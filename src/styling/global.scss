@@ -1,0 +1,9 @@
+@import './fonts.scss';
+@import './var.scss';
+
+body {
+   margin: 0;
+   letter-spacing: .1rem;
+   font-family: "Roboto", sans-serif;
+   background-color: $a7;
+}
