@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+import { API_URL } from 'config';
 import './Venues.css';
 
 export default class Venues extends Component {
@@ -9,7 +10,7 @@ export default class Venues extends Component {
    }
 
    async componentWillMount() {
-      const { data: venues } = await axios.get('http://localhost:49706/api/venues');
+      const { data: venues } = await axios.get(`${API_URL}/venues`);
       this.setState({ venues });
    }
 
