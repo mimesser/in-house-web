@@ -24,7 +24,7 @@ export default class Venues extends Component {
                <div className="header-text">nyc</div>
             </div>
             <h1 className="sub-header">
-               anonymous ratings from insiders only
+               anonymous ratings from insiders only.
             </h1>
             {venues && (
                <select>
