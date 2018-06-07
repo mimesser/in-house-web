@@ -1,0 +1,23 @@
+@import './reset.scss';
+@import './fonts.scss';
+@import './var.scss';
+
+body {
+   margin: 0;
+   letter-spacing: .1rem;
+   font-family: "Avenir Light", sans-serif;
+   @include b7;
+}
+
+h1, h2, h3, h4, h5, h6 {
+   text-align: center;
+   margin: 0.5em;
+}
+
+.padded-top {
+   margin-top: 100pt;
+}
+
+.mink-container {
+   @include b5;
+}
