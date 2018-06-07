@@ -1,0 +1,108 @@
+// A - colors
+$a1: #EBFAEC;
+$a2: #BDF3C2;
+$a3: #5E6F67;
+$a4: #424C48;
+$a5: #232D30;
+$a6: #171E21;
+$a7: #121618;
+$a8: #020202;
+
+// B - transparencies
+@mixin b1 {
+   background-color: $a1; // rgba($a1, 0.5);
+}
+@mixin b2 {
+   background-color: $a2; // rgba($a2, 0.5);
+}
+@mixin b3 {
+   background-color: $a3; // rgba($a3, 0.5);
+}
+@mixin b4 {
+   background-color: $a4; // rgba($a4, 0.5);
+}
+@mixin b5 {
+   background-color: $a5; // rgba($a5, 0.5);
+}
+@mixin b6 {
+   background-color: $a6; // rgba($a6, 0.9);
+}
+@mixin b7 {
+   background-color: $a7; // rgba($a7, 0.5);
+}
+
+// C - lines
+@mixin c1 {
+   border: 1px solid $a5;
+}
+@mixin c2 {
+   border: 1px solid $a4;
+}
+@mixin c3 {
+   border: 1px solid $a3;
+}
+@mixin c4 {
+   border: 2px solid $a2;
+}
+
+// H - headers/footer
+@mixin h1 {
+   font-size: 20pt;
+   color: $a2;
+}
+@mixin h2 {
+   font-size: 10pt;
+   color: $a2;
+}
+
+// L - landing
+.l3 {
+   font-size: 24pt;
+   color: $a3;
+}
+.l4 {
+   font-size: 32pt;
+   color: $a2;
+}
+.l5 {
+   font-size: 44pt;
+   color: $a2;
+}
+
+// T - title
+@mixin t1 {
+   color: $a3;
+}
+@mixin t2 {
+   color: $a2;
+}
+@mixin t3 {
+   color: $a4;
+}
+@mixin t4 {
+   color: $a1;
+}
+
+@mixin h3 {
+   @include p1;
+   :hover {
+      @include p2;
+   }
+}
+
+@mixin p1 {
+   font-size: 10pt;
+   color: $a3;
+}
+@mixin p2 {
+   font-size: 10pt;
+   color: $a2;
+}
+@mixin p3 {
+   font-size: 10pt;
+   color: $a4;
+}
+@mixin p4 {
+   font-size: 10pt;
+   color: $a1;
+}
