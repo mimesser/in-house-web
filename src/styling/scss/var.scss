@@ -1,108 +1,238 @@
-// A - colors
-$a1: #EBFAEC;
-$a2: #BDF3C2;
-$a3: #5E6F67;
-$a4: #424C48;
-$a5: #232D30;
-$a6: #171E21;
-$a7: #121618;
-$a8: #020202;
+// SECTION A (colors)
+$A-1: #EBFAEC;
+$A-2: #BDF3C2;
+$A-3: #5E6F67;
+$A-4: #424C48;
+$A-5: #232D30;
+$A-6: #171E21;
+$A-7: #121618;
+$A-8: #020202;
 
-// B - transparencies
-@mixin b1 {
-   background-color: $a1; // rgba($a1, 0.5);
+// SECTION B (transparencies)
+@mixin B-1 {
+   background-color: rgba($A-1, 0.5);
+   // background-color: $A-1;
 }
-@mixin b2 {
-   background-color: $a2; // rgba($a2, 0.5);
+@mixin B-2 {
+   background-color: rgba($A-2, 0.5);
+   // background-color: $A-2;
 }
-@mixin b3 {
-   background-color: $a3; // rgba($a3, 0.5);
+@mixin B-3 {
+   background-color: rgba($A-3, 0.5);
+   // background-color: $A-3;
 }
-@mixin b4 {
-   background-color: $a4; // rgba($a4, 0.5);
+@mixin B-4 {
+   background-color: rgba($A-4, 0.5);
+   // background-color: $A-4;
 }
-@mixin b5 {
-   background-color: $a5; // rgba($a5, 0.5);
+@mixin B-5 {
+   background-color: rgba($A-5, 0.5);
+   // background-color: $A-5;
 }
-@mixin b6 {
-   background-color: $a6; // rgba($a6, 0.9);
+@mixin B-6 {
+   background-color: rgba($A-6, 0.9);
+   // background-color: $A-6;
 }
-@mixin b7 {
-   background-color: $a7; // rgba($a7, 0.5);
-}
-
-// C - lines
-@mixin c1 {
-   border: 1px solid $a5;
-}
-@mixin c2 {
-   border: 1px solid $a4;
-}
-@mixin c3 {
-   border: 1px solid $a3;
-}
-@mixin c4 {
-   border: 2px solid $a2;
+@mixin B-7 {
+   background-color: rgba($A-7, 0.5);
+   // background-color: $A-7;
 }
 
-// H - headers/footer
-@mixin h1 {
-   font-size: 20pt;
-   color: $a2;
+// SECTION C (lines)
+@mixin C-1 {
+   border: 1px solid $A-5;
 }
-@mixin h2 {
-   font-size: 10pt;
-   color: $a2;
+@mixin C-2 {
+   border: 1px solid $A-4;
 }
-
-// L - landing
-.l3 {
-   font-size: 24pt;
-   color: $a3;
+@mixin C-3 {
+   border: 1px solid $A-3;
 }
-.l4 {
-   font-size: 32pt;
-   color: $a2;
-}
-.l5 {
-   font-size: 44pt;
-   color: $a2;
+@mixin C-4 {
+   border: 2px solid $A-2;
 }
 
-// T - title
-@mixin t1 {
-   color: $a3;
-}
-@mixin t2 {
-   color: $a2;
-}
-@mixin t3 {
-   color: $a4;
-}
-@mixin t4 {
-   color: $a1;
-}
+// SECTION D (svg logo – Avenir Light font)
 
-@mixin h3 {
-   @include p1;
-   :hover {
-      @include p2;
+// SECTION E (text fields)
+@mixin E-1 {
+   @include A-5;
+   ::placeholder {
+      @extend .P1;
+   }
+   :hover, :active {
+      @include B-3;
+      @extend .P2;
+   }
+   :not([value='']) {
+      @include A-5;
+      @extend .P2;
+   }
+   :invalid {
+      @include C-4;
+      border-width: 0;
+      border-left-width: 1px;
    }
 }
 
-@mixin p1 {
-   font-size: 10pt;
-   color: $a3;
+// SECTION F (search fields)
+@mixin F-1 {
+   @include A-5;
+   text-align: center;
+   ::placeholder {
+      @extend .P1;
+   }
+   :not([value='']) {
+      @include B-3;
+      @extend .P2;
+      text-align: left;
+   }
 }
-@mixin p2 {
-   font-size: 10pt;
-   color: $a2;
+@mixin F-2 {
+   :not([value='']) {
+      @include B-3;
+      @extend .P2;
+   }
 }
-@mixin p3 {
-   font-size: 10pt;
-   color: $a4;
+
+// SECTION G (dropdown menu)
+
+// SECTION H (headers/footer)
+
+// SECTION I (buttons)
+@mixin I-1 {
+   @include B-3;
+   @extend .P2;
+   text-transform: uppercase;
+   :hover {
+      @include B-2;
+      @extend .P4;
+   }
+   .previously-rated {
+      @include B-5;
+      @extend .P1;
+   }
 }
-@mixin p4 {
+@mixin I-2 {
+   @include B-3;
+   @extend .P2;
+   :hover {
+      @include B-2;
+      @extend .P4;
+   }
+}
+@mixin I-3 {
+   @include B-3;
+   @extend .P2;
+   :hover {
+      @include B-2;
+      @extend .P4;
+   }
+   :disabled {
+      @include B-5;
+      @extend .P4;
+   }
+}
+
+// SECTION J (links)
+
+// SECTION K (outline buttons)
+
+// SECTION M (modal windows)
+
+// SECTION N (pop ups)
+
+// SECTION N (alert pop-up)
+
+// SECTION P (venue photo gradient)
+
+// SECTION T (menus)
+
+// SECTION W (icons)
+
+/* ----------------------------------------- */
+
+// H (HEADER TAGS)
+.H1 {
+   font-family: "Helvetica Neue Light", sans-serif;
+   font-size: 20pt;
+   color: $A-2;
+}
+.H2 {
+   font-family: "Avenir Light", sans-serif;
    font-size: 10pt;
-   color: $a1;
+   color: $A-2;
+}
+
+// S (SMALL)
+
+// P (PARAGRAPH)
+.P1 {
+   font-family: "Avenir Light", sans-serif;
+   font-size: 10pt;
+   color: $A-3;
+}
+.P2 {
+   font-family: "Avenir Light", sans-serif;
+   font-size: 10pt;
+   color: $A-2;
+}
+.P3 {
+   font-family: "Avenir Light", sans-serif;
+   font-size: 10pt;
+   color: $A-4;
+}
+.P4 {
+   font-family: "Avenir Light", sans-serif;
+   font-size: 10pt;
+   color: $A-1;
+}
+
+// T (TITLE)
+.T1 {
+   color: $A-3;
+}
+.T2 {
+   color: $A-2;
+}
+.T-3 {
+   color: $A-4;
+}
+.T-4 {
+   color: $A-1;
+}
+
+// C (CATEGORIES)
+
+// M (MINKS)
+
+// V (VENUE)
+
+// N (NUMBERS)
+
+// L (LANDING)
+.L1 {
+   font-family: "Avenir Neue Ultra Light", sans-serif;
+   font-size: 16pt;
+   color: $A-3;
+}
+.L2 {
+   font-family: "Avenir Neue Ultra Light", sans-serif;
+   font-size: 16pt;
+   color: $A-1;
+}
+.L3 {
+   font-family: "Avenir Neue Ultra Light", sans-serif;
+   font-size: 24pt;
+   color: $A-3;
+}
+.L4 {
+   font-family: "Avenir Roman", sans-serif;
+   font-size: 32pt;
+   color: $A-2;
+}
+.L5 {
+   font-family: "Avenir Roman", sans-serif;
+   font-size: 44pt;
+   color: $A-2;
 }
