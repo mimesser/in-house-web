@@ -1,0 +1,20 @@
+@import '../../styling/var.scss';
+
+.Beta-header {
+   .logo {
+      // TODO
+      color: #fff;
+   }
+   .search-icon {
+      src: url(../../assets/images/icons/icon-search.svg) format('truetype');
+   }
+   .menu-icon {
+      src: url(../../assets/images/icons/hamburger.svg) format('truetype');
+   }
+}
+.Beta-section-1 {
+   background-color: $A-7;
+}
+.Beta-section-2 {
+   background-color: $A-7;
+}

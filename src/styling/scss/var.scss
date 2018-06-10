@@ -100,7 +100,7 @@ $A-8: #020202;
 // SECTION H (headers/footer)
 
 // SECTION I (buttons)
-@mixin I-1 {
+.I-1 {
    @include B-3;
    @extend .P2;
    text-transform: uppercase;
@@ -113,7 +113,7 @@ $A-8: #020202;
       @extend .P1;
    }
 }
-@mixin I-2 {
+.I-2 {
    @include B-3;
    @extend .P2;
    :hover {
@@ -121,7 +121,7 @@ $A-8: #020202;
       @extend .P4;
    }
 }
-@mixin I-3 {
+.I-3 {
    @include B-3;
    @extend .P2;
    :hover {
