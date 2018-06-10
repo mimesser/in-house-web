@@ -6,7 +6,6 @@ body {
    margin: 0;
    letter-spacing: .1rem;
    font-family: "Avenir Light", sans-serif;
-   @include b7;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -19,12 +18,4 @@ button {
    outline: none;
    background: none;
    font: inherit;
-}
-
-.padded-top {
-   margin-top: 100pt;
-}
-
-.mink-container {
-   @include b5;
 }

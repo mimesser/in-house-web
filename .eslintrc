@@ -13,6 +13,7 @@
       "indent": [2, 3, { "SwitchCase": 1 }],
       "import/no-unresolved": 0,
       "import/extensions": 0,
-      "react/require-default-props": 0
+      "react/require-default-props": 0,
+      "react/no-unescaped-entities": 0
    }
 }
