@@ -1,238 +1,248 @@
 /* eslint-disable no-use-before-define */
 import { css } from 'styled-components';
 
-const theme = {
-   // SECTION A (colors)
-   A_1: '#EBFAEC',
-   A_2: '#BDF3C2',
-   A_3: '#5E6F67',
-   A_4: '#424C48',
-   A_5: '#232D30',
-   A_6: '#171E21',
-   A_7: '#121618',
-   A_8: '#020202',
+// SECTION A (colors)
+const A_1 = '#EBFAEC';
+const A_2 = '#BDF3C2';
+const A_3 = '#5E6F67';
+const A_4 = '#424C48';
+const A_5 = '#232D30';
+const A_6 = '#171E21';
+const A_7 = '#121618';
+const A_8 = '#020202';
 
-   // SECTION B (transparencies)
-   B_1: css`
-      background-color: rgba(${this.A_1}, 0.5);
-   `,
-   B_2: css`
-      background-color: rgba(${this.A_2}, 0.5);
-   `,
-   B_3: css`
-      background-color: rgba(${this.A_3}, 0.5);
-   `,
-   B_4: css`
-      background-color: rgba(${this.A_4}, 0.5);
-   `,
-   B_5: css`
-      background-color: rgba(${this.A_5}, 0.5);
-   `,
-   B_6: css`
-      background-color: rgba(${this.A_6}, 0.9);
-   `,
-   B_7: css`
-      background-color: rgba(${this.A_7}, 0.5);
-   `,
+// SECTION B (transparencies)
+const B_1 = css`
+   background-color: rgba(${A_1}, 0.5);
+`;
+const B_2 = css`
+   background-color: rgba(${A_2}, 0.5);
+`;
+const B_3 = css`
+   background-color: rgba(${A_3}, 0.5);
+`;
+const B_4 = css`
+   background-color: rgba(${A_4}, 0.5);
+`;
+const B_5 = css`
+   background-color: rgba(${A_5}, 0.5);
+`;
+const B_6 = css`
+   background-color: rgba(${A_6}, 0.9);
+`;
+const B_7 = css`
+   background-color: rgba(${A_7}, 0.5);
+`;
 
-   // SECTION C (lines)
-   C_1: css`
-      border: 1px solid ${this.A_5};
-   `,
-   C_2: css`
-      border: 1px solid ${this.A_4};
-   `,
-   C_3: css`
-      border: 1px solid ${this.A_3};
-   `,
-   C_4: css`
-      border: 2px solid ${this.A_2};
-   `,
+// SECTION C (lines)
+const C_1 = css`
+   border = 1px solid ${A_5};
+`;
+const C_2 = css`
+   border = 1px solid ${A_4};
+`;
+const C_3 = css`
+   border = 1px solid ${A_3};
+`;
+const C_4 = css`
+   border = 2px solid ${A_2};
+`;
 
-   // SECTION D (svg logo – Avenir Light font)
+// SECTION D (svg logo – Avenir Light font)
 
-   // SECTION E (text fields)
-   E_1: css`
-      color: ${this.A_5};
-      ::placeholder {
-         ${this.P1};
-      }
-      :hover, :active {
-         ${this.B_3};
-         ${this.P2};
-      }
-      :not([value='']) {
-         ${this.A_5};
-         ${this.P2};
-      }
-      :invalid {
-         ${this.C_4};
-         border-width: 0;
-         border-left-width: 1px;
-      }
-   `,
+// SECTION E (text fields)
+const E_1 = css`
+   color = ${A_5};
+   ::placeholder {
+      ${P1};
+   }
+   :hover, :active {
+      ${B_3};
+      ${P2};
+   }
+   :not([value='']) {
+      ${A_5};
+      ${P2};
+   }
+   :invalid {
+      ${C_4};
+      border-width: 0;
+      border-left-width: 1px;
+   }
+`;
 
-   // SECTION F (search fields)
-   F_1: css`
-      ${this.A_5};
-      text-align: center;
-      ::placeholder {
-         ${this.P1};
-      }
-      :not([value='']) {
-         ${this.B_3};
-         ${this.P2};
-         text-align: left;
-      }
-   `,
-   F_2: css`
-      :not([value='']) {
-         ${this.B_3};
-         ${this.P2};
-      }
-   `,
+// SECTION F (search fields)
+const F_1 = css`
+   ${A_5};
+   text-align: center;
+   ::placeholder {
+      ${P1};
+   }
+   :not([value='']) {
+      ${B_3};
+      ${P2};
+      text-align: left;
+   }
+`;
+const F_2 = css`
+   :not([value='']) {
+      ${B_3};
+      ${P2};
+   }
+`;
 
    // SECTION G (dropdown menu)
 
    // SECTION H (headers/footer)
 
    // SECTION I (buttons)
-   I_1: css`
-      ${this.B_3};
-      ${this.P2};
-      text-transform: uppercase;
-      :hover {
-         ${this.B_2};
-         ${this.P4};
-      }
-      .previously-rated {
-         ${this.B_5};
-         ${this.P1};
-      }
-   `,
-   I_2: css`
-      ${this.B_3};
-      ${this.P2};
-      :hover {
-         ${this.B_2};
-         ${this.P4};
-      }
-   `,
-   I_3: css`
-      ${this.B_3};
-      ${this.P2};
-      :hover {
-         ${this.B_2};
-         ${this.P4};
-      }
-      :disabled {
-         ${this.B_5};
-         ${this.P4};
-      }
-   `,
+const I_1 = css`
+   ${B_3};
+   ${P2};
+   text-transform: uppercase;
+   :hover {
+      ${B_2};
+      ${P4};
+   }
+   .previously-rated {
+      ${B_5};
+      ${P1};
+   }
+`;
+const I_2 = css`
+   ${B_3};
+   ${P2};
+   :hover {
+      ${B_2};
+      ${P4};
+   }
+`;
+const I_3 = css`
+   ${B_3};
+   ${P2};
+   :hover {
+      ${B_2};
+      ${P4};
+   }
+   :disabled {
+      ${B_5};
+      ${P4};
+   }
+`;
 
-   // SECTION J (links)
+// SECTION J (links)
 
-   // SECTION K (outline buttons)
+// SECTION K (outline buttons)
 
-   // SECTION M (modal windows)
+// SECTION M (modal windows)
 
-   // SECTION N (pop ups)
+// SECTION N (pop ups)
 
-   // SECTION N (alert pop-up)
+// SECTION N (alert pop-up)
 
-   // SECTION P (venue photo gradient)
+// SECTION P (venue photo gradient)
 
-   // SECTION T (menus)
+// SECTION T (menus)
 
-   // SECTION W (icons)
+// SECTION W (icons)
 
-   /* ----------------------------------------- */
+/* ----------------------------------------- */
 
-   // H (HEADER TAGS)
-   H1: css`
-      font-family: "Helvetica Neue Light", sans-serif;
-      font-size: 20pt;
-      color: ${this.A_2};
-   `,
-   H2: css`
-      font-family: "Avenir Light", sans-serif;
-      font-size: 10pt;
-      color: ${this.A_2};
-   `,
+// H (HEADER TAGS)
+const H1 = css`
+   font-family: "Helvetica Neue Light", sans-serif;
+   font-size: 20pt;
+   color: ${A_2};
+`;
+const H2 = css`
+   font-family: "Avenir Light", sans-serif;
+   font-size: 10pt;
+   color: ${A_2};
+`;
 
-   // S (SMALL)
+// S (SMALL)
 
-   // P (PARAGRAPH)
-   P1: css`
-      font-family: "Avenir Light", sans-serif;
-      font-size: 10pt;
-      color: ${this.A_3};
-   `,
-   P2: css`
-      font-family: "Avenir Light", sans-serif;
-      font-size: 10pt;
-      color: ${this.A_2};
-   `,
-   P3: css`
-      font-family: "Avenir Light", sans-serif;
-      font-size: 10pt;
-      color: ${this.A_4};
-   `,
-   P4: css`
-      font-family: "Avenir Light", sans-serif;
-      font-size: 10pt;
-      color: ${this.A_1};
-   `,
+// P (PARAGRAPH)
+const P1 = css`
+   font-family: "Avenir Light", sans-serif;
+   font-size: 10pt;
+   color: ${A_3};
+`;
+const P2 = css`
+   font-family: "Avenir Light", sans-serif;
+   font-size: 10pt;
+   color: ${A_2};
+`;
+const P3 = css`
+   font-family: "Avenir Light", sans-serif;
+   font-size: 10pt;
+   color: ${A_4};
+`;
+const P4 = css`
+   font-family: "Avenir Light", sans-serif;
+   font-size: 10pt;
+   color: ${A_1};
+`;
 
-   // T (TITLE)
-   T1: css`
-      color: ${this.A_3};
-   `,
-   T2: css`
-      color: ${this.A_2};
-   `,
-   T3: css`
-      color: ${this.A_4};
-   `,
-   T4: css`
-      color: ${this.A_1};
-   `,
+// T (TITLE)
+const T1 = css`
+   color: ${A_3};
+`;
+const T2 = css`
+   color: ${A_2};
+`;
+const T3 = css`
+   color: ${A_4};
+`;
+const T4 = css`
+   color: ${A_1};
+`;
 
-   // C (CATEGORIES)
+// C (CATEGORIES)
 
-   // M (MINKS)
+// M (MINKS)
 
-   // V (VENUE)
+// V (VENUE)
 
-   // N (NUMBERS)
+// N (NUMBERS)
 
-   // L (LANDING)
-   L1: css`
-      font-family: "Avenir Neue Ultra Light", sans-serif;
-      font-size: 16pt;
-      color: ${this.A_3};
-   `,
-   L2: css`
-      font-family: "Avenir Neue Ultra Light", sans-serif;
-      font-size: 16pt;
-      color: ${this.A_1};
-   `,
-   L3: css`
-      font-family: "Avenir Neue Ultra Light", sans-serif;
-      font-size: 24pt;
-      color: ${this.A_3};
-   `,
-   L4: css`
-      font-family: "Avenir Roman", sans-serif;
-      font-size: 32pt;
-      color: ${this.A_2};
-   `,
-   L5: css`
-      font-family: "Avenir Roman", sans-serif;
-      font-size: 44pt;
-      color: ${this.A_2};
-   `,
+// L (LANDING)
+const L1 = css`
+   font-family: "Avenir Neue Ultra Light", sans-serif;
+   font-size: 16pt;
+   color: ${A_3};
+`;
+const L2 = css`
+   font-family: "Avenir Neue Ultra Light", sans-serif;
+   font-size: 16pt;
+   color: ${A_1};
+`;
+const L3 = css`
+   font-family: "Avenir Neue Ultra Light", sans-serif;
+   font-size: 24pt;
+   color: ${A_3};
+`;
+const L4 = css`
+   font-family: "Avenir Roman", sans-serif;
+   font-size: 32pt;
+   color: ${A_2};
+`;
+const L5 = css`
+   font-family: "Avenir Roman", sans-serif;
+   font-size: 44pt;
+   color: ${A_2};
+`;
+
+/* eslint-disable object-property-newline */
+export default {
+   A_1, A_2, A_3, A_4, A_5, A_6, A_7, A_8,
+   B_1, B_2, B_3, B_4, B_5, B_6, B_7,
+   C_1, C_2, C_3, C_4,
+   E_1,
+   F_1, F_2,
+   I_1, I_2, I_3,
+   H1, H2,
+   P1, P2, P3, P4,
+   T1, T2, T3, T4,
+   L1, L2, L3, L4, L5,
 };
-
-export default theme;
