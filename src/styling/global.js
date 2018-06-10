@@ -12,9 +12,12 @@ injectGlobal`
       font-family: "Avenir Light", sans-serif;
    }
 
+   div, h1, h2, h3, h4, h5, h6 {
+      line-height: 1.4em;
+   }
+
    h1, h2, h3, h4, h5, h6 {
-      text-align: center;
-      margin: 0.5em;
+      margin: 0.5em 0;
    }
 
    button {
@@ -23,6 +26,7 @@ injectGlobal`
       background: none;
       font: inherit;
    }
+
    .I_1 {
       ${theme.I_1}
    }

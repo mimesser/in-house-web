@@ -9,7 +9,7 @@ import { API_URL } from 'config';
 import Beta from './pages/Beta';
 
 class App extends Component {
-   async componentWillMount() {
+   async componentDidMount() {
       if (this.props.venues) {
          const { data } = await axios.get(`${API_URL}/aggregate`);
          this.props.setData(data);
