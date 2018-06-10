@@ -1,29 +1,30 @@
 // 0A
 import React from 'react';
 
-// import hamburgerIcon from 'assets/images/icons/hamburger.svg';
-// import searchIcon from 'assets/images/icons/icon-search.svg';
+import {
+   Header, Logo, SearchIcon, MenuIcon, Section1, Section2, Section3, Section4, Section5,
+   Section6, Video,
+} from './beta-styles.js';
 
 export default function Beta() {
    return (
       <div>
-         <header className="Beta-header">
-            <div className="logo">IN-HOUSE</div>
-            <div className="search-icon" />
-            <div className="menu-icon" />
-         </header>
-         <div className="Beta-section-1">
+         <Header>
+            <Logo>IN-HOUSE</Logo>
+            <SearchIcon />
+            <MenuIcon />
+         </Header>
+         <Section1>
             <h2 className="L5">
                if your job could talk
             </h2>
             <h3 className="L3">
                let team consensus guide your workplace
             </h3>
-            <div className="Beta-video">
-               asfdasfd
-            </div>
-         </div>
-         <div className="Beta-section-2">
+            <Video />
+         </Section1>
+
+         <Section2>
             <button className="I-2">Notify me when live</button>
             <h2 className="L5">
                a yelp from the inside
@@ -33,17 +34,16 @@ export default function Beta() {
                <br />
                (anonymously)
             </h3>
-         </div>
+         </Section2>
 
-         <div className="Beta-section-3">
+         <Section3>
             <h4 className="P1">#1 MINK:</h4>
             <h3 className="V2">
                Who is there a picture of in the employee bathroom?
             </h3>
+         </Section3>
 
-         </div>
-
-         <div className="Beta-section-4">
+         <Section4>
             <h2 className="L4">
                totally safe
             </h2>
@@ -78,9 +78,9 @@ export default function Beta() {
                No. Organizations can't control or dictate anything.
                They're only given access after insiders start talking.
             </span>
-         </div>
+         </Section4>
 
-         <div className="Beta-section-5">
+         <Section5>
             <h2 className="L4">
                how it works
             </h2>
@@ -110,13 +110,13 @@ export default function Beta() {
                   </span>
                </li>
             </ol>
-         </div>
+         </Section5>
 
-         <div className="Beta-section-6">
+         <Section6>
             <h2 className="L4">
                workplace democracy
             </h2>
-         </div>
+         </Section6>
       </div>
    );
 }
