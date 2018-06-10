@@ -1,18 +1,22 @@
 // 0A
 import React from 'react';
+import searchIcon from './icons/icon-search';
+import menuIcon from './icons/hamburger';
 
 import {
    Header, Logo, SearchIcon, MenuIcon, Section1, Section2, Section3, Section4, Section5,
-   Section6, Video,
+   Section6, Video, HeaderContent, Wrapper,
 } from './beta-styles.js';
 
 export default function Beta() {
    return (
-      <div>
+      <Wrapper>
          <Header>
-            <Logo>IN-HOUSE</Logo>
-            <SearchIcon />
-            <MenuIcon />
+            <HeaderContent>
+               <Logo>IN-HOUSE</Logo>
+               <SearchIcon>{searchIcon}</SearchIcon>
+               <MenuIcon>{menuIcon}</MenuIcon>
+            </HeaderContent>
          </Header>
          <Section1>
             <h2 className="L5">
@@ -21,8 +25,9 @@ export default function Beta() {
             <h3 className="L3">
                let team consensus guide your workplace
             </h3>
-            <Video />
          </Section1>
+
+         <Video />
 
          <Section2>
             <button className="I-2">Notify me when live</button>
@@ -44,40 +49,40 @@ export default function Beta() {
          </Section3>
 
          <Section4>
-            <h2 className="L4">
+            <h2 className="L5">
                totally safe
             </h2>
 
             <h4 className="L2">
                Will my boss know it's me?
             </h4>
-            <span className="L1">
+            <div className="L1">
                No. We don't take names or even emails.
-            </span>
+            </div>
 
             <h4 className="L2">
                How can I know it's just me & my team talking?
             </h4>
-            <span className="L1">
+            <div className="L1">
                Because we use <em>"minks"</em> - patented insider password
                questions using your shared knowledge to verify you.
-            </span>
+            </div>
 
             <h4 className="L2">
                Can everyone see our feedback?
             </h4>
-            <span className="L1">
+            <div className="L1">
                No. Only bosses & <em>"insiders"</em> (who can answer your
                job's 'mink') can get access so opinions stay IN-HOUSE.
-            </span>
+            </div>
 
             <h4 className="L2">
                Does my boss control this?
             </h4>
-            <span className="L1">
+            <div className="L1">
                No. Organizations can't control or dictate anything.
                They're only given access after insiders start talking.
-            </span>
+            </div>
          </Section4>
 
          <Section5>
@@ -117,6 +122,6 @@ export default function Beta() {
                workplace democracy
             </h2>
          </Section6>
-      </div>
+      </Wrapper>
    );
 }

@@ -11,6 +11,28 @@ const A_6 = '#171E21';
 const A_7 = '#121618';
 const A_8 = '#020202';
 
+// P (PARAGRAPH)
+const P1 = css`
+   font-family: "Avenir Light", sans-serif;
+   font-size: 10pt;
+   color: ${A_3};
+`;
+const P2 = css`
+   font-family: "Avenir Light", sans-serif;
+   font-size: 10pt;
+   color: ${A_2};
+`;
+const P3 = css`
+   font-family: "Avenir Light", sans-serif;
+   font-size: 10pt;
+   color: ${A_4};
+`;
+const P4 = css`
+   font-family: "Avenir Light", sans-serif;
+   font-size: 10pt;
+   color: ${A_1};
+`;
+
 // SECTION B (transparencies)
 const B_1 = css`
    background-color: rgba(${A_1}, 0.5);
@@ -162,28 +184,6 @@ const H2 = css`
 
 // S (SMALL)
 
-// P (PARAGRAPH)
-const P1 = css`
-   font-family: "Avenir Light", sans-serif;
-   font-size: 10pt;
-   color: ${A_3};
-`;
-const P2 = css`
-   font-family: "Avenir Light", sans-serif;
-   font-size: 10pt;
-   color: ${A_2};
-`;
-const P3 = css`
-   font-family: "Avenir Light", sans-serif;
-   font-size: 10pt;
-   color: ${A_4};
-`;
-const P4 = css`
-   font-family: "Avenir Light", sans-serif;
-   font-size: 10pt;
-   color: ${A_1};
-`;
-
 // T (TITLE)
 const T1 = css`
    color: ${A_3};
@@ -221,16 +221,19 @@ const L3 = css`
    font-family: "Avenir Neue Ultra Light", sans-serif;
    font-size: 24pt;
    color: ${A_3};
+   text-align: center;
 `;
 const L4 = css`
    font-family: "Avenir Roman", sans-serif;
    font-size: 32pt;
    color: ${A_2};
+   text-align: center;
 `;
 const L5 = css`
    font-family: "Avenir Roman", sans-serif;
    font-size: 44pt;
    color: ${A_2};
+   text-align: center;
 `;
 
 /* eslint-disable object-property-newline */
