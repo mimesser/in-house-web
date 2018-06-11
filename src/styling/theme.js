@@ -35,48 +35,48 @@ const P4 = css`
 
 // SECTION B (transparencies)
 const B_1 = css`
-   background-color: rgba(${A_1}, 0.5);
+   background-color: #EBFAEC80;
 `;
 const B_2 = css`
-   background-color: rgba(${A_2}, 0.5);
+   background-color: #BDF3C280;
 `;
 const B_3 = css`
-   background-color: rgba(${A_3}, 0.5);
+   background-color: #5E6F6780;
 `;
 const B_4 = css`
-   background-color: rgba(${A_4}, 0.5);
+   background-color: #424C4880;
 `;
 const B_5 = css`
-   background-color: rgba(${A_5}, 0.5);
+   background-color: #232D3080;
 `;
 const B_6 = css`
-   background-color: rgba(${A_6}, 0.9);
+   background-color: #171E21E6;
 `;
 const B_7 = css`
-   background-color: rgba(${A_7}, 0.5);
+   background-color: #12161880;
 `;
 
 // SECTION C (lines)
 const C_1 = css`
-   border = 1px solid ${A_5};
+   border: 1px solid ${A_5};
 `;
 const C_2 = css`
-   border = 1px solid ${A_4};
+   border: 1px solid ${A_4};
 `;
 const C_3 = css`
-   border = 1px solid ${A_3};
+   border: 1px solid ${A_3};
 `;
 const C_4 = css`
-   border = 2px solid ${A_2};
+   border: 2px solid ${A_2};
 `;
 
 // SECTION D (svg logo – Avenir Light font)
 
 // SECTION E (text fields)
 const E_1 = css`
-   color = ${A_5};
+   color: ${A_5};
    ::placeholder {
-      ${P1};
+      ${P1}
    }
    :hover, :active {
       ${B_3};
@@ -98,7 +98,7 @@ const F_1 = css`
    ${A_5};
    text-align: center;
    ::placeholder {
-      ${P1};
+      ${P1}
    }
    :not([value='']) {
       ${B_3};
@@ -108,16 +108,16 @@ const F_1 = css`
 `;
 const F_2 = css`
    :not([value='']) {
-      ${B_3};
-      ${P2};
+      ${B_3}
+      ${P2}
    }
 `;
 
-   // SECTION G (dropdown menu)
+// SECTION G (dropdown menu)
 
-   // SECTION H (headers/footer)
+// SECTION H (headers/footer)
 
-   // SECTION I (buttons)
+// SECTION I (buttons)
 const I_1 = css`
    ${B_3};
    ${P2};
@@ -132,6 +132,7 @@ const I_1 = css`
    }
 `;
 const I_2 = css`
+   padding: 16px;
    ${B_3};
    ${P2};
    :hover {
@@ -183,6 +184,26 @@ const H2 = css`
 `;
 
 // S (SMALL)
+const S1 = css`
+   font-family: "Avenir Light", sans-serif;
+   font-size: 8pt;
+   color: ${A_3};
+`;
+const S2 = css`
+   font-family: "Avenir Light", sans-serif;
+   font-size: 8pt;
+   color: ${A_2};
+`;
+const S3 = css`
+   font-family: "Avenir Light", sans-serif;
+   font-size: 8pt;
+   color: ${A_4};
+`;
+const S4 = css`
+   font-family: "Avenir Light", sans-serif;
+   font-size: 8pt;
+   color: ${A_1};
+`;
 
 // T (TITLE)
 const T1 = css`
@@ -203,6 +224,26 @@ const T4 = css`
 // M (MINKS)
 
 // V (VENUE)
+const V1 = css`
+   font-family: "Helvetica Neue Light", sans-serif;
+   font-size: 20pt;
+   color: ${A_3};
+`;
+const V2 = css`
+   font-family: "Helvetica Neue Light", sans-serif;
+   font-size: 20pt;
+   color: ${A_2};
+`;
+const V3 = css`
+   font-family: "Helvetica Neue Light", sans-serif;
+   font-size: 20pt;
+   color: ${A_4};
+`;
+const V4 = css`
+   font-family: "Helvetica Neue Light", sans-serif;
+   font-size: 20pt;
+   color: ${A_1};
+`;
 
 // N (NUMBERS)
 
@@ -245,7 +286,9 @@ export default {
    F_1, F_2,
    I_1, I_2, I_3,
    H1, H2,
+   S1, S2, S3, S4,
    P1, P2, P3, P4,
    T1, T2, T3, T4,
+   V1, V2, V3, V4,
    L1, L2, L3, L4, L5,
 };

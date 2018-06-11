@@ -9,10 +9,11 @@ injectGlobal`
    body {
       margin: 0;
       letter-spacing: .1rem;
-      font-family: "Avenir Light", sans-serif;
+      font-family: "Avenir Roman",sans-serif;
+      /* "Avenir Light", sans-serif; */
    }
 
-   div, h1, h2, h3, h4, h5, h6 {
+   span, div, h1, h2, h3, h4, h5, h6 {
       line-height: 1.4em;
    }
 
@@ -25,15 +26,20 @@ injectGlobal`
       outline: none;
       background: none;
       font: inherit;
+      text-transform: uppercase;
+      cursor: pointer;
    }
+`;
 
-   .I_1 {
+// inject classes from theme
+injectGlobal`
+   .I-1 {
       ${theme.I_1}
    }
-   .I_2 {
+   .I-2 {
       ${theme.I_2}
    }
-   .I_3 {
+   .I-3 {
       ${theme.I_3}
    }
 
@@ -42,6 +48,19 @@ injectGlobal`
    }
    .H2 {
       ${theme.H2}
+   }
+
+   .S1 {
+      ${theme.P1}
+   }
+   .S2 {
+      ${theme.P2}
+   }
+   .S3 {
+      ${theme.P3}
+   }
+   .S4 {
+      ${theme.P4}
    }
 
    .P1 {
@@ -68,6 +87,19 @@ injectGlobal`
    }
    .T4 {
       ${theme.T4}
+   }
+
+   .V1 {
+      ${theme.V1}
+   }
+   .V2 {
+      ${theme.V2}
+   }
+   .V3 {
+      ${theme.V3}
+   }
+   .V4 {
+      ${theme.V4}
    }
 
    .L1 {
