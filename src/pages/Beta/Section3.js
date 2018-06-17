@@ -7,6 +7,9 @@ const MinkAnswerContainer = styled.div`
    display: inline-flex;
    align-items: center;
    height: 50px;
+   i {
+      font-size: 40px;
+   }
 `;
 
 const MinkAnswer = styled.div`
@@ -15,7 +18,7 @@ const MinkAnswer = styled.div`
    display: flex;
    align-items: center;
    padding: 0 30px;
-   margin-left: 20px;
+   margin-left: 10px;
    height: 100%;
 `;
 
@@ -25,6 +28,9 @@ const RatingContainer = styled.div`
    justify-content: center;
    color: ${props => props.theme.A_4};
    margin: 30px 0 20px;
+   i {
+      font-size: 40px;
+   }
 `;
 
 const PeopleContainer = styled.div`
@@ -38,6 +44,11 @@ const Percentage = styled.div`
 const People = styled.div`
    font-size: 10pt;
    font-weight: bold;
+   display: flex;
+   align-items: center;
+   i {
+      font-size: 12pt;
+   }
 `;
 
 export default function Section3() {
@@ -48,20 +59,20 @@ export default function Section3() {
             Who is there a picture of in the employee bathroom?
          </h3>
          <MinkAnswerContainer>
-            <i className="fas fa-lock fa-2x" />
+            <i className="material-icons">lock</i>
             <MinkAnswer>
                (one word / no spaces)
             </MinkAnswer>
          </MinkAnswerContainer>
          <RatingContainer>
-            <i className="fas fa-thumbs-up fa-2x" />
+            <i className="material-icons">thumb_up</i>
             <PeopleContainer>
-               <Percentage>+89</Percentage>
+               <Percentage>+89%</Percentage>
                <People>
-                  (<i className="fas fa-user" /> 32 )
+                  (<i className="material-icons">person</i> 32)
                </People>
             </PeopleContainer>
-            <i className="fas fa-thumbs-down fa-2x" />
+            <i className="material-icons">thumb_down</i>
          </RatingContainer>
          <div className="S1">U.S. PATENT NO. 8,904,502</div>
       </Card>

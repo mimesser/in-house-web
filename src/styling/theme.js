@@ -1,5 +1,6 @@
 /* eslint-disable no-use-before-define */
 import { css } from 'styled-components';
+import chroma from 'chroma-js';
 
 // SECTION A (colors)
 const A_1 = '#EBFAEC';
@@ -35,25 +36,25 @@ const P4 = css`
 
 // SECTION B (transparencies)
 const B_1 = css`
-   background-color: #EBFAEC80;
+   background-color: ${chroma(A_1).alpha(0.5).hex()};
 `;
 const B_2 = css`
-   background-color: #BDF3C280;
+   background-color: ${chroma(A_2).alpha(0.5).hex()};
 `;
 const B_3 = css`
-   background-color: #5E6F6780;
+   background-color: ${chroma(A_3).alpha(0.5).hex()};
 `;
 const B_4 = css`
-   background-color: #424C4880;
+   background-color: ${chroma(A_4).alpha(0.5).hex()};
 `;
 const B_5 = css`
-   background-color: #232D3080;
+   background-color: ${chroma(A_5).alpha(0.5).hex()};
 `;
 const B_6 = css`
-   background-color: #171E21E6;
+   background-color: ${chroma(A_6).alpha(0.9).hex()};
 `;
 const B_7 = css`
-   background-color: #12161880;
+   background-color: ${chroma(A_7).alpha(0.5).hex()};
 `;
 
 // SECTION C (lines)
@@ -160,6 +161,10 @@ const I_3 = css`
 // SECTION M (modal windows)
 
 // SECTION N (pop ups)
+const N_1 = css`
+   ${B_6};
+   color: ${chroma(A_2).alpha(0.5).hex()};
+`;
 
 // SECTION N (alert pop-up)
 
@@ -286,6 +291,7 @@ export default {
    F_1, F_2,
    I_1, I_2, I_3,
    H1, H2,
+   N_1,
    S1, S2, S3, S4,
    P1, P2, P3, P4,
    T1, T2, T3, T4,

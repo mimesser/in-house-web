@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import MenuIcon from 'components/Menu';
 import searchIcon from './icons/icon-search';
-import menuIcon from './icons/hamburger';
+// import menuIcon from './icons/hamburger';
 
 const Wrapper = styled.nav`
    position: fixed;
@@ -30,16 +31,16 @@ const SearchIcon = Icon.extend`
    margin-left: auto;
 `;
 
-const MenuIcon = Icon.extend`
-   margin-left: 40px;
-   svg {
-      width: 20px;
-   }
-`;
+// const MenuIcon = Icon.extend`
+//    margin-left: 40px;
+//    svg {
+//       width: 20px;
+//    }
+// `;
 
 const Content = styled.div`
    display: flex;
-   padding: 20px;
+   padding: 40px 20px 20px;
    max-width: 1024px;
    margin: 0 auto;
 `;
@@ -50,7 +51,7 @@ export default function Header() {
          <Content>
             <Logo>IN-HOUSE</Logo>
             <SearchIcon>{searchIcon}</SearchIcon>
-            <MenuIcon>{menuIcon}</MenuIcon>
+            <MenuIcon />
          </Content>
       </Wrapper>
    );

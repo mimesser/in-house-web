@@ -3,7 +3,7 @@ import Card from './Card';
 
 export default function Section1() {
    return (
-      <Card>
+      <Card paddingTop={80}>
          <h2 className="L5">
             if your job could talk
          </h2>
