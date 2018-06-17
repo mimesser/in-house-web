@@ -24,6 +24,7 @@ const Wrapper = BaseComponent.extend`
       background-repeat: no-repeat;
       background-size: cover;
    `};
+   text-align: ${props => (props.centerAlign ? 'center' : 'left')};
 `;
 
 const Content = styled.div`
@@ -37,7 +38,7 @@ export default function Section({
    children, maxWidth, centerAlign, ...props
 }) {
    if (!props.container) {
-      return <Wrapper {...props}>{children}</Wrapper>;
+      return <Wrapper centerAlign={centerAlign} {...props}>{children}</Wrapper>;
    }
 
    return (
