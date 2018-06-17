@@ -14,7 +14,8 @@
       "react/require-default-props": 0,
       "react/no-unescaped-entities": 0,
       "global-require": 0,
-      "linebreak-style": 0
+      "linebreak-style": 0,
+      "no-unused-vars": 1
    },
    "parser": "babel-eslint",
    "settings": {
