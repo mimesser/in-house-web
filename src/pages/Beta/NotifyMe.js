@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { API_URL } from 'config';
 import axios from 'axios';
-import { Heading, Input, Button, Overlay } from 'components';
+import { Heading, Input, Button, Overlay, Text } from 'components';
 
 export default class NotifyMe extends Component {
    static propTypes = {
@@ -11,19 +11,19 @@ export default class NotifyMe extends Component {
 
    state = {
       email: '',
+      submitted: false,
    };
 
    onSubmit = async (e) => {
       e.preventDefault();
 
       const {
-         props: { onClose },
          state: { email },
       } = this;
 
       try {
          await axios.post(`${API_URL}/email`, { email });
-         onClose();
+         this.setState({ submitted: true });
       } catch (err) {
          console.warn(err.response || err.message);
       }
@@ -34,7 +34,19 @@ export default class NotifyMe extends Component {
    }
 
    render() {
-      const { email } = this.state;
+      const { email, submitted } = this.state;
+
+      if (submitted) {
+         return (
+            <Overlay onClose={this.props.onClose}>
+               <Heading T2>thanks</Heading>
+               <br />
+               <Text P1>we will let you know when the platform is ready</Text>
+               <br />
+               <Button I_3 onClick={this.props.onClose}>ok</Button>
+            </Overlay>
+         );
+      }
 
       return (
          <Overlay onClose={this.props.onClose}>

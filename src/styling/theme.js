@@ -156,8 +156,29 @@ const I_3 = css`
 `;
 
 // SECTION J (links)
-
-// SECTION K (outline buttons)
+const J_1 = css`
+   ${props => (props.selected ? css`
+      ${P4};
+   ` : css`
+      ${P3};
+   `)}
+   &:hover {
+      ${P4};
+   }
+`;
+const J_2 = css`
+   ${props => (props.selected ? css`
+      ${S2};
+      &:hover {
+         ${S4}
+      }
+   ` : css`
+      ${S3};
+      &:hover {
+         ${S2}
+      }
+   `)}
+`;
 
 // SECTION M (modal windows)
 
@@ -209,6 +230,16 @@ const S4 = css`
    font-family: "Avenir Light", sans-serif;
    font-size: 8pt;
    color: ${A_1};
+`;
+
+// SECTION K (outline buttons)
+const K_1 = css`
+   ${S1};
+   border: 1px solid transparent;
+   &:hover {
+      ${S2};
+      ${C_2};
+   }
 `;
 
 // T (TITLE)
@@ -292,6 +323,8 @@ export default {
    F_1, F_2,
    I_1, I_2, I_3,
    H1, H2,
+   J_1, J_2,
+   K_1,
    N_1,
    S1, S2, S3, S4,
    P1, P2, P3, P4,
