@@ -3,9 +3,6 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import baseComponent from './base-component';
 
-/* background-color: ${props => props.color && props.theme[props.color]};
- */
-
 const BaseComponent = baseComponent('section');
 
 const Wrapper = BaseComponent.extend`

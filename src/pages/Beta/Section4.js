@@ -4,6 +4,7 @@ import { Heading, Section, Text } from 'components';
 
 const Content = styled(Text)`
    margin-bottom: 30px;
+   display: block;
 `;
 
 export default function Sectio4() {

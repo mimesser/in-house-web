@@ -2,18 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import baseComponent from './base-component';
 
-export default function Input({ width, ...props }) {
-   const BaseComponent = baseComponent('input');
+const BaseComponent = baseComponent('input');
 
-   const Wrapper = BaseComponent.extend`
-      padding: 6px;
-      width: ${width};
-   `;
+const Wrapper = BaseComponent.extend`
+   padding: 6px;
+   width: ${props => props.width};
+`;
 
-   return <Wrapper {...props} />;
+export default function Input({ onChange, ...props }) {
+   function changeHandler({ target: { value } }) {
+      onChange(value);
+   }
+
+   return <Wrapper {...props} onChange={changeHandler} />;
 }
 
 Input.propTypes = {
+   onChange: PropTypes.func.isRequired,
    width: PropTypes.string,
 };
 
