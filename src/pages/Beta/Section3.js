@@ -1,80 +1,49 @@
 import React from 'react';
 import styled from 'styled-components';
-import Card from './Card';
+import { Heading, Icon, Section, Text } from 'components';
 
 const MinkAnswerContainer = styled.div`
    color: ${props => props.theme.A_5};
    display: inline-flex;
    align-items: center;
    height: 50px;
-   i {
-      font-size: 40px;
-   }
+   margin-top: 20px;
 `;
 
-const MinkAnswer = styled.div`
-   ${props => props.theme.P1}
-   background-color: ${props => props.theme.A_5};
-   display: flex;
-   align-items: center;
+const MinkAnswer = styled(Text)`
    padding: 0 30px;
-   margin-left: 10px;
+   margin-left: 20px;
    height: 100%;
-`;
-
-const RatingContainer = styled.div`
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   color: ${props => props.theme.A_4};
-   margin: 30px 0 20px;
-   i {
-      font-size: 40px;
-   }
 `;
 
 const PeopleContainer = styled.div`
    margin: 0 20px;
 `;
 
-const Percentage = styled.div`
-   ${props => props.theme.P2};
-`;
-
-const People = styled.div`
-   font-size: 10pt;
-   font-weight: bold;
-   display: flex;
-   align-items: center;
-   i {
-      font-size: 12pt;
-   }
-`;
-
 export default function Section3() {
    return (
-      <Card centerAlign color="A_6" maxWidth={400}>
-         <h4 className="P1">#1 MINK:</h4>
-         <h3 className="V2">
+      <Section centerAlign B_6 container maxWidth={400}>
+         <Heading P1>#1 MINK:</Heading>
+         <Heading V2>
             Who is there a picture of in the employee bathroom?
-         </h3>
+         </Heading>
          <MinkAnswerContainer>
-            <i className="material-icons">lock</i>
-            <MinkAnswer>
+            <Icon size={40}>lock</Icon>
+            <MinkAnswer P1 B_5 flex>
                (one word / no spaces)
             </MinkAnswer>
          </MinkAnswerContainer>
-         <RatingContainer>
-            <i className="material-icons">thumb_up</i>
+         <Section P3 flex>
+            <Icon size={40}>thumb_up</Icon>
             <PeopleContainer>
-               <Percentage>+89%</Percentage>
-               <People>
-                  (<i className="material-icons">person</i> 32)
-               </People>
+               <Text P2>+89%</Text>
+               <Text flex bold fontSize="12px">
+                  (<Icon size={20}>person</Icon> 32)
+               </Text>
             </PeopleContainer>
-            <i className="material-icons">thumb_down</i>
-         </RatingContainer>
-         <div className="S1">U.S. PATENT NO. 8,904,502</div>
-      </Card>
+            <Icon size={40}>thumb_down</Icon>
+         </Section>
+         <Text S1>U.S. PATENT NO. 8,904,502</Text>
+      </Section>
    );
 }

@@ -12,21 +12,17 @@ injectGlobal`
       font-family: "Avenir Roman", sans-serif;
    }
 
-   span, div, h1, h2, h3, h4, h5, h6 {
-      line-height: 1.4em;
-   }
-
-   h1, h2, h3, h4, h5, h6 {
-      margin: 0.5em 0;
-   }
-
-   button {
-      border: none;
+   input {
+      background: inherit;
       outline: none;
-      background: none;
+      border: none;
       font: inherit;
-      text-transform: uppercase;
-      cursor: pointer;
+   }
+
+   a {
+      text-decoration: none;
+      font: inherit;
+      color: inherit;
    }
 `;
 
