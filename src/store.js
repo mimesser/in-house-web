@@ -22,10 +22,10 @@ function getStoredData() {
    }
 }
 
-export function getStore() {
+export const store = (() => {
    const data = getStoredData();
 
-   const store = createStore(
+   const newStore = createStore(
       reducer,
       data,
       // eslint-disable-next-line no-underscore-dangle
@@ -33,13 +33,13 @@ export function getStore() {
    );
 
    if (localStorage) {
-      store.subscribe(() => {
-         localStorage.setItem('in-house', JSON.stringify(store.getState()));
+      newStore.subscribe(() => {
+         localStorage.setItem('in-house', JSON.stringify(newStore.getState()));
       });
    }
 
-   return store;
-}
+   return newStore;
+})();
 
 export function setData(data) {
    return { type: 'SET', data };

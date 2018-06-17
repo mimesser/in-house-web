@@ -2,15 +2,14 @@
 import { injectGlobal } from 'styled-components';
 
 import theme from './theme';
-import './reset.js';
-import './fonts.js';
+import './reset';
+import './fonts';
 
 injectGlobal`
    body {
       margin: 0;
       letter-spacing: .1rem;
-      font-family: "Avenir Roman",sans-serif;
-      /* "Avenir Light", sans-serif; */
+      font-family: "Avenir Roman", sans-serif;
    }
 
    span, div, h1, h2, h3, h4, h5, h6 {
