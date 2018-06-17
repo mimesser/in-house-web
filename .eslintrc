@@ -11,10 +11,17 @@
       "react/jsx-indent": [2, 3],
       "react/jsx-indent-props": [2, 3],
       "indent": [2, 3, { "SwitchCase": 1 }],
-      "import/no-unresolved": 0,
-      "import/extensions": 0,
       "react/require-default-props": 0,
       "react/no-unescaped-entities": 0,
       "global-require": 0,
-   }
+      "linebreak-style": 0
+   },
+   "parser": "babel-eslint",
+   "settings": {
+      "import/resolver": {
+        "node": {
+          "paths": ["src"]
+        }
+      }
+    }
 }
