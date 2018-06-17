@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import MenuIcon from 'components/Menu';
+import { Link } from 'react-router-dom';
+import Menu from './Menu';
 import searchIcon from './icons/icon-search';
-// import menuIcon from './icons/hamburger';
 
 const Wrapper = styled.nav`
    position: fixed;
@@ -11,8 +11,12 @@ const Wrapper = styled.nav`
    right: 0;
 `;
 
-const Logo = styled.div`
-   color: #aaa;
+const Logo = styled(Link)`
+   cursor: pointer;
+   color: #999;
+   &:hover {
+      color: #aaa;
+   }
 `;
 
 const Icon = styled.div`
@@ -31,13 +35,6 @@ const SearchIcon = Icon.extend`
    margin-left: auto;
 `;
 
-// const MenuIcon = Icon.extend`
-//    margin-left: 40px;
-//    svg {
-//       width: 20px;
-//    }
-// `;
-
 const Content = styled.div`
    display: flex;
    padding: 40px 20px 20px;
@@ -49,9 +46,9 @@ export default function Header() {
    return (
       <Wrapper>
          <Content>
-            <Logo>IN-HOUSE</Logo>
+            <Logo to="/">IN-HOUSE</Logo>
             <SearchIcon>{searchIcon}</SearchIcon>
-            <MenuIcon />
+            <Menu />
          </Content>
       </Wrapper>
    );

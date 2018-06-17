@@ -6,9 +6,20 @@ import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { isEmpty } from 'ramda';
 import { API_URL } from 'config';
+import styled from 'styled-components';
+import Header from 'layout/Header';
 
 import Beta from './pages/Beta';
 import Venues from './pages/Venues';
+
+const Wrapper = styled.div`
+   background-color: ${props => props.theme.A_7};
+   overflow: hidden;
+`;
+
+const Content = styled.main`
+   padding-top: 60px;
+`;
 
 class App extends Component {
    static propTypes = {
@@ -26,10 +37,13 @@ class App extends Component {
    render() {
       return (
          <Router>
-            <div>
-               <Route path="/" component={Beta} />
-               <Route path="/venues" component={Venues} />
-            </div>
+            <Wrapper>
+               <Header />
+               <Content>
+                  <Route path="/" exact component={Beta} />
+                  <Route path="/venues" component={Venues} />
+               </Content>
+            </Wrapper>
          </Router>
       );
    }

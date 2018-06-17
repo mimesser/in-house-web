@@ -1,15 +1,15 @@
 import React from 'react';
-import Card from './Card';
+import { Heading, Section } from 'components';
 
 export default function Section1() {
    return (
-      <Card paddingTop={80}>
-         <h2 className="L5">
+      <Section container>
+         <Heading L5>
             if your job could talk
-         </h2>
-         <h3 className="L3">
+         </Heading>
+         <Heading L3>
             let team consensus guide your workplace
-         </h3>
-      </Card>
+         </Heading>
+      </Section>
    );
 }

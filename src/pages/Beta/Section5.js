@@ -1,12 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import Card from './Card';
+import { Heading, Section, Text } from 'components';
 
-const Content = styled.div`
-   li {
-      display: flex;
-      margin-bottom: 30px;
-   }
+const Li = styled.li`
+   display: flex;
+   margin-bottom: 30px;
 `;
 
 const Number = styled.div`
@@ -15,49 +13,47 @@ const Number = styled.div`
    margin-right: 20px;
 `;
 
-export default function Sectio5() {
+export default function Section5() {
    return (
-      <Card maxWidth={600}>
-         <Content>
-            <h2 className="L5">
-               how it works
-            </h2>
+      <Section container maxWidth={600}>
+         <Heading L5>
+            how it works
+         </Heading>
 
-            <ol>
-               <li>
-                  <Number>1.</Number>
-                  <div>
-                     <span className="L2">List your job</span>
-                     <span className="L1">
-                        - including a password question that only you
-                        & your team will know the answer to
-                     </span>
-                  </div>
-               </li>
+         <ol>
+            <Li>
+               <Number>1.</Number>
+               <div>
+                  <Text L2>List your job</Text>
+                  <Text L1>
+                     - including a password question that only you
+                     & your team will know the answer to
+                  </Text>
+               </div>
+            </Li>
 
-               <li>
-                  <Number>2.</Number>
-                  <div>
-                     <span className="L2">Alert your team</span>
-                     <span className="L1">
-                        - so only insiders who can answer the most
-                        popular password question can rate your workplace.
-                     </span>
-                  </div>
-               </li>
+            <Li>
+               <Number>2.</Number>
+               <div>
+                  <Text L2>Alert your team</Text>
+                  <Text L1>
+                     - so only insiders who can answer the most
+                     popular password question can rate your workplace.
+                  </Text>
+               </div>
+            </Li>
 
-               <li>
-                  <Number>3.</Number>
-                  <div>
-                     <span className="L2">Rate & post</span>
-                     <span className="L1">
-                        - what bosses & teammates need to know with 100%
-                        anonymity.
-                     </span>
-                  </div>
-               </li>
-            </ol>
-         </Content>
-      </Card>
+            <Li>
+               <Number>3.</Number>
+               <div>
+                  <Text L2>Rate & post</Text>
+                  <Text L1>
+                     - what bosses & teammates need to know with 100%
+                     anonymity.
+                  </Text>
+               </div>
+            </Li>
+         </ol>
+      </Section>
    );
 }

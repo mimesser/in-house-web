@@ -36,25 +36,25 @@ const P4 = css`
 
 // SECTION B (transparencies)
 const B_1 = css`
-   background-color: ${chroma(A_1).alpha(0.5).hex()};
+   background-color: ${chroma(A_1).alpha(0.5).css()};
 `;
 const B_2 = css`
-   background-color: ${chroma(A_2).alpha(0.5).hex()};
+   background-color: ${chroma(A_2).alpha(0.5).css()};
 `;
 const B_3 = css`
-   background-color: ${chroma(A_3).alpha(0.5).hex()};
+   background-color: ${chroma(A_3).alpha(0.5).css()};
 `;
 const B_4 = css`
-   background-color: ${chroma(A_4).alpha(0.5).hex()};
+   background-color: ${chroma(A_4).alpha(0.5).css()};
 `;
 const B_5 = css`
-   background-color: ${chroma(A_5).alpha(0.5).hex()};
+   background-color: ${chroma(A_5).alpha(0.5).css()};
 `;
 const B_6 = css`
-   background-color: ${chroma(A_6).alpha(0.9).hex()};
+   background-color: ${chroma(A_6).alpha(0.9).css()};
 `;
 const B_7 = css`
-   background-color: ${chroma(A_7).alpha(0.5).hex()};
+   background-color: ${chroma(A_7).alpha(0.5).css()};
 `;
 
 // SECTION C (lines)
@@ -75,6 +75,7 @@ const C_4 = css`
 
 // SECTION E (text fields)
 const E_1 = css`
+   ${B_4};
    color: ${A_5};
    ::placeholder {
       ${P1}
@@ -87,11 +88,11 @@ const E_1 = css`
       ${A_5};
       ${P2};
    }
-   :invalid {
+   ${props => props.error && css`
       ${C_4};
       border-width: 0;
       border-left-width: 1px;
-   }
+   `}
 `;
 
 // SECTION F (search fields)
@@ -133,7 +134,6 @@ const I_1 = css`
    }
 `;
 const I_2 = css`
-   padding: 16px;
    ${B_3};
    ${P2};
    :hover {
