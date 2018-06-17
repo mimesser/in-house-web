@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Heading, Overlay, Input, Button, Section } from 'components';
+import { Heading, Button, Section } from 'components';
+import NotifyMe from './NotifyMe';
 
 export default class Section2 extends Component {
    state = {
@@ -15,15 +16,7 @@ export default class Section2 extends Component {
 
       return (
          <Section centerAlign container>
-            {notifyOpen && (
-               <Overlay onClose={this.closeNotify}>
-                  <Heading T2>notify me when live</Heading>
-                  <br />
-                  <Input E_1 type="email" placeholder="email" width="260px" />
-                  <br />
-                  <Button I_3>submit</Button>
-               </Overlay>
-            )}
+            {notifyOpen && <NotifyMe onClose={this.closeNotify} />}
             <Button I_2 onClick={this.openNotify}>
                Notify me when live
             </Button>

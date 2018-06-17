@@ -76,7 +76,8 @@ const C_4 = css`
 // SECTION E (text fields)
 const E_1 = css`
    ${B_4};
-   color: ${A_5};
+   /* color: ${A_5}; */
+   ${P3};
    ::placeholder {
       ${P1}
    }

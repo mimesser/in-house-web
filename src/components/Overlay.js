@@ -44,6 +44,6 @@ export default function Overlay({ children, onClose }) {
 }
 
 Overlay.propTypes = {
-   children: PropTypes.string,
+   children: PropTypes.node,
    onClose: PropTypes.func.isRequired,
 };
