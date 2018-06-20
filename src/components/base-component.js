@@ -9,12 +9,10 @@ export default function baseComponent(component, css) {
       ${(props) => {
          const propKeys = Object.keys(props);
          const elements = pick(propKeys, props.theme);
-         
-         console.log(elements);
+
          const x = Object.keys(elements).reduce((res, tag) => (
             [...res, ...elements[tag]]
          ), []);
-         console.log(x);
          return x;
       }};
    `;
