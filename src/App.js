@@ -14,7 +14,12 @@ import Venues from './pages/Venues';
 
 const Wrapper = styled.div`
    background-color: ${props => props.theme.A_7};
-   overflow: hidden;
+   overflow: auto;
+   position: fixed;
+   top: 0;
+   right: 0;
+   left: 0;
+   bottom: 0;
 `;
 
 const Content = styled.main`
@@ -56,3 +61,11 @@ function mapStateToProps(store) {
 }
 
 export default connect(mapStateToProps, { setData })(App);
+
+// Address
+// BlabsCount
+// ConsumerRating
+// CrossStreets
+// InsiderRating
+// Name
+// VenueImage
