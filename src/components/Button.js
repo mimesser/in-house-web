@@ -6,7 +6,6 @@ const Wrapper = baseComponent(
    'button',
    css`
       text-transform: uppercase;
-      height: fit-content;
    `,
 );
 

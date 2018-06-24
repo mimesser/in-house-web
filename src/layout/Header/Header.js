@@ -2,14 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Menu from './Menu';
-import searchIcon from './icons/icon-search';
+import Search from './Search';
 
 const Wrapper = styled.nav`
    position: fixed;
    top: 0;
    left: 0;
    right: 0;
-   ${props => props.theme.B_6};
+   ${props => props.theme.B_7};
 `;
 
 const Logo = styled(Link)`
@@ -20,27 +20,16 @@ const Logo = styled(Link)`
    }
 `;
 
-const Icon = styled.div`
-   cursor: pointer;
-   svg {
-      height: 24px;
-      width: 24px;
-      fill #555;
-      :hover {
-         fill #bbb;
-      }
-   }
-`;
-
-const SearchIcon = Icon.extend`
-   margin-left: auto;
-`;
-
 const Content = styled.div`
    display: flex;
    padding: 40px 20px 20px;
    max-width: 1024px;
    margin: 0 auto;
+`;
+const Right = styled.div`
+   margin-left: auto;
+   display: flex;
+   align-items: center;
 `;
 
 export default function Header() {
@@ -48,8 +37,10 @@ export default function Header() {
       <Wrapper>
          <Content>
             <Logo to="/">IN-HOUSE</Logo>
-            <SearchIcon>{searchIcon}</SearchIcon>
-            <Menu />
+            <Right>
+               <Search />
+               <Menu />
+            </Right>
          </Content>
       </Wrapper>
    );

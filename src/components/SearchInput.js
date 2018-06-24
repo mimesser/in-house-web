@@ -14,6 +14,7 @@ const Container = BaseComponent.extend`
       right: 7px;
       position: absolute;
       font-size: 31px;
+      cursor: pointer;
    }
 `;
 
@@ -46,8 +47,8 @@ export default class SearchInput extends Component {
 
       return (
          <Container {...props}>
-            <input {...inputProps} />
-            <Icon>search</Icon>
+            <input {...inputProps} ref={(el) => { this.el = el; }} />
+            <Icon onClick={() => this.el.focus()}>search</Icon>
          </Container>
       );
    }

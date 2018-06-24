@@ -15,7 +15,7 @@ import VenueItem from './pages/VenueItem';
 import KitchenSink from './pages/KitchenSink';
 
 const Wrapper = styled.div`
-   background-color: ${props => props.theme.A_6};
+   background-color: ${props => props.theme.A_7};
    overflow: auto;
    position: fixed;
    top: 0;
