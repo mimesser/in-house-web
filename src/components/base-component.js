@@ -13,7 +13,7 @@ export default function baseComponent(component, css) {
          const x = Object.keys(elements).reduce((res, tag) => (
             [...res, ...elements[tag]]
          ), []);
-         console.log(elements);
+
          return x;
       }};
    `;

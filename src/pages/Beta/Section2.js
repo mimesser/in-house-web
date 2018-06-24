@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
-import { Heading, Button, Section } from 'components';
+import { Typography, Button, Section } from 'components';
+import styled from 'styled-components';
 import NotifyMe from './NotifyMe';
+
+const Content = styled.div`
+   margin: 40px 0;
+`;
 
 export default class Section2 extends Component {
    state = {
@@ -20,14 +25,16 @@ export default class Section2 extends Component {
             <Button I_2 onClick={this.openNotify}>
                Notify me when live
             </Button>
-            <Heading L5>
-               a yelp from the inside
-            </Heading>
-            <Heading L3>
-               using common team knowledge to decide who can speak
-               <br />
-               (anonymously)
-            </Heading>
+            <Content>
+               <Typography L5>
+                  a yelp from the inside
+               </Typography>
+               <Typography L3>
+                  using common team knowledge to decide who can speak
+                  <br />
+                  (anonymously)
+               </Typography>
+            </Content>
          </Section>
       );
    }

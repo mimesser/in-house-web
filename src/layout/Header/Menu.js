@@ -13,9 +13,9 @@ const Icon = styled.div`
    svg {
       height: 24px;
       width: 24px;
-      fill #555;
+      fill: ${props => props.theme.A_4};
       :hover {
-         fill #bbb;
+         fill: ${props => props.theme.A_3};
       }
    }
 `;

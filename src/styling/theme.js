@@ -161,6 +161,9 @@ const F_2 = css`
          }
       }
    }
+   i {
+      color: ${A_4};
+   }
 `;
 
 // SECTION G (dropdown menu)
@@ -211,7 +214,8 @@ const H_3 = css`
 const I_1 = css`
    ${B_3};
    ${P2};
-   padding: 10px 12px;
+   height: 34px;
+   padding: 0 12px;
    min-width: 70px;
    :hover {
       ${B_2};
@@ -225,7 +229,8 @@ const I_1 = css`
 const I_2 = css`
    ${B_3};
    ${P2};
-   padding: 24px 40px;
+   height: 64px;
+   padding: 0 40px;
    :hover {
       ${B_2};
       ${P4};
@@ -234,7 +239,8 @@ const I_2 = css`
 const I_3 = css`
    ${B_3};
    ${P2};
-   padding: 16px 16px;
+   padding: 0 16px;
+   height: 48px;
    :hover {
       ${B_2};
       ${P4};
