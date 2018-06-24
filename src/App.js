@@ -4,7 +4,7 @@ import { setData } from 'store';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { isEmpty } from 'ramda';
+import moment from 'moment';
 import { API_URL } from 'config';
 import styled from 'styled-components';
 import Header from 'layout/Header';
@@ -64,16 +64,8 @@ class App extends Component {
 
 function mapStateToProps(store) {
    return {
-      initialized: !isEmpty(store),
+      initialized: store.timeStamp && moment(store.timeStamp).diff(moment()) > 0,
    };
 }
 
 export default connect(mapStateToProps, { setData })(App);
-
-// Address
-// BlabsCount
-// ConsumerRating
-// CrossStreets
-// InsiderRating
-// Name
-// VenueImage
