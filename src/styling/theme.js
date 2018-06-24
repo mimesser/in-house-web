@@ -75,18 +75,15 @@ const C_4 = css`
 
 // SECTION E (text fields)
 const E_1 = css`
-   ${B_4};
-   /* color: ${A_5}; */
-   ${P3};
-   ::placeholder {
+   padding: 8px 12px;
+   background-color: ${A_5};
+   &::placeholder {
       ${P1}
    }
-   :hover, :active {
+   background-color: ${A_5};
+   ${P2};
+   &:hover, &:active {
       ${B_3};
-      ${P2};
-   }
-   :not([value='']) {
-      ${A_5};
       ${P2};
    }
    ${props => props.error && css`
@@ -94,25 +91,54 @@ const E_1 = css`
       border-width: 0;
       border-left-width: 1px;
    `}
+   &:disabled {
+      background-color: ${A_5};
+      ${P2};
+   }
 `;
 
 // SECTION F (search fields)
 const F_1 = css`
-   ${A_5};
-   text-align: center;
-   ::placeholder {
-      ${P1}
+   input {
+      background-color: ${A_5};
+      text-align: center;
+      padding: 14px 18px;
+      ${P1};
+      &::placeholder {
+         ${P1}
+      }
+      &:focus {
+         text-align: left;
+      }
+      &:not([value='']) {
+         ${B_3};
+         ${P2};
+         text-align: left;
+         & ~ i {
+            color: ${A_2};
+         }
+      }
    }
-   :not([value='']) {
-      ${B_3};
-      ${P2};
-      text-align: left;
+   i {
+      color: ${A_3};
    }
 `;
 const F_2 = css`
-   :not([value='']) {
-      ${B_3}
+   input {
+      padding: 8px 12px;
       ${P2}
+      &:focus {
+         background-color: ${A_5};
+         & ~ i {
+            color: ${A_3};
+         }
+      }
+      &:not([value='']) {
+         ${B_3}
+         & ~ i {
+            color: ${A_2};
+         }
+      }
    }
 `;
 
