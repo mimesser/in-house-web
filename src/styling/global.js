@@ -23,7 +23,6 @@ injectGlobal`
       outline: none;
       background: none;
       font: inherit;
-      text-transform: uppercase;
       cursor: pointer;
    }
 

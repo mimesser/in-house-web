@@ -56,7 +56,6 @@ export default class SearchInput extends Component {
 SearchInput.propTypes = {
    onChange: PropTypes.func,
    width: PropTypes.string,
-   search: PropTypes.bool,
    value: PropTypes.oneOfType([
       PropTypes.string, PropTypes.number,
    ]),

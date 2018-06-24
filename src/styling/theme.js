@@ -1,4 +1,3 @@
-/* eslint-disable no-use-before-define */
 import { css } from 'styled-components';
 import chroma from 'chroma-js';
 
@@ -31,6 +30,28 @@ const P3 = css`
 const P4 = css`
    font-family: "Avenir Light", sans-serif;
    font-size: 10pt;
+   color: ${A_1};
+`;
+
+// S (SMALL)
+const S1 = css`
+   font-family: "Avenir Light", sans-serif;
+   font-size: 8pt;
+   color: ${A_3};
+`;
+const S2 = css`
+   font-family: "Avenir Light", sans-serif;
+   font-size: 8pt;
+   color: ${A_2};
+`;
+const S3 = css`
+   font-family: "Avenir Light", sans-serif;
+   font-size: 8pt;
+   color: ${A_4};
+`;
+const S4 = css`
+   font-family: "Avenir Light", sans-serif;
+   font-size: 8pt;
    color: ${A_1};
 `;
 
@@ -89,7 +110,7 @@ const E_1 = css`
    ${props => props.error && css`
       ${C_4};
       border-width: 0;
-      border-left-width: 1px;
+      border-left-width: 2px;
    `}
    &:disabled {
       background-color: ${A_5};
@@ -143,26 +164,68 @@ const F_2 = css`
 `;
 
 // SECTION G (dropdown menu)
-
+const G_1 = css`
+   ${P1}
+   background-color: ${A_6};
+   border: 1px solid transparent;
+   i {
+      color: ${chroma(A_3).alpha(0.5).css()};
+   }
+   &:hover {
+      ${P2}
+      i {
+         color: ${chroma(A_2).alpha(0.5).css()};
+      }
+   }
+   ${props => props.open && css`
+      ${C_3}
+      ${P2}
+      background-color: ${A_6};
+      i {
+         color: ${chroma(A_2).alpha(0.5).css()};
+      }
+      li {
+         text-align: right;
+         &:hover {
+            ${P4}
+            ${B_3}
+         }
+      }
+   `}
+   ${props => props.disabled && css`
+      ${C_1}
+      ${P2}
+      i {
+         color: ${chroma(A_2).alpha(0.5).css()};
+      }
+   `}
+`;
 // SECTION H (headers/footer)
-
+const H_3 = css`
+   ${P1}
+   &:hover {
+      ${P2}
+   }
+`;
 // SECTION I (buttons)
 const I_1 = css`
    ${B_3};
    ${P2};
-   text-transform: uppercase;
+   padding: 10px 12px;
+   min-width: 70px;
    :hover {
       ${B_2};
       ${P4};
    }
-   .previously-rated {
+   ${props => props.previouslyRated && css`
       ${B_5};
       ${P1};
-   }
+   `}
 `;
 const I_2 = css`
    ${B_3};
    ${P2};
+   padding: 24px 40px;
    :hover {
       ${B_2};
       ${P4};
@@ -171,6 +234,7 @@ const I_2 = css`
 const I_3 = css`
    ${B_3};
    ${P2};
+   padding: 16px 16px;
    :hover {
       ${B_2};
       ${P4};
@@ -180,30 +244,49 @@ const I_3 = css`
       ${P4};
    }
 `;
+const I_4 = css`
+   i {
+      color: ${chroma(A_3).alpha(0.5).css()};
+   }
+   ${props => props.prevSelected && css`
+      i {
+         color: ${chroma(A_4).alpha(0.5).css()};
+      }
+   `}
+   ${props => props.unselected && css`
+      i {
+         color: ${chroma(A_5).alpha(0.5).css()};
+      }
+   `}
+   &:hover i {
+      color: ${chroma(A_1).alpha(0.5).css()};
+   }
+`;
 
 // SECTION J (links)
 const J_1 = css`
-   ${props => (props.selected ? css`
-      ${P4};
-   ` : css`
-      ${P3};
-   `)}
    &:hover {
-      ${P4};
+      ${P4}
    }
+   ${P2};
+   ${props => props.selected && css`
+      ${P4};
+   `}
+   ${props => props.inactive && css`
+      ${P3};
+   `}
 `;
 const J_2 = css`
-   ${props => (props.selected ? css`
-      ${S2};
-      &:hover {
-         ${S4}
-      }
-   ` : css`
+   &:hover {
+      ${S4}
+   }
+   ${S2};
+   ${props => props.selected && css`
+      ${S4};
+   `}
+   ${props => props.inactive && css`
       ${S3};
-      &:hover {
-         ${S2}
-      }
-   `)}
+   `}
 `;
 
 // SECTION M (modal windows)
@@ -236,32 +319,11 @@ const H2 = css`
    color: ${A_2};
 `;
 
-// S (SMALL)
-const S1 = css`
-   font-family: "Avenir Light", sans-serif;
-   font-size: 8pt;
-   color: ${A_3};
-`;
-const S2 = css`
-   font-family: "Avenir Light", sans-serif;
-   font-size: 8pt;
-   color: ${A_2};
-`;
-const S3 = css`
-   font-family: "Avenir Light", sans-serif;
-   font-size: 8pt;
-   color: ${A_4};
-`;
-const S4 = css`
-   font-family: "Avenir Light", sans-serif;
-   font-size: 8pt;
-   color: ${A_1};
-`;
-
 // SECTION K (outline buttons)
 const K_1 = css`
    ${S1};
    border: 1px solid transparent;
+   padding: 20px 8px;
    &:hover {
       ${S2};
       ${C_2};
@@ -283,8 +345,48 @@ const T4 = css`
 `;
 
 // C (CATEGORIES)
+const C1 = css`
+   font-family: "Helvetica Neue Light", sans-serif;
+   font-size: 10pt;
+   color: ${A_3};
+`;
+const C2 = css`
+   font-family: "Helvetica Neue Light", sans-serif;
+   font-size: 10pt;
+   color: ${A_2};
+`;
+const C3 = css`
+   font-family: "Helvetica Neue Light", sans-serif;
+   font-size: 10pt;
+   color: ${A_4};
+`;
+const C4 = css`
+   font-family: "Helvetica Neue Light", sans-serif;
+   font-size: 10pt;
+   color: ${A_1};
+`;
 
 // M (MINKS)
+const M1 = css`
+   font-family: "Helvetica Neue Light", sans-serif;
+   font-size: 12pt;
+   color: ${A_3};
+`;
+const M2 = css`
+   font-family: "Helvetica Neue Light", sans-serif;
+   font-size: 12pt;
+   color: ${A_2};
+`;
+const M3 = css`
+   font-family: "Helvetica Neue Light", sans-serif;
+   font-size: 12pt;
+   color: ${A_4};
+`;
+const M4 = css`
+   font-family: "Helvetica Neue Light", sans-serif;
+   font-size: 12pt;
+   color: ${A_1};
+`;
 
 // V (VENUE)
 const V1 = css`
@@ -309,6 +411,36 @@ const V4 = css`
 `;
 
 // N (NUMBERS)
+const N1 = css`
+   font-family: "Avenir Light", sans-serif;
+   font-size: 16pt;
+   color: ${A_3};
+`;
+const N2 = css`
+   font-family: "Avenir Light", sans-serif;
+   font-size: 16pt;
+   color: ${A_2};
+`;
+const N3 = css`
+   font-family: "Avenir Light", sans-serif;
+   font-size: 24pt;
+   color: ${A_2};
+`;
+const N4 = css`
+   font-family: "Avenir Light", sans-serif;
+   font-size: 24pt;
+   color: ${A_1};
+`;
+const N7 = css`
+   font-family: "Avenir Light", sans-serif;
+   font-size: 54pt;
+   color: ${A_2};
+`;
+const N8 = css`
+   font-family: "Avenir Light", sans-serif;
+   font-size: 54pt;
+   color: ${A_1};
+`;
 
 // L (LANDING)
 const L1 = css`
@@ -325,20 +457,46 @@ const L3 = css`
    font-family: "Avenir Neue Ultra Light", sans-serif;
    font-size: 24pt;
    color: ${A_3};
-   text-align: center;
 `;
 const L4 = css`
    font-family: "Avenir Roman", sans-serif;
    font-size: 32pt;
    color: ${A_2};
-   text-align: center;
 `;
 const L5 = css`
    font-family: "Avenir Roman", sans-serif;
    font-size: 44pt;
    color: ${A_2};
-   text-align: center;
 `;
+
+// W (icons)
+// const W_2 = css`
+//    &:hover i { color: ${A_4}; }
+//    i { color: ${A_3}; }
+// `;
+// const W_3 = css`
+//    &:hover i { color: ${A_4}; }
+//    i { color: ${A_3}; }
+// `;
+// const W_4 = css`
+//    &:hover i { color: ${A_4}; }
+//    i { color: ${A_3}; }
+// `;
+// const W_5 = css`
+//    ${props => (props.active ? css`
+//       i { color: ${A_3}; }
+//    ` : css`
+//       i { color: ${A_5}; }
+//    `)}
+// `;
+// const W_6 = css`
+//    &:hover i { color: ${A_4}; }
+//    i { color: ${A_3}; }
+// `;
+// const W_7 = css`
+//    &:hover i { color: ${A_4}; }
+//    i { color: ${A_3}; }
+// `;
 
 /* eslint-disable object-property-newline */
 export default {
@@ -347,14 +505,19 @@ export default {
    C_1, C_2, C_3, C_4,
    E_1,
    F_1, F_2,
-   I_1, I_2, I_3,
+   G_1,
+   I_1, I_2, I_3, I_4,
    H1, H2,
+   H_3,
    J_1, J_2,
    K_1,
    N_1,
    S1, S2, S3, S4,
+   C1, C2, C3, C4,
+   M1, M2, M3, M4,
    P1, P2, P3, P4,
    T1, T2, T3, T4,
+   N1, N2, N3, N4, N7, N8,
    V1, V2, V3, V4,
    L1, L2, L3, L4, L5,
 };
