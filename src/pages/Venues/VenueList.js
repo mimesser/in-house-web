@@ -110,7 +110,7 @@ export default function VenueList({ venues, filter }) {
                         </Content>
                         <Right>
                            {parseNumber(f.insiderRating)}
-                           <Person><Icon size={16}>person</Icon> 32</Person>
+                           <Person><Icon size={16}>person</Icon> {f.insiderVotesCount}</Person>
                         </Right>
                      </Link>
                   </li>

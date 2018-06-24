@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Section, Heading, Text, Input } from 'components';
+import { Section, Typography, SearchInput } from 'components';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import VenueList from './VenueList';
@@ -10,7 +10,7 @@ const Nav = styled.button`
    margin: 0 40px;
 `;
 
-const Request = styled(Heading)`
+const Request = styled(Typography)`
    padding: 20px 8px;
    line-height: 1em;
    display: inline-block;
@@ -52,9 +52,9 @@ class Venues extends Component {
             </Section>
             <Section container centerAlign maxWidth={800}>
                <Header>
-                  <Text P1>> standard</Text>
-                  <Input F_1 search placeholder="search" filter={filter} onChange={this.onFilterChange} />
-                  <Text J_1>LIST MY JOB</Text>
+                  <Typography P1>> standard</Typography>
+                  <SearchInput F_1 placeholder="search" value={filter} onChange={this.onFilterChange} />
+                  <Typography J_1>LIST MY JOB</Typography>
                </Header>
             </Section>
             <VenueList filter={filter} venues={venues} />
