@@ -9,6 +9,7 @@ const Wrapper = styled.nav`
    top: 0;
    left: 0;
    right: 0;
+   ${props => props.theme.B_6};
 `;
 
 const Logo = styled(Link)`
