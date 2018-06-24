@@ -50,14 +50,17 @@ const Header = styled.div`
 `;
 
 const MenuItem = styled(Link)`
+   display: block;
    color: ${props => props.theme.A_3};
+   padding: 10px 20px;
+   white-space: nowrap;
    &:hover {
       color: ${props => props.theme.A_2};
    }
 `;
 
 const Content = styled.div`
-   padding: 20px 40px;
+   padding: 10px 0;
 `;
 
 const CloseIcon = styled.i``;
@@ -97,6 +100,7 @@ export default class Menu extends Component {
                </Header>
                <Content>
                   <MenuItem to="/venues">Venues</MenuItem>
+                  <MenuItem to="/kitchen-sink">Kitchen Sink</MenuItem>
                </Content>
             </Dropdown>
          </Wrapper>

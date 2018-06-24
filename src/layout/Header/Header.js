@@ -10,6 +10,7 @@ const Wrapper = styled.nav`
    left: 0;
    right: 0;
    ${props => props.theme.B_7};
+   z-index: 1;
 `;
 
 const Logo = styled(Link)`
@@ -22,7 +23,7 @@ const Logo = styled(Link)`
 
 const Content = styled.div`
    display: flex;
-   padding: 40px 20px 20px;
+   padding: 40px 40px 20px;
    max-width: 1024px;
    margin: 0 auto;
 `;

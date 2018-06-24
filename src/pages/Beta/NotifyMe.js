@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { API_URL } from 'config';
 import axios from 'axios';
-import { Heading, Input, Button, Overlay, Text } from 'components';
+import { Typography, Input, Button, Overlay } from 'components';
+import styled from 'styled-components';
+
+const InputContainer = styled.div`
+   margin: 30px 0;
+`;
 
 export default class NotifyMe extends Component {
    static propTypes = {
@@ -39,10 +44,10 @@ export default class NotifyMe extends Component {
       if (submitted) {
          return (
             <Overlay onClose={this.props.onClose}>
-               <Heading T2>thanks</Heading>
-               <br />
-               <Text P1>we will let you know when the platform is ready</Text>
-               <br />
+               <Typography T2>thanks</Typography>
+               <InputContainer>
+                  <Typography P1>we will let you know when the platform is ready</Typography>
+               </InputContainer>
                <Button I_3 onClick={this.props.onClose}>ok</Button>
             </Overlay>
          );
@@ -51,10 +56,10 @@ export default class NotifyMe extends Component {
       return (
          <Overlay onClose={this.props.onClose}>
             <form onSubmit={this.onSubmit}>
-               <Heading T2>notify me when live</Heading>
-               <br />
-               <Input E_1 type="email" placeholder="email" width="260px" value={email} onChange={this.handleEmailChange} />
-               <br />
+               <Typography T2>notify me when live</Typography>
+               <InputContainer>
+                  <Input E_1 type="email" placeholder="email" width="260px" value={email} onChange={this.handleEmailChange} />
+               </InputContainer>
                <Button I_3 type="submit">submit</Button>
             </form>
          </Overlay>

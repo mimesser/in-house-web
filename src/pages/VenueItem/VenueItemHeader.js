@@ -114,7 +114,7 @@ function parseNumber(rating) {
    );
 }
 
-export default function VenueItemHeader({ image, typesSummary, address, crossStreets, phone, insiderRating }) {
+export default function VenueItemHeader({ image, typesSummary, address, crossStreets, phone, insiderRating, insiderVotesCount }) {
    return (
       <Header src={image}>
          <HeaderOverlay />
@@ -139,7 +139,7 @@ export default function VenueItemHeader({ image, typesSummary, address, crossStr
                <Right>
                   <Rating>
                      {parseNumber(insiderRating)}
-                     <Person><Icon size={16}>person</Icon> 32</Person>
+                     <Person><Icon size={16}>person</Icon> {insiderVotesCount}</Person>
                   </Rating>
                </Right>
             </Content>
