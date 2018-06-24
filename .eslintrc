@@ -15,7 +15,8 @@
       "react/no-unescaped-entities": 0,
       "global-require": 0,
       "linebreak-style": 0,
-      "no-unused-vars": 1
+      "no-unused-vars": 1,
+      "jsx-a11y/anchor-is-valid": 0
    },
    "parser": "babel-eslint",
    "settings": {

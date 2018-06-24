@@ -5,3 +5,4 @@ export { default as Overlay } from './Overlay';
 export { default as Icon } from './Icon';
 export { default as Section } from './Section';
 export { default as Text } from './Text';
+export { default as SearchInput } from './SearchInput';

@@ -11,9 +11,11 @@ import Header from 'layout/Header';
 
 import Beta from './pages/Beta';
 import Venues from './pages/Venues';
+import VenueItem from './pages/VenueItem';
+import KitchenSink from './pages/KitchenSink';
 
 const Wrapper = styled.div`
-   background-color: ${props => props.theme.A_7};
+   background-color: ${props => props.theme.A_6};
    overflow: auto;
    position: fixed;
    top: 0;
@@ -40,13 +42,19 @@ class App extends Component {
    }
 
    render() {
+      if (!this.props.initialized) {
+         return null;
+      }
+
       return (
          <Router>
             <Wrapper>
                <Header />
                <Content>
                   <Route path="/" exact component={Beta} />
-                  <Route path="/venues" component={Venues} />
+                  <Route path="/kitchen-sink" exact component={KitchenSink} />
+                  <Route path="/venues" exact component={Venues} />
+                  <Route path="/venues/:id" component={VenueItem} />
                </Content>
             </Wrapper>
          </Router>

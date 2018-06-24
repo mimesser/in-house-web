@@ -1,53 +1,50 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled, { css } from 'styled-components';
-import { Icon } from 'components';
 import baseComponent from './base-component';
 
 const BaseComponent = baseComponent('input');
 
 const Wrapper = BaseComponent.extend`
-   padding: 6px;
    width: ${props => props.width};
-   ${props => props.search && css`
-      padding: 14px 18px;
-   `}
 `;
 
-const Container = styled.div`
-   position: relative;
-   i {
-      right: 7px;
-      position: absolute;
-      color: ${props => props.theme.A_3};
-      top: 7px;
-      font-size: 31px;
-   }
-`;
-
-export default function Input({ onChange, ...props }) {
-   function changeHandler({ target: { value } }) {
-      onChange(value);
+export default class Input extends Component {
+   constructor(props) {
+      super(props);
+      this.state = {
+         value: props.value,
+      };
    }
 
-   const comp = <Wrapper {...props} onChange={changeHandler} />;
+   render() {
+      const { onChange, ...rest } = this.props;
 
-   if (!props.search) return comp;
+      const props = { ...rest };
+      if (onChange) {
+         props.onChange = (event) => {
+            onChange(event.target.value);
+         };
+         props.value = rest.value;
+      } else {
+         props.onChange = (event) => {
+            this.setState({ value: event.target.value });
+         };
+         props.value = this.state.value;
+      }
 
-   return (
-      <Container>
-         {comp}
-         <Icon>search</Icon>
-      </Container>
-   );
+      return <Wrapper {...props} />;
+   }
 }
 
 Input.propTypes = {
-   onChange: PropTypes.func.isRequired,
+   onChange: PropTypes.func,
    width: PropTypes.string,
-   search: PropTypes.bool,
+   value: PropTypes.oneOfType([
+      PropTypes.string, PropTypes.number,
+   ]),
 };
 
 Input.defaultProps = {
    width: 'auto',
+   value: '',
 };

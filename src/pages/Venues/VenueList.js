@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Section, Icon, Button } from 'components';
@@ -6,8 +7,11 @@ import { Section, Icon, Button } from 'components';
 const List = styled.ul`
    ${props => props.theme.B_7};
    li {
-      display: flex;
       padding: 10px 100px;
+      cursor: pointer;
+   }
+   a {
+      display: flex;
    }
    li:hover {
       background-color: ${props => props.theme.A_8}
@@ -51,6 +55,17 @@ const Person = styled.div`
 const Footer = styled.div`
    text-align: right;
 `;
+const NoJobs = styled.div`
+   ${props => props.theme.P2};
+   text-align: center;
+`;
+const Image = styled.div`
+   background-image: ${props => `url('https://minklistphoto.azureedge.net/photo/${props.src}')`};
+   background-size: auto;
+   background-position: center;
+   width: 100px;
+   background-repeat: no-repeat;
+`;
 
 
 function parseNumber(rating) {
@@ -79,24 +94,32 @@ export default function VenueList({ venues, filter }) {
 
    return (
       <Section container>
-         <List>
-            {filtered.map(f => (
-               <li key={f.id}>
-                  <Content>
-                     <Name>{f.name}</Name>
-                     todo
-                     <br />
-                     {f.crossStreets}
-                     <br />
-                     {f.address}
-                  </Content>
-                  <Right>
-                     {parseNumber(f.insiderRating)}
-                     <Person><Icon size={16}>person</Icon> 32</Person>
-                  </Right>
-               </li>
-            ))}
-         </List>
+         {filtered.length > 0 &&
+            <List>
+               {filtered.map(f => (
+                  <li key={f.id}>
+                     <Link to={`/venues/${f.id}`}>
+                        <Image src={f.thumbnail} />
+                        <Content>
+                           <Name>{f.name}</Name>
+                           {f.typesSummary}
+                           <br />
+                           {f.crossStreets}
+                           <br />
+                           {f.address}
+                        </Content>
+                        <Right>
+                           {parseNumber(f.insiderRating)}
+                           <Person><Icon size={16}>person</Icon> 32</Person>
+                        </Right>
+                     </Link>
+                  </li>
+               ))}
+            </List>
+         }
+         {filtered.length === 0 &&
+            <NoJobs>sorry, no businesses match that search</NoJobs>
+         }
          <Footer>
             <Button J_1>Add my job</Button>
          </Footer>
