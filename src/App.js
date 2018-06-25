@@ -64,7 +64,7 @@ class App extends Component {
 
 function mapStateToProps(store) {
    return {
-      initialized: store.timeStamp && moment(store.timeStamp).diff(moment()) > 0,
+      initialized: store.timeStamp ? moment(store.timeStamp).diff(moment()) > 0 : false,
    };
 }
 
