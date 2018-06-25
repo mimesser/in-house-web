@@ -338,15 +338,23 @@ const K_1 = css`
 
 // T (TITLE)
 const T1 = css`
+   font-family: "Avenir Light", sans-serif;
+   font-size: 12pt;
    color: ${A_3};
 `;
 const T2 = css`
+   font-family: "Avenir Light", sans-serif;
+   font-size: 12pt;
    color: ${A_2};
 `;
 const T3 = css`
+   font-family: "Avenir Light", sans-serif;
+   font-size: 12pt;
    color: ${A_4};
 `;
 const T4 = css`
+   font-family: "Avenir Light", sans-serif;
+   font-size: 12pt;
    color: ${A_1};
 `;
 

@@ -1,61 +1,46 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Icon, Button } from 'components';
+import { Icon, Button, Typography } from 'components';
 
 const Link = styled(Button)`
    color: ${props => props.theme.A_1};
 `;
 const ButtonContainer = styled.div`
-   margin-left: -34px;
+   margin-top: 30px;
+   button + button {
+      margin-left: 30px;
+   }
 `;
-const Header = styled.div`
+const BackgroundImage = styled.div`
    background-image: ${props => `url('https://minklistphoto.azureedge.net/photo/${props.src}')`};
    width: 100%;
    background-size: cover;
-   height: 300px;
    background-repeat: no-repeat;
-   position: relative;
-   margin-top: 40px;
-`;
-const HeaderOverlay = styled.div`
    position: absolute;
-   top: 0;
-   right: 0;
-   left: 0;
-   bottom: 0;
-   background-color: rgba(0,0,0,0.5);
+   opacity: 0.4;
+   height: 100%;
+   z-index: -1;
 `;
 const Content = styled.div`
    ${props => props.theme.P1};
    z-index: 1;
    width: 100%;
    display: flex;
-`;
-const Container = styled.div`
    height: 100%;
-   display: flex;
-   align-items: center;
    max-width: 800px;
    margin: 0 auto;
+   padding: 50px 0;
 `;
-const Name = styled.h3`
-   ${props => props.theme.P1};
-   color: #ccc;
-   font-size: 16pt;
-   margin-bottom: 10px;
-`;
-const Type = styled.div`
-   ${props => props.theme.T1};
-   font-size: 13pt;
-   margin-bottom: 10px;
+const Container = styled.div`
+   margin-top: 40px;
+   position: relative;
 `;
 const Title = styled.h3`
-   ${props => props.theme.S1};
+   ${props => props.theme.S2};
    text-align: center;
-   font-size: 12pt;
-   padding: 10px;
-   background-color: ${props => props.theme.A_7};
+   padding: 16px;
+   background-color: ${props => props.theme.A_8};
    display: inline-block;
 `;
 const Left = styled.div`
@@ -91,10 +76,18 @@ const NumberContainer = styled.div`
 `;
 const Person = styled.div`
    color: ${props => props.theme.A_4};
+   &:hover {
+      color: ${props => props.theme.A_2};
+   }
    font-size: 13px;
    display: flex;
    align-items: flex-end;
-   margin-top: 4px;
+   margin-top: 10px;
+`;
+
+const StarContainer = styled.div`
+   display: flex;
+   color: ${props => props.theme.A_3};
 `;
 
 function parseNumber(rating) {
@@ -114,40 +107,55 @@ function parseNumber(rating) {
    );
 }
 
-export default function VenueItemHeader({ image, typesSummary, address, crossStreets, phone, insiderRating, insiderVotesCount }) {
+export default function VenueItemHeader({
+   image, typesSummary, address, crossStreets, phone, insiderRating, insiderVotesCount,
+}) {
+   const filled = Math.round(insiderRating);
+
    return (
-      <Header src={image}>
-         <HeaderOverlay />
-         <Container>
-            <Content>
-               <Left>
-                  <Name>the standard grill</Name>
-                  <Type>{typesSummary}</Type>
+      <Container>
+         <BackgroundImage src={image} />
+         <Content>
+            <Left>
+               <Typography V1>the standard grill</Typography>
+               <Typography T1>{typesSummary}</Typography>
+               <Typography P1 style={{ marginTop: '10px' }}>
                   {address}
                   <br />
                   {crossStreets}
                   <br />
                   {phone}
-                  <ButtonContainer>
-                     <Link J_2>Edit</Link>
-                     <Link J_2>House</Link>
-                  </ButtonContainer>
-               </Left>
-               <Center>
-                  <Title>INSIDER</Title>
-               </Center>
-               <Right>
-                  <Rating>
-                     {parseNumber(insiderRating)}
-                     <Person><Icon size={16}>person</Icon> {insiderVotesCount}</Person>
-                  </Rating>
-               </Right>
-            </Content>
-         </Container>
-      </Header>
+               </Typography>
+               <ButtonContainer>
+                  <Link J_2>Edit</Link>
+                  <Link J_2>House</Link>
+               </ButtonContainer>
+            </Left>
+            <Center>
+               <Title>INSIDER</Title>
+            </Center>
+            <Right>
+               <Rating>
+                  {parseNumber(insiderRating)}
+                  <StarContainer>
+                     {(new Array(10)).fill().map((_, i) => (
+                        <Icon size={16} key={i}>{i < filled ? 'star' : 'star_border'}</Icon>
+                     ))}
+                  </StarContainer>
+                  <Person>(<Icon size={16}>person</Icon> {insiderVotesCount})</Person>
+               </Rating>
+            </Right>
+         </Content>
+      </Container>
    );
 }
 
 VenueItemHeader.propTypes = {
    image: PropTypes.string.isRequired,
+   typesSummary: PropTypes.string.isRequired,
+   address: PropTypes.string.isRequired,
+   crossStreets: PropTypes.string.isRequired,
+   phone: PropTypes.string.isRequired,
+   insiderRating: PropTypes.number,
+   insiderVotesCount: PropTypes.number,
 };
