@@ -307,8 +307,87 @@ const N_1 = css`
 
 // SECTION P (venue photo gradient)
 
-// SECTION T (menus)
+// T (TITLE)
+const T1 = css`
+   font-family: "Avenir Light", sans-serif;
+   font-size: 12pt;
+   color: ${A_3};
+`;
+const T2 = css`
+   font-family: "Avenir Light", sans-serif;
+   font-size: 12pt;
+   color: ${A_2};
+`;
+const T3 = css`
+   font-family: "Avenir Light", sans-serif;
+   font-size: 12pt;
+   color: ${A_4};
+`;
+const T4 = css`
+   font-family: "Avenir Light", sans-serif;
+   font-size: 12pt;
+   color: ${A_1};
+`;
 
+// SECTION T (menus)
+const T_3 = css`
+   text-transform: uppercase;
+   ${P1}
+   &:hover {
+      ${P4}
+   }
+   ${props => props.selected && css`
+      ${P2}
+   `}
+`;
+const T_4 = css`
+   padding: 16px;
+   ${C_1};
+   ${P1};
+   &:hover {
+      ${P4};
+   }
+   ${props => props.selected && css`
+      ${C_4};
+      ${P2};
+   `}
+   border-width: 0;
+   border-bottom-width: 2px;
+`;
+const T_5 = css`
+   padding: 4px;
+   ${C_1};
+   ${S1};
+   &:hover {
+      ${S4};
+   }
+   ${props => props.selected && css`
+      ${C_4};
+      ${S2};
+   `}
+   border-width: 0;
+   border-bottom-width: 2px;
+`;
+const T_6 = css`
+   ${C_2};
+   ${S1};
+   &:hover {
+      ${S2};
+      ${C_3};
+   }
+   border-width: 0;
+   border-bottom-width: 2px;
+`;
+const T_7 = css`
+   ${C_2};
+   ${P1};
+   &:hover {
+      ${T2};
+      ${C_3};
+   }
+   border-width: 0;
+   border-bottom-width: 2px;
+`;
 // SECTION W (icons)
 
 /* ----------------------------------------- */
@@ -336,27 +415,6 @@ const K_1 = css`
    }
 `;
 
-// T (TITLE)
-const T1 = css`
-   font-family: "Avenir Light", sans-serif;
-   font-size: 12pt;
-   color: ${A_3};
-`;
-const T2 = css`
-   font-family: "Avenir Light", sans-serif;
-   font-size: 12pt;
-   color: ${A_2};
-`;
-const T3 = css`
-   font-family: "Avenir Light", sans-serif;
-   font-size: 12pt;
-   color: ${A_4};
-`;
-const T4 = css`
-   font-family: "Avenir Light", sans-serif;
-   font-size: 12pt;
-   color: ${A_1};
-`;
 
 // C (CATEGORIES)
 const C1 = css`
@@ -534,4 +592,5 @@ export default {
    N1, N2, N3, N4, N7, N8,
    V1, V2, V3, V4,
    L1, L2, L3, L4, L5,
+   T_3, T_4, T_5, T_6, T_7,
 };
