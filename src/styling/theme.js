@@ -2,7 +2,7 @@ import { css } from 'styled-components';
 import chroma from 'chroma-js';
 
 // SECTION A (colors)
-const A_1 = '#EBFAEC';
+const A_1 = '#ff0000';
 const A_2 = '#BDF3C2';
 const A_3 = '#5E6F67';
 const A_4 = '#424C48';
