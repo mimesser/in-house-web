@@ -38,10 +38,10 @@ export default function Header() {
       <Wrapper>
          <Content>
             <Logo to="/">IN-HOUSE</Logo>
-            <Right>
+            {/* <Right>
                <Search />
                <Menu />
-            </Right>
+            </Right> */}
          </Content>
       </Wrapper>
    );

@@ -19,16 +19,16 @@ export default class NotifyMe extends Component {
       submitted: false,
    };
 
-   onSubmit = async (e) => {
+   onSubmit = (e) => {
       e.preventDefault();
 
       const {
          state: { email },
       } = this;
 
+      this.setState({ submitted: true });
       try {
-         await axios.post(`${API_URL}/email`, { email });
-         this.setState({ submitted: true });
+         axios.post(`${API_URL}/email`, { email });
       } catch (err) {
          console.warn(err.response || err.message);
       }
