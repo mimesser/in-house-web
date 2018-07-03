@@ -26,7 +26,7 @@ export default class Sectio6 extends Component {
          <Section container centerAlign backgroundImage={require('assets/images/workplace.jpg')}>
             {notifyOpen && <NotifyMe onClose={this.closeNotify} />}
             <Heading L5>workplace democracy</Heading>
-            <B I_2>Notify me when live</B>
+            <B I_2 onClick={this.openNotify}>Notify me when live</B>
          </Section>
       );
    }
