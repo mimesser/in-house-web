@@ -1,6 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const rotate360 = keyframes`
+ from { opacity: 0; }
+  to { opacity: 1; }
+`;
 
 const Wrapper = styled.div`
    position: fixed;
@@ -13,7 +18,8 @@ const Wrapper = styled.div`
    display: flex;
    align-items: center;
    justify-content: center;
-   transition: all 1s ease-out;
+   animation: ${rotate360} 0.5s;
+   /* transition: all 1s ease-out; */
 `;
 
 const CloseIcon = styled.i`
@@ -27,6 +33,7 @@ const CloseIcon = styled.i`
       color: ${props => props.theme.A_2};
    }
 `;
+
 
 const Content = styled.div`
    position: relative;
