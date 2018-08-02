@@ -3,19 +3,21 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
-import { store } from 'store';
+import configureStore from 'store';
 import theme from 'styling/theme';
 import 'styling/global';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import Main from 'main';
+// import registerServiceWorker from './registerServiceWorker';
+
+const store = configureStore();
 
 ReactDOM.render(
    <Provider store={store}>
       <ThemeProvider theme={theme}>
-         <App />
+         <Main />
       </ThemeProvider>
    </Provider>,
    document.getElementById('root'),
 );
 
-registerServiceWorker();
+// registerServiceWorker();

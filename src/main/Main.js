@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { setData } from 'store';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import moment from 'moment';
-import { API_URL } from 'config';
-import styled from 'styled-components';
-import Header from 'layout/Header';
 
-import Beta from './pages/Beta';
-import Venues from './pages/Venues';
-import VenueItem from './pages/VenueItem';
-import KitchenSink from './pages/KitchenSink';
+import styled from 'styled-components';
+
+import BetaCountdown from 'pages/0/BetaCountdown';
+import SearchResults from 'pages/12/SearchResults';
+import VenuePage from 'pages/13/VenuePage';
+import KitchenSink from 'pages/KitchenSink';
+import Header from './Header';
+import { get } from '../services/aggregate';
 
 const Wrapper = styled.div`
    background-color: ${props => props.theme.A_7};
@@ -28,16 +26,15 @@ const Content = styled.main`
    padding-top: 60px;
 `;
 
+
 class App extends Component {
    static propTypes = {
       initialized: PropTypes.bool.isRequired,
-      setData: PropTypes.func.isRequired,
    }
 
    async componentDidMount() {
       if (!this.props.initialized) {
-         const { data } = await axios.get(`${API_URL}/aggregate`);
-         this.props.setData(data);
+         get();
       }
    }
 
@@ -51,10 +48,10 @@ class App extends Component {
             <Wrapper>
                <Header />
                <Content>
-                  <Route path="/" exact component={Beta} />
+                  <Route path="/" exact component={BetaCountdown} />
                   <Route path="/kitchen-sink" exact component={KitchenSink} />
-                  <Route path="/venues" exact component={Venues} />
-                  <Route path="/venues/:id" component={VenueItem} />
+                  <Route path="/venues" exact component={SearchResults} />
+                  <Route path="/venues/:id" component={VenuePage} />
                </Content>
             </Wrapper>
          </Router>
@@ -62,10 +59,10 @@ class App extends Component {
    }
 }
 
-function mapStateToProps(store) {
+function mapStateToProps() {
    return {
-      initialized: true, // store.timeStamp ? moment(store.timeStamp).diff(moment()) > 0 : false,
+      initialized: false, // store.timeStamp ? moment(store.timeStamp).diff(moment()) > 0 : false,
    };
 }
 
-export default connect(mapStateToProps, { setData })(App);
+export default connect(mapStateToProps)(App);

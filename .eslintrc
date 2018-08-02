@@ -17,7 +17,8 @@
       "linebreak-style": 0,
       "no-unused-vars": 1,
       "jsx-a11y/anchor-is-valid": 0,
-      "react/no-array-index-key": 0
+      "react/no-array-index-key": 0,
+      "func-names": 0
    },
    "parser": "babel-eslint",
    "settings": {

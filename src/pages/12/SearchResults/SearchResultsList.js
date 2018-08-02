@@ -85,7 +85,7 @@ function parseNumber(rating) {
    );
 }
 
-export default function VenueList({ venues, filter }) {
+export default function SearchResultsList({ venues, filter }) {
    const filtered = venues.filter(venue => Object.keys(venue).some((key) => {
       if (!venue[key]) return false;
       const value = venue[key].toString().toLowerCase();
@@ -127,7 +127,7 @@ export default function VenueList({ venues, filter }) {
    );
 }
 
-VenueList.propTypes = {
+SearchResultsList.propTypes = {
    venues: PropTypes.arrayOf(PropTypes.shape()).isRequired,
    filter: PropTypes.string,
 };

@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { Section, Typography, SearchInput } from 'components';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import VenueList from './VenueList';
+import pageWrapper from 'utils/page-wrapper';
+import VenueList from './SearchResultsList';
 
 const Nav = styled.button`
    ${props => props.theme.J_1};
@@ -23,7 +24,7 @@ const Header = styled.nav`
    align-items: center;
 `;
 
-class Venues extends Component {
+class SearchResults extends Component {
    static propTypes = {
       venues: PropTypes.arrayOf(PropTypes.shape({})),
    };
@@ -70,4 +71,4 @@ function mapStateToProps({ venues }) {
    };
 }
 
-export default connect(mapStateToProps)(Venues);
+export default pageWrapper('12A')(connect(mapStateToProps)(SearchResults));

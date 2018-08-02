@@ -69,7 +69,7 @@ function parseNumber(rating) {
    );
 }
 
-function VenueItemCategories({
+function VenuePageCategories({
    categories,
 }) {
    return (
@@ -103,7 +103,7 @@ function VenueItemCategories({
    );
 }
 
-VenueItemCategories.propTypes = {
+VenuePageCategories.propTypes = {
    categories: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
@@ -128,4 +128,4 @@ function mapStateToProps({ categories }, { venue }) {
    };
 }
 
-export default connect(mapStateToProps)(VenueItemCategories);
+export default connect(mapStateToProps)(VenuePageCategories);

@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Button, Section } from 'components';
-import Categories from './VenueItemCategories';
-import VenueItemHeader from './VenueItemHeader';
+import pageWrapper from 'utils/page-wrapper';
+import Categories from './VenuePageCategories';
+import Header from './VenuePageHeader';
 
 const ButtonContainer = styled(Section)`
    button + button {
@@ -18,7 +19,7 @@ const categories = [
    { id: 'minks', name: 'Minks' },
 ];
 
-class VenueItem extends Component {
+class VenuePage extends Component {
    state = {
       selectedCategory: categories[0],
    }
@@ -31,7 +32,7 @@ class VenueItem extends Component {
 
       return (
          <div>
-            <VenueItemHeader {...venue} />
+            <Header {...venue} />
             <ButtonContainer container flex>
                {categories.map(category => (
                   <Button
@@ -56,8 +57,8 @@ function mapStateToProps({ venues }, { match: { params: { id } } }) {
    };
 }
 
-VenueItem.propTypes = {
+VenuePage.propTypes = {
    venue: PropTypes.shape().isRequired,
 };
 
-export default connect(mapStateToProps)(VenueItem);
+export default pageWrapper('13A.1')(connect(mapStateToProps)(VenuePage));

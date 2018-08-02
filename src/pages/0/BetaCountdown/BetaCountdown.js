@@ -1,6 +1,7 @@
 // 0A
 import React from 'react';
 import styled from 'styled-components';
+import pageWrapper from 'utils/page-wrapper';
 import Section1 from './Section1';
 import Section2 from './Section2';
 import Section3 from './Section3';
@@ -16,7 +17,7 @@ const Video = styled.div`
    background-size: cover;
 `;
 
-export default function Beta() {
+function BetaCountdown() {
    return (
       <div>
          <Section1 />
@@ -35,3 +36,5 @@ export default function Beta() {
       </div>
    );
 }
+
+export default pageWrapper('0A')(BetaCountdown);
