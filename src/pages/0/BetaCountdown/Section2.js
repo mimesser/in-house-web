@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Typography, Button, Section } from 'components';
 import styled from 'styled-components';
-import NotifyMe from './NotifyMe';
+import Notify from '../Notify';
 
 const Content = styled.div`
    margin: 40px 0;
@@ -21,7 +21,7 @@ export default class Section2 extends Component {
 
       return (
          <Section centerAlign container>
-            {notifyOpen && <NotifyMe onClose={this.closeNotify} />}
+            {notifyOpen && <Notify onClose={this.closeNotify} />}
             <Button I_2 onClick={this.openNotify}>
                Notify me when live
             </Button>

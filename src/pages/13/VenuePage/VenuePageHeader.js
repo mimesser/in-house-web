@@ -107,7 +107,7 @@ function parseNumber(rating) {
    );
 }
 
-export default function VenueItemHeader({
+export default function VenuePageHeader({
    image, typesSummary, address, crossStreets, phone, insiderRating, insiderVotesCount,
 }) {
    const filled = Math.round(insiderRating);
@@ -150,7 +150,7 @@ export default function VenueItemHeader({
    );
 }
 
-VenueItemHeader.propTypes = {
+VenuePageHeader.propTypes = {
    image: PropTypes.string.isRequired,
    typesSummary: PropTypes.string.isRequired,
    address: PropTypes.string.isRequired,
