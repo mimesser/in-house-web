@@ -108,17 +108,17 @@ function parseNumber(rating) {
 }
 
 export default function VenuePageHeader({
-   image, typesSummary, address, crossStreets, phone, insiderRating, insiderVotesCount,
+   imageThumbnailBig, itemsSummary, address, crossStreets, phone, rating, votes,
 }) {
-   const filled = Math.round(insiderRating);
+   const filled = Math.round(rating);
 
    return (
       <Container>
-         <BackgroundImage src={image} />
+         <BackgroundImage src={imageThumbnailBig} />
          <Content>
             <Left>
                <Typography V1>the standard grill</Typography>
-               <Typography T1>{typesSummary}</Typography>
+               <Typography T1>{itemsSummary}</Typography>
                <Typography P1 style={{ marginTop: '10px' }}>
                   {address}
                   <br />
@@ -136,13 +136,13 @@ export default function VenuePageHeader({
             </Center>
             <Right>
                <Rating>
-                  {parseNumber(insiderRating)}
+                  {parseNumber(rating)}
                   <StarContainer>
                      {(new Array(10)).fill().map((_, i) => (
                         <Icon size={16} key={i}>{i < filled ? 'star' : 'star_border'}</Icon>
                      ))}
                   </StarContainer>
-                  <Person>(<Icon size={16}>person</Icon> {insiderVotesCount})</Person>
+                  <Person>(<Icon size={16}>person</Icon> {votes})</Person>
                </Rating>
             </Right>
          </Content>
@@ -151,11 +151,11 @@ export default function VenuePageHeader({
 }
 
 VenuePageHeader.propTypes = {
-   image: PropTypes.string.isRequired,
-   typesSummary: PropTypes.string.isRequired,
+   imageThumbnailBig: PropTypes.string,
+   itemsSummary: PropTypes.string.isRequired,
    address: PropTypes.string.isRequired,
-   crossStreets: PropTypes.string.isRequired,
-   phone: PropTypes.string.isRequired,
-   insiderRating: PropTypes.number,
-   insiderVotesCount: PropTypes.number,
+   crossStreets: PropTypes.string,
+   phone: PropTypes.string,
+   rating: PropTypes.number,
+   votes: PropTypes.number,
 };

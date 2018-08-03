@@ -9,6 +9,7 @@ import BetaCountdown from 'pages/0/BetaCountdown';
 import SearchResults from 'pages/12/SearchResults';
 import VenuePage from 'pages/13/VenuePage';
 import KitchenSink from 'pages/KitchenSink';
+import ListVenue from 'pages/7/ListVenue';
 import Header from './Header';
 import { get } from '../services/aggregate';
 
@@ -29,17 +30,15 @@ const Content = styled.main`
 
 class App extends Component {
    static propTypes = {
-      initialized: PropTypes.bool.isRequired,
+      timestamp: PropTypes.number,
    }
 
    async componentDidMount() {
-      if (!this.props.initialized) {
-         get();
-      }
+      get();
    }
 
    render() {
-      if (!this.props.initialized) {
+      if (!this.props.timestamp) {
          return null;
       }
 
@@ -52,6 +51,7 @@ class App extends Component {
                   <Route path="/kitchen-sink" exact component={KitchenSink} />
                   <Route path="/venues" exact component={SearchResults} />
                   <Route path="/venues/:id" component={VenuePage} />
+                  <Route path="/list-venue" component={ListVenue} />
                </Content>
             </Wrapper>
          </Router>
@@ -59,9 +59,9 @@ class App extends Component {
    }
 }
 
-function mapStateToProps() {
+function mapStateToProps({ timestamp }) {
    return {
-      initialized: false, // store.timeStamp ? moment(store.timeStamp).diff(moment()) > 0 : false,
+      timestamp,
    };
 }
 

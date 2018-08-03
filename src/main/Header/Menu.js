@@ -1,8 +1,12 @@
 /* global document */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import menuIcon from './icons/hamburger';
+import Login from './Login';
+import Signup from './Signup';
 
 const Wrapper = styled.div`
    position: relative;
@@ -49,7 +53,17 @@ const Header = styled.div`
    }
 `;
 
-const MenuItem = styled(Link)`
+const MenuItem = styled.div`
+   display: block;
+   color: ${props => props.theme.A_3};
+   padding: 10px 20px;
+   white-space: nowrap;
+   &:hover {
+      color: ${props => props.theme.A_2};
+   }
+`;
+
+const MenuItemLink = styled(Link)`
    display: block;
    color: ${props => props.theme.A_3};
    padding: 10px 20px;
@@ -65,7 +79,11 @@ const Content = styled.div`
 
 const CloseIcon = styled.i``;
 
-export default class Menu extends Component {
+class Menu extends Component {
+   static propTypes = {
+      user: PropTypes.shape().isRequired,
+   }
+
    state = {
       open: false,
    }
@@ -86,11 +104,40 @@ export default class Menu extends Component {
       }
    }
 
+   openLogin = () => {
+      this.setState({ modal: 'login' });
+   }
+
+   openSignup = () => {
+      this.setState({ modal: 'signup' });
+   }
+
+   closeModal = () => {
+      this.setState({ modal: null });
+   }
+
+   renderModal = () => {
+      const { user } = this.props;
+      const { modal } = this.state;
+
+      if (user.email) {
+         return null;
+      }
+
+      switch (modal) {
+         case 'login': return <Login onClose={this.closeModal} />;
+         case 'signup': return <Signup onClose={this.closeModal} />;
+         default: return null;
+      }
+   }
+
    render() {
       const { open } = this.state;
+      const { user } = this.props;
 
       return (
          <Wrapper innerRef={(node) => { this.wrapperRef = node; }}>
+            {this.renderModal()}
             <MenuIcon onClick={() => this.setState({ open: true })}>{menuIcon}</MenuIcon>
             <Dropdown visable={open}>
                <Header>
@@ -99,11 +146,25 @@ export default class Menu extends Component {
                   </CloseIcon>
                </Header>
                <Content>
-                  <MenuItem to="/venues">Venues</MenuItem>
-                  <MenuItem to="/kitchen-sink">Kitchen Sink</MenuItem>
+                  <MenuItemLink to="/venues">Venues</MenuItemLink>
+                  <MenuItemLink to="/kitchen-sink">Kitchen Sink</MenuItemLink>
+                  {user.email
+                     ? <MenuItem onClick={this.openUserInfo}>User Info</MenuItem>
+                     : [
+                        <MenuItem key={0} onClick={this.openLogin}>Login</MenuItem>,
+                        <MenuItem key={1} onClick={this.openSignup}>Signup</MenuItem>,
+                     ]}
                </Content>
             </Dropdown>
          </Wrapper>
       );
    }
 }
+
+function mapStateToProps({ user }) {
+   return {
+      user,
+   };
+}
+
+export default connect(mapStateToProps)(Menu);

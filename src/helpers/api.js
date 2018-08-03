@@ -16,21 +16,14 @@ async function request(data, props) {
          headers,
          ...props,
       });
-      console.log(res);
+
       return res;
    } catch (err) {
       const { response, message } = err;
-      console.log(response, message);
+
       if (!response) {
          // no network
          throw new Error(message);
-      }
-
-      const { status } = response;
-
-      if (status === 422) {
-         // TODO: check for expired
-         throw new Error('Session expired.');
       }
 
       throw response;
@@ -39,5 +32,12 @@ async function request(data, props) {
 
 export default ['get', 'post', 'put', 'delete'].reduce((res, method) => ({
    ...res,
-   [method]: (url, props) => request({ method, url: `${API_URL}/${url}`, ...props }),
+   [method]: (url, data, props) => {
+      if (method === 'get' || method === 'delete') {
+         return request({ method, url: `${API_URL}/${url}`, ...data });
+      }
+      return request({
+         method, url: `${API_URL}/${url}`, data, ...props,
+      });
+   },
 }), {});

@@ -28,14 +28,21 @@ const Dropdown = styled.ol`
    right: -1px;
    left: -1px;
    background-color: inherit;
+   z-index: 10;
    li button {
       padding: 8px;
    }
 `;
 
+const DropdownButton = styled.button`
+   width: 100%;
+   text-align: left;
+`;
+
 const Input = styled.input`
    color: inherit;
    padding: 4px;
+   width: 100%;
 `;
 
 export default class Select extends Component {
@@ -70,17 +77,17 @@ export default class Select extends Component {
    getOptions = () => {
       const { options } = this.props;
       const { search, open } = this.state;
-      if (!search || !open) return null;
+      if (!open) return null;
       const searchLower = search.toLowerCase();
       const filtered = options.filter(option => (
          option.name.toLowerCase().indexOf(searchLower) > -1
-      ));
+      )).slice(0, 10);
       if (filtered.length === 0) return null;
       return (
          <Dropdown>
             {filtered.map(o => (
                <li key={o.id}>
-                  <button onClick={() => this.setValue(o.id)}>{o.name}</button>
+                  <DropdownButton onClick={() => this.setValue(o.id)}>{o.name}</DropdownButton>
                </li>
             ))}
          </Dropdown>
@@ -105,7 +112,7 @@ export default class Select extends Component {
    render() {
       const {
          props: {
-            onChange, value, placeholder, ...props
+            onChange, value, placeholder, disabled, ...props
          },
          state: {
             search,
@@ -121,6 +128,7 @@ export default class Select extends Component {
                value={search}
                onChange={this.changeSearch}
                onFocus={this.onFocus}
+               disabled={disabled}
             />
             <Icon size={40}>arrow_drop_down</Icon>
             {options}
@@ -132,6 +140,7 @@ export default class Select extends Component {
 Select.propTypes = {
    onChange: PropTypes.func,
    width: PropTypes.string,
+   disabled: PropTypes.bool,
    options: PropTypes.arrayOf(PropTypes.shape()).isRequired,
    value: PropTypes.oneOfType([
       PropTypes.string, PropTypes.number,
@@ -140,6 +149,7 @@ Select.propTypes = {
 };
 
 Select.defaultProps = {
+   disabled: false,
    width: 'auto',
    value: '',
 };

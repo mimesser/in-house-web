@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import styled, { keyframes } from 'styled-components';
 
 const rotate360 = keyframes`
- from { opacity: 0; }
-  to { opacity: 1; }
+   from { opacity: 0; }
+   to { opacity: 1; }
 `;
 
 const Wrapper = styled.div`
@@ -43,7 +43,14 @@ export default function Overlay({ children, onClose }) {
    return (
       <Wrapper>
          <Content>
-            <CloseIcon onClick={() => onClose()} className="material-icons">close</CloseIcon>
+            {onClose &&
+               <CloseIcon
+                  onClick={onClose ? (() => onClose()) : undefined}
+                  className="material-icons"
+               >
+                  close
+               </CloseIcon>
+            }
             {children}
          </Content>
       </Wrapper>
@@ -52,5 +59,5 @@ export default function Overlay({ children, onClose }) {
 
 Overlay.propTypes = {
    children: PropTypes.node,
-   onClose: PropTypes.func.isRequired,
+   onClose: PropTypes.func,
 };

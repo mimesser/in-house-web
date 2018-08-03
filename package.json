@@ -25,7 +25,8 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.9.1",
     "fs-extra": "^6.0.1",
-    "react-scripts": "^1.1.4"
+    "react-scripts": "^1.1.4",
+    "redux-devtools-extension": "^2.13.5"
   },
   "scripts": {
     "start": "react-scripts start",

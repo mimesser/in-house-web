@@ -13,7 +13,7 @@ export default function getType(value) {
       return 'empty';
    }
    if (Array.isArray(value)) {
-      return 'list';
+      return 'array';
    }
    return 'object';
 }

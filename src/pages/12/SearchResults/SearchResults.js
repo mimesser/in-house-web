@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Section, Typography, SearchInput } from 'components';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import pageWrapper from 'utils/page-wrapper';
 import VenueList from './SearchResultsList';
@@ -22,6 +23,10 @@ const Header = styled.nav`
    display: flex;
    justify-content: space-around;
    align-items: center;
+`;
+
+const NavLink = styled(Link)`
+   color: ${props => props.theme.A_3};
 `;
 
 class SearchResults extends Component {
@@ -55,7 +60,7 @@ class SearchResults extends Component {
                <Header>
                   <Typography P1>> standard</Typography>
                   <SearchInput F_1 placeholder="search" value={filter} onChange={this.onFilterChange} />
-                  <Typography J_1>LIST MY JOB</Typography>
+                  <NavLink to="/list-venue">LIST MY JOB</NavLink>
                </Header>
             </Section>
             <VenueList filter={filter} venues={venues} />
@@ -67,7 +72,7 @@ class SearchResults extends Component {
 
 function mapStateToProps({ venues }) {
    return {
-      venues,
+      venues: venues.filter(venue => venue.minks.length > 0),
    };
 }
 

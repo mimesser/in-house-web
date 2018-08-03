@@ -1,7 +1,7 @@
 import toObject from './to-object';
 import map from './map';
 
-export default function mergeLists(oldList, newList, key = 'id') {
+export default function mergeLists(oldList, newList, key = '_id') {
    if (!newList) return oldList;
    if (!oldList) return newList;
 
