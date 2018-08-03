@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Section, Icon, Button } from 'components';
+import { getType } from 'utils';
 
 const List = styled.ul`
    ${props => props.theme.B_7};
@@ -85,44 +86,55 @@ function parseNumber(rating) {
    );
 }
 
-export default function SearchResultsList({ venues, filter }) {
-   const filtered = venues.filter(venue => Object.keys(venue).some((key) => {
-      if (!venue[key]) return false;
-      const value = venue[key].toString().toLowerCase();
-      return value.indexOf(filter) > -1;
+function getFilteredResults(allVenues, search) {
+   if (!search) return null;
+
+   return allVenues.filter(venue => Object.keys(venue).some((key) => {
+      const data = venue[key];
+      if (!data) return false;
+      const type = getType();
+      if (type === 'string' || type === 'number') return false;
+      const value = data.toString().toLowerCase();
+      return value.indexOf(search) > -1;
    }));
+}
+
+export default function SearchResultsList({ venues, filter }) {
+   const filteredVenues = getFilteredResults(venues, filter);
 
    return (
       <Section container>
-         {filtered.length > 0 &&
+         {filteredVenues && filteredVenues.length > 0 &&
             <List>
-               {filtered.map(f => (
-                  <li key={f.id}>
-                     <Link to={`/venues/${f.id}`}>
-                        <Image src={f.thumbnail} />
+               {filteredVenues.map(f => (
+                  <li key={f._id}>
+                     <Link to={`/venues/${f._id}`}>
+                        <Image src={f.imageThumbnail} />
                         <Content>
                            <Name>{f.name}</Name>
-                           {f.typesSummary}
+                           {f.itemsSummary}
                            <br />
                            {f.crossStreets}
                            <br />
                            {f.address}
                         </Content>
                         <Right>
-                           {parseNumber(f.insiderRating)}
-                           <Person><Icon size={16}>person</Icon> {f.insiderVotesCount}</Person>
+                           {parseNumber(f.rating)}
+                           <Person><Icon size={16}>person</Icon> {f.votes}</Person>
                         </Right>
                      </Link>
                   </li>
                ))}
             </List>
          }
-         {filtered.length === 0 &&
+         {filteredVenues && filteredVenues.length === 0 &&
             <NoJobs>sorry, no businesses match that search</NoJobs>
          }
-         <Footer>
-            <Button J_1>Add my job</Button>
-         </Footer>
+         {filteredVenues && (
+            <Footer>
+               <Button J_1>Add my job</Button>
+            </Footer>
+         )}
       </Section>
    );
 }

@@ -6,7 +6,6 @@ import baseComponent from './base-component';
 const BaseComponent = baseComponent('section');
 
 const Wrapper = BaseComponent.extend`
-   overflow: hidden;
    ${props => props.flex && css`
       display: flex;
       align-items: center;

@@ -4,15 +4,12 @@
  * Create the store with dynamic reducers
  */
 import thunkMiddleware from 'redux-thunk';
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { LOCAL_STORAGE_KEY } from 'config';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import reducer from './reducer';
 
 let store;
-
-/* eslint-disable no-underscore-dangle */
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
 
 export default function configureStore(initialState = {}) {
    const middleware = [
@@ -30,7 +27,7 @@ export default function configureStore(initialState = {}) {
    store = createStore(
       reducer,
       { ...cachedState, ...initialState },
-      composeEnhancers(applyMiddleware(...middleware)),
+      composeWithDevTools(applyMiddleware(...middleware)),
    );
 
    store.injectedReducers = {}; // Reducer registry
