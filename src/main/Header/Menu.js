@@ -149,7 +149,7 @@ class Menu extends Component {
                   <MenuItemLink to="/venues">Venues</MenuItemLink>
                   <MenuItemLink to="/kitchen-sink">Kitchen Sink</MenuItemLink>
                   {user.email
-                     ? <MenuItem onClick={this.openUserInfo}>User Info</MenuItem>
+                     ? <MenuItemLink to="/profile">User Info</MenuItemLink>
                      : [
                         <MenuItem key={0} onClick={this.openLogin}>Login</MenuItem>,
                         <MenuItem key={1} onClick={this.openSignup}>Signup</MenuItem>,

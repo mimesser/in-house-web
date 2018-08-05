@@ -12,7 +12,8 @@ const Nav = styled.button`
    margin: 0 40px;
 `;
 
-const Request = styled(Typography)`
+const Request = styled(Link)`
+   color: ${props => props.theme.A_3};
    padding: 20px 8px;
    line-height: 1em;
    display: inline-block;
@@ -32,6 +33,7 @@ const NavLink = styled(Link)`
 class SearchResults extends Component {
    static propTypes = {
       venues: PropTypes.arrayOf(PropTypes.shape({})),
+      industries: PropTypes.arrayOf(PropTypes.shape({})),
    };
 
    state = {
@@ -42,19 +44,19 @@ class SearchResults extends Component {
 
    render() {
       const {
-         props: { venues },
+         props: { venues, industries },
          state: { filter },
       } = this;
 
       return (
          <div>
             <Section container centerAlign>
-               <Nav>Restaurants</Nav>
-               <Nav>START UPS</Nav>
-               <Nav>SCHOOLS</Nav>
+               {industries.map(i => (
+                  <Nav key={i._id}>{i.name}</Nav>
+               ))}
             </Section>
             <Section centerAlign style={{ paddingTop: 0 }}>
-               <Request K_1>REQUEST YOUR INDUSTRY FOR BETA TRAIL</Request>
+               <Request to="/request-new-industry">REQUEST YOUR INDUSTRY FOR BETA TRAIL</Request>
             </Section>
             <Section container centerAlign maxWidth={800}>
                <Header>
@@ -70,9 +72,10 @@ class SearchResults extends Component {
 }
 
 
-function mapStateToProps({ venues }) {
+function mapStateToProps({ venues, industries }) {
    return {
       venues: venues.filter(venue => venue.minks.length > 0),
+      industries,
    };
 }
 

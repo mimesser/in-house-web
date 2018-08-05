@@ -1,6 +1,6 @@
 import getType from './get-type';
 
-export default function filter(collection, func) {
+export default function map(collection, func) {
    const type = getType(collection);
 
    if (type === 'array') {

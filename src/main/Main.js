@@ -12,6 +12,10 @@ import KitchenSink from 'pages/KitchenSink';
 import ListVenue from 'pages/ListVenue';
 import SuggestEdit from 'pages/SuggestEdit';
 import ApplyAsOwner from 'pages/ApplyAsOwner';
+import RequestNewIndustry from 'pages/RequestNewIndustry';
+import Profile from 'pages/Profile';
+import EditEmail from 'pages/EditEmail';
+import EditPassword from 'pages/EditPassword';
 import Header from './Header';
 import { get } from '../services/aggregate';
 
@@ -56,6 +60,10 @@ class App extends Component {
                   <Route path="/venues/:id/suggest-edit" component={SuggestEdit} />
                   <Route path="/venues/:id/apply-as-owner" component={ApplyAsOwner} />
                   <Route path="/list-venue" component={ListVenue} />
+                  <Route path="/request-new-industry" component={RequestNewIndustry} />
+                  <Route path="/profile" exact component={Profile} />
+                  <Route path="/profile/email" exact component={EditEmail} />
+                  <Route path="/profile/password" exact component={EditPassword} />
                </Content>
             </Wrapper>
          </Router>

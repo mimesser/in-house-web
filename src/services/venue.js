@@ -7,7 +7,6 @@ export async function createVenue(body) {
       await get();
       return null;
    } catch (err) {
-      console.log(err, err.status, err.message, err.response, err.data);
       return err.data.message;
    }
 }
@@ -18,7 +17,6 @@ export async function suggestEdit(body) {
       await get();
       return null;
    } catch (err) {
-      console.log(err, err.status, err.message, err.response, err.data);
       return err.data.message;
    }
 }
@@ -29,7 +27,16 @@ export async function applyAsOwner(body) {
       await get();
       return null;
    } catch (err) {
-      console.log(err, err.status, err.message, err.response, err.data);
+      return err.data.message;
+   }
+}
+
+export async function rateCategory({ venueId, categoryId, rating }) {
+   try {
+      await api.post(`venues/${venueId}/rate-category`, { category: categoryId, rating });
+      await get();
+      return null;
+   } catch (err) {
       return err.data.message;
    }
 }
