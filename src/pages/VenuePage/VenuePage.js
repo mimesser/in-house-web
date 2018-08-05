@@ -27,7 +27,7 @@ class VenuePage extends Component {
    }
 
    state = {
-      selectedCategory: null,
+      selectedCategory: categories[0],
       answer: '',
    }
 
@@ -78,7 +78,7 @@ class VenuePage extends Component {
             <ButtonContainer container flex>
                {categories.map(category => (
                   <Button
-                     selected={selectedCategory && selectedCategory.id === category.id}
+                     selected={isInsider && selectedCategory.id === category.id}
                      T_4
                      key={category.id}
                      onClick={() => this.setState({ selectedCategory: category })}
@@ -87,7 +87,7 @@ class VenuePage extends Component {
                   </Button>
                ))}
             </ButtonContainer>
-            {selectedCategory && selectedCategory.Component &&
+            {isInsider && selectedCategory.Component &&
                <selectedCategory.Component venue={venue} /> }
          </div>
       );
