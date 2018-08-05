@@ -4,7 +4,7 @@ import { Section, Select, Input, Button } from 'components';
 import { connect } from 'react-redux';
 import pageWrapper from 'utils/page-wrapper';
 import { createVenue } from 'services/venue';
-import history from '../../../history';
+import history from '../../history';
 
 class ListVenue extends Component {
    static propTypes = {

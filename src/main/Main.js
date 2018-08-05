@@ -5,11 +5,13 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import styled from 'styled-components';
 
-import BetaCountdown from 'pages/0/BetaCountdown';
-import SearchResults from 'pages/12/SearchResults';
-import VenuePage from 'pages/13/VenuePage';
+import Landing from 'pages/Landing';
+import SearchResults from 'pages/SearchResults';
+import VenuePage from 'pages/VenuePage';
 import KitchenSink from 'pages/KitchenSink';
-import ListVenue from 'pages/7/ListVenue';
+import ListVenue from 'pages/ListVenue';
+import SuggestEdit from 'pages/SuggestEdit';
+import ApplyAsOwner from 'pages/ApplyAsOwner';
 import Header from './Header';
 import { get } from '../services/aggregate';
 
@@ -47,10 +49,12 @@ class App extends Component {
             <Wrapper>
                <Header />
                <Content>
-                  <Route path="/" exact component={BetaCountdown} />
+                  <Route path="/" exact component={Landing} />
                   <Route path="/kitchen-sink" exact component={KitchenSink} />
                   <Route path="/venues" exact component={SearchResults} />
-                  <Route path="/venues/:id" component={VenuePage} />
+                  <Route path="/venues/:id" exact component={VenuePage} />
+                  <Route path="/venues/:id/suggest-edit" component={SuggestEdit} />
+                  <Route path="/venues/:id/apply-as-owner" component={ApplyAsOwner} />
                   <Route path="/list-venue" component={ListVenue} />
                </Content>
             </Wrapper>

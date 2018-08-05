@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Icon, Button, Typography } from 'components';
+import { Link } from 'react-router-dom';
+import { Icon, Typography } from 'components';
 
-const Link = styled(Button)`
+const ButtonLink = styled(Link)`
    color: ${props => props.theme.A_1};
 `;
 const ButtonContainer = styled.div`
@@ -108,7 +109,7 @@ function parseNumber(rating) {
 }
 
 export default function VenuePageHeader({
-   imageThumbnailBig, itemsSummary, address, crossStreets, phone, rating, votes,
+   _id, imageThumbnailBig, itemsSummary, address, crossStreets, phone, rating, votes,
 }) {
    const filled = Math.round(rating);
 
@@ -127,8 +128,7 @@ export default function VenuePageHeader({
                   {phone}
                </Typography>
                <ButtonContainer>
-                  <Link J_2>Edit</Link>
-                  <Link J_2>House</Link>
+                  <ButtonLink to={`/venues/${_id}/suggest-edit`}>Edit House</ButtonLink>
                </ButtonContainer>
             </Left>
             <Center>
@@ -151,6 +151,7 @@ export default function VenuePageHeader({
 }
 
 VenuePageHeader.propTypes = {
+   _id: PropTypes.string.isRequired,
    imageThumbnailBig: PropTypes.string,
    itemsSummary: PropTypes.string.isRequired,
    address: PropTypes.string.isRequired,
