@@ -1,4 +1,4 @@
-/* global window, localStorage */
+/* global localStorage */
 
 /**
  * Create the store with dynamic reducers
@@ -6,6 +6,7 @@
 import thunkMiddleware from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
 import { LOCAL_STORAGE_KEY } from 'config';
+// eslint-disable-next-line
 import { composeWithDevTools } from 'redux-devtools-extension';
 import reducer from './reducer';
 

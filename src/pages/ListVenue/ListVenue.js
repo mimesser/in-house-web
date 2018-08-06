@@ -26,9 +26,9 @@ class ListVenue extends Component {
 
       if (industry) {
          return industries
-            .find(i => i._id === industry)
+            .find(i => i.id === industry)
             .items
-            .filter(i => i._id === itemId || !items.includes(i._id));
+            .filter(i => i.id === itemId || !items.includes(i.id));
       }
       return [];
    }
@@ -94,7 +94,7 @@ class ListVenue extends Component {
                   <Select
                      G_1
                      options={states.map(s => ({
-                        id: s._id,
+                        id: s.id,
                         name: s.name,
                      }))}
                      onChange={this.changeHandler('state')}
@@ -124,7 +124,7 @@ class ListVenue extends Component {
                         <Select
                            G_1
                            options={cities.map(s => ({
-                              id: s._id,
+                              id: s.id,
                               name: s.name,
                            }))}
                            onChange={this.changeHandler('city')}
@@ -155,7 +155,7 @@ class ListVenue extends Component {
                         <Select
                            G_1
                            options={industries.map(s => ({
-                              id: s._id,
+                              id: s.id,
                               name: s.name,
                            }))}
                            onChange={this.changeHandler('industry')}
@@ -167,7 +167,7 @@ class ListVenue extends Component {
                         <Select
                            G_1
                            options={this.getItems(item1).map(s => ({
-                              id: s._id,
+                              id: s.id,
                               name: s.name,
                            }))}
                            onChange={this.changeHandler('item1')}
@@ -180,7 +180,7 @@ class ListVenue extends Component {
                         <Select
                            G_1
                            options={this.getItems(item2).map(s => ({
-                              id: s._id,
+                              id: s.id,
                               name: s.name,
                            }))}
                            onChange={this.changeHandler('item2')}
@@ -193,7 +193,7 @@ class ListVenue extends Component {
                         <Select
                            G_1
                            options={this.getItems(item3).map(s => ({
-                              id: s._id,
+                              id: s.id,
                               name: s.name,
                            }))}
                            onChange={this.changeHandler('item3')}

@@ -6,6 +6,8 @@ import { Button, Section, Overlay, Input } from 'components';
 import pageWrapper from 'utils/page-wrapper';
 import { submitAnswer } from 'services/mink';
 import Categories from './VenuePageCategories';
+import Minks from './VenuePageMinks';
+import Feedbacks from './VenuePageFeedbacks';
 import Header from './VenuePageHeader';
 
 const ButtonContainer = styled(Section)`
@@ -16,8 +18,8 @@ const ButtonContainer = styled(Section)`
 
 const categories = [
    { id: 'categories', name: 'Categories', Component: Categories },
-   { id: 'feedback', name: 'Feedback' },
-   { id: 'minks', name: 'Minks' },
+   { id: 'feedback', name: 'Feedback', Component: Feedbacks },
+   { id: 'minks', name: 'Minks', Component: Minks },
 ];
 
 class VenuePage extends Component {
@@ -38,7 +40,7 @@ class VenuePage extends Component {
    submit = async (e) => {
       e.preventDefault();
       this.setState({ error: null });
-      const error = await submitAnswer(this.props.venue.minks[0]._id, this.state.answer);
+      const error = await submitAnswer(this.props.venue.minks[0].id, this.state.answer);
       if (error) {
          this.setState({ error });
       }
@@ -97,7 +99,7 @@ class VenuePage extends Component {
 function mapStateToProps({ venues, user }, { match: { params: { id } } }) {
    return {
       isInsider: user.insider.includes(id),
-      venue: venues.find(venue => venue._id === id),
+      venue: venues.find(venue => venue.id === id),
    };
 }
 

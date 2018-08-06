@@ -52,7 +52,7 @@ class SearchResults extends Component {
          <div>
             <Section container centerAlign>
                {industries.map(i => (
-                  <Nav key={i._id}>{i.name}</Nav>
+                  <Nav key={i.id}>{i.name}</Nav>
                ))}
             </Section>
             <Section centerAlign style={{ paddingTop: 0 }}>
