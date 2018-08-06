@@ -85,8 +85,8 @@ class VenuePageCategories extends Component {
          return (
             <Rating
                name={rating.name}
-               venueId={rating.venue}
-               categoryId={rating.category}
+               venueId={rating.venueId}
+               categoryId={rating.categoryId}
                onClose={() => this.setState({ rating: null })}
             />
          );
@@ -111,7 +111,7 @@ class VenuePageCategories extends Component {
                </thead>
                <tbody>
                   {categories.slice(0, 10).map((category, i) => (
-                     <tr key={category._id}>
+                     <tr key={category.id}>
                         <td>{i + 1}.</td>
                         <td>{category.name}</td>
                         <td>
@@ -146,8 +146,8 @@ class VenuePageCategories extends Component {
                      </tr>
                   </thead>
                   <tbody>
-                     {categories.slice(10).map((category, i) => (
-                        <tr key={category._id}>
+                     {categories.slice(10).map(category => (
+                        <tr key={category.id}>
                            <td>&nbsp;</td>
                            <td>{category.name}</td>
                            <td>
@@ -182,17 +182,17 @@ VenuePageCategories.propTypes = {
 };
 
 function mapStateToProps({ categories, user }, { venue }) {
-   const myRatings = user.categoryRatings.filter(v => v.venue === venue._id);
-   // console.log(myRatings);
    return {
-      categories: venue.categoryRatings
-         .map((cr) => {
-            const myVote = myRatings.find(r => r.category === cr.category);
-            console.log(myVote);
+      categories: (venue.venueCategories || [])
+         .map((vc) => {
+            const myRating = user.venueCategoryRatings.find(vcr => (
+               vcr.venueCategoryId === vc.id
+            ));
+
             return {
-               ...categories.find(c => c._id === cr.category),
-               myRating: myVote ? myVote.rating : null,
-               ...cr,
+               ...categories.find(c => c.id === vc.categoryId),
+               myRating: myRating ? myRating.rating : null,
+               ...vc,
             };
          })
          .sort((a, b) => {

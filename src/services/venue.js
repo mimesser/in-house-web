@@ -33,7 +33,7 @@ export async function applyAsOwner(body) {
 
 export async function rateCategory({ venueId, categoryId, rating }) {
    try {
-      await api.post(`venues/${venueId}/rate-category`, { category: categoryId, rating });
+      await api.post(`venues/${venueId}/rate-category`, { categoryId, rating });
       await get();
       return null;
    } catch (err) {

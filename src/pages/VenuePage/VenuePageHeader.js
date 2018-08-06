@@ -109,7 +109,7 @@ function parseNumber(rating) {
 }
 
 export default function VenuePageHeader({
-   _id, imageThumbnailBig, itemsSummary, address, crossStreets, phone, rating, votes,
+   id, imageThumbnailBig, itemsSummary, address, crossStreets, phone, rating, votes,
 }) {
    const filled = Math.round(rating);
 
@@ -128,7 +128,7 @@ export default function VenuePageHeader({
                   {phone}
                </Typography>
                <ButtonContainer>
-                  <ButtonLink to={`/venues/${_id}/suggest-edit`}>Edit House</ButtonLink>
+                  <ButtonLink to={`/venues/${id}/suggest-edit`}>Edit House</ButtonLink>
                </ButtonContainer>
             </Left>
             <Center>
@@ -151,7 +151,7 @@ export default function VenuePageHeader({
 }
 
 VenuePageHeader.propTypes = {
-   _id: PropTypes.string.isRequired,
+   id: PropTypes.string.isRequired,
    imageThumbnailBig: PropTypes.string,
    itemsSummary: PropTypes.string.isRequired,
    address: PropTypes.string.isRequired,

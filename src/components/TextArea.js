@@ -7,9 +7,6 @@ const BaseComponent = baseComponent('input');
 const Wrapper = BaseComponent.extend`
    width: ${props => props.width};
 `;
-const MultilineWrapper = baseComponent('textarea').extend`
-   width: ${props => props.width};
-`;
 
 export default class Input extends Component {
    constructor(props) {
@@ -20,7 +17,7 @@ export default class Input extends Component {
    }
 
    render() {
-      const { onChange, multiline, ...rest } = this.props;
+      const { onChange, ...rest } = this.props;
 
       const props = { ...rest };
       if (onChange) {
@@ -35,9 +32,7 @@ export default class Input extends Component {
          props.value = this.state.value;
       }
 
-      const Comp = multiline ? MultilineWrapper : Wrapper;
-
-      return <Comp {...props} />;
+      return <Wrapper {...props} />;
    }
 }
 
@@ -47,7 +42,6 @@ Input.propTypes = {
    value: PropTypes.oneOfType([
       PropTypes.string, PropTypes.number,
    ]),
-   multiline: PropTypes.bool,
 };
 
 Input.defaultProps = {

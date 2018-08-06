@@ -107,8 +107,8 @@ export default function SearchResultsList({ venues, filter }) {
          {filteredVenues && filteredVenues.length > 0 &&
             <List>
                {filteredVenues.map(f => (
-                  <li key={f._id}>
-                     <Link to={`/venues/${f._id}`}>
+                  <li key={f.id}>
+                     <Link to={`/venues/${f.id}`}>
                         <Image src={f.imageThumbnail} />
                         <Content>
                            <Name>{f.name}</Name>

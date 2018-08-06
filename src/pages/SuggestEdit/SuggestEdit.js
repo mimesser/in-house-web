@@ -38,7 +38,7 @@ class SuggestEdit extends Component {
       const body = {
          userName: name,
          userEmail: email,
-         venue: venue._id,
+         venue: venue.id,
          relation,
          comment,
       };
@@ -99,7 +99,7 @@ class SuggestEdit extends Component {
                </div>
                <div style={{ margin: '20px 0' }}>
                   <Typography S2>
-                     <Link to={`/venues/${venue._id}/apply-as-owner`}>click here</Link> if you
+                     <Link to={`/venues/${venue.id}/apply-as-owner`}>click here</Link> if you
                      are an owner who would like the unique ability
                      to respond publicly to blabs (and other special ownership
                      privileges)
@@ -122,7 +122,7 @@ class SuggestEdit extends Component {
 
 function mapStateToProps({ venues }, { match: { params: { id } } }) {
    return {
-      venue: venues.find(venue => venue._id === id),
+      venue: venues.find(venue => venue.id === id),
    };
 }
 

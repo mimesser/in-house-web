@@ -47,7 +47,7 @@ class ApplyAsOwner extends Component {
       if (error) {
          this.setState({ error });
       } else {
-         history.push(`/venues/${venue._id}`);
+         history.push(`/venues/${venue.id}`);
       }
    }
 
@@ -124,7 +124,7 @@ class ApplyAsOwner extends Component {
 
 function mapStateToProps({ venues }, { match: { params: { id } } }) {
    return {
-      venue: venues.find(venue => venue._id === id),
+      venue: venues.find(venue => venue.id === id),
    };
 }
 

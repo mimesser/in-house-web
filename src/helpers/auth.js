@@ -5,8 +5,8 @@ export function getToken() {
    const { user } = getState();
 
    /* eslint-disable no-underscore-dangle */
-   if (user && user._id) {
-      return user._id;
+   if (user && user.id) {
+      return user.id;
    }
    /* eslint-enable */
 
