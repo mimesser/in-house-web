@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Overlay, Section, Typography } from 'components';
 import { times } from 'utils';
-import { rateCategory } from 'services/venue';
+import { rateCategory } from 'services/category';
 import styled from 'styled-components';
 
 const Block = styled.div`
@@ -22,8 +22,8 @@ export default class Rating extends Component {
    }
 
    select = async (rating) => {
-      const { venueId, categoryId } = this.props;
-      const error = await rateCategory({ venueId, categoryId, rating });
+      const { venue, categoryId } = this.props;
+      const error = await rateCategory({ venue, categoryId, rating });
       if (error) {
          this.setState({ error });
       } else {
@@ -58,7 +58,7 @@ export default class Rating extends Component {
 }
 
 Rating.propTypes = {
-   venueId: PropTypes.string.isRequired,
+   venue: PropTypes.shape().isRequired,
    categoryId: PropTypes.string.isRequired,
    name: PropTypes.string.isRequired,
    onClose: PropTypes.func.isRequired,

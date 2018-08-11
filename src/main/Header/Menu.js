@@ -125,8 +125,8 @@ class Menu extends Component {
       }
 
       switch (modal) {
-         case 'login': return <Login onClose={this.closeModal} />;
-         case 'signup': return <Signup onClose={this.closeModal} />;
+         case 'login': return <Login onClose={this.closeModal} openSignup={this.openSignup} />;
+         case 'signup': return <Signup onClose={this.closeModal} openLogin={this.openLogin} />;
          default: return null;
       }
    }

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Icon, Section, Button } from 'components';
 import Rating from './Rating';
+import CategoryForm from './CategoryForm';
 
 const Table = styled.table`
    width: 100%;
@@ -76,17 +77,27 @@ class VenuePageCategories extends Component {
    }
 
    openRating = (rating) => {
+      const { venue, openMink } = this.props;
+      if (!venue.insider) {
+         openMink();
+      }
       this.setState({ rating });
+   }
+
+   openCategoryForm = () => {
+      this.setState({ categoryForm: true });
    }
 
    renderRating = () => {
       const { rating } = this.state;
-      if (rating) {
+      const { venue } = this.props;
+
+      if (venue.insider && rating) {
          return (
             <Rating
                name={rating.name}
-               venueId={rating.venueId}
-               categoryId={rating.categoryId}
+               venue={venue}
+               categoryId={rating.id}
                onClose={() => this.setState({ rating: null })}
             />
          );
@@ -95,10 +106,19 @@ class VenuePageCategories extends Component {
    }
 
    render() {
-      const { categories } = this.props;
+      const { categories, industryId } = this.props;
+      const { categoryForm } = this.state;
 
       return (
          <Section container maxWidth={600}>
+            {categoryForm
+               && (
+                  <CategoryForm
+                     industryId={industryId}
+                     onClose={() => this.setState({ categoryForm: false })}
+                  />
+               )
+            }
             {this.renderRating()}
             <Table>
                <thead>
@@ -113,7 +133,7 @@ class VenuePageCategories extends Component {
                   {categories.slice(0, 10).map((category, i) => (
                      <tr key={category.id}>
                         <td>{i + 1}.</td>
-                        <td>{category.name}</td>
+                        <td>{category.order} {category.name}</td>
                         <td>
                            {category.votes &&
                               <Votes>
@@ -172,6 +192,12 @@ class VenuePageCategories extends Component {
                   </tbody>
                </Table>
             }
+            <Button
+               I_1
+               onClick={() => this.openCategoryForm()}
+            >
+               Suggest new category
+            </Button>
          </Section>
       );
    }
@@ -179,24 +205,35 @@ class VenuePageCategories extends Component {
 
 VenuePageCategories.propTypes = {
    categories: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+   venue: PropTypes.shape().isRequired,
+   industryId: PropTypes.string.isRequired,
+   openMink: PropTypes.func.isRequired,
 };
 
-function mapStateToProps({ categories, user }, { venue }) {
+function mapStateToProps({ industries }, { venue }) {
+   const { categories, id: industryId } = industries.find(i => i.id === venue.industryId);
+   const { venueCategories } = venue;
+
    return {
-      categories: (venue.venueCategories || [])
-         .map((vc) => {
-            const myRating = user.venueCategoryRatings.find(vcr => (
-               vcr.venueCategoryId === vc.id
-            ));
+      industryId,
+      categories: categories
+         .map((c) => {
+            const venueCategory = venueCategories
+               ? venueCategories.find(vc => vc.categoryId === c.id)
+               : null;
 
             return {
-               ...categories.find(c => c.id === vc.categoryId),
-               myRating: myRating ? myRating.rating : null,
-               ...vc,
+               myRating: (venueCategory && venueCategory.myRating) || null,
+               rating: venueCategory ? venueCategory.rating : null,
+               votes: venueCategory ? venueCategory.votes : null,
+               ...c,
             };
          })
          .sort((a, b) => {
             const diff = b.order - a.order;
+            if (diff === 0) return 0;
+            if (a.order === 0) return 1;
+            if (b.order === 0) return -1;
             if (diff > 0) return -1;
             if (diff < 0) return 1;
             return 0;

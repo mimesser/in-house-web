@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Section, Input, Button, Typography } from 'components';
 import { connect } from 'react-redux';
 import pageWrapper from 'utils/page-wrapper';
-import { applyAsOwner } from 'services/venue';
+import { applyAsOwner } from 'services/owner';
 import history from '../../history';
 
 class ApplyAsOwner extends Component {
@@ -38,7 +38,7 @@ class ApplyAsOwner extends Component {
       const body = {
          userName: name,
          userEmail: email,
-         venue,
+         venueId: venue.id,
          relation,
          phone,
          message,

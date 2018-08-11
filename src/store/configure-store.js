@@ -12,22 +12,33 @@ import reducer from './reducer';
 
 let store;
 
-export default function configureStore(initialState = {}) {
+export default function configureStore() {
    const middleware = [
       thunkMiddleware,
    ];
 
+   let noLocalStorage = true;
+
    const cachedState = (() => {
       try {
-         return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+         const data = localStorage.getItem(LOCAL_STORAGE_KEY);
+         noLocalStorage = false;
+         return JSON.parse(data);
       } catch (err) {
          return null;
       }
    })();
 
+   const state = (() => {
+      if (noLocalStorage) {
+         return { noLocalStorage: true };
+      }
+      return { ...cachedState, booting: true };
+   })();
+
    store = createStore(
       reducer,
-      { ...cachedState, ...initialState },
+      state,
       composeWithDevTools(applyMiddleware(...middleware)),
    );
 
@@ -42,6 +53,7 @@ export default function configureStore(initialState = {}) {
 
 export function dispatch(func) {
    return store ? store.dispatch(func) : () => {
+      // eslint-disable-next-line no-console
       console.warn('For some strange reason, dispatch was called before store was initialized.');
    };
 }

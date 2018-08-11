@@ -110,6 +110,7 @@ function parseNumber(rating) {
 
 export default function VenuePageHeader({
    id, imageThumbnailBig, itemsSummary, address, crossStreets, phone, rating, votes,
+   insider, owner,
 }) {
    const filled = Math.round(rating);
 
@@ -132,7 +133,8 @@ export default function VenuePageHeader({
                </ButtonContainer>
             </Left>
             <Center>
-               <Title>INSIDER</Title>
+               {insider && <Title>INSIDER</Title>}
+               {owner && <Title>OWNER</Title>}
             </Center>
             <Right>
                <Rating>
@@ -159,4 +161,6 @@ VenuePageHeader.propTypes = {
    phone: PropTypes.string,
    rating: PropTypes.number,
    votes: PropTypes.number,
+   insider: PropTypes.bool,
+   owner: PropTypes.bool,
 };
