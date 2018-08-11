@@ -1,28 +1,43 @@
-import { getType, mergeLists, mapValues } from '../utils';
+import { merge } from '../utils';
 
-export default function (state = {}, action) {
+export default function (state = {
+   // categories,
+   // cities,
+   // countries,
+   // industries,
+   // neighborhoods,
+   // regions,
+   // states
+}, action) {
    switch (action.type) {
       case 'UPDATE': {
-         return mapValues(action.aggregate, (newData, key) => {
-            if (key === 'venues') {
-               return mergeLists(state[key], newData.map(d => ({
-                  ...d,
-                  itemsSummary: (d.venueItems.map(vi => vi.name).join(', ')),
-               })));
-            }
+         const newState = merge(state, action.aggregate);
 
-            const oldData = state[key];
-            const type = getType(oldData);
+         delete newState.booting;
 
-            if (type === 'array') return mergeLists(oldData, newData);
-            if (type === 'object') return { ...oldData, ...newData };
-            return newData;
-         });
+         if (newState.venues) {
+            newState.venues = newState.venues.map(v => ({
+               ...v,
+               itemsSummary: v.venueItems && (v.venueItems.map(vi => vi.itemId.name).join(', ')),
+            }));
+         }
+
+         return newState;
       }
       case 'SET_USER': {
          return {
             ...state,
             user: action.user,
+         };
+      }
+      case 'SET_VENUE': {
+         return {
+            ...state,
+            venues: state.venues.map(v => (
+               v.id === action.venue.id
+                  ? merge(v, action.venue)
+                  : v
+            )),
          };
       }
       default:

@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
 import { Input, Section, Typography, Button, Icon } from 'components';
 import { submitAnswer, rateMink } from 'services/mink';
 import Rating from './Rating';
+import MinkForm from './MinkForm';
 
 class VenuePageMinks extends Component {
+   static propTypes = {
+      venue: PropTypes.shape().isRequired,
+   }
+
    constructor(props) {
       super(props);
       this.state = {
          rating: null,
          results: {},
+         minkForm: null,
          answers: props.minks.reduce((res, mink) => ({
             ...res,
             [mink.id]: '',
@@ -46,7 +51,12 @@ class VenuePageMinks extends Component {
    }
 
    rateMink = async (minkId, rating) => {
-      await rateMink(minkId, rating);
+      const { venue } = this.props;
+      await rateMink(minkId, rating, venue);
+   }
+
+   openMinkForm = () => {
+      this.setState({ minkForm: true });
    }
 
    renderRating = () => {
@@ -76,10 +86,13 @@ class VenuePageMinks extends Component {
    }
 
    render() {
-      const { minks } = this.props;
-
+      const { minks, venue } = this.props;
+      const { minkForm } = this.state;
       return (
          <Section>
+            {minkForm
+               && <MinkForm venue={venue} onClose={() => this.setState({ minkForm: false })} />
+            }
             {minks.map(mink => (
                <div style={{ padding: '20px', display: 'flex' }} key={mink.id}>
                   <div style={{ marginRight: '100px', textAlign: 'center' }}>
@@ -121,6 +134,12 @@ class VenuePageMinks extends Component {
                   </div>
                </div>
             ))}
+            <Button
+               I_1
+               onClick={() => this.openMinkForm()}
+            >
+               Add mink
+            </Button>
          </Section>
       );
    }
@@ -130,17 +149,15 @@ VenuePageMinks.propTypes = {
    minks: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
-function mapStateToProps({ user }, { venue }) {
-   const myRatings = user.minkRatings;
-
+function mapStateToProps(_, { venue }) {
    return {
       minks: venue.minks
          .map((mink) => {
-            const myVote = myRatings.find(r => r.minkId === mink.id);
+            // const myVote = myRatings.find(r => r.minkId === mink.id);
 
             const totalVotes = mink.votesAgainst + mink.votesFor;
             return {
-               myRating: myVote ? myVote.rating : null,
+               // myRating: myVote ? myVote.rating : null,
                ...mink,
                percentage: totalVotes ? (mink.votesFor / totalVotes) : 0,
             };

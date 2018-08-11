@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Route, Router } from 'react-router-dom';
 
 import styled from 'styled-components';
 
@@ -18,6 +18,7 @@ import EditEmail from 'pages/EditEmail';
 import EditPassword from 'pages/EditPassword';
 import Header from './Header';
 import { get } from '../services/aggregate';
+import history from '../history';
 
 const Wrapper = styled.div`
    background-color: ${props => props.theme.A_7};
@@ -36,20 +37,43 @@ const Content = styled.main`
 
 class App extends Component {
    static propTypes = {
-      timestamp: PropTypes.number,
+      booting: PropTypes.bool,
+      noLocalStorage: PropTypes.bool,
+      lastVenueId: PropTypes.string,
    }
 
    async componentDidMount() {
-      get();
+      if (!this.props.noLocalStorage) {
+         get();
+      }
+   }
+
+   componentWillReceiveProps = async ({ booting, lastVenueId }) => {
+      if (this.props.booting && !booting && lastVenueId) {
+         history.push(`/venues/${lastVenueId}`);
+      }
+   }
+
+   renderSignup = () => {
+      // TODO
+      // eslint-disable-next-line no-console
+      console.log('no local storage');
+      return null;
    }
 
    render() {
-      if (!this.props.timestamp) {
+      const { booting, noLocalStorage } = this.props;
+
+      if (booting) {
          return null;
       }
 
+      if (noLocalStorage) {
+         return this.renderSignup();
+      }
+
       return (
-         <Router>
+         <Router history={history}>
             <Wrapper>
                <Header />
                <Content>
@@ -71,9 +95,11 @@ class App extends Component {
    }
 }
 
-function mapStateToProps({ timestamp }) {
+function mapStateToProps({ booting, user, noLocalStorage }) {
    return {
-      timestamp,
+      booting,
+      lastVenueId: user && user.lastVenueId,
+      noLocalStorage,
    };
 }
 

@@ -1,12 +1,27 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import styled from 'styled-components';
 import { Section, Typography, Button, Icon } from 'components';
 import { rateFeedback } from 'services/feedback';
 import FeedbackForm from './FeedbackForm';
 
-class VenuePageFeedbacks extends Component {
+function parseFeedbacks(feedbacks) {
+   if (!feedbacks) return [];
+   return feedbacks.map((f) => {
+      const totalVotes = f.votesAgainst + f.votesFor;
+
+      return {
+         ...f,
+         percentage: totalVotes ? (f.votesFor / totalVotes) : 0,
+      };
+   });
+}
+
+export default class VenuePageFeedbacks extends Component {
+   static propTypes = {
+      feedbacks: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+      venue: PropTypes.PropTypes.shape().isRequired,
+   };
+
    constructor(props) {
       super(props);
       this.state = {
@@ -19,7 +34,7 @@ class VenuePageFeedbacks extends Component {
    }
 
    rateFeedback = async (feedbackId, rating) => {
-      await rateFeedback(feedbackId, rating);
+      await rateFeedback(feedbackId, rating, this.props.venue);
    }
 
    render() {
@@ -28,9 +43,14 @@ class VenuePageFeedbacks extends Component {
       return (
          <Section>
             {feedbackForm
-               && <FeedbackForm venueId={venue.id} onClose={() => this.setState({ feedbackForm: false })} />
+               && (
+                  <FeedbackForm
+                     venue={venue}
+                     onClose={() => this.setState({ feedbackForm: false })}
+                  />
+               )
             }
-            {feedbacks.map(feedback => (
+            {parseFeedbacks(feedbacks).map(feedback => (
                <div style={{ padding: '20px', display: 'flex' }} key={feedback.id}>
                   <Typography H2>{feedback.title}</Typography>
                   <Typography C1>{feedback.text}</Typography>
@@ -38,7 +58,10 @@ class VenuePageFeedbacks extends Component {
                      <Typography P2>
                         <Button
                            I_4
-                           onClick={() => this.rateFeedback(feedback.id, feedback.myRating === 0 ? null : 0)}
+                           onClick={() => this.rateFeedback(
+                              feedback.id,
+                              feedback.myRating === 0 ? null : 0,
+                           )}
                            unselected={feedback.myRating !== 0}
                         >
                            <Icon size={40}>
@@ -48,7 +71,10 @@ class VenuePageFeedbacks extends Component {
                         {Number.parseInt(feedback.percentage * 100, 10)}%
                         <Button
                            I_4
-                           onClick={() => this.rateFeedback(feedback.id, feedback.myRating === 1 ? null : 1)}
+                           onClick={() => this.rateFeedback(
+                              feedback.id,
+                              feedback.myRating === 1 ? null : 1,
+                           )}
                            unselected={feedback.myRating !== 1}
                         >
                            <Icon size={40}>
@@ -69,44 +95,3 @@ class VenuePageFeedbacks extends Component {
       );
    }
 }
-
-VenuePageFeedbacks.propTypes = {
-   feedbacks: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-};
-
-function mapStateToProps({ user }, { venue }) {
-   const myRatings = user.feedbackRatings;
-   console.log(venue.feedbacks);
-   return {
-      feedbacks: (venue.feedbacks || []).map((f) => {
-         const myVote = myRatings.find(r => r.feedbackId === f.id);
-
-         const totalVotes = f.votesAgainst + f.votesFor;
-
-         return {
-            myRating: myVote ? myVote.rating : null,
-            ...f,
-            percentage: totalVotes ? (f.votesFor / totalVotes) : 0,
-         };
-      }),
-      // minks: venue.minks
-      //    .map((mink) => {
-      //       const myVote = myRatings.find(r => r.minkId === mink.id);
-
-      //       const totalVotes = mink.votesAgainst + mink.votesFor;
-      //       return {
-      //          myRating: myVote ? myVote.rating : null,
-      //          ...mink,
-      //          percentage: totalVotes ? (mink.votesFor / totalVotes) : 0,
-      //       };
-      //    })
-      //    .sort((a, b) => {
-      //       const diff = b.percentage - a.percentage;
-      //       if (diff > 0) return -1;
-      //       if (diff < 0) return 1;
-      //       return 0;
-      //    }),
-   };
-}
-
-export default connect(mapStateToProps)(VenuePageFeedbacks);

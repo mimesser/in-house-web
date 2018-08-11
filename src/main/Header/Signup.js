@@ -6,6 +6,7 @@ import { signup } from 'services/auth';
 export default class Signup extends Component {
    static propTypes = {
       onClose: PropTypes.func.isRequired,
+      openLogin: PropTypes.func.isRequired,
    }
 
    state = {
@@ -25,9 +26,16 @@ export default class Signup extends Component {
    submit = async (e) => {
       e.preventDefault();
       this.setState({ error: null });
-      const { email, password } = this.state;
+      const {
+         props: { onSuccess },
+         state: { email, password },
+      } = this;
       const error = await signup({ email, password });
-      this.setState({ error });
+      if (error) {
+         this.setState({ error });
+      } else if (onSuccess) {
+         onSuccess();
+      }
    }
 
    render() {
@@ -59,6 +67,7 @@ export default class Signup extends Component {
                   type="password"
                />
                <Button I_3 type="submit">submit</Button>
+               <Button I_3 onClick={this.props.openLogin}>to login</Button>
             </form>
          </Overlay>
       );

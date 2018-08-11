@@ -27,11 +27,11 @@ export default class FeedbackForm extends Component {
 
    submit = async (e) => {
       e.preventDefault();
-      const { venueId } = this.props;
+      const { venue } = this.props;
       const { title, text, mood } = this.state;
       const error = await createFeedback({
-         venueId, title, text, mood,
-      });
+         venueId: venue.id, title, text, mood,
+      }, venue);
       if (error) {
          this.setState({ error });
       } else {
@@ -105,6 +105,6 @@ export default class FeedbackForm extends Component {
 }
 
 FeedbackForm.propTypes = {
-   venueId: PropTypes.string.isRequired,
+   venue: PropTypes.shape().isRequired,
    onClose: PropTypes.func.isRequired,
 };
