@@ -17,11 +17,24 @@ class VenuePageMinks extends Component {
          rating: null,
          results: {},
          minkForm: null,
+         minkRating: null,
          answers: props.minks.reduce((res, mink) => ({
             ...res,
             [mink.id]: '',
          })),
       };
+   }
+
+   async componentWillReceiveProps(nextProps) {
+      const {
+         props: { venue },
+         state: { minkRating },
+      } = this;
+      // if you rated a feedback, but weren't an insider
+      if (!venue.insider && nextProps.venue.insider && minkRating) {
+         const { minkId, rating } = minkRating;
+         await rateMink(minkId, rating, venue);
+      }
    }
 
    openRating = (rating) => {
@@ -51,8 +64,13 @@ class VenuePageMinks extends Component {
    }
 
    rateMink = async (minkId, rating) => {
-      const { venue } = this.props;
-      await rateMink(minkId, rating, venue);
+      const { venue, openMink } = this.props;
+      if (!venue.insider) {
+         openMink();
+         this.setState({ minkRating: { minkId, rating } });
+      } else {
+         await rateMink(minkId, rating, venue);
+      }
    }
 
    openMinkForm = () => {

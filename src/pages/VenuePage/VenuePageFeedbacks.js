@@ -18,38 +18,69 @@ function parseFeedbacks(feedbacks) {
 
 export default class VenuePageFeedbacks extends Component {
    static propTypes = {
-      feedbacks: PropTypes.arrayOf(PropTypes.shape()).isRequired,
       venue: PropTypes.PropTypes.shape().isRequired,
+      openMink: PropTypes.func.isRequired,
    };
 
    constructor(props) {
       super(props);
       this.state = {
          feedbackForm: false,
+         feedbackRating: null,
       };
    }
 
+   async componentWillReceiveProps(nextProps) {
+      const {
+         props: { venue },
+         state: { feedbackRating },
+      } = this;
+      // if you rated a feedback, but weren't an insider
+      if (!venue.insider && nextProps.venue.insider && feedbackRating) {
+         const { feedbackId, rating } = feedbackRating;
+         await rateFeedback(feedbackId, rating, venue);
+      }
+   }
+
    openFeedbackForm = () => {
+      const { venue, openMink } = this.props;
+      if (!venue.insider) {
+         openMink();
+      }
       this.setState({ feedbackForm: true });
    }
 
    rateFeedback = async (feedbackId, rating) => {
-      await rateFeedback(feedbackId, rating, this.props.venue);
+      const { venue, openMink } = this.props;
+      if (!venue.insider) {
+         openMink();
+         this.setState({ feedbackRating: { feedbackId, rating } });
+      } else {
+         await rateFeedback(feedbackId, rating, this.props.venue);
+      }
+   }
+
+   renderFeedbackForm = () => {
+      const { feedbackForm } = this.state;
+      const { venue } = this.props;
+
+      if (venue.insider && feedbackForm) {
+         return (
+            <FeedbackForm
+               venue={venue}
+               onClose={() => this.setState({ feedbackForm: false })}
+            />
+         );
+      }
+      return null;
    }
 
    render() {
-      const { feedbacks, venue } = this.props;
-      const { feedbackForm } = this.state;
+      const { venue } = this.props;
+      const { feedbacks } = venue;
       return (
          <Section>
-            {feedbackForm
-               && (
-                  <FeedbackForm
-                     venue={venue}
-                     onClose={() => this.setState({ feedbackForm: false })}
-                  />
-               )
-            }
+            {this.renderFeedbackForm()}
             {parseFeedbacks(feedbacks).map(feedback => (
                <div style={{ padding: '20px', display: 'flex' }} key={feedback.id}>
                   <Typography H2>{feedback.title}</Typography>

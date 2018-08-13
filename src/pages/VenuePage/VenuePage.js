@@ -45,7 +45,7 @@ class VenuePage extends Component {
       selectedCategory: categories[0],
       answer: '',
       loading: true,
-      showMink: false,
+      minkOpen: false,
    }
 
    componentDidMount = async () => {
@@ -62,7 +62,7 @@ class VenuePage extends Component {
       try {
          await getVenue(venue);
       } catch (error) {
-         this.setState({ showMink: true });
+         this.setState({ minkOpen: true });
       }
    }
 
@@ -78,7 +78,7 @@ class VenuePage extends Component {
          this.setState({ error });
       } else {
          await this.getVenue();
-         this.setState({ showMink: false });
+         this.setState({ minkOpen: false });
       }
    }
 
@@ -106,9 +106,9 @@ class VenuePage extends Component {
    }
 
    renderOverlay = () => {
-      const { loading, showMink } = this.state;
+      const { loading, minkOpen } = this.state;
       if (loading) return renderLoading();
-      if (showMink) return this.renderMink();
+      if (minkOpen) return this.renderMink();
       return null;
    }
 
@@ -140,7 +140,7 @@ class VenuePage extends Component {
                && (
                   <selectedCategory.Component
                      venue={venue}
-                     openMink={() => this.setState({ showMink: true })}
+                     openMink={() => this.setState({ minkOpen: true })}
                   />
                )
             }
