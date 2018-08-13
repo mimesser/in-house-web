@@ -72,6 +72,13 @@ function parseNumber(rating) {
 }
 
 class VenuePageCategories extends Component {
+   static propTypes = {
+      categories: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+      venue: PropTypes.shape().isRequired,
+      industryId: PropTypes.string.isRequired,
+      openMink: PropTypes.func.isRequired,
+   };
+
    state = {
       rating: null,
    }
@@ -85,6 +92,10 @@ class VenuePageCategories extends Component {
    }
 
    openCategoryForm = () => {
+      const { venue, openMink } = this.props;
+      if (!venue.insider) {
+         openMink();
+      }
       this.setState({ categoryForm: true });
    }
 
@@ -105,20 +116,27 @@ class VenuePageCategories extends Component {
       return null;
    }
 
-   render() {
-      const { categories, industryId } = this.props;
+   renderCategoryForm = () => {
       const { categoryForm } = this.state;
+      const { venue, industryId } = this.props;
+
+      if (venue.insider && categoryForm) {
+         return (
+            <CategoryForm
+               industryId={industryId}
+               onClose={() => this.setState({ categoryForm: false })}
+            />
+         );
+      }
+      return null;
+   }
+
+   render() {
+      const { categories } = this.props;
 
       return (
          <Section container maxWidth={600}>
-            {categoryForm
-               && (
-                  <CategoryForm
-                     industryId={industryId}
-                     onClose={() => this.setState({ categoryForm: false })}
-                  />
-               )
-            }
+            {this.renderCategoryForm()}
             {this.renderRating()}
             <Table>
                <thead>
@@ -203,12 +221,6 @@ class VenuePageCategories extends Component {
    }
 }
 
-VenuePageCategories.propTypes = {
-   categories: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-   venue: PropTypes.shape().isRequired,
-   industryId: PropTypes.string.isRequired,
-   openMink: PropTypes.func.isRequired,
-};
 
 function mapStateToProps({ industries }, { venue }) {
    const { categories, id: industryId } = industries.find(i => i.id === venue.industryId);

@@ -26,7 +26,6 @@ function toSet(list) {
  * - If the new data is a simple array, keep the old one.
  */
 export default function merge(d1, d2) {
-   console.log(d1, d2);
    if (d1 === undefined) return d2;
    if (d2 === undefined) return d1;
 
