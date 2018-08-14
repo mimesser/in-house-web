@@ -1,17 +1,11 @@
 import { merge } from '../utils';
 
-export default function (state = {
-   // categories,
-   // cities,
-   // countries,
-   // industries,
-   // neighborhoods,
-   // regions,
-   // states
-}, action) {
+export default function (state = {}, action) {
    switch (action.type) {
       case 'UPDATE': {
-         const newState = merge(state, action.aggregate);
+         const newState = action.aggregate.reset
+            ? action.aggregate
+            : merge(state, action.aggregate);
 
          delete newState.booting;
 
