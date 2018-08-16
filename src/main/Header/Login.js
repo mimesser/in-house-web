@@ -7,7 +7,7 @@ export default class Login extends Component {
    static propTypes = {
       onClose: PropTypes.func.isRequired,
       onSuccess: PropTypes.func,
-      openLogin: PropTypes.func,
+      openSignup: PropTypes.func,
    }
 
    state = {
@@ -69,7 +69,7 @@ export default class Login extends Component {
                   type="password"
                />
                <Button I_3 type="submit">submit</Button>
-               <Button I_3 onClick={this.props.openLogin}>to login</Button>
+               <Button I_3 type="button" onClick={this.props.openSignup}>to signup</Button>
             </form>
          </Overlay>
       );
