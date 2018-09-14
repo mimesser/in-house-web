@@ -6,6 +6,7 @@
 import thunkMiddleware from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
 import { LOCAL_STORAGE_KEY } from 'config';
+import moment from 'moment';
 // eslint-disable-next-line
 import { composeWithDevTools } from 'redux-devtools-extension';
 import reducer from './reducer';
@@ -33,6 +34,14 @@ export default function configureStore() {
       if (noLocalStorage) {
          return { noLocalStorage: true };
       }
+      const { timestamp } = cachedState;
+
+      // For now, reset if older than 12 hours.  A reset should be sent from the server.
+      if (!timestamp || (moment().diff(moment(timestamp), 'hours') > 12)) {
+         localStorage.setItem(LOCAL_STORAGE_KEY, '{}');
+         return { booting: true };
+      }
+
       return { ...cachedState, booting: true };
    })();
 

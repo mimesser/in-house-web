@@ -74,7 +74,7 @@ class SearchResults extends Component {
 
 function mapStateToProps({ venues, industries }) {
    return {
-      venues: venues.filter(venue => venue.minks && venue.minks.length > 0),
+      venues: venues.filter(venue => venue), // .minks && venue.minks.length > 0),
       industries,
    };
 }
