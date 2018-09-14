@@ -1,3 +1,3 @@
 export const API_URL = process.env.NODE_ENV === 'production' ?
-   'https://cj-in-house-dev-core.azurewebsites.net' : 'http://localhost:5000';
+   'https://in-house-dev.azurewebsites.net/api' : 'http://localhost:49706/api';
 export const LOCAL_STORAGE_KEY = 'in-house';
