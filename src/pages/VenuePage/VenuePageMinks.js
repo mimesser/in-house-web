@@ -169,7 +169,7 @@ VenuePageMinks.propTypes = {
 
 function mapStateToProps(_, { venue }) {
    return {
-      minks: venue.minks
+      minks: venue.ipqs
          .map((mink) => {
             // const myVote = myRatings.find(r => r.minkId === mink.id);
 

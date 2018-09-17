@@ -75,7 +75,7 @@ class VenuePageCategories extends Component {
    static propTypes = {
       categories: PropTypes.arrayOf(PropTypes.shape()).isRequired,
       venue: PropTypes.shape().isRequired,
-      industryId: PropTypes.string.isRequired,
+      industryId: PropTypes.number.isRequired,
       openMink: PropTypes.func.isRequired,
    };
 
@@ -222,22 +222,25 @@ class VenuePageCategories extends Component {
 }
 
 
-function mapStateToProps({ industries }, { venue }) {
-   const { categories, id: industryId } = industries.find(i => i.id === venue.industryId);
-   const { venueCategories } = venue;
+function mapStateToProps({ categories: allCategories }, { venue }) {
+   const { industryId } = venue;
+
+   const categories = allCategories.filter(i => i.industryId === industryId);
+
+   const { categoryRatings } = venue;
 
    return {
       industryId,
       categories: categories
          .map((c) => {
-            const venueCategory = venueCategories
-               ? venueCategories.find(vc => vc.categoryId === c.id)
+            const categoryRating = categoryRatings
+               ? categoryRatings.find(cr => cr.categoryId === c.id)
                : null;
 
             return {
-               myRating: (venueCategory && venueCategory.myRating) || null,
-               rating: venueCategory ? venueCategory.rating : null,
-               votes: venueCategory ? venueCategory.votes : null,
+               myRating: (categoryRating && categoryRating.myRating) || null,
+               rating: categoryRating ? categoryRating.rating : null,
+               votes: categoryRating ? categoryRating.votes : null,
                ...c,
             };
          })

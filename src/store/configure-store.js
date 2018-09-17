@@ -24,9 +24,9 @@ export default function configureStore() {
       try {
          const data = localStorage.getItem(LOCAL_STORAGE_KEY);
          noLocalStorage = false;
-         return JSON.parse(data);
+         return JSON.parse(data) || {};
       } catch (err) {
-         return null;
+         return {};
       }
    })();
 
