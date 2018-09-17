@@ -10,9 +10,13 @@ export default function (state = {}, action) {
          delete newState.booting;
 
          if (newState.venues) {
+            const itemTypeNames = newState.itemTypes.reduce((res, itemType) => ({
+               ...res, [itemType.id]: itemType.name,
+            }), {});
+
             newState.venues = newState.venues.map(v => ({
                ...v,
-               itemsSummary: v.venueItems && (v.venueItems.map(vi => vi.itemId.name).join(', ')),
+               itemsSummary: v.itemTypeIds.map(i => itemTypeNames[i]).join(', '),
             }));
          }
 

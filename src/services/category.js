@@ -14,7 +14,7 @@ export async function createCategory(body) {
 
 export async function rateCategory({ venue, categoryId, rating }) {
    try {
-      await api.post(`category/${categoryId}/rate`, { venueId: venue.id, rating });
+      await api.post(`categories/${categoryId}/rate`, { venueId: venue.id, rating });
       await getVenue(venue);
       return null;
    } catch (err) {

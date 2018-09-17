@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { Button, Section, Overlay, Input } from 'components';
 import pageWrapper from 'utils/page-wrapper';
 import { Link } from 'react-router-dom';
-import { submitAnswer } from 'services/mink';
+import { submitAnswer, getTopMink } from 'services/mink';
 import { getVenue } from 'services/venue';
 import history from '../../history';
 import Categories from './VenuePageCategories';
@@ -45,6 +45,7 @@ class VenuePage extends Component {
       selectedCategory: categories[0],
       answer: '',
       loading: true,
+      mink: null,
       minkOpen: false,
    }
 
@@ -62,8 +63,18 @@ class VenuePage extends Component {
       try {
          await getVenue(venue);
       } catch (error) {
-         this.setState({ minkOpen: true });
+         await this.openMink();
       }
+   }
+
+   openMink = async () => {
+      if (!this.state.mink) {
+         // TODO: check for empty mink?
+         const mink = await getTopMink(this.props.venue.id);
+
+         this.setState({ mink });
+      }
+      this.setState({ minkOpen: true });
    }
 
    changeAnswer = (answer) => {
@@ -73,7 +84,7 @@ class VenuePage extends Component {
    submit = async (e) => {
       e.preventDefault();
       this.setState({ error: null });
-      const error = await submitAnswer(this.props.venue.minks[0].id, this.state.answer);
+      const error = await submitAnswer(this.state.mink.id, this.state.answer);
       if (error) {
          this.setState({ error });
       } else {
@@ -83,8 +94,8 @@ class VenuePage extends Component {
    }
 
    renderMink = () => {
-      const { venue: { minks, id } } = this.props;
-      const { question } = minks[0];
+      const { venue: { id } } = this.props;
+      const { question } = this.state.mink;
       const { answer, error } = this.state;
       return (
          <Overlay>
@@ -97,8 +108,11 @@ class VenuePage extends Component {
             }
             <form onSubmit={this.submit} style={{ width: '300px' }}>
                Question: {question}
+               <br />
                <Input E_1 value={answer} placholder="Answer" onChange={this.changeAnswer} />
+               <br />
                <Button I_3 type="submit">submit</Button>
+               <br />
                <ButtonLink to={`/venues/${id}/apply-as-owner`}>Apply as owner</ButtonLink>
             </form>
          </Overlay>
@@ -140,7 +154,7 @@ class VenuePage extends Component {
                && (
                   <selectedCategory.Component
                      venue={venue}
-                     openMink={() => this.setState({ minkOpen: true })}
+                     openMink={this.openMink}
                   />
                )
             }
@@ -151,7 +165,7 @@ class VenuePage extends Component {
 
 function mapStateToProps({ venues }, { match: { params: { id } } }) {
    return {
-      venue: venues.find(venue => venue.id === id),
+      venue: venues.find(venue => venue.id === Number.parseInt(id, 10)),
    };
 }
 

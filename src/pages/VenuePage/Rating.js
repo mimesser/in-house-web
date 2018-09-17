@@ -59,7 +59,7 @@ export default class Rating extends Component {
 
 Rating.propTypes = {
    venue: PropTypes.shape().isRequired,
-   categoryId: PropTypes.string.isRequired,
+   categoryId: PropTypes.number.isRequired,
    name: PropTypes.string.isRequired,
    onClose: PropTypes.func.isRequired,
 };

@@ -153,7 +153,7 @@ export default function VenuePageHeader({
 }
 
 VenuePageHeader.propTypes = {
-   id: PropTypes.string.isRequired,
+   id: PropTypes.number.isRequired,
    imageThumbnailBig: PropTypes.string,
    itemsSummary: PropTypes.string.isRequired,
    address: PropTypes.string.isRequired,

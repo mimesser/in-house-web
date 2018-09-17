@@ -3,10 +3,10 @@ import { getVenue } from 'services/venue';
 
 export async function submitAnswer(minkId, answer) {
    try {
-      await api.post(`mink/${minkId}`, { answer });
+      await api.post(`ipqs/answer/${minkId}`, { answer });
       return null;
    } catch (err) {
-      return err.data.message;
+      return err.data;
    }
 }
 
@@ -17,6 +17,16 @@ export async function rateMink(minkId, rating, venue) {
       return null;
    } catch (err) {
       return err.data.message;
+   }
+}
+
+export async function getTopMink(venueId) {
+   try {
+      const { data } = await api.get(`ipqs/top/${venueId}`);
+      return data;
+   } catch (err) {
+      console.log(err.data);
+      return null;
    }
 }
 
