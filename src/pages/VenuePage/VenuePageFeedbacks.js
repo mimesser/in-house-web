@@ -6,12 +6,13 @@ import FeedbackForm from './FeedbackForm';
 
 function parseFeedbacks(feedbacks) {
    if (!feedbacks) return [];
+   // eslint-disable-next-line
    return feedbacks.map((f) => {
-      const totalVotes = f.votesAgainst + f.votesFor;
+      // const totalVotes = f.negativeVotes + f.positiveVotes;
 
       return {
          ...f,
-         percentage: totalVotes ? (f.votesFor / totalVotes) : 0,
+         percentage: f.voteRating,
       };
    });
 }
@@ -77,11 +78,11 @@ export default class VenuePageFeedbacks extends Component {
 
    render() {
       const { venue } = this.props;
-      const { feedbacks } = venue;
+      const { blabs } = venue;
       return (
          <Section>
             {this.renderFeedbackForm()}
-            {parseFeedbacks(feedbacks).map(feedback => (
+            {parseFeedbacks(blabs).map(feedback => (
                <div style={{ padding: '20px', display: 'flex' }} key={feedback.id}>
                   <Typography H2>{feedback.title}</Typography>
                   <Typography C1>{feedback.text}</Typography>
