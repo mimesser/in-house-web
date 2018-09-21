@@ -3,7 +3,7 @@ import { getVenue } from 'services/venue';
 
 export async function createFeedback(body, venue) {
    try {
-      await api.post('feedback', body);
+      await api.post('blabs', body);
       await getVenue(venue);
       return null;
    } catch (err) {
