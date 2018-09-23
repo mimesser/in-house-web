@@ -13,7 +13,7 @@ export async function createFeedback(body, venue) {
 
 export async function rateFeedback(feedbackId, rating, venue) {
    try {
-      await api.post(`feedback/${feedbackId}/rate`, { rating });
+      await api.post(`blabs/${feedbackId}/vote/${rating}`);
       await getVenue(venue);
       return null;
    } catch (err) {
