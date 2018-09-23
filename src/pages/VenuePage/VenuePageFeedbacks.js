@@ -92,7 +92,7 @@ export default class VenuePageFeedbacks extends Component {
                            I_4
                            onClick={() => this.rateFeedback(
                               feedback.id,
-                              feedback.myRating === 0 ? null : 0,
+                              0, // feedback.myRating === 0 ? null : 0,
                            )}
                            unselected={feedback.myRating !== 0}
                         >
@@ -105,7 +105,7 @@ export default class VenuePageFeedbacks extends Component {
                            I_4
                            onClick={() => this.rateFeedback(
                               feedback.id,
-                              feedback.myRating === 1 ? null : 1,
+                              1, // feedback.myRating === 1 ? null : 1,
                            )}
                            unselected={feedback.myRating !== 1}
                         >

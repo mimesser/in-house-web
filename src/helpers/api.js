@@ -7,7 +7,7 @@ async function request(data, props) {
    const token = getToken();
 
    const headers = token
-      ? { authorization: `token ${token}` }
+      ? { Authorization: `token ${token}` }
       : null;
 
    try {

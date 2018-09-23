@@ -131,8 +131,10 @@ class VenuePageMinks extends Component {
                      <Typography P2>
                         <Button
                            I_4
-                           onClick={() => this.rateMink(mink.id, mink.myRating === 0 ? null : 0)}
-                           unselected={mink.myRating !== 0}
+                           onClick={() => {
+                              this.rateMink(mink.id, mink.myRating === false ? null : false);
+                           }}
+                           unselected={mink.myRating !== false}
                         >
                            <Icon size={40}>
                               thumb_down
@@ -141,8 +143,10 @@ class VenuePageMinks extends Component {
                         {Number.parseInt(mink.percentage * 100, 10)}%
                         <Button
                            I_4
-                           onClick={() => this.rateMink(mink.id, mink.myRating === 1 ? null : 1)}
-                           unselected={mink.myRating !== 1}
+                           onClick={() => {
+                              this.rateMink(mink.id, mink.myRating === true ? null : true);
+                           }}
+                           unselected={mink.myRating !== true}
                         >
                            <Icon size={40}>
                               thumb_up
@@ -172,12 +176,12 @@ function mapStateToProps(_, { venue }) {
       minks: venue.ipqs
          .map((mink) => {
             // const myVote = myRatings.find(r => r.minkId === mink.id);
-
-            const totalVotes = mink.votesAgainst + mink.votesFor;
+            const { voteRating } = mink;
+            // const totalVotes = mink.votesAgainst + mink.votesFor;
             return {
                // myRating: myVote ? myVote.rating : null,
                ...mink,
-               percentage: totalVotes ? (mink.votesFor / totalVotes) : 0,
+               percentage: voteRating, // totalVotes ? (mink.votesFor / totalVotes) : 0,
             };
          })
          .sort((a, b) => {

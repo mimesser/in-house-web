@@ -12,7 +12,7 @@ export async function submitAnswer(minkId, answer) {
 
 export async function rateMink(minkId, rating, venue) {
    try {
-      await api.post(`mink/${minkId}/rate`, { rating });
+      await api.post(`ipqs/${minkId}/rate`, { rating });
       await getVenue(venue);
       return null;
    } catch (err) {
@@ -25,14 +25,13 @@ export async function getTopMink(venueId) {
       const { data } = await api.get(`ipqs/top/${venueId}`);
       return data;
    } catch (err) {
-      console.log(err.data);
       return null;
    }
 }
 
 export async function createMink(body, venue) {
    try {
-      await api.post('mink', body);
+      await api.post('ipqs', body);
       await getVenue(venue);
       return null;
    } catch (err) {
