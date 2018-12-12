@@ -13,10 +13,11 @@ export async function login({ password, email }) {
    }
 }
 
-export async function signup({ password, email }) {
+export async function signUp({ password, email }) {
    try {
+      /* spell-checker: disable */
       const { data: user } = await api.post('signup', { password, email });
-      /* eslint-disable-next-line no-underscore-dangle */
+      /* spell-checker: enable */
       setUser(user);
       return null;
    } catch (err) {
