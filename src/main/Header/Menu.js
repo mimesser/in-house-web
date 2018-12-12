@@ -6,7 +6,8 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import menuIcon from './icons/hamburger';
 import Login from './Login';
-import Signup from './Signup';
+import SignUp from './SignUp';
+import NoConnection from './NoConnection';
 
 const Wrapper = styled.div`
    position: relative;
@@ -32,7 +33,7 @@ const MenuIcon = Icon.extend`
 `;
 
 const Dropdown = styled.div`
-   visibility: ${props => (props.visable ? 'visible' : 'collapse')};
+   visibility: ${props => (props.visible ? 'visible' : 'collapse')};
    background-color: ${props => props.theme.A_8};
    position: absolute;
    top: -20px;
@@ -81,7 +82,7 @@ const CloseIcon = styled.i``;
 
 class Menu extends Component {
    static propTypes = {
-      user: PropTypes.shape().isRequired,
+      user: PropTypes.shape(),
    }
 
    state = {
@@ -108,8 +109,8 @@ class Menu extends Component {
       this.setState({ modal: 'login' });
    }
 
-   openSignup = () => {
-      this.setState({ modal: 'signup' });
+   openSignUp = () => {
+      this.setState({ modal: 'sign-up' });
    }
 
    closeModal = () => {
@@ -120,13 +121,13 @@ class Menu extends Component {
       const { user } = this.props;
       const { modal } = this.state;
 
-      if (user.email) {
+      if (user && user.email) {
          return null;
       }
 
       switch (modal) {
-         case 'login': return <Login onClose={this.closeModal} openSignup={this.openSignup} />;
-         case 'signup': return <Signup onClose={this.closeModal} openLogin={this.openLogin} />;
+         case 'login': return <Login onClose={this.closeModal} openSignUp={this.openSignUp} />;
+         case 'sign-up': return <SignUp onClose={this.closeModal} openLogin={this.openLogin} />;
          default: return null;
       }
    }
@@ -138,8 +139,9 @@ class Menu extends Component {
       return (
          <Wrapper innerRef={(node) => { this.wrapperRef = node; }}>
             {this.renderModal()}
+            {!user && <NoConnection />}
             <MenuIcon onClick={() => this.setState({ open: true })}>{menuIcon}</MenuIcon>
-            <Dropdown visable={open}>
+            <Dropdown visible={open}>
                <Header>
                   <CloseIcon className="material-icons" onClick={() => this.setState({ open: false })}>
                      close
@@ -148,12 +150,13 @@ class Menu extends Component {
                <Content>
                   <MenuItemLink to="/venues">Venues</MenuItemLink>
                   <MenuItemLink to="/kitchen-sink">Kitchen Sink</MenuItemLink>
-                  {user.email
+                  {user && (user.email
                      ? <MenuItemLink to="/profile">User Info</MenuItemLink>
                      : [
                         <MenuItem key={0} onClick={this.openLogin}>Login</MenuItem>,
-                        <MenuItem key={1} onClick={this.openSignup}>Signup</MenuItem>,
-                     ]}
+                        <MenuItem key={1} onClick={this.openSignUp}>SignUp</MenuItem>,
+                     ]
+                  )}
                </Content>
             </Dropdown>
          </Wrapper>

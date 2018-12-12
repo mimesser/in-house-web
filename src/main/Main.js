@@ -54,7 +54,7 @@ class App extends Component {
       }
    }
 
-   renderSignup = () => {
+   renderSignUp = () => {
       // TODO
       // eslint-disable-next-line no-console
       console.log('no local storage');
@@ -69,7 +69,7 @@ class App extends Component {
       }
 
       if (noLocalStorage) {
-         return this.renderSignup();
+         return this.renderSignUp();
       }
 
       return (

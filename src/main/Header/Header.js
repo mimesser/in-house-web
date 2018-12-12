@@ -23,6 +23,7 @@ const Logo = styled(Link)`
 
 const Content = styled.div`
    display: flex;
+   align-items: center;
    padding: 40px 40px 20px;
    max-width: 1024px;
    margin: 0 auto;

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Overlay, Input } from 'components';
-import { signup } from 'services/auth';
+import { signUp } from 'services/auth';
 
-export default class Signup extends Component {
+export default class SignUp extends Component {
    static propTypes = {
       onClose: PropTypes.func.isRequired,
       openLogin: PropTypes.func.isRequired,
@@ -30,7 +30,7 @@ export default class Signup extends Component {
          props: { onSuccess },
          state: { email, password },
       } = this;
-      const error = await signup({ email, password });
+      const error = await signUp({ email, password });
       if (error) {
          this.setState({ error });
       } else if (onSuccess) {
@@ -44,7 +44,7 @@ export default class Signup extends Component {
       return (
          <Overlay onClose={() => this.props.onClose()}>
             <form onSubmit={this.submit} style={{ width: '300px' }}>
-               <h1>Signup</h1>
+               <h1>SignUp</h1>
                {
                   error && (
                      <div style={{ padding: '20px', color: '#fbb' }}>
