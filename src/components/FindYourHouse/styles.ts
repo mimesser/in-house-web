@@ -1,29 +1,19 @@
 import styled from 'styled-components';
 
-export const Header = styled.header`
-   height: 48px;
-   background-color: #0939CF;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   color: #fff;
-   font-size: 20px;
-`;
+const mobileMaxWidth = 480;
 
 export const Container = styled.div`
-   display: flex;
-   flex-direction: column;
-   height: 100vh;
-`;
-
-export const Content = styled.div`
    flex: 1;
    display: flex;
    flex-direction: column;
    align-items: center;
-   padding: 0 10px 10px;
-   max-width: 480px;
-   margin: 0 auto;
+`;
+
+export const Wrapper = styled.div`
+   text-align: center;
+   width: 100%;
+   max-width: ${mobileMaxWidth}px;
+   padding: 0 10px;
 `;
 
 export const Input = styled.input`
@@ -59,8 +49,11 @@ export const Button = styled.button`
    color: #fff;
    background-color: #0939CF;
    border-radius: 40px;
+   margin: 20px 0 10px;
 `;
 
 export const List = styled.div`
    flex: 1;
+   width: 100%;
+   overflow-y: auto;
 `;

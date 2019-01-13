@@ -1,11 +1,13 @@
 import * as React from 'react';
-import { Button, Container, Content, Header, Input, List, SubText, Title } from './find-your-house-styles';
+import {
+   Button, Container, Input, List, SubText, Title, Wrapper,
+} from './styles';
+import VenueList from './VenueList';
 
 export default function FindYourHouse () {
    return (
       <Container>
-         <Header>In House</Header>
-         <Content>
+         <Wrapper>
             <Title>
                Find your house
             </Title>
@@ -13,9 +15,13 @@ export default function FindYourHouse () {
             <SubText>
                You can find your workplace by looking up it’s name
             </SubText>
-            <List />
+         </Wrapper>
+         <List>
+            <VenueList />
+         </List>
+         <Wrapper>
             <Button>List your house</Button>
-         </Content>
+         </Wrapper>
       </Container>
    );
 }
