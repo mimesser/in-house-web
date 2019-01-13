@@ -7,6 +7,12 @@ export default createGlobalStyle`
       font-weight: normal;
       font-style: normal;
    }
+   html, body, #root {
+      height: 100%;
+   }
+   div {
+      box-sizing: border-box;
+   }
    body {
       font-family: 'Roboto', sans-serif;
       margin: 0;
