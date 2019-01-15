@@ -6,12 +6,12 @@ import {
 import Venue from './Venue';
 
 export default class FindYourHouse extends React.Component {
-   public state = {
+   state = {
       filter: '',
       venues: null,
    };
 
-   public async componentWillMount () {
+   async componentWillMount () {
       try {
          const { data: { venues } } = await axios.get('https://in-house-dev.azurewebsites.net/api/aggregate');
          this.setState({ venues });
@@ -20,7 +20,7 @@ export default class FindYourHouse extends React.Component {
       }
    }
 
-   public render () {
+   render () {
       const { venues } = this;
       const { filter } = this.state;
 
@@ -51,11 +51,11 @@ export default class FindYourHouse extends React.Component {
       );
    }
 
-   private changeFilter = ({ target: { value } }) => {
+   changeFilter = ({ target: { value } }) => {
       this.setState({ filter: value });
    }
 
-   private get subText () {
+   get subText () {
       const { filter } = this.state;
       return filter
          ? (
@@ -69,7 +69,7 @@ export default class FindYourHouse extends React.Component {
          );
    }
 
-   private get venues () {
+   get venues () {
       const { venues: allVenues, filter } = this.state;
       if (!allVenues) return null;
       if (!filter) return [];

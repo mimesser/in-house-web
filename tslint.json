@@ -5,6 +5,7 @@
       "semicolon": [true],
       "no-var-requires": [false],
       "ter-indent": [true, 3],
-      "no-console": [false]
+      "no-console": [false],
+      "member-access": [false]
    }
 }
