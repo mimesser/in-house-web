@@ -1,11 +1,11 @@
-import axios from 'axios';
+import api from 'api';
 import * as React from 'react';
 import {
    Button, Container, FoundSubText, Input, List, Loader, SubText, Title, Wrapper,
 } from './styles';
 import Venue from './Venue';
 
-export default class FindYourHouse extends React.Component {
+export default class FindYourVenue extends React.Component {
    state = {
       filter: '',
       venues: null,
@@ -13,7 +13,7 @@ export default class FindYourHouse extends React.Component {
 
    async componentWillMount () {
       try {
-         const { data: { venues } } = await axios.get('https://in-house-dev.azurewebsites.net/api/aggregate');
+         const { data: { venues } } = await api.get('aggregate');
          this.setState({ venues });
       } catch (err) {
          console.log(err);
@@ -45,7 +45,7 @@ export default class FindYourHouse extends React.Component {
                {venues.map((venue) => <Venue key={venue.id} venue={venue} />)}
             </List>
             <Wrapper>
-               <Button>List your house</Button>
+               <Button to='/list'>List your house</Button>
             </Wrapper>
          </Container>
       );
