@@ -3,7 +3,8 @@
    "rules": {
       "trailing-comma": [true, {"multiline": "always", "singleline": "never"}],
       "semicolon": [true],
-      "no-var-requires": false,
-      "ter-indent": [true, 3]
+      "no-var-requires": [false],
+      "ter-indent": [true, 3],
+      "no-console": [false]
    }
 }

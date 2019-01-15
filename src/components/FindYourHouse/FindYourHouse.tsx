@@ -1,27 +1,79 @@
+import axios from 'axios';
 import * as React from 'react';
 import {
-   Button, Container, Input, List, SubText, Title, Wrapper,
+   Button, Container, FoundSubText, Input, List, Loader, SubText, Title, Wrapper,
 } from './styles';
-import VenueList from './VenueList';
+import Venue from './Venue';
 
-export default function FindYourHouse () {
-   return (
-      <Container>
-         <Wrapper>
-            <Title>
-               Find your house
-            </Title>
-            <Input placeholder='Search by name or address...' />
+export default class FindYourHouse extends React.Component {
+   public state = {
+      filter: '',
+      venues: null,
+   };
+
+   public async componentWillMount () {
+      try {
+         const { data: { venues } } = await axios.get('https://in-house-dev.azurewebsites.net/api/aggregate');
+         this.setState({ venues });
+      } catch (err) {
+         console.log(err);
+      }
+   }
+
+   public render () {
+      const { venues } = this;
+      const { filter } = this.state;
+
+      if (!venues) {
+         return (
+            <Container>
+               <Loader>Loading...</Loader>
+            </Container>
+         );
+      }
+
+      return (
+         <Container>
+            <Wrapper>
+               <Title>
+                  Find your house
+               </Title>
+               <Input placeholder='Search by name or address...' value={filter} onChange={this.changeFilter} />
+               {this.subText}
+            </Wrapper>
+            <List>
+               {venues.map((venue) => <Venue key={venue.id} venue={venue} />)}
+            </List>
+            <Wrapper>
+               <Button>List your house</Button>
+            </Wrapper>
+         </Container>
+      );
+   }
+
+   private changeFilter = ({ target: { value } }) => {
+      this.setState({ filter: value });
+   }
+
+   private get subText () {
+      const { filter } = this.state;
+      return filter
+         ? (
+            <FoundSubText>
+               Search results
+            </FoundSubText>
+         ) : (
             <SubText>
                You can find your workplace by looking up it’s name
             </SubText>
-         </Wrapper>
-         <List>
-            <VenueList />
-         </List>
-         <Wrapper>
-            <Button>List your house</Button>
-         </Wrapper>
-      </Container>
-   );
+         );
+   }
+
+   private get venues () {
+      const { venues: allVenues, filter } = this.state;
+      if (!allVenues) return null;
+      if (!filter) return [];
+      const simpleFilter = filter.toLowerCase();
+      return allVenues.filter((venue) => venue.name.toLowerCase().indexOf(simpleFilter) > -1);
+   }
 }

@@ -41,6 +41,15 @@ export const SubText = styled.p`
    text-align: center;
 `;
 
+export const FoundSubText = styled.p`
+   font-size: 16px;
+   color: rgba(104,112,137,0.65);
+   margin-left: 0;
+   margin-right: 20px;
+   margin-bottom: 4px;
+   text-align: left;
+`;
+
 export const Button = styled.button`
    font-size: 16px;
    width: 100%;
@@ -56,4 +65,16 @@ export const List = styled.div`
    flex: 1;
    width: 100%;
    overflow-y: auto;
+   display: flex;
+   flex-wrap: wrap;
+   align-content: baseline;
+   @media (min-width: 481px) {
+      padding: 0 10px;
+   };
+`;
+
+export const Loader = styled.div`
+   height: 100%;
+   display: flex;
+   align-items: center;
 `;
