@@ -1,13 +1,9 @@
 import * as React from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import styled from 'styled-components';
 import GlobalStyles from 'styling/GlobalStyles';
-import FindYourHouse from './FindYourHouse';
-// import './../assets/scss/App.scss';
-
-// const reactLogo = require('../assets/img/react_logo.svg');
-
-// export interface IAppProps {
-// }
+import FindYourVenue from './FindYourVenue';
+import ListYourVenue from './ListYourVenue';
 
 const { Fragment } = React;
 
@@ -22,21 +18,33 @@ export const Header = styled.header`
    background-color: #0939CF;
    display: flex;
    align-items: center;
-   justify-content: center;
+   justify-content: space-between;
    color: #fff;
    font-size: 20px;
+   padding: 0 20px;
 `;
 
 export default class App extends React.Component {
    public render () {
       return (
-         <Fragment>
-            <GlobalStyles />
-            <Container>
-               <Header>In House</Header>
-               <FindYourHouse />
-            </Container>
-         </Fragment>
+         <Router>
+            <Fragment>
+               <GlobalStyles />
+               <Container>
+                  <Header>
+                     <i className='material-icons'>
+                        menu
+                     </i>
+                     <span>In House</span>
+                     <i className='material-icons'>
+                        share
+                     </i>
+                  </Header>
+                  <Route path='/' exact={true} component={FindYourVenue} />
+                  <Route path='/list' component={ListYourVenue} />
+               </Container>
+            </Fragment>
+         </Router>
       );
    }
 }

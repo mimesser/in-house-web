@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const mobileMaxWidth = 480;
@@ -50,7 +51,7 @@ export const FoundSubText = styled.p`
    text-align: left;
 `;
 
-export const Button = styled.button`
+export const Button = styled(Link)`
    font-size: 16px;
    width: 100%;
    padding: 10px;
@@ -59,6 +60,8 @@ export const Button = styled.button`
    background-color: #0939CF;
    border-radius: 40px;
    margin: 20px 0 10px;
+   display: block;
+   text-decoration: none;
 `;
 
 export const List = styled.div`
