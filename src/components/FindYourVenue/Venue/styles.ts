@@ -40,7 +40,8 @@ export const VenueWrapper = styled.div`
 `;
 
 export const Image = styled.div`
-   background-image: ${(props) => `url('https://minklistphoto.azureedge.net/photo/${props.src}')`};
+   /* background-image: ${(props) => `url('https://minklistphoto.azureedge.net/photo/${props.src}')`}; */
+   background-image: ${(props) => `url('${props.src}')`};
    background-size: cover;
    background-position: center;
    width: 110px;

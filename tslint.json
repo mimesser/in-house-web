@@ -6,6 +6,7 @@
       "no-var-requires": [false],
       "ter-indent": [true, 3],
       "no-console": [false],
-      "member-access": [false]
+      "member-access": [false],
+      "maxx-classes-per-file": [false],
    }
 }
