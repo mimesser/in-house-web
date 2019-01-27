@@ -1,19 +1,23 @@
 import api from 'api';
 import * as React from 'react';
+import { getVenues } from 'services/venue';
 import {
    Button, Container, FoundSubText, Input, List, Loader, SubText, Title, Wrapper,
 } from './styles';
 import Venue from './Venue';
+import IVenue from 'interfaces/IVenue';
 
-export default class FindYourVenue extends React.Component {
-   state = {
-      filter: '',
-      venues: null,
-   };
+class State {
+   readonly filter: string = '';
+   readonly venues?: IVenue[] = null;
+}
+
+export default class FindYourVenue extends React.Component<{}, State> {
+   state = new State();
 
    async componentWillMount () {
       try {
-         const { data: { venues } } = await api.get('aggregate');
+         const venues = await getVenues();
          this.setState({ venues });
       } catch (err) {
          console.log(err);
@@ -21,8 +25,8 @@ export default class FindYourVenue extends React.Component {
    }
 
    render () {
-      const { venues } = this;
-      const { filter } = this.state;
+      const { filter, venues } = this.state;
+
 
       if (!venues) {
          return (
@@ -51,11 +55,11 @@ export default class FindYourVenue extends React.Component {
       );
    }
 
-   changeFilter = ({ target: { value } }) => {
+   changeFilter = ({ target: { value } }): void => {
       this.setState({ filter: value });
    }
 
-   get subText () {
+   get subText (): React.ReactNode {
       const { filter } = this.state;
       return filter
          ? (
@@ -69,7 +73,7 @@ export default class FindYourVenue extends React.Component {
          );
    }
 
-   get venues () {
+   get venues (): IVenue[] {
       const { venues: allVenues, filter } = this.state;
       if (!allVenues) return null;
       if (!filter) return [];
