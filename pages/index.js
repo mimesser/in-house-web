@@ -5,7 +5,7 @@ function Home() {
     <main>
       <div className="container">
         <h1><strong>In</strong>House</h1>
-        <h3>Coming soon...</h3>
+        <h3>Coming soon....</h3>
       </div>
       
       <style global jsx>{`
