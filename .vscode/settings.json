@@ -1,7 +1,5 @@
 {
-   "cSpell.words": [
-      "Visser",
-      "crossorigin",
-      "devtool"
-   ]
+  "appService.zipIgnorePattern": [
+    ".vscode{,/**}"
+  ]
 }
