@@ -1,5 +1,6 @@
 {
   "name": "in-house",
+  "main": "server.js",
   "scripts": {
     "dev": "node server.js",
     "build": "next build",
