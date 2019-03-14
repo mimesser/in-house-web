@@ -1,9 +1,9 @@
-import { Fragment } from 'react';
-
 function Home() {
+  console.log(process.env);
   return (
     <main>
       <div className="container">
+        {JSON.stringify(process.env)}
         <h1><strong>In</strong>House</h1>
         <h3>Coming soon...</h3>
       </div>
