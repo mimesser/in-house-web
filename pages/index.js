@@ -1,11 +1,10 @@
-function Home() {
-  console.log(process.env);
+function Home({ mode }) {
   return (
     <main>
       <div className="container">
-        {JSON.stringify(process.env)}
         <h1><strong>In</strong>House</h1>
         <h3>Coming soon...</h3>
+        <h5>{mode}</h5>
       </div>
       
       <style global jsx>{`
@@ -36,5 +35,13 @@ function Home() {
     </main>
   );
 }
+
+Home.getInitialProps = () => {
+  // TODO: save in redux.
+  if (process.browser) {
+    return {};
+  }
+  return { mode: process.env.MODE };
+};
 
 export default Home;
