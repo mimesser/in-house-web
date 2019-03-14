@@ -2,9 +2,9 @@
   "name": "in-house",
   "main": "server.js",
   "scripts": {
-    "dev": "node server.js",
+    "dev": "cross-env MODE=dev node server.js",
     "build": "next build",
-    "start": "cross-env NODE_ENV=production node server.js"
+    "start": "cross-env NODE_ENV=production, MDD=bla node server.js"
   },
   "dependencies": {
     "koa": "^2.7.0",
