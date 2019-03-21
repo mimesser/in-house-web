@@ -1,8 +1,6 @@
-import { Fragment } from 'react';
-
 export default function Input({ onChange, ...props }) {
    return (
-      <div className="container">
+      <div className="input">
          <i className="material-icons">
             search
          </i>
@@ -11,7 +9,7 @@ export default function Input({ onChange, ...props }) {
             onChange={evt => onChange(evt.target.value)}
          />
          <style jsx>{`
-            .container {
+            .input {
                position: relative;
             }
             i {
