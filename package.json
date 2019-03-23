@@ -2,8 +2,10 @@
   "name": "in-house",
   "main": "server.js",
   "scripts": {
-    "dev": "cross-env MODE=dev nodemon server.js",
-    "build": "next build",
+    "lint": "eslint --ext .js pages components lib server.js",
+    "dev": "npm run lint && npm run clean-cache && node server.js",
+    "clean-cache": "rimraf -rf ./node_modules/.cache",
+    "build": "npm run clean-cache && next build",
     "start": "cross-env NODE_ENV=production node server.js"
   },
   "dependencies": {
@@ -31,6 +33,7 @@
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.12.4",
-    "nodemon": "^1.18.10"
+    "nodemon": "^1.18.10",
+    "rimraf": "^2.6.3"
   }
 }
