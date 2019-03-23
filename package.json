@@ -3,10 +3,11 @@
   "main": "server.js",
   "scripts": {
     "lint": "eslint --ext .js pages components lib server.js",
-    "dev": "npm run lint && npm run clean-cache && node server.js",
+    "dev": "cross-env MODE=dev npm run lint && npm run clean-cache && node server.js",
     "clean-cache": "rimraf -rf ./node_modules/.cache",
     "build": "npm run clean-cache && next build",
-    "start": "cross-env NODE_ENV=production node server.js"
+    "start": "cross-env MODE=production NODE_ENV=production node server.js",
+    "prestart": "npm run build"
   },
   "dependencies": {
     "axios": "^0.18.0",
