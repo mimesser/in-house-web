@@ -2,7 +2,7 @@ import axios from 'axios';
 
 
 const api = axios.create({
-   baseURL: 'https://inhousecore.azurewebsites.net/api',
+   baseURL: 'https://inhousedev.azurewebsites.net/api',
    // withCredentials: false,
    headers: {
       Accept: 'application/json',
