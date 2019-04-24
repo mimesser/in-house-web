@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-
 const api = axios.create({
    baseURL: 'https://inhousedev.azurewebsites.net/api',
    // withCredentials: false,
@@ -9,7 +8,6 @@ const api = axios.create({
       // 'cache-control': 'no-cache'
    },
    // headers: {
-   //    
    //    'Content-Type': 'application/json',
    //    'Access-Control-Allow-Origin': '*',
    //    'Access-Control-Request-Method': '*',
@@ -17,12 +15,11 @@ const api = axios.create({
    // },
 });
 
-   // const cachedToken = localStorage.getItem('in-house/token');
+// const cachedToken = localStorage.getItem('in-house/token');
 
 export function setAuthorization(token) {
    localStorage.setItem('in-house/token', token);
    api.defaults.headers.Authorization = `token ${token}`;
 }
-
 
 export default api;
