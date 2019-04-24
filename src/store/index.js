@@ -19,9 +19,5 @@ export const reducer = (state = initialState, action) => {
 };
 
 export function initializeStore(state = initialState) {
-   return createStore(
-      reducer,
-      state,
-      composeWithDevTools(applyMiddleware(thunkMiddleware)),
-   );
+   return createStore(reducer, state, composeWithDevTools(applyMiddleware(thunkMiddleware)));
 }

@@ -4,7 +4,11 @@
         "es6": true,
         "node": true
     },
-    "extends": "airbnb",
+    "extends": [
+        "airbnb",
+        "prettier",
+        "prettier/react"
+    ],
     "parser": "babel-eslint",
     "parserOptions": {
         "ecmaFeatures": {
@@ -14,8 +18,9 @@
         "sourceType": "module"
     },
     "plugins": [
+        "babel",
         "react",
-        "babel"
+        "prettier"
     ],
     "rules": {
         "linebreak-style": "off",
