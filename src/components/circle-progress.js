@@ -15,8 +15,8 @@ export default function CircleProgress({ score, size = 60 }) {
 
    const angle = percentage * 3.6;
 
-   const x = 16 + 15.9155 * Math.cos(angle * Math.PI / 180);
-   const y = 16 + 15.9155 * Math.sin(angle * Math.PI / 180);
+   const x = 16 + 15.9155 * Math.cos((angle * Math.PI) / 180);
+   const y = 16 + 15.9155 * Math.sin((angle * Math.PI) / 180);
 
    return (
       <div className="content">
@@ -30,54 +30,55 @@ export default function CircleProgress({ score, size = 60 }) {
             <div className="decimal">{decimal}</div>
          </div>
 
-         <style jsx>{`
-            svg {
-               height: ${size}px;
-               width: ${size}px;
-               transform: rotate(90deg);
-            }
+         <style jsx>
+            {`
+               svg {
+                  height: ${size}px;
+                  width: ${size}px;
+                  transform: rotate(90deg);
+               }
 
-            .circle-background {
-               fill: none;
-               stroke: #E5E5E5;
-               stroke-width: ${STROKE_WIDTH}px;
-            }
+               .circle-background {
+                  fill: none;
+                  stroke: #e5e5e5;
+                  stroke-width: ${STROKE_WIDTH}px;
+               }
 
-            .dot {
-               fill: #ffffff;
-               stroke: #14DCED;
-               stroke-width: ${STROKE_WIDTH};
-            }
+               .dot {
+                  fill: #ffffff;
+                  stroke: #14dced;
+                  stroke-width: ${STROKE_WIDTH};
+               }
 
-            .circle-progress {
-               fill: none;
-               stroke: #14DCED;
-               stroke-dasharray: 100 100;
-               stroke-dashoffset: ${offset};
-               stroke-width: ${STROKE_WIDTH};
-               transition: stroke-dashoffset 1s ease-in-out;
-            }
+               .circle-progress {
+                  fill: none;
+                  stroke: #14dced;
+                  stroke-dasharray: 100 100;
+                  stroke-dashoffset: ${offset};
+                  stroke-width: ${STROKE_WIDTH};
+                  transition: stroke-dashoffset 1s ease-in-out;
+               }
 
-            .content {
-               display: flex;
-               align-items: center;
-               justify-content: center;
-            }
+               .content {
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+               }
 
-            .score {
-               position: absolute;
-               display: flex;
-            }
-            .base {
-               font-size: 18px;
-               font-weight: bold;
-            }
-            .decimal {
-               font-size: 12px;
-               font-weight: bold;
-               margin-top: 3px;
-            }
-         `}
+               .score {
+                  position: absolute;
+                  display: flex;
+               }
+               .base {
+                  font-size: 18px;
+                  font-weight: bold;
+               }
+               .decimal {
+                  font-size: 12px;
+                  font-weight: bold;
+                  margin-top: 3px;
+               }
+            `}
          </style>
       </div>
    );

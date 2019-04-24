@@ -12,7 +12,6 @@ class MyApp extends App {
          pageProps = await Component.getInitialProps(ctx);
       }
 
-
       return { pageProps };
    }
 
@@ -30,7 +29,7 @@ class MyApp extends App {
 
             setAuthorization(aggregate.userId);
 
-            this.props.reduxStore.dispatch(({ type: 'SET_AGGREGATE', aggregate }));
+            this.props.reduxStore.dispatch({ type: 'SET_AGGREGATE', aggregate });
          }
       } catch (err) {
          // TODO:
@@ -49,13 +48,14 @@ class MyApp extends App {
                   <Component {...pageProps} />
                </main>
 
-               <style jsx>{`
-                  main {
-                     padding: 20px 10px;
-                     max-width: 1200px;
-                     margin: 0 auto;
-                  }
-               `}
+               <style jsx>
+                  {`
+                     main {
+                        padding: 20px 10px;
+                        max-width: 1200px;
+                        margin: 0 auto;
+                     }
+                  `}
                </style>
             </Provider>
          </Container>
