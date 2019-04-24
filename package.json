@@ -1,12 +1,12 @@
 {
   "name": "in-house",
-  "main": "server.js",
+  "main": "server/index.js",
   "scripts": {
-    "lint": "eslint --ext .js pages components lib server.js",
-    "dev": "cross-env MODE=dev npm run lint && npm run clean-cache && node server.js",
+    "lint": "eslint --ext .js src server/index.js",
+    "dev": "cross-env MODE=dev npm run lint && npm run clean-cache && nodemon server/index.js",
     "clean-cache": "rimraf -rf ./node_modules/.cache",
     "build": "npm run clean-cache && next build",
-    "start": "cross-env MODE=production NODE_ENV=production node server.js",
+    "start": "cross-env MODE=production NODE_ENV=production node server/index.js",
     "prestart": "npm run build"
   },
   "dependencies": {

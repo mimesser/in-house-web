@@ -4,7 +4,7 @@ const Router = require('koa-router');
 
 const port = parseInt(process.env.PORT || process.env.port, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
-const app = nextApp({ dev });
+const app = nextApp({ dir: './src', dev });
 const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
@@ -23,6 +23,7 @@ app.prepare().then(() => {
 
    server.use(router.routes());
    server.listen(port, () => {
+      // eslint-disable-next-line no-console
       console.log(`> Ready on http://localhost:${port}`);
    });
 });
