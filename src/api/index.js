@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const api = axios.create({
-   baseURL: 'https://inhousedev.azurewebsites.net/api',
+   baseURL:
+      process.env.NODE_ENV === 'development' && process.env.NODE_ENV !== 'test' ? `http://localhost:5080/api` : 'https://inhousedev.azurewebsites.net/api',
    // withCredentials: false,
    headers: {
       Accept: 'application/json',

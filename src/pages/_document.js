@@ -1,4 +1,6 @@
+import React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
+import GlobalStyle from '../components/GlobalStyle';
 
 class MyDocument extends Document {
    static async getInitialProps(ctx) {
@@ -16,6 +18,7 @@ class MyDocument extends Document {
                <link rel="stylesheet" type="text/css" href="/static/site.css" />
             </Head>
             <body>
+               <GlobalStyle />
                <Main />
                <NextScript />
             </body>
