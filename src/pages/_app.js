@@ -1,7 +1,7 @@
 import App, { Container } from 'next/app';
 import { Provider } from 'react-redux';
 import withReduxStore from '../lib/with-redux-store';
-import Header from '../components/header';
+import { Header } from '../components';
 import api, { setAuthorization } from '../api';
 
 class MyApp extends App {

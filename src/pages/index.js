@@ -1,6 +1,7 @@
 import { Fragment, Component } from 'react';
 import axios from 'axios';
-import { Input } from '../components';
+
+import { IconInput } from '../components/molecules';
 import api from '../api';
 import VenueList from '../components/venue-list';
 
@@ -48,7 +49,7 @@ export default class Home extends Component {
                   <p>You can find your workplace by looking up its name or address.</p>
                </Fragment>
             )}
-            <Input type="search" placeholder="Search for name or address" value={search} onChange={this.setSearch} />
+            <IconInput type="search" icon="magnifying-glass" placeholder="Search for name or address" value={search} onChange={this.setSearch} />
             {(() => {
                if (!search) return null;
                if (loading) return <div className="loading">Loading...</div>;

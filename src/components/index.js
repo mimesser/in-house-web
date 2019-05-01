@@ -1,2 +1,3 @@
-export { default as Header } from './header';
-export { default as Input } from './input';
+export * from './atoms';
+export * from './molecules';
+export * from './organisms';
