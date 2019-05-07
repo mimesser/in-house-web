@@ -1,6 +1,6 @@
 const STROKE_WIDTH = 2;
 
-export default function CircleProgress({ score, size = 60 }) {
+export function CircleProgress({ score, size = 60 }) {
    const validScore = (() => {
       if (score < 0) return 0;
       if (score > 10) return 10;

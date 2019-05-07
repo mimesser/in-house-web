@@ -5,8 +5,8 @@ import { Loader } from '../Loader';
 
 const StyledButton = styled.button`
    border-radius: 5px;
-   background-color: ${props => (props.secondary ? '#F7A072' : '#a1cdf1')};
-   color: #fff;
+   background-color: ${props => (props.secondary ? 'white' : 'black')};
+   color: ${props => (props.secondary ? 'black' : 'white')};
    padding: 10px 15px;
    font-size: ${props => {
       if (props.big) return '20px';
@@ -16,7 +16,7 @@ const StyledButton = styled.button`
    border: none;
    cursor: pointer;
    margin: 15px;
-   border: 2px solid ${props => (props.secondary ? '#F7A072' : '#a1cdf1')};
+   border: 2px solid ${props => (props.secondary ? 'black' : 'white')};
 
    ${props => {
       return (

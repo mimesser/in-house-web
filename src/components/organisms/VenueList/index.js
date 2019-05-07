@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
-import CircleProgress from './circle-progress';
-import { Modal } from './organisms/Modal';
-import { VenueInsiderQuestionChallenge } from './organisms/VenueInsiderQuestionChallenge';
+import { CircleProgress } from '../../atoms';
+import { Modal } from '../Modal';
+import { VenueInsiderQuestionChallenge } from '../VenueInsiderQuestionChallenge';
 
-import { unsplashRestaurantAndCafeCollection } from './imgURLs'; // https://unsplash.com/collections/312299/restaurant-cafe
+import { unsplashRestaurantAndCafeCollection } from './imgURLs';
 
+// https://unsplash.com/collections/312299/restaurant-cafe
 const allImgURLs = unsplashRestaurantAndCafeCollection.length;
 
 function getRandomScore() {
@@ -22,7 +23,7 @@ const getRandomImage = () => {
    return unsplashRestaurantAndCafeCollection[imgAtIndex];
 };
 
-function VenueList({ venues, industries }) {
+function VenueListComponent({ venues, industries }) {
    const [modalState, setModalState] = useState(false);
    const [venueSelected, setVenueSelected] = useState(null);
 
@@ -36,44 +37,45 @@ function VenueList({ venues, industries }) {
    }, [modalState, venueSelected]);
 
    return (
-      <section className="container">
+      <>
          <div className="row">
-            {venues.map(venue => {
-               const industry = industries[venue.industryId];
+            {venues &&
+               venues.map(venue => {
+                  const industry = industries[venue.industryId];
 
-               return (
-                  <div
-                     className="col-xs-12 col-sm-6 col-md-4 col-lg-3"
-                     key={venue.id}
-                     onClick={() => {
-                        handleModalState();
-                        handleVenueSelected(venue);
-                     }}
-                  >
-                     <div className="card">
-                        <div className="container-image">
-                           <img className="image" src={getRandomImage()} alt="random" />
-                        </div>
-                        <div className="venue-details">
-                           <div className="industry">{industry && industry.name}</div>
-                           <div className="venue-name">{venue.name}</div>
-                           <div className="venue-address">
-                              {venue.venueInfo.address}
-                              <br />
-                              {venue.venueInfo.city}, {venue.venueInfo.state} {venue.venueInfo.zipCode}
+                  return (
+                     <div
+                        className="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+                        key={venue.id}
+                        onClick={() => {
+                           handleModalState();
+                           handleVenueSelected(venue);
+                        }}
+                     >
+                        <div className="card">
+                           <div className="container-image">
+                              <img className="image" src={getRandomImage()} alt="random" />
                            </div>
-                        </div>
-                        <div className="right">
-                           <CircleProgress score={getRandomScore()} />
-                           <div className="insiders">
-                              <i className="material-icons">person</i>
-                              <span>{getRandomInsiders()}</span>
+                           <div className="venue-details">
+                              <div className="industry">{industry && industry.name}</div>
+                              <div className="venue-name">{venue.name}</div>
+                              <div className="venue-address">
+                                 {venue.venueInfo.address}
+                                 <br />
+                                 {venue.venueInfo.city}, {venue.venueInfo.state} {venue.venueInfo.zipCode}
+                              </div>
+                           </div>
+                           <div className="right">
+                              <CircleProgress score={getRandomScore()} />
+                              <div className="insiders">
+                                 <i className="material-icons">person</i>
+                                 <span>{getRandomInsiders()}</span>
+                              </div>
                            </div>
                         </div>
                      </div>
-                  </div>
-               );
-            })}
+                  );
+               })}
          </div>
          <Modal open={modalState} closeModal={() => handleModalState()}>
             {venueSelected ? <VenueInsiderQuestionChallenge venue={venueSelected} /> : null}
@@ -156,19 +158,17 @@ function VenueList({ venues, industries }) {
                }
             `}
          </style>
-      </section>
+      </>
    );
 }
 
-function mapStateToProps({ aggregate }) {
-   return {
-      industries: !aggregate
-         ? {}
-         : aggregate.industries.reduce((res, industry) => {
-              res[industry.id] = industry;
-              return res;
-           }, {}),
-   };
-}
-
-export default connect(mapStateToProps)(VenueList);
+export const VenueList = connect(
+   state => ({
+      venues: state.venues,
+      industries: state.aggregate.industries.reduce((res, industry) => {
+         res[industry.id] = industry;
+         return res;
+      }, {}),
+   }),
+   dispatch => ({}),
+)(VenueListComponent);

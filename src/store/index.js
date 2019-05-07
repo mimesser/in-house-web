@@ -1,23 +1,24 @@
-import { createStore, applyMiddleware } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import thunkMiddleware from 'redux-thunk';
+import { applyMiddleware, createStore } from 'redux';
+import createSagaMiddleware from 'redux-saga';
 
-const initialState = {
-   aggregate: null,
-};
+import rootReducer, { initialState } from './reducer';
+import rootSaga from './saga';
 
-// REDUCERS
-export const reducer = (state = initialState, action) => {
-   switch (action.type) {
-      case 'SET_AGGREGATE': {
-         return { ...state, aggregate: action.aggregate };
-      }
-      default: {
-         return state;
-      }
+const bindMiddleware = middleware => {
+   if (process.env.NODE_ENV !== 'production') {
+      const { composeWithDevTools } = require('redux-devtools-extension');
+      return composeWithDevTools(applyMiddleware(...middleware));
    }
+   return applyMiddleware(...middleware);
 };
 
-export function initializeStore(state = initialState) {
-   return createStore(reducer, state, composeWithDevTools(applyMiddleware(thunkMiddleware)));
+function configureStore(initialState = initialState) {
+   const sagaMiddleware = createSagaMiddleware();
+   const store = createStore(rootReducer, initialState, bindMiddleware([sagaMiddleware]));
+
+   store.sagaTask = sagaMiddleware.run(rootSaga);
+
+   return store;
 }
+
+export default configureStore;
