@@ -1,79 +1,51 @@
-import { Fragment, Component } from 'react';
-import axios from 'axios';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import Link from 'next/link';
 
-import { IconInput } from '../components/molecules';
-import api from '../api';
-import VenueList from '../components/venue-list';
+import { setAuthorization } from '../api';
+import { Page } from '../components/templates';
+import { loadAggregateData } from '../store/actions';
+import { aggregateUserIdSelector } from '../store/selectors';
+import { Button, Container, Heading, Flex, Column } from '../components/atoms';
 
-export default class Home extends Component {
-   state = {
-      search: '',
-      venues: [],
-      loading: false,
-      cancelSource: null, // Used with axios to cancel previous request.
-   };
+class Index extends Component {
+   static async getInitialProps(props) {
+      const { store, isServer } = props.ctx;
 
-   setSearch = search => {
-      this.setState({ loading: true, search });
-      this.getVenues(search);
-   };
-
-   cancelSearchFunc = () => {
-      const { cancelSource } = this.state;
-      if (cancelSource) {
-         cancelSource.cancel('Start new search, stop active search');
+      if (!store.getState().aggregate) {
+         store.dispatch(loadAggregateData());
+      } else {
+         setAuthorization(aggregateUserIdSelector(store.getState()));
       }
-   };
 
-   getVenues = async search => {
-      this.cancelSearchFunc();
-      const source = axios.CancelToken.source();
-      this.setState({ cancelSource: source });
-      try {
-         const { data: venues } = await api.get('/venues', { params: { IdentifierFreeText: search }, cancelToken: source.token });
-         this.setState({ cancelSource: null, venues, loading: false });
-      } catch (err) {
-         // Probably cancelled.
-         // TODO: Simply canceling axios requests is not good enough.
-         // We need to debounce the requests.
-      }
-   };
+      return { isServer };
+   }
 
    render() {
-      const { search, loading, venues } = this.state;
       return (
-         <Fragment>
-            {!search && (
-               <Fragment>
-                  <h1>Let’s find your house</h1>
-                  <p>You can find your workplace by looking up its name or address.</p>
-               </Fragment>
-            )}
-            <IconInput type="search" icon="magnifying-glass" placeholder="Search for name or address" value={search} onChange={this.setSearch} />
-            {(() => {
-               if (!search) return null;
-               if (loading) return <div className="loading">Loading...</div>;
-               if (venues.length) return <VenueList venues={venues} />;
-               return <p className="no-houses">No current houses match your search.</p>;
-            })()}
-            <style jsx>
-               {`
-                  .no-houses {
-                     font-size: 24px;
-                     line-height: 28px;
-                     margin-top: 32px;
-                  }
-                  .loading {
-                     margin-top: 24px;
-                  }
-                  @media screen and (max-width: 480px) {
-                     p {
-                        width: 267px;
-                     }
-                  }
-               `}
-            </style>
-         </Fragment>
+         <Page title="Landing Page">
+            <Container>
+               <Flex alignStretch>
+                  <Column>
+                     <Heading>change everything?</Heading>
+
+                     <Heading h2>90 00 00 00</Heading>
+
+                     <p>when everyone has a safe, equal & anonymous voice at the table, the entirety of your organization will change forever</p>
+
+                     <Heading h4>how will your world change?</Heading>
+                  </Column>
+               </Flex>
+
+               <Flex justifyAround>
+                  <Link href="/intro">
+                     <Button>see how it works</Button>
+                  </Link>
+               </Flex>
+            </Container>
+         </Page>
       );
    }
 }
+
+export default connect()(Index);

@@ -23,4 +23,9 @@ export const Container = styled.div`
       if (props.small) return '15px';
       return '25px';
    }};
+
+   min-height: ${props => {
+      if (props.fullHeight) return '100vh';
+      return undefined;
+   }};
 `;
