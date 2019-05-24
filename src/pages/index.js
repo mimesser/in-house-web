@@ -9,17 +9,17 @@ import { aggregateUserIdSelector } from '../store/selectors';
 import { Button, Container, Heading, Flex, Column } from '../components/atoms';
 
 class Index extends Component {
-   static async getInitialProps(props) {
-      const { store, isServer } = props.ctx;
-
-      if (!store.getState().aggregate) {
-         store.dispatch(loadAggregateData());
-      } else {
-         setAuthorization(aggregateUserIdSelector(store.getState()));
-      }
-
-      return { isServer };
-   }
+   // static async getInitialProps(props) {
+   //    const { store, isServer } = props.ctx;
+   //
+   //    if (!store.getState().aggregate) {
+   //       store.dispatch(loadAggregateData());
+   //    } else {
+   //       setAuthorization(aggregateUserIdSelector(store.getState()));
+   //    }
+   //
+   //    return { isServer };
+   // }
 
    render() {
       return (
@@ -48,4 +48,4 @@ class Index extends Component {
    }
 }
 
-export default connect()(Index);
+export default Index;
