@@ -22,7 +22,7 @@ export const ModalContainer = styled(Container)`
    align-self: center;
    justify-self: center;
    background: ${props => props.theme.white};
-   max-width: ${props => props.theme.maxWidth};
+   max-width: 90vw;
    max-height: 100vh;
    position: relative;
    overflow: hidden;

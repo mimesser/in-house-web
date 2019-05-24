@@ -2,6 +2,8 @@ import React from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { normalize } from 'styled-normalize';
 
+import { BASE_FONT_SIZE } from '../theme';
+
 const GlobalStyle = createGlobalStyle`
    ${normalize}
    * {
@@ -9,7 +11,7 @@ const GlobalStyle = createGlobalStyle`
    }
 
    body {
-      font-size: 16px;
+      font-size: ${BASE_FONT_SIZE};
       font-family: 'Roboto', sans-serif;
       font-weight: 300;
    }
