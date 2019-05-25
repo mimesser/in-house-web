@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import Link from 'next/link';
 
-import { setAuthorization } from '../api';
 import { Page } from '../components/templates';
-import { loadAggregateData } from '../store/actions';
-import { aggregateUserIdSelector } from '../store/selectors';
-import { Button, Container, Heading, Flex, Column } from '../components/atoms';
+import { Button, Container, Heading, Strong, Flex } from '../components/atoms';
+import { SplashLayout } from '../components/organisms';
+
+// import { setAuthorization } from '../api';
+// import { loadAggregateData } from '../store/actions';
+// import { aggregateUserIdSelector } from '../store/selectors';
 
 class Index extends Component {
    // static async getInitialProps(props) {
@@ -23,25 +24,18 @@ class Index extends Component {
 
    render() {
       return (
-         <Page title="Landing Page">
+         <Page>
             <Container>
-               <Flex alignStretch>
-                  <Column>
-                     <Heading>change everything?</Heading>
+               <SplashLayout>
+                  <Heading>change everything?</Heading>
 
-                     <Heading h2>90 00 00 00</Heading>
+                  <p>when everyone has a safe, equal & anonymous voice at the table, the entirety of your organization will change forever</p>
 
-                     <p>when everyone has a safe, equal & anonymous voice at the table, the entirety of your organization will change forever</p>
-
-                     <Heading h4>how will your world change?</Heading>
-                  </Column>
-               </Flex>
-
-               <Flex justifyAround>
+                  <Strong>how will your world change?</Strong>
                   <Link href="/intro">
                      <Button>see how it works</Button>
                   </Link>
-               </Flex>
+               </SplashLayout>
             </Container>
          </Page>
       );

@@ -6,4 +6,5 @@ export const spacing = {
    small: calcRem('8px'),
    medium: calcRem('16px'),
    large: calcRem('24px'),
+   xLarge: calcRem('32px'),
 };
