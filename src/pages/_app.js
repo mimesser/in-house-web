@@ -7,6 +7,7 @@ import withReduxSaga from 'next-redux-saga';
 
 import createStore from '../store';
 import theme from '../theme';
+import GlobalStyle from '../components/GlobalStyle';
 
 class MyApp extends App {
    static async getInitialProps({ Component, ctx }) {
@@ -26,7 +27,10 @@ class MyApp extends App {
          <Container>
             <Provider store={store}>
                <ThemeProvider theme={theme}>
-                  <Component {...pageProps} />
+                  <>
+                     <GlobalStyle />
+                     <Component {...pageProps} />
+                  </>
                </ThemeProvider>
             </Provider>
          </Container>

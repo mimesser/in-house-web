@@ -7,3 +7,4 @@ export { Heading } from './Heading';
 export { Icon } from './Icon';
 export { Input } from './Input';
 export { Loader } from './Loader';
+export { Strong } from './Strong';

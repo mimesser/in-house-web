@@ -3,6 +3,11 @@ import { createGlobalStyle } from 'styled-components';
 import { normalize } from 'styled-normalize';
 
 import { BASE_FONT_SIZE } from '../theme';
+import { key, font } from '../utils';
+
+const background = ({ theme: { appBackground } }) => appBackground;
+// TODO: decide if key util is better than syntax above (no autocomplete, silent failure ...)
+const color = key('textColors.primary');
 
 const GlobalStyle = createGlobalStyle`
    ${normalize}
@@ -12,8 +17,11 @@ const GlobalStyle = createGlobalStyle`
 
    body {
       font-size: ${BASE_FONT_SIZE};
-      font-family: 'Roboto', sans-serif;
+      font-family: ${font('primary')};
       font-weight: 300;
+      color: ${color};
+      background-color: ${background};
+      min-width: 320px;
    }
 
    h1,
@@ -22,7 +30,7 @@ const GlobalStyle = createGlobalStyle`
    h4,
    h5,
    h6 {
-      font-family: 'Poppins', sans-serif;
+      font-family: ${font('emphasis')};
       font-weight: normal;
    }
 `;

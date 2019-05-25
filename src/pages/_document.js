@@ -1,7 +1,6 @@
 import React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
-import GlobalStyle from '../components/GlobalStyle';
 
 class MyDocument extends Document {
    static async getInitialProps(ctx) {
@@ -34,11 +33,10 @@ class MyDocument extends Document {
          <Html>
             <Head>
                <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-               <link href="https://fonts.googleapis.com/css?family=Montserrat|Poppins|Roboto" rel="stylesheet" />
+               <link href="https://fonts.googleapis.com/css?family=Montserrat|Poppins|Roboto:300,400&display=swap" rel="stylesheet" />
                <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
             </Head>
             <body>
-               <GlobalStyle />
                <Main />
                <NextScript />
             </body>

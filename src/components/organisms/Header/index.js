@@ -1,35 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { Container, Heading } from '../../atoms';
+import { calcRem, spacing } from '../../../theme';
 
-const StyledHeader = styled(Container)`
+const imgSize = calcRem('20px');
+const Layout = styled.div`
    display: flex;
-   justify-content: space-between;
-   align-items: center;
-   height: 60px;
-   padding: 0 20px;
+   padding: ${imgSize} ${spacing.large};
 
-   i {
-      margin-left: auto;
-   }
-   h1 {
-      font-weight: 300;
-      font-size: 18px;
-   }
-   h1 strong {
-      color: #9b9b9b;
+   img {
+      height: ${imgSize};
    }
 `;
 
-export const Header = () => {
-   return (
-      <StyledHeader>
-         <Heading>
-            In<strong>House</strong>
-         </Heading>
+export const Header = () => (
+   <Layout>
+      <img src="/static/logo.png" alt="logo" />
 
-         <i className="material-icons">menu</i>
-      </StyledHeader>
-   );
-};
+      {/* TODO: wrap logo with anchor? */}
+      {/* TODO: menu */}
+   </Layout>
+);
