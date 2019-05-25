@@ -4,6 +4,10 @@ import styled from 'styled-components';
 import { breakpoints, spacing } from '../../../theme';
 
 export const Container = styled.div`
+   display: flex;
+   flex-direction: column;
+   flex: auto;
+
    padding-left: ${props => {
       if (props.full) return 0;
       return `calc((100vw - ${breakpoints.sm}) / 2)`;
