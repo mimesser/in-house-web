@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import { Page } from '../components/templates';
 import { Button, Container, Heading, Strong, Flex } from '../components/atoms';
-import { SplashLayout } from '../components/organisms';
+import { LandingLayout } from '../components/organisms';
 
 // import { setAuthorization } from '../api';
 // import { loadAggregateData } from '../store/actions';
@@ -26,7 +26,7 @@ class Index extends Component {
       return (
          <Page>
             <Container>
-               <SplashLayout>
+               <LandingLayout>
                   <Heading>change everything?</Heading>
 
                   <p>when everyone has a safe, equal & anonymous voice at the table, the entirety of your organization will change forever</p>
@@ -35,7 +35,7 @@ class Index extends Component {
                   <Link href="/intro">
                      <Button>see how it works</Button>
                   </Link>
-               </SplashLayout>
+               </LandingLayout>
             </Container>
          </Page>
       );

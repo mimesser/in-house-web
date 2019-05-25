@@ -5,4 +5,4 @@ export { MultiStep } from './MultiStep';
 export { Modal } from './Modal';
 export { VenueList } from './VenueList';
 export { VenueInsiderQuestionChallenge } from './VenueInsiderQuestionChallenge';
-export { SplashLayout } from './SplashLayout';
+export * from './Splash';
