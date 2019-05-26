@@ -31,7 +31,9 @@
     "redux": "4.0.1",
     "redux-saga": "1.0.1",
     "styled-components": "^4.2.0",
-    "styled-icons": "^7.10.0"
+    "styled-normalize": "8.0.6",
+    "styled-icons": "^7.10.0",
+    "polished": "3.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.4.0",
@@ -43,6 +45,7 @@
     "babel-jest": "^23.4.2",
     "babel-loader": "^8.0.5",
     "babel-preset-airbnb": "^3.2.1",
+    "babel-plugin-styled-components": "1.10.0",
     "cross-env": "^5.2.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.12.1",

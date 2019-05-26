@@ -3,3 +3,4 @@ coverage/
 .next/
 .idea/
 .bin/
+yarn-error.log

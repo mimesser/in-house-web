@@ -3,4 +3,4 @@ export { ifProp } from './theming/ifProp';
 export { key } from './theming/key';
 export { palette } from './theming/palette';
 export { prop } from './theming/prop';
-export { size } from './theming/size';
+export { breakpoints } from './theming/breakpoints';
