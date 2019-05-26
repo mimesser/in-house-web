@@ -1,31 +1,48 @@
 import React, { useState } from 'react';
-import { Container, Flex } from '../../atoms';
-import { RadioGroup, Radio } from '../../molecules';
+import styled from 'styled-components';
 
-export function MultiStep(props) {
-   const [selectionValue, setSelectionValue] = useState(0);
+import { Container } from '../../atoms';
+import { calcRem, spacing } from '../../../theme';
 
-   const handleChange = value => {
-      if (typeof value === 'object') {
-         if (selectionValue + 1 < props.steps.length) {
-            return setSelectionValue(selectionValue + 1);
-         }
-         return null;
+const navSize = calcRem('10px');
+const NavButton = styled.button`
+   background: ${({ selected, theme: { palette } }) => (selected ? palette.grayscale[0] : palette.grayscale[1])};
+   border-radius: 50%;
+   width: ${navSize};
+   height: ${navSize};
+   padding: 0;
+   border: none;
+   outline: none;
+   cursor: pointer;
+
+   :not(:last-child) {
+      margin-right: ${navSize};
+   }
+`;
+const Nav = styled.nav`
+   margin: auto auto ${spacing.medium} auto;
+`;
+
+export function MultiStep({ steps }) {
+   const [selectedStep, setSelectedStep] = useState(0);
+
+   const nextStep = () => {
+      const nextIndex = selectedStep + 1;
+      if (nextIndex < steps.length) {
+         setSelectedStep(nextIndex);
       }
-
-      return setSelectionValue(value);
    };
 
+   const Step = steps[selectedStep];
+
    return (
-      <Container onClick={handleChange}>
-         {props.steps[selectionValue]}
-         <Flex justifyAround>
-            <RadioGroup selectedValue={selectionValue} onChange={handleChange}>
-               {props.steps.map((step, index) => {
-                  return <Radio type="radio" key={index} value={index} checked={selectionValue === index} />;
-               })}
-            </RadioGroup>
-         </Flex>
+      <Container full fullVertical onClick={nextStep}>
+         <Step />
+         <Nav selectedValue={selectedStep} onChange={nextStep}>
+            {steps.map((_, index) => (
+               <NavButton key={index} selected={selectedStep === index} onClick={() => setSelectedStep(index)} />
+            ))}
+         </Nav>
       </Container>
    );
 }

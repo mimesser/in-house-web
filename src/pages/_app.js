@@ -1,10 +1,13 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import { ThemeProvider } from 'styled-components';
 import App, { Container } from 'next/app';
 import withRedux from 'next-redux-wrapper';
 import withReduxSaga from 'next-redux-saga';
 
 import createStore from '../store';
+import theme from '../theme';
+import GlobalStyle from '../components/GlobalStyle';
 
 class MyApp extends App {
    static async getInitialProps({ Component, ctx }) {
@@ -23,7 +26,12 @@ class MyApp extends App {
       return (
          <Container>
             <Provider store={store}>
-               <Component {...pageProps} />
+               <ThemeProvider theme={theme}>
+                  <>
+                     <GlobalStyle />
+                     <Component {...pageProps} />
+                  </>
+               </ThemeProvider>
             </Provider>
          </Container>
       );

@@ -1,17 +1,38 @@
 import React from 'react';
 import { createGlobalStyle } from 'styled-components';
+import { normalize } from 'styled-normalize';
+
+import { BASE_FONT_SIZE } from '../theme';
+import { key, font } from '../utils';
+
+const background = ({ theme: { appBackground } }) => appBackground;
+// TODO: decide if key util is better than syntax above (no autocomplete, silent failure ...)
+const color = key('textColors.primary');
 
 const GlobalStyle = createGlobalStyle`
-    * {
-        box-sizing: border-box;
-    }
+   ${normalize}
+   * {
+      box-sizing: border-box;
+   }
 
-    html, body {
-        margin: 0;
-        font-size: 20px;
-        font-family: 'Work Sans', sans-serif;
-        font-weight: 300;
-    }
+   body {
+      font-size: ${BASE_FONT_SIZE};
+      font-family: ${font('primary')};
+      font-weight: 300;
+      color: ${color};
+      background-color: ${background};
+      min-width: 320px;
+   }
+
+   h1,
+   h2,
+   h3,
+   h4,
+   h5,
+   h6 {
+      font-family: ${font('emphasis')};
+      font-weight: normal;
+   }
 `;
 
 export default GlobalStyle;
