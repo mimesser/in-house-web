@@ -4,7 +4,7 @@ import { setAuthorization } from '../api';
 import { Page } from '../components/templates';
 import { loadVenuesData } from '../store/actions';
 import { SplashLayout, MultiStep, Step1, Step2, Step3, Step4, Step5 } from '../components/organisms';
-import { Button, Container } from '../components/atoms';
+import { Container } from '../components/atoms';
 import { aggregateUserIdSelector } from '../store/selectors';
 
 class Intro extends Component {
