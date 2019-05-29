@@ -2,11 +2,13 @@ import { all, put, takeLatest } from 'redux-saga/effects';
 
 import api from '../../api';
 import { actionTypes, failure, loadVenuesDataSuccess } from '../actions';
+import { waitTillReady } from '../aggregate/saga';
 
 function* loadVenuesDataSaga() {
+   // TODO loader/spinner ?
    try {
-      const res = yield api.get('venues', { method: 'GET' });
-      const { data } = res;
+      yield waitTillReady();
+      const { data } = yield api.get('venues');
       yield put(loadVenuesDataSuccess(data));
    } catch (err) {
       yield put(failure(err));
