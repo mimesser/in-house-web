@@ -1,7 +1,7 @@
 import { actionTypes } from '../actions';
 
 export const initialState = {
-   aggregate: null,
+   aggregate: {},
 };
 
 export function reducer(state = initialState, action) {

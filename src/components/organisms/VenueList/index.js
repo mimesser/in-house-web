@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
 import { CircleProgress } from '../../atoms';
 import { Modal } from '../Modal';
 import { VenueInsiderQuestionChallenge } from '../VenueInsiderQuestionChallenge';
 
 import { unsplashRestaurantAndCafeCollection } from './imgURLs';
+import { selectVenues } from '../../../store/venues/selectors';
+import { selectIndustriesMap } from '../../../store/aggregate/selectors';
+import { loadVenuesData } from '../../../store/venues/actions';
 
 // https://unsplash.com/collections/312299/restaurant-cafe
 const allImgURLs = unsplashRestaurantAndCafeCollection.length;
@@ -23,18 +27,24 @@ const getRandomImage = () => {
    return unsplashRestaurantAndCafeCollection[imgAtIndex];
 };
 
-function VenueListComponent({ venues, industries }) {
+function VenueListComponent({ venues, industries, loadVenuesData }) {
    const [modalState, setModalState] = useState(false);
    const [venueSelected, setVenueSelected] = useState(null);
 
-   const handleModalState = () => setModalState(!modalState);
-   const handleVenueSelected = venue => setVenueSelected(venue);
+   useEffect(() => {
+      if (!venues) {
+         loadVenuesData();
+      }
+   }, []);
 
    useEffect(() => {
       if (modalState === false && venueSelected !== null) {
          setVenueSelected(null);
       }
    }, [modalState, venueSelected]);
+
+   const handleModalState = () => setModalState(!modalState);
+   const handleVenueSelected = venue => setVenueSelected(venue);
 
    return (
       <>
@@ -162,13 +172,15 @@ function VenueListComponent({ venues, industries }) {
    );
 }
 
+const mapState = createStructuredSelector({
+   venues: selectVenues,
+   industries: selectIndustriesMap,
+});
+const mapDispatch = {
+   loadVenuesData,
+};
+
 export const VenueList = connect(
-   state => ({
-      venues: state.venues,
-      industries: state.aggregate.industries.reduce((res, industry) => {
-         res[industry.id] = industry;
-         return res;
-      }, {}),
-   }),
-   dispatch => ({}),
+   mapState,
+   mapDispatch,
 )(VenueListComponent);

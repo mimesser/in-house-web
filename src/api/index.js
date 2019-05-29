@@ -1,25 +1,22 @@
 import axios from 'axios';
 
+import { config } from './config';
+
+const TOKEN_KEY = 'in-house/token';
+
 const api = axios.create({
-   baseURL:
-      process.env.NODE_ENV === 'development' && process.env.NODE_ENV !== 'test' ? `http://localhost:5080/api` : 'https://inhousedev.azurewebsites.net/api',
-   // withCredentials: false,
-   headers: {
-      Accept: 'application/json',
-      // 'cache-control': 'no-cache'
-   },
-   // headers: {
-   //    'Content-Type': 'application/json',
-   //    'Access-Control-Allow-Origin': '*',
-   //    'Access-Control-Request-Method': '*',
-   //    'Access-Control-Allow-Headers': '*'
-   // },
+   baseURL: config.baseUrl,
 });
 
-// const cachedToken = localStorage.getItem('in-house/token');
+if (process.browser) {
+   const cachedToken = localStorage && localStorage.getItem(TOKEN_KEY);
+   if (cachedToken) {
+      setAuthorization(cachedToken);
+   }
+}
 
 export function setAuthorization(token) {
-   localStorage.setItem('in-house/token', token);
+   localStorage.setItem(TOKEN_KEY, token);
    api.defaults.headers.Authorization = `token ${token}`;
 }
 

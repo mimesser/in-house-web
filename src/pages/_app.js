@@ -8,16 +8,16 @@ import withReduxSaga from 'next-redux-saga';
 import createStore from '../store';
 import theme from '../theme';
 import GlobalStyle from '../components/GlobalStyle';
+import { loadAggregateData } from '../store/aggregate/actions';
 
 class MyApp extends App {
    static async getInitialProps({ Component, ctx }) {
-      let pageProps = {};
-
-      if (Component.getInitialProps) {
-         pageProps = await Component.getInitialProps({ ctx });
-      }
-
+      const pageProps = Component.getInitialProps ? await Component.getInitialProps({ ctx }) : {};
       return { pageProps };
+   }
+
+   componentDidMount() {
+      this.props.store.dispatch(loadAggregateData());
    }
 
    render() {

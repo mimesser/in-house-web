@@ -1,8 +1,9 @@
-import { all, put, takeLatest } from 'redux-saga/effects';
+import { all, put, takeLatest, select, take } from 'redux-saga/effects';
 
 import api, { setAuthorization } from '../../api';
 
 import { actionTypes, failure, loadAggregateDataSuccess } from '../actions';
+import { selectReady } from '../selectors';
 
 function* loadAggregateDataSaga() {
    try {
@@ -12,6 +13,13 @@ function* loadAggregateDataSaga() {
       setAuthorization(data.userId);
    } catch (err) {
       yield put(failure(err));
+   }
+}
+
+export function* waitTillReady() {
+   const ready = yield select(selectReady);
+   if (!ready) {
+      yield take(actionTypes.LOAD_AGGREGATE_DATA_SUCCESS);
    }
 }
 
