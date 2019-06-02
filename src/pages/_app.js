@@ -16,10 +16,6 @@ class MyApp extends App {
       return { pageProps };
    }
 
-   componentDidMount() {
-      this.props.store.dispatch(loadAggregateData());
-   }
-
    render() {
       const { Component, pageProps, store } = this.props;
 
