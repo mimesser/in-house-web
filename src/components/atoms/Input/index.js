@@ -13,7 +13,8 @@ const styles = css`
    margin: 0;
    box-sizing: border-box;
    font-size: ${fontSize};
-   padding: ${ifProp({ type: 'textarea' }, `${0.4444444444}em`, 'unset')};
+   font-weight: 300;
+   padding: ${ifProp({ type: 'textarea' }, `${0.4444444444}em`, '0.6rem 0.4rem')};
    height: ${ifProp({ type: 'textarea' }, 'auto', 'unset')};
    color: currentcolor;
    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.08);
