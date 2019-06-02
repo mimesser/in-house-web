@@ -1,32 +1,15 @@
 import { combineReducers } from 'redux';
 
-import { reducer as aggregateReducer, initialState as aggregateInitialState } from './aggregate/reducer';
-import { reducer as clockReducer, initialState as clockInitialState } from './clock/reducer';
-import { reducer as counterReducer, initialState as counterInitialState } from './counter/reducer';
-import { reducer as errorReducer, initialState as errorInitialState } from './error/reducer';
-import { reducer as venuesReducer, initialState as venuesInitialState } from './venues/reducer';
+import { reducer as aggregate } from './aggregate/reducer';
+import { reducer as clock } from './clock/reducer';
+import { reducer as counter } from './counter/reducer';
+import { reducer as error } from './error/reducer';
+import { reducer as venues } from './venues/reducer';
 
-export const initialState = {
-   ...aggregateInitialState,
-   ...clockInitialState,
-   ...counterInitialState,
-   ...errorInitialState,
-   ...venuesInitialState,
-};
-
-const _rootReducer = combineReducers({
-   aggregate: aggregateReducer,
-   clock: clockReducer,
-   counter: counterReducer,
-   error: errorReducer,
-   venues: venuesReducer,
+export default combineReducers({
+   aggregate,
+   clock,
+   counter,
+   error,
+   venues,
 });
-
-function reducer(state = initialState, action) {
-   switch (action.type) {
-      default:
-         return _rootReducer(state, action);
-   }
-}
-
-export default reducer;

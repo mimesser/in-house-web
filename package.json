@@ -33,7 +33,7 @@
     "reselect": "4.0.0",
     "styled-components": "^4.2.0",
     "styled-normalize": "8.0.6",
-    "styled-icons": "^7.10.0",
+    "styled-icons": "8.0.0",
     "polished": "3.3.2"
   },
   "devDependencies": {

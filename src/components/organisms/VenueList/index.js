@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import Router from 'next/router';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 
 import { CircleProgress } from '../../atoms';
-import { Modal } from '../Modal';
-import { VenueInsiderQuestionChallenge } from '../VenueInsiderQuestionChallenge';
 
 import { unsplashRestaurantAndCafeCollection } from './imgURLs';
-import { selectVenues } from '../../../store/venues/selectors';
-import { selectIndustriesMap } from '../../../store/aggregate/selectors';
-import { loadVenuesData } from '../../../store/venues/actions';
+import { setSelectedVenue } from '../../../store/venues';
 
 // https://unsplash.com/collections/312299/restaurant-cafe
 const allImgURLs = unsplashRestaurantAndCafeCollection.length;
@@ -27,40 +23,26 @@ const getRandomImage = () => {
    return unsplashRestaurantAndCafeCollection[imgAtIndex];
 };
 
-function VenueListComponent({ venues, industries, loadVenuesData }) {
-   const [modalState, setModalState] = useState(false);
-   const [venueSelected, setVenueSelected] = useState(null);
-
-   useEffect(() => {
-      if (!venues) {
-         loadVenuesData();
-      }
-   }, []);
-
-   useEffect(() => {
-      if (modalState === false && venueSelected !== null) {
-         setVenueSelected(null);
-      }
-   }, [modalState, venueSelected]);
-
-   const handleModalState = () => setModalState(!modalState);
-   const handleVenueSelected = venue => setVenueSelected(venue);
+function VenueListComponent({ venues, industries, setSelectedVenue }) {
+   const showVenue = venue => {
+      setSelectedVenue(venue);
+      const { id } = venue;
+      Router.push(`/houses?id=${id}`, `/houses/${id}`, { shallow: true });
+   };
 
    return (
       <>
          <div className="row">
             {venues &&
                venues.map(venue => {
+                  // TODO: should be part of selector
                   const industry = industries[venue.industryId];
 
                   return (
                      <div
                         className="col-xs-12 col-sm-6 col-md-4 col-lg-3"
                         key={venue.id}
-                        onClick={() => {
-                           handleModalState();
-                           handleVenueSelected(venue);
-                        }}
+                        onClick={() => showVenue(venue)}
                      >
                         <div className="card">
                            <div className="container-image">
@@ -87,9 +69,6 @@ function VenueListComponent({ venues, industries, loadVenuesData }) {
                   );
                })}
          </div>
-         <Modal open={modalState} closeModal={() => handleModalState()}>
-            {venueSelected ? <VenueInsiderQuestionChallenge venue={venueSelected} /> : null}
-         </Modal>
          <style jsx>
             {`
                section {
@@ -172,15 +151,11 @@ function VenueListComponent({ venues, industries, loadVenuesData }) {
    );
 }
 
-const mapState = createStructuredSelector({
-   venues: selectVenues,
-   industries: selectIndustriesMap,
-});
 const mapDispatch = {
-   loadVenuesData,
+   setSelectedVenue,
 };
 
 export const VenueList = connect(
-   mapState,
+   undefined,
    mapDispatch,
 )(VenueListComponent);

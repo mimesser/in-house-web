@@ -132,7 +132,7 @@ export const Step5 = () => {
          <Paragraph spaceAbove>
             <Badge>drive consensus</Badge>
          </Paragraph>
-         <Link href="/home">
+         <Link href="/houses">
             <SeeHousesButton secondary>see beta houses</SeeHousesButton>
          </Link>
       </>

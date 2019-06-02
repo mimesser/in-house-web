@@ -2,7 +2,7 @@ import React from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { normalize } from 'styled-normalize';
 
-import { BASE_FONT_SIZE } from '../theme';
+import { BASE_FONT_SIZE, breakpoints } from '../theme';
 import { key, font } from '../utils';
 
 const background = ({ theme: { appBackground } }) => appBackground;
@@ -21,7 +21,7 @@ const GlobalStyle = createGlobalStyle`
       font-weight: 300;
       color: ${color};
       background-color: ${background};
-      min-width: 320px;
+      min-width: ${breakpoints.xs};
    }
 
    h1,

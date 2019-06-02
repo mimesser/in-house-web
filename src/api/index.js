@@ -21,3 +21,5 @@ export function setAuthorization(token) {
 }
 
 export default api;
+
+export const isConflict = e => e && e.response && e.response.status === 409;
