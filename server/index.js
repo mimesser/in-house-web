@@ -12,6 +12,10 @@ app.prepare()
       const server = new Koa();
       const router = new Router();
 
+      router.get('/houses/:id', ({ req, res, params }) => {
+         return app.render(req, res, '/houses', { id: params.id });
+      });
+
       router.get('*', async ctx => {
          await handle(ctx.req, ctx.res);
          ctx.respond = false;

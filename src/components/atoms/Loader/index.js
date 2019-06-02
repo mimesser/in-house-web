@@ -11,6 +11,7 @@ const Bounce = keyframes`
 
 const StyledDotsLoader = styled.div`
    display: inline-block;
+   margin: auto;
 `;
 
 const Dot = styled.span`
