@@ -19,7 +19,7 @@ const Home = () => {
    }
 
    return (
-      <Page title="Home Page">
+      <Page title="In-House">
          <Container>
             {submitted ? (
                <>
