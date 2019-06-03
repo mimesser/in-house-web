@@ -22,10 +22,10 @@ const Home = () => {
       <Page title="In-House">
          <Container>
             {submitted ? (
-               <>
+               <NotifyLayout>
                   <Heading>thank you!</Heading>
                   <p>we’ll let you know when we go live!</p>
-               </>
+               </NotifyLayout>
             ) : (
                <NotifyLayout>
                   <Heading>notify me</Heading>

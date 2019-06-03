@@ -19,8 +19,9 @@ const NavButton = styled.button`
       margin-right: ${navSize};
    }
 `;
+// Adds additional bottom padding to cater for mobile hiding bottom part when navbar is active.
 const Nav = styled.nav`
-   margin: auto auto ${spacing.medium} auto;
+   margin: auto auto ${calcRem('48px')} auto;
 `;
 
 export function MultiStep({ steps }) {
