@@ -9,8 +9,8 @@ import { withErrorReporter } from '../error/saga';
 function* loadAggregateDataSaga() {
    const res = yield call(api.get, 'aggregate');
    const { data } = res;
-   yield put(loadAggregateDataSuccess(data));
    setAuthorization(data.userId);
+   yield put(loadAggregateDataSuccess(data));
 }
 
 export function* waitTillReady() {
