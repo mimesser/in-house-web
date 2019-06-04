@@ -13,11 +13,12 @@ import { loadAggregateData } from '../store/aggregate/actions';
 class MyApp extends App {
    static async getInitialProps({ Component, ctx }) {
       const pageProps = Component.getInitialProps ? await Component.getInitialProps({ ctx }) : {};
-      return { pageProps };
+      return { pageProps, isServer: ctx.isServer, pathname: ctx.pathname };
    }
 
    componentDidMount() {
-      this.props.store.dispatch(loadAggregateData());
+      const { isServer, pathname } = this.props;
+      this.props.store.dispatch(loadAggregateData(isServer, pathname));
    }
 
    render() {

@@ -1,11 +1,13 @@
 import React from 'react';
 import Router from 'next/router';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
 import { CircleProgress } from '../../atoms';
 
 import { unsplashRestaurantAndCafeCollection } from './imgURLs';
-import { setSelectedVenue } from '../../../store/venues';
+import { selectVenues } from '../../../store/venues';
+import { selectIndustriesMap } from '../../../store/aggregate';
 
 // https://unsplash.com/collections/312299/restaurant-cafe
 const allImgURLs = unsplashRestaurantAndCafeCollection.length;
@@ -23,9 +25,8 @@ const getRandomImage = () => {
    return unsplashRestaurantAndCafeCollection[imgAtIndex];
 };
 
-function VenueListComponent({ venues, industries, setSelectedVenue }) {
+function VenueListComponent({ venues, industries }) {
    const showVenue = venue => {
-      setSelectedVenue(venue);
       const { id } = venue;
       Router.push(`/houses?id=${id}`, `/houses/${id}`, { shallow: true });
    };
@@ -151,11 +152,9 @@ function VenueListComponent({ venues, industries, setSelectedVenue }) {
    );
 }
 
-const mapDispatch = {
-   setSelectedVenue,
-};
+const mapStateToProps = createStructuredSelector({
+   venues: selectVenues,
+   industries: selectIndustriesMap,
+});
 
-export const VenueList = connect(
-   undefined,
-   mapDispatch,
-)(VenueListComponent);
+export const VenueList = connect(mapStateToProps)(VenueListComponent);

@@ -1,14 +1,14 @@
 export const actionTypes = {
-   LOAD_VENUES_DATA: 'LOAD_VENUES_DATA',
+   INIT_VENUES_PAGE: 'INIT_VENUES_PAGE',
    LOAD_VENUES_DATA_SUCCESS: 'LOAD_VENUES_DATA_SUCCESS',
    SET_SELECTED_VENUE: 'SET_SELECTED_VENUE',
    SET_SELECTED_VENUE_MINK: 'SET_SELECTED_VENUE_MINK',
    ANSWER_MINK: 'ANSWER_MINK',
-   SET_MINK_ANSWER_STATUS: 'SET_MINK_ANSWER_STATUS',
+   SET_CHALLENGE_FORM_DATA: 'SET_CHALLENGE_FORM_DATA',
 };
 
-export function loadVenuesData() {
-   return { type: actionTypes.LOAD_VENUES_DATA };
+export function initVenuesPage(idToSelect) {
+   return { type: actionTypes.INIT_VENUES_PAGE, payload: { idToSelect } };
 }
 
 export function loadVenuesDataSuccess(data) {
@@ -26,4 +26,7 @@ export const setSelectedVenueMink = topMink => ({
 });
 
 export const answerMink = answer => ({ type: actionTypes.ANSWER_MINK, payload: { answer } });
-export const setMinkAnswerStatus = status => ({ type: actionTypes.SET_MINK_ANSWER_STATUS, payload: { status } });
+export const setChallengeFormData = payload => ({
+   type: actionTypes.SET_CHALLENGE_FORM_DATA,
+   payload,
+});

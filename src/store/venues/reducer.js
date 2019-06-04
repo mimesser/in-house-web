@@ -4,7 +4,7 @@ import { actionTypes } from './actions';
 const initialState = {
    list: undefined,
    selectedVenue: undefined,
-   minkAnswerStatus: undefined,
+   insiderChallengeForm: undefined,
 };
 
 export function reducer(state = initialState, action) {
@@ -15,7 +15,7 @@ export function reducer(state = initialState, action) {
          const {
             payload: { venue: selectedVenue },
          } = action;
-         return { ...state, selectedVenue, minkAnswer: undefined };
+         return { ...state, selectedVenue, insiderChallengeForm: undefined };
       }
       case actionTypes.SET_SELECTED_VENUE_MINK: {
          if (!state.selectedVenue) {
@@ -29,11 +29,9 @@ export function reducer(state = initialState, action) {
          const selectedVenue = { ...state.selectedVenue, topMink };
          return { ...state, selectedVenue };
       }
-      case actionTypes.SET_MINK_ANSWER_STATUS: {
-         const {
-            payload: { status: minkAnswerStatus },
-         } = action;
-         return { ...state, minkAnswerStatus };
+      case actionTypes.SET_CHALLENGE_FORM_DATA: {
+         const { payload } = action;
+         return { ...state, insiderChallengeForm: payload };
       }
 
       default:

@@ -12,3 +12,8 @@ export const selectIndustriesMap = createSelector(
    selectAggregate,
    ({ industries }) => industries && keyBy(industries, i => i.id),
 );
+
+export const selectInsiderVenueIds = createSelector(
+   selectAggregate,
+   ({ insiderVenueIds }) => insiderVenueIds,
+);

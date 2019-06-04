@@ -1,11 +1,12 @@
-import { put, select, call } from 'redux-saga/effects';
+import { put, select, call, delay } from 'redux-saga/effects';
 
 import { selectSelectedVenue } from '../selectors';
 import api, { isConflict } from '../../../api';
-import { setMinkAnswerStatus } from '../actions';
+import { setChallengeFormData } from '../actions';
 import { getRecord, clearRecord, setRecord } from './minkAnswerRecord';
 
 const MAX_ATTEMPTS = 5;
+const CONFIRMATION_DELAY = 1000;
 
 export function* answerMink({ payload: { answer } }) {
    if (!answer) {
@@ -23,7 +24,9 @@ export function* answerMink({ payload: { answer } }) {
 
       if (isAnswerCorrect) {
          clearRecord();
-         yield put(setMinkAnswerStatus({ isAnswerCorrect }));
+         yield put(setChallengeFormData({ isAnswerCorrect }));
+         yield delay(CONFIRMATION_DELAY);
+         yield put(setChallengeFormData(undefined));
          return;
       }
 
@@ -33,13 +36,13 @@ export function* answerMink({ payload: { answer } }) {
          yield call(api.post, `venues/${venue.id}/mink/${venue.topMink.id}/block`);
       }
       setRecord(record);
-      yield put(setMinkAnswerStatus({ isAnswerCorrect, blocked: record.blocked }));
+      yield put(setChallengeFormData({ isAnswerCorrect, blocked: record.blocked }));
    } catch (e) {
       if (!isConflict(e)) {
          throw e;
       }
       const record = { blocked: true, time: Date.now() };
       setRecord(record);
-      yield put(setMinkAnswerStatus(record));
+      yield put(setChallengeFormData(record));
    }
 }
