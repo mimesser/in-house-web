@@ -1,4 +1,5 @@
-import { all, put, takeLatest, select, take, call } from 'redux-saga/effects';
+import { all, put, takeLatest, select, take, call, delay } from 'redux-saga/effects';
+import Router from 'next/router';
 
 import api, { setAuthorization } from '../../api';
 
@@ -6,10 +7,17 @@ import { actionTypes, loadAggregateDataSuccess } from './actions';
 import { selectReady } from '../selectors';
 import { withErrorReporter } from '../error/saga';
 
-function* loadAggregateDataSaga() {
+const REDIRECT_FORMER_INSIDER_FROM = ['/', '/intro'];
+const REDIRECT_DELAY = 600;
+
+function* loadAggregateDataSaga({ meta: { isServer, pathname } }) {
    const res = yield call(api.get, 'aggregate');
    const { data } = res;
    setAuthorization(data.userId);
+   if (isServer && REDIRECT_FORMER_INSIDER_FROM.includes(pathname) && data.isFormerInsider) {
+      yield delay(REDIRECT_DELAY);
+      Router.push('/houses');
+   }
    yield put(loadAggregateDataSuccess(data));
 }
 

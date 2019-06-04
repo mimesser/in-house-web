@@ -1,19 +1,56 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { withRouter } from 'next/router';
 
 import { Page } from '../components/templates';
-import { Container } from '../components/atoms';
-import { VenueLoader } from '../components/organisms';
+import { Container, Loader } from '../components/atoms';
+import { VenueList, Venue } from '../components/organisms';
+import { initVenuesPage, selectLoadingVenues } from '../store/venues';
 
-const Houses = ({ id }) => {
-   return (
-      <Page title="Houses">
-         <Container>
-            <VenueLoader id={id} />
-         </Container>
-      </Page>
-   );
+class Houses extends Component {
+   get houseId() {
+      return this.props.router.query.id;
+   }
+
+   componentDidMount() {
+      this.props.initVenuesPage(this.houseId);
+   }
+
+   componentDidUpdate(prevProps) {
+      if (this.houseId !== prevProps.router.query.id) {
+         this.props.initVenuesPage(this.houseId);
+      }
+   }
+
+   renderComponent = () => {
+      if (this.props.loading) {
+         return <Loader big />;
+      }
+
+      return this.houseId ? <Venue id={this.houseId} /> : <VenueList />;
+   };
+
+   render() {
+      return (
+         <Page title="Houses">
+            <Container>{this.renderComponent()}</Container>
+         </Page>
+      );
+   }
+}
+
+const mapStateToProps = createStructuredSelector({
+   loading: selectLoadingVenues,
+});
+
+const mapDispatch = {
+   initVenuesPage,
 };
 
-Houses.getInitialProps = ({ ctx: { query: { id } = {} } }) => ({ id });
-
-export default Houses;
+export default withRouter(
+   connect(
+      mapStateToProps,
+      mapDispatch,
+   )(Houses),
+);

@@ -7,12 +7,17 @@ export const selectVenues = createSelector(
    ({ list }) => list,
 );
 
+export const selectLoadingVenues = createSelector(
+   selectVenues,
+   list => !list,
+);
+
 export const selectSelectedVenue = createSelector(
    selectVenueState,
    ({ selectedVenue }) => selectedVenue,
 );
 
-export const selectMinkAnswerStatus = createSelector(
+export const selectInsiderChallengeForm = createSelector(
    selectVenueState,
-   ({ minkAnswerStatus }) => minkAnswerStatus,
+   ({ insiderChallengeForm }) => insiderChallengeForm,
 );

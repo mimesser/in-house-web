@@ -1,15 +1,34 @@
-import { put, call } from 'redux-saga/effects';
+import { put, call, select, delay } from 'redux-saga/effects';
 
 import api from '../../../api';
-import { setMinkAnswerStatus, setSelectedVenueMink } from '../actions';
+import { setChallengeFormData, setSelectedVenueMink } from '../actions';
+import { selectInsiderVenueIds } from '../../aggregate';
 import { getRecord } from './minkAnswerRecord';
+
+const DELAY_BEFORE_CHALLENGE = 500;
+const DELAY_CONFIRMATION = 1000;
 
 export function* setSelectedVenue({ payload: { venue: { id } = {} } }) {
    if (!id) {
       return;
    }
    const { blocked } = getRecord();
-   yield put(setMinkAnswerStatus({ blocked }));
+   const insiderVenueIds = yield select(selectInsiderVenueIds);
+   const isActiveInsider = insiderVenueIds && insiderVenueIds.includes(id);
+
+   yield delay(DELAY_BEFORE_CHALLENGE);
+
+   if (isActiveInsider) {
+      yield put(setChallengeFormData({ isAnswerCorrect: true }));
+      yield delay(DELAY_CONFIRMATION);
+      yield put(setChallengeFormData(undefined));
+      return;
+   }
+
+   yield put(setChallengeFormData({ blocked }));
+   if (blocked) {
+      return;
+   }
 
    const { data } = yield call(api.get, `venues/${id}/topmink`);
    yield put(setSelectedVenueMink(data));
