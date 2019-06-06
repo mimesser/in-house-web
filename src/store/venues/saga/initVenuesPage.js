@@ -5,6 +5,8 @@ import { waitTillReady } from '../../aggregate/saga';
 import api from '../../../api';
 import { loadVenuesDataSuccess, setSelectedVenue } from '../actions';
 import { selectVenues } from '../selectors';
+import { unsplashRestaurantAndCafeCollection } from './tempImages';
+import { selectIndustriesMap } from '../../aggregate';
 
 function* fetchVenueList() {
    const venues = yield select(selectVenues);
@@ -14,8 +16,16 @@ function* fetchVenueList() {
 
    yield waitTillReady();
    const { data } = yield call(api.get, 'venues');
-   yield put(loadVenuesDataSuccess(data));
-   return data;
+   const industries = yield select(selectIndustriesMap);
+
+   const normalized = data.map((v, i) => ({
+      ...v,
+      imageUrl: unsplashRestaurantAndCafeCollection[i],
+      industry: industries[v.industryId],
+   }));
+
+   yield put(loadVenuesDataSuccess(normalized));
+   return normalized;
 }
 
 export function* initVenuesPage({ payload: { idToSelect } }) {

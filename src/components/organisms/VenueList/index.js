@@ -3,14 +3,10 @@ import Router from 'next/router';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { CircleProgress } from '../../atoms';
+import { CircleProgress, Loader } from '../../atoms';
 
-import { unsplashRestaurantAndCafeCollection } from './imgURLs';
 import { selectVenues } from '../../../store/venues';
 import { selectIndustriesMap } from '../../../store/aggregate';
-
-// https://unsplash.com/collections/312299/restaurant-cafe
-const allImgURLs = unsplashRestaurantAndCafeCollection.length;
 
 function getRandomScore() {
    return Math.random() * 10 + 1;
@@ -20,12 +16,11 @@ function getRandomInsiders() {
    return Math.floor(Math.random() * 100 + 1);
 }
 
-const getRandomImage = () => {
-   const imgAtIndex = Math.floor(Math.random() * allImgURLs + 1);
-   return unsplashRestaurantAndCafeCollection[imgAtIndex];
-};
+function VenueListComponent({ venues }) {
+   if (!venues) {
+      return <Loader big />;
+   }
 
-function VenueListComponent({ venues, industries }) {
    const showVenue = venue => {
       const { id } = venue;
       Router.push(`/houses?id=${id}`, `/houses/${id}`, { shallow: true });
@@ -36,9 +31,6 @@ function VenueListComponent({ venues, industries }) {
          <div className="row">
             {venues &&
                venues.map(venue => {
-                  // TODO: should be part of selector
-                  const industry = industries[venue.industryId];
-
                   return (
                      <div
                         className="col-xs-12 col-sm-6 col-md-4 col-lg-3"
@@ -47,10 +39,10 @@ function VenueListComponent({ venues, industries }) {
                      >
                         <div className="card">
                            <div className="container-image">
-                              <img className="image" src={getRandomImage()} alt="random" />
+                              <img className="image" src={venue.imageUrl} alt="random" />
                            </div>
                            <div className="venue-details">
-                              <div className="industry">{industry && industry.name}</div>
+                              <div className="industry">{venue.industry && venue.industry.name}</div>
                               <div className="venue-name">{venue.name}</div>
                               <div className="venue-address">
                                  {venue.venueInfo.address}
@@ -154,7 +146,6 @@ function VenueListComponent({ venues, industries }) {
 
 const mapStateToProps = createStructuredSelector({
    venues: selectVenues,
-   industries: selectIndustriesMap,
 });
 
 export const VenueList = connect(mapStateToProps)(VenueListComponent);

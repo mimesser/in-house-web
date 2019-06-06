@@ -1,3 +1,5 @@
+// https://unsplash.com/collections/312299/restaurant-cafe
+
 export const unsplashRestaurantAndCafeCollection = [
    'https://images.unsplash.com/photo-1542372147193-a7aca54189cd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60',
    'https://images.unsplash.com/photo-1542326891-50b14105a80b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60',

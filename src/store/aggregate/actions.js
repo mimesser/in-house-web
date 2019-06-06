@@ -1,6 +1,7 @@
 export const actionTypes = {
    LOAD_AGGREGATE_DATA: 'LOAD_AGGREGATE_DATA',
    LOAD_AGGREGATE_DATA_SUCCESS: 'LOAD_AGGREGATE_DATA_SUCCESS',
+   ADD_INSIDER_VENUE: 'ADD_INSIDER_VENUE',
 };
 
 export function loadAggregateData(isServer, pathname) {
@@ -13,3 +14,5 @@ export function loadAggregateDataSuccess(data) {
       data,
    };
 }
+
+export const addInsiderVenue = id => ({ type: actionTypes.ADD_INSIDER_VENUE, payload: { id } });

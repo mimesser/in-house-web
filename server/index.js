@@ -16,8 +16,20 @@ app.prepare()
       // TODO: environment config + use this for staging only
       server.use(auth({ name: 'Radu', pass: 'Radu' }));
 
-      router.get('/houses/:id', ({ req, res, params }) => {
-         return app.render(req, res, '/houses', { id: params.id });
+      router.get('/houses/:id', async ctx => {
+         const { req, res, params } = ctx;
+         await app.render(req, res, '/houses', { id: params.id });
+         ctx.respond = false;
+      });
+
+      router.get(`/houses/:id/:tab`, async ctx => {
+         const {
+            req,
+            res,
+            params: { id, tab },
+         } = ctx;
+         await app.render(req, res, '/houses', { id, tab });
+         ctx.respond = false;
       });
 
       router.get('*', async ctx => {

@@ -8,6 +8,7 @@ export const withErrorReporter = worker =>
          return yield worker(...args);
       } catch (e) {
          // TODO: report
+         console.error(e);
          yield put(failure(e));
          return undefined;
       }

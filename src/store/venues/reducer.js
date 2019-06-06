@@ -33,6 +33,17 @@ export function reducer(state = initialState, action) {
          const { payload } = action;
          return { ...state, insiderChallengeForm: payload };
       }
+      case actionTypes.SET_SELECTED_VENUE_RATES: {
+         if (!state.selectedVenue) {
+            return state;
+         }
+         const {
+            payload: { rates },
+         } = action;
+
+         const selectedVenue = { ...state.selectedVenue, rates };
+         return { ...state, selectedVenue };
+      }
 
       default:
          return state;
