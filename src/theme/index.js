@@ -7,3 +7,4 @@ export { fontSize, fonts } from './theme';
 export * from './helper/calcRem';
 export * from './spacing';
 export * from './breakpoints';
+export * from './globals';

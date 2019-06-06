@@ -4,9 +4,9 @@ import { createStructuredSelector } from 'reselect';
 import { withRouter } from 'next/router';
 
 import { Page } from '../components/templates';
-import { Container, Loader } from '../components/atoms';
-import { VenueList, Venue } from '../components/organisms';
-import { initVenuesPage, selectLoadingVenues } from '../store/venues';
+import { Container } from '../components/atoms';
+import { Venue, VenueList } from '../components/organisms';
+import { initVenuesPage, selectLoadingVenues, selectSelectedVenue } from '../store/venues';
 
 class Houses extends Component {
    get houseId() {
@@ -23,18 +23,16 @@ class Houses extends Component {
       }
    }
 
-   renderComponent = () => {
-      if (this.props.loading) {
-         return <Loader big />;
-      }
-
-      return this.houseId ? <Venue id={this.houseId} /> : <VenueList />;
-   };
-
    render() {
+      const View = this.houseId ? Venue : VenueList;
+
+      // TODO split and render separately?
+
       return (
-         <Page title="Houses">
-            <Container>{this.renderComponent()}</Container>
+         <Page title="Houses" defaultHeader={!this.houseId}>
+            <Container fullVertical={this.houseId}>
+               <View />
+            </Container>
          </Page>
       );
    }

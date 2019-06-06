@@ -4,6 +4,7 @@ import api from '../../../api';
 import { setChallengeFormData, setSelectedVenueMink } from '../actions';
 import { selectInsiderVenueIds } from '../../aggregate';
 import { getRecord } from './minkAnswerRecord';
+import { loadVenueRateTags } from './loadVenueRateTags';
 
 const DELAY_BEFORE_CHALLENGE = 500;
 const DELAY_CONFIRMATION = 1000;
@@ -22,6 +23,7 @@ export function* setSelectedVenue({ payload: { venue: { id } = {} } }) {
       yield put(setChallengeFormData({ isAnswerCorrect: true }));
       yield delay(DELAY_CONFIRMATION);
       yield put(setChallengeFormData(undefined));
+      yield loadVenueRateTags(id);
       return;
    }
 

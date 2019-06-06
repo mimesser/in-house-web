@@ -1,9 +1,11 @@
-import { put, select, call, delay } from 'redux-saga/effects';
+import { put, select, call, delay, fork } from 'redux-saga/effects';
 
 import { selectSelectedVenue } from '../selectors';
 import api, { isConflict } from '../../../api';
 import { setChallengeFormData } from '../actions';
 import { getRecord, clearRecord, setRecord } from './minkAnswerRecord';
+import { addInsiderVenue } from '../../aggregate';
+import { loadVenueRateTags } from './loadVenueRateTags';
 
 const MAX_ATTEMPTS = 5;
 const CONFIRMATION_DELAY = 1000;
@@ -25,8 +27,10 @@ export function* answerMink({ payload: { answer } }) {
       if (isAnswerCorrect) {
          clearRecord();
          yield put(setChallengeFormData({ isAnswerCorrect }));
+         yield fork(loadVenueRateTags, venue.id);
          yield delay(CONFIRMATION_DELAY);
          yield put(setChallengeFormData(undefined));
+         yield put(addInsiderVenue(venue.id));
          return;
       }
 

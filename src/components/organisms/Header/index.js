@@ -22,8 +22,6 @@ export const Header = () => (
             <img src="/static/logo.png" alt="logo" />
          </a>
       </Link>
-
-      {/* TODO: wrap logo with anchor? */}
       {/* TODO: menu */}
    </Layout>
 );
