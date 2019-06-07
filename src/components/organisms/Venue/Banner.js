@@ -5,29 +5,44 @@ import styled from 'styled-components';
 import { ArrowBack } from 'styled-icons/boxicons-regular/ArrowBack';
 import { calcRem, spacing, fontSize } from '../../../theme';
 import { Votes } from './Votes';
-import { Flex } from '../../atoms';
+import { IconButton } from '../../atoms';
 
-const Back = styled(ArrowBack).attrs({
-   size: 32,
-})`
-   cursor: pointer;
+const Back = styled(IconButton)`
+   margin-right: auto;
 `;
 
 const Header = styled.header`
-   background-image: url("${({ imageUrl }) => imageUrl}");
-   background-size: cover;
-   background-repeat: no-repeat;
-   background-position: center center;   
+   position: relative;
    height: ${calcRem('270px')};
    padding: ${spacing.large};
    color: ${({ theme }) => theme.palette.white};
-   
+
    display: flex;
    flex-direction: column;
-    > div {
+   > div {
       display: flex;
       flex: 1;
-    }
+   }
+
+   > * {
+      z-index: 1;
+   }
+`;
+
+const Background = styled.div`
+   position: absolute;
+   top:0;
+   bottom: 0;
+   right: 0;
+   left: 0;
+   background-image: url("${({ imageUrl }) => imageUrl}");
+   background-size: cover;
+   background-repeat: no-repeat;
+   background-position: center center;  
+   opacity: 0.7;
+   &&& {
+      z-index: 0;
+   }
 `;
 
 const About = styled.div`
@@ -73,9 +88,12 @@ export const Banner = ({
    const ratingParts = typeof rating === 'number' && rating.toFixed(1).split('.');
 
    return (
-      <Header imageUrl={imageUrl}>
+      <Header>
+         <Background imageUrl={imageUrl} />
          <Link href="/houses">
-            <Back />
+            <Back>
+               <ArrowBack size={32} />
+            </Back>
          </Link>
          <div>
             <About>

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { fontSize, spacing } from '../../../theme';
+import { calcRem, fontSize, spacing } from '../../../theme';
 import { Button, IconButton } from '../../atoms/Button';
 
 export const QuestionForm = styled.div`
@@ -17,12 +17,23 @@ export const Question = styled.p`
    font-size: 2rem;
    margin: ${spacing.large} 0;
 `;
-export const Answer = styled.div`
-   display: flex;
-   ${IconButton} {
-      margin-left: ${spacing.medium};
+export const Answer = styled.form`
+   > div {
+      display: flex;
    }
+   input {
+      max-width: calc(100% - ${calcRem('60px')});
+   }
+   margin-bottom: ${spacing.xLarge};
 `;
+export const SubmitButton = styled(IconButton).attrs({
+   type: 'submit',
+})`
+   transition: opacity 0.5s;
+   opacity: ${({ visible }) => (visible ? 1 : 0)};
+   margin-left: ${spacing.medium};
+`;
+
 export const ChangeButton = styled(Button)`
    border-color: ${({ theme: { palette } }) => palette.white};
    margin: auto auto 0 0;

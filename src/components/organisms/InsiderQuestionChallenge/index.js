@@ -4,32 +4,56 @@ import { createStructuredSelector } from 'reselect';
 import { withRouter } from 'next/router';
 import { ArrowRight } from 'styled-icons/evil/ArrowRight';
 
-import { Input, Heading, Paragraph, Loader, IconButton } from '../../atoms';
+import { Input, Heading, Paragraph, Loader, Flex } from '../../atoms';
 import { Patent } from '../../molecules';
 import { answerMink, selectSelectedVenue, selectInsiderChallengeForm } from '../../../store/venues';
-import { Answer, ChangeButton, HouseTitle, Question, QuestionForm, ValidationError, Confirmation } from './style';
+import {
+   Answer,
+   SubmitButton,
+   ChangeButton,
+   HouseTitle,
+   Question,
+   QuestionForm,
+   ValidationError,
+   Confirmation,
+} from './style';
 import { Modal } from '../Modal';
 
 const Form = ({ topMink, wrongAnswer, answerMink }) => {
    const [answer, setAnswer] = useState('');
+   const [showError, setShowError] = useState(false);
+
+   const handleSubmit = e => {
+      e.preventDefault();
+      if (answer) {
+         answerMink(answer);
+         setShowError(true);
+      }
+   };
+
+   const handleChange = e => {
+      setAnswer(e.target.value.toLowerCase());
+      setShowError(false);
+   };
+
    return topMink ? (
       <>
          <Question>{topMink.question}</Question>
-         <Answer>
-            <Input
-               autocomplete="off"
-               spellcheck="false"
-               placeholder="One word / no spaces"
-               value={answer}
-               onChange={evt => setAnswer(evt.target.value.toLowerCase())}
-            />
-            {answer.length ? (
-               <IconButton onClick={() => answerMink(answer)}>
-                  <ArrowRight size={44} />
-               </IconButton>
-            ) : null}
+         <Answer onSubmit={handleSubmit}>
+            <div>
+               <Input
+                  autocomplete="off"
+                  spellcheck="false"
+                  placeholder="One word / no spaces"
+                  value={answer}
+                  onChange={handleChange}
+               />
+               <SubmitButton visible={!!answer.length}>
+                  {showError && !wrongAnswer ? <Loader white /> : <ArrowRight size={44} />}
+               </SubmitButton>
+            </div>
+            {wrongAnswer && showError && <ValidationError>Wrong answer</ValidationError>}
          </Answer>
-         {wrongAnswer && <ValidationError>Wrong answer</ValidationError>}
       </>
    ) : (
       <Loader white big />

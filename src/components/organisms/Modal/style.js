@@ -29,6 +29,7 @@ export const Layout = styled.div`
 
 export const Content = styled.div`
    position: relative;
+   overflow: auto;
 
    display: flex;
    background-color: ${({ theme: { palette } }) => palette.black};
