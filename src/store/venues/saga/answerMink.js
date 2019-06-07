@@ -14,6 +14,7 @@ export function* answerMink({ payload: { answer } }) {
    if (!answer) {
       return;
    }
+   yield put(setChallengeFormData({}));
 
    const record = getRecord();
 

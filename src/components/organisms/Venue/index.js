@@ -10,7 +10,7 @@ import { Banner } from './Banner';
 import { Navbar } from './Navbar';
 import { RateTab } from './RateTab';
 import { PostTab } from './PostTab';
-import { MinkTab } from './MinkTab';
+import MinkTab from './MinkTab';
 
 const tabMap = {
    rate: RateTab,
