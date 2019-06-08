@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { fontSize } from '../../../theme';
+import { fontSize, spacing } from '../../../theme';
 import { Loader, Card, Flex } from '../../atoms';
 import { Votes } from './Votes';
 import { PokeButton } from '../../molecules';
-import { TabLayout, CARD_MIN_HEIGHT } from './commonStyle';
+import { TabLayout } from './commonStyle';
 
 const TagCard = styled(Card)`
    p {
@@ -14,15 +14,24 @@ const TagCard = styled(Card)`
    }
 `;
 
+// TODO: this placeholder for dial control
 const Score = styled.div`
-   min-width: 6rem;
+   flex-shrink: 0;
+   width: 6rem;
+   height: 6rem;
+   border: 4px solid;
+   border-radius: 50%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   margin-right: ${spacing.medium};
 `;
 
 const renderTags = rateTags =>
    rateTags ? (
       rateTags.map(({ name, definitionId, voteCount, voteRating }) => (
          <TagCard key={definitionId}>
-            <Score />
+            <Score>{typeof voteRating === 'number' ? voteRating : 'Please rate'}</Score>
             <Flex column justifyAround>
                <p>{name}</p>
                <Votes count={voteCount} />

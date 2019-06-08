@@ -16,7 +16,7 @@ export const TabLayout = styled.div`
    ${Card} {
       position: relative;
       min-height: ${CARD_MIN_HEIGHT};
-      padding: ${spacing.medium};
+      padding: ${spacing.large} ${spacing.medium};
       
       ${PokeButton} {
          position: absolute;
