@@ -27,21 +27,21 @@ const Header = styled.header`
    > * {
       z-index: 1;
    }
-`;
-
-const Background = styled.div`
-   position: absolute;
-   top:0;
-   bottom: 0;
-   right: 0;
-   left: 0;
+   
    background-image: url("${({ imageUrl }) => imageUrl}");
    background-size: cover;
    background-repeat: no-repeat;
    background-position: center center;  
-   opacity: 0.7;
-   &&& {
-      z-index: 0;
+   
+   :after {
+      position: absolute;
+      top:0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      content: '';
+      background-color: rgba(85,116,128,0.5);
+      background: linear-gradient(180deg, rgba(129,149,156,0.5) 0%, rgba(0,0,0,0.5) 100%);
    }
 `;
 
@@ -88,8 +88,7 @@ export const Banner = ({
    const ratingParts = typeof rating === 'number' && rating.toFixed(1).split('.');
 
    return (
-      <Header>
-         <Background imageUrl={imageUrl} />
+      <Header imageUrl={imageUrl}>
          <Link href="/houses">
             <Back>
                <ArrowBack size={32} />

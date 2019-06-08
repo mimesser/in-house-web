@@ -7,7 +7,7 @@ import { fontSize, spacing } from '../../../theme';
 import { Loader, Card, Flex } from '../../atoms';
 import { Votes } from './Votes';
 import { PokeButton, Patent } from '../../molecules';
-import { TabLayout, CARD_MIN_HEIGHT } from './commonStyle';
+import { TabLayout } from './commonStyle';
 
 const Tab = styled(TabLayout)`
    > p {

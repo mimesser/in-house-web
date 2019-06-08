@@ -5,6 +5,7 @@ export const actionTypes = {
    SET_VENUE_TOP_MINK: 'SET_VENUE_TOP_MINK',
    ANSWER_MINK: 'ANSWER_MINK',
    SET_CHALLENGE_FORM_DATA: 'SET_CHALLENGE_FORM_DATA',
+   DISMISS_CHALLENGE_FORM: 'DISMISS_CHALLENGE_FORM',
    SET_VENUE_RATES: 'SET_VENUE_RATES',
    LOAD_MINKS: 'LOAD_MINKS',
    SET_VENUE_MINKS: 'SET_VENUE_MINKS',
@@ -38,6 +39,10 @@ export const answerMink = answer => ({
 export const setChallengeFormData = payload => ({
    type: actionTypes.SET_CHALLENGE_FORM_DATA,
    payload,
+});
+
+export const dismissChallengeForm = payload => ({
+   type: actionTypes.DISMISS_CHALLENGE_FORM,
 });
 
 export const setVenueRates = rates => ({

@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { selectInsiderVenueIds } from '../aggregate';
 
 const selectVenueState = state => state.venues;
 
@@ -20,4 +21,10 @@ export const selectSelectedVenue = createSelector(
 export const selectInsiderChallengeForm = createSelector(
    selectVenueState,
    ({ insiderChallengeForm }) => insiderChallengeForm,
+);
+
+export const selectIsActiveInsider = createSelector(
+   selectInsiderVenueIds,
+   selectSelectedVenue,
+   (insiderVenueIds, selectedVenue) => insiderVenueIds && selectedVenue && insiderVenueIds.includes(selectedVenue.id),
 );

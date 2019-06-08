@@ -15,6 +15,15 @@ export function reducer(state = initialState, action) {
             insiderVenueIds: state.insiderVenueIds.concat(id),
          };
       }
+      case actionTypes.CLEAR_INSIDER_VENUE: {
+         const {
+            payload: { id },
+         } = action;
+         return {
+            ...state,
+            insiderVenueIds: state.insiderVenueIds.filter(i => i !== id),
+         };
+      }
 
       default:
          return state;

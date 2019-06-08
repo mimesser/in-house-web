@@ -1,4 +1,5 @@
 import { actionTypes } from './actions';
+import { actionTypes as aggregateActions } from '../aggregate';
 
 // listing props just for documentation
 const initialState = {
@@ -41,6 +42,17 @@ export function reducer(state = initialState, action) {
       }
       case actionTypes.SET_VENUE_MINKS: {
          return setSelectedVenueProp(state, action, 'minks');
+      }
+      case aggregateActions.CLEAR_INSIDER_VENUE: {
+         if (!state.selectedVenue) {
+            return state;
+         }
+         const {
+            payload: { id },
+         } = action;
+
+         const selectedVenue = state.list && state.list.find(v => v.id === id);
+         return { ...state, selectedVenue };
       }
 
       default:

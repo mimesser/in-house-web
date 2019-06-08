@@ -1,7 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
+import { createStructuredSelector } from 'reselect';
 import Link from 'next/link';
+
 import { panelBoxShadow, spacing } from '../../../theme';
+import { selectIsActiveInsider } from '../../../store/venues';
 
 const Nav = styled.nav`
    display: flex;
@@ -15,6 +19,7 @@ const activeStyle = ({ active }) =>
    opacity: 1;
    border-bottom: 1px solid;
 `;
+const cursor = ({ deny }) => (deny ? 'not-allowed' : 'pointer');
 
 const A = styled.a`
    flex: 1;
@@ -24,24 +29,29 @@ const A = styled.a`
    text-decoration: none;
    opacity: 0.5;
    transition: opacity 0.5s;
-   cursor: pointer;
+   cursor: ${cursor};
    ${activeStyle};
 `;
 
-const TabHeader = ({ id, path, label, active }) => (
-   <Link href={`/houses?id=${id}&tab=${path}`} as={`/houses/${id}/${path}`}>
-      <A active={active}>{label}</A>
-   </Link>
-);
+const TabHeader = ({ id, tab: { path, label, secured }, active, authorized }) =>
+   !authorized && secured ? (
+      <A deny>{label}</A>
+   ) : (
+      <Link href={`/houses?id=${id}&tab=${path}`} as={`/houses/${id}/${path}`} passHref>
+         <A active={active}>{label}</A>
+      </Link>
+   );
 
 const tabs = [
    {
       path: 'rate',
       label: 'rate',
+      secured: true,
    },
    {
       path: 'post',
       label: 'post',
+      secured: true,
    },
    {
       path: 'mink',
@@ -49,10 +59,16 @@ const tabs = [
    },
 ];
 
-export const Navbar = ({ id, selected }) => (
+const Navbar = ({ id, selected, authorized }) => (
    <Nav>
-      {tabs.map(({ path, label }) => (
-         <TabHeader id={id} key={path} path={path} label={label} active={selected === path} />
+      {tabs.map(t => (
+         <TabHeader id={id} key={t.path} tab={t} active={selected === t.path} authorized={authorized} />
       ))}
    </Nav>
 );
+
+const mapState = createStructuredSelector({
+   authorized: selectIsActiveInsider,
+});
+
+export default connect(mapState)(Navbar);
