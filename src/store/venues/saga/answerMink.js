@@ -27,11 +27,11 @@ export function* answerMink({ payload: { answer } }) {
 
       if (isAnswerCorrect) {
          clearRecord();
+         yield put(addInsiderVenue(venue.id));
          yield put(setChallengeFormData({ isAnswerCorrect }));
          yield fork(loadVenueRateTags, venue.id);
          yield delay(CONFIRMATION_DELAY);
          yield put(setChallengeFormData(undefined));
-         yield put(addInsiderVenue(venue.id));
          return;
       }
 

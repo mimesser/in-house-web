@@ -7,7 +7,7 @@ import InsiderQuestionChallenge from '../InsiderQuestionChallenge';
 import { selectSelectedVenue } from '../../../store/venues';
 import { Loader } from '../../atoms';
 import { Banner } from './Banner';
-import { Navbar } from './Navbar';
+import Navbar from './Navbar';
 import { RateTab } from './RateTab';
 import { PostTab } from './PostTab';
 import MinkTab from './MinkTab';

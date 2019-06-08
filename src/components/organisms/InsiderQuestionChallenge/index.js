@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { withRouter } from 'next/router';
 import { ArrowRight } from 'styled-icons/evil/ArrowRight';
 
-import { Input, Heading, Paragraph, Loader, Flex } from '../../atoms';
+import { Input, Heading, Paragraph, Loader } from '../../atoms';
 import { Patent } from '../../molecules';
-import { answerMink, selectSelectedVenue, selectInsiderChallengeForm } from '../../../store/venues';
+import {
+   answerMink,
+   dismissChallengeForm,
+   selectSelectedVenue,
+   selectInsiderChallengeForm,
+} from '../../../store/venues';
 import {
    Answer,
    SubmitButton,
@@ -60,13 +64,9 @@ const Form = ({ topMink, wrongAnswer, answerMink }) => {
    );
 };
 
-const InsiderQuestionChallenge = ({ venue: { name, topMink }, challengeFormData, router, answerMink }) => {
+const InsiderQuestionChallenge = ({ venue: { name, topMink }, challengeFormData, dismissForm, answerMink }) => {
    const { blocked, isAnswerCorrect } = challengeFormData || {};
    const wrongAnswer = isAnswerCorrect === false;
-
-   const dismissForm = () => {
-      router.push('/houses', '/houses', { shallow: true });
-   };
    const accessGranted = challengeFormData && challengeFormData.isAnswerCorrect;
 
    return (
@@ -106,9 +106,10 @@ const mapState = createStructuredSelector({
 });
 const mapDispatch = {
    answerMink,
+   dismissForm: dismissChallengeForm,
 };
 
 export default connect(
    mapState,
    mapDispatch,
-)(withRouter(InsiderQuestionChallenge));
+)(InsiderQuestionChallenge);

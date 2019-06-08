@@ -1,9 +1,21 @@
 import { call, put } from 'redux-saga/effects';
 
-import api from '../../../api';
+import api, { isForbidden } from '../../../api';
+import { clearInsiderVenue } from '../../aggregate';
 import { setVenueRates } from '../actions';
+import { showInsiderChallenge } from './showInsiderChallenge';
 
 export function* loadVenueRateTags(id) {
-   const { data } = yield call(api.get, `/Venues/${id}/rateTags`);
-   yield put(setVenueRates(data));
+   try {
+      const { data } = yield call(api.get, `/Venues/${id}/rateTags`);
+      yield put(setVenueRates(data));
+   } catch (e) {
+      if (isForbidden(e)) {
+         // TODO: test when UI allows changing top mink
+         yield clearInsiderVenue(id);
+         yield showInsiderChallenge(id);
+         return;
+      }
+      throw e;
+   }
 }
