@@ -17,11 +17,7 @@ const P = styled.p``;
 
 export const Step1 = () => (
    <>
-      <Heading>
-         #1:
-         <br />
-         list your house
-      </Heading>
+      <Heading>#1: list your house</Heading>
       <P>activate your organization</P>
       <P>easily & untraceably</P>
       <P>then empower your team as an insider</P>
@@ -57,9 +53,7 @@ const Smile = styled(SmileWink).attrs(({ theme: { palette } }) => ({ size: 24, c
 export const Step2 = () => (
    <>
       <Heading>
-         #2:
-         <br />
-         insiders only
+         #2: insiders only
          <Patent>U.S. patent no. 8,904,502</Patent>
       </Heading>
       <P>
@@ -93,11 +87,7 @@ const Poke = styled(PaperPlane).attrs(({ theme: { palette } }) => ({
 export const Step3 = () => {
    return (
       <>
-         <Heading>
-            #3:
-            <br />
-            poke your team
-         </Heading>
+         <Heading>#3: poke your team</Heading>
          <P>use our secret share feature</P>
          <P>to spread the word</P>
          <P>
@@ -128,9 +118,7 @@ export const Step4 = () => {
    return (
       <>
          <Heading>
-            #4:
-            <br />
-            vote top MINK
+            #4: vote top MINK
             <Copyright>©</Copyright>
          </Heading>
          <ExplainMink>
