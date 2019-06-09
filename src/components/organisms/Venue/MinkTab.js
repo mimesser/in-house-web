@@ -12,14 +12,9 @@ import { TabLayout } from './commonStyle';
 const Tab = styled(TabLayout)`
    > p {
       text-transform: uppercase;
-
-      :first-child {
-         margin-bottom: 0;
-      }
    }
    ${Patent} {
       font-size: ${fontSize.tiny};
-      text-transform: lowercase;
    }
 `;
 
@@ -77,8 +72,8 @@ const MinkTab = ({ venue: { id, minks }, loadMinks }) => {
       <Tab>
          <p>
             Top MINK<sup>©</sup>
+            <Patent />
          </p>
-         <Patent />
          {renderMinks(minks)}
       </Tab>
    );

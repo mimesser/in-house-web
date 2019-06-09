@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { ArrowRight } from 'styled-icons/evil/ArrowRight';
 
-import { Input, Heading, Paragraph, Loader } from '../../atoms';
+import { Input, Heading, Loader } from '../../atoms';
 import { Patent } from '../../molecules';
 import {
    answerMink,
@@ -83,11 +83,11 @@ const InsiderQuestionChallenge = ({ venue: { name, topMink }, challengeFormData,
                   <Confirmation>,)</Confirmation>
                ) : (
                   <>
-                     <Heading noMargin>insider?</Heading>
-                     <Paragraph spaceAbove noMargin>
+                     <Heading>insider?</Heading>
+                     <p>
                         prove it by this #1 <strong>MINK</strong>
-                     </Paragraph>
-                     <Patent />
+                        <Patent />
+                     </p>
                      {/* TODO error text and styling */}
                      {blocked && <p>Too many attempts. Please come back later</p>}
                      {!blocked && <Form topMink={topMink} wrongAnswer={wrongAnswer} answerMink={answerMink} />}

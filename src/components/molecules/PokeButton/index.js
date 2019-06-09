@@ -12,5 +12,5 @@ export const PokeButton = styled(props => (
       <Icon />
    </IconButton>
 ))`
-   color: ${({ theme: { palette } }) => palette.grayscale[2]};
+   color: ${({ theme: { palette } }) => palette.grayscale[3]};
 `;
