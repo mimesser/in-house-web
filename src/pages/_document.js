@@ -38,7 +38,7 @@ class MyDocument extends Document {
                />
                {/* TODO cleanup fonts */}
                <link
-                  href="https://fonts.googleapis.com/css?family=Poppins|Roboto:300,400|Lato&display=swap"
+                  href="https://fonts.googleapis.com/css?family=Poppins|Roboto:300,400,500|Lato&display=swap"
                   rel="stylesheet"
                />
             </Head>

@@ -7,7 +7,7 @@ import { PaperPlane } from 'styled-icons/fa-solid';
 
 import { Heading, Badge, Button, Strong } from '../../atoms';
 import { Patent as BasePatent } from '../../molecules';
-import { fontSize, spacing } from '../../../theme';
+import { fontSize, spacing, fontWeight } from '../../../theme';
 
 const Patent = styled(BasePatent)`
    font-size: ${fontSize.small};
@@ -29,7 +29,7 @@ export const Step1 = () => (
 );
 
 const B = styled.b`
-   font-weight: bold;
+   font-weight: ${fontWeight.bold};
 `;
 
 const AnswerSample = styled.span`
@@ -111,7 +111,7 @@ export const Step3 = () => {
 };
 
 const Copyright = styled.sup`
-   font-weight: bold;
+   font-weight: ${fontWeight.bold};
    margin-left: ${spacing.xLarge};
 `;
 const ExplainMink = styled(P)`
@@ -119,7 +119,7 @@ const ExplainMink = styled(P)`
    color: ${({ theme: { palette } }) => palette.grayscale[1]};
    ${Strong} {
       font-size: ${fontSize.tiny};
-      font-weight: bold;
+      font-weight: ${fontWeight.bold};
       color: ${({ theme }) => theme.textColors.emphasis};
    }
 `;
