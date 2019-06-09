@@ -14,7 +14,8 @@ function* loadAggregateDataSaga({ meta: { isServer, pathname } }) {
    const res = yield call(api.get, 'aggregate');
    const { data } = res;
    setAuthorization(data.userId);
-   if (isServer && REDIRECT_FORMER_INSIDER_FROM.includes(pathname) && data.isFormerInsider) {
+   const pathNotChanged = pathname === Router.router.pathname;
+   if (isServer && pathNotChanged && REDIRECT_FORMER_INSIDER_FROM.includes(pathname) && data.isFormerInsider) {
       yield delay(REDIRECT_DELAY);
       Router.push('/houses');
    }
