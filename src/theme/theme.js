@@ -35,6 +35,12 @@ export const fontSize = {
    large: calcRem('24px'),
 };
 
+export const fontWeight = {
+   primary: 300,
+   bolder: 400,
+   bold: 500,
+};
+
 export const theme = {
    palette,
    // TODO: what is it good for?

@@ -2,7 +2,7 @@ import React from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { normalize } from 'styled-normalize';
 
-import { BASE_FONT_SIZE, breakpoints, lineHeight } from '../theme';
+import { BASE_FONT_SIZE, breakpoints, lineHeight, fontWeight } from '../theme';
 import { key, font } from '../utils';
 
 const background = ({ theme: { appBackground } }) => appBackground;
@@ -18,7 +18,7 @@ const GlobalStyle = createGlobalStyle`
    body {
       font-size: ${BASE_FONT_SIZE};
       font-family: ${font('primary')};
-      font-weight: 300;
+      font-weight: ${fontWeight.primary};
       line-height: ${lineHeight.medium};
       color: ${color};
       background-color: ${background};

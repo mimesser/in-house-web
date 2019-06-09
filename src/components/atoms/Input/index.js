@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
 import { font, ifProp, palette } from '../../../utils';
-import { spacing } from '../../../theme';
+import { spacing, fontWeight } from '../../../theme';
 
 const styles = css`
    font-family: ${font('primary')};
@@ -12,7 +12,7 @@ const styles = css`
    margin: 0;
    box-sizing: border-box;
    font-size: 1rem;
-   font-weight: 300;
+   font-weight: ${fontWeight.primary};
    padding: ${spacing.input};
    color: ${({ theme: { textColors } }) => textColors.primary};
    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.08);

@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Loader } from '../Loader';
+import { fontWeight } from '../../../theme';
 
 const StyledButton = styled.button`
    cursor: pointer;
@@ -13,7 +14,7 @@ const StyledButton = styled.button`
    // TODO: use predefined spacing, override in specific component if needed
    padding: 0.8rem 2.7rem;
    font-size: ${({ theme: { fontSize } }) => fontSize.medium};
-   font-weight: 300;
+   font-weight: ${fontWeight.primary};
    outline: none;
 `;
 
