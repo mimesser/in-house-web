@@ -10,7 +10,7 @@ const palette = {
    danger: ['#d32f2f', '#F40000', '#f8877f', '#ffcdd2'],
    alert: ['#ffa000', '#ffc107', '#ffd761', '#ffecb3'],
    success: ['#388e3c', '#4caf50', '#7cc47f', '#c8e6c9'],
-   grayscale: ['#8E8E93', '#9F9F9F', '#E4E4E4'],
+   grayscale: ['#8E8E93', '#9F9F9F', '#D8D8D8', '#E4E4E4'],
    white: '#FFFFFF',
    black: '#000000',
 };

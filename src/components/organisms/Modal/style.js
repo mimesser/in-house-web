@@ -43,7 +43,7 @@ export const Content = styled.div`
 `;
 
 // TODO: button
-export const Close = styled(CloseIcon).attrs({ size: `2rem` })`
+export const Close = styled(CloseIcon).attrs({ size: 32 })`
    position: absolute;
    top: 1rem;
    right: 1rem;

@@ -7,7 +7,7 @@ import { actionTypes, loadAggregateDataSuccess } from './actions';
 import { selectReady } from '../selectors';
 import { withErrorReporter } from '../error/saga';
 
-const REDIRECT_FORMER_INSIDER_FROM = ['/', '/intro'];
+const REDIRECT_FORMER_INSIDER_FROM = ['/', '/how-it-works'];
 const REDIRECT_DELAY = 600;
 
 function* loadAggregateDataSaga({ meta: { isServer, pathname } }) {

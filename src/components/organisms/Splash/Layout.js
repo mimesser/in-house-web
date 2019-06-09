@@ -12,7 +12,7 @@ export const SplashLayout = styled.div`
 
 export const LandingLayout = styled(SplashLayout)`
    ${Heading} {
-      margin-bottom: 4rem;
+      margin-bottom: 4.5rem;
    }
 
    p {

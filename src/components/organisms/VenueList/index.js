@@ -3,10 +3,11 @@ import Router from 'next/router';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
+import { Users } from 'styled-icons/feather';
+
 import { CircleProgress, Loader } from '../../atoms';
 
 import { selectVenues } from '../../../store/venues';
-import { selectIndustriesMap } from '../../../store/aggregate';
 
 function getRandomScore() {
    return Math.random() * 10 + 1;
@@ -53,7 +54,7 @@ function VenueListComponent({ venues }) {
                            <div className="right">
                               <CircleProgress score={getRandomScore()} />
                               <div className="insiders">
-                                 <i className="material-icons">person</i>
+                                 <Users size={18} />
                                  <span>{getRandomInsiders()}</span>
                               </div>
                            </div>
