@@ -5,7 +5,6 @@ import { waitTillReady } from '../../aggregate/saga';
 import api from '../../../api';
 import { loadVenuesDataSuccess, setSelectedVenue } from '../actions';
 import { selectVenues } from '../selectors';
-import { unsplashRestaurantAndCafeCollection } from './tempImages';
 import { selectIndustriesMap } from '../../aggregate';
 
 function* fetchVenueList() {
@@ -20,7 +19,6 @@ function* fetchVenueList() {
 
    const normalized = data.map((v, i) => ({
       ...v,
-      imageUrl: unsplashRestaurantAndCafeCollection[i],
       industry: industries[v.industryId],
    }));
 
