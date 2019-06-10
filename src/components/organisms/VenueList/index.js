@@ -9,14 +9,6 @@ import { CircleProgress, Loader } from '../../atoms';
 
 import { selectVenues } from '../../../store/venues';
 
-function getRandomScore() {
-   return Math.random() * 10 + 1;
-}
-
-function getRandomInsiders() {
-   return Math.floor(Math.random() * 100 + 1);
-}
-
 function VenueListComponent({ venues }) {
    if (!venues) {
       return <Loader big />;
@@ -40,7 +32,7 @@ function VenueListComponent({ venues }) {
                      >
                         <div className="card">
                            <div className="container-image">
-                              <img className="image" src={venue.imageUrl} alt="random" />
+                              <img className="image" src={venue.venueInfo.imageUrl} alt="random" />
                            </div>
                            <div className="venue-details">
                               <div className="industry">{venue.industry && venue.industry.name}</div>
@@ -52,10 +44,10 @@ function VenueListComponent({ venues }) {
                               </div>
                            </div>
                            <div className="right">
-                              <CircleProgress score={getRandomScore()} />
+                              {typeof venue.rating === 'number' ? <CircleProgress score={venue.rating || 0} /> : '—'}
                               <div className="insiders">
                                  <Users size={18} />
-                                 <span>{getRandomInsiders()}</span>
+                                 <span>{venue.insidersCount}</span>
                               </div>
                            </div>
                         </div>

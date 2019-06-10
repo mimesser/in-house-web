@@ -77,10 +77,9 @@ const Score = styled.div`
 
 export const Banner = ({
    venue: {
-      imageUrl,
       industry: { name: industry } = {},
       name,
-      venueInfo: { address, city, state, zipCode },
+      venueInfo: { address, city, state, zipCode, imageUrl },
       insidersCount,
       rating,
    },
