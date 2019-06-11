@@ -1,39 +1,61 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-
-import Link from 'next/link';
+import React, { useState } from 'react';
+import axios from 'axios';
 import { Page } from '../components/templates';
+import { Container, Heading, Input } from '../components/atoms';
+import { NotifyLayout, SubmitButton } from '../components/organisms';
 
-import { Button, Container, Flex, Heading, Input } from '../components/atoms';
+const isEmailValid = email => {
+   // eslint-disable-next-line
+   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+   return re.test(String(email).toLowerCase());
+};
 
-class Notify extends Component {
-   thankYou = () => {
-      return (
-         <Container>
-            <Heading>thank you</Heading>
-         </Container>
-      );
-   };
+const Notify = () => {
+   const [submitted, setSubmitted] = useState(false);
+   const [loading, setLoading] = useState(false);
+   const [email, setEmail] = useState('');
 
-   render() {
-      return (
-         <Page title="Notify Me">
-            <Container>
-               <Heading>notify me</Heading>
-               <p>we'll let you know when we go live!</p>
-               <br />
-               <Input placeholder="Email or mobile" />
-               <br />
-               <br />
-               <Flex justifyAround>
-                  <Link href="/home">
-                     <Button>send</Button>
-                  </Link>
-               </Flex>
-            </Container>
-         </Page>
-      );
+   async function submit() {
+      setLoading(true);
+      try {
+         await axios.post(
+            'https://inhouseprelaunch.azurewebsites.net/api/emails?code=m7WcoGFdsWppZXKb8DvbMKWiRDbBfhtgFlFCyqertPPuYdY8YJgCCg==',
+            { email },
+         );
+      } finally {
+         setSubmitted(true);
+      }
    }
-}
 
-export default connect()(Notify);
+   const emailValid = isEmailValid(email);
+
+   return (
+      <Page title="In-House">
+         <Container>
+            {submitted ? (
+               <NotifyLayout>
+                  <Heading>thank you!</Heading>
+                  <p>we’ll let you know when we go live!</p>
+               </NotifyLayout>
+            ) : (
+               <NotifyLayout>
+                  <Heading>notify me</Heading>
+                  <p>we’ll let you know when we go live!</p>
+                  <Input
+                     disabled={loading}
+                     value={email}
+                     onChange={event => setEmail(event.target.value)}
+                     placeholder="Email"
+                     type="email"
+                  />
+                  <SubmitButton visible={emailValid} disabled={!emailValid || loading} onClick={submit}>
+                     send
+                  </SubmitButton>
+               </NotifyLayout>
+            )}
+         </Container>
+      </Page>
+   );
+};
+
+export default Notify;

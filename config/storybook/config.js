@@ -5,7 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import configureStore from '../../src/store';
 import theme from '../../src/theme';
 
-const store = configureStore({});
+const store = configureStore();
 const req = require.context('../../src/components', true, /.stories.js$/);
 
 function loadStories() {

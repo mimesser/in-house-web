@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Link from 'next/link';
 
 import { calcRem, spacing } from '../../../theme';
 
@@ -15,9 +16,12 @@ const Layout = styled.div`
 
 export const Header = () => (
    <Layout>
-      <img src="/static/logo.png" alt="logo" />
-
-      {/* TODO: wrap logo with anchor? */}
+      <Link href="/">
+         {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+         <a>
+            <img src="/static/logo.png" alt="logo" />
+         </a>
+      </Link>
       {/* TODO: menu */}
    </Layout>
 );
