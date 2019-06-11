@@ -17,8 +17,8 @@ const baseStyle = css`
 
 export const Heading = styled.h1`
    ${baseStyle};
-   font-size: 3rem;
-   margin-bottom: ${spacing.xLarge};
+   font-size: 2rem;
+   margin-bottom: ${({ noMargin }) => (noMargin ? 0 : spacing.large)};
 `;
 
 // TODO: fix below sizing/spacing

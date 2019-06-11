@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
 import { font, ifProp, palette } from '../../../utils';
-
-const fontSize = ({ height }) => `${height / 35.5555555556}rem`;
+import { spacing, fontWeight } from '../../../theme';
 
 const styles = css`
    font-family: ${font('primary')};
@@ -12,11 +11,10 @@ const styles = css`
    width: 100%;
    margin: 0;
    box-sizing: border-box;
-   font-size: ${fontSize};
-   font-weight: 300;
-   padding: ${ifProp({ type: 'textarea' }, `${0.4444444444}em`, '0.6rem 0.4rem')};
-   height: ${ifProp({ type: 'textarea' }, 'auto', 'unset')};
-   color: currentcolor;
+   font-size: 1rem;
+   font-weight: ${fontWeight.primary};
+   padding: ${spacing.input};
+   color: ${({ theme: { textColors } }) => textColors.primary};
    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.08);
    border: 1px solid ${ifProp('invalid', palette('danger', 2), 'transparent')};
    border-radius: 3px;
@@ -31,10 +29,11 @@ const styles = css`
    }
    :active,
    :focus {
-      border: 1px solid #1a90e4;
+      border: 1px solid ${ifProp('invalid', palette('danger', 2), '#1a90e4')};
+      outline: none;
    }
    ::placeholder {
-      color: #a3a3a3;
+      color: ${({ theme: { palette } }) => palette.grayscale[1]};
    }
 `;
 
@@ -51,7 +50,7 @@ const StyledInput = styled.input`
 `;
 
 export const Input = ({ ...props }) => {
-   const { type } = props;
+   const { type = 'text' } = props;
 
    if (type === 'textarea') {
       return <StyledTextarea {...props} />;
@@ -69,11 +68,4 @@ Input.propTypes = {
    reverse: PropTypes.bool,
    height: PropTypes.number,
    invalid: PropTypes.bool,
-};
-
-Input.defaultProps = {
-   type: 'text',
-   height: 40,
-   reverse: false,
-   invalid: false,
 };

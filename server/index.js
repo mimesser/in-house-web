@@ -1,6 +1,7 @@
 const Koa = require('koa');
 const nextApp = require('next');
 const Router = require('koa-router');
+const auth = require('koa-basic-auth');
 
 const port = parseInt(process.env.PORT || process.env.port, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';

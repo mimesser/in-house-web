@@ -1,73 +1,41 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import Router from 'next/router';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { CircleProgress } from '../../atoms';
-import { Modal } from '../Modal';
-import { VenueInsiderQuestionChallenge } from '../VenueInsiderQuestionChallenge';
+import { Users } from 'styled-icons/feather';
 
-import { unsplashRestaurantAndCafeCollection } from './imgURLs';
-import { selectVenues } from '../../../store/venues/selectors';
-import { selectIndustriesMap } from '../../../store/aggregate/selectors';
-import { loadVenuesData } from '../../../store/venues/actions';
+import { CircleProgress, Loader } from '../../atoms';
 
-// https://unsplash.com/collections/312299/restaurant-cafe
-const allImgURLs = unsplashRestaurantAndCafeCollection.length;
+import { selectVenues } from '../../../store/venues';
 
-function getRandomScore() {
-   return Math.random() * 10 + 1;
-}
+function VenueListComponent({ venues }) {
+   if (!venues) {
+      return <Loader big />;
+   }
 
-function getRandomInsiders() {
-   return Math.floor(Math.random() * 100 + 1);
-}
-
-const getRandomImage = () => {
-   const imgAtIndex = Math.floor(Math.random() * allImgURLs + 1);
-   return unsplashRestaurantAndCafeCollection[imgAtIndex];
-};
-
-function VenueListComponent({ venues, industries, loadVenuesData }) {
-   const [modalState, setModalState] = useState(false);
-   const [venueSelected, setVenueSelected] = useState(null);
-
-   useEffect(() => {
-      if (!venues) {
-         loadVenuesData();
-      }
-   }, []);
-
-   useEffect(() => {
-      if (modalState === false && venueSelected !== null) {
-         setVenueSelected(null);
-      }
-   }, [modalState, venueSelected]);
-
-   const handleModalState = () => setModalState(!modalState);
-   const handleVenueSelected = venue => setVenueSelected(venue);
+   const showVenue = venue => {
+      const { id } = venue;
+      Router.push(`/houses?id=${id}`, `/houses/${id}`, { shallow: true });
+   };
 
    return (
       <>
          <div className="row">
             {venues &&
                venues.map(venue => {
-                  const industry = industries[venue.industryId];
-
                   return (
                      <div
                         className="col-xs-12 col-sm-6 col-md-4 col-lg-3"
                         key={venue.id}
-                        onClick={() => {
-                           handleModalState();
-                           handleVenueSelected(venue);
-                        }}
+                        onClick={() => showVenue(venue)}
                      >
                         <div className="card">
                            <div className="container-image">
-                              <img className="image" src={getRandomImage()} alt="random" />
+                              <img className="image" src={venue.venueInfo.imageUrl} alt="random" />
                            </div>
                            <div className="venue-details">
-                              <div className="industry">{industry && industry.name}</div>
+                              <div className="industry">{venue.industry && venue.industry.name}</div>
                               <div className="venue-name">{venue.name}</div>
                               <div className="venue-address">
                                  {venue.venueInfo.address}
@@ -76,10 +44,10 @@ function VenueListComponent({ venues, industries, loadVenuesData }) {
                               </div>
                            </div>
                            <div className="right">
-                              <CircleProgress score={getRandomScore()} />
+                              {typeof venue.rating === 'number' ? <CircleProgress score={venue.rating || 0} /> : '—'}
                               <div className="insiders">
-                                 <i className="material-icons">person</i>
-                                 <span>{getRandomInsiders()}</span>
+                                 <Users size={18} />
+                                 <span>{venue.insidersCount}</span>
                               </div>
                            </div>
                         </div>
@@ -87,9 +55,6 @@ function VenueListComponent({ venues, industries, loadVenuesData }) {
                   );
                })}
          </div>
-         <Modal open={modalState} closeModal={() => handleModalState()}>
-            {venueSelected ? <VenueInsiderQuestionChallenge venue={venueSelected} /> : null}
-         </Modal>
          <style jsx>
             {`
                section {
@@ -172,15 +137,8 @@ function VenueListComponent({ venues, industries, loadVenuesData }) {
    );
 }
 
-const mapState = createStructuredSelector({
+const mapStateToProps = createStructuredSelector({
    venues: selectVenues,
-   industries: selectIndustriesMap,
 });
-const mapDispatch = {
-   loadVenuesData,
-};
 
-export const VenueList = connect(
-   mapState,
-   mapDispatch,
-)(VenueListComponent);
+export const VenueList = connect(mapStateToProps)(VenueListComponent);
