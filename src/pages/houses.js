@@ -6,7 +6,7 @@ import { withRouter } from 'next/router';
 import { Page } from '../components/templates';
 import { Container } from '../components/atoms';
 import { Venue, VenueList } from '../components/organisms';
-import { initVenuesPage, selectLoadingVenues, selectSelectedVenue } from '../store/venues';
+import { initVenuesPage, selectLoadingVenues } from '../store/venues';
 
 class Houses extends Component {
    get houseId() {

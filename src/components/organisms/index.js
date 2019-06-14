@@ -1,5 +1,3 @@
-export { Clock } from './Clock';
-export { Counter } from './Counter';
 export { Header } from './Header';
 export { MultiStep } from './MultiStep';
 export { Modal } from './Modal';
