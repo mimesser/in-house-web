@@ -4,7 +4,7 @@ import Router from 'next/router';
 import api, { setAuthorization } from '../../api';
 
 import { actionTypes, loadAggregateDataSuccess } from './actions';
-import { selectReady } from '../selectors';
+import { selectReady } from './selectors';
 import { withErrorReporter } from '../error/saga';
 
 const REDIRECT_FORMER_INSIDER_FROM = ['/', '/how-it-works'];

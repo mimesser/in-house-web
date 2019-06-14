@@ -1,5 +1,4 @@
 import { put } from 'redux-saga/effects';
-
 import { failure } from './actions';
 
 export const withErrorReporter = worker =>

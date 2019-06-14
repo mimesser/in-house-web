@@ -8,7 +8,7 @@ import withReduxSaga from 'next-redux-saga';
 import createStore from '../store';
 import theme from '../theme';
 import GlobalStyle from '../components/GlobalStyle';
-import { loadAggregateData } from '../store/aggregate/actions';
+import { loadAggregateData } from '../store/aggregate';
 
 class MyApp extends App {
    static async getInitialProps({ Component, ctx }) {
