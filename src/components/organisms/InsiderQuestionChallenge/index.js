@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { ArrowRight } from 'styled-icons/evil/ArrowRight';
 
-import { Input, Heading, Loader } from '../../atoms';
+import Link from 'next/link';
+import { Input, Heading, Loader, Button } from '../../atoms';
 import { Patent } from '../../molecules';
 import {
    answerMink,
@@ -36,7 +37,7 @@ const Form = ({ topMink, wrongAnswer, answerMink }) => {
    };
 
    const handleChange = e => {
-      setAnswer(e.target.value.toLowerCase());
+      setAnswer(e.target.value.toLowerCase().trim());
       setShowError(false);
    };
 
@@ -64,7 +65,7 @@ const Form = ({ topMink, wrongAnswer, answerMink }) => {
    );
 };
 
-const InsiderQuestionChallenge = ({ venue: { name, topMink }, challengeFormData, dismissForm, answerMink }) => {
+const InsiderQuestionChallenge = ({ venue: { id, name, topMink }, challengeFormData, dismissForm, answerMink }) => {
    const { blocked, isAnswerCorrect } = challengeFormData || {};
    const wrongAnswer = isAnswerCorrect === false;
    const accessGranted = challengeFormData && challengeFormData.isAnswerCorrect;
@@ -91,7 +92,7 @@ const InsiderQuestionChallenge = ({ venue: { name, topMink }, challengeFormData,
                      {/* TODO error text and styling */}
                      {blocked && <p>Too many attempts. Please come back later</p>}
                      {!blocked && <Form topMink={topMink} wrongAnswer={wrongAnswer} answerMink={answerMink} />}
-                     <ChangeButton>change this question</ChangeButton>
+                     <ChangeButton onClick={dismissForm}>change this question</ChangeButton>
                   </>
                )}
             </QuestionForm>

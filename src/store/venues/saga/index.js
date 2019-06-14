@@ -7,6 +7,7 @@ import { initVenuesPage } from './initVenuesPage';
 import { setSelectedVenue } from './setSelectedVenue';
 import { loadVenueMinks } from './loadVenueMinks';
 import { dismissChallengeForm } from './dismissChallengeForm';
+import { createMink } from './createMink';
 
 export default function* venuesSaga() {
    yield all([
@@ -15,5 +16,6 @@ export default function* venuesSaga() {
       takeLeading(actionTypes.ANSWER_MINK, withErrorReporter(answerMink)),
       takeLatest(actionTypes.LOAD_MINKS, withErrorReporter(loadVenueMinks)),
       takeLatest(actionTypes.DISMISS_CHALLENGE_FORM, withErrorReporter(dismissChallengeForm)),
+      takeLeading(actionTypes.CREATE_MINK, withErrorReporter(createMink)),
    ]);
 }

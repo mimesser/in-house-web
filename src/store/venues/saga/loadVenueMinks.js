@@ -12,6 +12,6 @@ export function* loadVenueMinks() {
    // TODO: handle pagination, store total count
    const {
       data: { minks },
-   } = yield call(api.get, `/Venues/${id}/minks`);
+   } = yield call(api.get, `/venues/${id}/minks`);
    yield put(setVenueMinks(minks));
 }

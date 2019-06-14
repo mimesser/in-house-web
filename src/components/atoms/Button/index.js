@@ -5,7 +5,7 @@ import { Loader } from '../Loader';
 import { fontWeight } from '../../../theme';
 
 const StyledButton = styled.button`
-   cursor: pointer;
+   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
    border-radius: 2em;
    border: 1px solid ${({ theme: { palette } }) => palette.black};
    background-color: ${({ secondary, inverse, theme: { palette } }) =>
@@ -16,6 +16,7 @@ const StyledButton = styled.button`
    font-size: ${({ theme: { fontSize } }) => fontSize.medium};
    font-weight: ${fontWeight.primary};
    outline: none;
+   ${({ disabled }) => disabled && `opacity: 0.5;`}
 `;
 
 export const Button = styled(({ secondary, big, inverse, loading, children, ...props }) => {

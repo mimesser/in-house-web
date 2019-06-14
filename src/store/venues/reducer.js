@@ -43,6 +43,16 @@ export function reducer(state = initialState, action) {
       case actionTypes.SET_VENUE_MINKS: {
          return setSelectedVenueProp(state, action, 'minks');
       }
+      case actionTypes.STORE_NEW_MINK: {
+         if (!state.selectedVenue) {
+            return state;
+         }
+         const {
+            payload: { mink },
+         } = action;
+         const newMinks = [mink, ...(state.selectedVenue.newMinks || [])];
+         return { ...state, selectedVenue: { ...state.selectedVenue, newMinks } };
+      }
       case aggregateActions.CLEAR_INSIDER_VENUE: {
          if (!state.selectedVenue) {
             return state;
