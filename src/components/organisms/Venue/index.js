@@ -11,6 +11,7 @@ import Navbar from './Navbar';
 import { RateTab } from './RateTab';
 import { PostTab } from './PostTab';
 import MinkTab from './MinkTab';
+import AddMink from './AddMink';
 
 const tabMap = {
    rate: RateTab,
@@ -23,6 +24,7 @@ const knownTabs = Object.keys(tabMap);
 const Venue = ({ venue, router }) => {
    const {
       query: { tab = 'rate' },
+      asPath,
    } = router;
 
    useEffect(() => {
@@ -33,6 +35,10 @@ const Venue = ({ venue, router }) => {
 
    if (!venue) {
       return <Loader big />;
+   }
+
+   if (asPath.endsWith('/new')) {
+      return <AddMink />;
    }
 
    const Tab = tabMap[tab] || RateTab;

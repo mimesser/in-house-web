@@ -9,6 +9,8 @@ export const actionTypes = {
    SET_VENUE_RATES: 'SET_VENUE_RATES',
    LOAD_MINKS: 'LOAD_MINKS',
    SET_VENUE_MINKS: 'SET_VENUE_MINKS',
+   CREATE_MINK: 'CREATE_MINK',
+   STORE_NEW_MINK: 'STORE_NEW_MINK',
 };
 
 export const initVenuesPage = idToSelect => ({
@@ -57,4 +59,14 @@ export const loadMinks = () => ({
 export const setVenueMinks = minks => ({
    type: actionTypes.SET_VENUE_MINKS,
    payload: { minks },
+});
+
+export const createMink = (id, question, answer) => ({
+   type: actionTypes.CREATE_MINK,
+   payload: { id, question, answer },
+});
+
+export const storeNewMink = mink => ({
+   type: actionTypes.STORE_NEW_MINK,
+   payload: { mink },
 });

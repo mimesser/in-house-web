@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
 import { font, ifProp, palette } from '../../../utils';
@@ -30,41 +29,28 @@ const styles = css`
    :active,
    :focus {
       border: 1px solid ${ifProp('invalid', palette('danger', 2), '#1a90e4')};
+      outline: none;
    }
    ::placeholder {
       color: ${({ theme: { palette } }) => palette.grayscale[1]};
    }
 `;
 
-const StyledTextarea = styled.textarea`
+export const Textarea = styled.textarea`
+   ${styles};
+   resize: none;
+`;
+
+export const Select = styled.select`
    ${styles}
 `;
 
-const StyledSelect = styled.select`
+export const Input = styled.input`
    ${styles}
 `;
 
-const StyledInput = styled.input`
+export const Checkbox = styled.input.attrs({
+   type: 'checkbox',
+})`
    ${styles}
 `;
-
-export const Input = ({ ...props }) => {
-   const { type = 'text' } = props;
-
-   if (type === 'textarea') {
-      return <StyledTextarea {...props} />;
-   }
-
-   if (type === 'select') {
-      return <StyledSelect {...props} />;
-   }
-
-   return <StyledInput {...props} />;
-};
-
-Input.propTypes = {
-   type: PropTypes.string,
-   reverse: PropTypes.bool,
-   height: PropTypes.number,
-   invalid: PropTypes.bool,
-};

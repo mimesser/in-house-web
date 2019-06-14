@@ -5,7 +5,7 @@ export { Container } from './Container';
 export { Flex, Column } from './Flex';
 export * from './Heading';
 export { Icon } from './Icon';
-export { Input } from './Input';
+export * from './Input';
 export { Loader } from './Loader';
 export { Strong } from './Strong';
 export { Badge } from './Badge';
