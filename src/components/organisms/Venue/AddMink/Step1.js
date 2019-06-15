@@ -42,7 +42,13 @@ const EditAnswer = ({ value, setAnswer }) => {
       <FormGroup>
          <label>
             secret answer
-            <Input onChange={handleChange} value={value} placeholder="one word / no spaces" />
+            <Input
+               onChange={handleChange}
+               value={value}
+               placeholder="one word / no spaces"
+               autocomplete="off"
+               spellcheck="false"
+            />
          </label>
          <CharLimit reached={value.length === MAX_ANSWER_LENGTH}>{MAX_ANSWER_LENGTH}</CharLimit>
       </FormGroup>

@@ -43,6 +43,15 @@ export function reducer(state = initialState, action) {
       case actionTypes.SET_VENUE_MINKS: {
          return setSelectedVenueProp(state, action, 'minks');
       }
+      case actionTypes.SET_SELECTED_MINK: {
+         return setSelectedVenueProp(state, action, 'selectedMinkId');
+      }
+      case actionTypes.SHOW_VOTE_MINK_CONFIRMATION: {
+         return setSelectedVenueProp(state, action, 'voteMinkConfirmation');
+      }
+      case actionTypes.SET_ANSWER_MINK_STATUS: {
+         return setSelectedVenueProp(state, action, 'answerMinkStatus');
+      }
       case actionTypes.STORE_NEW_MINK: {
          if (!state.selectedVenue) {
             return state;
@@ -52,6 +61,19 @@ export function reducer(state = initialState, action) {
          } = action;
          const newMinks = [mink, ...(state.selectedVenue.newMinks || [])];
          return { ...state, selectedVenue: { ...state.selectedVenue, newMinks } };
+      }
+      case actionTypes.SET_MY_CORRECT_ANSWER: {
+         if (!state.selectedVenue) {
+            return state;
+         }
+         const {
+            payload: { minkId, answer },
+         } = action;
+         const minks = state.selectedVenue.minks.slice();
+         const index = minks.findIndex(m => m.id === minkId);
+         minks[index] = { ...minks[index], myCorrectAnswer: answer };
+
+         return { ...state, selectedVenue: { ...state.selectedVenue, minks } };
       }
       case aggregateActions.CLEAR_INSIDER_VENUE: {
          if (!state.selectedVenue) {

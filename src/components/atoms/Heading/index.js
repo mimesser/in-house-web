@@ -24,8 +24,8 @@ export const Heading = styled.h1`
 // TODO: fix below sizing/spacing
 
 export const HeadingTwo = styled.h2`
-   font-size: 36px;
-   margin-bottom: 20px;
+   font-size: 1.8rem;
+   margin-bottom: ${spacing.medium};
    ${baseStyle};
 `;
 

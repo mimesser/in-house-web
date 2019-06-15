@@ -11,6 +11,7 @@ export function* loadVenueRateTags(id) {
       const { data } = yield call(api.get, `/Venues/${id}/rateTags`);
       yield put(setVenueRates(orderBy(data, t => t.orderIndex)));
    } catch (e) {
+      // TODO: extract and reuse in post loading
       if (isForbidden(e)) {
          // TODO: test when UI allows changing top mink
          yield clearInsiderVenue(id);

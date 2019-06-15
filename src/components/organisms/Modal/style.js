@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Close as CloseIcon } from 'styled-icons/material/Close';
 
 import { breakpoints } from '../../../theme';
-import { Heading } from '../../atoms';
+import { Heading, HeadingTwo } from '../../atoms';
 
 export const Background = styled.div`
    position: fixed;
@@ -34,7 +34,7 @@ export const Content = styled.div`
    display: flex;
    background-color: ${({ theme: { palette } }) => palette.black};
    color: ${({ theme: { palette } }) => palette.white};
-   ${Heading} {
+   ${Heading}, ${HeadingTwo} {
       color: ${({ theme: { palette } }) => palette.white};
    }
    min-width: ${breakpoints.xs};
