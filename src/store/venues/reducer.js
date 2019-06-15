@@ -63,7 +63,7 @@ export function reducer(state = initialState, action) {
          return { ...state, selectedVenue: { ...state.selectedVenue, newMinks } };
       }
       case actionTypes.SET_MY_CORRECT_ANSWER: {
-         if (!state.selectedVenue) {
+         if (!state.selectedVenue || !state.selectedVenue.minks) {
             return state;
          }
          const {
