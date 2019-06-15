@@ -10,7 +10,7 @@ import { loadVenueRateTags } from './loadVenueRateTags';
 const MAX_ATTEMPTS = 5;
 const CONFIRMATION_DELAY = 1000;
 
-export function* answerMink({ payload: { answer } }) {
+export function* answerTopMink({ payload: { answer } }) {
    if (!answer) {
       return;
    }

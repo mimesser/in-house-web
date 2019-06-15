@@ -1,16 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Link from 'next/link';
 import differenceBy from 'lodash/differenceBy';
 
-import { loadMinks } from '../../../store/venues';
+import { loadMinks, setSelectedMink } from '../../../store/venues';
 import { fontSize, spacing } from '../../../theme';
 import { Loader, Card, Flex, Button } from '../../atoms';
 import { Votes } from './Votes';
 import { PokeButton, Patent } from '../../molecules';
-import { TabLayout } from './commonStyle';
+import { Score, TabLayout } from './commonStyle';
 import { formatDate } from '../../../utils/format';
+import VoteMink from './VoteMink';
 
 // TODO: styling in general + "large" support for a top mink
 const MinkCard = styled(Card)`
@@ -38,30 +39,37 @@ const Tab = styled(TabLayout)`
    }
 `;
 
-const Score = styled.div`
-   min-width: 6rem;
-`;
+const Mink = ({ mink: { id, created, question, voteCount, voteRating, myVote }, large, setSelectedMink }) => {
+   const open = useCallback(() => setSelectedMink(id), [id]);
 
-const Mink = ({ mink: { id, created, question, voteCount, voteRating }, large }) => (
-   <MinkCard large={large}>
-      <Score />
-      <Flex column justifyAround>
-         <time dateTime={created}>{formatDate(created)}</time>
-         <p>{question}</p>
-         <Votes count={voteCount} />
-      </Flex>
-      <PokeButton onClick={() => console.log('share')} />
-   </MinkCard>
+   return (
+      <MinkCard large={large} onClick={open}>
+         <Score>{myVote ? voteRating : 'Please rate'}</Score>
+         <Flex column justifyAround>
+            <time dateTime={created}>{formatDate(created)}</time>
+            <p>{question}</p>
+            <Votes count={voteCount} />
+         </Flex>
+         <PokeButton
+            onClick={e => {
+               e.stopPropagation();
+               console.log('share');
+            }}
+         />
+      </MinkCard>
+   );
+};
+
+const renderMink = (mink, setSelectedMink, large) => (
+   <Mink mink={mink} key={mink.id} large={large} setSelectedMink={setSelectedMink} />
 );
 
-const renderMinks = (minks, newMinks) => (
+const renderMinks = (minks, newMinks, setSelectedMink) => (
    <>
       {newMinks && newMinks.length > 0 && (
          <>
             <p>New:</p>
-            {newMinks.map(m => (
-               <Mink mink={m} key={m.id} />
-            ))}
+            {newMinks.map(m => renderMink(m, setSelectedMink))}
          </>
       )}
       {minks.length > 0 && (
@@ -70,21 +78,19 @@ const renderMinks = (minks, newMinks) => (
                Top MINK<sup>©</sup>
                <Patent />
             </p>
-            <Mink mink={minks[0]} key={minks[0].id} large />
+            {renderMink(minks[0], setSelectedMink, true)}
          </>
       )}
       {minks.length > 1 && (
          <>
             <p>Runners up:</p>
-            {minks.slice(1).map(m => (
-               <Mink mink={m} key={m.id} />
-            ))}
+            {minks.slice(1).map(m => renderMink(m, setSelectedMink))}
          </>
       )}
    </>
 );
 
-const MinkTab = ({ venue: { id, minks, newMinks }, loadMinks }) => {
+const MinkTab = ({ venue: { id, minks, newMinks }, loadMinks, setSelectedMink }) => {
    useEffect(() => {
       loadMinks(id);
    }, []);
@@ -93,16 +99,18 @@ const MinkTab = ({ venue: { id, minks, newMinks }, loadMinks }) => {
 
    return (
       <Tab>
-         {minks ? renderMinks(exceptNew, newMinks) : <Loader big />}
+         {minks ? renderMinks(exceptNew, newMinks, setSelectedMink) : <Loader big />}
          <Link href={`/houses?id=${id}&tab=mink&new`} as={`/houses/${id}/mink/new`} passHref>
             <Button>Add mink</Button>
          </Link>
+         <VoteMink />
       </Tab>
    );
 };
 
 const mapDispatch = {
    loadMinks,
+   setSelectedMink,
 };
 
 export default connect(

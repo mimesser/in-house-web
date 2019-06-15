@@ -3,11 +3,10 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { ArrowRight } from 'styled-icons/evil/ArrowRight';
 
-import Link from 'next/link';
-import { Input, Heading, Loader, Button } from '../../atoms';
+import { Input, Heading, Loader } from '../../atoms';
 import { Patent } from '../../molecules';
 import {
-   answerMink,
+   answerTopMink,
    dismissChallengeForm,
    selectSelectedVenue,
    selectInsiderChallengeForm,
@@ -23,21 +22,24 @@ import {
    Confirmation,
 } from './style';
 import { Modal } from '../Modal';
+import { normalizeAnswer } from '../Venue/normalizeAnswer';
 
-const Form = ({ topMink, wrongAnswer, answerMink }) => {
+// TODO: move this form to Venue?
+
+const Form = ({ topMink, wrongAnswer, answerTopMink }) => {
    const [answer, setAnswer] = useState('');
    const [showError, setShowError] = useState(false);
 
    const handleSubmit = e => {
       e.preventDefault();
       if (answer) {
-         answerMink(answer);
+         answerTopMink(answer);
          setShowError(true);
       }
    };
 
    const handleChange = e => {
-      setAnswer(e.target.value.toLowerCase().trim());
+      setAnswer(normalizeAnswer(e.target.value));
       setShowError(false);
    };
 
@@ -65,7 +67,7 @@ const Form = ({ topMink, wrongAnswer, answerMink }) => {
    );
 };
 
-const InsiderQuestionChallenge = ({ venue: { id, name, topMink }, challengeFormData, dismissForm, answerMink }) => {
+const InsiderQuestionChallenge = ({ venue: { name, topMink }, challengeFormData, dismissForm, answerTopMink }) => {
    const { blocked, isAnswerCorrect } = challengeFormData || {};
    const wrongAnswer = isAnswerCorrect === false;
    const accessGranted = challengeFormData && challengeFormData.isAnswerCorrect;
@@ -91,7 +93,7 @@ const InsiderQuestionChallenge = ({ venue: { id, name, topMink }, challengeFormD
                      </p>
                      {/* TODO error text and styling */}
                      {blocked && <p>Too many attempts. Please come back later</p>}
-                     {!blocked && <Form topMink={topMink} wrongAnswer={wrongAnswer} answerMink={answerMink} />}
+                     {!blocked && <Form topMink={topMink} wrongAnswer={wrongAnswer} answerTopMink={answerTopMink} />}
                      <ChangeButton onClick={dismissForm}>change this question</ChangeButton>
                   </>
                )}
@@ -106,7 +108,7 @@ const mapState = createStructuredSelector({
    challengeFormData: selectInsiderChallengeForm,
 });
 const mapDispatch = {
-   answerMink,
+   answerTopMink,
    dismissForm: dismissChallengeForm,
 };
 
