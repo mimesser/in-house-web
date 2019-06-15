@@ -8,8 +8,8 @@ import { selectSelectedVenue } from '../../../store/venues';
 import { Loader } from '../../atoms';
 import { Banner } from './Banner';
 import Navbar from './Navbar';
-import { RateTab } from './RateTab';
-import { PostTab } from './PostTab';
+import RateTab from './RateTab';
+import PostTab from './PostTab';
 import MinkTab from './MinkTab';
 import AddMink from './AddMink';
 

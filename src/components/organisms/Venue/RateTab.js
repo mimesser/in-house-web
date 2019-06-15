@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import { fontSize } from '../../../theme';
@@ -6,6 +7,8 @@ import { Loader, Card, Flex } from '../../atoms';
 import { Votes } from './Votes';
 import { PokeButton } from '../../molecules';
 import { TabLayout, Score } from './commonStyle';
+import RateTag from './RateTag';
+import { setSelectedTag } from '../../../store/venues';
 
 const TagCard = styled(Card)`
    p {
@@ -14,25 +17,41 @@ const TagCard = styled(Card)`
    }
 `;
 
-const renderTags = rateTags =>
-   rateTags ? (
-      rateTags.map(({ name, definitionId, voteCount, voteRating }) => (
-         <TagCard key={definitionId}>
-            <Score>{typeof voteRating === 'number' ? voteRating : 'Please rate'}</Score>
-            <Flex column justifyAround>
-               <p>{name}</p>
-               <Votes count={voteCount} />
-            </Flex>
-            <PokeButton onClick={() => console.log('share')} />
-         </TagCard>
-      ))
-   ) : (
-      <Loader big />
-   );
+const Tag = ({ name, definitionId, voteCount, voteRating, setSelectedTag }) => {
+   const open = useCallback(() => {
+      setSelectedTag(definitionId);
+   }, [definitionId]);
 
-export const RateTab = ({ venue: { rates: rateTags } }) => (
+   return (
+      <TagCard onClick={open}>
+         <Score>{typeof voteRating === 'number' ? voteRating : 'Please rate'}</Score>
+         <Flex column justifyAround>
+            <p>{name}</p>
+            <Votes count={voteCount} />
+         </Flex>
+         <PokeButton
+            onClick={e => {
+               e.stopPropagation();
+               console.log('share');
+            }}
+         />
+      </TagCard>
+   );
+};
+
+const RateTab = ({ venue: { rates: tags }, setSelectedTag }) => (
    <TabLayout>
       <p>Industry top 10</p>
-      {renderTags(rateTags)}
+      {tags ? tags.map(t => <Tag {...t} key={t.definitionId} setSelectedTag={setSelectedTag} />) : <Loader big />}
+      <RateTag />
    </TabLayout>
 );
+
+const mapDispatch = {
+   setSelectedTag,
+};
+
+export default connect(
+   undefined,
+   mapDispatch,
+)(RateTab);

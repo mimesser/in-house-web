@@ -44,3 +44,16 @@ export const selectAnswerMinkStatus = createSelector(
    selectSelectedVenue,
    selectedVenue => selectedVenue && selectedVenue.answerMinkStatus,
 );
+
+export const selectSelectedTag = createSelector(
+   selectSelectedVenue,
+   selectedVenue =>
+      selectedVenue &&
+      selectedVenue.rates &&
+      selectedVenue.rates.find(t => t.definitionId === selectedVenue.selectedTagId),
+);
+
+export const selectRateTagConfirmation = createSelector(
+   selectSelectedVenue,
+   selectedVenue => selectedVenue && selectedVenue.rateTagConfirmation,
+);

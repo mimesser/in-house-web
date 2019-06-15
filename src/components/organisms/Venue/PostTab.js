@@ -1,3 +1,5 @@
 import React from 'react';
 
-export const PostTab = () => <div>Posts</div>;
+const PostTab = () => <div>Posts</div>;
+
+export default PostTab;
