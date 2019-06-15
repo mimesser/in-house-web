@@ -17,6 +17,10 @@ export const actionTypes = {
    TRY_ANSWER_MINK: 'TRY_ANSWER_MINK',
    SET_ANSWER_MINK_STATUS: 'SET_ANSWER_MINK_STATUS',
    SET_MY_CORRECT_ANSWER: 'SET_MY_CORRECT_ANSWER',
+   SET_SELECTED_TAG: 'SET_SELECTED_TAG',
+   RATE_TAG: 'RATE_TAG',
+   SHOW_RATE_TAG_CONFIRMATION: 'SHOW_RATE_TAG_CONFIRMATION',
+   UPDATE_TAG_AND_VENUE_RATES: 'UPDATE_TAG_AND_VENUE_RATES',
 };
 
 export const initVenuesPage = idToSelect => ({
@@ -113,4 +117,24 @@ export const setMyCorrectAnswer = (minkId, answer) => ({
       minkId,
       answer,
    },
+});
+
+export const setSelectedTag = selectedTagId => ({
+   type: actionTypes.SET_SELECTED_TAG,
+   payload: { selectedTagId },
+});
+
+export const rateTag = rating => ({
+   type: actionTypes.RATE_TAG,
+   payload: { rating },
+});
+
+export const showRateTagConfirmation = value => ({
+   type: actionTypes.SHOW_RATE_TAG_CONFIRMATION,
+   payload: { rateTagConfirmation: value },
+});
+
+export const updateTagAndVenueRates = (tag, venue) => ({
+   type: actionTypes.UPDATE_TAG_AND_VENUE_RATES,
+   payload: { tag, venue },
 });

@@ -46,6 +46,9 @@ export function reducer(state = initialState, action) {
       case actionTypes.SET_SELECTED_MINK: {
          return setSelectedVenueProp(state, action, 'selectedMinkId');
       }
+      case actionTypes.SET_SELECTED_TAG: {
+         return setSelectedVenueProp(state, action, 'selectedTagId');
+      }
       case actionTypes.SHOW_VOTE_MINK_CONFIRMATION: {
          return setSelectedVenueProp(state, action, 'voteMinkConfirmation');
       }
@@ -85,6 +88,35 @@ export function reducer(state = initialState, action) {
 
          const selectedVenue = state.list && state.list.find(v => v.id === id);
          return { ...state, selectedVenue };
+      }
+      case actionTypes.SHOW_RATE_TAG_CONFIRMATION: {
+         return setSelectedVenueProp(state, action, 'rateTagConfirmation');
+      }
+      case actionTypes.UPDATE_TAG_AND_VENUE_RATES: {
+         const {
+            payload: { tag, venue },
+         } = action;
+
+         // TODO: consider storing items as map for easier updates
+
+         const list = state.list.slice();
+         const index = list.findIndex(v => v.id === venue.id);
+         list[index] = venue;
+
+         const { userRate, voteCount, voteRating } = tag;
+
+         const selectedVenue = state.selectedVenue && {
+            ...state.selectedVenue,
+            votesCount: venue.votesCount,
+            rating: venue.rating,
+            rates:
+               state.selectedVenue.rates &&
+               state.selectedVenue.rates.map(r =>
+                  r.definitionId === tag.definitionId ? { ...r, userRate, voteCount, voteRating } : r,
+               ),
+         };
+
+         return { ...state, list, selectedVenue };
       }
 
       default:
