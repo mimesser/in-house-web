@@ -54,7 +54,8 @@
         "react/forbid-prop-types": "off",
         "react/no-multi-comp": "off",
         "react/require-default-props": "off",
-        "jsx-a11y/label-has-associated-control": "off"
+        "jsx-a11y/label-has-associated-control": "off",
+        "no-restricted-syntax": ["error", "ForInStatement", "LabeledStatement", "WithStatement"]
     },
     "settings": {
         "import/resolver": {

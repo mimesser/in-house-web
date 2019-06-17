@@ -12,6 +12,7 @@ import RateTab from './RateTab';
 import PostTab from './PostTab';
 import MinkTab from './MinkTab';
 import AddMink from './AddMink';
+import AddPost from './AddPost';
 
 const tabMap = {
    rate: RateTab,
@@ -37,8 +38,12 @@ const Venue = ({ venue, router }) => {
       return <Loader big />;
    }
 
-   if (asPath.endsWith('/new')) {
+   if (asPath.endsWith('mink/new')) {
       return <AddMink />;
+   }
+
+   if (asPath.endsWith('post/new')) {
+      return <AddPost />;
    }
 
    const Tab = tabMap[tab] || RateTab;

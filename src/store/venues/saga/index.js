@@ -11,6 +11,10 @@ import { createMink } from './createMink';
 import { voteMink } from './voteMink';
 import { watchMinkAnswerAttempts } from './watchMinkAnswerAttempts';
 import { rateTag } from './rateTag';
+import { loadVenuePosts } from './loadVenuePosts';
+import { loadVenueRateTags } from './loadVenueRateTags';
+import { createPost } from './createPost';
+import { votePost } from './votePost';
 
 export default function* venuesSaga() {
    yield all([
@@ -23,5 +27,9 @@ export default function* venuesSaga() {
       takeLatest(actionTypes.SET_SELECTED_MINK, withErrorReporter(watchMinkAnswerAttempts)),
       takeLeading(actionTypes.VOTE_MINK, withErrorReporter(voteMink)),
       takeLeading(actionTypes.RATE_TAG, withErrorReporter(rateTag)),
+      takeLatest(actionTypes.LOAD_POSTS, withErrorReporter(loadVenuePosts)),
+      takeLatest(actionTypes.LOAD_RATES, withErrorReporter(loadVenueRateTags)),
+      takeLeading(actionTypes.CREATE_POST, withErrorReporter(createPost)),
+      takeLeading(actionTypes.VOTE_POST, withErrorReporter(votePost)),
    ]);
 }

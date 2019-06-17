@@ -32,16 +32,18 @@ app.prepare()
          ctx.respond = false;
       });
 
-      router.all('/houses/:id/mink/new', async ctx => {
-         const {
-            req,
-            res,
-            params: { id },
-         } = ctx;
+      for (const tab of ['mink', 'post']) {
+         router.all(`/houses/:id/${tab}/new`, async ctx => {
+            const {
+               req,
+               res,
+               params: { id },
+            } = ctx;
 
-         ctx.redirect(`/houses/${id}/mink`);
-         ctx.status = 301;
-      });
+            ctx.redirect(`/houses/${id}/${tab}`);
+            ctx.status = 301;
+         });
+      }
 
       router.get('*', async ctx => {
          await handle(ctx.req, ctx.res);

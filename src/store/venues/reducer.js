@@ -118,6 +118,15 @@ export function reducer(state = initialState, action) {
 
          return { ...state, list, selectedVenue };
       }
+      case actionTypes.SET_VENUE_POSTS: {
+         return setSelectedVenueProp(state, action, 'posts');
+      }
+      case actionTypes.SET_SELECTED_POST: {
+         return setSelectedVenueProp(state, action, 'selectedPostId');
+      }
+      case actionTypes.SHOW_VOTE_POST_CONFIRMATION: {
+         return setSelectedVenueProp(state, action, 'votePostConfirmation');
+      }
 
       default:
          return state;
