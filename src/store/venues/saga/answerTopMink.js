@@ -1,4 +1,5 @@
 import { put, select, call, delay, fork } from 'redux-saga/effects';
+import Router from 'next/router';
 
 import { selectSelectedVenue } from '../selectors';
 import api, { isConflict } from '../../../api';
@@ -6,9 +7,21 @@ import { setChallengeFormData, setMyCorrectAnswer } from '../actions';
 import { getRecord, clearRecord, setRecord } from './minkAnswerRecord';
 import { addInsiderVenue } from '../../aggregate';
 import { loadVenueRateTags } from './loadVenueRateTags';
+import { loadVenuePosts } from './loadVenuePosts';
 
 const MAX_ATTEMPTS = 5;
 const CONFIRMATION_DELAY = 1000;
+
+const getLoadDataSaga = () => {
+   const currentTab = Router.query.tab;
+   if (!currentTab || currentTab === 'rate') {
+      return loadVenueRateTags;
+   }
+   if (currentTab === 'post') {
+      return loadVenuePosts;
+   }
+   return undefined;
+};
 
 export function* answerTopMink({ payload: { answer } }) {
    if (!answer) {
@@ -29,7 +42,11 @@ export function* answerTopMink({ payload: { answer } }) {
          clearRecord();
          yield put(addInsiderVenue(venue.id));
          yield put(setChallengeFormData({ isAnswerCorrect }));
-         yield fork(loadVenueRateTags, venue.id);
+         const loadDataSaga = getLoadDataSaga();
+         if (loadDataSaga) {
+            yield fork(loadDataSaga);
+         }
+
          yield delay(CONFIRMATION_DELAY);
          yield put(setChallengeFormData(undefined));
          yield put(setMyCorrectAnswer(venue.topMink.id, answer));

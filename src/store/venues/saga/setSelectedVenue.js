@@ -2,7 +2,6 @@ import { put, select, delay } from 'redux-saga/effects';
 
 import { setChallengeFormData } from '../actions';
 import { selectIsActiveInsider } from '../selectors';
-import { loadVenueRateTags } from './loadVenueRateTags';
 import { showInsiderChallenge } from './showInsiderChallenge';
 
 const DELAY_BEFORE_CHALLENGE = 500;
@@ -20,7 +19,6 @@ export function* setSelectedVenue({ payload: { venue: { id } = {} } }) {
       yield put(setChallengeFormData({ isAnswerCorrect: true }));
       yield delay(DELAY_CONFIRMATION);
       yield put(setChallengeFormData(undefined));
-      yield loadVenueRateTags(id);
       return;
    }
 

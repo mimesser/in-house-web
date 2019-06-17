@@ -57,3 +57,14 @@ export const selectRateTagConfirmation = createSelector(
    selectSelectedVenue,
    selectedVenue => selectedVenue && selectedVenue.rateTagConfirmation,
 );
+
+export const selectSelectedPost = createSelector(
+   selectSelectedVenue,
+   selectedVenue =>
+      selectedVenue && selectedVenue.posts && selectedVenue.posts.find(m => m.id === selectedVenue.selectedPostId),
+);
+
+export const selectVotePostConfirmation = createSelector(
+   selectSelectedVenue,
+   selectedVenue => selectedVenue && selectedVenue.votePostConfirmation,
+);

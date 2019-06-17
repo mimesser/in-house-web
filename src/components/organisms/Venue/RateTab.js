@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
@@ -8,7 +8,7 @@ import { Votes } from './Votes';
 import { PokeButton } from '../../molecules';
 import { TabLayout, Score } from './commonStyle';
 import RateTag from './RateTag';
-import { setSelectedTag } from '../../../store/venues';
+import { setSelectedTag, loadRates } from '../../../store/venues';
 
 const TagCard = styled(Card)`
    p {
@@ -39,16 +39,23 @@ const Tag = ({ name, definitionId, voteCount, voteRating, setSelectedTag }) => {
    );
 };
 
-const RateTab = ({ venue: { rates: tags }, setSelectedTag }) => (
-   <TabLayout>
-      <p>Industry top 10</p>
-      {tags ? tags.map(t => <Tag {...t} key={t.definitionId} setSelectedTag={setSelectedTag} />) : <Loader big />}
-      <RateTag />
-   </TabLayout>
-);
+const RateTab = ({ venue: { rates: tags }, setSelectedTag, loadRates }) => {
+   useEffect(() => {
+      loadRates();
+   }, []);
+
+   return (
+      <TabLayout>
+         <p>Industry top 10</p>
+         {tags ? tags.map(t => <Tag {...t} key={t.definitionId} setSelectedTag={setSelectedTag} />) : <Loader big />}
+         <RateTag />
+      </TabLayout>
+   );
+};
 
 const mapDispatch = {
    setSelectedTag,
+   loadRates,
 };
 
 export default connect(

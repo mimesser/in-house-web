@@ -92,7 +92,7 @@ const renderMinks = (minks, newMinks, setSelectedMink) => (
 
 const MinkTab = ({ venue: { id, minks, newMinks }, loadMinks, setSelectedMink }) => {
    useEffect(() => {
-      loadMinks(id);
+      loadMinks();
    }, []);
 
    const exceptNew = differenceBy(minks, newMinks, m => m.id);

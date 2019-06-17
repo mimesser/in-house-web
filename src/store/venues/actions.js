@@ -6,6 +6,7 @@ export const actionTypes = {
    ANSWER_TOP_MINK: 'ANSWER_TOP_MINK',
    SET_CHALLENGE_FORM_DATA: 'SET_CHALLENGE_FORM_DATA',
    DISMISS_CHALLENGE_FORM: 'DISMISS_CHALLENGE_FORM',
+   LOAD_RATES: 'LOAD_RATES',
    SET_VENUE_RATES: 'SET_VENUE_RATES',
    LOAD_MINKS: 'LOAD_MINKS',
    SET_VENUE_MINKS: 'SET_VENUE_MINKS',
@@ -21,6 +22,12 @@ export const actionTypes = {
    RATE_TAG: 'RATE_TAG',
    SHOW_RATE_TAG_CONFIRMATION: 'SHOW_RATE_TAG_CONFIRMATION',
    UPDATE_TAG_AND_VENUE_RATES: 'UPDATE_TAG_AND_VENUE_RATES',
+   LOAD_POSTS: 'LOAD_POSTS',
+   SET_SELECTED_POST: 'SET_SELECTED_POST',
+   SET_VENUE_POSTS: 'SET_VENUE_POSTS',
+   CREATE_POST: 'CREATE_POST',
+   VOTE_POST: 'VOTE_POST',
+   SHOW_VOTE_POST_CONFIRMATION: 'SHOW_VOTE_POST_CONFIRMATION',
 };
 
 export const initVenuesPage = idToSelect => ({
@@ -55,6 +62,10 @@ export const setChallengeFormData = payload => ({
 
 export const dismissChallengeForm = payload => ({
    type: actionTypes.DISMISS_CHALLENGE_FORM,
+});
+
+export const loadRates = () => ({
+   type: actionTypes.LOAD_RATES,
 });
 
 export const setVenueRates = rates => ({
@@ -137,4 +148,38 @@ export const showRateTagConfirmation = value => ({
 export const updateTagAndVenueRates = (tag, venue) => ({
    type: actionTypes.UPDATE_TAG_AND_VENUE_RATES,
    payload: { tag, venue },
+});
+
+export const loadPosts = () => ({
+   type: actionTypes.LOAD_POSTS,
+});
+
+export const setSelectedPost = selectedPostId => ({
+   type: actionTypes.SET_SELECTED_POST,
+   payload: { selectedPostId },
+});
+
+export const setVenuePosts = posts => ({
+   type: actionTypes.SET_VENUE_POSTS,
+   payload: { posts },
+});
+
+export const createPost = (id, title, message) => ({
+   type: actionTypes.CREATE_POST,
+   payload: { id, title, message },
+});
+
+export const upvotePost = () => ({
+   type: actionTypes.VOTE_POST,
+   payload: { vote: 1 },
+});
+
+export const downvotePost = () => ({
+   type: actionTypes.VOTE_POST,
+   payload: { vote: -1 },
+});
+
+export const showVotePostConfirmation = value => ({
+   type: actionTypes.SHOW_VOTE_POST_CONFIRMATION,
+   payload: { votePostConfirmation: value },
 });
