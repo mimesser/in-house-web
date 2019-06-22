@@ -3,99 +3,101 @@ import React from 'react';
 import { CircleSlider } from 'react-circle-slider';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import debounce from 'lodash/debounce';
+import isNumber from 'lodash/isNumber';
+
+const FONT_RATIO = 4.5;
+
+const Container = styled.div`
+   position: relative;
+   display: flex;
+   width: ${({ size }) => size}px;
+   height: ${({ size }) => size}px;
+
+   svg {
+      position: absolute;
+   }
+`;
 
 const RealSliderTooltip = styled.div`
-   position: 'relative';
    display: ${props => (props.showTooltip ? 'block' : 'none')};
-   top: ${props => props.top};
    font-size: ${props => props.fontSize};
+   margin: auto;
 `;
 
 const SuperScriptDecimalSpan = styled.span`
-   vertical-align: 'super';
-   font-size: '.5em';
-   margin-left: '-2px';
+   vertical-align: super;
+   font-size: 0.5em;
+   margin-left: -2px;
 `;
 
 export class Slider extends React.Component {
    static defaultProps = {
       animationColorOne: '#002633',
       animationColorTwo: '#e4e4e4',
-      isReadOnly: false,
+      readonly: false,
       size: 180,
-      onSliderChange: value => {},
-      useDecimal: true,
+      defaultIfEmpty: '?',
+      onChange: () => {},
    };
 
    constructor(props) {
       super(props);
-      this.initializeDefaults(props);
-
-      const { value } = props;
+      const { value, size, readonly, animationColorOne, animationColorTwo } = props;
+      this.fontSize = `${size / FONT_RATIO}px`;
 
       this.state = Slider.determineInitialRenderState({
-         readOnly: props.isReadOnly,
-         sliderValue: value,
-         animationColorOne: props.animationColorOne,
-         animationColorTwo: props.animationColorTwo,
-         useDecimal: props.useDecimal,
-         defaultIfEmpty: '?',
+         readonly,
+         value,
+         animationColorOne,
+         animationColorTwo,
       });
+   }
 
-      if (!value) {
-         this.increment();
+   componentDidMount() {
+      const { value, readonly } = this.props;
+      if (!value && !readonly) {
+         this.animate();
       }
    }
 
-   initializeDefaults(props) {
-      const otherDimensions = Slider.calculateDimensionSettings(props.size);
-      this.fontSize = props.fontSize || otherDimensions.fontSize;
-      this.tooltipUpwardAdjustment = props.tooltipUpwardAdjustment || otherDimensions.tooltipUpwardAdjustment;
-
-      this.initialAnimationInterval = null;
+   componentWillUnmount() {
+      clearInterval(this.initialAnimationInterval);
+      this.reportChange.cancel();
    }
 
-   static determineInitialRenderState({
-      isReadOnly,
-      sliderValue,
-      animationColorOne,
-      animationColorTwo,
-      useDecimal,
-      defaultIfEmpty,
-   }) {
-      const defaultEmptyValue = defaultIfEmpty || '?';
+   componentDidUpdate({ value: prevValue }) {
+      if (prevValue === this.props.value) {
+         return;
+      }
 
-      if (isReadOnly) {
-         return Slider.createValueDrivenState({
-            sliderValue: sliderValue || defaultEmptyValue,
+      const { value, readonly, animationColorOne, animationColorTwo } = this.props;
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState(
+         Slider.determineInitialRenderState({
+            readonly,
+            value,
             animationColorOne,
             animationColorTwo,
-            useDecimal,
+         }),
+      );
+   }
+
+   static determineInitialRenderState({ readonly, value, animationColorOne, animationColorTwo }) {
+      if (readonly || isNumber(value)) {
+         return Slider.createValueDrivenState({
+            value,
+            animationColorOne,
+            animationColorTwo,
+            readonly,
          });
       }
 
-      return sliderValue
-         ? Slider.createValueDrivenState({
-              sliderValue,
-              animationColorOne,
-              animationColorTwo,
-              useDecimal,
-           })
-         : Slider.createAnimatingState({
-              sliderAnimatingValue: 0,
-              animatedProgressColor: animationColorOne,
-              animatedCircleColor: animationColorTwo,
-           });
-   }
-
-   static calculateDimensionSettings(size) {
-      const fontRatio = 4.5;
-      const tooltipAdjustmentPercentage = 0.65;
-
-      return {
-         fontSize: `${size / fontRatio}px`,
-         tooltipUpwardAdjustment: `${-(size * tooltipAdjustmentPercentage)}px`,
-      };
+      return Slider.createAnimatingState({
+         value: 0,
+         animatedProgressColor: animationColorOne,
+         animatedCircleColor: animationColorTwo,
+      });
    }
 
    static calculateAnimatingState({ state, animationColorOne, animationColorTwo }) {
@@ -108,48 +110,40 @@ export class Slider extends React.Component {
          newCircleColor = state.progressColor === animationColorOne ? animationColorOne : animationColorTwo;
       }
       return Slider.createAnimatingState({
-         sliderAnimatingValue: newValue,
+         value: newValue,
          animatedProgressColor: newProgressColor,
          animatedCircleColor: newCircleColor,
       });
    }
 
-   static createAnimatingState({ sliderAnimatingValue, animatedProgressColor, animatedCircleColor }) {
+   static createAnimatingState({ value, animatedProgressColor, animatedCircleColor }) {
       return {
-         value: sliderAnimatingValue,
+         value,
          progressColor: animatedProgressColor,
          circleColor: animatedCircleColor,
          knobColor: animatedProgressColor,
          showTooltip: false,
-         knobRadius: 10,
-         circleWidth: 1,
-         progressWidth: 1,
          stepSize: 0.1,
-         isAnimating: true,
       };
    }
 
    // This belongs somewhere other than the control, obv
    static roundToPrecision(value, precision) {
-      const numValue = +value;
-      return numValue.toFixed(precision || 0);
+      return parseFloat(value.toFixed(precision));
    }
 
-   static createValueDrivenState({ sliderValue, animationColorOne, animationColorTwo, useDecimal }) {
+   static createValueDrivenState({ value, animationColorOne, animationColorTwo, readonly }) {
       return {
-         value: useDecimal ? Slider.roundToPrecision(sliderValue, 1) : Math.ceil(sliderValue),
+         value: readonly && isNumber(value) ? Slider.roundToPrecision(value, 1) : value,
          progressColor: animationColorOne,
          circleColor: animationColorTwo,
          knobColor: animationColorOne,
          showTooltip: true,
-         knobRadius: 10,
-         circleWidth: 1,
-         progressWidth: 1,
          stepSize: 1,
       };
    }
 
-   increment() {
+   animate() {
       this.initialAnimationInterval = setInterval(() => {
          const newAnimatingState = Slider.calculateAnimatingState({
             state: this.state,
@@ -160,82 +154,77 @@ export class Slider extends React.Component {
       }, 25);
    }
 
-   handleChange = value => {
+   handleChange = rawValue => {
       clearInterval(this.initialAnimationInterval);
+      const value = Math.round(rawValue);
       this.setState(
          Slider.createValueDrivenState({
-            sliderValue: value,
+            value,
             animationColorOne: this.props.animationColorOne,
             animationColorTwo: this.props.animationColorTwo,
-            useDecimal: this.props.useDecimal,
+            readonly: this.props.readonly,
          }),
       );
-      this.props.onSliderChange(value);
+      this.reportChange(value);
    };
+
+   reportChange = debounce(this.props.onChange, 700);
 
    render() {
       return (
-         <div>
+         <Container size={this.props.size}>
             <CircleSlider
-               value={this.props.isReadOnly ? this.state.value || 0 : this.state.value}
+               value={this.state.value}
                progressColor={this.state.progressColor}
                circleColor={this.state.circleColor}
                showTooltip={false}
                knobRadius={10}
                knobColor={this.state.knobColor}
-               circleWidth={this.state.circleWidth}
-               progressWidth={this.state.progressWidth}
+               circleWidth={1}
+               progressWidth={1}
                stepSize={this.state.stepSize}
                min={0}
                max={10}
-               disabled={this.props.isReadOnly}
+               disabled={this.props.readonly}
                onChange={this.handleChange}
                size={this.props.size}
             />
-            <RealSliderTooltip
-               showTooltip={this.state.showTooltip}
-               top={this.tooltipUpwardAdjustment}
-               fontSize={this.fontSize}
-            >
-               {Slider.renderValue({ value: this.state.value, useDecimal: this.props.useDecimal })}
+            <RealSliderTooltip showTooltip={this.state.showTooltip} fontSize={this.fontSize}>
+               {Slider.renderValue({
+                  value: this.state.value,
+                  useDecimal: this.props.readonly,
+                  defaultIfEmpty: this.props.defaultIfEmpty,
+               })}
             </RealSliderTooltip>
-         </div>
+         </Container>
       );
    }
 
-   static renderValue({ value, useDecimal }) {
-      if (!value) {
+   static renderValue({ value, useDecimal, defaultIfEmpty }) {
+      if (!isNumber(value)) {
+         return defaultIfEmpty;
+      }
+
+      if (useDecimal) {
+         const parts = String(value).split('.');
          return (
-            <div>
-               <span>{value === 0 ? value : '?'}</span>
-            </div>
+            <>
+               <span>{parts[0]}.</span>
+               <SuperScriptDecimalSpan>{parts[1] || 0}</SuperScriptDecimalSpan>
+            </>
          );
       }
 
-      const parts = String(value).split('.');
-      if (parts.length > 1 && useDecimal) {
-         return (
-            <div>
-               <span>{parts[0]}</span>
-               <span>.</span>
-               <SuperScriptDecimalSpan>{parts[1]}</SuperScriptDecimalSpan>
-            </div>
-         );
-      }
-      return (
-         <div>
-            <span>{value}</span>
-         </div>
-      );
+      return value;
    }
 }
 
 Slider.propTypes = {
+   defaultIfEmpty: PropTypes.string,
    animationColorOne: PropTypes.string,
    animationColorTwo: PropTypes.string,
-   isReadOnly: PropTypes.bool,
-   onSliderChange: PropTypes.func,
-   useDecimal: PropTypes.bool,
+   readonly: PropTypes.bool,
+   onChange: PropTypes.func,
    value: PropTypes.number,
    size: PropTypes.number,
 };
