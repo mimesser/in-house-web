@@ -14,6 +14,7 @@ import { Modal } from '../../Modal';
 import { Heading } from '../../../atoms';
 import { spacing } from '../../../../theme';
 import { RateConfirmation } from '../RateConfirmation';
+import { Slider } from '../../../molecules';
 
 const Layout = styled.div`
    width: 100%;
@@ -29,10 +30,9 @@ const Layout = styled.div`
 `;
 
 const RateTag = ({ tag: { name: tagName, userRate }, venue: { name: venueName }, rateTag }) => {
-   const [value, setValue] = useState(userRate || '');
+   const [value, setValue] = useState(userRate);
    const handleChange = useCallback(
-      e => {
-         const newValue = e.currentTarget.value;
+      newValue => {
          if (newValue < 0 || newValue > 10) {
             return;
          }
@@ -49,7 +49,7 @@ const RateTag = ({ tag: { name: tagName, userRate }, venue: { name: venueName },
       <Layout>
          <div>{venueName}</div>
          <Heading>{tagName}</Heading>
-         <input type="number" value={value} onChange={handleChange} min="0" max="10" placeholder="Please rate" />
+         <Slider value={value} onChange={handleChange} />
       </Layout>
    );
 };

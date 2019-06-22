@@ -8,8 +8,8 @@ import { loadMinks, setSelectedMink } from '../../../store/venues';
 import { fontSize, spacing } from '../../../theme';
 import { Loader, Card, Flex, Button } from '../../atoms';
 import { Votes } from './Votes';
-import { PokeButton, Patent } from '../../molecules';
-import { Score, TabLayout } from './commonStyle';
+import { PokeButton, Patent, Slider } from '../../molecules';
+import { TabLayout } from './commonStyle';
 import { formatDate } from '../../../utils/format';
 import VoteMink from './VoteMink';
 
@@ -44,7 +44,7 @@ const Mink = ({ mink: { id, created, question, voteCount, voteRating, myVote }, 
 
    return (
       <MinkCard large={large} onClick={open}>
-         <Score>{myVote ? voteRating : 'Please rate'}</Score>
+         <Slider readonly value={myVote ? voteRating : undefined} />
          <Flex column justifyAround>
             <time dateTime={created}>{formatDate(created)}</time>
             <p>{question}</p>
