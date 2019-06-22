@@ -5,8 +5,8 @@ import styled from 'styled-components';
 import { fontSize } from '../../../theme';
 import { Loader, Card, Flex } from '../../atoms';
 import { Votes } from './Votes';
-import { PokeButton } from '../../molecules';
-import { TabLayout, Score } from './commonStyle';
+import { PokeButton, Slider } from '../../molecules';
+import { TabLayout } from './commonStyle';
 import RateTag from './RateTag';
 import { setSelectedTag, loadRates } from '../../../store/venues';
 
@@ -24,7 +24,7 @@ const Tag = ({ name, definitionId, voteCount, voteRating, setSelectedTag }) => {
 
    return (
       <TagCard onClick={open}>
-         <Score>{typeof voteRating === 'number' ? voteRating : 'Please rate'}</Score>
+         <Slider readonly value={voteRating} />
          <Flex column justifyAround>
             <p>{name}</p>
             <Votes count={voteCount} />

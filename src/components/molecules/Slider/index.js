@@ -13,6 +13,7 @@ const Container = styled.div`
    display: flex;
    width: ${({ size }) => size}px;
    height: ${({ size }) => size}px;
+   flex-shrink: 0;
 
    svg {
       position: absolute;
@@ -56,7 +57,7 @@ export class Slider extends React.Component {
 
    componentDidMount() {
       const { value, readonly } = this.props;
-      if (!value && !readonly) {
+      if (!isNumber(value) && !readonly) {
          this.animate();
       }
    }

@@ -7,9 +7,8 @@ import { loadPosts, setSelectedPost } from '../../../store/venues';
 import { fontSize, spacing } from '../../../theme';
 import { Loader, Card, Flex, Button } from '../../atoms';
 import { Votes } from './Votes';
-import { PokeButton, Patent } from '../../molecules';
-import { Score, TabLayout } from './commonStyle';
-import { formatDate } from '../../../utils/format';
+import { PokeButton, Patent, Slider } from '../../molecules';
+import { TabLayout } from './commonStyle';
 import VotePost from './VotePost';
 
 // TODO: styling in general + "large" support for a top post
@@ -43,7 +42,7 @@ const Post = ({ post: { id, title, text, voteCount, voteRating }, large, setSele
 
    return (
       <PostCard large={large} onClick={open}>
-         <Score>{voteRating}</Score>
+         <Slider readonly value={voteRating} />
          <Flex column justifyAround>
             <p>{title}</p>
             <p>{text}</p>
