@@ -1,4 +1,5 @@
 export { Header } from './Header';
+export { Menu } from './Menu';
 export { MultiStep } from './MultiStep';
 export { Modal } from './Modal';
 export { VenueList } from './VenueList';
