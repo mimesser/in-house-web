@@ -59,7 +59,7 @@ const ModalWrapper = props => {
    const close = useCallback(() => setSelectedTag(undefined), []);
 
    return (
-      <Modal open={!!tag} closeModal={close} canClose={false}>
+      <Modal open={!!tag} closeModal={close}>
          {tag && !confirmation ? <RateTag {...props} /> : null}
          {tag && confirmation ? <RateConfirmation venueName={venue.name} title={tag.name} {...confirmation} /> : null}
       </Modal>

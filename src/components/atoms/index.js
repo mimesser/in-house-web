@@ -9,3 +9,4 @@ export * from './Input';
 export { Loader } from './Loader';
 export { Strong } from './Strong';
 export { Badge } from './Badge';
+export { FormGroup } from './FormGroup';

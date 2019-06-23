@@ -32,6 +32,17 @@ app.prepare()
          ctx.respond = false;
       });
 
+      router.get(`/houses/:id/:tab/:itemId`, async ctx => {
+         const {
+            req,
+            res,
+            query: { token },
+            params: { id, tab, itemId },
+         } = ctx;
+         await app.render(req, res, '/houses', { id, tab, itemId, token });
+         ctx.respond = false;
+      });
+
       for (const tab of ['mink', 'post']) {
          router.all(`/houses/:id/${tab}/new`, async ctx => {
             const {

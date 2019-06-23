@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
-import { Background, Close, Content, Layout } from './style';
+import { Background, CloseButton, Content, Layout, Title } from './style';
 
 const stopPropagation = event => event.stopPropagation();
 
 const Portal = ({ children, node = document.body }) => ReactDOM.createPortal(children, node);
 
-export const Modal = ({ open, closeModal, canDismiss = true, canClose = true, children }) => {
+export const Modal = ({ open, closeModal, canDismiss = true, canClose = true, title, inverse, children }) => {
    useEffect(() => {
       document.body.style.overflow = open ? 'hidden' : 'initial';
    }, [open]);
@@ -16,8 +16,11 @@ export const Modal = ({ open, closeModal, canDismiss = true, canClose = true, ch
       <Portal>
          <Background open={open} onClick={canDismiss ? closeModal : undefined}>
             <Layout>
-               <Content onClick={stopPropagation}>
-                  {canClose && <Close onClick={closeModal} />}
+               <Content inverse={inverse} onClick={stopPropagation}>
+                  <Title>
+                     <span>{title}</span>
+                     {canClose && <CloseButton onClick={closeModal} />}
+                  </Title>
                   {children}
                </Content>
             </Layout>

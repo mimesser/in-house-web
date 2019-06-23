@@ -7,9 +7,11 @@ import { loadPosts, setSelectedPost } from '../../../store/venues';
 import { fontSize, spacing } from '../../../theme';
 import { Loader, Card, Flex, Button } from '../../atoms';
 import { Votes } from './Votes';
-import { PokeButton, Patent, Slider } from '../../molecules';
+import { Patent, Slider } from '../../molecules';
 import { TabLayout } from './commonStyle';
 import VotePost from './VotePost';
+import PrivateShare from './PrivateShare';
+import PrivateShareButton from './PrivateShareButton';
 
 // TODO: styling in general + "large" support for a top post
 const PostCard = styled(Card)`
@@ -48,12 +50,7 @@ const Post = ({ post: { id, title, text, voteCount, voteRating }, large, setSele
             <p>{text}</p>
             <Votes count={voteCount} />
          </Flex>
-         <PokeButton
-            onClick={e => {
-               e.stopPropagation();
-               console.log('share');
-            }}
-         />
+         <PrivateShareButton id={id} />
       </PostCard>
    );
 };
@@ -75,10 +72,37 @@ const renderPosts = (posts, setSelectedPost) => (
    </>
 );
 
+const findPost = (id, posts) => {
+   const post = posts.find(t => t.id === id);
+   if (!post) {
+      throw new Error(`Can't find post ${id}`);
+   }
+   return post;
+};
+
 const PostTab = ({ venue: { id, posts }, loadPosts, setSelectedPost }) => {
    useEffect(() => {
       loadPosts();
    }, []);
+
+   const renderSharePreview = useCallback(
+      id => {
+         const { title, text, voteCount, voteRating } = findPost(id, posts);
+
+         return (
+            <PostCard>
+               <Slider readonly value={voteRating} />
+               <Flex column justifyAround>
+                  <p>{title}</p>
+                  <p>{text}</p>
+                  <Votes count={voteCount} />
+               </Flex>
+            </PostCard>
+         );
+      },
+      [posts],
+   );
+   const getTitleForShare = useCallback(id => findPost(id, posts).title, [posts]);
 
    return (
       <Tab>
@@ -87,6 +111,7 @@ const PostTab = ({ venue: { id, posts }, loadPosts, setSelectedPost }) => {
             <Button>new post</Button>
          </Link>
          <VotePost />
+         <PrivateShare type="post" renderItem={renderSharePreview} getItemTitle={getTitleForShare} />
       </Tab>
    );
 };

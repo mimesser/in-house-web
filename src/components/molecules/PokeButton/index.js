@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from 'styled-components';
 import { PaperPlane } from 'styled-icons/fa-solid';
 
