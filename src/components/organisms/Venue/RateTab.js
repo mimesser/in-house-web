@@ -4,11 +4,13 @@ import styled from 'styled-components';
 
 import { fontSize } from '../../../theme';
 import { Loader, Card, Flex } from '../../atoms';
-import { Votes } from './Votes';
 import { PokeButton, Slider } from '../../molecules';
+import { setSelectedTag, loadRates } from '../../../store/venues';
+import { Votes } from './Votes';
 import { TabLayout } from './commonStyle';
 import RateTag from './RateTag';
-import { setSelectedTag, loadRates } from '../../../store/venues';
+import PrivateShare from './PrivateShare';
+import PrivateShareButton from './PrivateShareButton';
 
 const TagCard = styled(Card)`
    p {
@@ -18,9 +20,7 @@ const TagCard = styled(Card)`
 `;
 
 const Tag = ({ name, definitionId, voteCount, voteRating, setSelectedTag }) => {
-   const open = useCallback(() => {
-      setSelectedTag(definitionId);
-   }, [definitionId]);
+   const open = useCallback(() => setSelectedTag(definitionId), [definitionId]);
 
    return (
       <TagCard onClick={open}>
@@ -29,26 +29,47 @@ const Tag = ({ name, definitionId, voteCount, voteRating, setSelectedTag }) => {
             <p>{name}</p>
             <Votes count={voteCount} />
          </Flex>
-         <PokeButton
-            onClick={e => {
-               e.stopPropagation();
-               console.log('share');
-            }}
-         />
+         <PrivateShareButton id={definitionId} />
       </TagCard>
    );
+};
+
+const findTag = (id, tags) => {
+   const tag = tags.find(t => t.definitionId === id);
+   if (!tag) {
+      throw new Error(`Can't find tag ${id}`);
+   }
+   return tag;
 };
 
 const RateTab = ({ venue: { rates: tags }, setSelectedTag, loadRates }) => {
    useEffect(() => {
       loadRates();
    }, []);
+   const renderSharePreview = useCallback(
+      id => {
+         const { name, voteCount, voteRating } = findTag(id, tags);
+
+         return (
+            <TagCard>
+               <Slider readonly value={voteRating} />
+               <Flex column justifyAround>
+                  <p>{name}</p>
+                  <Votes count={voteCount} />
+               </Flex>
+            </TagCard>
+         );
+      },
+      [tags],
+   );
+   const getTitleForShare = useCallback(id => findTag(id, tags).name, [tags]);
 
    return (
       <TabLayout>
          <p>Industry top 10</p>
          {tags ? tags.map(t => <Tag {...t} key={t.definitionId} setSelectedTag={setSelectedTag} />) : <Loader big />}
          <RateTag />
+         <PrivateShare type="rate" renderItem={renderSharePreview} getItemTitle={getTitleForShare} />
       </TabLayout>
    );
 };

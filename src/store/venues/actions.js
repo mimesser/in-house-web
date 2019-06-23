@@ -28,6 +28,10 @@ export const actionTypes = {
    CREATE_POST: 'CREATE_POST',
    VOTE_POST: 'VOTE_POST',
    SHOW_VOTE_POST_CONFIRMATION: 'SHOW_VOTE_POST_CONFIRMATION',
+   SET_PRIVATE_SHARE_ITEM_ID: 'SET_PRIVATE_SHARE_ITEM_ID',
+   SET_PRIVATE_SHARE_RECIPIENT_ERROR: 'SET_PRIVATE_SHARE_RECIPIENT_ERROR',
+   PRIVATE_SHARE: 'PRIVATE_SHARE',
+   SET_PRIVATE_SHARE_SENDING: 'SET_PRIVATE_SHARE_SENDING',
 };
 
 export const initVenuesPage = idToSelect => ({
@@ -182,4 +186,35 @@ export const downvotePost = () => ({
 export const showVotePostConfirmation = value => ({
    type: actionTypes.SHOW_VOTE_POST_CONFIRMATION,
    payload: { votePostConfirmation: value },
+});
+
+export const setPrivateShareItemId = id => ({
+   type: actionTypes.SET_PRIVATE_SHARE_ITEM_ID,
+   payload: { privateShareItemId: id },
+});
+
+export const clearPrivateShareItemId = () => ({
+   type: actionTypes.SET_PRIVATE_SHARE_ITEM_ID,
+   payload: { privateShareItemId: undefined },
+});
+
+export const setPrivateShareRecipientError = error => ({
+   type: actionTypes.SET_PRIVATE_SHARE_RECIPIENT_ERROR,
+   payload: { privateShareRecipientError: error },
+});
+
+export const privateShare = (type, id, recipient, message) => ({
+   type: actionTypes.PRIVATE_SHARE,
+   payload: { type, id, recipient, message },
+});
+
+export const SEND_STATUS = {
+   idle: 'idle',
+   sending: 'sending',
+   sent: 'sent',
+};
+
+export const setPrivateShareSending = value => ({
+   type: actionTypes.SET_PRIVATE_SHARE_SENDING,
+   payload: { privateShareSending: value },
 });

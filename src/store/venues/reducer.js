@@ -127,6 +127,20 @@ export function reducer(state = initialState, action) {
       case actionTypes.SHOW_VOTE_POST_CONFIRMATION: {
          return setSelectedVenueProp(state, action, 'votePostConfirmation');
       }
+      case actionTypes.SET_PRIVATE_SHARE_ITEM_ID: {
+         const newState = setSelectedVenueProp(state, action, 'privateShareItemId');
+         if (newState.selectedVenue) {
+            delete newState.selectedVenue.privateShareRecipientError;
+            delete newState.selectedVenue.privateShareSending;
+         }
+         return newState;
+      }
+      case actionTypes.SET_PRIVATE_SHARE_RECIPIENT_ERROR: {
+         return setSelectedVenueProp(state, action, 'privateShareRecipientError');
+      }
+      case actionTypes.SET_PRIVATE_SHARE_SENDING: {
+         return setSelectedVenueProp(state, action, 'privateShareSending');
+      }
 
       default:
          return state;

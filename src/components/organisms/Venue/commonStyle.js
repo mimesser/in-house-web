@@ -7,18 +7,6 @@ import { PokeButton } from '../../molecules';
 
 export const CARD_MIN_HEIGHT = calcRem('125px');
 
-export const Score = styled.div`
-   flex-shrink: 0;
-   width: 6rem;
-   height: 6rem;
-   border: 4px solid;
-   border-radius: 50%;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   margin-right: ${spacing.medium};
-`;
-
 export const TabLayout = styled.div`
    display: flex;
    flex: 1;

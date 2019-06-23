@@ -74,6 +74,7 @@ const InsiderQuestionChallenge = ({ venue: { name, topMink }, challengeFormData,
 
    return (
       <Modal
+         inverse
          open={!!challengeFormData}
          closeModal={dismissForm}
          canDismiss={!accessGranted}

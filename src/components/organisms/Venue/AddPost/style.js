@@ -40,31 +40,3 @@ export const Commands = styled.div`
       width: ${({ step }) => step * 25}%;
    }
 `;
-
-export const CharLimit = styled.div`
-   transition: color 0.5s;
-   color: ${({ reached, theme: { palette, textColors } }) => (reached ? palette.danger[0] : textColors.primary)};
-`;
-
-// TODO: extract? reusable?
-export const FormGroup = styled.div`
-   margin-top: ${spacing.large};
-   > label {
-      ${({ readonly, theme: { palette } }) => readonly && `color: ${palette.grayscale[1]}`};
-
-      > * {
-         margin-top: ${spacing.small};
-      }
-   }
-   > p {
-      margin-top: ${spacing.tiny};
-      margin-bottom: 0;
-      font-size: ${fontSize.medium};
-   }
-
-   ${CharLimit} {
-      font-size: ${fontSize.small};
-      margin-top: ${spacing.tiny};
-      text-align: right;
-   }
-`;

@@ -1,5 +1,7 @@
 import { createSelector } from 'reselect';
+
 import { selectInsiderVenueIds } from '../aggregate';
+import { SEND_STATUS } from './actions';
 
 const selectVenueState = state => state.venues;
 
@@ -67,4 +69,24 @@ export const selectSelectedPost = createSelector(
 export const selectVotePostConfirmation = createSelector(
    selectSelectedVenue,
    selectedVenue => selectedVenue && selectedVenue.votePostConfirmation,
+);
+
+export const selectPrivateShareItemId = createSelector(
+   selectSelectedVenue,
+   selectedVenue => selectedVenue && selectedVenue.privateShareItemId,
+);
+
+export const selectPrivateShareRecipientError = createSelector(
+   selectSelectedVenue,
+   selectedVenue => selectedVenue && selectedVenue.privateShareRecipientError,
+);
+
+export const selectPrivateShareSending = createSelector(
+   selectSelectedVenue,
+   selectedVenue => selectedVenue && selectedVenue.privateShareSending === SEND_STATUS.sending,
+);
+
+export const selectPrivateShareSent = createSelector(
+   selectSelectedVenue,
+   selectedVenue => selectedVenue && selectedVenue.privateShareSending === SEND_STATUS.sent,
 );

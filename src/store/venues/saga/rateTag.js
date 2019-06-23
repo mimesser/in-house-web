@@ -1,14 +1,23 @@
 import { call, select, put, delay, fork } from 'redux-saga/effects';
 
 import api, { isForbidden } from '../../../api';
-import { selectSelectedTag, selectSelectedVenue } from '../selectors';
+import { selectIsActiveInsider, selectSelectedTag, selectSelectedVenue } from '../selectors';
 import { showRateTagConfirmation, setSelectedTag, updateTagAndVenueRates } from '../actions';
 import { handleForbiddenResponse } from './handleForbiddenResponse';
+import { showInsiderChallenge } from './showInsiderChallenge';
 
 const CONFIRMATION_INTERVAL = 1500;
 
 export function* rateTag({ payload: { rating } }) {
    const { id: venueId } = yield select(selectSelectedVenue);
+   const isActiveInsider = yield select(selectIsActiveInsider);
+
+   if (!isActiveInsider) {
+      // this possible when private share link sent
+      yield showInsiderChallenge(venueId);
+      return;
+   }
+
    const tag = yield select(selectSelectedTag);
 
    const {

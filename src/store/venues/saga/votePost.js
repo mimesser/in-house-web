@@ -1,14 +1,23 @@
 import { call, select, put, delay, fork } from 'redux-saga/effects';
 
 import api from '../../../api';
-import { selectSelectedPost, selectSelectedVenue } from '../selectors';
+import { selectIsActiveInsider, selectSelectedPost, selectSelectedVenue } from '../selectors';
 import { showVotePostConfirmation, setSelectedPost } from '../actions';
 import { reloadVenuePosts } from './loadVenuePosts';
+import { showInsiderChallenge } from './showInsiderChallenge';
 
 const CONFIRMATION_INTERVAL = 1500;
 
 export function* votePost({ payload: { vote } }) {
    const venue = yield select(selectSelectedVenue);
+   const isActiveInsider = yield select(selectIsActiveInsider);
+
+   if (!isActiveInsider) {
+      // this possible when private share link sent
+      yield showInsiderChallenge(venue.id);
+      return;
+   }
+
    const post = yield select(selectSelectedPost);
 
    const { data } = yield call(api.post, `venues/${venue.id}/feedback/${post.id}/vote`, { vote });

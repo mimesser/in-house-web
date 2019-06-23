@@ -15,6 +15,7 @@ import { loadVenuePosts } from './loadVenuePosts';
 import { loadVenueRateTags } from './loadVenueRateTags';
 import { createPost } from './createPost';
 import { votePost } from './votePost';
+import { privateShare } from './privateShare';
 
 export default function* venuesSaga() {
    yield all([
@@ -31,5 +32,6 @@ export default function* venuesSaga() {
       takeLatest(actionTypes.LOAD_RATES, withErrorReporter(loadVenueRateTags)),
       takeLeading(actionTypes.CREATE_POST, withErrorReporter(createPost)),
       takeLeading(actionTypes.VOTE_POST, withErrorReporter(votePost)),
+      takeLeading(actionTypes.PRIVATE_SHARE, withErrorReporter(privateShare)),
    ]);
 }

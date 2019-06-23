@@ -6,8 +6,8 @@ import api, { isConflict } from '../../../api';
 import { setChallengeFormData, setMyCorrectAnswer } from '../actions';
 import { getRecord, clearRecord, setRecord } from './minkAnswerRecord';
 import { addInsiderVenue } from '../../aggregate';
-import { loadVenueRateTags } from './loadVenueRateTags';
-import { loadVenuePosts } from './loadVenuePosts';
+import { reloadVenueRateTags } from './loadVenueRateTags';
+import { reloadVenuePosts } from './loadVenuePosts';
 
 const MAX_ATTEMPTS = 5;
 const CONFIRMATION_DELAY = 1000;
@@ -15,10 +15,10 @@ const CONFIRMATION_DELAY = 1000;
 const getLoadDataSaga = () => {
    const currentTab = Router.query.tab;
    if (!currentTab || currentTab === 'rate') {
-      return loadVenueRateTags;
+      return reloadVenueRateTags;
    }
    if (currentTab === 'post') {
-      return loadVenuePosts;
+      return reloadVenuePosts;
    }
    return undefined;
 };
@@ -44,7 +44,7 @@ export function* answerTopMink({ payload: { answer } }) {
          yield put(setChallengeFormData({ isAnswerCorrect }));
          const loadDataSaga = getLoadDataSaga();
          if (loadDataSaga) {
-            yield fork(loadDataSaga);
+            yield fork(loadDataSaga, venue.id);
          }
 
          yield delay(CONFIRMATION_DELAY);

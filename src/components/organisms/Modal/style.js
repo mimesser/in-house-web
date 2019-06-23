@@ -1,8 +1,9 @@
-import styled from 'styled-components';
-import { Close as CloseIcon } from 'styled-icons/material/Close';
+import React from 'react';
+import styled, { css } from 'styled-components';
+import { Close } from 'styled-icons/material/Close';
 
-import { breakpoints } from '../../../theme';
-import { Heading, HeadingTwo } from '../../atoms';
+import { breakpoints, spacing } from '../../../theme';
+import { Heading, HeadingTwo, IconButton } from '../../atoms';
 
 export const Background = styled.div`
    position: fixed;
@@ -27,26 +28,41 @@ export const Layout = styled.div`
    justify-content: center;
 `;
 
+const colors = ({ inverse, theme: { palette, appBackground } }) =>
+   inverse
+      ? css`
+           background-color: ${palette.black};
+           color: ${palette.white};
+           ${Heading}, ${HeadingTwo} {
+              color: ${palette.white};
+           }
+        `
+      : `background-color: ${appBackground};`;
+
 export const Content = styled.div`
    position: relative;
    overflow: auto;
-
    display: flex;
-   background-color: ${({ theme: { palette } }) => palette.black};
-   color: ${({ theme: { palette } }) => palette.white};
-   ${Heading}, ${HeadingTwo} {
-      color: ${({ theme: { palette } }) => palette.white};
-   }
+   flex-direction: column;
    min-width: ${breakpoints.xs};
    max-width: ${breakpoints.sm};
    width: 100%;
+   padding: ${spacing.large};
+
+   ${colors};
 `;
 
-// TODO: button
-export const Close = styled(CloseIcon).attrs({ size: 32 })`
-   position: absolute;
-   top: 1rem;
-   right: 1rem;
+export const Title = styled.header`
+   display: flex;
+   margin-bottom: ${spacing.medium};
+`;
+
+const CloseIcon = styled(Close).attrs({ size: 27 })``;
+
+export const CloseButton = styled(IconButton).attrs({
+   children: <CloseIcon />,
+})`
    cursor: pointer;
-   color: white;
+   color: ${({ theme: { palette }, inverse }) => inverse && palette.white};
+   margin-left: auto;
 `;
