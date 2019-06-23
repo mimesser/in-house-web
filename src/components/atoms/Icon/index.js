@@ -29,7 +29,7 @@ export const Wrapper = styled.span`
 export const Icon = ({ icon, ...props }) => {
    // eslint-disable-next-line global-require,import/no-dynamic-require
    const svg = require(`!raw-loader!./icons/${icon}.svg`);
-   return <Wrapper {...props} dangerouslySetInnerHTML={{ __html: svg }} />;
+   return <Wrapper {...props} dangerouslySetInnerHTML={{ __html: svg.default || svg }} />;
 };
 
 Icon.propTypes = {
