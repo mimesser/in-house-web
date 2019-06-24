@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -29,8 +29,12 @@ const Layout = styled.div`
    }
 `;
 
-const RateTag = ({ tag: { name: tagName, userRate }, venue: { name: venueName }, rateTag }) => {
+const RateTag = ({ tag, venue: { name: venueName }, rateTag }) => {
+   const { name: tagName, userRate } = tag;
    const [value, setValue] = useState(userRate);
+   useEffect(() => {
+      setValue(userRate);
+   }, [tag]);
    const handleChange = useCallback(
       newValue => {
          if (newValue < 0 || newValue > 10) {

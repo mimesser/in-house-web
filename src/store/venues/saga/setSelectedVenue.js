@@ -19,7 +19,7 @@ const DELAY_BEFORE_CHALLENGE = 500;
 const DELAY_CONFIRMATION = 1000;
 
 const tabMap = {
-   [VENUE_TABS.rate]: [setSelectedTag, 'rateTags', setVenueRates],
+   [VENUE_TABS.rate]: [setSelectedTag, 'ratetags', setVenueRates],
    [VENUE_TABS.post]: [setSelectedPost, 'feedback', setVenuePosts],
    [VENUE_TABS.mink]: [setSelectedMink],
 };

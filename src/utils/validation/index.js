@@ -2,5 +2,5 @@ const EMAIL_VALIDATOR = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".
 export const isEmailValid = email => EMAIL_VALIDATOR.test(String(email).toLowerCase());
 
 // TODO
-const PHONE_VALIDATOR = /^[\d-]{5,}$/;
+const PHONE_VALIDATOR = /^\+?[\d-]{5,}$/;
 export const isPhoneNumberValid = phone => PHONE_VALIDATOR.test(phone);
