@@ -10,15 +10,15 @@ const CONFIRMATION_INTERVAL = 1500;
 
 export function* rateTag({ payload: { rating } }) {
    const { id: venueId } = yield select(selectSelectedVenue);
+   const tag = yield select(selectSelectedTag);
    const isActiveInsider = yield select(selectIsActiveInsider);
 
    if (!isActiveInsider) {
       // this possible when private share link sent
       yield showInsiderChallenge(venueId);
+      yield setSelectedTag({ ...tag });
       return;
    }
-
-   const tag = yield select(selectSelectedTag);
 
    const {
       data: { venueRateTag, venue },
