@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
-import { spacing } from '../../../theme';
+import { spacing, palette } from '../../../style';
 
 export const Badge = styled.span`
    display: inline-block;
-   color: ${({ theme: { palette } }) => palette.white};
-   background-color: ${({ theme: { palette } }) => palette.black};
+   color: ${palette.white};
+   background-color: ${palette.black};
    padding: ${spacing.tiny};
    ${({ wide }) => wide && `width: 100%`}
 `;

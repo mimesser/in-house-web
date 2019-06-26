@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { Close } from 'styled-icons/material/Close';
 
-import { breakpoints, spacing } from '../../../theme';
+import { breakpoints, spacing, palette, appBackground } from '../../../style';
 import { Heading, HeadingTwo, IconButton } from '../../atoms';
 
 export const Background = styled.div`
@@ -28,7 +28,7 @@ export const Layout = styled.div`
    justify-content: center;
 `;
 
-const colors = ({ inverse, theme: { palette, appBackground } }) =>
+const colors = ({ inverse }) =>
    inverse
       ? css`
            background-color: ${palette.black};
@@ -63,6 +63,6 @@ export const CloseButton = styled(IconButton).attrs({
    children: <CloseIcon />,
 })`
    cursor: pointer;
-   color: ${({ theme: { palette }, inverse }) => inverse && palette.white};
+   color: ${({ inverse }) => inverse && palette.white};
    margin-left: auto;
 `;

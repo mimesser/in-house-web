@@ -5,10 +5,10 @@ import Link from 'next/link';
 import differenceBy from 'lodash/differenceBy';
 
 import { loadMinks, setSelectedMink } from '../../../store/venues';
-import { fontSize, spacing } from '../../../theme';
+import { fontSize, spacing } from '../../../style';
 import { Loader, Card, Flex, Button } from '../../atoms';
 import { Votes } from './Votes';
-import { PokeButton, Patent, Slider } from '../../molecules';
+import { Patent, Slider } from '../../molecules';
 import { TabLayout } from './commonStyle';
 import { formatDate } from '../../../utils/format';
 import VoteMink from './VoteMink';

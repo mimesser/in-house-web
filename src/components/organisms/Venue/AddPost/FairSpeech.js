@@ -3,7 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Heading, Checkbox } from '../../../atoms';
-import { spacing } from '../../../../theme';
+import { spacing, palette } from '../../../../style';
 
 const Container = styled.div`
    display: flex;
@@ -16,7 +16,7 @@ const Container = styled.div`
    a {
       display: block;
       margin-top: ${spacing.xLarge};
-      color: ${({ theme: { textColors } }) => textColors.emphasis};
+      color: ${palette.textDark};
       text-decoration: underline;
    }
 `;

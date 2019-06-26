@@ -24,9 +24,8 @@ class Houses extends Component {
    }
 
    render() {
-      const View = this.houseId ? Venue : VenueList;
-
       // TODO split and render separately?
+      const View = this.houseId ? Venue : VenueList;
 
       return (
          <Page title="Houses" defaultHeader={!this.houseId}>

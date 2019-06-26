@@ -16,14 +16,14 @@ import {
 } from '../../../../store/venues';
 import { Modal } from '../../Modal';
 import { Heading, IconButton, Input } from '../../../atoms';
-import { spacing } from '../../../../theme';
+import { spacing, palette } from '../../../../style';
 import { formatDate } from '../../../../utils/format';
 import { RateConfirmation } from '../RateConfirmation';
 
 // TODO TODO TODO
 
 const VoteButton = styled(IconButton)`
-   color: ${({ selected, theme: { palette } }) => (selected ? palette.alert[2] : 'currentColor')};
+   color: ${({ selected }) => (selected ? palette.primary : 'currentColor')};
    &[disabled] {
       color: gray;
    }

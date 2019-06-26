@@ -6,7 +6,7 @@ import withRedux from 'next-redux-wrapper';
 import withReduxSaga from 'next-redux-saga';
 
 import createStore from '../store';
-import theme from '../theme';
+import { theme } from '../style';
 import GlobalStyle from '../components/GlobalStyle';
 import { loadAggregateData } from '../store/aggregate';
 

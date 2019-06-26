@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { calcRem, spacing } from '../../../theme';
+import { calcRem, spacing } from '../../../style';
 import { Card } from '../../atoms';
 import { PokeButton } from '../../molecules';
 

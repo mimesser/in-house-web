@@ -1,9 +1,8 @@
 import styled from 'styled-components';
 
-import { font } from '../../../utils';
+import { fontWeight, palette } from '../../../style';
 
 export const Strong = styled.strong`
-   font-size: ${({ theme: { fontSize } }) => fontSize.medium};
-   font-weight: normal;
-   font-family: ${font('emphasis')};
+   font-weight: ${fontWeight.bolder};
+   color: ${palette.textDark};
 `;

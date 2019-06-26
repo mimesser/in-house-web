@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { breakpoints, spacing } from '../../../theme';
+import { breakpoints, spacing } from '../../../style';
 
 export const Container = styled.div`
    display: flex;

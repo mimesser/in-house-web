@@ -2,19 +2,19 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Loader } from '../Loader';
-import { fontWeight } from '../../../theme';
+import { fontWeight, palette, fontSize, letterSpacing, spacing } from '../../../style';
 
 const StyledButton = styled.button`
    cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
    border-radius: 2em;
-   border: 1px solid ${({ theme: { palette } }) => palette.black};
-   background-color: ${({ secondary, inverse, theme: { palette } }) =>
-      secondary || inverse ? palette.white : palette.black};
-   color: ${({ secondary, inverse, theme: { palette } }) => (secondary || inverse ? palette.black : palette.white)};
+   border: 1px solid ${palette.primaryLight};
+   background-color: ${({ secondary, inverse }) => (secondary || inverse ? palette.white : palette.primaryLight)};
+   color: ${({ secondary, inverse }) => (secondary || inverse ? palette.primaryLight : palette.white)};
    // TODO: use predefined spacing, override in specific component if needed
-   padding: 0.8rem 2.7rem;
-   font-size: ${({ theme: { fontSize } }) => fontSize.medium};
+   padding: ${spacing.large} ${spacing.xxLarge};
+   font-size: ${fontSize.small};
    font-weight: ${fontWeight.primary};
+   letter-spacing: ${letterSpacing.primary};
    outline: none;
    ${({ disabled }) => disabled && `opacity: 0.5;`}
 `;

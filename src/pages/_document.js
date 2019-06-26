@@ -36,9 +36,8 @@ class MyDocument extends Document {
                   name="viewport"
                   content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
                />
-               {/* TODO cleanup fonts */}
                <link
-                  href="https://fonts.googleapis.com/css?family=Poppins|Roboto:300,400,500|Lato&display=swap"
+                  href="https://fonts.googleapis.com/css?family=Nunito+Sans:600|Roboto:300|Source+Sans+Pro:300,400&display=swap"
                   rel="stylesheet"
                />
             </Head>
