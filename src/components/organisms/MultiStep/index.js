@@ -21,7 +21,7 @@ const NavButton = styled.button`
    }
 `;
 const Nav = styled.nav`
-   margin: auto auto ${spacing.medium} auto;
+   margin: auto auto ${spacing.xxLarge} auto;
 `;
 
 const Swipeable = styled.div`

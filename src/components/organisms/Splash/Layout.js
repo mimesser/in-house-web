@@ -24,6 +24,6 @@ export const LandingLayout = styled(SplashLayout)`
    }
 
    ${Button} {
-      margin: 9rem auto 0;
+      margin: auto;
    }
 `;
