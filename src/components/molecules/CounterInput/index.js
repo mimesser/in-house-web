@@ -3,6 +3,8 @@ import React, { useCallback } from 'react';
 import { CharLimit, Status, Error } from './style';
 import { Textarea, Input, FormGroup } from '../../atoms';
 
+const WARN_COUNT = 5;
+
 export const CounterInput = ({ value, onChange, max, multiline, label, error, ...inputProps }) => {
    const handleChange = useCallback(
       e => {
@@ -12,6 +14,7 @@ export const CounterInput = ({ value, onChange, max, multiline, label, error, ..
       [onChange],
    );
    const Control = multiline ? Textarea : Input;
+   const charsLeft = max - value.length;
 
    return (
       <FormGroup>
@@ -21,7 +24,7 @@ export const CounterInput = ({ value, onChange, max, multiline, label, error, ..
          </label>
          <Status>
             {error && <Error>{error}</Error>}
-            <CharLimit reached={value.length === max}>{max}</CharLimit>
+            <CharLimit warn={charsLeft < WARN_COUNT}>{charsLeft}</CharLimit>
          </Status>
       </FormGroup>
    );
