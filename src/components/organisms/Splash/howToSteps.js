@@ -7,7 +7,7 @@ import { PaperPlane } from 'styled-icons/fa-solid';
 
 import { Heading, Badge, Button, Strong } from '../../atoms';
 import { Patent as BasePatent } from '../../molecules';
-import { fontSize, spacing, fontWeight } from '../../../theme';
+import { fontSize, spacing, fontWeight, palette } from '../../../style';
 
 const Patent = styled(BasePatent)`
    font-size: ${fontSize.small};
@@ -18,9 +18,10 @@ const P = styled.p``;
 export const Step1 = () => (
    <>
       <Heading>#1: list your house</Heading>
-      <P>activate your organization</P>
-      <P>easily & untraceably</P>
-      <P>then empower your team as an insider</P>
+      <P>activate your organization easily & untraceably</P>
+      <P>
+         <Strong>and then empower your team as an insider</Strong>
+      </P>
    </>
 );
 
@@ -48,7 +49,7 @@ const Question = styled(P)`
    margin-top: 4.5rem;
 `;
 
-const Smile = styled(SmileWink).attrs(({ theme: { palette } }) => ({ size: 24, color: palette.black }))``;
+const Smile = styled(SmileWink).attrs(() => ({ size: 24, color: palette.black }))``;
 
 export const Step2 = () => (
    <>
@@ -77,9 +78,9 @@ export const Step2 = () => (
    </>
 );
 
-const Poke = styled(PaperPlane).attrs(({ theme: { palette } }) => ({
+const Poke = styled(PaperPlane).attrs(({ theme }) => ({
    size: 24,
-   color: palette.grayscale[3],
+   color: theme.colors.secondary,
 }))`
    transform: scale(1.5, 1) rotate(30deg);
    margin-left: ${spacing.tiny};
@@ -106,11 +107,10 @@ const Copyright = styled.sup`
 `;
 const ExplainMink = styled(P)`
    font-size: ${fontSize.tiny};
-   color: ${({ theme: { palette } }) => palette.grayscale[1]};
+   color: ${palette.secondary};
    ${Strong} {
       font-size: ${fontSize.tiny};
       font-weight: ${fontWeight.bold};
-      color: ${({ theme }) => theme.textColors.emphasis};
    }
 `;
 

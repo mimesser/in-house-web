@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { ifProp, palette } from '../../../utils';
-
 const fontSize = ({ width, height }) => {
    const size = width || height;
    return size ? `${size / 16}rem` : '1.25em';
@@ -12,7 +10,7 @@ const fontSize = ({ width, height }) => {
 export const Wrapper = styled.span`
    display: block;
    font-size: ${fontSize};
-   color: ${ifProp('palette', palette({ grayscale: 0 }, 1), 'currentcolor')};
+   color: currentcolor;
    width: 2rem;
    height: 2rem;
    margin: 0.25rem;

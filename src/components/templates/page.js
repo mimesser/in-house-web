@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
-import { withRouter } from 'next/router';
+import React, { useState, useCallback } from 'react';
 import Head from 'next/head';
-import Link from 'next/link';
 import Sidebar from 'react-sidebar';
-import styled from 'styled-components';
 
-import { Icon } from '../atoms/Icon';
 import { Container } from '../atoms';
 import { Header, Menu } from '../organisms';
 
 export const Page = ({ children, title = 'inHouse', defaultHeader = true }) => {
    const [menuOpen, setMenuOpen] = useState(false);
+   const openMenu = useCallback(() => setMenuOpen(true), []);
+   const closeMenu = useCallback(() => setMenuOpen(false), []);
 
    return (
       <>
@@ -18,7 +16,7 @@ export const Page = ({ children, title = 'inHouse', defaultHeader = true }) => {
             <title>{title}</title>
          </Head>
          <Sidebar
-            sidebar={<Menu closeMenu={() => setMenuOpen(false)} />}
+            sidebar={<Menu closeMenu={closeMenu} />}
             open={menuOpen}
             onSetOpen={setMenuOpen}
             styles={{ sidebar: { background: '#000', width: '260px' } }}
@@ -26,7 +24,7 @@ export const Page = ({ children, title = 'inHouse', defaultHeader = true }) => {
             pullRight
          >
             <Container full fullVertical fullHeight>
-               {defaultHeader && <Header openMenu={() => setMenuOpen(true)} />}
+               {defaultHeader && <Header openMenu={openMenu} />}
                {children}
             </Container>
          </Sidebar>

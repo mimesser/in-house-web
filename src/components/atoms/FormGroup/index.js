@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import { fontSize, spacing } from '../../../theme';
+import { fontSize, spacing, palette } from '../../../style';
 
 export const FormGroup = styled.div`
    margin-top: ${spacing.large};
    > label {
-      ${({ readonly, theme: { palette } }) => readonly && `color: ${palette.grayscale[1]}`};
+      ${({ readonly }) => readonly && `color: ${palette.secondary}`};
 
       > * {
          margin-top: ${spacing.small};

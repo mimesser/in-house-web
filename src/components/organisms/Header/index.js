@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Link from 'next/link';
 
 import { Icon } from '../../atoms/Icon';
-import { calcRem, spacing } from '../../../theme';
+import { calcRem, spacing } from '../../../style';
 
 const imgSize = calcRem('20px');
 

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { calcRem, fontSize, spacing } from '../../../../theme';
+import { calcRem, fontSize, spacing, palette } from '../../../../style';
 import { Button } from '../../../atoms';
 import { Patent } from '../../../molecules';
 
@@ -23,7 +23,7 @@ export const Commands = styled.div`
    display: flex;
    justify-content: space-around;
    margin-top: auto;
-   background-color: ${({ theme: { palette } }) => palette.white};
+   background-color: ${palette.white};
    ${Button} {
       width: 40%;
       margin: 0 ${spacing.small};
@@ -36,7 +36,7 @@ export const Commands = styled.div`
       left: 0;
       content: '';
       height: ${calcRem('2px')};
-      background-color: ${({ theme: { textColors } }) => textColors.primary};
+      background-color: ${palette.text};
       width: ${({ step }) => step * 25}%;
    }
 `;

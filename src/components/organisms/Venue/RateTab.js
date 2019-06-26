@@ -2,9 +2,9 @@ import React, { useCallback, useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import { fontSize } from '../../../theme';
+import { fontSize } from '../../../style';
 import { Loader, Card, Flex } from '../../atoms';
-import { PokeButton, Slider } from '../../molecules';
+import { Slider } from '../../molecules';
 import { setSelectedTag, loadRates } from '../../../store/venues';
 import { Votes } from './Votes';
 import { TabLayout } from './commonStyle';

@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import ReactSwipe from 'react-swipe';
 
 import { Container } from '../../atoms';
-import { calcRem, spacing } from '../../../theme';
+import { calcRem, spacing, palette } from '../../../style';
 
 const navSize = calcRem('10px');
 const NavButton = styled.button`
-   background: ${({ selected, theme: { palette } }) => (selected ? palette.grayscale[0] : palette.grayscale[2])};
+   background: ${({ selected }) => (selected ? palette.secondaryDark : palette.secondary)};
    border-radius: 50%;
    width: ${navSize};
    height: ${navSize};

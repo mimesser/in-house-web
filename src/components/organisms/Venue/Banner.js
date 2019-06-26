@@ -3,7 +3,7 @@ import Link from 'next/link';
 import styled from 'styled-components';
 
 import { ArrowBack } from 'styled-icons/boxicons-regular/ArrowBack';
-import { calcRem, spacing, fontSize } from '../../../theme';
+import { calcRem, spacing, fontSize, palette } from '../../../style';
 import { Votes } from './Votes';
 import { IconButton } from '../../atoms';
 
@@ -15,7 +15,7 @@ const Header = styled.header`
    position: relative;
    height: ${calcRem('270px')};
    padding: ${spacing.large};
-   color: ${({ theme }) => theme.palette.white};
+   color: ${palette.white};
 
    display: flex;
    flex-direction: column;

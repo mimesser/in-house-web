@@ -1,15 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { withRouter } from 'next/router';
-import Head from 'next/head';
 import Link from 'next/link';
-import Sidebar from 'react-sidebar';
 import styled from 'styled-components';
 
-import { Icon } from '../../atoms/Icon';
-import { Container } from '../../atoms';
-import { Header } from '../Header';
+import { Icon } from '../../atoms';
 
-import { breakpoints, spacing, fontSize } from '../../../theme';
+import { spacing, fontSize, palette } from '../../../style';
 
 const MenuContainer = styled.ul`
    padding-left: ${spacing.large};
@@ -23,11 +19,13 @@ const CloseButton = styled.button`
    background: none;
 `;
 
+// TODO colors
+
 const CloseIcon = styled(Icon)`
    svg {
       stroke: #eeeeee;
       &:hover {
-         stroke: #ffffff;
+         stroke: ${palette.white};
       }
       cursor: pointer;
    }
@@ -42,7 +40,7 @@ const A = styled.a`
    padding: ${spacing.small} ${spacing.large};
    display: block;
    &:hover {
-      color: #ffffff;
+      color: ${palette.white};
    }
 `;
 

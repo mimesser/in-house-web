@@ -4,12 +4,12 @@ import styled from 'styled-components';
 import { createStructuredSelector } from 'reselect';
 import Link from 'next/link';
 
-import { panelBoxShadow, spacing } from '../../../theme';
+import { panelBoxShadow, spacing, palette } from '../../../style';
 import { selectIsActiveInsider } from '../../../store/venues';
 
 const Nav = styled.nav`
    display: flex;
-   background-color: ${({ theme: { palette } }) => palette.white};
+   background-color: ${palette.white};
    ${panelBoxShadow}
 `;
 
@@ -25,7 +25,7 @@ const A = styled.a`
    flex: 1;
    text-align: center;
    padding: ${spacing.medium};
-   color: ${({ theme: { textColors } }) => textColors.primary};
+   color: ${palette.text};
    text-decoration: none;
    opacity: 0.5;
    transition: opacity 0.5s;

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Link from 'next/link';
 
 import { loadPosts, setSelectedPost } from '../../../store/venues';
-import { fontSize, spacing } from '../../../theme';
+import { fontSize, spacing } from '../../../style';
 import { Loader, Card, Flex, Button } from '../../atoms';
 import { Votes } from './Votes';
 import { Patent, Slider } from '../../molecules';

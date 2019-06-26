@@ -1,10 +1,9 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { spacing } from '../../../theme';
+import { spacing } from '../../../style';
 
 const baseStyle = css`
    margin-bottom: ${props => props.noMargin && '0'};
-   color: ${({ theme }) => theme.textColors.emphasis};
    margin-top: 0;
    text-align: ${props => {
       if (props.center) return 'center';
@@ -18,7 +17,7 @@ const baseStyle = css`
 export const Heading = styled.h1`
    ${baseStyle};
    font-size: 2rem;
-   margin-bottom: ${({ noMargin }) => (noMargin ? 0 : spacing.large)};
+   margin-bottom: ${({ noMargin }) => (noMargin ? 0 : spacing.xxLarge)};
 `;
 
 // TODO: fix below sizing/spacing

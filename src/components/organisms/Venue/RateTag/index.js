@@ -12,7 +12,7 @@ import {
 } from '../../../../store/venues';
 import { Modal } from '../../Modal';
 import { Heading } from '../../../atoms';
-import { spacing } from '../../../../theme';
+import { spacing } from '../../../../style';
 import { RateConfirmation } from '../RateConfirmation';
 import { Slider } from '../../../molecules';
 

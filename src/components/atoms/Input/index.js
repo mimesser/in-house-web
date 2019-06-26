@@ -1,21 +1,20 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-import { font, ifProp, palette } from '../../../utils';
-import { spacing, fontWeight } from '../../../theme';
+import { spacing, fontWeight, font, palette } from '../../../style';
 
 const styles = css`
-   font-family: ${font('primary')};
+   font-family: ${font.primary};
    display: block;
    width: 100%;
    margin: 0;
    box-sizing: border-box;
    font-size: 1rem;
    font-weight: ${fontWeight.primary};
-   padding: ${spacing.input};
-   color: ${({ theme: { textColors } }) => textColors.primary};
+   padding: ${spacing.medium};
+   color: ${palette.text};
    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.08);
-   border: 1px solid ${ifProp('invalid', palette('danger', 2), 'transparent')};
+   border: 1px solid ${({ invalid }) => (invalid ? palette.primaryDark : 'transparent')};
    border-radius: 3px;
    &[type='checkbox'],
    &[type='radio'] {
@@ -28,11 +27,11 @@ const styles = css`
    }
    :active,
    :focus {
-      border: 1px solid ${ifProp('invalid', palette('danger', 2), '#1a90e4')};
+      border: 1px solid ${({ invalid }) => (invalid ? palette.primaryDark : palette.secondaryDark)};
       outline: none;
    }
    ::placeholder {
-      color: ${({ theme: { palette } }) => palette.grayscale[1]};
+      color: ${palette.textLight};
    }
 `;
 

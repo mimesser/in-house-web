@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-import { calcRem, fontSize, spacing } from '../../../theme';
-import { Button, IconButton } from '../../atoms/Button';
+import { calcRem, fontSize, spacing, palette } from '../../../style';
+import { Button, IconButton } from '../../atoms';
 
 export const QuestionForm = styled.div`
    padding: 5rem ${spacing.large};
@@ -11,7 +11,7 @@ export const QuestionForm = styled.div`
 `;
 export const HouseTitle = styled.header`
    font-size: ${fontSize.large};
-   color: ${({ theme: { palette } }) => palette.grayscale[1]};
+   color: ${palette.secondary};
 `;
 export const Question = styled.p`
    font-size: 2rem;
@@ -35,13 +35,13 @@ export const SubmitButton = styled(IconButton).attrs({
 `;
 
 export const ChangeButton = styled(Button)`
-   border-color: ${({ theme: { palette } }) => palette.white};
+   border-color: ${palette.white};
    margin: auto auto 0 0;
 `;
 
 // TODO: should be part of InputFiled
 export const ValidationError = styled.span`
-   color: ${({ theme: { palette } }) => palette.danger[1]};
+   color: ${palette.primaryDark};
    font-size: ${fontSize.small};
    margin-top: ${spacing.tiny};
 `;
