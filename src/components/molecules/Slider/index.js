@@ -1,7 +1,6 @@
 /* eslint-disable react/no-unused-prop-types */
 import React from 'react';
 import { CircleSlider } from 'react-circle-slider';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import debounce from 'lodash/debounce';
 import isNumber from 'lodash/isNumber';
@@ -34,8 +33,9 @@ const SuperScriptDecimalSpan = styled.span`
 
 export class Slider extends React.Component {
    static defaultProps = {
-      animationColorOne: '#002633',
-      animationColorTwo: '#e4e4e4',
+      progressColor: '#002633',
+      knobColor: '#002633',
+      circleColor: '#e4e4e4',
       readonly: false,
       size: 180,
       defaultIfEmpty: '?',
@@ -44,14 +44,12 @@ export class Slider extends React.Component {
 
    constructor(props) {
       super(props);
-      const { value, size, readonly, animationColorOne, animationColorTwo } = props;
+      const { value, size, readonly } = props;
       this.fontSize = `${size / FONT_RATIO}px`;
 
       this.state = Slider.determineInitialRenderState({
          readonly,
          value,
-         animationColorOne,
-         animationColorTwo,
       });
    }
 
@@ -63,7 +61,7 @@ export class Slider extends React.Component {
    }
 
    componentWillUnmount() {
-      clearInterval(this.initialAnimationInterval);
+      this.stopAnimation();
       this.reportChange.cancel();
    }
 
@@ -72,57 +70,26 @@ export class Slider extends React.Component {
          return;
       }
 
-      const { value, readonly, animationColorOne, animationColorTwo } = this.props;
+      const { value, readonly } = this.props;
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState(
          Slider.determineInitialRenderState({
             readonly,
             value,
-            animationColorOne,
-            animationColorTwo,
          }),
       );
    }
 
-   static determineInitialRenderState({ readonly, value, animationColorOne, animationColorTwo }) {
+   static determineInitialRenderState({ readonly, value }) {
       if (readonly || isNumber(value)) {
          return Slider.createValueDrivenState({
             value,
-            animationColorOne,
-            animationColorTwo,
             readonly,
          });
       }
 
-      return Slider.createAnimatingState({
-         value: 0,
-         animatedProgressColor: animationColorOne,
-         animatedCircleColor: animationColorTwo,
-      });
-   }
-
-   static calculateAnimatingState({ state, animationColorOne, animationColorTwo }) {
-      const roundedValue = Math.floor(state.value);
-      const newValue = roundedValue === 10 ? 0 : state.value + 0.1;
-      let newProgressColor = state.progressColor;
-      let newCircleColor = state.circleColor;
-      if (roundedValue === 10) {
-         newProgressColor = state.progressColor === animationColorOne ? animationColorTwo : animationColorOne;
-         newCircleColor = state.progressColor === animationColorOne ? animationColorOne : animationColorTwo;
-      }
-      return Slider.createAnimatingState({
-         value: newValue,
-         animatedProgressColor: newProgressColor,
-         animatedCircleColor: newCircleColor,
-      });
-   }
-
-   static createAnimatingState({ value, animatedProgressColor, animatedCircleColor }) {
       return {
          value,
-         progressColor: animatedProgressColor,
-         circleColor: animatedCircleColor,
-         knobColor: animatedProgressColor,
          showTooltip: false,
          stepSize: 0.1,
       };
@@ -133,12 +100,9 @@ export class Slider extends React.Component {
       return parseFloat(value.toFixed(precision));
    }
 
-   static createValueDrivenState({ value, animationColorOne, animationColorTwo, readonly }) {
+   static createValueDrivenState({ value, readonly }) {
       return {
          value: readonly && isNumber(value) ? Slider.roundToPrecision(value, 1) : value,
-         progressColor: animationColorOne,
-         circleColor: animationColorTwo,
-         knobColor: animationColorOne,
          showTooltip: true,
          stepSize: 1,
       };
@@ -146,23 +110,27 @@ export class Slider extends React.Component {
 
    animate() {
       this.initialAnimationInterval = setInterval(() => {
-         const newAnimatingState = Slider.calculateAnimatingState({
-            state: this.state,
-            animationColorOne: this.props.animationColorOne,
-            animationColorTwo: this.props.animationColorTwo,
+         this.setState(({ value }) => {
+            const roundedValue = Math.floor(value);
+            const newValue = roundedValue === 10 ? 0 : value + 0.05;
+            return {
+               value: newValue,
+            };
          });
-         this.setState(newAnimatingState);
-      }, 25);
+      }, 20);
    }
 
-   handleChange = rawValue => {
+   stopAnimation = () => {
       clearInterval(this.initialAnimationInterval);
+      this.initialAnimationInterval = undefined;
+   };
+
+   handleChange = rawValue => {
+      this.stopAnimation();
       const value = Math.round(rawValue);
       this.setState(
          Slider.createValueDrivenState({
             value,
-            animationColorOne: this.props.animationColorOne,
-            animationColorTwo: this.props.animationColorTwo,
             readonly: this.props.readonly,
          }),
       );
@@ -171,37 +139,9 @@ export class Slider extends React.Component {
 
    reportChange = debounce(this.props.onChange, 700);
 
-   render() {
-      return (
-         <Container size={this.props.size}>
-            <CircleSlider
-               value={this.state.value}
-               progressColor={this.state.progressColor}
-               circleColor={this.state.circleColor}
-               showTooltip={false}
-               knobRadius={10}
-               knobColor={this.state.knobColor}
-               circleWidth={1}
-               progressWidth={1}
-               stepSize={this.state.stepSize}
-               min={0}
-               max={10}
-               disabled={this.props.readonly}
-               onChange={this.handleChange}
-               size={this.props.size}
-            />
-            <RealSliderTooltip showTooltip={this.state.showTooltip} fontSize={this.fontSize}>
-               {Slider.renderValue({
-                  value: this.state.value,
-                  useDecimal: this.props.readonly,
-                  defaultIfEmpty: this.props.defaultIfEmpty,
-               })}
-            </RealSliderTooltip>
-         </Container>
-      );
-   }
-
-   static renderValue({ value, useDecimal, defaultIfEmpty }) {
+   renderValue = () => {
+      const { defaultIfEmpty, readonly: useDecimal } = this.props;
+      const { value } = this.state;
       if (!isNumber(value)) {
          return defaultIfEmpty;
       }
@@ -217,15 +157,33 @@ export class Slider extends React.Component {
       }
 
       return value;
+   };
+
+   render() {
+      const { readonly, circleColor, size, progressColor, knobColor } = this.props;
+      const { showTooltip, stepSize, value } = this.state;
+      return (
+         <Container size={size}>
+            <CircleSlider
+               value={value}
+               progressColor={this.initialAnimationInterval ? circleColor : progressColor}
+               circleColor={circleColor}
+               showTooltip={false}
+               knobRadius={10}
+               knobColor={knobColor}
+               circleWidth={1}
+               progressWidth={1}
+               stepSize={stepSize}
+               min={0}
+               max={10}
+               disabled={readonly}
+               onChange={this.handleChange}
+               size={size}
+            />
+            <RealSliderTooltip showTooltip={showTooltip} fontSize={this.fontSize}>
+               {this.renderValue()}
+            </RealSliderTooltip>
+         </Container>
+      );
    }
 }
-
-Slider.propTypes = {
-   defaultIfEmpty: PropTypes.string,
-   animationColorOne: PropTypes.string,
-   animationColorTwo: PropTypes.string,
-   readonly: PropTypes.bool,
-   onChange: PropTypes.func,
-   value: PropTypes.number,
-   size: PropTypes.number,
-};
