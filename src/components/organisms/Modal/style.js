@@ -47,14 +47,9 @@ export const Content = styled.div`
    min-width: ${breakpoints.xs};
    max-width: ${breakpoints.sm};
    width: 100%;
-   padding: ${spacing.large};
+   padding: ${spacing.xxLarge} ${spacing.large} ${spacing.large} ${spacing.large};
 
    ${colors};
-`;
-
-export const Title = styled.header`
-   display: flex;
-   margin-bottom: ${spacing.medium};
 `;
 
 const CloseIcon = styled(Close).attrs({ size: 27 })``;
@@ -64,5 +59,7 @@ export const CloseButton = styled(IconButton).attrs({
 })`
    cursor: pointer;
    color: ${({ inverse }) => inverse && palette.white};
-   margin-left: auto;
+   position: absolute;
+   top: ${spacing.large};
+   right: ${spacing.large};
 `;

@@ -1,5 +1,4 @@
 import React, { useCallback } from 'react';
-import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
@@ -15,64 +14,25 @@ import {
    downvotePost,
 } from '../../../../store/venues';
 import { Modal } from '../../Modal';
-import { Heading, IconButton, Input } from '../../../atoms';
-import { spacing, palette } from '../../../../style';
-import { formatDate } from '../../../../utils/format';
 import { RateConfirmation } from '../RateConfirmation';
+import { Layout, VenueTitle, ItemTitle, VoteArea, VoteButton } from '../voteStyle';
 
-// TODO TODO TODO
-
-const VoteButton = styled(IconButton)`
-   color: ${({ selected }) => (selected ? palette.primary : 'currentColor')};
-   &[disabled] {
-      color: gray;
-   }
-`;
-
-const Layout = styled.div`
-   width: 100%;
-   padding: 10rem ${spacing.xLarge} ${spacing.medium} ${spacing.medium};
-
-   display: flex;
-   flex-direction: row;
-
-   > div {
-      display: flex;
-      flex-direction: column;
-
-      ${Input} {
-         margin-top: ${spacing.large};
-      }
-
-      &:first-child {
-         flex-grow: 0;
-         margin-right: ${spacing.large};
-
-         ${VoteButton} {
-            &:last-child {
-               margin-top: ${spacing.large};
-            }
-         }
-      }
-   }
-`;
-
-const VoteMink = ({ post: { created, title, text, myVote }, venue: { id: venueId }, upvotePost, downvotePost }) => {
+const VotePost = ({ post: { created, title, text, myVote }, venue: { name: venueName }, upvotePost, downvotePost }) => {
    return (
       <Layout>
-         <div>
-            <VoteButton onClick={upvotePost} selected={myVote === 1}>
-               <Check size={48} />
-            </VoteButton>
-            <VoteButton onClick={downvotePost} selected={myVote === -1}>
-               <CloseO size={48} />
-            </VoteButton>
-         </div>
-         <div>
-            <div>{formatDate(created)}</div>
-            <Heading noMargin>{title}</Heading>
-            <p>{text}</p>
-         </div>
+         <VenueTitle>{venueName}</VenueTitle>
+         <ItemTitle>{title}</ItemTitle>
+         <VoteArea>
+            <div>
+               <VoteButton onClick={upvotePost} selected={myVote === 1}>
+                  <Check size={48} />
+               </VoteButton>
+               <VoteButton onClick={downvotePost} selected={myVote === -1}>
+                  <CloseO size={48} />
+               </VoteButton>
+            </div>
+            <div>{text}</div>
+         </VoteArea>
       </Layout>
    );
 };
@@ -82,8 +42,14 @@ const ModalWrapper = props => {
    const close = useCallback(() => setSelectedPost(undefined), []);
 
    return (
-      <Modal open={!!post} closeModal={close} canClose={!confirmation} canDismiss={false}>
-         {post && !confirmation ? <VoteMink {...props} /> : null}
+      <Modal
+         open={!!post}
+         closeModal={close}
+         canClose={!confirmation}
+         canDismiss={!confirmation}
+         title={venue && venue.name}
+      >
+         {post && !confirmation ? <VotePost {...props} /> : null}
          {post && confirmation ? (
             <RateConfirmation venueName={venue.name} title={post.title} {...confirmation} />
          ) : null}

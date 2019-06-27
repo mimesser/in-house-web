@@ -14,5 +14,5 @@ export const PokeButton = styled(props => (
       <Icon />
    </IconButton>
 ))`
-   color: ${palette.secondaryDark};
+   color: ${palette.text};
 `;

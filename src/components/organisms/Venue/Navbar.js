@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { createStructuredSelector } from 'reselect';
 import Link from 'next/link';
 
-import { panelBoxShadow, spacing, palette } from '../../../style';
+import { panelBoxShadow, spacing, palette, fontWeight, calcRem } from '../../../style';
 import { selectIsActiveInsider } from '../../../store/venues';
 
 const Nav = styled.nav`
@@ -13,24 +13,33 @@ const Nav = styled.nav`
    ${panelBoxShadow}
 `;
 
-const activeStyle = ({ active }) =>
-   active &&
-   `
-   opacity: 1;
-   border-bottom: 1px solid;
-`;
+const linkTextStyle = ({ active, deny }) => {
+   if (deny) {
+      return css`
+         color: ${palette.textLight};
+      `;
+   }
+   if (active) {
+      return css`
+         color: ${palette.textDark};
+         font-weight: ${fontWeight.bolder};
+         border-bottom: ${calcRem('2px')} solid;
+      `;
+   }
+   return undefined;
+};
+
 const cursor = ({ deny }) => (deny ? 'not-allowed' : 'pointer');
 
 const A = styled.a`
    flex: 1;
    text-align: center;
-   padding: ${spacing.medium};
+   padding: ${spacing.small};
    color: ${palette.text};
    text-decoration: none;
-   opacity: 0.5;
-   transition: opacity 0.5s;
+   transition: color 0.5s;
    cursor: ${cursor};
-   ${activeStyle};
+   ${linkTextStyle};
 `;
 
 const TabHeader = ({ id, tab: { path, label, secured }, active, authorized }) =>

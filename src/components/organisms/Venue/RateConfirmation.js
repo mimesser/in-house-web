@@ -1,19 +1,13 @@
 import React from 'react';
-import styled from 'styled-components';
 
-import { Heading, HeadingTwo } from '../../atoms';
 import { Slider } from '../../molecules';
+import { Layout, VenueTitle, ItemTitle, TeamAverage } from './voteStyle';
 
-const Layout = styled.div`
-   margin: auto;
-`;
-
-export const RateConfirmation = ({ venueName, title, voteCount, voteRating }) => (
+export const RateConfirmation = ({ venueName, title, voteRating }) => (
    <Layout>
-      <Heading>{venueName}</Heading>
-      <Heading noMargin>{title}</Heading>
-      <div>Team average</div>
-      <Slider readonly value={voteRating} />
-      <HeadingTwo>Vote count: {voteCount}</HeadingTwo>
+      <VenueTitle>{venueName}</VenueTitle>
+      <ItemTitle>{title}</ItemTitle>
+      <TeamAverage>Team average</TeamAverage>
+      <Slider readonly value={voteRating} size={280} />
    </Layout>
 );

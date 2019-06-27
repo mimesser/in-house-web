@@ -7,7 +7,7 @@ import { Loader, Card, Flex } from '../../atoms';
 import { Slider } from '../../molecules';
 import { setSelectedTag, loadRates } from '../../../store/venues';
 import { Votes } from './Votes';
-import { TabLayout } from './commonStyle';
+import { TabLayout } from './tabStyle';
 import RateTag from './RateTag';
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
