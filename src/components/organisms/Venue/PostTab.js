@@ -1,64 +1,34 @@
 import React, { useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
 import Link from 'next/link';
 
 import { loadPosts, setSelectedPost } from '../../../store/venues';
-import { fontSize, spacing } from '../../../style';
-import { Loader, Card, Flex, Button } from '../../atoms';
-import { Votes } from './Votes';
-import { Patent, Slider } from '../../molecules';
-import { TabLayout } from './commonStyle';
+import { Loader, Button } from '../../atoms';
+import { ItemCard, ItemText, ItemTitle, Main, TabLayout, TabTitle } from './tabStyle';
 import VotePost from './VotePost';
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
-
-// TODO: styling in general + "large" support for a top post
-const PostCard = styled(Card)`
-   p {
-      font-size: ${fontSize.large};
-      margin: ${spacing.small} 0;
-   }
-   time {
-      font-size: ${fontSize.tiny};
-   }
-`;
-
-const Tab = styled(TabLayout)`
-   > p {
-      text-transform: uppercase;
-   }
-   ${Patent} {
-      font-size: ${fontSize.tiny};
-   }
-   ${Button} {
-      margin: auto;
-   }
-   ${PostCard}:last-of-type {
-      margin-bottom: ${spacing.large};
-   }
-`;
+import { ScoreAndVoters } from './ScoreAndVoters';
 
 const Post = ({ post: { id, title, text, voteCount, voteRating }, large, setSelectedPost }) => {
    const open = useCallback(() => setSelectedPost(id), [id]);
 
    return (
-      <PostCard large={large} onClick={open}>
-         <Slider readonly value={voteRating} />
-         <Flex column justifyAround>
-            <p>{title}</p>
-            <p>{text}</p>
-            <Votes count={voteCount} />
-         </Flex>
+      <ItemCard large={large} onClick={open}>
+         <ScoreAndVoters voteCount={voteCount} voteRating={voteRating} sliderSize={large ? 100 : 80} />
+         <Main>
+            <ItemTitle>{title}</ItemTitle>
+            <ItemText>{text}</ItemText>
+         </Main>
          <PrivateShareButton id={id} />
-      </PostCard>
+      </ItemCard>
    );
 };
 
 const renderSection = (title, posts, setSelectedPost, large) =>
    posts.length > 0 && (
       <>
-         <p>{title}</p>
+         <TabTitle>{title}</TabTitle>
          {posts.map(p => (
             <Post post={p} key={p.id} large={large} setSelectedPost={setSelectedPost} />
          ))}
@@ -90,14 +60,13 @@ const PostTab = ({ venue: { id, posts }, loadPosts, setSelectedPost }) => {
          const { title, text, voteCount, voteRating } = findPost(id, posts);
 
          return (
-            <PostCard>
-               <Slider readonly value={voteRating} />
-               <Flex column justifyAround>
-                  <p>{title}</p>
-                  <p>{text}</p>
-                  <Votes count={voteCount} />
-               </Flex>
-            </PostCard>
+            <ItemCard>
+               <ScoreAndVoters voteCount={voteCount} voteRating={voteRating} sliderSize={80} />
+               <Main>
+                  <ItemTitle>{title}</ItemTitle>
+                  <ItemText>{text}</ItemText>
+               </Main>
+            </ItemCard>
          );
       },
       [posts],
@@ -105,14 +74,14 @@ const PostTab = ({ venue: { id, posts }, loadPosts, setSelectedPost }) => {
    const getTitleForShare = useCallback(id => findPost(id, posts).title, [posts]);
 
    return (
-      <Tab>
+      <TabLayout>
          {posts ? renderPosts(posts, setSelectedPost) : <Loader big />}
          <Link href={`/houses?id=${id}&tab=post&new`} as={`/houses/${id}/post/new`} passHref>
             <Button>new post</Button>
          </Link>
          <VotePost />
          <PrivateShare type="post" renderItem={renderSharePreview} getItemTitle={getTitleForShare} />
-      </Tab>
+      </TabLayout>
    );
 };
 

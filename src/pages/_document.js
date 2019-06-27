@@ -37,7 +37,7 @@ class MyDocument extends Document {
                   content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
                />
                <link
-                  href="https://fonts.googleapis.com/css?family=Nunito+Sans:600|Roboto:300|Source+Sans+Pro:300,400&display=swap"
+                  href="https://fonts.googleapis.com/css?family=Roboto:300|Nunito+Sans:600|Source+Sans+Pro:300,400&display=swap"
                   rel="stylesheet"
                />
             </Head>

@@ -9,7 +9,7 @@ import { fontSize, spacing } from '../../../style';
 import { Loader, Card, Flex, Button } from '../../atoms';
 import { Votes } from './Votes';
 import { Patent, Slider } from '../../molecules';
-import { TabLayout } from './commonStyle';
+import { TabLayout } from './tabStyle';
 import { formatDate } from '../../../utils/format';
 import VoteMink from './VoteMink';
 import PrivateShare from './PrivateShare';

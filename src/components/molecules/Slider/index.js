@@ -31,7 +31,7 @@ const SuperScriptDecimalSpan = styled.span`
    margin-left: -2px;
 `;
 
-export class Slider extends React.Component {
+class BaseSlider extends React.Component {
    static defaultProps = {
       progressColor: '#002633',
       knobColor: '#002633',
@@ -160,10 +160,10 @@ export class Slider extends React.Component {
    };
 
    render() {
-      const { readonly, circleColor, size, progressColor, knobColor } = this.props;
+      const { readonly, circleColor, size, progressColor, knobColor, className } = this.props;
       const { showTooltip, stepSize, value } = this.state;
       return (
-         <Container size={size}>
+         <Container size={size} className={className}>
             <CircleSlider
                value={value}
                progressColor={this.initialAnimationInterval ? circleColor : progressColor}
@@ -187,3 +187,5 @@ export class Slider extends React.Component {
       );
    }
 }
+
+export const Slider = styled(BaseSlider)``;
