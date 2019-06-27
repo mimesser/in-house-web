@@ -107,7 +107,7 @@ export const Step3 = () => {
    return (
       <>
          <Heading>#3: alert your team</Heading>
-         <P>user our secret share feature to spread the word</P>
+         <P>use our secret share feature to spread the word</P>
          <P>
             <Poke />
          </P>
