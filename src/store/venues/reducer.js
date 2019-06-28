@@ -92,9 +92,9 @@ export function reducer(state = initialState, action) {
       case actionTypes.SHOW_RATE_TAG_CONFIRMATION: {
          return setSelectedVenueProp(state, action, 'rateTagConfirmation');
       }
-      case actionTypes.UPDATE_TAG_AND_VENUE_RATES: {
+      case actionTypes.UPDATE_VENUE_RATE: {
          const {
-            payload: { tag, venue },
+            payload: { venue },
          } = action;
 
          // TODO: consider storing items as map for easier updates
@@ -103,17 +103,10 @@ export function reducer(state = initialState, action) {
          const index = list.findIndex(v => v.id === venue.id);
          list[index] = venue;
 
-         const { userRate, voteCount, voteRating } = tag;
-
          const selectedVenue = state.selectedVenue && {
             ...state.selectedVenue,
             votesCount: venue.votesCount,
             rating: venue.rating,
-            rates:
-               state.selectedVenue.rates &&
-               state.selectedVenue.rates.map(r =>
-                  r.definitionId === tag.definitionId ? { ...r, userRate, voteCount, voteRating } : r,
-               ),
          };
 
          return { ...state, list, selectedVenue };

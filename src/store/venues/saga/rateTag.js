@@ -2,9 +2,10 @@ import { call, select, put, delay, fork } from 'redux-saga/effects';
 
 import api, { isForbidden } from '../../../api';
 import { selectIsActiveInsider, selectSelectedTag, selectSelectedVenue } from '../selectors';
-import { showRateTagConfirmation, setSelectedTag, updateTagAndVenueRates } from '../actions';
+import { showRateTagConfirmation, setSelectedTag, updateVenueRate } from '../actions';
 import { handleForbiddenResponse } from './handleForbiddenResponse';
 import { showInsiderChallenge } from './showInsiderChallenge';
+import { reloadVenueRateTags } from './loadVenueRateTags';
 
 const CONFIRMATION_INTERVAL = 1500;
 
@@ -26,7 +27,8 @@ export function* rateTag({ payload: { rating } }) {
 
    try {
       yield put(showRateTagConfirmation(venueRateTag));
-      yield put(updateTagAndVenueRates(venueRateTag, venue));
+      yield put(updateVenueRate(venue));
+      yield fork(reloadVenueRateTags, venueId);
       yield delay(CONFIRMATION_INTERVAL);
    } catch (e) {
       if (isForbidden(e)) {
