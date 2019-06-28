@@ -2,12 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import { palette } from '../../../style';
+
+const getColor = ({ color }) => (color ? palette[color] : 'currentColor');
+
 const Wrapper = styled.span`
    display: inline-block;
-   color: currentcolor;
    width: ${({ size }) => size}rem;
    height: ${({ size }) => size}rem;
    box-sizing: border-box;
+   color: ${getColor};
 
    & > svg {
       width: 100%;
