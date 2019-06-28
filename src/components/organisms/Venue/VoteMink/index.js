@@ -17,62 +17,44 @@ import {
    tryAnswerMink,
 } from '../../../../store/venues';
 import { Modal } from '../../Modal';
-import { Heading, IconButton, Input, Loader } from '../../../atoms';
-import { spacing, palette } from '../../../../style';
+import { Loader, Icon } from '../../../atoms';
+import { IconInput } from '../../../molecules';
+import { spacing, fontSize, font } from '../../../../style';
 import { formatDate } from '../../../../utils/format';
 import { RateConfirmation } from '../RateConfirmation';
 import { normalizeAnswer } from '../normalizeAnswer';
+import { ItemTitle, Layout, VenueTitle, VoteArea, VoteButton } from '../openCardStyle';
 
-const VoteButton = styled(IconButton)`
-   color: ${({ selected }) => (selected ? palette.primaryDark : palette.secondaryDark)};
-   &[disabled] {
-      color: ${palette.secondaryLight};
-   }
-`;
-
-const Layout = styled.div`
-   width: 100%;
-   padding: 10rem ${spacing.xLarge} ${spacing.medium} ${spacing.medium};
-
-   display: flex;
-   flex-direction: row;
-
-   > div {
-      display: flex;
-      flex-direction: column;
-
-      ${Input} {
-         margin-top: ${spacing.large};
-      }
-
-      &:first-child {
-         flex-grow: 0;
-         margin-right: ${spacing.large};
-
-         ${VoteButton} {
-            &:last-child {
-               margin-top: ${spacing.large};
-            }
-         }
-      }
-   }
-`;
-
-const AnswerStatus = ({ status }) => {
+const AnswerStatus = styled(({ status, className }) => {
    if (!status) {
       return null;
    }
 
    const { loading, isAnswerCorrect } = status;
    if (loading) {
-      return <Loader white />;
+      return <Loader />;
    }
-   return isAnswerCorrect ? 'correct answer' : 'wrong answer';
-};
+   return <span className={className}>{isAnswerCorrect ? 'correct answer' : 'wrong answer'}</span>;
+})`
+   font-size: ${fontSize.tiny};
+`;
+
+const VoteMinkLayout = styled(Layout)`
+   ${VoteArea} {
+      margin-top: ${spacing.xxLarge};
+   }
+
+   time {
+      font-size: ${fontSize.tiny};
+      font-family: ${font.number};
+      margin: ${spacing.large} 0;
+      display: block;
+   }
+`;
 
 const VoteMink = ({
    mink: { created, question, myCorrectAnswer, myVote, id: minkId },
-   venue: { id: venueId },
+   venue: { id: venueId, name: venueName },
    answerStatus,
    tryAnswerMink,
    upvoteMink,
@@ -98,30 +80,40 @@ const VoteMink = ({
    const inputValue = (dirty ? answer : myCorrectAnswer) || '';
 
    return (
-      <Layout>
-         <div>
-            <VoteButton disabled={!canVote} onClick={upvoteMink} selected={myVote === 1}>
-               <Check size={48} />
-            </VoteButton>
-            <VoteButton disabled={!canVote} onClick={downvoteMink} selected={myVote === -1}>
-               <CloseO size={48} />
-            </VoteButton>
-         </div>
-         <div>
-            <Heading noMargin>{question}</Heading>
-            <div>{formatDate(created)}</div>
-            <Input
-               placeholder="try answer"
-               autocomplete="off"
-               spellcheck="false"
-               value={inputValue}
-               onChange={tryAnswer}
-            />
+      <VoteMinkLayout>
+         <VenueTitle>{venueName}</VenueTitle>
+         <VoteArea>
             <div>
-               <AnswerStatus status={answerStatus} />
+               <VoteButton disabled={!canVote} onClick={upvoteMink} selected={myVote === 1}>
+                  <Check size={48} />
+               </VoteButton>
+               <VoteButton disabled={!canVote} onClick={downvoteMink} selected={myVote === -1}>
+                  <CloseO size={48} />
+               </VoteButton>
             </div>
-         </div>
-      </Layout>
+            <div>
+               <ItemTitle>{question}</ItemTitle>
+               <time dateTime={created}>{formatDate(created)}</time>
+               <IconInput
+                  placeholder="try answer"
+                  autocomplete="off"
+                  spellcheck="false"
+                  value={inputValue}
+                  onChange={tryAnswer}
+                  icon={
+                     answerStatus && answerStatus.isAnswerCorrect ? (
+                        <Icon icon="winky" color="textDark" size={1.5} />
+                     ) : (
+                        undefined
+                     )
+                  }
+               />
+               <div>
+                  <AnswerStatus status={answerStatus} />
+               </div>
+            </div>
+         </VoteArea>
+      </VoteMinkLayout>
    );
 };
 
@@ -130,7 +122,7 @@ const ModalWrapper = props => {
    const close = useCallback(() => setSelectedMink(undefined), []);
 
    return (
-      <Modal open={!!mink} closeModal={close} canClose={!confirmation} canDismiss={false}>
+      <Modal open={!!mink} closeModal={close} canClose={!confirmation} canDismiss={!confirmation}>
          {mink && !confirmation ? <VoteMink {...props} /> : null}
          {mink && confirmation ? (
             <RateConfirmation venueName={venue.name} title={mink.question} {...confirmation} />

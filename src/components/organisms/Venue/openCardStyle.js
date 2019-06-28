@@ -46,6 +46,9 @@ export const VoteArea = styled.div`
          }
       }
    }
+   > div:nth-child(2) {
+      flex: 1;
+   }
 `;
 
 export const Layout = styled.div`

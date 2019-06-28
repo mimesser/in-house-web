@@ -76,7 +76,7 @@ export const Step2 = () => (
    <>
       <Heading>
          #2: add a MINK<sup>©</sup>
-         <Patent>U.S. patent no. 8,904,502</Patent>
+         <Patent />
       </Heading>
       <P>
          <Strong>MINK: a team-based security question</Strong>

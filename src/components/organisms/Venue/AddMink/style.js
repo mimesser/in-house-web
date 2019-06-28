@@ -2,13 +2,9 @@ import styled from 'styled-components';
 
 import { calcRem, fontSize, spacing, palette } from '../../../../style';
 import { Button } from '../../../atoms';
-import { Patent } from '../../../molecules';
 
 export const Main = styled.div`
    padding: ${spacing.medium};
-   ${Patent} {
-      font-size: ${fontSize.tiny};
-   }
 `;
 
 export const Name = styled.div`

@@ -16,15 +16,6 @@ const styles = css`
    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.08);
    border: 1px solid ${({ invalid }) => (invalid ? palette.primaryDark : 'transparent')};
    border-radius: 3px;
-   &[type='checkbox'],
-   &[type='radio'] {
-      display: inline-block;
-      border: 0;
-      border-radius: 0;
-      width: auto;
-      height: auto;
-      margin: 0 0.2rem 0 0;
-   }
    :active,
    :focus {
       border: 1px solid ${({ invalid }) => (invalid ? palette.primaryDark : palette.secondaryDark)};
