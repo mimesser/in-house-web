@@ -2,9 +2,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { Checkbox } from '../../../atoms';
-import { spacing, palette } from '../../../../style';
-import { Title } from './Title';
+import { Checkbox } from '../../atoms';
+import { spacing, palette } from '../../../style';
+import { Title } from './newItemStyle';
 
 const Container = styled.div`
    display: flex;

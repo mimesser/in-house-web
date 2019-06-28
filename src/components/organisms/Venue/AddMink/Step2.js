@@ -1,14 +1,13 @@
 import React from 'react';
 
 import { Button, FormGroup } from '../../../atoms';
-import { StepLayout } from './StepLayout';
-import { Title } from './Title';
+import { StepLayout, Title } from '../newItemStyle';
 
 export const Step2 = ({ venue: { name }, answer, question, edit, setStep }) => (
    <StepLayout
       main={
          <>
-            <Title houseName={name} verb="confirm" />
+            <Title houseName={name} action="confirm" />
             <FormGroup readonly>
                <label>mink question</label>
                <p>{question}</p>

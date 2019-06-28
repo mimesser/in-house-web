@@ -1,7 +1,8 @@
+import React from 'react';
 import styled from 'styled-components';
 
-import { calcRem, fontSize, spacing, palette, panelBoxShadow } from '../../../../style';
-import { Button, Heading } from '../../../atoms';
+import { calcRem, spacing, palette, panelBoxShadow, fontSize } from '../../../style';
+import { Button, Heading } from '../../atoms';
 
 export const Main = styled.div`
    padding: ${spacing.large};
@@ -43,3 +44,23 @@ export const Commands = styled.div`
       width: ${({ step }) => step * 25}%;
    }
 `;
+
+export const Tip = styled.div`
+   margin: ${spacing.tiny} 0 ${spacing.xLarge};
+   color: ${palette.textLight};
+   font-size: ${fontSize.tiny};
+`;
+
+export const Title = ({ houseName, action }) => (
+   <>
+      <Name>{houseName}</Name>
+      <Heading>{action}</Heading>
+   </>
+);
+
+export const StepLayout = ({ main, commands, step }) => (
+   <>
+      <Main>{main}</Main>
+      <Commands step={step}>{commands}</Commands>
+   </>
+);
