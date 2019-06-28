@@ -1,8 +1,7 @@
 import React from 'react';
 
 import { Button, FormGroup } from '../../../atoms';
-import { StepLayout } from './StepLayout';
-import { Title } from './Title';
+import { StepLayout, Title } from '../newItemStyle';
 
 export const Step2 = ({ venue: { name }, title, message, edit, setStep }) => (
    <StepLayout

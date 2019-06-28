@@ -1,10 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
 
-import { Button, Heading } from '../../../atoms';
+import { Button } from '../../../atoms';
 import { CounterInput } from '../../../molecules';
-import { StepLayout } from './StepLayout';
-import { Title } from './Title';
+import { Title, StepLayout } from '../newItemStyle';
 
 const MAX_TITLE_LENGTH = 25;
 const MAX_MESSAGE_LENGTH = 150;

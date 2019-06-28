@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { Button } from '../../../atoms';
-import { StepLayout } from './StepLayout';
-import { FairSpeech } from './FairSpeech';
+import { StepLayout } from '../newItemStyle';
+import { FairSpeech } from '../FairSpeech';
 
 export const Step4 = ({ venue: { name }, setStep, edit, loading, post }) => (
    <StepLayout
