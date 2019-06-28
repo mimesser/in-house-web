@@ -4,9 +4,9 @@ import { Button } from '../../../atoms';
 import { StepLayout } from './StepLayout';
 import { FairSpeech } from './FairSpeech';
 
-export const Step3 = ({ edit, setStep }) => (
+export const Step3 = ({ venue: { name }, edit, setStep }) => (
    <StepLayout
-      main={<FairSpeech acceptedTerms={false} toggleTerms={() => setStep(4)} />}
+      main={<FairSpeech houseName={name} acceptedTerms={false} toggleTerms={() => setStep(4)} />}
       commands={
          <>
             <Button secondary onClick={edit}>

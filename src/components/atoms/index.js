@@ -12,3 +12,4 @@ export { FormGroup } from './FormGroup';
 export { Title } from './Title';
 export { Address } from './Address';
 export { Number } from './Number';
+export { Checkbox } from './Checkbox';

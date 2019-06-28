@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 
-import { Button } from '../../../atoms';
+import { Button, Heading } from '../../../atoms';
 import { CounterInput } from '../../../molecules';
 import { StepLayout } from './StepLayout';
 import { Title } from './Title';
@@ -13,7 +13,7 @@ export const Step1 = ({ venue: { id, name }, title, setTitle, message, setMessag
    <StepLayout
       main={
          <>
-            <Title houseName={name} verb="add" />
+            <Title houseName={name} action="new post" />
             <CounterInput
                value={title}
                onChange={setTitle}
@@ -34,7 +34,7 @@ export const Step1 = ({ venue: { id, name }, title, setTitle, message, setMessag
       commands={
          <>
             <Link href={`/houses?id=${id}&tab=post`} as={`/houses/${id}/post`}>
-               <Button secondary>Cancel</Button>
+               <Button secondary>cancel</Button>
             </Link>
             <Button onClick={() => setStep(2)} disabled={!message.trim() || !title.trim()}>
                next

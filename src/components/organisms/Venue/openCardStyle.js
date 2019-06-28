@@ -7,6 +7,12 @@ import { Slider } from '../../molecules';
 export const VenueTitle = styled.div`
    text-transform: uppercase;
    color: ${palette.textLight};
+   margin-bottom: ${spacing.tiny};
+`;
+
+export const ItemDate = styled.div`
+   color: ${palette.textLight};
+   font-size: ${fontSize.tiny};
    margin-bottom: ${spacing.large};
 `;
 

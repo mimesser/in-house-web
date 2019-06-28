@@ -10,9 +10,9 @@ const styles = css`
    margin: 0;
    box-sizing: border-box;
    font-size: 1rem;
-   font-weight: ${fontWeight.primary};
-   padding: ${spacing.medium};
-   color: ${palette.text};
+   font-weight: ${fontWeight.bolder};
+   padding: ${spacing.small};
+   color: ${palette.textDark};
    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.08);
    border: 1px solid ${({ invalid }) => (invalid ? palette.primaryDark : 'transparent')};
    border-radius: 3px;
@@ -32,6 +32,7 @@ const styles = css`
    }
    ::placeholder {
       color: ${palette.textLight};
+      font-weight: ${fontWeight.primary};
    }
 `;
 
@@ -45,11 +46,5 @@ export const Select = styled.select`
 `;
 
 export const Input = styled.input`
-   ${styles}
-`;
-
-export const Checkbox = styled.input.attrs({
-   type: 'checkbox',
-})`
    ${styles}
 `;
