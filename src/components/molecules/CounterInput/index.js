@@ -24,7 +24,7 @@ export const CounterInput = ({ value, onChange, max, multiline, label, error, ..
          </label>
          <Status>
             {error && <Error>{error}</Error>}
-            <CharLimit warn={charsLeft < WARN_COUNT}>{charsLeft}</CharLimit>
+            <CharLimit warn={charsLeft < WARN_COUNT}>{charsLeft < max ? `${charsLeft}/${max}` : max}</CharLimit>
          </Status>
       </FormGroup>
    );

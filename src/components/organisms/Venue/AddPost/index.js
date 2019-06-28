@@ -15,6 +15,7 @@ const AddPost = ({ venue, createPost }) => {
    const [message, setMessage] = useState('');
    const [loading, setLoading] = useState(false);
    const edit = useCallback(() => setStep(1), [setStep]);
+   const setNormalizedTitle = useCallback(t => setTitle(t.toLowerCase()), [setTitle]);
 
    return (
       <>
@@ -23,19 +24,20 @@ const AddPost = ({ venue, createPost }) => {
             <Step1
                venue={venue}
                title={title}
-               setTitle={setTitle}
+               setTitle={setNormalizedTitle}
                message={message}
                setMessage={setMessage}
                setStep={setStep}
             />
          )}
          {step === 2 && <Step2 venue={venue} title={title} message={message} edit={edit} setStep={setStep} />}
-         {step === 3 && <Step3 edit={edit} setStep={setStep} />}
+         {step === 3 && <Step3 venue={venue} edit={edit} setStep={setStep} />}
          {step === 4 && (
             <Step4
                edit={edit}
                setStep={setStep}
                loading={loading}
+               venue={venue}
                post={() => {
                   setLoading(true);
                   createPost(venue.id, title, message);

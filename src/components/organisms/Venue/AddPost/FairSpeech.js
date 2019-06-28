@@ -2,28 +2,31 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { Heading, Checkbox } from '../../../atoms';
+import { Checkbox } from '../../../atoms';
 import { spacing, palette } from '../../../../style';
+import { Title } from './Title';
 
 const Container = styled.div`
    display: flex;
    flex-direction: row;
+   text-transform: lowercase;
 
-   > div:first-child {
-      min-width: 2rem;
+   > div {
+      margin-right: ${spacing.large};
    }
 
    a {
       display: block;
-      margin-top: ${spacing.xLarge};
-      color: ${palette.textDark};
-      text-decoration: underline;
+      margin-top: ${spacing.large};
+      color: ${palette.textLight};
+      text-decoration: none;
+      cursor: pointer;
    }
 `;
 
-export const FairSpeech = ({ acceptedTerms, toggleTerms }) => (
+export const FairSpeech = ({ houseName, acceptedTerms, toggleTerms }) => (
    <>
-      <Heading>fair speech?</Heading>
+      <Title action="fair speech?" houseName={houseName} />
       <Container>
          <div>
             <Checkbox checked={acceptedTerms} onChange={toggleTerms} />

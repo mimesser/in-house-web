@@ -8,7 +8,7 @@ export const Step2 = ({ venue: { name }, title, message, edit, setStep }) => (
    <StepLayout
       main={
          <>
-            <Title houseName={name} verb="confirm" />
+            <Title houseName={name} action="confirm" />
             <FormGroup readonly>
                <label>title</label>
                <p>{title}</p>

@@ -9,11 +9,10 @@ const StyledButton = styled.button`
    border-radius: 2em;
    border: 1px solid ${palette.primaryLight};
    background-color: ${({ secondary, inverse }) => (secondary || inverse ? palette.white : palette.primaryLight)};
-   color: ${({ secondary, inverse }) => (secondary || inverse ? palette.primaryLight : palette.white)};
-   // TODO: use predefined spacing, override in specific component if needed
+   color: ${({ secondary, inverse }) => (secondary || inverse ? palette.textDark : palette.white)};
    padding: ${spacing.large} ${spacing.xxLarge};
    font-size: ${fontSize.small};
-   font-weight: ${fontWeight.primary};
+   font-weight: ${fontWeight.bolder};
    letter-spacing: ${letterSpacing.primary};
    outline: none;
    ${({ disabled }) => disabled && `opacity: 0.5;`}
