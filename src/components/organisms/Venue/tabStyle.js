@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-import { calcRem, palette, spacing, fontWeight, fontSize } from '../../../style';
+import { calcRem, spacing, fontWeight, fontSize } from '../../../style';
 import { Card, Button } from '../../atoms';
 import { PokeButton } from '../../molecules';
 
@@ -9,7 +9,6 @@ export const CARD_MIN_HEIGHT = calcRem('125px');
 export const TabTitle = styled.div`
    margin: ${spacing.large} 0;
    text-transform: uppercase;
-   color: ${palette.textLight};
 `;
 
 export const ItemTitle = styled.div`

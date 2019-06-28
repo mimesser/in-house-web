@@ -2,14 +2,9 @@ import styled from 'styled-components';
 
 import { calcRem, fontSize, spacing, palette, panelBoxShadow } from '../../../../style';
 import { Button, Heading } from '../../../atoms';
-import { Patent } from '../../../molecules';
 
 export const Main = styled.div`
    padding: ${spacing.large};
-
-   ${Patent} {
-      font-size: ${fontSize.tiny};
-   }
 
    ${Heading} {
       margin-bottom: ${spacing.xLarge};

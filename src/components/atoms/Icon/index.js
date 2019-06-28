@@ -31,3 +31,7 @@ Icon.propTypes = {
    icon: PropTypes.string.isRequired,
    size: PropTypes.number,
 };
+
+Icon.defaultProps = {
+   size: 1,
+};

@@ -5,39 +5,27 @@ import Link from 'next/link';
 import differenceBy from 'lodash/differenceBy';
 
 import { loadMinks, setSelectedMink } from '../../../store/venues';
-import { fontSize, spacing } from '../../../style';
-import { Loader, Card, Flex, Button } from '../../atoms';
-import { Votes } from './Votes';
-import { Patent, Slider } from '../../molecules';
-import { TabLayout, ItemCard } from './tabStyle';
+import { fontSize, palette, spacing, font } from '../../../style';
+import { Loader, Button } from '../../atoms';
+import { Patent } from '../../molecules';
+import { TabLayout, ItemCard, Main, ItemTitle, TabTitle } from './tabStyle';
 import { formatDate } from '../../../utils/format';
 import VoteMink from './VoteMink';
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
+import { ScoreAndVoters } from './ScoreAndVoters';
 
-// TODO: styling in general + "large" support for a top mink
+const questionSize = ({ large }) => !large && `font-size: ${fontSize.primary}`;
 const MinkCard = styled(ItemCard)`
-   p {
-      font-size: ${fontSize.large};
-      margin: ${spacing.small} 0;
-   }
    time {
       font-size: ${fontSize.tiny};
+      font-family: ${font.number};
+      margin-top: ${spacing.large};
    }
-`;
 
-const Tab = styled(TabLayout)`
-   > p {
-      text-transform: uppercase;
-   }
-   ${Patent} {
-      font-size: ${fontSize.tiny};
-   }
-   ${Button} {
-      margin: auto;
-   }
-   ${MinkCard}:last-of-type {
-      margin-bottom: ${spacing.large};
+   ${ItemTitle} {
+      margin-top: ${spacing.tiny};
+      ${questionSize};
    }
 `;
 
@@ -46,12 +34,11 @@ const Mink = ({ mink: { id, created, question, voteCount, voteRating, myVote }, 
 
    return (
       <MinkCard large={large} onClick={open}>
-         <Slider readonly value={myVote ? voteRating : undefined} />
-         <Flex column justifyAround>
+         <ScoreAndVoters voteCount={voteCount} voteRating={myVote && voteRating} sliderSize={large ? 100 : 80} />
+         <Main>
             <time dateTime={created}>{formatDate(created)}</time>
-            <p>{question}</p>
-            <Votes count={voteCount} />
-         </Flex>
+            <ItemTitle>{question}</ItemTitle>
+         </Main>
          <PrivateShareButton id={id} />
       </MinkCard>
    );
@@ -65,22 +52,22 @@ const renderMinks = (minks, newMinks, setSelectedMink) => (
    <>
       {newMinks && newMinks.length > 0 && (
          <>
-            <p>New:</p>
+            <TabTitle>New:</TabTitle>
             {newMinks.map(m => renderMink(m, setSelectedMink))}
          </>
       )}
       {minks.length > 0 && (
          <>
-            <p>
+            <TabTitle>
                Top MINK<sup>©</sup>
                <Patent />
-            </p>
+            </TabTitle>
             {renderMink(minks[0], setSelectedMink, true)}
          </>
       )}
       {minks.length > 1 && (
          <>
-            <p>Runners up:</p>
+            <TabTitle>Runners up:</TabTitle>
             {minks.slice(1).map(m => renderMink(m, setSelectedMink))}
          </>
       )}
@@ -105,12 +92,11 @@ const MinkTab = ({ venue: { id, minks, newMinks }, loadMinks, setSelectedMink })
 
          return (
             <MinkCard preview>
-               <Slider readonly value={myVote ? voteRating : undefined} />
-               <Flex column justifyAround>
+               <ScoreAndVoters voteCount={voteCount} voteRating={myVote && voteRating} sliderSize={80} />
+               <Main>
                   <time dateTime={created}>{formatDate(created)}</time>
-                  <p>{question}</p>
-                  <Votes count={voteCount} />
-               </Flex>
+                  <ItemTitle>{question}</ItemTitle>
+               </Main>
             </MinkCard>
          );
       },
@@ -121,14 +107,14 @@ const MinkTab = ({ venue: { id, minks, newMinks }, loadMinks, setSelectedMink })
    const exceptNew = differenceBy(minks, newMinks, m => m.id);
 
    return (
-      <Tab>
+      <TabLayout>
          {minks ? renderMinks(exceptNew, newMinks, setSelectedMink) : <Loader big />}
          <Link href={`/houses?id=${id}&tab=mink&new`} as={`/houses/${id}/mink/new`} passHref>
-            <Button>Add mink</Button>
+            <Button>new mink</Button>
          </Link>
          <VoteMink />
          <PrivateShare type="mink" renderItem={renderSharePreview} getItemTitle={getTitleForShare} />
-      </Tab>
+      </TabLayout>
    );
 };
 

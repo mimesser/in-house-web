@@ -23,7 +23,16 @@ const linkTextStyle = ({ active, deny }) => {
       return css`
          color: ${palette.textDark};
          font-weight: ${fontWeight.bolder};
-         border-bottom: ${calcRem('2px')} solid;
+         position: relative;
+         :after {
+            content: '';
+            display: block;
+            border-bottom: ${calcRem('2px')} solid;
+            position: absolute;
+            width: 100%;
+            left: 0;
+            bottom: -${calcRem('2px')};
+         }
       `;
    }
    return undefined;
