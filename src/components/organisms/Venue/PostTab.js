@@ -60,7 +60,7 @@ const PostTab = ({ venue: { id, posts }, loadPosts, setSelectedPost }) => {
          const { title, text, voteCount, voteRating } = findPost(id, posts);
 
          return (
-            <ItemCard>
+            <ItemCard preview>
                <ScoreAndVoters voteCount={voteCount} voteRating={voteRating} sliderSize={80} />
                <Main>
                   <ItemTitle>{title}</ItemTitle>

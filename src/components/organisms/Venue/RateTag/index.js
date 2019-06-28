@@ -1,5 +1,4 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
@@ -11,23 +10,9 @@ import {
    rateTag,
 } from '../../../../store/venues';
 import { Modal } from '../../Modal';
-import { Heading } from '../../../atoms';
-import { spacing } from '../../../../style';
 import { RateConfirmation } from '../RateConfirmation';
 import { Slider } from '../../../molecules';
-
-const Layout = styled.div`
-   width: 100%;
-   padding: ${spacing.medium};
-
-   display: flex;
-   flex-direction: column;
-
-   input {
-      width: 7rem;
-      height: 3rem;
-   }
-`;
+import { ItemTitle, Layout, VenueTitle } from '../openCardStyle';
 
 const RateTag = ({ tag, venue: { name: venueName }, rateTag }) => {
    const { name: tagName, userRate } = tag;
@@ -51,9 +36,9 @@ const RateTag = ({ tag, venue: { name: venueName }, rateTag }) => {
 
    return (
       <Layout>
-         <div>{venueName}</div>
-         <Heading>{tagName}</Heading>
-         <Slider value={value} onChange={handleChange} />
+         <VenueTitle>{venueName}</VenueTitle>
+         <ItemTitle keepSpace>{tagName}</ItemTitle>
+         <Slider size={250} value={value} onChange={handleChange} />
       </Layout>
    );
 };
