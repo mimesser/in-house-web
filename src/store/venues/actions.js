@@ -21,7 +21,7 @@ export const actionTypes = {
    SET_SELECTED_TAG: 'SET_SELECTED_TAG',
    RATE_TAG: 'RATE_TAG',
    SHOW_RATE_TAG_CONFIRMATION: 'SHOW_RATE_TAG_CONFIRMATION',
-   UPDATE_TAG_AND_VENUE_RATES: 'UPDATE_TAG_AND_VENUE_RATES',
+   UPDATE_VENUE_RATE: 'UPDATE_VENUE_RATE',
    LOAD_POSTS: 'LOAD_POSTS',
    SET_SELECTED_POST: 'SET_SELECTED_POST',
    SET_VENUE_POSTS: 'SET_VENUE_POSTS',
@@ -149,9 +149,9 @@ export const showRateTagConfirmation = value => ({
    payload: { rateTagConfirmation: value },
 });
 
-export const updateTagAndVenueRates = (tag, venue) => ({
-   type: actionTypes.UPDATE_TAG_AND_VENUE_RATES,
-   payload: { tag, venue },
+export const updateVenueRate = venue => ({
+   type: actionTypes.UPDATE_VENUE_RATE,
+   payload: { venue },
 });
 
 export const loadPosts = () => ({
