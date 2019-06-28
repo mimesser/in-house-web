@@ -31,7 +31,7 @@ export const Layout = styled.div`
 const colors = ({ inverse }) =>
    inverse
       ? css`
-           background-color: ${palette.black};
+           background-color: ${palette.primary};
            color: ${palette.white};
            ${Heading}, ${HeadingTwo} {
               color: ${palette.white};

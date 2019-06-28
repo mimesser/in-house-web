@@ -12,10 +12,9 @@ import {
    selectPrivateShareSending,
    setPrivateShareRecipientError,
 } from '../../../../store/venues';
-import { Heading } from '../../../atoms';
 import { Modal } from '../../Modal';
 import { CounterInput, WinkConfirmation } from '../../../molecules';
-import { SubmitButton } from './style';
+import { SendAnonymous, SubmitButton, Layout, Tip } from './style';
 
 const PrivateShare = ({
    venue: { name: venueName },
@@ -43,9 +42,9 @@ const PrivateShare = ({
    const placeholder = `${venueName} insider? someone wants you to know about — “${getItemTitle(id)}”`;
 
    return (
-      <>
-         <Heading>send anonymous</Heading>
+      <Layout>
          {renderItem(id)}
+         <SendAnonymous>send anonymous</SendAnonymous>
          <CounterInput
             value={recipient}
             onChange={handleRecipientChange}
@@ -53,11 +52,13 @@ const PrivateShare = ({
             placeholder="recipient email/mobile"
             error={recipientError}
          />
+         <Tip>sent via in-house network</Tip>
          <CounterInput value={message} onChange={setMessage} max={60} multiline rows={3} placeholder={placeholder} />
+         <Tip>anonymous message</Tip>
          <SubmitButton visible={recipient.length > 0} loading={sending} onClick={send}>
-            send
+            send to co-insider
          </SubmitButton>
-      </>
+      </Layout>
    );
 };
 

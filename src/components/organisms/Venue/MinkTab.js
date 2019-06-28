@@ -9,14 +9,14 @@ import { fontSize, spacing } from '../../../style';
 import { Loader, Card, Flex, Button } from '../../atoms';
 import { Votes } from './Votes';
 import { Patent, Slider } from '../../molecules';
-import { TabLayout } from './tabStyle';
+import { TabLayout, ItemCard } from './tabStyle';
 import { formatDate } from '../../../utils/format';
 import VoteMink from './VoteMink';
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
 
 // TODO: styling in general + "large" support for a top mink
-const MinkCard = styled(Card)`
+const MinkCard = styled(ItemCard)`
    p {
       font-size: ${fontSize.large};
       margin: ${spacing.small} 0;
@@ -104,7 +104,7 @@ const MinkTab = ({ venue: { id, minks, newMinks }, loadMinks, setSelectedMink })
          const { created, question, voteCount, voteRating, myVote } = findMink(id, minks);
 
          return (
-            <MinkCard>
+            <MinkCard preview>
                <Slider readonly value={myVote ? voteRating : undefined} />
                <Flex column justifyAround>
                   <time dateTime={created}>{formatDate(created)}</time>

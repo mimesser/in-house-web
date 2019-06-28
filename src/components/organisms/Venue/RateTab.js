@@ -2,35 +2,43 @@ import React, { useCallback, useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import { fontSize } from '../../../style';
-import { Loader, Card, Flex } from '../../atoms';
+import { Loader } from '../../atoms';
 import { Slider } from '../../molecules';
 import { setSelectedTag, loadRates } from '../../../store/venues';
 import { Votes } from './Votes';
-import { TabLayout } from './tabStyle';
+import { ItemCard, TabLayout, Main, ItemTitle, TabTitle } from './tabStyle';
 import RateTag from './RateTag';
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
+import { calcRem, spacing } from '../../../style';
 
-const TagCard = styled(Card)`
-   p {
-      font-size: ${fontSize.large};
-      margin: 0;
+const RateCard = styled(ItemCard)`
+   min-height: ${({ preview }) => !preview && calcRem('150px')};
+
+   ${Main} {
+      margin: 0 ${spacing.medium};
+   }
+
+   ${ItemTitle} {
+      margin: ${spacing.small} 0;
+   }
+   ${Votes} {
+      margin: auto 0 ${spacing.small} 0;
    }
 `;
 
-const Tag = ({ name, definitionId, voteCount, voteRating, setSelectedTag }) => {
+const Tag = ({ name, definitionId, userRate, voteCount, voteRating, setSelectedTag }) => {
    const open = useCallback(() => setSelectedTag(definitionId), [definitionId]);
 
    return (
-      <TagCard onClick={open}>
-         <Slider readonly value={voteRating} />
-         <Flex column justifyAround>
-            <p>{name}</p>
+      <RateCard onClick={open}>
+         <Slider size={100} readonly value={userRate && voteRating} />
+         <Main>
+            <ItemTitle>{name}</ItemTitle>
             <Votes count={voteCount} />
-         </Flex>
+         </Main>
          <PrivateShareButton id={definitionId} />
-      </TagCard>
+      </RateCard>
    );
 };
 
@@ -48,16 +56,16 @@ const RateTab = ({ venue: { rates: tags }, setSelectedTag, loadRates }) => {
    }, []);
    const renderSharePreview = useCallback(
       id => {
-         const { name, voteCount, voteRating } = findTag(id, tags);
+         const { name, voteCount, userRate, voteRating } = findTag(id, tags);
 
          return (
-            <TagCard>
-               <Slider readonly value={voteRating} />
-               <Flex column justifyAround>
-                  <p>{name}</p>
+            <RateCard preview>
+               <Slider size={100} readonly value={userRate && voteRating} />
+               <Main>
+                  <ItemTitle>{name}</ItemTitle>
                   <Votes count={voteCount} />
-               </Flex>
-            </TagCard>
+               </Main>
+            </RateCard>
          );
       },
       [tags],
@@ -66,7 +74,7 @@ const RateTab = ({ venue: { rates: tags }, setSelectedTag, loadRates }) => {
 
    return (
       <TabLayout>
-         <p>Industry top 10</p>
+         <TabTitle>Industry top 10</TabTitle>
          {tags ? tags.map(t => <Tag {...t} key={t.definitionId} setSelectedTag={setSelectedTag} />) : <Loader big />}
          <RateTag />
          <PrivateShare type="rate" renderItem={renderSharePreview} getItemTitle={getTitleForShare} />

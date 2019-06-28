@@ -4,6 +4,7 @@ import { CircleSlider } from 'react-circle-slider';
 import styled from 'styled-components';
 import debounce from 'lodash/debounce';
 import isNumber from 'lodash/isNumber';
+import { font } from '../../../style';
 
 const FONT_RATIO = 4.5;
 
@@ -13,6 +14,7 @@ const Container = styled.div`
    width: ${({ size }) => size}px;
    height: ${({ size }) => size}px;
    flex-shrink: 0;
+   font-family: ${font.number};
 
    svg {
       position: absolute;

@@ -1,13 +1,14 @@
 import styled from 'styled-components';
 
 import { Button, Heading } from '../../atoms';
-import { spacing } from '../../../style';
+import { spacing, lineHeight } from '../../../style';
 
 export const SplashLayout = styled.div`
    display: flex;
    flex-direction: column;
    flex: auto;
    padding: 0 ${spacing.medium};
+   line-height: ${lineHeight.medium};
 
    p {
       margin: 0 0 ${spacing.xLarge} 0;

@@ -21,7 +21,8 @@ export const ItemTitle = styled.div`
    font-size: ${fontSize.xLarge};
    font-weight: ${fontWeight.bolder};
    color: ${palette.textDark};
-   margin-bottom: ${spacing.small};
+   // keep space for 'team average'
+   margin-bottom: ${({ keepSpace }) => (keepSpace ? '3.25rem' : spacing.small)};
 `;
 
 export const VoteButton = styled(IconButton)`

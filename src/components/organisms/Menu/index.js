@@ -21,7 +21,9 @@ const CloseButton = styled.button`
 
 // TODO colors
 
-const CloseIcon = styled(Icon)`
+const CloseIcon = styled(Icon).attrs({
+   size: 2,
+})`
    svg {
       stroke: #eeeeee;
       &:hover {

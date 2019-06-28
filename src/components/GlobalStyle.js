@@ -24,7 +24,7 @@ const GlobalStyle = createGlobalStyle`
       font-family: ${font.primary};
       font-weight: ${fontWeight.primary};
       letter-spacing: ${letterSpacing.primary};
-      line-height: ${lineHeight.medium};
+      line-height: ${lineHeight.small};
       color: ${palette.text};
       background-color: ${appBackground};
       min-width: ${breakpoints.xs};

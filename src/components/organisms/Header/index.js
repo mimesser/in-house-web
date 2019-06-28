@@ -36,7 +36,7 @@ export const Header = ({ openMenu }) => (
       </Link>
       {/* TODO: menu */}
       <MenuIconButton>
-         <Icon icon="menu" onClick={openMenu} />
+         <Icon size={2} icon="menu" onClick={openMenu} />
       </MenuIconButton>
    </Layout>
 );

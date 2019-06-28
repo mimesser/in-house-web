@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { calcRem, palette, spacing, fontWeight, fontSize } from '../../../style';
 import { Card, Button } from '../../atoms';
@@ -25,11 +25,19 @@ export const Main = styled.div`
    flex-direction: column;
 `;
 
+const adjustForPreview = ({ preview }) =>
+   preview &&
+   css`
+      border: none;
+      background: none;
+      box-shadow: none;
+   `;
 export const ItemCard = styled(Card)`
    text-transform: lowercase;
    ${ItemText} {
       font-size: ${({ large }) => (large ? fontSize.primary : fontSize.tiny)};
    }
+   ${adjustForPreview};
 `;
 
 export const TabLayout = styled.div`
