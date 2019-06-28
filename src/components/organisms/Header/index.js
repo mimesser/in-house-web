@@ -2,20 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
 
-import { Icon } from '../../atoms/Icon';
-import { calcRem, spacing } from '../../../style';
-
-const imgSize = calcRem('20px');
+import { Icon } from '../../atoms';
+import { spacing } from '../../../style';
 
 const Layout = styled.div`
    display: flex;
    align-items: center;
    justify-content: space-between;
    padding: ${spacing.medium} ${spacing.large};
-
-   img {
-      height: ${imgSize};
-   }
 `;
 
 const MenuIconButton = styled.button`
@@ -31,10 +25,9 @@ export const Header = ({ openMenu }) => (
       <Link href="/">
          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
          <a>
-            <img src="/static/logo.png" alt="logo" />
+            <Icon size={1.5} color="secondaryDark" icon="logo" />
          </a>
       </Link>
-      {/* TODO: menu */}
       <MenuIconButton>
          <Icon size={2} icon="menu" onClick={openMenu} />
       </MenuIconButton>
