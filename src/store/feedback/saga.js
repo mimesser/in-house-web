@@ -18,7 +18,7 @@ export function* postFeedback({ payload: { subject, message, email } }) {
       yield call(api.post, 'email/contactus', {
          subject,
          message,
-         email,
+         userEmail: email,
       });
       yield put(setFeedbackSuccess());
       yield delay(CONFIRMATION_DELAY);

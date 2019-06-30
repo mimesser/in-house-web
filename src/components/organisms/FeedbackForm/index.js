@@ -30,6 +30,16 @@ function FeedbackForm(props) {
 
    const valid = !!subject && !!message;
 
+   /**
+    * TODO: after submission, the form should clear.
+    * Find a better way to do this.
+    * * Maybe put form variables in Redux.
+    * * Maybe have an onClose event on the Modal.
+    */
+   if (props.success && subject) {
+      clear();
+   }
+
    return (
       <Container>
          {/* Must hide Modal on initial render / struggles with SSR */}
@@ -38,7 +48,8 @@ function FeedbackForm(props) {
                open={props.success || props.loading}
                closeModal={clear}
                inverse
-               canClose={!!props.success}
+               canDismiss={false}
+               canClose={false}
                title="Success!"
             >
                {props.loading ? <Loader white /> : <WinkConfirmation />}
