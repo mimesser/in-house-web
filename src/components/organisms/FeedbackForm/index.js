@@ -83,7 +83,7 @@ function FeedbackForm(props) {
          {props.error && <P>{props.error}</P>}
          <ButtonContainer>
             <SubmitButton visible={valid} onClick={submit}>
-               request to list my house
+               send
             </SubmitButton>
          </ButtonContainer>
       </Container>

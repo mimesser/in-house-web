@@ -24,7 +24,6 @@ export function* postFeedback({ payload: { subject, message, email } }) {
       yield delay(CONFIRMATION_DELAY);
       yield put(clearFeedback());
    } catch (e) {
-      console.error({ e });
       yield put(setFeedbackError('Something went wrong...'));
    }
 }
