@@ -5,7 +5,7 @@ import { selectSelectedVenue } from '../selectors';
 import api, { isConflict } from '../../../api';
 import { setChallengeFormData, setMyCorrectAnswer } from '../actions';
 import { getRecord, clearRecord, setRecord } from './minkAnswerRecord';
-import { addInsiderVenue } from '../../aggregate';
+import { addInsiderVenue, selectAcceptedTerms } from '../../aggregate';
 import { reloadVenueRateTags } from './loadVenueRateTags';
 import { reloadVenuePosts } from './loadVenuePosts';
 
@@ -48,7 +48,8 @@ export function* answerTopMink({ payload: { answer } }) {
          }
 
          yield delay(CONFIRMATION_DELAY);
-         yield put(setChallengeFormData(undefined));
+         const acceptedTerms = yield select(selectAcceptedTerms);
+         yield put(setChallengeFormData(acceptedTerms ? undefined : { showTerms: true }));
          yield put(setMyCorrectAnswer(venue.topMink.id, answer));
          return;
       }
