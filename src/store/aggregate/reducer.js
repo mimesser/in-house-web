@@ -24,6 +24,12 @@ export function reducer(state = initialState, action) {
             insiderVenueIds: state.insiderVenueIds.filter(i => i !== id),
          };
       }
+      case actionTypes.TERMS_ACCEPTED: {
+         return {
+            ...state,
+            isTermAccepted: true,
+         };
+      }
 
       default:
          return state;

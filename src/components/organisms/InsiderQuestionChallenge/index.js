@@ -4,25 +4,17 @@ import { createStructuredSelector } from 'reselect';
 import { ArrowRight } from 'styled-icons/evil/ArrowRight';
 
 import { Input, Heading, Loader } from '../../atoms';
-import { Patent } from '../../molecules';
+import { Patent, WinkConfirmation } from '../../molecules';
 import {
    answerTopMink,
    dismissChallengeForm,
    selectSelectedVenue,
    selectInsiderChallengeForm,
 } from '../../../store/venues';
-import {
-   Answer,
-   SubmitButton,
-   ChangeButton,
-   HouseTitle,
-   Question,
-   QuestionForm,
-   ValidationError,
-   Confirmation,
-} from './style';
+import { Answer, SubmitButton, ChangeButton, HouseTitle, Question, QuestionForm, ValidationError } from './style';
 import { Modal } from '../Modal';
 import { normalizeAnswer } from '../Venue/normalizeAnswer';
+import AcceptTerms from './AcceptTerms';
 
 // TODO: move this form to Venue?
 
@@ -67,39 +59,46 @@ const Form = ({ topMink, wrongAnswer, answerTopMink }) => {
    );
 };
 
+const renderSubview = (name, isAnswerCorrect, blocked, topMink, wrongAnswer, answerTopMink, dismissForm, showTerms) =>
+   showTerms ? (
+      <AcceptTerms />
+   ) : (
+      <QuestionForm>
+         <HouseTitle>{name}</HouseTitle>
+         {isAnswerCorrect ? (
+            <WinkConfirmation />
+         ) : (
+            <>
+               <Heading>insider?</Heading>
+               <p>
+                  prove it by this #1 <strong>MINK</strong>
+                  <Patent />
+               </p>
+               {/* TODO error text and styling */}
+               {blocked && <p>Too many attempts. Please come back later</p>}
+               {!blocked && <Form topMink={topMink} wrongAnswer={wrongAnswer} answerTopMink={answerTopMink} />}
+               <ChangeButton onClick={dismissForm}>change this question</ChangeButton>
+            </>
+         )}
+      </QuestionForm>
+   );
+
 const InsiderQuestionChallenge = ({ venue: { name, topMink }, challengeFormData, dismissForm, answerTopMink }) => {
-   const { blocked, isAnswerCorrect } = challengeFormData || {};
+   const { blocked, isAnswerCorrect, showTerms } = challengeFormData || {};
    const wrongAnswer = isAnswerCorrect === false;
    const accessGranted = challengeFormData && challengeFormData.isAnswerCorrect;
 
    return (
       <Modal
-         inverse
+         inverse={!showTerms}
          open={!!challengeFormData}
          closeModal={dismissForm}
-         canDismiss={!accessGranted}
-         canClose={!!challengeFormData && !accessGranted}
+         canDismiss={!accessGranted && !showTerms}
+         canClose={!!challengeFormData && !accessGranted && !showTerms}
       >
-         {challengeFormData ? (
-            <QuestionForm>
-               <HouseTitle>{name}</HouseTitle>
-               {isAnswerCorrect ? (
-                  <Confirmation>,)</Confirmation>
-               ) : (
-                  <>
-                     <Heading>insider?</Heading>
-                     <p>
-                        prove it by this #1 <strong>MINK</strong>
-                        <Patent />
-                     </p>
-                     {/* TODO error text and styling */}
-                     {blocked && <p>Too many attempts. Please come back later</p>}
-                     {!blocked && <Form topMink={topMink} wrongAnswer={wrongAnswer} answerTopMink={answerTopMink} />}
-                     <ChangeButton onClick={dismissForm}>change this question</ChangeButton>
-                  </>
-               )}
-            </QuestionForm>
-         ) : null}
+         {challengeFormData
+            ? renderSubview(name, isAnswerCorrect, blocked, topMink, wrongAnswer, answerTopMink, dismissForm, showTerms)
+            : null}
       </Modal>
    );
 };
