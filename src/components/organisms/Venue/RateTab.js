@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import isNil from 'lodash/isNil';
 
 import { Loader } from '../../atoms';
 import { Slider } from '../../molecules';
@@ -27,12 +28,14 @@ const RateCard = styled(ItemCard)`
    }
 `;
 
+const getTeamRateIfRated = (userRate, voteRating) => (isNil(userRate) ? undefined : voteRating);
+
 const Tag = ({ name, definitionId, userRate, voteCount, voteRating, setSelectedTag }) => {
    const open = useCallback(() => setSelectedTag(definitionId), [definitionId]);
 
    return (
       <RateCard onClick={open}>
-         <Slider size={100} readonly value={userRate && voteRating} />
+         <Slider size={100} readonly value={getTeamRateIfRated(userRate, voteRating)} />
          <Main>
             <ItemTitle>{name}</ItemTitle>
             <Votes count={voteCount} />
@@ -60,7 +63,7 @@ const RateTab = ({ venue: { rates: tags }, setSelectedTag, loadRates }) => {
 
          return (
             <RateCard preview>
-               <Slider size={100} readonly value={userRate && voteRating} />
+               <Slider size={100} readonly value={getTeamRateIfRated(userRate, voteRating)} />
                <Main>
                   <ItemTitle>{name}</ItemTitle>
                   <Votes count={voteCount} />
