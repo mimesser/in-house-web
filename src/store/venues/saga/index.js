@@ -35,6 +35,6 @@ export default function* venuesSaga() {
       takeLeading(actionTypes.CREATE_POST, withErrorReporter(createPost)),
       takeLeading(actionTypes.VOTE_POST, withErrorReporter(votePost)),
       takeLeading(actionTypes.PRIVATE_SHARE, withErrorReporter(privateShare)),
-      takeLatest(aggregateActions.ACCEPT_TERMS, withErrorReporter(acceptTerms)),
+      takeLeading(aggregateActions.ACCEPT_TERMS, withErrorReporter(acceptTerms)),
    ]);
 }

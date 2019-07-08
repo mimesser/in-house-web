@@ -27,7 +27,7 @@ export function reducer(state = initialState, action) {
       case actionTypes.TERMS_ACCEPTED: {
          return {
             ...state,
-            isTermAccepted: true,
+            isTermsAccepted: true,
          };
       }
 

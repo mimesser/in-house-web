@@ -1,11 +1,11 @@
-import { put, delay } from 'redux-saga/effects';
+import { call, put } from 'redux-saga/effects';
 
+import api from '../../../api';
 import { termsAccepted } from '../../aggregate';
 import { setChallengeFormData } from '../actions';
 
 export function* acceptTerms() {
-   // TODO: fork api call
-   yield delay(500);
+   yield call(api.post, 'user/acceptTerms');
    yield put(setChallengeFormData(undefined));
    yield put(termsAccepted());
 }
