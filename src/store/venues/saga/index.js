@@ -1,6 +1,7 @@
 import { all, takeLatest, takeLeading } from 'redux-saga/effects';
 
 import { actionTypes } from '../actions';
+import { actionTypes as aggregateActions } from '../../aggregate';
 import { withErrorReporter } from '../../error/saga';
 import { answerTopMink } from './answerTopMink';
 import { initVenuesPage } from './initVenuesPage';
@@ -16,6 +17,7 @@ import { loadVenueRateTags } from './loadVenueRateTags';
 import { createPost } from './createPost';
 import { votePost } from './votePost';
 import { privateShare } from './privateShare';
+import { acceptTerms } from './acceptTerms';
 
 export default function* venuesSaga() {
    yield all([
@@ -33,5 +35,6 @@ export default function* venuesSaga() {
       takeLeading(actionTypes.CREATE_POST, withErrorReporter(createPost)),
       takeLeading(actionTypes.VOTE_POST, withErrorReporter(votePost)),
       takeLeading(actionTypes.PRIVATE_SHARE, withErrorReporter(privateShare)),
+      takeLeading(aggregateActions.ACCEPT_TERMS, withErrorReporter(acceptTerms)),
    ]);
 }

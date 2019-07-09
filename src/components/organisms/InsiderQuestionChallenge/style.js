@@ -45,11 +45,3 @@ export const ValidationError = styled.span`
    font-size: ${fontSize.small};
    margin-top: ${spacing.tiny};
 `;
-
-export const Confirmation = styled.div`
-   margin: auto;
-   font-size: 12rem;
-   font-family: 'Lato', sans-serif;
-   letter-spacing: 2rem;
-   transform: rotate(90deg);
-`;
