@@ -14,6 +14,7 @@ import { selectIsActiveInsider } from '../selectors';
 import { showInsiderChallenge } from './showInsiderChallenge';
 import { VENUE_TABS } from '../../../../server/venueTabs';
 import api from '../../../api';
+import { selectAcceptedTerms } from '../../aggregate';
 
 const DELAY_BEFORE_CHALLENGE = 500;
 const DELAY_CONFIRMATION = 1000;
@@ -27,7 +28,8 @@ const tabMap = {
 function* showInsiderConfirmation() {
    yield put(setChallengeFormData({ isAnswerCorrect: true }));
    yield delay(DELAY_CONFIRMATION);
-   yield put(setChallengeFormData(undefined));
+   const acceptedTerms = yield select(selectAcceptedTerms);
+   yield put(setChallengeFormData(acceptedTerms ? undefined : { showTerms: true }));
 }
 
 const parseOpenItemRequest = venueId => {
