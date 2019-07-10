@@ -98,6 +98,7 @@
       ">0.2%",
       "not dead",
       "not ie <= 9",
-      "not op_mini all"
+      "not op_mini all",
+      "not samsung 4"
    ]
 }
