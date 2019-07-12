@@ -36,7 +36,7 @@ export const FairSpeech = ({ houseName, acceptedTerms, toggleTerms }) => (
                I acknowledge that I may become personally liable if I state anything beyond an opinion that can be
                construed as defamation, hate-speech, sabotage, harassment, or a falsehood
             </div>
-            <a target="_blank" href={`${process.env.baseUrl}/terms`}>
+            <a target="_blank" href="/terms">
                review terms of service
             </a>
          </div>
