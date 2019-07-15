@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { Slider } from '../../molecules';
+import { Dial } from '../../molecules';
 import { Votes } from './Votes';
 import { spacing, calcRem } from '../../../style';
 
 export const ScoreAndVoters = styled(({ voteRating, voteCount, sliderSize, className }) => (
    <div className={className}>
-      <Slider size={sliderSize} readonly value={voteRating} />
+      <Dial size={sliderSize} readonly value={voteRating} />
       <Votes count={voteCount} />
    </div>
 ))`
@@ -19,7 +19,7 @@ export const ScoreAndVoters = styled(({ voteRating, voteCount, sliderSize, class
       margin: ${spacing.large} auto 0 auto;
    }
 
-   ${Slider} {
+   ${Dial} {
       margin: 0 auto;
    }
 `;

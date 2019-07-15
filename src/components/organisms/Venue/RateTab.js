@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import isNil from 'lodash/isNil';
 
 import { Loader } from '../../atoms';
-import { Slider } from '../../molecules';
+import { Dial } from '../../molecules';
 import { setSelectedTag, loadRates } from '../../../store/venues';
 import { Votes } from './Votes';
 import { ItemCard, TabLayout, Main, ItemTitle, TabTitle } from './tabStyle';
@@ -35,7 +35,7 @@ const Tag = ({ name, definitionId, userRate, voteCount, voteRating, setSelectedT
 
    return (
       <RateCard onClick={open}>
-         <Slider size={100} readonly value={getTeamRateIfRated(userRate, voteRating)} />
+         <Dial size={100} readonly value={getTeamRateIfRated(userRate, voteRating)} />
          <Main>
             <ItemTitle>{name}</ItemTitle>
             <Votes count={voteCount} />
@@ -63,7 +63,7 @@ const RateTab = ({ venue: { rates: tags }, setSelectedTag, loadRates }) => {
 
          return (
             <RateCard preview>
-               <Slider size={100} readonly value={getTeamRateIfRated(userRate, voteRating)} />
+               <Dial size={100} readonly value={getTeamRateIfRated(userRate, voteRating)} />
                <Main>
                   <ItemTitle>{name}</ItemTitle>
                   <Votes count={voteCount} />

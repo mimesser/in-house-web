@@ -56,7 +56,9 @@
         "react/require-default-props": "off",
         "jsx-a11y/label-has-associated-control": "off",
         "no-param-reassign": "off",
-        "no-restricted-syntax": ["error", "ForInStatement", "LabeledStatement", "WithStatement"]
+        "no-restricted-syntax": ["error", "ForInStatement", "LabeledStatement", "WithStatement"],
+        "class-methods-use-this": "off",
+        "no-plusplus": "off"
     },
     "settings": {
         "import/resolver": {
