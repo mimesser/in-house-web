@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import { palette, spacing, fontSize, fontWeight } from '../../../style';
 import { IconButton } from '../../atoms';
-import { Slider } from '../../molecules';
+import { Dial } from '../../molecules';
 
 export const VenueTitle = styled.div`
    text-transform: uppercase;
@@ -53,12 +53,14 @@ export const VoteArea = styled.div`
 
 export const Layout = styled.div`
    padding: 0 ${spacing.large};
-
+   flex: 1;
    display: flex;
    flex-direction: column;
+   overflow: hidden;
 
-   ${Slider} {
-      margin: 0 auto;
+   ${Dial} {
+      margin-top: -150px;
+      margin-left: -150px;
    }
 `;
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Slider } from '../../molecules';
+import { Dial } from '../../molecules';
 import { Layout, VenueTitle, ItemTitle, TeamAverage, ItemDate } from './openCardStyle';
 import { formatDate } from '../../../utils/format';
 
@@ -10,6 +10,6 @@ export const RateConfirmation = ({ venueName, title, date, voteRating }) => (
       {date && <ItemDate>{formatDate(date)}</ItemDate>}
       <ItemTitle>{title}</ItemTitle>
       <TeamAverage>Team average</TeamAverage>
-      <Slider readonly value={voteRating} size={250} />
+      <Dial readonly value={voteRating} size={550} padd={150} />
    </Layout>
 );

@@ -32,7 +32,6 @@
       "polished": "3.3.2",
       "prop-types": "15.7.2",
       "react": "16.8.6",
-      "react-circle-slider": "1.6.2",
       "react-dom": "16.8.6",
       "react-redux": "5.0.7",
       "react-sidebar": "3.0.2",
@@ -73,8 +72,8 @@
       "jsdom": "11.11.0",
       "lint-staged": "8.1.5",
       "nodemon": "1.18.10",
-      "prettier": "1.16.4",
       "opn-cli": "3.1.0",
+      "prettier": "1.16.4",
       "react-test-renderer": "16.0.0",
       "redux-devtools-extension": "2.13.2",
       "redux-mock-store": "1.2.3",
@@ -83,7 +82,7 @@
    },
    "husky": {
       "hooks": {
-         "pre-commit": "npm build && lint-staged"
+         "pre-commit": "npm run build && lint-staged"
       }
    },
    "lint-staged": {

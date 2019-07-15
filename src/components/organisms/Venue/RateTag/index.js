@@ -11,7 +11,7 @@ import {
 } from '../../../../store/venues';
 import { Modal } from '../../Modal';
 import { RateConfirmation } from '../RateConfirmation';
-import { Slider } from '../../../molecules';
+import { Dial } from '../../../molecules';
 import { ItemTitle, Layout, VenueTitle } from '../openCardStyle';
 
 const RateTag = ({ tag, venue: { name: venueName }, rateTag }) => {
@@ -38,7 +38,7 @@ const RateTag = ({ tag, venue: { name: venueName }, rateTag }) => {
       <Layout>
          <VenueTitle>{venueName}</VenueTitle>
          <ItemTitle keepSpace>{tagName}</ItemTitle>
-         <Slider size={250} value={value} onChange={handleChange} />
+         <Dial size={550} padd={150} value={value} onChange={handleChange} />
       </Layout>
    );
 };
