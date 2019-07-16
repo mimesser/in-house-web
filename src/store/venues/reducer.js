@@ -55,16 +55,6 @@ export function reducer(state = initialState, action) {
       case actionTypes.SET_ANSWER_MINK_STATUS: {
          return setSelectedVenueProp(state, action, 'answerMinkStatus');
       }
-      case actionTypes.STORE_NEW_MINK: {
-         if (!state.selectedVenue) {
-            return state;
-         }
-         const {
-            payload: { mink },
-         } = action;
-         const newMinks = [mink, ...(state.selectedVenue.newMinks || [])];
-         return { ...state, selectedVenue: { ...state.selectedVenue, newMinks } };
-      }
       case actionTypes.SET_MY_CORRECT_ANSWER: {
          if (!state.selectedVenue || !state.selectedVenue.minks) {
             return state;
@@ -133,6 +123,9 @@ export function reducer(state = initialState, action) {
       }
       case actionTypes.SET_PRIVATE_SHARE_SENDING: {
          return setSelectedVenueProp(state, action, 'privateShareSending');
+      }
+      case actionTypes.SET_ADDED_MINK_ID: {
+         return setSelectedVenueProp(state, action, 'addedMinkId');
       }
 
       default:
