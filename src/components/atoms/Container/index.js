@@ -1,7 +1,15 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { breakpoints, spacing } from '../../../style';
+
+const height = ({ fullHeight }) =>
+   fullHeight &&
+   css`
+      min-height: 100vh;
+      // noinspection CssInvalidPropertyValue
+      min-height: -webkit-fill-available;
+   `;
 
 export const Container = styled.div`
    display: flex;
@@ -30,8 +38,5 @@ export const Container = styled.div`
       return spacing.large;
    }};
 
-   min-height: ${props => {
-      if (props.fullHeight) return '100vh';
-      return undefined;
-   }};
+   ${height};
 `;
