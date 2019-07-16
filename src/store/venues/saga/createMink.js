@@ -2,7 +2,7 @@ import { call, put } from 'redux-saga/effects';
 import Router from 'next/router';
 
 import api from '../../../api';
-import { storeNewMink } from '../actions';
+import { setAddedMinkId } from '../actions';
 import { reloadVenueMinks } from './loadVenueMinks';
 import { reloadInsiderVenueIds } from './reloadInsiderVenueIds';
 
@@ -15,7 +15,7 @@ export function* createMink({ payload: { id, question, answer } }) {
    if (becameTop) {
       yield reloadInsiderVenueIds();
    } else {
-      yield put(storeNewMink(created));
+      yield put(setAddedMinkId(created.id));
    }
 
    Router.push(`/houses?id=${id}&tab=mink`, `/houses/${id}/mink`, { shallow: true });

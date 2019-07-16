@@ -11,7 +11,7 @@ export const actionTypes = {
    LOAD_MINKS: 'LOAD_MINKS',
    SET_VENUE_MINKS: 'SET_VENUE_MINKS',
    CREATE_MINK: 'CREATE_MINK',
-   STORE_NEW_MINK: 'STORE_NEW_MINK',
+   SET_ADDED_MINK_ID: 'SET_ADDED_MINK_ID',
    SET_SELECTED_MINK: 'SET_SELECTED_MINK',
    VOTE_MINK: 'VOTE_MINK',
    SHOW_VOTE_MINK_CONFIRMATION: 'SHOW_VOTE_MINK_CONFIRMATION',
@@ -91,9 +91,9 @@ export const createMink = (id, question, answer) => ({
    payload: { id, question, answer },
 });
 
-export const storeNewMink = mink => ({
-   type: actionTypes.STORE_NEW_MINK,
-   payload: { mink },
+export const setAddedMinkId = addedMinkId => ({
+   type: actionTypes.SET_ADDED_MINK_ID,
+   payload: { addedMinkId },
 });
 
 export const setSelectedMink = selectedMinkId => ({
