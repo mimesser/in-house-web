@@ -59,8 +59,8 @@ export const Layout = styled.div`
    overflow: hidden;
 
    ${Dial} {
-      margin-top: -150px;
-      margin-left: -150px;
+      margin-top: -100px;
+      margin-left: -100px;
    }
 `;
 

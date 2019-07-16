@@ -38,7 +38,7 @@ const RateTag = ({ tag, venue: { name: venueName }, rateTag }) => {
       <Layout>
          <VenueTitle>{venueName}</VenueTitle>
          <ItemTitle keepSpace>{tagName}</ItemTitle>
-         <Dial size={550} padd={150} value={value} onChange={handleChange} />
+         <Dial size={450} padd={100} value={value} onChange={handleChange} />
       </Layout>
    );
 };

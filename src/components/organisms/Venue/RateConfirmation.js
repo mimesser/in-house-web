@@ -10,6 +10,6 @@ export const RateConfirmation = ({ venueName, title, date, voteRating }) => (
       {date && <ItemDate>{formatDate(date)}</ItemDate>}
       <ItemTitle>{title}</ItemTitle>
       <TeamAverage>Team average</TeamAverage>
-      <Dial readonly value={voteRating} size={550} padd={150} />
+      <Dial readonly value={voteRating} size={450} padd={100} />
    </Layout>
 );
