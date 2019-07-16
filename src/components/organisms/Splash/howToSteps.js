@@ -121,7 +121,7 @@ export const Step3 = () => {
 export const Step4 = () => {
    return (
       <>
-         <Heading>#4: insiders only</Heading>
+         <Heading>#4: allow insiders only</Heading>
          <P>anyone can add a new MINK that they think will better identify insiders</P>
          <P>your team votes</P>
          <P>
