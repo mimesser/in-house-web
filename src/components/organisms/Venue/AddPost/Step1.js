@@ -13,13 +13,7 @@ export const Step1 = ({ venue: { id, name }, title, setTitle, message, setMessag
       main={
          <>
             <Title houseName={name} action="new post" />
-            <CounterInput
-               value={title}
-               onChange={setTitle}
-               placeholder="title"
-               autocomplete="off"
-               max={MAX_TITLE_LENGTH}
-            />
+            <CounterInput value={title} onChange={setTitle} placeholder="title" max={MAX_TITLE_LENGTH} />
             <CounterInput
                value={message}
                onChange={setMessage}
