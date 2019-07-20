@@ -5,6 +5,8 @@ const auth = require('koa-basic-auth');
 
 const port = parseInt(process.env.PORT || process.env.port, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
+const isInProdEnvironment = process.env.MODE === 'production';
+const isInStagingEnvironment = process.env.MODE === 'staging';
 const app = nextApp({ dir: './src', dev });
 const handle = app.getRequestHandler();
 
@@ -13,8 +15,9 @@ app.prepare()
       const server = new Koa();
       const router = new Router();
 
-      // TODO: environment config + use this for staging only
-      server.use(auth({ name: 'Radu', pass: 'Radu' }));
+      if (isInStagingEnvironment) {
+         server.use(auth({ name: 'Radu', pass: 'Radu' }));
+      }
 
       router.get('/houses/:id', async ctx => {
          const { req, res, params } = ctx;

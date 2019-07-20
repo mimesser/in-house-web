@@ -8,6 +8,7 @@ import { ArrowRight } from 'styled-icons/evil/ArrowRight';
 import { Heading, Button, Strong } from '../../atoms';
 import { Patent as BasePatent } from '../../molecules';
 import { fontSize, spacing, fontWeight, palette } from '../../../style';
+import { settings } from '../../../settings';
 
 const Patent = styled(BasePatent)`
    font-size: ${fontSize.small};
@@ -131,17 +132,28 @@ export const Step4 = () => {
    );
 };
 
-// TODO: adjust links and styling in master branch
 const ContinueOptions = styled.div`
    margin: auto;
    display: flex;
    flex-wrap: wrap;
    justify-content: space-around;
-   // ${Button} {
-   //    padding: ${spacing.medium};
-   //    flex-shrink: 0;
-   // }
 `;
+
+const ContinueButton = () => {
+   if (settings.preLaunchMode) {
+      return (
+         <Link href="/notify">
+            <Button>get notified when live</Button>
+         </Link>
+      );
+   }
+   return (
+      <Link href="/houses">
+         <Button>see beta houses</Button>
+      </Link>
+   );
+};
+
 export const Step5 = () => {
    return (
       <>
@@ -152,15 +164,7 @@ export const Step5 = () => {
          <P>rate everything democratically</P>
          <Strong>empower consensus</Strong>
          <ContinueOptions>
-            {/* <Link href="/notify"> */}
-            {/*   <Button>notify me when live</Button> */}
-            {/* </Link> */}
-            {/* <Link href="/feedback"> */}
-            {/*   <Button>request to list my house</Button> */}
-            {/* </Link> */}
-            <Link href="/houses">
-               <Button>see beta houses</Button>
-            </Link>
+            <ContinueButton />
          </ContinueOptions>
       </>
    );

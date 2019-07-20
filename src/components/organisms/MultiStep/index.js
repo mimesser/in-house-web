@@ -70,8 +70,6 @@ export function MultiStep({ steps }) {
       }
    };
 
-   const Step = steps[selectedStep];
-
    return (
       <Container full fullVertical onClick={nextStep}>
          <ReactSwipe className="carousel" style={style} swipeOptions={swipeOptions} ref={swipeRef}>
