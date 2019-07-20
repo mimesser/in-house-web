@@ -17,6 +17,7 @@ const staging = {
 
 const production = {
    apiUrl: 'https://inhousedev.azurewebsites.net/api',
+   preLaunchMode: true,
 };
 
 const settingsMap = {

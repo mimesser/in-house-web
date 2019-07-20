@@ -4,6 +4,7 @@ import Link from 'next/link';
 
 import { Icon } from '../../atoms';
 import { spacing } from '../../../style';
+import { settings } from '../../../settings';
 
 const Layout = styled.div`
    display: flex;
@@ -28,8 +29,10 @@ export const Header = ({ openMenu }) => (
             <Icon size={1.5} color="secondaryDark" icon="logo" />
          </a>
       </Link>
-      <MenuIconButton>
-         <Icon size={2} icon="menu" onClick={openMenu} />
-      </MenuIconButton>
+      {!settings.preLaunchMode && (
+         <MenuIconButton>
+            <Icon size={2} icon="menu" onClick={openMenu} />
+         </MenuIconButton>
+      )}
    </Layout>
 );
