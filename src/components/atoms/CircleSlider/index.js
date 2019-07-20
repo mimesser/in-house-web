@@ -232,14 +232,17 @@ class CircleSlider extends React.PureComponent {
    };
 
    handleTouchMove = event => {
-      const { targetTouches } = event;
-      const currentTouch = targetTouches.item(targetTouches.length - 1);
+      const { targetTouches, changedTouches } = event;
+      const currentTouch =
+         targetTouches.item(targetTouches.length - 1) ||
+         (changedTouches && changedTouches.item(changedTouches.length - 1));
       if (currentTouch) {
          this.updateAngle(currentTouch);
       }
    };
 
    handleTouchEnd = event => {
+      event.preventDefault();
       this.handleTouchMove(event);
       this.cleanupEventListeners();
       this.reportChange();
