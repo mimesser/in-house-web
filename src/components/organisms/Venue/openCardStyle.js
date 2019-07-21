@@ -20,7 +20,7 @@ export const ItemTitle = styled.div`
    text-transform: lowercase;
    font-size: ${fontSize.xLarge};
    font-weight: ${fontWeight.bolder};
-   color: ${palette.textDark};
+   color: ${({ inverse }) => (inverse ? palette.textLight : palette.textDark)};
    // keep space for 'team average'
    margin-bottom: ${({ keepSpace }) => (keepSpace ? '3.25rem' : spacing.small)};
 `;
