@@ -1,4 +1,4 @@
-import { actionTypes } from '../actions';
+import { actionTypes } from './actions';
 
 export const initialState = {
    error: false,

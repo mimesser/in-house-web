@@ -2,21 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { ifProp, palette } from '../../../utils';
+import { palette } from '../../../style';
 
-const fontSize = ({ width, height }) => {
-   const size = width || height;
-   return size ? `${size / 16}rem` : '1.25em';
-};
+const getColor = ({ color }) => (color ? palette[color] : 'currentColor');
 
-export const Wrapper = styled.span`
-   display: block;
-   font-size: ${fontSize};
-   color: ${ifProp('palette', palette({ grayscale: 0 }, 1), 'currentcolor')};
-   width: 2rem;
-   height: 2rem;
-   margin: 0.25rem;
+const Wrapper = styled.span`
+   display: inline-block;
+   width: ${({ size }) => size}rem;
+   height: ${({ size }) => size}rem;
    box-sizing: border-box;
+   color: ${getColor};
 
    & > svg {
       width: 100%;
@@ -29,20 +24,14 @@ export const Wrapper = styled.span`
 export const Icon = ({ icon, ...props }) => {
    // eslint-disable-next-line global-require,import/no-dynamic-require
    const svg = require(`!raw-loader!./icons/${icon}.svg`);
-   return <Wrapper {...props} dangerouslySetInnerHTML={{ __html: svg }} />;
+   return <Wrapper {...props} dangerouslySetInnerHTML={{ __html: svg.default || svg }} />;
 };
 
 Icon.propTypes = {
    icon: PropTypes.string.isRequired,
-   width: PropTypes.number,
-   height: PropTypes.number,
-   palette: PropTypes.string,
-   reverse: PropTypes.bool,
+   size: PropTypes.number,
 };
 
 Icon.defaultProps = {
-   width: 16,
-   height: 16,
-   palette: '',
-   reverse: false,
+   size: 1,
 };

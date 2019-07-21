@@ -17,3 +17,8 @@ export const selectInsiderVenueIds = createSelector(
    selectAggregate,
    ({ insiderVenueIds }) => insiderVenueIds,
 );
+
+export const selectAcceptedTerms = createSelector(
+   selectAggregate,
+   ({ isTermsAccepted }) => isTermsAccepted,
+);

@@ -8,9 +8,11 @@ import { selectSelectedVenue } from '../../../store/venues';
 import { Loader } from '../../atoms';
 import { Banner } from './Banner';
 import Navbar from './Navbar';
-import { RateTab } from './RateTab';
-import { PostTab } from './PostTab';
+import RateTab from './RateTab';
+import PostTab from './PostTab';
 import MinkTab from './MinkTab';
+import AddMink from './AddMink';
+import AddPost from './AddPost';
 
 const tabMap = {
    rate: RateTab,
@@ -23,6 +25,7 @@ const knownTabs = Object.keys(tabMap);
 const Venue = ({ venue, router }) => {
    const {
       query: { tab = 'rate' },
+      asPath,
    } = router;
 
    useEffect(() => {
@@ -33,6 +36,14 @@ const Venue = ({ venue, router }) => {
 
    if (!venue) {
       return <Loader big />;
+   }
+
+   if (asPath.endsWith('mink/new')) {
+      return <AddMink />;
+   }
+
+   if (asPath.endsWith('post/new')) {
+      return <AddPost />;
    }
 
    const Tab = tabMap[tab] || RateTab;

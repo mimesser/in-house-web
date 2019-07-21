@@ -31,9 +31,10 @@ function VenueListComponent({ venues }) {
                         onClick={() => showVenue(venue)}
                      >
                         <div className="card">
-                           <div className="container-image">
-                              <img className="image" src={venue.venueInfo.imageUrl} alt="random" />
-                           </div>
+                           <div
+                              className="container-image"
+                              style={{ backgroundImage: `url(${venue.venueInfo.imageUrl})` }}
+                           />
                            <div className="venue-details">
                               <div className="industry">{venue.industry && venue.industry.name}</div>
                               <div className="venue-name">{venue.name}</div>
@@ -74,17 +75,12 @@ function VenueListComponent({ venues }) {
                   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12);
                }
                .container-image {
-                  background-color: #e5e5e5;
                   height: 92px;
-                  width: 92px;
                   min-width: 92px;
                   max-width: 92px;
-                  overflow: hidden;
-               }
-               .image {
-                  height: 100%;
-                  width: 100%;
-                  object-fit: stretch;
+                  background-position: center;
+                  background-size: cover;
+                  background-repeat: no-repeat;
                }
                .venue-details {
                   display: flex;

@@ -9,18 +9,15 @@ const Index = () => (
    <Page>
       <Container>
          <LandingLayout>
-            <Heading>
-               change
-               <br />
-               everything?
-            </Heading>
+            <Heading>change everything?</Heading>
+
+            <p>when everyone in your organization can vote safely, equally & anonymously</p>
+
+            <p>on everything</p>
 
             <p>
-               when everyone has a safe, equal & anonymous voice at the table, the entirety of your organization will
-               change forever
+               <Strong>how will your life change?</Strong>
             </p>
-
-            <Strong>how will your world change?</Strong>
             <Link href="/how-it-works">
                <Button>see how it works</Button>
             </Link>

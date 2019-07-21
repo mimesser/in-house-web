@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { calcRem, panelBoxShadow } from '../../../theme';
+import { calcRem, panelBoxShadow, palette } from '../../../style';
 
-export const Card = styled.div`
+export const Card = styled.section`
    display: flex;
    border-radius: ${calcRem('2px')};
-   background-color: ${({ theme: { palette } }) => palette.white};
+   background-color: ${palette.white};
    ${panelBoxShadow};
+   cursor: pointer;
 `;
