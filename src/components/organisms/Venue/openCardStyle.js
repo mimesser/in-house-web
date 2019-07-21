@@ -66,6 +66,6 @@ export const Layout = styled.div`
 
 export const TeamAverage = styled.div`
    font-size: ${fontSize.large};
-   color: ${palette.textDark};
+   color: ${palette.textLight};
    margin-bottom: ${spacing.large};
 `;
