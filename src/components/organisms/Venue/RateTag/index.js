@@ -12,13 +12,15 @@ import {
 import { Modal } from '../../Modal';
 import { RateConfirmation } from '../RateConfirmation';
 import { Dial } from '../../../molecules';
-import { ItemTitle, Layout, VenueTitle } from '../openCardStyle';
+import { ItemTitle, Layout, VenueTitle, SubTitle } from '../openCardStyle';
 
-const RateTag = ({ tag, venue: { name: venueName }, rateTag }) => {
+const RateTag = ({ tag, venue: { name: venueName }, rateTag, setRated, rated }) => {
    const { name: tagName, userRate } = tag;
    const [value, setValue] = useState(userRate);
+
    useEffect(() => {
       setValue(userRate);
+      return () => setRated(false);
    }, [tag]);
    const handleChange = useCallback(
       newValue => {
@@ -28,6 +30,7 @@ const RateTag = ({ tag, venue: { name: venueName }, rateTag }) => {
          setValue(newValue);
 
          if (newValue !== '') {
+            setRated(true);
             rateTag(newValue);
          }
       },
@@ -36,9 +39,12 @@ const RateTag = ({ tag, venue: { name: venueName }, rateTag }) => {
 
    return (
       <Layout>
-         <VenueTitle>{venueName}</VenueTitle>
-         <ItemTitle keepSpace>{tagName}</ItemTitle>
-         <Dial size={450} padd={100} value={value} onChange={handleChange} />
+         <VenueTitle inverse>{venueName}</VenueTitle>
+         <ItemTitle keepSpace={!rated} inverse>
+            {tagName}
+         </ItemTitle>
+         {rated && <SubTitle>you rated</SubTitle>}
+         <Dial size={450} padd={100} value={value} onChange={handleChange} inverse={rated} />
       </Layout>
    );
 };
@@ -46,13 +52,15 @@ const RateTag = ({ tag, venue: { name: venueName }, rateTag }) => {
 const ModalWrapper = props => {
    const { tag, confirmation, setSelectedTag, venue } = props;
    const close = useCallback(() => setSelectedTag(undefined), []);
+   const [rated, setRated] = useState(false);
 
    const showRateTag = tag && !confirmation;
    const showConfirmation = tag && confirmation;
+   const inverse = showConfirmation || rated;
 
    return (
-      <Modal open={!!tag} closeModal={close} inverse={showConfirmation}>
-         {showRateTag ? <RateTag {...props} /> : null}
+      <Modal open={!!tag} closeModal={close} inverse={inverse}>
+         {showRateTag ? <RateTag {...props} rated={rated} setRated={setRated} /> : null}
          {showConfirmation ? <RateConfirmation venueName={venue.name} title={tag.name} {...confirmation} /> : null}
       </Modal>
    );

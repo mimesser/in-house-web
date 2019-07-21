@@ -64,7 +64,7 @@ export const Layout = styled.div`
    }
 `;
 
-export const TeamAverage = styled.div`
+export const SubTitle = styled.div`
    font-size: ${fontSize.large};
    color: ${palette.textLight};
    margin-bottom: ${spacing.large};
