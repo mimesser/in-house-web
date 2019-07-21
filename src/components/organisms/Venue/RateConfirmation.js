@@ -8,7 +8,7 @@ export const RateConfirmation = ({ venueName, title, date, voteRating, voteCount
    <Layout>
       <VenueTitle>{venueName}</VenueTitle>
       {date && <ItemDate>{formatDate(date)}</ItemDate>}
-      <ItemTitle>{title}</ItemTitle>
+      <ItemTitle inverse>{title}</ItemTitle>
       <TeamAverage>Team average</TeamAverage>
       <Dial readonly value={voteRating} size={450} padd={100} inverse voteCount={voteCount} />
    </Layout>
