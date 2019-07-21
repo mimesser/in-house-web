@@ -7,7 +7,7 @@
       "local": "cross-env MODE=local npm run start:watch",
       "start:watch": "npm run build && nodemon server/index.js",
       "clean-next": "rimraf ./src/.next",
-      "build": "npm run clean-next && next build ./src",
+      "build": "next build ./src",
       "start": "cross-env NODE_ENV=production node server/index.js",
       "start:production": "cross-env NODE_ENV=production MODE=production node server/index.js",
       "postinstall": "npm run build",
