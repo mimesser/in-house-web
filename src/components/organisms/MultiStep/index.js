@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import ReactSwipe from 'react-swipe';
 
 import { Container } from '../../atoms';
-import { calcRem, spacing } from '../../../theme';
+import { calcRem, spacing, palette } from '../../../style';
 
 const navSize = calcRem('10px');
 const NavButton = styled.button`
-   background: ${({ selected, theme: { palette } }) => (selected ? palette.grayscale[0] : palette.grayscale[2])};
+   background: ${({ selected }) => (selected ? palette.secondaryDark : palette.secondary)};
    border-radius: 50%;
    width: ${navSize};
    height: ${navSize};
@@ -20,9 +20,8 @@ const NavButton = styled.button`
       margin-right: ${navSize};
    }
 `;
-// Adds additional bottom padding to cater for mobile hiding bottom part when navbar is active.
 const Nav = styled.nav`
-   margin: auto auto ${calcRem('48px')} auto;
+   margin: auto auto ${spacing.xxLarge} auto;
 `;
 
 const Swipeable = styled.div`
@@ -70,8 +69,6 @@ export function MultiStep({ steps }) {
          swipeRef.current.next();
       }
    };
-
-   const Step = steps[selectedStep];
 
    return (
       <Container full fullVertical onClick={nextStep}>

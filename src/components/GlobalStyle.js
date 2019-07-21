@@ -2,12 +2,16 @@ import React from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { normalize } from 'styled-normalize';
 
-import { BASE_FONT_SIZE, breakpoints, lineHeight, fontWeight } from '../theme';
-import { key, font } from '../utils';
-
-const background = ({ theme: { appBackground } }) => appBackground;
-// TODO: decide if key util is better than syntax above (no autocomplete, silent failure ...)
-const color = key('textColors.primary');
+import {
+   BASE_FONT_SIZE,
+   breakpoints,
+   lineHeight,
+   fontWeight,
+   font,
+   appBackground,
+   palette,
+   letterSpacing,
+} from '../style';
 
 const GlobalStyle = createGlobalStyle`
    ${normalize}
@@ -17,11 +21,12 @@ const GlobalStyle = createGlobalStyle`
 
    body {
       font-size: ${BASE_FONT_SIZE};
-      font-family: ${font('primary')};
+      font-family: ${font.primary};
       font-weight: ${fontWeight.primary};
-      line-height: ${lineHeight.medium};
-      color: ${color};
-      background-color: ${background};
+      letter-spacing: ${letterSpacing.primary};
+      line-height: ${lineHeight.small};
+      color: ${palette.text};
+      background-color: ${appBackground};
       min-width: ${breakpoints.xs};
    }
 
@@ -31,8 +36,10 @@ const GlobalStyle = createGlobalStyle`
    h4,
    h5,
    h6 {
-      font-family: ${font('emphasis')};
-      font-weight: normal;
+      font-family: ${font.heading};
+      font-weight: ${fontWeight.bold};
+      color: ${palette.textDark};
+      letter-spacing: ${letterSpacing.large};
    }
 `;
 

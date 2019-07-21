@@ -3,12 +3,7 @@ import axios from 'axios';
 import { Page } from '../components/templates';
 import { Container, Heading, Input } from '../components/atoms';
 import { NotifyLayout, SubmitButton } from '../components/organisms';
-
-const isEmailValid = email => {
-   // eslint-disable-next-line
-   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-   return re.test(String(email).toLowerCase());
-};
+import { isEmailValid } from '../utils/validation';
 
 const Notify = () => {
    const [submitted, setSubmitted] = useState(false);
@@ -18,6 +13,7 @@ const Notify = () => {
    async function submit() {
       setLoading(true);
       try {
+         // TODO: use api for this as well?
          await axios.post(
             'https://inhouseprelaunch.azurewebsites.net/api/emails?code=m7WcoGFdsWppZXKb8DvbMKWiRDbBfhtgFlFCyqertPPuYdY8YJgCCg==',
             { email },

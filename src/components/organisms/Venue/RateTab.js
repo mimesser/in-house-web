@@ -1,51 +1,96 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
+import isNil from 'lodash/isNil';
 
-import { fontSize, spacing } from '../../../theme';
-import { Loader, Card, Flex } from '../../atoms';
+import { Loader } from '../../atoms';
+import { Dial } from '../../molecules';
+import { setSelectedTag, loadRates } from '../../../store/venues';
 import { Votes } from './Votes';
-import { PokeButton } from '../../molecules';
-import { TabLayout } from './commonStyle';
+import { ItemCard, TabLayout, Main, ItemTitle, TabTitle } from './tabStyle';
+import RateTag from './RateTag';
+import PrivateShare from './PrivateShare';
+import PrivateShareButton from './PrivateShareButton';
+import { calcRem, spacing } from '../../../style';
 
-const TagCard = styled(Card)`
-   p {
-      font-size: ${fontSize.large};
-      margin: 0;
+const RateCard = styled(ItemCard)`
+   min-height: ${({ preview }) => !preview && calcRem('150px')};
+
+   ${Main} {
+      margin: 0 ${spacing.medium};
+   }
+
+   ${ItemTitle} {
+      margin: ${spacing.small} 0;
+   }
+   ${Votes} {
+      margin: auto 0 ${spacing.small} 0;
    }
 `;
 
-// TODO: this placeholder for dial control
-const Score = styled.div`
-   flex-shrink: 0;
-   width: 6rem;
-   height: 6rem;
-   border: 4px solid;
-   border-radius: 50%;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   margin-right: ${spacing.medium};
-`;
+const getTeamRateIfRated = (userRate, voteRating) => (isNil(userRate) ? undefined : voteRating);
 
-const renderTags = rateTags =>
-   rateTags ? (
-      rateTags.map(({ name, definitionId, voteCount, voteRating }) => (
-         <TagCard key={definitionId}>
-            <Score>{typeof voteRating === 'number' ? voteRating : 'Please rate'}</Score>
-            <Flex column justifyAround>
-               <p>{name}</p>
-               <Votes count={voteCount} />
-            </Flex>
-            <PokeButton onClick={() => console.log('share')} />
-         </TagCard>
-      ))
-   ) : (
-      <Loader big />
+const Tag = ({ name, definitionId, userRate, voteCount, voteRating, setSelectedTag }) => {
+   const open = useCallback(() => setSelectedTag(definitionId), [definitionId]);
+
+   return (
+      <RateCard onClick={open}>
+         <Dial size={100} readonly value={getTeamRateIfRated(userRate, voteRating)} />
+         <Main>
+            <ItemTitle>{name}</ItemTitle>
+            <Votes count={voteCount} />
+         </Main>
+         <PrivateShareButton id={definitionId} />
+      </RateCard>
    );
+};
 
-export const RateTab = ({ venue: { rates: rateTags } }) => (
-   <TabLayout>
-      <p>Industry top 10</p>
-      {renderTags(rateTags)}
-   </TabLayout>
-);
+const findTag = (id, tags) => {
+   const tag = tags.find(t => t.definitionId === id);
+   if (!tag) {
+      throw new Error(`Can't find tag ${id}`);
+   }
+   return tag;
+};
+
+const RateTab = ({ venue: { rates: tags }, setSelectedTag, loadRates }) => {
+   useEffect(() => {
+      loadRates();
+   }, []);
+   const renderSharePreview = useCallback(
+      id => {
+         const { name, voteCount, userRate, voteRating } = findTag(id, tags);
+
+         return (
+            <RateCard preview>
+               <Dial size={100} readonly value={getTeamRateIfRated(userRate, voteRating)} />
+               <Main>
+                  <ItemTitle>{name}</ItemTitle>
+                  <Votes count={voteCount} />
+               </Main>
+            </RateCard>
+         );
+      },
+      [tags],
+   );
+   const getTitleForShare = useCallback(id => findTag(id, tags).name, [tags]);
+
+   return (
+      <TabLayout>
+         <TabTitle>Industry top 10</TabTitle>
+         {tags ? tags.map(t => <Tag {...t} key={t.definitionId} setSelectedTag={setSelectedTag} />) : <Loader big />}
+         <RateTag />
+         <PrivateShare type="rate" renderItem={renderSharePreview} getItemTitle={getTitleForShare} />
+      </TabLayout>
+   );
+};
+
+const mapDispatch = {
+   setSelectedTag,
+   loadRates,
+};
+
+export default connect(
+   undefined,
+   mapDispatch,
+)(RateTab);

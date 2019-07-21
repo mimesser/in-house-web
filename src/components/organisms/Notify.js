@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { Button, Heading } from '../atoms';
-import { spacing, fontSize } from '../../theme';
+import { spacing, fontSize } from '../../style';
 
 export const SubmitButton = styled(Button)`
    opacity: ${({ visible }) => (visible ? 1 : 0)};

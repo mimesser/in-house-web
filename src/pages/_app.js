@@ -6,14 +6,24 @@ import withRedux from 'next-redux-wrapper';
 import withReduxSaga from 'next-redux-saga';
 
 import createStore from '../store';
-import theme from '../theme';
+import { theme } from '../style';
+import { settings } from '../settings';
 import GlobalStyle from '../components/GlobalStyle';
-import { loadAggregateData } from '../store/aggregate/actions';
+import { loadAggregateData } from '../store/aggregate';
 
 class MyApp extends App {
    static async getInitialProps({ Component, ctx }) {
       const pageProps = Component.getInitialProps ? await Component.getInitialProps({ ctx }) : {};
-      return { pageProps };
+      return { pageProps, isServer: ctx.isServer, pathname: ctx.pathname };
+   }
+
+   componentDidMount() {
+      if (settings.preLaunchMode) {
+         return;
+      }
+
+      const { isServer, pathname } = this.props;
+      this.props.store.dispatch(loadAggregateData(isServer, pathname));
    }
 
    render() {

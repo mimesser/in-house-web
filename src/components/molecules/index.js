@@ -1,4 +1,6 @@
+export { CounterInput } from './CounterInput';
 export { IconInput } from './IconInput';
-export { Radio, RadioGroup } from './Radio';
+export { Dial } from './Dial';
 export { Patent } from './Patent';
 export { PokeButton } from './PokeButton';
+export { WinkConfirmation } from './WinkConfirmation';

@@ -2,26 +2,37 @@ import React from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
 
-import { calcRem, spacing } from '../../../theme';
+import { Icon } from '../../atoms';
+import { spacing } from '../../../style';
+import { settings } from '../../../settings';
 
-const imgSize = calcRem('20px');
 const Layout = styled.div`
    display: flex;
-   padding: ${imgSize} ${spacing.large};
-
-   img {
-      height: ${imgSize};
-   }
+   align-items: center;
+   justify-content: space-between;
+   padding: ${spacing.medium} ${spacing.large};
 `;
 
-export const Header = () => (
+const MenuIconButton = styled.button`
+   outline: none;
+   border: none;
+   background: none;
+   padding: 0;
+   cursor: pointer;
+`;
+
+export const Header = ({ openMenu }) => (
    <Layout>
       <Link href="/">
          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
          <a>
-            <img src="/static/logo.png" alt="logo" />
+            <Icon size={1.5} color="secondaryDark" icon="logo" />
          </a>
       </Link>
-      {/* TODO: menu */}
+      {!settings.preLaunchMode && (
+         <MenuIconButton>
+            <Icon size={2} icon="menu" onClick={openMenu} />
+         </MenuIconButton>
+      )}
    </Layout>
 );
