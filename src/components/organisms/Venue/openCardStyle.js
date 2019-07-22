@@ -20,7 +20,7 @@ export const ItemTitle = styled.div`
    text-transform: lowercase;
    font-size: ${fontSize.xLarge};
    font-weight: ${fontWeight.bolder};
-   color: ${palette.textDark};
+   color: ${({ inverse }) => (inverse ? palette.textLight : palette.textDark)};
    // keep space for 'team average'
    margin-bottom: ${({ keepSpace }) => (keepSpace ? '3.25rem' : spacing.small)};
 `;
@@ -64,8 +64,8 @@ export const Layout = styled.div`
    }
 `;
 
-export const TeamAverage = styled.div`
+export const SubTitle = styled.div`
    font-size: ${fontSize.large};
-   color: ${palette.textDark};
+   color: ${palette.textLight};
    margin-bottom: ${spacing.large};
 `;

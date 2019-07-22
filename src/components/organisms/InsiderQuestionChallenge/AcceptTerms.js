@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import Link from 'next/link';
+import Terms from '../Terms';
 
 import { Heading, Checkbox } from '../../atoms';
 import { font, fontWeight, fontSize, spacing, palette } from '../../../style';
@@ -18,19 +18,29 @@ const Layout = styled.div`
       margin-top: ${spacing.xxLarge};
       display: flex;
       align-items: center;
-
-      a {
-         font-family: ${font.heading};
-         font-size: ${fontSize.large};
-         text-decoration: none;
-         color: ${palette.textDark};
-         margin-left: ${spacing.large};
-      }
+   }
+`;
+const LinkText = styled.button`
+   display: inline-block;
+   margin-left: ${spacing.large};
+   color: ${palette.textDark};
+   margin-left: ${spacing.large};
+   border: none;
+   outline: none;
+   font: inherit;
+   font-family: ${font.heading};
+   font-size: ${fontSize.large};
+   background: none;
+   padding: 0;
+   cursor: pointer;
+   &:hover {
+      text-decoration: underline;
    }
 `;
 
 const AcceptTerms = ({ acceptTerms }) => {
    const [accepted, setAccepted] = useState(false);
+   const [termsModal, showTermsModal] = useState(false);
    const handleChange = () => {
       setAccepted(true);
       acceptTerms();
@@ -38,14 +48,12 @@ const AcceptTerms = ({ acceptTerms }) => {
 
    return (
       <Layout>
+         <Terms open={termsModal} close={() => showTermsModal(false)} modal />
          <Heading>i agree to be fair</Heading>
          <div>to engage respectfully and offer the same objectivity and decency that i would hope for in return</div>
          <div>
             <Checkbox onChange={handleChange} checked={accepted} />
-            <Link href="/terms">
-               {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-               <a target="_blank">i agree to terms of use</a>
-            </Link>
+            <LinkText onClick={() => showTermsModal(true)}>i agree to terms of use</LinkText>
          </div>
       </Layout>
    );
