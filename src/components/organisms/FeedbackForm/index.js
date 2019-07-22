@@ -71,6 +71,7 @@ function FeedbackForm(props) {
          </P>
          <CounterInput
             multiline
+            disabled={!subject}
             value={message}
             onChange={setMessage}
             max={500}
@@ -78,7 +79,13 @@ function FeedbackForm(props) {
             rows={4}
          />
          <P>
-            <Input value={email} onChange={handleEmailChange} placeholder="email (if you want a reply)" type="email" />
+            <Input
+               value={email}
+               disabled={!subject || !message}
+               onChange={handleEmailChange}
+               placeholder="email (if you want a reply)"
+               type="email"
+            />
          </P>
          {props.error && <P>{props.error}</P>}
          <ButtonContainer>
