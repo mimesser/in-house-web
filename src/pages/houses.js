@@ -13,6 +13,11 @@ class Houses extends Component {
       return this.props.router.query.id;
    }
 
+   get isNewMinkOrPostPath() {
+      const { asPath } = this.props.router;
+      return asPath.endsWith('mink/new') || asPath.endsWith('post/new');
+   }
+
    componentDidMount() {
       this.props.initVenuesPage(this.houseId);
    }
@@ -26,9 +31,10 @@ class Houses extends Component {
    render() {
       // TODO split and render separately?
       const View = this.houseId ? Venue : VenueList;
+      const defaultHeader = !this.houseId || this.isNewMinkOrPostPath;
 
       return (
-         <Page title="Houses" defaultHeader={!this.houseId}>
+         <Page title="Houses" defaultHeader={defaultHeader}>
             <Container fullVertical={this.houseId}>
                <View />
             </Container>
