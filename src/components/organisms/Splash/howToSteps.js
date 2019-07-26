@@ -137,6 +137,10 @@ const ContinueOptions = styled.div`
    display: flex;
    flex-wrap: wrap;
    justify-content: space-around;
+   ${Button} {
+      margin: ${spacing.tiny};
+      min-width: 10rem;
+   }
 `;
 
 const ContinueButton = () => {
@@ -148,9 +152,14 @@ const ContinueButton = () => {
       );
    }
    return (
-      <Link href="/houses">
-         <Button>see beta houses</Button>
-      </Link>
+      <>
+         <Link href="/houses">
+            <Button>see beta houses</Button>
+         </Link>
+         <Button tag="a" href="https://trial.in-house.com">
+            test drive
+         </Button>
+      </>
    );
 };
 

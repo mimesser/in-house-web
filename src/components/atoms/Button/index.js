@@ -15,12 +15,14 @@ const StyledButton = styled.button`
    font-weight: ${fontWeight.bolder};
    letter-spacing: ${letterSpacing.primary};
    outline: none;
+   text-decoration: none;
+   text-align: center;
    ${({ disabled }) => disabled && `opacity: 0.5;`}
 `;
 
-export const Button = styled(({ secondary, big, inverse, loading, children, ...props }) => {
+export const Button = styled(({ secondary, big, inverse, loading, children, tag, ...props }) => {
    return (
-      <StyledButton secondary={secondary} big={big} inverse={inverse} {...props}>
+      <StyledButton as={tag} secondary={secondary} big={big} inverse={inverse} {...props}>
          {loading ? <Loader small white /> : children}
       </StyledButton>
    );
