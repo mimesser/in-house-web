@@ -3,20 +3,27 @@ import getConfig from 'next/config';
 // This way settings resolved at runtime and not at build time
 const { publicRuntimeConfig: { MODE } = {} } = getConfig() || {};
 
+const TRIAL_SUB_DOMAIN = 'trial';
+const trialApp = process.browser && window.location.host.startsWith(TRIAL_SUB_DOMAIN);
+
 const local = {
-   apiUrl: 'http://localhost:5080/api',
+   mainAppApi: 'http://localhost:5080/api',
+   trialAppApi: 'http://localhost:5080/api',
 };
 
 const localStaging = {
-   apiUrl: 'https://inhousedev.azurewebsites.net/api',
+   mainAppApi: 'https://inhousedev.azurewebsites.net/api',
+   trialAppApi: 'https://inhousedev.azurewebsites.net/api',
 };
 
 const staging = {
-   apiUrl: 'https://inhousedev.azurewebsites.net/api',
+   mainAppApi: 'https://inhousedev.azurewebsites.net/api',
+   trialAppApi: 'https://inhousedev.azurewebsites.net/api',
 };
 
 const production = {
-   apiUrl: 'https://inhousedev.azurewebsites.net/api',
+   mainAppApi: 'https://inhousedev.azurewebsites.net/api',
+   trialAppApi: 'https://inhousedev.azurewebsites.net/api',
    preLaunchMode: true,
 };
 
@@ -27,4 +34,14 @@ const settingsMap = {
    production,
 };
 
-export const settings = settingsMap[MODE] || console.error('Environment not supplied!') || {};
+const settings = settingsMap[MODE] || console.error('Environment not supplied!') || {};
+
+settings.trialApp = trialApp;
+Object.defineProperty(settings, 'apiUrl', {
+   get() {
+      return trialApp ? this.trialAppApi : this.mainAppApi;
+   },
+   configurable: false,
+});
+
+export { settings };
