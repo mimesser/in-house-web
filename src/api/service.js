@@ -19,3 +19,8 @@ export function setAuthorization(token) {
    localStorage.setItem(TOKEN_KEY, token);
    api.defaults.headers.Authorization = `token ${token}`;
 }
+
+export function clearAuthorization() {
+   localStorage.removeItem(TOKEN_KEY);
+   delete api.defaults.headers.Authorization;
+}

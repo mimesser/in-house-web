@@ -156,7 +156,7 @@ const ContinueButton = () => {
          <Link href="/houses">
             <Button>see beta houses</Button>
          </Link>
-         <Button tag="a" href={settings.trialApp}>
+         <Button tag="a" href={settings.demoAppUrl}>
             test drive
          </Button>
       </>

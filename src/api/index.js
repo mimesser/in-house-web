@@ -1,2 +1,2 @@
-export { api as default, setAuthorization } from './service';
+export { api as default, setAuthorization, clearAuthorization } from './service';
 export * from './responseHelpers';
