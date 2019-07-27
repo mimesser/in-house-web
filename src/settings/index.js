@@ -30,8 +30,8 @@ const staging = {
 };
 
 const production = {
-   mainAppApi: 'https://inhousedev.azurewebsites.net/api',
-   demoAppApi: 'https://inhousedev.azurewebsites.net/api',
+   mainAppApi: 'https://in-house-backend.azurewebsites.net/api',
+   demoAppApi: 'https://in-house-demo-backend.azurewebsites.net/api',
    demoAppUrl: 'https://demo.in-house.com',
    preLaunchMode: true,
 };
