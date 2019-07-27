@@ -3,7 +3,7 @@ import getConfig from 'next/config';
 // This way settings resolved at runtime and not at build time
 const { publicRuntimeConfig: { MODE } = {} } = getConfig() || {};
 
-const TRIAL_SUB_DOMAIN = 'trial';
+const TRIAL_SUB_DOMAIN = 'demo';
 const trialApp = process.browser && window.location.host.startsWith(TRIAL_SUB_DOMAIN);
 
 const local = {
