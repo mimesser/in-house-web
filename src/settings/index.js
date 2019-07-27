@@ -12,18 +12,21 @@ const local = {
 };
 
 const localStaging = {
-   mainAppApi: 'https://inhousedev.azurewebsites.net/api',
-   trialAppApi: 'https://inhousedev.azurewebsites.net/api',
+   mainAppApi: 'https://in-house-staging-admin-backend.azurewebsites.net/api',
+   trialAppApi: 'https://in-house-staging-demo-backend.azurewebsites.net/api',
+   trialApp: 'https://demo-staging.in-house.com',
 };
 
 const staging = {
-   mainAppApi: 'https://inhousedev.azurewebsites.net/api',
-   trialAppApi: 'https://inhousedev.azurewebsites.net/api',
+   mainAppApi: 'https://in-house-staging-admin-backend.azurewebsites.net/api',
+   trialAppApi: 'https://in-house-staging-demo-backend.azurewebsites.net/api',
+   trialApp: 'https://demo-staging.in-house.com',
 };
 
 const production = {
    mainAppApi: 'https://inhousedev.azurewebsites.net/api',
    trialAppApi: 'https://inhousedev.azurewebsites.net/api',
+   trialApp: 'https://demo.in-house.com',
    preLaunchMode: true,
 };
 
