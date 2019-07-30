@@ -2,7 +2,6 @@ import React, { useCallback, useState } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { Header } from '../../Header';
 import { createMink, selectSelectedVenue } from '../../../../store/venues';
 import { Step1 } from './Step1';
 import { Step2 } from './Step2';
@@ -20,7 +19,6 @@ const AddMink = ({ venue, createMink }) => {
 
    return (
       <>
-         <Header />
          {step === 1 && (
             <Step1
                venue={venue}

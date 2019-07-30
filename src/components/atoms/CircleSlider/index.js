@@ -259,7 +259,16 @@ class CircleSlider extends React.PureComponent {
    };
 
    render() {
-      const { size, padd, progressColor, knobColor, circleColor, readonly, className, children } = this.props;
+      const { size, padd, readonly, className, children, inverse } = this.props;
+
+      let { knobColor, circleColor, progressColor } = this.props;
+
+      if (inverse) {
+         knobColor = theme.colors.secondaryLight;
+         circleColor = theme.colors.primaryLight;
+         progressColor = theme.colors.secondaryLight;
+      }
+
       const { x, y } = this.getPointPosition();
       const center = this.getCenter();
       const animating = !!this.animationInterval;
