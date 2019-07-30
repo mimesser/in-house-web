@@ -1,4 +1,5 @@
 import { all, delay, takeLatest, put, call } from 'redux-saga/effects';
+import Router from 'next/router';
 
 import api from '../../api';
 import { isEmailValid } from '../../utils/validation';
@@ -23,6 +24,7 @@ export function* postFeedback({ payload: { subject, message, email } }) {
       yield put(setFeedbackSuccess());
       yield delay(CONFIRMATION_DELAY);
       yield put(clearFeedback());
+      Router.back();
    } catch (e) {
       yield put(setFeedbackError('Something went wrong...'));
    }

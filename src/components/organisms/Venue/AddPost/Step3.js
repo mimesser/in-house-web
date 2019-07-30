@@ -10,7 +10,7 @@ export const Step3 = ({ venue: { name }, edit, setStep }) => (
       commands={
          <>
             <Button secondary onClick={edit}>
-               edit
+               back
             </Button>
             <Button disabled>next</Button>
          </>

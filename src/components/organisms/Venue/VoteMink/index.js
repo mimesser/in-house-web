@@ -122,7 +122,13 @@ const ModalWrapper = props => {
    const close = useCallback(() => setSelectedMink(undefined), []);
 
    return (
-      <Modal open={!!mink} closeModal={close} canClose={!confirmation} canDismiss={!confirmation}>
+      <Modal
+         open={!!mink}
+         closeModal={close}
+         canClose={!confirmation}
+         canDismiss={!confirmation}
+         inverse={mink && confirmation}
+      >
          {mink && !confirmation ? <VoteMink {...props} /> : null}
          {mink && confirmation ? (
             <RateConfirmation venueName={venue.name} title={mink.question} {...confirmation} />

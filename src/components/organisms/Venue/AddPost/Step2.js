@@ -21,7 +21,7 @@ export const Step2 = ({ venue: { name }, title, message, edit, setStep }) => (
       commands={
          <>
             <Button secondary onClick={edit}>
-               edit
+               back
             </Button>
             <Button onClick={() => setStep(3)}>next</Button>
          </>

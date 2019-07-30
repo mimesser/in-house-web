@@ -1,7 +1,7 @@
 import { all, put, takeLatest, select, take, call, delay } from 'redux-saga/effects';
 import Router from 'next/router';
 
-import api, { setAuthorization } from '../../api';
+import api, { isUnauthorized, setAuthorization, clearAuthorization } from '../../api';
 
 import { actionTypes, loadAggregateDataSuccess } from './actions';
 import { selectReady } from './selectors';
@@ -11,8 +11,18 @@ const REDIRECT_FORMER_INSIDER_FROM = ['/', '/how-it-works'];
 const REDIRECT_DELAY = 600;
 
 function* loadAggregateDataSaga({ meta: { isServer, pathname } }) {
-   const res = yield call(api.get, 'aggregate');
-   const { data } = res;
+   let response;
+   try {
+      response = yield call(api.get, 'aggregate');
+   } catch (e) {
+      if (isUnauthorized(e)) {
+         clearAuthorization();
+         response = yield call(api.get, 'aggregate');
+      } else {
+         throw e;
+      }
+   }
+   const { data } = response;
    setAuthorization(data.userId);
    const pathNotChanged = pathname === Router.router.pathname;
    if (isServer && pathNotChanged && REDIRECT_FORMER_INSIDER_FROM.includes(pathname) && data.isFormerInsider) {

@@ -50,6 +50,7 @@ const ModalWrapper = props => {
          canClose={!confirmation}
          canDismiss={!confirmation}
          title={venue && venue.name}
+         inverse={post && confirmation}
       >
          {post && !confirmation ? <VotePost {...props} /> : null}
          {post && confirmation ? (
