@@ -4,3 +4,4 @@ coverage/
 .idea/
 .bin/
 yarn-error.log
+build/

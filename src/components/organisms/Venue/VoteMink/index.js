@@ -1,4 +1,5 @@
 import React, { useCallback, useState, useEffect } from 'react';
+import Router from 'next/router';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -119,7 +120,10 @@ const VoteMink = ({
 
 const ModalWrapper = props => {
    const { mink, confirmation, setSelectedMink, venue } = props;
-   const close = useCallback(() => setSelectedMink(undefined), []);
+   const close = useCallback(() => {
+      setSelectedMink(undefined);
+      Router.push('/houses', '/houses', { shallow: true });
+   }, []);
 
    return (
       <Modal
