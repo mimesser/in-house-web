@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
-import { Heading, Button, Loader } from '../../atoms';
+import { Heading, Input, Dropdown, Loader } from '../../atoms';
 import { WinkConfirmation, CounterInput } from '../../molecules';
 import { Modal } from '../Modal';
-import { Select, Textarea, Input } from '../../atoms/Input';
 import { ButtonContainer, P, Container, SubmitButton } from './style';
-import { postFeedback, clearFeedback } from '../../../store/feedback/actions';
+import { postFeedback, clearFeedback } from '../../../store/feedback';
 
 const subjectOptions = ['request new beta house', 'technical issue', 'general feedback', 'other issue'];
 
@@ -58,7 +57,7 @@ function FeedbackForm(props) {
          <Heading>let us know</Heading>
          <P>we keep everything confidenial</P>
          <P>
-            <Select value={subject} onChange={handleSubjectChange}>
+            <Dropdown value={subject} onChange={handleSubjectChange}>
                <option disabled value="">
                   subject
                </option>
@@ -67,7 +66,7 @@ function FeedbackForm(props) {
                      {subjectOption}
                   </option>
                ))}
-            </Select>
+            </Dropdown>
          </P>
          <CounterInput
             multiline
