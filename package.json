@@ -3,7 +3,7 @@
    "main": "server/index.js",
    "scripts": {
       "lint": "eslint --ext .js src server/index.js",
-      "local-staging": "cross-env MODE=localStaging npm run start:watch",
+      "local-dev": "cross-env MODE=dev npm run start:watch",
       "local": "cross-env MODE=local npm run start:watch",
       "start:watch": "next dev ./src && nodemon server/index.js",
       "clean": "rimraf ./build",
