@@ -52,11 +52,13 @@ const style = {
    },
 };
 
-export function MultiStep({ steps }) {
-   const [selectedStep, setSelectedStep] = useState(0);
+export function MultiStep({ steps, startStep = 0 }) {
+   const [selectedStep, setSelectedStep] = useState(startStep);
+
    const swipeRef = useRef(null);
    const swipeOptions = useMemo(
       () => ({
+         startSlide: startStep,
          continuous: false,
          callback: index => setSelectedStep(index),
       }),

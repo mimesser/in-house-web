@@ -15,12 +15,13 @@ export const Banner = ({
       insidersCount,
       rating,
    },
+   redirectPath,
 }) => {
    const ratingParts = typeof rating === 'number' && rating.toFixed(1).split('.');
 
    return (
       <Header imageUrl={imageUrl}>
-         <Link href="/houses">
+         <Link href={redirectPath}>
             <Back>
                <ArrowLeft size={32} />
             </Back>
