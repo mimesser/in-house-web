@@ -28,6 +28,7 @@ export const themeColors = {
    secondaryLight: appColors.grayLight,
 
    text: appColors.dimLight,
+   textUltraLight: appColors.gray,
    textLight: appColors.grayDark,
    textDark: appColors.dim,
    textInverse: constColors.white,

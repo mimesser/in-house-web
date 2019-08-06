@@ -39,9 +39,8 @@ export const ChangeButton = styled(Button)`
    margin: auto auto 0 0;
 `;
 
-// TODO: should be part of InputFiled
+// TODO: should be part of InputFiled?
 export const ValidationError = styled.span`
-   color: ${palette.primaryDark};
    font-size: ${fontSize.small};
    margin-top: ${spacing.tiny};
 `;

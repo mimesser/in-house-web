@@ -1,6 +1,6 @@
 import React from 'react';
 import { createGlobalStyle } from 'styled-components';
-import { normalize } from 'styled-normalize';
+import { normalize } from 'polished';
 
 import {
    BASE_FONT_SIZE,
@@ -14,7 +14,7 @@ import {
 } from '../style';
 
 const GlobalStyle = createGlobalStyle`
-   ${normalize}
+   ${normalize()}
    * {
       box-sizing: border-box;
    }
