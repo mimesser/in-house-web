@@ -6,7 +6,6 @@ const auth = require('koa-basic-auth');
 const port = parseInt(process.env.PORT || process.env.port, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
 const isInProdEnvironment = process.env.MODE === 'production';
-const isInStagingEnvironment = process.env.MODE === 'staging';
 const app = nextApp({ dir: './src', dev });
 const handle = app.getRequestHandler();
 
@@ -15,7 +14,7 @@ app.prepare()
       const server = new Koa();
       const router = new Router();
 
-      if (isInStagingEnvironment) {
+      if (!isInProdEnvironment) {
          server.use(auth({ name: 'Radu', pass: 'Radu' }));
       }
 
