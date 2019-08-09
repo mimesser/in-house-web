@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { PokeButton } from '../../molecules';
-import { setPrivateShareItemId } from '../../../store/venues';
-import { selectIsDemoing } from '../../../store/demo';
+import { setPrivateShareItemId, selectSelectedVenue } from '../../../store/venues';
+import { DEMO_VENUE_ID } from '../../../store/demo/data';
 
-const Share = ({ id, openModal, isDemoing }) => {
+const Share = ({ id, openModal, venue }) => {
    const handleClick = useCallback(
       e => {
          e.stopPropagation();
@@ -14,11 +14,11 @@ const Share = ({ id, openModal, isDemoing }) => {
       },
       [id],
    );
-   return !isDemoing && <PokeButton onClick={handleClick} />;
+   return !venue.id === DEMO_VENUE_ID && <PokeButton onClick={handleClick} />;
 };
 
 const mapState = createStructuredSelector({
-   isDemoing: selectIsDemoing,
+   venue: selectSelectedVenue,
 });
 
 const mapDispatch = {

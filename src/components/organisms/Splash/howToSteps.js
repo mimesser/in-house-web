@@ -9,7 +9,7 @@ import { Heading, Button, Strong } from '../../atoms';
 import { Patent as BasePatent } from '../../molecules';
 import { fontSize, spacing, fontWeight, palette } from '../../../style';
 import { settings } from '../../../settings';
-import { VENUE_ID as DEMO_VENUE_ID } from '../../../store/demo/data';
+import { DEMO_VENUE_ID } from '../../../store/demo/data';
 
 const Patent = styled(BasePatent)`
    font-size: ${fontSize.small};
