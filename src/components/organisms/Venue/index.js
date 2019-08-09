@@ -5,7 +5,6 @@ import { withRouter } from 'next/router';
 
 import InsiderQuestionChallenge from '../InsiderQuestionChallenge';
 import { selectSelectedVenue } from '../../../store/venues';
-import { selectIsDemoing } from '../../../store/demo';
 import { Loader } from '../../atoms';
 import { Banner } from './Banner';
 import Navbar from './Navbar';
@@ -23,7 +22,7 @@ const tabMap = {
 
 const knownTabs = Object.keys(tabMap);
 
-const Venue = ({ venue, router, isDemoing }) => {
+const Venue = ({ venue, router }) => {
    const {
       query: { tab = 'rate' },
       asPath,
@@ -48,11 +47,10 @@ const Venue = ({ venue, router, isDemoing }) => {
    }
 
    const Tab = tabMap[tab] || RateTab;
-   const redirectPath = isDemoing ? '/how-it-works?step=4' : '/houses';
 
    return (
       <>
-         <Banner venue={venue} redirectPath={redirectPath} />
+         <Banner venue={venue} />
          <Navbar id={venue.id} selected={tab} />
          <Tab venue={venue} />
          <InsiderQuestionChallenge />
@@ -62,7 +60,6 @@ const Venue = ({ venue, router, isDemoing }) => {
 
 const mapStateToProps = createStructuredSelector({
    venue: selectSelectedVenue,
-   isDemoing: selectIsDemoing,
 });
 
 const mapDispatch = {};

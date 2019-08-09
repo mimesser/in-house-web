@@ -17,7 +17,7 @@ import {
    downvoteMink,
    tryAnswerMink,
 } from '../../../../store/venues';
-import { selectIsDemoing } from '../../../../store/demo';
+import { DEMO_VENUE_ID } from '../../../../store/demo/data';
 import { Modal } from '../../Modal';
 import { Loader, Icon } from '../../../atoms';
 import { IconInput } from '../../../molecules';
@@ -120,11 +120,11 @@ const VoteMink = ({
 };
 
 const ModalWrapper = props => {
-   const { mink, confirmation, setSelectedMink, venue, isDemoing } = props;
+   const { mink, confirmation, setSelectedMink, venue } = props;
    const close = useCallback(() => {
       setSelectedMink(undefined);
-      const redirectPath = isDemoing ? '/how-it-works?step=4' : '/houses';
-      Router.push(redirectPath, redirectPath, { shallow: true });
+      const href = venue.id === DEMO_VENUE_ID ? '/how-it-works?step=5' : '/houses';
+      Router.push(href, href, { shallow: true });
    }, []);
 
    return (
@@ -148,7 +148,6 @@ const mapState = createStructuredSelector({
    mink: selectSelectedMink,
    confirmation: selectVoteMinkConfirmation,
    answerStatus: selectAnswerMinkStatus,
-   isDemoing: selectIsDemoing,
 });
 const mapDispatch = {
    setSelectedMink,

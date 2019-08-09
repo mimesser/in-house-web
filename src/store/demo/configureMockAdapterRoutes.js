@@ -1,40 +1,48 @@
 import maxBy from 'lodash/maxBy';
+import orderBy from 'lodash/orderBy';
 
-import { VENUE_ID } from './data';
-import { createDemoMink, createDemoPost, voteDemoPost, voteDemoMink, rateDemoTag } from './actions';
-import {
-   selectDemoData,
-   selectDemoVenue,
-   selectDemoPosts,
-   selectDemoAggregate,
-   selectDemoMinks,
-   selectDemoRateTags,
-} from './selectors';
+import { DEMO_VENUE_ID as VENUE_ID } from './data';
+import { selectAggregate } from '../aggregate';
+import { selectSelectedVenue, setVenueMinks, setVenuePosts, setVenueRates } from '../venues';
+
+const mockVoteCalculate = (vote, total) => {
+   const random = Math.random();
+   const change = vote === 1 ? random : -random;
+   const result = total + change;
+   return parseFloat(result.toFixed(2));
+};
+
+const mockRateCalculate = (rate, total) => {
+   const random = Math.random();
+   const change = rate > 4 ? random : -random;
+   const result = total + change;
+   return parseFloat(result.toFixed(2));
+};
 
 export default function configureMockAdapterRoutes(mock, store) {
-   // TODO: translate from server implementation..
-   const computeVoteRating = (value, total, count) => {
-      const result = total + value / count;
-      return parseFloat(result.toFixed(2));
-   };
-
    const configureRateTagRoute = tag => {
       mock.onPost(`venues/${VENUE_ID}/rateTag/${tag.definitionId}/rate`).reply(config => {
          const { rate } = JSON.parse(config.data);
-         const venue = selectDemoVenue(store.getState());
-         const voteCount = tag.voteCount + 1;
-         const voteRating = computeVoteRating(rate, tag.voteRating, voteCount);
          const ratedTag = {
             ...tag,
-            voteCount,
-            voteRating,
+            voteCount: tag.voteCount + 1,
+            voteRating: mockRateCalculate(rate, tag.voteRating),
             userRate: rate,
          };
-         store.dispatch(rateDemoTag(ratedTag));
+
+         const venue = selectSelectedVenue(store.getState());
+         const updatedRates = venue.rates.map(tag => (tag.definitionId === ratedTag.definitionId ? ratedTag : tag));
+         store.dispatch(setVenueRates(updatedRates));
+
+         const updatedVenue = {
+            ...venue,
+            votesCount: venue.votesCount + 1,
+            rating: mockRateCalculate(rate, venue.rating),
+         };
          return [
             200,
             {
-               venue,
+               venue: updatedVenue,
                venueRateTag: ratedTag,
             },
          ];
@@ -44,16 +52,16 @@ export default function configureMockAdapterRoutes(mock, store) {
    const configureMinkRoute = mink => {
       mock.onPost(`venues/${VENUE_ID}/mink/${mink.id}/rate`).reply(config => {
          const { vote } = JSON.parse(config.data);
-         const voteCount = mink.voteCount + 1;
-         const voteRating = computeVoteRating(vote, mink.voteRating, voteCount);
          const votedMink = {
             ...mink,
             myCorrectAnswer: mink.answer,
             myVote: vote,
-            voteCount,
-            voteRating,
+            voteCount: mink.voteCount + 1,
+            voteRating: mockVoteCalculate(vote, mink.voteRating),
          };
-         store.dispatch(voteDemoMink(votedMink));
+         const { minks } = selectSelectedVenue(store.getState());
+         const updatedMinks = minks.map(mink => (mink.id === votedMink.id ? votedMink : mink));
+         store.dispatch(setVenueMinks(updatedMinks));
          return [200, votedMink];
       });
 
@@ -66,53 +74,55 @@ export default function configureMockAdapterRoutes(mock, store) {
    const configurePostRoute = post => {
       mock.onPost(`venues/${VENUE_ID}/feedback/${post.id}/vote`).reply(config => {
          const { vote } = JSON.parse(config.data);
-         const voteCount = post.voteCount + 1;
-         const voteRating = computeVoteRating(vote, post.voteRating, voteCount);
          const votedPost = {
             ...post,
-            voteCount,
-            voteRating,
+            voteCount: post.voteCount + 1,
+            voteRating: mockVoteCalculate(vote, post.voteRating),
          };
-         store.dispatch(voteDemoPost(votedPost));
+
+         const { posts } = selectSelectedVenue(store.getState());
+         const updatedPosts = posts.map(post => (post.id === votedPost.id ? votedPost : post));
+         store.dispatch(setVenuePosts(updatedPosts));
          return [200, votedPost];
       });
    };
 
-   mock.onGet('/aggregate').reply(config => {
-      const aggregate = selectDemoAggregate(store.getState());
+   mock.onGet('aggregate').reply(config => {
+      const aggregate = selectAggregate(store.getState());
       return [200, aggregate];
    });
-   mock.onGet('venues').reply(config => {
-      const venue = selectDemoVenue(store.getState());
-      return [200, [venue]];
-   });
+
    mock.onGet(`/venues/${VENUE_ID}/minks`).reply(config => {
-      const minks = selectDemoMinks(store.getState());
+      const { minks } = selectSelectedVenue(store.getState());
       return [200, { minks, totalCount: minks.length }];
    });
-   mock.onGet(`/Venues/${VENUE_ID}/rateTags`).reply(config => {
-      const rateTags = selectDemoRateTags(store.getState());
-      return [200, rateTags];
+
+   mock.onGet(`/venues/${VENUE_ID}/rateTags`).reply(config => {
+      const { rates } = selectSelectedVenue(store.getState());
+      return [200, rates];
    });
+
    mock.onGet(`/venues/${VENUE_ID}/feedback?OrderBy=VoteRating`).reply(config => {
-      const posts = selectDemoPosts(store.getState());
-      return [200, { feedback: posts, totalCount: posts.length }];
+      const { posts } = selectSelectedVenue(store.getState());
+      const orderedPosts = orderBy(posts, ['voteRating'], ['desc']);
+      return [200, { feedback: orderedPosts, totalCount: orderedPosts.length }];
    });
+
    mock.onGet(`venues/${VENUE_ID}/topmink`).reply(config => {
-      const minks = selectDemoMinks(store.getState());
+      const { minks } = selectSelectedVenue(store.getState());
       const topMink = maxBy(minks, mink => mink.voteRating);
       return [200, topMink];
    });
-   mock.onPost('/user/acceptTerms').reply(config => {
-      return [204, {}];
-   });
+
+   mock.onPost('/user/acceptTerms').reply(config => [200, {}]);
+
    mock.onPost(`/venues/${VENUE_ID}/feedback`).reply(config => {
       const { title, text } = JSON.parse(config.data);
       const date = new Date();
-      const posts = selectDemoPosts(store.getState());
-      const maxId = maxBy(posts, post => post.id);
+      const { posts } = selectSelectedVenue(store.getState());
+      const { id } = maxBy(posts, post => post.id);
       const newPost = {
-         id: maxId + 1,
+         id: id + 1,
          venueId: VENUE_ID,
          created: date.toISOString(),
          title,
@@ -122,40 +132,42 @@ export default function configureMockAdapterRoutes(mock, store) {
          myVote: 0,
          isMy: true,
       };
-
       configurePostRoute(newPost);
-      store.dispatch(createDemoPost(newPost));
+      const updatedPosts = posts.concat(newPost);
+      store.dispatch(setVenuePosts(updatedPosts));
       return [200, newPost];
    });
+
    mock.onPost(`/venues/${VENUE_ID}/mink`).reply(config => {
       const { question, answer } = JSON.parse(config.data);
       const date = new Date();
-      const minks = selectDemoMinks(store.getState());
-      const maxId = maxBy(minks, mink => mink.id);
+      const { minks } = selectSelectedVenue(store.getState());
+      const { id } = maxBy(minks, mink => mink.id);
       const newMink = {
-         id: maxId + 1,
+         id: id + 1,
          created: date.toISOString(),
-         question,
-         answer,
          voteRating: 0,
          voteCount: 0,
-         myCorrectAnswer: null,
+         myCorrectAnswer: undefined,
          myVote: 0,
+         question,
+         // TODO: move to some other state to maintain type consistency?
+         answer,
       };
-
       configureMinkRoute(newMink);
-      store.dispatch(createDemoMink(newMink));
+      const updatedMinks = minks.concat(newMink);
+      store.dispatch(setVenueMinks(updatedMinks));
       return [200, newMink];
    });
 
-   const { minks, posts, rateTags } = selectDemoData(store.getState());
-   minks.forEach(mink => {
+   const { minks: defaultMinks, posts: defaultPosts, rates: defaultRateTags } = selectSelectedVenue(store.getState());
+   defaultMinks.forEach(mink => {
       configureMinkRoute(mink);
    });
-   posts.forEach(post => {
+   defaultPosts.forEach(post => {
       configurePostRoute(post);
    });
-   rateTags.forEach(tag => {
-      configureRateTagRoute(tag);
+   defaultRateTags.forEach(rateTag => {
+      configureRateTagRoute(rateTag);
    });
 }
