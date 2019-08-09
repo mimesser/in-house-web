@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Loader } from '../Loader';
+import { withForwardedRef } from '../../withForwardedRef';
 import { fontWeight, palette, fontSize, letterSpacing, spacing } from '../../../style';
 
 const StyledButton = styled.button`
@@ -20,13 +21,13 @@ const StyledButton = styled.button`
    ${({ disabled }) => disabled && `opacity: 0.5;`}
 `;
 
-export const Button = styled(({ secondary, big, inverse, loading, children, tag, ...props }) => {
-   return (
+export const Button = styled(
+   withForwardedRef(({ secondary, big, inverse, loading, children, tag, ...props }) => (
       <StyledButton as={tag} secondary={secondary} big={big} inverse={inverse} {...props}>
          {loading ? <Loader small white /> : children}
       </StyledButton>
-   );
-})``;
+   )),
+)``;
 
 // TODO: active/focus etc
 export const IconButton = styled.button`
