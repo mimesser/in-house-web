@@ -1,15 +1,2 @@
-import venue from './venue';
-import aggregate from './aggregate';
-import minks from './minks';
-import posts from './posts';
-import rateTags from './rateTags';
-
-export { VENUE_ID } from './config';
-
-export const data = {
-   venue,
-   aggregate,
-   minks,
-   posts,
-   rateTags,
-};
+export { VENUE_ID as DEMO_VENUE_ID } from './config';
+export { venue as DEMO_VENUE } from './venue';

@@ -1,14 +1,19 @@
 import { VENUE_ID, created } from './config';
 import industry from './industry';
+import minks from './minks';
+import posts from './posts';
+import rateTags from './rateTags';
 
-export default {
+const venueVotesCount = minks.reduce((sum, mink) => sum + mink.voteCount, 0);
+
+export const venue = {
    id: VENUE_ID,
-   industryId: 1,
+   industryId: industry.id,
    industry,
    name: '[my house?]',
-   rating: 9.25,
-   votesCount: 24,
-   insidersCount: 20,
+   rating: 7.5,
+   votesCount: venueVotesCount,
+   insidersCount: 30,
    venueInfo: {
       zipCode: '10010',
       phone: '333-333-3333',
@@ -21,4 +26,7 @@ export default {
       imageUrl: null,
    },
    created,
+   minks,
+   posts,
+   rates: rateTags,
 };
