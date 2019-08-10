@@ -6,7 +6,7 @@ import { Users } from 'styled-icons/feather';
 import { CircleSlider, Number } from '../../atoms';
 import { fontSize, palette } from '../../../style';
 
-const FONT_RATIO = 4.5;
+const FONT_RATIO = 3;
 
 const SuperScriptDecimalSpan = styled.span`
    vertical-align: super;
@@ -38,11 +38,11 @@ const renderValue = (value, decimal) => {
    }
 
    if (decimal) {
-      const parts = String(value).split('.');
+      const parts = value.toFixed(1).split('.');
       return (
          <>
             <span>{parts[0]}.</span>
-            <SuperScriptDecimalSpan>{parts[1] || 0}</SuperScriptDecimalSpan>
+            <SuperScriptDecimalSpan>{parts[1]}</SuperScriptDecimalSpan>
          </>
       );
    }
@@ -69,6 +69,7 @@ const BaseSlider = ({ value: initialValue, voteCount, ...sliderProps }) => {
 
 BaseSlider.defaultProps = {
    size: 300,
+   padd: 0,
 };
 
 export const Dial = styled(BaseSlider)``;

@@ -26,15 +26,15 @@ const valueOutTransform = Math.floor;
 const getElementSizes = size => {
    let k = 1;
    if (size > 150) {
-      k = 2;
-   }
-   if (size > 300) {
       k = 3;
    }
+   if (size > 300) {
+      k = 4;
+   }
    return {
-      circleWidth: 4 * k,
-      progressWidth: 5 * k,
-      knobRadius: 8 * k,
+      circleWidth: 2 * k,
+      progressWidth: 3 * k,
+      knobRadius: 6 * k,
    };
 };
 
