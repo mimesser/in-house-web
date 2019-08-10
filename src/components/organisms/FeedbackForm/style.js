@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { spacing } from '../../../style';
 import { Button } from '../../atoms';
 
-export const P = styled.p`
+export const FormGroup = styled.div`
    strong {
       font-weight: 600;
    }
@@ -10,7 +10,7 @@ export const P = styled.p`
    margin: ${spacing.xLarge} 0;
 `;
 
-export const ButtonContainer = styled.p`
+export const ButtonContainer = styled.div`
    padding-top: ${spacing.xLarge};
    text-align: center;
 `;

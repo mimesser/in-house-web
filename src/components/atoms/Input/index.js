@@ -12,22 +12,28 @@ const strikeThrough = ({ strike }) =>
 const borderWidth = ({ error }) => (error ? 3 : 1);
 const borderColor = ({ error }) => (error ? palette.primary : palette.secondary);
 
-export const baseInputStyle = css`
+export const placeholder = css`
+   color: ${palette.textUltraLight};
+`;
+
+export const fontStyle = css`
+   font-size: 1rem;
    font-family: ${font.primary};
-   display: block;
-   width: 100%;
+   font-weight: ${fontWeight.primary};
+`;
+
+export const baseFormControlStyle = css`
    margin: 0;
    box-sizing: border-box;
-   font-size: 1rem;
-   font-weight: ${fontWeight.primary};
-   padding: ${spacing.medium};
+   ${fontStyle};
    border: ${borderWidth}px solid ${borderColor};
    color: ${palette.textLight};
    transition: color 0.3s, border-color 0.3s;
    ${strikeThrough};
    ::placeholder {
-      color: ${palette.textUltraLight};
+      ${placeholder};
    }
+   :hover:not(:disabled),
    :active:not(:disabled),
    :focus:not(:disabled) {
       color: ${palette.textDark};
@@ -38,6 +44,13 @@ export const baseInputStyle = css`
       color: ${palette.secondaryLight};
       border-color: ${palette.secondaryLight};
    }
+`;
+
+export const baseInputStyle = css`
+   display: block;
+   width: 100%;
+   padding: ${spacing.medium};
+   ${baseFormControlStyle};
 `;
 
 export const Textarea = styled.textarea`

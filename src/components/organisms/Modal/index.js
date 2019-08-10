@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
+import { withNoSSR } from '../../atoms';
 import { Background, CloseButton, Content, Layout } from './style';
 
 const stopPropagation = event => event.stopPropagation();
 
-const Portal = ({ children, node = document.body }) => ReactDOM.createPortal(children, node);
+const Portal = withNoSSR(({ children, node = document.body }) => ReactDOM.createPortal(children, node));
 
 export const Modal = ({ open, closeModal, canDismiss = true, canClose = true, inverse, children }) => {
    useEffect(() => {

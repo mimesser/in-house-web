@@ -5,17 +5,19 @@ import { storiesOf } from '@storybook/react';
 import { Dropdown } from '.';
 
 const Container = styled.div`
+   padding: 1rem;
    > * {
       margin-bottom: 1rem;
    }
 `;
 
-storiesOf('Dropdown', module).add('default', () => (
+const options = [{ label: 'A', value: 'A' }, { label: 'B', value: 'B' }, { label: 'C', value: 'C' }];
+
+storiesOf('Dropdown', module).add('Dropdown', () => (
    <Container>
-      <Dropdown>
-         <option>Option 1</option>
-         <option>Option 2</option>
-         <option>Option 3</option>
-      </Dropdown>
+      <Dropdown options={options} />
+      <Dropdown placeholder="placeholder" options={options} />
+      <Dropdown placeholder="disabled" isDisabled options={options} />
+      <Dropdown placeholder="open programmatically" options={options} menuIsOpen />
    </Container>
 ));
