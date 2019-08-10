@@ -7,8 +7,8 @@ Node.js and npm https://nodejs.org/en/
 `npm ci`
 
 ## Running locally
-Start local web server in dev mode (with hot reloading) pointing to back-end on staging server   
-`npm run local-staging`   
+Start local web server in dev mode (with hot reloading) pointing to back-end in dev environment   
+`npm run local-dev`   
 
 ## Running tests
 Our test framework is Jest https://jestjs.io/  

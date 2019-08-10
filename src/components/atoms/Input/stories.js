@@ -1,18 +1,23 @@
 import React from 'react';
+import styled from 'styled-components';
 import { storiesOf } from '@storybook/react';
-import { Input, Select, Textarea } from '.';
+import { Input, Textarea } from '.';
 
-storiesOf('Input', module)
-   .add('default', () => <Input />)
-   .add('height', () => <Input height={100} />)
-   .add('invalid', () => <Input invalid />)
-   .add('type textarea', () => <Textarea />)
-   .add('type checkbox', () => <Input type="checkbox" />)
-   .add('type radio', () => <Input type="radio" />)
-   .add('type select', () => (
-      <Select>
-         <option>Option 1</option>
-         <option>Option 2</option>
-         <option>Option 3</option>
-      </Select>
-   ));
+const Container = styled.div`
+   > * {
+      margin-bottom: 1rem;
+   }
+`;
+
+storiesOf('Input controls', module)
+   .add('Input', () => (
+      <Container>
+         <Input />
+         <Input placeholder="placeholder" />
+         <Input value="some value" />
+         <Input value="disabled" disabled />
+         <Input value="strike wrong" strike />
+         <Input value="error" error />
+      </Container>
+   ))
+   .add('Textarea', () => <Textarea />);

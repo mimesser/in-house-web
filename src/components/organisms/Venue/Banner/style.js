@@ -14,7 +14,7 @@ export const Header = styled.header`
    position: relative;
    height: ${calcRem('270px')};
    padding: ${spacing.large};
-   color: ${palette.textLight};
+   color: ${palette.white};
 
    display: flex;
    flex-direction: column;
