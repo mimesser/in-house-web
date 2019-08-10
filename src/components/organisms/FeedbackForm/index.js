@@ -4,21 +4,24 @@ import { connect } from 'react-redux';
 import { Heading, Input, Dropdown, Loader } from '../../atoms';
 import { WinkConfirmation, CounterInput } from '../../molecules';
 import { Modal } from '../Modal';
-import { ButtonContainer, P, Container, SubmitButton } from './style';
+import { ButtonContainer, FormGroup, Container, SubmitButton } from './style';
 import { postFeedback, clearFeedback } from '../../../store/feedback';
 
-const subjectOptions = ['request new beta house', 'technical issue', 'general feedback', 'other issue'];
+const subjectOptions = ['request new beta house', 'technical issue', 'general feedback', 'other issue'].map(value => ({
+   label: value,
+   value,
+}));
 
 function FeedbackForm(props) {
-   const [subject, setSubject] = useState('');
+   const [subject, setSubject] = useState(undefined);
    const [email, setEmail] = useState('');
    const [message, setMessage] = useState('');
    const getHandler = setter => event => setter(event.target.value);
-   const handleSubjectChange = getHandler(setSubject);
+   const handleSubjectChange = value => setSubject(value);
    const handleEmailChange = getHandler(setEmail);
 
    const submit = () => {
-      props.postFeedback({ email, subject, message });
+      props.postFeedback({ email, subject: subject.value, message });
    };
 
    const clear = () => {
@@ -41,33 +44,21 @@ function FeedbackForm(props) {
 
    return (
       <Container>
-         {/* Must hide Modal on initial render / struggles with SSR */}
-         {process.browser && (
-            <Modal
-               open={props.success || props.loading}
-               closeModal={clear}
-               inverse
-               canDismiss={false}
-               canClose={false}
-               title="Success!"
-            >
-               {props.loading ? <Loader white /> : <WinkConfirmation />}
-            </Modal>
-         )}
+         <Modal
+            open={props.success || props.loading}
+            closeModal={clear}
+            inverse
+            canDismiss={false}
+            canClose={false}
+            title="Success!"
+         >
+            {props.loading ? <Loader white /> : <WinkConfirmation />}
+         </Modal>
          <Heading>let us know</Heading>
-         <P>we keep everything confidenial</P>
-         <P>
-            <Dropdown value={subject} onChange={handleSubjectChange}>
-               <option disabled value="">
-                  subject
-               </option>
-               {subjectOptions.map(subjectOption => (
-                  <option key={subjectOption} value={subjectOption}>
-                     {subjectOption}
-                  </option>
-               ))}
-            </Dropdown>
-         </P>
+         <FormGroup>we keep everything confidential</FormGroup>
+         <FormGroup>
+            <Dropdown value={subject} placeholder="subject" options={subjectOptions} onChange={handleSubjectChange} />
+         </FormGroup>
          <CounterInput
             multiline
             disabled={!subject}
@@ -77,7 +68,7 @@ function FeedbackForm(props) {
             placeholder="type something"
             rows={4}
          />
-         <P>
+         <FormGroup>
             <Input
                value={email}
                disabled={!subject || !message}
@@ -85,8 +76,8 @@ function FeedbackForm(props) {
                placeholder="email (if you want a reply)"
                type="email"
             />
-         </P>
-         {props.error && <P>{props.error}</P>}
+         </FormGroup>
+         {props.error && <FormGroup>{props.error}</FormGroup>}
          <ButtonContainer>
             <SubmitButton visible={valid} onClick={submit}>
                send
