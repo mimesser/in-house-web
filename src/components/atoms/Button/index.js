@@ -2,31 +2,54 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Loader } from '../Loader';
+import { withForwardedRef } from '../../withForwardedRef';
 import { fontWeight, palette, fontSize, letterSpacing, spacing } from '../../../style';
 
-const StyledButton = styled.button`
+const background = ({ secondary, disabled }) => {
+   if (secondary) {
+      return palette.white;
+   }
+
+   return disabled ? palette.secondary : palette.primaryLight;
+};
+
+const border = ({ secondary, disabled }) => {
+   if (secondary) {
+      return disabled ? palette.secondaryLight : palette.secondaryDark;
+   }
+
+   return disabled ? palette.secondary : palette.primaryLight;
+};
+
+const color = ({ secondary, disabled }) => {
+   if (secondary) {
+      return disabled ? palette.secondaryLight : palette.textDark;
+   }
+   return palette.white;
+};
+
+const BaseButton = styled.button`
    cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
    border-radius: 2em;
-   border: 1px solid ${palette.primaryLight};
-   background-color: ${({ secondary, inverse }) => (secondary || inverse ? palette.white : palette.primaryLight)};
-   color: ${({ secondary, inverse }) => (secondary || inverse ? palette.textDark : palette.white)};
-   padding: ${spacing.large} ${spacing.xxLarge};
+   border: 1px solid ${border};
+   background-color: ${background};
+   color: ${color};
+   padding: ${fontSize.small} ${spacing.xxLarge};
    font-size: ${fontSize.small};
-   font-weight: ${fontWeight.bolder};
+   font-weight: ${fontWeight.primary};
    letter-spacing: ${letterSpacing.primary};
    outline: none;
    text-decoration: none;
    text-align: center;
-   ${({ disabled }) => disabled && `opacity: 0.5;`}
 `;
 
-export const Button = styled(({ secondary, big, inverse, loading, children, tag, ...props }) => {
-   return (
-      <StyledButton as={tag} secondary={secondary} big={big} inverse={inverse} {...props}>
+export const Button = styled(
+   withForwardedRef(({ loading, children, forwardedRef, tag, ...props }) => (
+      <BaseButton {...props} as={tag} ref={forwardedRef}>
          {loading ? <Loader small white /> : children}
-      </StyledButton>
-   );
-})``;
+      </BaseButton>
+   )),
+)``;
 
 // TODO: active/focus etc
 export const IconButton = styled.button`

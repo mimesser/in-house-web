@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { Page } from '../components/templates';
 import FeedbackForm from '../components/organisms/FeedbackForm';
 import { Container } from '../components/atoms';
