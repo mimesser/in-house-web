@@ -1,12 +1,14 @@
 import React from 'react';
 import Link from 'next/link';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
 import { ArrowLeft } from 'styled-icons/feather/ArrowLeft';
 
+import { selectInDemo } from '../../../../store/demo';
 import { Votes } from '../Votes';
 import { Address, Title } from '../../../atoms';
 import { About, Back, Header, Industry, Ratings, Score } from './style';
-import { DEMO_VENUE_ID } from '../../../../store/demo/data';
 
 export const Banner = ({
    venue: {
@@ -17,9 +19,10 @@ export const Banner = ({
       insidersCount,
       rating,
    },
+   inDemo,
 }) => {
    const ratingParts = typeof rating === 'number' && rating.toFixed(1).split('.');
-   const href = id === DEMO_VENUE_ID ? '/how-it-works?step=5' : '/houses';
+   const href = inDemo ? '/how-it-works?step=5' : '/houses';
 
    return (
       <Header imageUrl={imageUrl}>
@@ -54,3 +57,14 @@ export const Banner = ({
       </Header>
    );
 };
+
+const mapState = createStructuredSelector({
+   inDemo: selectInDemo,
+});
+
+const mapDispatch = {};
+
+export default connect(
+   mapState,
+   mapDispatch,
+)(Banner);

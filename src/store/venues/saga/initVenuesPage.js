@@ -33,12 +33,11 @@ export function* initVenuesPage({ payload: { idToSelect } }) {
    if (!idToSelect) {
       return;
    }
-   const id = +idToSelect;
    let venueToSelect;
-   if (id === DEMO_VENUE.id) {
+   if (idToSelect === DEMO_VENUE.id) {
       venueToSelect = DEMO_VENUE;
    } else {
-      venueToSelect = venues.find(v => v.id === id);
+      venueToSelect = venues.find(v => v.id === +idToSelect);
    }
    if (venueToSelect) {
       yield put(setSelectedVenue(venueToSelect));

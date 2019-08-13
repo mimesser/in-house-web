@@ -1,4 +1,5 @@
 import { VENUE_ID, created } from './config';
+import { mockRate } from '../mockFunctions';
 import industry from './industry';
 import minks from './minks';
 import posts from './posts';
@@ -10,8 +11,8 @@ export const venue = {
    id: VENUE_ID,
    industryId: industry.id,
    industry,
-   name: '[my house?]',
-   rating: 7.5,
+   name: 'sample house',
+   rating: mockRate(),
    votesCount: venueVotesCount,
    insidersCount: 30,
    venueInfo: {

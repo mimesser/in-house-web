@@ -3,17 +3,24 @@ import MockAdapter from 'axios-mock-adapter';
 import api from '../../api';
 import configureMockAdapterRoutes from './configureMockAdapterRoutes';
 import { actionTypes } from './actions';
-import { selectMockAdapter } from './selectors';
 
-const RESPONSE_DELAY = 300;
+const demoMiddleware = store => next => action => {
+   let mockAdapter;
 
-const turnDemoOnMiddleware = store => next => action => {
    if (action.type === actionTypes.TURN_DEMO_ON) {
-      const mockAdapter = new MockAdapter(api, { delayResponse: RESPONSE_DELAY });
+      mockAdapter = new MockAdapter(api, { delayResponse: 300 });
       configureMockAdapterRoutes(mockAdapter, store);
-      action.payload = mockAdapter;
    }
+
+   if (action.type === actionTypes.TURN_DEMO_OFF) {
+      // TODO: this check is only necc. bc turnDemoOff is called everytime new venue is selected
+      if (mockAdapter) {
+         mockAdapter.restore();
+         mockAdapter = undefined;
+      }
+   }
+
    return next(action);
 };
 
-export default [turnDemoOnMiddleware];
+export default demoMiddleware;

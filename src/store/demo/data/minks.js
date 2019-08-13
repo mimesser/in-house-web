@@ -1,3 +1,4 @@
+import { mockRate } from '../mockFunctions';
 import { created } from './config';
 
 export default [
@@ -6,8 +7,8 @@ export default [
       created,
       answer: 'happyworker2020',
       question: 'what is the office wifi password? [happyworker2020]?',
-      voteRating: 18,
-      voteCount: 12,
+      voteRating: mockRate(),
+      voteCount: 30,
       myCorrectAnswer: null,
       myVote: null,
    },
@@ -16,8 +17,8 @@ export default [
       created,
       answer: 'beyonce',
       question: 'who is sergio’s muse? [beyonce]?',
-      voteRating: 16,
-      voteCount: 9,
+      voteRating: mockRate(),
+      voteCount: 25,
       myCorrectAnswer: null,
       myVote: null,
    },
@@ -26,8 +27,8 @@ export default [
       created,
       answer: 'blue',
       question: 'what’s the color of my blue suede shoes?',
-      voteRating: 1,
-      voteCount: 15,
+      voteRating: mockRate(),
+      voteCount: 16,
       myCorrectAnswer: null,
       myVote: null,
    },

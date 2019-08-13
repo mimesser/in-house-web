@@ -4,9 +4,9 @@ import { createStructuredSelector } from 'reselect';
 
 import { PokeButton } from '../../molecules';
 import { setPrivateShareItemId, selectSelectedVenue } from '../../../store/venues';
-import { DEMO_VENUE_ID } from '../../../store/demo/data';
+import { selectInDemo } from '../../../store/demo';
 
-const Share = ({ id, openModal, venue }) => {
+const Share = ({ id, openModal, inDemo }) => {
    const handleClick = useCallback(
       e => {
          e.stopPropagation();
@@ -14,11 +14,11 @@ const Share = ({ id, openModal, venue }) => {
       },
       [id],
    );
-   return !venue.id === DEMO_VENUE_ID && <PokeButton onClick={handleClick} />;
+   return !inDemo && <PokeButton onClick={handleClick} />;
 };
 
 const mapState = createStructuredSelector({
-   venue: selectSelectedVenue,
+   inDemo: selectInDemo,
 });
 
 const mapDispatch = {
