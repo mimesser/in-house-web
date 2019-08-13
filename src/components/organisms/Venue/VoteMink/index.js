@@ -123,8 +123,6 @@ const ModalWrapper = props => {
    const { mink, confirmation, setSelectedMink, venue } = props;
    const close = useCallback(() => {
       setSelectedMink(undefined);
-      const href = venue.id === DEMO_VENUE_ID ? '/how-it-works?step=5' : '/houses';
-      Router.push(href, href, { shallow: true });
    }, []);
 
    return (
