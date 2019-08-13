@@ -1,19 +1,17 @@
 import { VENUE_ID, created } from './config';
-import { mockRate } from '../mockFunctions';
+import { mockRating } from '../mockFunctions';
 import industry from './industry';
 import minks from './minks';
 import posts from './posts';
 import rateTags from './rateTags';
-
-const venueVotesCount = minks.reduce((sum, mink) => sum + mink.voteCount, 0);
 
 export const venue = {
    id: VENUE_ID,
    industryId: industry.id,
    industry,
    name: 'sample house',
-   rating: mockRate(),
-   votesCount: venueVotesCount,
+   rating: mockRating(),
+   votesCount: minks.reduce((sum, mink) => sum + mink.voteCount, 0),
    insidersCount: 30,
    venueInfo: {
       zipCode: '10010',

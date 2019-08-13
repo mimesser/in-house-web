@@ -12,7 +12,6 @@ import { About, Back, Header, Industry, Ratings, Score } from './style';
 
 export const Banner = ({
    venue: {
-      id,
       industry: { name: industry } = {},
       name,
       venueInfo: { address, city, state, zipCode, imageUrl },
@@ -62,9 +61,4 @@ const mapState = createStructuredSelector({
    inDemo: selectInDemo,
 });
 
-const mapDispatch = {};
-
-export default connect(
-   mapState,
-   mapDispatch,
-)(Banner);
+export default connect(mapState)(Banner);
