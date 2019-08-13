@@ -17,6 +17,7 @@ import {
    downvoteMink,
    tryAnswerMink,
 } from '../../../../store/venues';
+import { DEMO_VENUE_ID } from '../../../../store/demo/data';
 import { Modal } from '../../Modal';
 import { Loader, Icon } from '../../../atoms';
 import { IconInput } from '../../../molecules';
@@ -121,7 +122,6 @@ const ModalWrapper = props => {
    const { mink, confirmation, setSelectedMink, venue } = props;
    const close = useCallback(() => {
       setSelectedMink(undefined);
-      Router.push('/houses', '/houses', { shallow: true });
    }, []);
 
    return (

@@ -1,8 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
 import { ArrowLeft } from 'styled-icons/feather/ArrowLeft';
 
+import { selectInDemo } from '../../../../store/demo';
 import { Votes } from '../Votes';
 import { Address, Title } from '../../../atoms';
 import { About, Back, Header, Industry, Ratings, Score } from './style';
@@ -15,12 +18,14 @@ export const Banner = ({
       insidersCount,
       rating,
    },
+   inDemo,
 }) => {
    const ratingParts = typeof rating === 'number' && rating.toFixed(1).split('.');
+   const href = inDemo ? '/how-it-works?step=5' : '/houses';
 
    return (
       <Header imageUrl={imageUrl}>
-         <Link href="/houses">
+         <Link href={href}>
             <Back>
                <ArrowLeft size={32} />
             </Back>
@@ -51,3 +56,9 @@ export const Banner = ({
       </Header>
    );
 };
+
+const mapState = createStructuredSelector({
+   inDemo: selectInDemo,
+});
+
+export default connect(mapState)(Banner);
