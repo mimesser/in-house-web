@@ -1,23 +1,10 @@
 import maxBy from 'lodash/maxBy';
 import orderBy from 'lodash/orderBy';
 
-import { DEMO_VENUE_ID as VENUE_ID } from './data';
 import { selectAggregate } from '../aggregate';
 import { selectSelectedVenue, setVenueMinks, setVenuePosts, setVenueRates } from '../venues';
-
-const mockVoteCalculate = (vote, total) => {
-   const random = Math.random();
-   const change = vote === 1 ? random : -random;
-   const result = total + change;
-   return parseFloat(result.toFixed(2));
-};
-
-const mockRateCalculate = (rate, total) => {
-   const random = Math.random();
-   const change = rate > 4 ? random : -random;
-   const result = total + change;
-   return parseFloat(result.toFixed(2));
-};
+import { DEMO_VENUE_ID as VENUE_ID } from './data';
+import { mockRateCalculate } from './mockFunctions';
 
 export default function configureMockAdapterRoutes(mock, store) {
    const configureRateTagRoute = tag => {
@@ -57,7 +44,7 @@ export default function configureMockAdapterRoutes(mock, store) {
             myCorrectAnswer: mink.answer,
             myVote: vote,
             voteCount: mink.voteCount + 1,
-            voteRating: mockVoteCalculate(vote, mink.voteRating),
+            voteRating: mockRateCalculate(vote, mink.voteRating),
          };
          const { minks } = selectSelectedVenue(store.getState());
          const updatedMinks = minks.map(mink => (mink.id === votedMink.id ? votedMink : mink));
@@ -77,7 +64,7 @@ export default function configureMockAdapterRoutes(mock, store) {
          const votedPost = {
             ...post,
             voteCount: post.voteCount + 1,
-            voteRating: mockVoteCalculate(vote, post.voteRating),
+            voteRating: mockRateCalculate(vote, post.voteRating),
          };
 
          const { posts } = selectSelectedVenue(store.getState());

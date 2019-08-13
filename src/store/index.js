@@ -15,8 +15,8 @@ const bindMiddleware = middleware => {
 
 function configureStore(initialState = {}) {
    const sagaMiddleware = createSagaMiddleware();
-   const middleware = [sagaMiddleware].concat(demoMiddleware);
-   const store = createStore(rootReducer, initialState, bindMiddleware(middleware));
+   const middlewares = [sagaMiddleware, demoMiddleware];
+   const store = createStore(rootReducer, initialState, bindMiddleware(middlewares));
 
    store.sagaTask = sagaMiddleware.run(rootSaga);
 

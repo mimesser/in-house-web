@@ -1,8 +1,9 @@
 import { createSelector } from 'reselect';
 
-export const selectDemo = state => state.demo;
+import { selectSelectedVenue } from '../venues';
+import { DEMO_VENUE_ID } from './data';
 
-export const selectMockAdapter = createSelector(
-   selectDemo,
-   ({ mockAdapter }) => mockAdapter,
+export const selectInDemo = createSelector(
+   selectSelectedVenue,
+   selectedVenue => selectedVenue && selectedVenue.id === DEMO_VENUE_ID,
 );
