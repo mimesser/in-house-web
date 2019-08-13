@@ -1,6 +1,7 @@
 import React, { useState, useRef, useMemo } from 'react';
 import styled from 'styled-components';
 import ReactSwipe from 'react-swipe';
+import noop from 'lodash/noop';
 
 import { Container } from '../../atoms';
 import { calcRem, spacing, palette } from '../../../style';
@@ -52,13 +53,18 @@ const style = {
    },
 };
 
-export function MultiStep({ steps }) {
-   const [selectedStep, setSelectedStep] = useState(0);
+export function MultiStep({ steps, startStep = 0, onStepChange = noop }) {
+   const [selectedStep, setSelectedStep] = useState(startStep);
+
    const swipeRef = useRef(null);
    const swipeOptions = useMemo(
       () => ({
+         startSlide: startStep,
          continuous: false,
-         callback: index => setSelectedStep(index),
+         callback: index => {
+            onStepChange(index);
+            setSelectedStep(index);
+         },
       }),
       [],
    );
