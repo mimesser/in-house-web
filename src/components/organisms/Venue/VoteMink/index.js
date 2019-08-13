@@ -24,7 +24,7 @@ import { spacing, fontSize, font } from '../../../../style';
 import { formatDate } from '../../../../utils/format';
 import { RateConfirmation } from '../RateConfirmation';
 import { normalizeAnswer } from '../normalizeAnswer';
-import { ItemTitle, Layout, VenueTitle, VoteArea, VoteButton } from '../openCardStyle';
+import { ItemTitle, Layout, VoteArea, VoteButton } from '../openCardStyle';
 
 const AnswerStatus = styled(({ status, className }) => {
    if (!status) {
@@ -82,7 +82,6 @@ const VoteMink = ({
 
    return (
       <VoteMinkLayout>
-         <VenueTitle>{venueName}</VenueTitle>
          <VoteArea>
             <div>
                <VoteButton disabled={!canVote} onClick={upvoteMink} selected={myVote === 1}>
@@ -132,11 +131,10 @@ const ModalWrapper = props => {
          canClose={!confirmation}
          canDismiss={!confirmation}
          inverse={mink && confirmation}
+         title={venue.name}
       >
          {mink && !confirmation ? <VoteMink {...props} /> : null}
-         {mink && confirmation ? (
-            <RateConfirmation venueName={venue.name} title={mink.question} {...confirmation} />
-         ) : null}
+         {mink && confirmation ? <RateConfirmation title={mink.question} {...confirmation} /> : null}
       </Modal>
    );
 };

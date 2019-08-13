@@ -4,7 +4,7 @@ import { calcRem, fontSize, spacing, palette } from '../../../style';
 import { Button, IconButton } from '../../atoms';
 
 export const QuestionForm = styled.div`
-   padding: 5rem ${spacing.large};
+   padding: 5rem 0;
    display: flex;
    flex-direction: column;
    flex: 1;
