@@ -15,13 +15,12 @@ import {
 } from '../../../../store/venues';
 import { Modal } from '../../Modal';
 import { RateConfirmation } from '../RateConfirmation';
-import { Layout, VenueTitle, ItemDate, ItemTitle, VoteArea, VoteButton } from '../openCardStyle';
+import { Layout, ItemDate, ItemTitle, VoteArea, VoteButton } from '../openCardStyle';
 import { formatDate } from '../../../../utils/format';
 
 const VotePost = ({ post: { created, title, text, myVote }, venue: { name: venueName }, upvotePost, downvotePost }) => {
    return (
       <Layout>
-         <VenueTitle>{venueName}</VenueTitle>
          <ItemDate>{formatDate(created)}</ItemDate>
          <ItemTitle>{title}</ItemTitle>
          <VoteArea>
@@ -53,9 +52,7 @@ const ModalWrapper = props => {
          inverse={post && confirmation}
       >
          {post && !confirmation ? <VotePost {...props} /> : null}
-         {post && confirmation ? (
-            <RateConfirmation venueName={venue.name} title={post.title} date={post.created} {...confirmation} />
-         ) : null}
+         {post && confirmation ? <RateConfirmation title={post.title} date={post.created} {...confirmation} /> : null}
       </Modal>
    );
 };

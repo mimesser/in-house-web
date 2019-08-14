@@ -16,6 +16,9 @@ import { VENUE_TABS } from '../../../../server/venueTabs';
 import api from '../../../api';
 import { selectAcceptedTerms } from '../../aggregate';
 
+import { turnDemoOn, turnDemoOff } from '../../demo';
+import { DEMO_VENUE_ID } from '../../demo/data';
+
 const DELAY_BEFORE_CHALLENGE = 500;
 const DELAY_CONFIRMATION = 1000;
 
@@ -57,6 +60,13 @@ const parseOpenItemRequest = venueId => {
 export function* setSelectedVenue({ payload: { venue: { id } = {} } }) {
    if (!id) {
       return;
+   }
+
+   if (id === DEMO_VENUE_ID) {
+      yield put(turnDemoOn());
+   } else {
+      // TODO: this should only get called once iff demo exit
+      yield put(turnDemoOff());
    }
 
    const isActiveInsider = yield select(selectIsActiveInsider);
