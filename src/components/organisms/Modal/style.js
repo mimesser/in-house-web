@@ -47,9 +47,15 @@ export const Content = styled.div`
    min-width: ${breakpoints.xs};
    max-width: ${breakpoints.sm};
    width: 100%;
-   padding: ${spacing.xxLarge} ${spacing.large} ${spacing.large} ${spacing.large};
+   padding: ${spacing.xLarge};
 
    ${colors};
+`;
+
+export const ModalHeader = styled.header`
+   display: flex;
+   align-items: center;
+   text-transform: uppercase;
 `;
 
 const CloseIcon = styled(Close).attrs({ size: 27 })``;
@@ -57,9 +63,5 @@ const CloseIcon = styled(Close).attrs({ size: 27 })``;
 export const CloseButton = styled(IconButton).attrs({
    children: <CloseIcon />,
 })`
-   cursor: pointer;
-   color: ${({ inverse }) => inverse && palette.white};
-   position: absolute;
-   top: ${spacing.large};
-   right: ${spacing.large};
+   margin-left: auto;
 `;

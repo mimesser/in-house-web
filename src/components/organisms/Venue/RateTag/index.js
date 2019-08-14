@@ -12,7 +12,7 @@ import {
 import { Modal } from '../../Modal';
 import { RateConfirmation } from '../RateConfirmation';
 import { Dial } from '../../../molecules';
-import { ItemTitle, Layout, VenueTitle, SubTitle } from '../openCardStyle';
+import { ItemTitle, Layout, SubTitle } from '../openCardStyle';
 
 const RateTag = ({ tag, venue: { name: venueName }, rateTag, setRated, rated }) => {
    const { name: tagName, userRate } = tag;
@@ -39,7 +39,6 @@ const RateTag = ({ tag, venue: { name: venueName }, rateTag, setRated, rated }) 
 
    return (
       <Layout>
-         <VenueTitle inverse>{venueName}</VenueTitle>
          <ItemTitle keepSpace={!rated} inverse>
             {tagName}
          </ItemTitle>
@@ -59,9 +58,9 @@ const ModalWrapper = props => {
    const inverse = showConfirmation || rated;
 
    return (
-      <Modal open={!!tag} closeModal={close} inverse={inverse}>
+      <Modal open={!!tag} closeModal={close} inverse={inverse} title={venue.name}>
          {showRateTag ? <RateTag {...props} rated={rated} setRated={setRated} /> : null}
-         {showConfirmation ? <RateConfirmation venueName={venue.name} title={tag.name} {...confirmation} /> : null}
+         {showConfirmation ? <RateConfirmation title={tag.name} {...confirmation} /> : null}
       </Modal>
    );
 };

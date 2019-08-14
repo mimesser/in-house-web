@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
 import { withNoSSR } from '../../atoms';
-import { Background, CloseButton, Content, Layout } from './style';
+import { Background, CloseButton, Content, Layout, ModalHeader } from './style';
 
 const stopPropagation = event => event.stopPropagation();
 
 const Portal = withNoSSR(({ children, node = document.body }) => ReactDOM.createPortal(children, node));
 
-export const Modal = ({ open, closeModal, canDismiss = true, canClose = true, inverse, children }) => {
+export const Modal = ({ open, closeModal, title, canDismiss = true, canClose = true, inverse, children }) => {
    useEffect(() => {
       document.body.style.overflow = open ? 'hidden' : 'initial';
    }, [open]);
@@ -18,7 +18,10 @@ export const Modal = ({ open, closeModal, canDismiss = true, canClose = true, in
          <Background open={open} onClick={canDismiss ? closeModal : undefined}>
             <Layout>
                <Content inverse={inverse} onClick={stopPropagation}>
-                  {canClose && <CloseButton onClick={closeModal} />}
+                  <ModalHeader>
+                     {title}
+                     {canClose && <CloseButton onClick={closeModal} />}
+                  </ModalHeader>
                   {children}
                </Content>
             </Layout>

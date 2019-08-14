@@ -9,6 +9,7 @@ import { Heading, Button, Strong } from '../../atoms';
 import { Patent as BasePatent } from '../../molecules';
 import { fontSize, spacing, fontWeight, palette } from '../../../style';
 import { settings } from '../../../settings';
+import { DEMO_VENUE_ID } from '../../../store/demo/data';
 
 const Patent = styled(BasePatent)`
    font-size: ${fontSize.small};
@@ -156,7 +157,7 @@ const ContinueButton = () => {
          <Link href="/houses">
             <Button>see beta houses</Button>
          </Link>
-         <Button tag="a" href={settings.demoAppUrl}>
+         <Button tag="a" href={`/houses/${DEMO_VENUE_ID}`}>
             test drive
          </Button>
       </>

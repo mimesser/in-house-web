@@ -8,7 +8,7 @@ import { selectIsActiveInsider, selectSelectedVenue } from '../selectors';
 
 export function* reloadVenueRateTags(id) {
    try {
-      const { data } = yield call(api.get, `/Venues/${id}/rateTags`);
+      const { data } = yield call(api.get, `/venues/${id}/rateTags`);
       yield put(setVenueRates(orderBy(data, t => t.orderIndex)));
    } catch (e) {
       if (isForbidden(e)) {

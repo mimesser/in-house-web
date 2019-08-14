@@ -64,7 +64,6 @@ const renderSubview = (name, isAnswerCorrect, blocked, topMink, wrongAnswer, ans
       <AcceptTerms />
    ) : (
       <QuestionForm>
-         <HouseTitle>{name}</HouseTitle>
          {isAnswerCorrect ? (
             <WinkConfirmation />
          ) : (
@@ -95,6 +94,7 @@ const InsiderQuestionChallenge = ({ venue: { name, topMink }, challengeFormData,
          closeModal={dismissForm}
          canDismiss={!accessGranted && !showTerms}
          canClose={!!challengeFormData && !accessGranted && !showTerms}
+         title={showTerms ? undefined : name}
       >
          {challengeFormData
             ? renderSubview(name, isAnswerCorrect, blocked, topMink, wrongAnswer, answerTopMink, dismissForm, showTerms)
