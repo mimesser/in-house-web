@@ -10,7 +10,7 @@ export function* reloadVenuePosts(id) {
       // TODO: paging?
       const {
          data: { feedback },
-      } = yield call(api.get, `/venues/${id}/feedback?OrderBy=VoteRating`);
+      } = yield call(api.get, `/venues/${id}/feedback?OrderBy=VoteCount`);
       const posts = feedback || [];
       yield put(setVenuePosts(posts));
 
