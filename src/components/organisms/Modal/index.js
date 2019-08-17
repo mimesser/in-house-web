@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 
 import { withNoSSR } from '../../atoms';
@@ -12,15 +12,16 @@ export const Modal = ({ open, closeModal, title, canDismiss = true, canClose = t
    useEffect(() => {
       document.body.style.overflow = open ? 'hidden' : 'initial';
    }, [open]);
+   const handleClose = useCallback(() => closeModal(), [closeModal]);
 
    return (
       <Portal>
-         <Background open={open} onClick={canDismiss ? closeModal : undefined}>
+         <Background open={open} onClick={canDismiss ? handleClose : undefined}>
             <Layout>
                <Content inverse={inverse} onClick={stopPropagation}>
                   <ModalHeader>
                      {title}
-                     {canClose && <CloseButton onClick={closeModal} />}
+                     {canClose && <CloseButton onClick={handleClose} />}
                   </ModalHeader>
                   {children}
                </Content>

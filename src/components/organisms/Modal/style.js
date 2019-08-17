@@ -32,9 +32,9 @@ const colors = ({ inverse }) =>
    inverse
       ? css`
            background-color: ${palette.primary};
-           color: ${palette.white};
+           color: ${palette.textUltraLight};
            ${Heading}, ${HeadingTwo} {
-              color: ${palette.white};
+              color: ${palette.textUltraLight};
            }
         `
       : `background-color: ${appBackground};`;
