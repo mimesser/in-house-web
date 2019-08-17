@@ -15,7 +15,7 @@ const Notify = () => {
       try {
          // TODO: use api for this as well?
          await axios.post(
-            'https://inhouseprelaunch.azurewebsites.net/api/emails?code=m7WcoGFdsWppZXKb8DvbMKWiRDbBfhtgFlFCyqertPPuYdY8YJgCCg==',
+            'https://inhouseprelaunch.azurewebsites.net/api/emails?code=38xRjN0xPdUIrAgYiwyBHeaEoL29X4IgfiHKltRAW8dvrezWRaeg7A==',
             { email },
          );
       } finally {
