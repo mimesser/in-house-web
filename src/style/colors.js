@@ -31,5 +31,4 @@ export const themeColors = {
    textUltraLight: appColors.gray,
    textLight: appColors.grayDark,
    textDark: appColors.dim,
-   textInverse: constColors.white,
 };

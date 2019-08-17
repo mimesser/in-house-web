@@ -1,28 +1,36 @@
 import styled from 'styled-components';
 
 import { calcRem, fontSize, spacing, palette } from '../../../style';
-import { Button, IconButton } from '../../atoms';
+import { Button, Heading, IconButton, Input } from '../../atoms';
+import { Patent } from '../../molecules';
 
 export const QuestionForm = styled.div`
-   padding: 5rem 0;
+   padding: ${calcRem('50px')} 0;
    display: flex;
    flex-direction: column;
    flex: 1;
+
+   ${Heading} {
+      margin-bottom: ${spacing.small};
+      color: ${palette.white};
+   }
 `;
-export const HouseTitle = styled.header`
-   font-size: ${fontSize.large};
-   color: ${palette.secondary};
+
+export const ExplainMink = styled.div`
+   margin-bottom: ${calcRem('80px')};
+
+   ${Patent} {
+      color: ${palette.textLight};
+   }
 `;
-export const Question = styled.p`
+
+export const Question = styled.div`
    font-size: 2rem;
-   margin: ${spacing.large} 0;
+   margin-bottom: ${spacing.xLarge};
 `;
 export const Answer = styled.form`
    > div {
       display: flex;
-   }
-   input {
-      max-width: calc(100% - ${calcRem('60px')});
    }
    margin-bottom: ${spacing.xLarge};
 `;
@@ -35,12 +43,33 @@ export const SubmitButton = styled(IconButton).attrs({
 `;
 
 export const ChangeButton = styled(Button)`
-   border-color: ${palette.white};
-   margin: auto auto 0 0;
+   border-color: ${palette.secondary};
+   color: inherit;
+   background-color: transparent;
+   margin: auto;
 `;
 
-// TODO: should be part of InputFiled?
-export const ValidationError = styled.span`
+export const InputHelp = styled.span`
    font-size: ${fontSize.small};
    margin-top: ${spacing.tiny};
+   margin-left: ${spacing.medium};
+   color: ${({ highlight }) => (highlight ? palette.white : 'inherit')};
+`;
+
+export const AnswerInput = styled(Input)`
+   max-width: calc(100% - ${calcRem('60px')});
+   border-color: ${palette.secondaryDark};
+   color: inherit;
+   background-color: transparent;
+   :hover:not(:disabled),
+   :active:not(:disabled),
+   :focus:not(:disabled) {
+      color: inherit;
+      border-color: ${({ strike }) => (strike ? palette.white : 'inherit')};
+      outline: none;
+   }
+
+   ::placeholder {
+      color: ${palette.secondaryDark};
+   }
 `;

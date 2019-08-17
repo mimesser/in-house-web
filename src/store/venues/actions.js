@@ -64,8 +64,9 @@ export const setChallengeFormData = payload => ({
    payload,
 });
 
-export const dismissChallengeForm = payload => ({
+export const dismissChallengeForm = showMinks => ({
    type: actionTypes.DISMISS_CHALLENGE_FORM,
+   payload: { showMinks },
 });
 
 export const loadRates = () => ({

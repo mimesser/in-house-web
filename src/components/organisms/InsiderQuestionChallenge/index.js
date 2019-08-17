@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { ArrowRight } from 'styled-icons/evil/ArrowRight';
+import { ArrowRight } from 'styled-icons/feather/ArrowRight';
 
-import { Input, Heading, Loader } from '../../atoms';
+import { Heading, Loader } from '../../atoms';
 import { Patent, WinkConfirmation } from '../../molecules';
 import {
    answerTopMink,
@@ -11,12 +11,21 @@ import {
    selectSelectedVenue,
    selectInsiderChallengeForm,
 } from '../../../store/venues';
-import { Answer, SubmitButton, ChangeButton, HouseTitle, Question, QuestionForm, ValidationError } from './style';
+import {
+   Answer,
+   SubmitButton,
+   ChangeButton,
+   Question,
+   QuestionForm,
+   InputHelp,
+   ExplainMink,
+   AnswerInput,
+} from './style';
 import { Modal } from '../Modal';
 import { normalizeAnswer } from '../Venue/normalizeAnswer';
 import AcceptTerms from './AcceptTerms';
 
-// TODO: move this form to Venue?
+// TODO: move this to Venue?
 
 const Form = ({ topMink, wrongAnswer, answerTopMink }) => {
    const [answer, setAnswer] = useState('');
@@ -35,23 +44,25 @@ const Form = ({ topMink, wrongAnswer, answerTopMink }) => {
       setShowError(false);
    };
 
+   const highlightError = wrongAnswer && showError;
+
    return topMink ? (
       <>
          <Question>{topMink.question}</Question>
          <Answer onSubmit={handleSubmit}>
             <div>
-               <Input
+               <AnswerInput
                   autocomplete="off"
                   spellcheck="false"
-                  placeholder="One word / no spaces"
                   value={answer}
                   onChange={handleChange}
+                  strike={highlightError}
                />
                <SubmitButton visible={!!answer.length}>
-                  {showError && !wrongAnswer ? <Loader white /> : <ArrowRight size={44} />}
+                  {showError && !wrongAnswer ? <Loader white /> : !highlightError && <ArrowRight size={44} />}
                </SubmitButton>
             </div>
-            {wrongAnswer && showError && <ValidationError>Wrong answer</ValidationError>}
+            <InputHelp highlight={highlightError}>{highlightError ? 'wrong answer' : 'one word / no spaces'}</InputHelp>
          </Answer>
       </>
    ) : (
@@ -69,14 +80,13 @@ const renderSubview = (name, isAnswerCorrect, blocked, topMink, wrongAnswer, ans
          ) : (
             <>
                <Heading>insider?</Heading>
-               <p>
-                  prove it by this #1 <strong>MINK</strong>
+               <ExplainMink>
+                  answer the #1 MINK<sup>©</sup>
                   <Patent />
-               </p>
-               {/* TODO error text and styling */}
+               </ExplainMink>
                {blocked && <p>Too many attempts. Please come back later</p>}
                {!blocked && <Form topMink={topMink} wrongAnswer={wrongAnswer} answerTopMink={answerTopMink} />}
-               <ChangeButton onClick={dismissForm}>change this question</ChangeButton>
+               <ChangeButton onClick={() => dismissForm(true)}>change this question</ChangeButton>
             </>
          )}
       </QuestionForm>
