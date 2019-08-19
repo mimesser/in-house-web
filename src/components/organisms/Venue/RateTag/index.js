@@ -1,6 +1,7 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import styled from 'styled-components';
 
 import {
    selectSelectedVenue,
@@ -13,6 +14,22 @@ import { Modal } from '../../Modal';
 import { RateConfirmation } from '../RateConfirmation';
 import { Dial } from '../../../molecules';
 import { ItemTitle, Layout, SubTitle } from '../openCardStyle';
+import { fontSize, fontWeight, spacing, theme } from '../../../../style';
+
+const RateLayout = styled(Layout)`
+   margin-top: ${spacing.xxLarge};
+`;
+
+const RateItemTitle = styled(ItemTitle)`
+   color: ${({ rated }) => rated && theme.colors.textUltraLight};
+   font-size: ${fontSize.large};
+   font-weight: ${fontWeight.primary};
+   margin-top: ${spacing.nano};
+`;
+
+const RateSubTitle = styled(SubTitle)`
+   visibility: ${({ rated }) => (rated ? 'visible' : 'hidden')};
+`;
 
 const RateTag = ({ tag, venue: { name: venueName }, rateTag, setRated, rated }) => {
    const { name: tagName, userRate } = tag;
@@ -37,14 +54,31 @@ const RateTag = ({ tag, venue: { name: venueName }, rateTag, setRated, rated }) 
       [setValue, rateTag],
    );
 
+   const sliderProps = {
+      size: 450,
+      padd: 100,
+      inverse: rated,
+   };
+
+   let valueColor;
+
+   if (!rated) {
+      valueColor = theme.colors.secondaryDark;
+
+      sliderProps.color = theme.colors.secondaryDark;
+      sliderProps.knobColor = theme.colors.secondaryDark;
+      sliderProps.circleColor = theme.colors.secondary;
+      sliderProps.progressColor = theme.colors.secondaryDark;
+   }
+
    return (
-      <Layout>
-         <ItemTitle keepSpace={!rated} inverse>
+      <RateLayout>
+         <RateSubTitle rated={rated}>you rated</RateSubTitle>
+         <RateItemTitle rated={rated} keepSpace>
             {tagName}
-         </ItemTitle>
-         {rated && <SubTitle>you rated</SubTitle>}
-         <Dial size={450} padd={100} value={value} onChange={handleChange} inverse={rated} />
-      </Layout>
+         </RateItemTitle>
+         <Dial value={value} valueColor={valueColor} onChange={handleChange} {...sliderProps} />
+      </RateLayout>
    );
 };
 

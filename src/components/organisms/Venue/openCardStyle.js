@@ -14,8 +14,7 @@ export const ItemTitle = styled.div`
    text-transform: lowercase;
    font-size: ${fontSize.xLarge};
    font-weight: ${fontWeight.bolder};
-   color: ${({ inverse }) => (inverse ? palette.textLight : palette.textDark)};
-   // keep space for 'team average'
+   // keep space for 'you rated'
    margin-bottom: ${({ keepSpace }) => (keepSpace ? '3.25rem' : spacing.small)};
 `;
 
@@ -46,7 +45,6 @@ export const VoteArea = styled.div`
 `;
 
 export const Layout = styled.div`
-   padding: 0 ${spacing.large};
    flex: 1;
    display: flex;
    flex-direction: column;
@@ -60,6 +58,7 @@ export const Layout = styled.div`
 
 export const SubTitle = styled.div`
    font-size: ${fontSize.large};
+   fontWeight: ${fontWeight.bolder}
    color: ${palette.textLight};
    margin-bottom: ${spacing.large};
 `;
