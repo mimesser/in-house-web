@@ -1,3 +1,5 @@
+import orderBy from 'lodash/orderBy';
+
 import { VENUE_ID, created } from './config';
 import { mockRating } from '../mockFunctions';
 import industry from './industry';
@@ -25,7 +27,7 @@ export const venue = {
       imageUrl: null,
    },
    created,
-   minks,
-   posts,
-   rates: rateTags,
+   minks: orderBy(minks, ['voteRating'], ['desc']),
+   posts: orderBy(posts, ['voteRating'], ['desc']),
+   rates: orderBy(rateTags, ['orderIndex']),
 };
