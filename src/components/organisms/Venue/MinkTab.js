@@ -4,27 +4,18 @@ import styled from 'styled-components';
 import Link from 'next/link';
 
 import { loadMinks, setSelectedMink, setAddedMinkId } from '../../../store/venues';
-import { fontSize, spacing, font } from '../../../style';
 import { Loader, Button } from '../../atoms';
 import { Patent } from '../../molecules';
-import { TabLayout, ItemCard, Main, ItemTitle, TabTitle } from './tabStyle';
+import { TabLayout, ItemCard, Main, ItemTitle, ItemTime, TabTitle } from './tabStyle';
 import { formatDate } from '../../../utils/format';
 import VoteMink from './VoteMink';
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
 import { ScoreAndVoters } from './ScoreAndVoters';
 
-const questionSize = ({ large }) => !large && `font-size: ${fontSize.primary}`;
 const MinkCard = styled(ItemCard)`
-   time {
-      font-size: ${fontSize.tiny};
-      font-family: ${font.number};
-      margin-top: ${spacing.large};
-   }
-
    ${ItemTitle} {
-      margin-top: ${spacing.tiny};
-      ${questionSize};
+      width: 80%;
    }
 `;
 
@@ -46,9 +37,14 @@ const Mink = ({
 
    return (
       <MinkCard large={large} onClick={open} ref={ref}>
-         <ScoreAndVoters voteCount={voteCount} voteRating={myVote && voteRating} sliderSize={large ? 100 : 80} />
+         <ScoreAndVoters
+            voteCount={voteCount}
+            voteRating={myVote && voteRating}
+            sliderSize={large ? 80 : 65}
+            large={large}
+         />
          <Main>
-            <time dateTime={created}>{formatDate(created)}</time>
+            <ItemTime dateTime={created}>{formatDate(created)}</ItemTime>
             <ItemTitle>{question}</ItemTitle>
          </Main>
          <PrivateShareButton id={id} />
