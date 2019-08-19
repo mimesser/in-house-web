@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-import { calcRem, spacing, fontWeight, fontSize } from '../../../style';
+import { calcRem, spacing, fontWeight, fontSize, font, palette } from '../../../style';
 import { Card, Button } from '../../atoms';
 import { PokeButton } from '../../molecules';
 
@@ -11,17 +11,24 @@ export const TabTitle = styled.div`
    text-transform: uppercase;
 `;
 
-export const ItemTitle = styled.div`
-   font-size: ${fontSize.large};
-   font-weight: ${fontWeight.bolder};
-   margin-top: ${spacing.large};
+export const ItemTime = styled.time`
+   font-size: ${fontSize.tiny};
+   font-family: ${font.number};
+   color: ${palette.textLight};
 `;
 
-export const ItemText = styled.div``;
+export const ItemTitle = styled.div`
+   margin-top: ${spacing.nano};
+`;
+
+export const ItemText = styled.div`
+   font-size: ${fontSize.small};
+   color: ${palette.textLight};
+   margin-top: ${spacing.nano};
+`;
 
 export const Main = styled.div`
-   display: flex;
-   flex-direction: column;
+   width: 100%;
 `;
 
 const adjustForPreview = ({ preview }) =>
@@ -33,9 +40,11 @@ const adjustForPreview = ({ preview }) =>
    `;
 export const ItemCard = styled(Card)`
    text-transform: lowercase;
-   ${ItemText} {
-      font-size: ${({ large }) => (large ? fontSize.primary : fontSize.tiny)};
+
+   ${ItemTitle} {
+      font-size: ${({ large }) => (large ? `${fontSize.mediumLarge}` : `${fontSize.primary}`)};
    }
+
    ${adjustForPreview};
 `;
 
@@ -44,27 +53,27 @@ export const TabLayout = styled.div`
    flex: 1;
    flex-direction: column;
    padding: 0 ${spacing.medium} ${spacing.medium} ${spacing.medium};
-   
+
    ${Card} {
       position: relative;
       min-height: ${CARD_MIN_HEIGHT};
-      padding: ${spacing.small} ${spacing.medium} ${spacing.large} 0;
-      
+      padding: ${spacing.large} ${spacing.medium} ${spacing.large};
+
       :last-of-type {
          margin-bottom: ${spacing.large};
       }
-      
+
       ${PokeButton} {
          position: absolute;
-         top: ${spacing.small};
-         right: ${spacing.medium};
+         top: ${spacing.medium};
+         right: ${spacing.xLarge};
       }
    }
-   
+
    ${Card} + ${Card} {
       margin-top: ${spacing.medium};
    }
-   
+
    > ${Button} {
        min-width: 10rem;
        margin: auto;

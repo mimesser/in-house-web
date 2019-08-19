@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { Dial } from '../../molecules';
 import { Votes } from './Votes';
-import { spacing, calcRem } from '../../../style';
+import { spacing, calcRem, fontSize } from '../../../style';
 
 export const ScoreAndVoters = styled(({ voteRating, voteCount, sliderSize, className }) => (
    <div className={className}>
@@ -16,7 +16,8 @@ export const ScoreAndVoters = styled(({ voteRating, voteCount, sliderSize, class
    min-width: ${calcRem('100px')};
 
    ${Votes} {
-      margin: ${spacing.large} auto 0 auto;
+      margin: ${spacing.tiny} auto 0 auto;
+      font-size: ${({ large }) => (large ? fontSize.small : fontSize.tiny)};
    }
 
    ${Dial} {
