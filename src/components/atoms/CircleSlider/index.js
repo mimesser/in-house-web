@@ -26,10 +26,10 @@ const valueOutTransform = Math.floor;
 const getElementSizes = size => {
    let k = 1;
    if (size > 150) {
-      k = 3;
+      k = 2;
    }
    if (size > 300) {
-      k = 4;
+      k = 3;
    }
    return {
       circleWidth: 2 * k,

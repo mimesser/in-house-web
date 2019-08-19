@@ -58,7 +58,7 @@ export const ModalHeader = styled.header`
    text-transform: uppercase;
 `;
 
-const CloseIcon = styled(Close).attrs({ size: 27 })``;
+const CloseIcon = styled(Close).attrs({ size: 40 })``;
 
 export const CloseButton = styled(IconButton).attrs({
    children: <CloseIcon />,
