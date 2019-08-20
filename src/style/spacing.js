@@ -2,6 +2,7 @@ import { calcRem } from './calcRem';
 
 export const spacing = {
    none: '0',
+   nano: calcRem('2px'),
    tiny: calcRem('4px'),
    small: calcRem('8px'),
    medium: calcRem('12px'),

@@ -6,6 +6,8 @@ import { selectSelectedVenue, setVenueMinks, setVenuePosts, setVenueRates } from
 import { DEMO_VENUE_ID as VENUE_ID } from './data';
 import { mockCalculateRating } from './mockFunctions';
 
+export const RESPONSE_DELAY = 800;
+
 export default function configureMockAdapterRoutes(mock, store) {
    const configureRateTagRoute = tag => {
       mock.onPost(`venues/${VENUE_ID}/rateTag/${tag.definitionId}/rate`).reply(config => {
@@ -19,7 +21,10 @@ export default function configureMockAdapterRoutes(mock, store) {
 
          const venue = selectSelectedVenue(store.getState());
          const updatedRateTags = venue.rates.map(tag => (tag.definitionId === ratedTag.definitionId ? ratedTag : tag));
-         store.dispatch(setVenueRates(updatedRateTags));
+         // time the response with this to prevent the view from flickering
+         setTimeout(() => {
+            store.dispatch(setVenueRates(updatedRateTags));
+         }, RESPONSE_DELAY);
 
          const updatedVenue = {
             ...venue,
@@ -81,7 +86,8 @@ export default function configureMockAdapterRoutes(mock, store) {
 
    mock.onGet(`/venues/${VENUE_ID}/minks`).reply(config => {
       const { minks } = selectSelectedVenue(store.getState());
-      return [200, { minks, totalCount: minks.length }];
+      const orderedMinks = orderBy(minks, ['voteRating'], ['desc']);
+      return [200, { minks: orderedMinks, totalCount: orderedMinks.length }];
    });
 
    mock.onGet(`/venues/${VENUE_ID}/rateTags`).reply(config => {

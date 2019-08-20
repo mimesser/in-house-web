@@ -1,14 +1,14 @@
 import MockAdapter from 'axios-mock-adapter';
 
 import api from '../../api';
-import configureMockAdapterRoutes from './configureMockAdapterRoutes';
+import configureMockAdapterRoutes, { RESPONSE_DELAY } from './configureMockAdapterRoutes';
 import { actionTypes } from './actions';
 
 const demoMiddleware = store => next => action => {
    let mockAdapter;
 
    if (action.type === actionTypes.TURN_DEMO_ON) {
-      mockAdapter = new MockAdapter(api, { delayResponse: 300 });
+      mockAdapter = new MockAdapter(api, { delayResponse: RESPONSE_DELAY });
       configureMockAdapterRoutes(mockAdapter, store);
    }
 

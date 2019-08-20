@@ -8,6 +8,7 @@ import { Dial } from '../../molecules';
 import { setSelectedTag, loadRates } from '../../../store/venues';
 import { Votes } from './Votes';
 import { ItemCard, TabLayout, Main, ItemTitle, TabTitle } from './tabStyle';
+import { ScoreAndVoters } from './ScoreAndVoters';
 import RateTag from './RateTag';
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
@@ -17,14 +18,7 @@ const RateCard = styled(ItemCard)`
    min-height: ${({ preview }) => !preview && calcRem('150px')};
 
    ${Main} {
-      margin: 0 ${spacing.medium};
-   }
-
-   ${ItemTitle} {
-      margin: ${spacing.small} 0;
-   }
-   ${Votes} {
-      margin: auto 0 ${spacing.small} 0;
+      margin-top: ${spacing.large};
    }
 `;
 
@@ -34,11 +28,10 @@ const Tag = ({ name, definitionId, userRate, voteCount, voteRating, setSelectedT
    const open = useCallback(() => setSelectedTag(definitionId), [definitionId]);
 
    return (
-      <RateCard onClick={open}>
-         <Dial size={100} readonly value={getTeamRateIfRated(userRate, voteRating)} />
+      <RateCard large onClick={open}>
+         <ScoreAndVoters voteCount={voteCount} voteRating={getTeamRateIfRated(userRate, voteRating)} sliderSize={80} />
          <Main>
             <ItemTitle>{name}</ItemTitle>
-            <Votes count={voteCount} />
          </Main>
          <PrivateShareButton id={definitionId} />
       </RateCard>

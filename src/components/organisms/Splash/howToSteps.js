@@ -55,7 +55,7 @@ const MinkSample = styled.div`
       }
       :nth-child(2) {
          font-size: ${fontSize.medium};
-         color: ${palette.textInverse};
+         color: ${palette.white};
          font-weight: ${fontWeight.bolder};
          margin-bottom: ${spacing.small};
       }

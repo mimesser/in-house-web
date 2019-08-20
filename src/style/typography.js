@@ -1,6 +1,7 @@
 import { calcRem } from './calcRem';
 
 export const lineHeight = {
+   tiny: '1.1',
    small: '1.2',
    medium: '1.4',
    large: '1.5',
@@ -17,6 +18,7 @@ export const fontSize = {
    small: calcRem('14px'),
    primary: '1rem',
    medium: calcRem('18px'),
+   mediumLarge: calcRem('21px'),
    large: calcRem('24px'),
    xLarge: calcRem('32px'),
 };
