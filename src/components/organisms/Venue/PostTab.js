@@ -1,27 +1,41 @@
 import React, { useEffect, useCallback } from 'react';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
 import Link from 'next/link';
 
+import { formatDate } from '../../../utils/format';
 import { loadPosts, setSelectedPost } from '../../../store/venues';
 import { Loader, Button } from '../../atoms';
-import { ItemCard, ItemText, ItemTitle, Main, TabLayout, TabTitle } from './tabStyle';
+import { ItemCard, ItemText, ItemTitle, ItemTime, Main, TabLayout, TabTitle } from './tabStyle';
 import VotePost from './VotePost';
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
 import { ScoreAndVoters } from './ScoreAndVoters';
+import { spacing } from '../../../style';
 
-const Post = ({ post: { id, title, text, voteCount, voteRating }, large, setSelectedPost }) => {
+const PostCard = styled(ItemCard)`
+   ${ScoreAndVoters} {
+      margin-top: ${spacing.large};
+   }
+
+   ${ItemTitle} {
+      width: 80%;
+   }
+`;
+
+const Post = ({ post: { id, created, title, text, voteCount, voteRating }, large, setSelectedPost }) => {
    const open = useCallback(() => setSelectedPost(id), [id]);
 
    return (
-      <ItemCard large={large} onClick={open}>
-         <ScoreAndVoters voteCount={voteCount} voteRating={voteRating} sliderSize={large ? 100 : 80} />
+      <PostCard large={large} onClick={open}>
+         <ScoreAndVoters voteCount={voteCount} voteRating={voteRating} sliderSize={large ? 80 : 65} large={large} />
          <Main>
+            <ItemTime dateTime={created}>{formatDate(created)}</ItemTime>
             <ItemTitle>{title}</ItemTitle>
             <ItemText>{text}</ItemText>
          </Main>
          <PrivateShareButton id={id} />
-      </ItemCard>
+      </PostCard>
    );
 };
 

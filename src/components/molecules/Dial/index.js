@@ -6,7 +6,7 @@ import { Users } from 'styled-icons/feather';
 import { CircleSlider, Number } from '../../atoms';
 import { fontSize, palette } from '../../../style';
 
-const FONT_RATIO = 3;
+const FONT_RATIO = 3.5;
 
 const SuperScriptDecimalSpan = styled.span`
    vertical-align: super;
@@ -15,6 +15,7 @@ const SuperScriptDecimalSpan = styled.span`
 `;
 
 const Value = styled(Number)`
+   color: ${({ color }) => color};
    font-size: ${({ size, padd }) => (size - padd) / FONT_RATIO}px;
 `;
 
@@ -50,7 +51,7 @@ const renderValue = (value, decimal) => {
    return value;
 };
 
-const BaseSlider = ({ value: initialValue, voteCount, ...sliderProps }) => {
+const BaseSlider = ({ value: initialValue, voteCount, valueColor, ...sliderProps }) => {
    const { readonly: decimal, size, padd } = sliderProps;
    const [value, setValue] = useState(initialValue);
    useEffect(() => {
@@ -59,7 +60,7 @@ const BaseSlider = ({ value: initialValue, voteCount, ...sliderProps }) => {
 
    return (
       <CircleSlider {...sliderProps} onChanging={setValue} initialValue={initialValue}>
-         <Value size={size} padd={padd}>
+         <Value size={size} padd={padd} color={valueColor}>
             {renderValue(value, decimal)}
             {voteCount && <Votes count={voteCount} />}
          </Value>

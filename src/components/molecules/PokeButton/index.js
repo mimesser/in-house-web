@@ -7,6 +7,7 @@ import { palette } from '../../../style';
 
 const Icon = styled(PaperPlane).attrs({ size: 16 })`
    transform: rotate(28deg);
+   color: ${palette.secondaryDark};
 `;
 
 export const PokeButton = styled(props => (

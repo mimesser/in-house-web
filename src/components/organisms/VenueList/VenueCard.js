@@ -8,7 +8,7 @@ export const VenueCard = ({ venue, showVenue }) => {
    const handleClick = useCallback(() => showVenue(venue), [venue]);
 
    const {
-      insidersCount,
+      votesCount,
       industry,
       name,
       rating,
@@ -28,7 +28,7 @@ export const VenueCard = ({ venue, showVenue }) => {
                {city}, {state} {zipCode}
             </Address>
          </div>
-         <ScoreAndVoters voteCount={insidersCount} voteRating={rating} sliderSize={72} />
+         <ScoreAndVoters voteCount={votesCount} voteRating={rating} sliderSize={72} />
       </Container>
    );
 };

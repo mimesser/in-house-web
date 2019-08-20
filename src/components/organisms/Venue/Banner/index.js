@@ -15,7 +15,7 @@ export const Banner = ({
       industry: { name: industry } = {},
       name,
       venueInfo: { address, city, state, zipCode, imageUrl },
-      insidersCount,
+      votesCount,
       rating,
    },
    inDemo,
@@ -50,7 +50,7 @@ export const Banner = ({
                      '—'
                   )}
                </Score>
-               <Votes count={insidersCount} />
+               <Votes count={votesCount} />
             </Ratings>
          </div>
       </Header>
