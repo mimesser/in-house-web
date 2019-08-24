@@ -15,58 +15,58 @@ import AddMink from './AddMink';
 import AddPost from './AddPost';
 
 const tabMap = {
-   rate: RateTab,
-   post: PostTab,
-   mink: MinkTab,
+  rate: RateTab,
+  post: PostTab,
+  mink: MinkTab,
 };
 
 const knownTabs = Object.keys(tabMap);
 
 const Venue = ({ venue, router }) => {
-   const {
-      query: { tab = 'rate' },
-      asPath,
-   } = router;
+  const {
+    query: { tab = 'rate' },
+    asPath,
+  } = router;
 
-   useEffect(() => {
-      if (!knownTabs.includes(tab)) {
-         router.replace('/houses');
-      }
-   }, []);
+  useEffect(() => {
+    if (!knownTabs.includes(tab)) {
+      router.replace('/houses');
+    }
+  }, []);
 
-   if (!venue) {
-      return <Loader big />;
-   }
+  if (!venue) {
+    return <Loader big />;
+  }
 
-   if (asPath.endsWith('mink/new')) {
-      return <AddMink />;
-   }
+  if (asPath.endsWith('mink/new')) {
+    return <AddMink />;
+  }
 
-   if (asPath.endsWith('post/new')) {
-      return <AddPost />;
-   }
+  if (asPath.endsWith('post/new')) {
+    return <AddPost />;
+  }
 
-   const Tab = tabMap[tab] || RateTab;
+  const Tab = tabMap[tab] || RateTab;
 
-   return (
-      <>
-         <Banner venue={venue} />
-         <Navbar id={venue.id} selected={tab} />
-         <Tab venue={venue} />
-         <InsiderQuestionChallenge />
-      </>
-   );
+  return (
+    <>
+      <Banner venue={venue} />
+      <Navbar id={venue.id} selected={tab} />
+      <Tab venue={venue} />
+      <InsiderQuestionChallenge />
+    </>
+  );
 };
 
 const mapStateToProps = createStructuredSelector({
-   venue: selectSelectedVenue,
+  venue: selectSelectedVenue,
 });
 
 const mapDispatch = {};
 
 export default withRouter(
-   connect(
-      mapStateToProps,
-      mapDispatch,
-   )(Venue),
+  connect(
+    mapStateToProps,
+    mapDispatch,
+  )(Venue),
 );

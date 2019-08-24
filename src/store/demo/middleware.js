@@ -5,22 +5,22 @@ import configureMockAdapterRoutes, { RESPONSE_DELAY } from './configureMockAdapt
 import { actionTypes } from './actions';
 
 const demoMiddleware = store => next => action => {
-   let mockAdapter;
+  let mockAdapter;
 
-   if (action.type === actionTypes.TURN_DEMO_ON) {
-      mockAdapter = new MockAdapter(api, { delayResponse: RESPONSE_DELAY });
-      configureMockAdapterRoutes(mockAdapter, store);
-   }
+  if (action.type === actionTypes.TURN_DEMO_ON) {
+    mockAdapter = new MockAdapter(api, { delayResponse: RESPONSE_DELAY });
+    configureMockAdapterRoutes(mockAdapter, store);
+  }
 
-   if (action.type === actionTypes.TURN_DEMO_OFF) {
-      // TODO: this check is only necc. bc turnDemoOff is called everytime new venue is selected
-      if (mockAdapter) {
-         mockAdapter.restore();
-         mockAdapter = undefined;
-      }
-   }
+  if (action.type === actionTypes.TURN_DEMO_OFF) {
+    // TODO: this check is only necc. bc turnDemoOff is called everytime new venue is selected
+    if (mockAdapter) {
+      mockAdapter.restore();
+      mockAdapter = undefined;
+    }
+  }
 
-   return next(action);
+  return next(action);
 };
 
 export default demoMiddleware;

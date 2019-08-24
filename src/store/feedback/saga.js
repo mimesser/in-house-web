@@ -8,28 +8,28 @@ import { setFeedbackError, setFeedbackLoading, setFeedbackSuccess, actionTypes, 
 const CONFIRMATION_DELAY = 2000;
 
 export function* postFeedback({ payload: { subject, message, email } }) {
-   const valid = email ? isEmailValid(email) : true;
-   if (!valid) {
-      yield put(setFeedbackError('Please provide a valid email'));
-      return;
-   }
+  const valid = email ? isEmailValid(email) : true;
+  if (!valid) {
+    yield put(setFeedbackError('Please provide a valid email'));
+    return;
+  }
 
-   try {
-      yield put(setFeedbackLoading());
-      yield call(api.post, 'email/contactus', {
-         subject,
-         message,
-         userEmail: email,
-      });
-      yield put(setFeedbackSuccess());
-      yield delay(CONFIRMATION_DELAY);
-      yield put(clearFeedback());
-      Router.back();
-   } catch (e) {
-      yield put(setFeedbackError('Something went wrong...'));
-   }
+  try {
+    yield put(setFeedbackLoading());
+    yield call(api.post, 'email/contactus', {
+      subject,
+      message,
+      userEmail: email,
+    });
+    yield put(setFeedbackSuccess());
+    yield delay(CONFIRMATION_DELAY);
+    yield put(clearFeedback());
+    Router.back();
+  } catch (e) {
+    yield put(setFeedbackError('Something went wrong...'));
+  }
 }
 
 export default function* feedbackSaga() {
-   yield all([takeLatest(actionTypes.POST_FEEDBACK, postFeedback)]);
+  yield all([takeLatest(actionTypes.POST_FEEDBACK, postFeedback)]);
 }

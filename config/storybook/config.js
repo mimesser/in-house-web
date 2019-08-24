@@ -9,13 +9,13 @@ const store = configureStore();
 const req = require.context('../../src/components', true, /.stories.js$/);
 
 function loadStories() {
-   req.keys().forEach(filename => req(filename));
+  req.keys().forEach(filename => req(filename));
 }
 
 addDecorator(story => (
-   <Provider store={store}>
-      <ThemeProvider theme={theme}>{story()}</ThemeProvider>
-   </Provider>
+  <Provider store={store}>
+    <ThemeProvider theme={theme}>{story()}</ThemeProvider>
+  </Provider>
 ));
 
 configure(loadStories, module);

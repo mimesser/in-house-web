@@ -3,14 +3,14 @@ import { createGlobalStyle } from 'styled-components';
 import { normalize } from 'polished';
 
 import {
-   BASE_FONT_SIZE,
-   breakpoints,
-   lineHeight,
-   fontWeight,
-   font,
-   appBackground,
-   palette,
-   letterSpacing,
+  BASE_FONT_SIZE,
+  breakpoints,
+  lineHeight,
+  fontWeight,
+  font,
+  appBackground,
+  palette,
+  letterSpacing,
 } from '../style';
 
 const GlobalStyle = createGlobalStyle`

@@ -1,4 +1,4 @@
 export default {
-   id: -1,
-   name: 'Sample Industry',
+  id: -1,
+  name: 'Sample Industry',
 };

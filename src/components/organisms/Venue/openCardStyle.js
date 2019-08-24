@@ -5,60 +5,46 @@ import { IconButton } from '../../atoms';
 import { Dial } from '../../molecules';
 
 export const ItemDate = styled.div`
-   color: ${palette.textLight};
-   font-size: ${fontSize.tiny};
-   margin-bottom: ${spacing.large};
+  color: ${palette.textLight};
+  font-size: ${fontSize.tiny};
+  margin-bottom: ${spacing.small};
 `;
 
 export const ItemTitle = styled.div`
-   text-transform: lowercase;
-   font-size: ${fontSize.xLarge};
-   font-weight: ${fontWeight.bolder};
-   // keep space for 'you rated'
-   margin-bottom: ${({ keepSpace }) => (keepSpace ? '3.25rem' : spacing.small)};
+  text-transform: lowercase;
+  font-size: ${fontSize.xLarge};
+  font-weight: ${fontWeight.primary};
+  // keep space for 'you rated'
+  margin-bottom: ${({ keepSpace }) => (keepSpace ? '3.25rem' : spacing.small)};
 `;
 
 export const VoteButton = styled(IconButton)`
-   color: ${({ selected }) => (selected ? palette.textDark : palette.textLight)};
-   &[disabled] {
-      color: ${palette.secondaryLight};
-   }
-`;
-
-export const VoteArea = styled.div`
-   display: flex;
-   flex-direction: row;
-
-   > div:first-child {
-      flex: 0;
-      margin-right: ${spacing.small};
-
-      ${VoteButton} {
-         &:last-child {
-            margin-top: ${spacing.large};
-         }
-      }
-   }
-   > div:nth-child(2) {
-      flex: 1;
-   }
+  color: ${({ selected }) => (selected ? palette.textDark : palette.textLight)};
+  margin-top: ${spacing.xxxLarge};
+  &[disabled] {
+    color: ${palette.textUltraLight};
+  }
+  &:last-child {
+    margin-left: ${spacing.large};
+  }
 `;
 
 export const Layout = styled.div`
-   flex: 1;
-   display: flex;
-   flex-direction: column;
-   overflow: hidden;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding-top: ${spacing.xxLarge};
 
-   ${Dial} {
-      margin-top: -100px;
-      margin-left: -100px;
-   }
+  ${Dial} {
+    margin-top: -100px;
+    margin-left: -100px;
+  }
 `;
 
 export const SubTitle = styled.div`
    font-size: ${fontSize.large};
-   fontWeight: ${fontWeight.bolder}
+   font-weight: ${fontWeight.bolder}
    color: ${palette.textLight};
    margin-bottom: ${spacing.large};
 `;

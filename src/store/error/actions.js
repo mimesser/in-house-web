@@ -1,10 +1,10 @@
 export const actionTypes = {
-   FAILURE: 'FAILURE',
+  FAILURE: 'FAILURE',
 };
 
 export function failure(error) {
-   return {
-      type: actionTypes.FAILURE,
-      error,
-   };
+  return {
+    type: actionTypes.FAILURE,
+    error,
+  };
 }

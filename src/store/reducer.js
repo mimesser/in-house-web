@@ -6,8 +6,8 @@ import { reducer as venues } from './venues/reducer';
 import { reducer as feedback } from './feedback/reducer';
 
 export default combineReducers({
-   aggregate,
-   error,
-   feedback,
-   venues,
+  aggregate,
+  error,
+  feedback,
+  venues,
 });
