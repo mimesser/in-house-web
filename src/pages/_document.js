@@ -1,6 +1,7 @@
 import React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
+import { hotjar } from '../external-tools/hotjar';
 
 class MyDocument extends Document {
    static async getInitialProps(ctx) {
@@ -40,6 +41,7 @@ class MyDocument extends Document {
                   href="https://fonts.googleapis.com/css?family=Roboto:300|Nunito+Sans:600|Source+Sans+Pro:300,400&display=swap"
                   rel="stylesheet"
                />
+               <script dangerouslySetInnerHTML={hotjar} />
             </Head>
             <body>
                <Main />
