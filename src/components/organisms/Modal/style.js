@@ -1,9 +1,8 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { Close } from 'styled-icons/material/Close';
 
 import { breakpoints, spacing, palette, appBackground } from '../../../style';
-import { Heading, HeadingTwo, IconButton } from '../../atoms';
+import { Heading, HeadingTwo, IconButton, Icon } from '../../atoms';
 
 export const Background = styled.div`
    position: fixed;
@@ -52,10 +51,8 @@ export const Content = styled.div`
    ${colors};
 `;
 
-const CloseIcon = styled(Close).attrs({ size: 40 })``;
-
 export const CloseButton = styled(IconButton).attrs({
-   children: <CloseIcon />,
+   children: <Icon icon="close" />,
 })`
    margin-left: auto;
 `;

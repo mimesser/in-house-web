@@ -3,7 +3,7 @@ import { withRouter } from 'next/router';
 import Link from 'next/link';
 import styled from 'styled-components';
 
-import { Icon } from '../../atoms';
+import { Icon, IconButton } from '../../atoms';
 
 import { spacing, fontSize, palette } from '../../../style';
 
@@ -12,31 +12,23 @@ const MenuContainer = styled.ul`
    list-style: none;
 `;
 
-const CloseButton = styled.button`
+const CloseButton = styled(IconButton)`
    padding: ${spacing.small};
-   outline: none;
-   border: none;
-   background: none;
 `;
 
-// TODO colors
-
-const CloseIcon = styled(Icon).attrs({
-   size: 2,
-})`
-   svg {
-      stroke: #eeeeee;
-      &:hover {
-         stroke: ${palette.white};
-      }
-      cursor: pointer;
+const CloseIcon = styled(Icon)`
+   cursor: pointer;
+   color: ${palette.textUltraLight};
+   :hover {
+      color: ${palette.white};
    }
 `;
+
 const A = styled.a`
    outline: none;
    text-decoration: none;
    cursor: pointer;
-   color: #eeeeee;
+   color: ${palette.textUltraLight};
    font-family: Poppins;
    font-size: ${fontSize.large};
    padding: ${spacing.small} ${spacing.large};
