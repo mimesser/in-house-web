@@ -7,13 +7,13 @@ import { Dial } from '../../molecules';
 export const ItemDate = styled.div`
    color: ${palette.textLight};
    font-size: ${fontSize.tiny};
-   margin-bottom: ${spacing.large};
+   margin-bottom: ${spacing.small};
 `;
 
 export const ItemTitle = styled.div`
    text-transform: lowercase;
    font-size: ${fontSize.xLarge};
-   font-weight: ${fontWeight.bolder};
+   font-weight: ${fontWeight.primary};
    // keep space for 'you rated'
    margin-bottom: ${({ keepSpace }) => (keepSpace ? '3.25rem' : spacing.small)};
 `;
@@ -21,26 +21,28 @@ export const ItemTitle = styled.div`
 export const VoteButton = styled(IconButton)`
    color: ${({ selected }) => (selected ? palette.textDark : palette.textLight)};
    &[disabled] {
-      color: ${palette.secondaryLight};
+      color: ${palette.textUltraLight};
    }
 `;
 
 export const VoteArea = styled.div`
    display: flex;
-   flex-direction: row;
+   flex-direction: column;
 
    > div:first-child {
+      flex: 1;
+      margin-top: ${spacing.large};
+   }
+
+   > div:nth-child(2) {
       flex: 0;
-      margin-right: ${spacing.small};
+      margin-top: ${spacing.xxLarge};
 
       ${VoteButton} {
          &:last-child {
-            margin-top: ${spacing.large};
+            margin-left: ${spacing.large};
          }
       }
-   }
-   > div:nth-child(2) {
-      flex: 1;
    }
 `;
 

@@ -9,10 +9,13 @@ import { fontSize, fontWeight, spacing, palette } from '../../../style';
 const RateConfirmationLayout = styled(Layout)`
    margin-top: ${spacing.xxLarge};
 
+   ${ItemDate} {
+      margin-bottom: ${spacing.large};
+   }
+
    ${ItemTitle} {
       color: ${palette.textUltraLight};
       font-size: ${fontSize.large};
-      font-weight: ${fontWeight.primary};
    }
 
    ${SubTitle} {
@@ -25,9 +28,9 @@ const RateConfirmationLayout = styled(Layout)`
    }
 `;
 
-export const RateConfirmation = ({ title, date, voteRating, voteCount }) => (
+export const RateConfirmation = ({ title, created, voteRating, voteCount }) => (
    <RateConfirmationLayout>
-      {date && <ItemDate>{formatDate(date)}</ItemDate>}
+      {created && <ItemDate dateTime={created}>{formatDate(created)}</ItemDate>}
       <SubTitle>team average</SubTitle>
       <ItemTitle>{title}</ItemTitle>
       <Dial readonly value={voteRating} size={350} padd={78} inverse voteCount={voteCount} />

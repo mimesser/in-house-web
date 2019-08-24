@@ -2,8 +2,7 @@ import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { Check } from 'styled-icons/evil/Check';
-import { CloseO } from 'styled-icons/evil/CloseO';
+import { Icon } from '../../../atoms';
 
 import {
    selectSelectedVenue,
@@ -21,18 +20,20 @@ import { formatDate } from '../../../../utils/format';
 const VotePost = ({ post: { created, title, text, myVote }, venue: { name: venueName }, upvotePost, downvotePost }) => {
    return (
       <Layout>
-         <ItemDate>{formatDate(created)}</ItemDate>
-         <ItemTitle>{title}</ItemTitle>
          <VoteArea>
             <div>
+               <ItemDate dateTime={created}>{formatDate(created)}</ItemDate>
+               <ItemTitle>{title}</ItemTitle>
+               {text}
+            </div>
+            <div>
                <VoteButton onClick={upvotePost} selected={myVote === 1}>
-                  <Check size={48} />
+                  <Icon size={4} icon="arrow-up-circle" />
                </VoteButton>
                <VoteButton onClick={downvotePost} selected={myVote === -1}>
-                  <CloseO size={48} />
+                  <Icon size={4} icon="arrow-down-circle" />
                </VoteButton>
             </div>
-            <div>{text}</div>
          </VoteArea>
       </Layout>
    );
