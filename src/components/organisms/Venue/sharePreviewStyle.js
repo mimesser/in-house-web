@@ -8,7 +8,7 @@ import { spacing, palette, calcRem } from '../../../style';
 const parentsHorizontalPadding = calcRem('64px');
 
 export const SharePreviewCard = styled(ItemCard)`
-   margin: ${spacing.xxLarge} -${parentsHorizontalPadding};
-   background-color: ${palette.secondaryLight};
-   padding: ${spacing.large} ${spacing.xLarge};
+  margin: ${spacing.xxLarge} -${parentsHorizontalPadding};
+  background-color: ${palette.secondaryLight};
+  padding: ${spacing.large} ${spacing.xLarge};
 `;

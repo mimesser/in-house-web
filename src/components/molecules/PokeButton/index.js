@@ -6,15 +6,15 @@ import { IconButton } from '../../atoms';
 import { palette } from '../../../style';
 
 const Icon = styled(PaperPlane).attrs({ size: 16 })`
-   transform: rotate(28deg);
-   color: ${palette.secondaryDark};
-   vertical-align: baseline;
+  transform: rotate(28deg);
+  color: ${palette.secondaryDark};
+  vertical-align: baseline;
 `;
 
 export const PokeButton = styled(props => (
-   <IconButton {...props}>
-      <Icon />
-   </IconButton>
+  <IconButton {...props}>
+    <Icon />
+  </IconButton>
 ))`
-   color: ${palette.text};
+  color: ${palette.text};
 `;

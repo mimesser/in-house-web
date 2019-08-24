@@ -6,87 +6,87 @@ import { SEND_STATUS } from './actions';
 const selectVenueState = state => state.venues;
 
 export const selectVenues = createSelector(
-   selectVenueState,
-   ({ list }) => list,
+  selectVenueState,
+  ({ list }) => list,
 );
 
 export const selectLoadingVenues = createSelector(
-   selectVenues,
-   list => !list,
+  selectVenues,
+  list => !list,
 );
 
 export const selectSelectedVenue = createSelector(
-   selectVenueState,
-   ({ selectedVenue }) => selectedVenue,
+  selectVenueState,
+  ({ selectedVenue }) => selectedVenue,
 );
 
 export const selectInsiderChallengeForm = createSelector(
-   selectVenueState,
-   ({ insiderChallengeForm }) => insiderChallengeForm,
+  selectVenueState,
+  ({ insiderChallengeForm }) => insiderChallengeForm,
 );
 
 export const selectIsActiveInsider = createSelector(
-   selectInsiderVenueIds,
-   selectSelectedVenue,
-   (insiderVenueIds, selectedVenue) => insiderVenueIds && selectedVenue && insiderVenueIds.includes(selectedVenue.id),
+  selectInsiderVenueIds,
+  selectSelectedVenue,
+  (insiderVenueIds, selectedVenue) => insiderVenueIds && selectedVenue && insiderVenueIds.includes(selectedVenue.id),
 );
 
 export const selectSelectedMink = createSelector(
-   selectSelectedVenue,
-   selectedVenue =>
-      selectedVenue && selectedVenue.minks && selectedVenue.minks.find(m => m.id === selectedVenue.selectedMinkId),
+  selectSelectedVenue,
+  selectedVenue =>
+    selectedVenue && selectedVenue.minks && selectedVenue.minks.find(m => m.id === selectedVenue.selectedMinkId),
 );
 
 export const selectVoteMinkConfirmation = createSelector(
-   selectSelectedVenue,
-   selectedVenue => selectedVenue && selectedVenue.voteMinkConfirmation,
+  selectSelectedVenue,
+  selectedVenue => selectedVenue && selectedVenue.voteMinkConfirmation,
 );
 
 export const selectAnswerMinkStatus = createSelector(
-   selectSelectedVenue,
-   selectedVenue => selectedVenue && selectedVenue.answerMinkStatus,
+  selectSelectedVenue,
+  selectedVenue => selectedVenue && selectedVenue.answerMinkStatus,
 );
 
 export const selectSelectedTag = createSelector(
-   selectSelectedVenue,
-   selectedVenue =>
-      selectedVenue &&
-      selectedVenue.rates &&
-      selectedVenue.rates.find(t => t.definitionId === selectedVenue.selectedTagId),
+  selectSelectedVenue,
+  selectedVenue =>
+    selectedVenue &&
+    selectedVenue.rates &&
+    selectedVenue.rates.find(t => t.definitionId === selectedVenue.selectedTagId),
 );
 
 export const selectRateTagConfirmation = createSelector(
-   selectSelectedVenue,
-   selectedVenue => selectedVenue && selectedVenue.rateTagConfirmation,
+  selectSelectedVenue,
+  selectedVenue => selectedVenue && selectedVenue.rateTagConfirmation,
 );
 
 export const selectSelectedPost = createSelector(
-   selectSelectedVenue,
-   selectedVenue =>
-      selectedVenue && selectedVenue.posts && selectedVenue.posts.find(m => m.id === selectedVenue.selectedPostId),
+  selectSelectedVenue,
+  selectedVenue =>
+    selectedVenue && selectedVenue.posts && selectedVenue.posts.find(m => m.id === selectedVenue.selectedPostId),
 );
 
 export const selectVotePostConfirmation = createSelector(
-   selectSelectedVenue,
-   selectedVenue => selectedVenue && selectedVenue.votePostConfirmation,
+  selectSelectedVenue,
+  selectedVenue => selectedVenue && selectedVenue.votePostConfirmation,
 );
 
 export const selectPrivateShareItemId = createSelector(
-   selectSelectedVenue,
-   selectedVenue => selectedVenue && selectedVenue.privateShareItemId,
+  selectSelectedVenue,
+  selectedVenue => selectedVenue && selectedVenue.privateShareItemId,
 );
 
 export const selectPrivateShareRecipientError = createSelector(
-   selectSelectedVenue,
-   selectedVenue => selectedVenue && selectedVenue.privateShareRecipientError,
+  selectSelectedVenue,
+  selectedVenue => selectedVenue && selectedVenue.privateShareRecipientError,
 );
 
 export const selectPrivateShareSending = createSelector(
-   selectSelectedVenue,
-   selectedVenue => selectedVenue && selectedVenue.privateShareSending === SEND_STATUS.sending,
+  selectSelectedVenue,
+  selectedVenue => selectedVenue && selectedVenue.privateShareSending === SEND_STATUS.sending,
 );
 
 export const selectPrivateShareSent = createSelector(
-   selectSelectedVenue,
-   selectedVenue => selectedVenue && selectedVenue.privateShareSending === SEND_STATUS.sent,
+  selectSelectedVenue,
+  selectedVenue => selectedVenue && selectedVenue.privateShareSending === SEND_STATUS.sent,
 );

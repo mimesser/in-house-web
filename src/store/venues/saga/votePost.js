@@ -9,26 +9,26 @@ import { showInsiderChallenge } from './showInsiderChallenge';
 const CONFIRMATION_INTERVAL = 1500;
 
 export function* votePost({ payload: { vote } }) {
-   const venue = yield select(selectSelectedVenue);
-   const isActiveInsider = yield select(selectIsActiveInsider);
+  const venue = yield select(selectSelectedVenue);
+  const isActiveInsider = yield select(selectIsActiveInsider);
 
-   if (!isActiveInsider) {
-      // this possible when private share link sent
-      yield showInsiderChallenge(venue.id);
-      return;
-   }
+  if (!isActiveInsider) {
+    // this possible when private share link sent
+    yield showInsiderChallenge(venue.id);
+    return;
+  }
 
-   const post = yield select(selectSelectedPost);
+  const post = yield select(selectSelectedPost);
 
-   const { data } = yield call(api.post, `venues/${venue.id}/feedback/${post.id}/vote`, { vote });
+  const { data } = yield call(api.post, `venues/${venue.id}/feedback/${post.id}/vote`, { vote });
 
-   try {
-      yield put(showVotePostConfirmation(data));
-      // order can change
-      yield fork(reloadVenuePosts, venue.id);
-      yield delay(CONFIRMATION_INTERVAL);
-   } finally {
-      yield put(setSelectedPost(undefined));
-      yield put(showVotePostConfirmation(undefined));
-   }
+  try {
+    yield put(showVotePostConfirmation(data));
+    // order can change
+    yield fork(reloadVenuePosts, venue.id);
+    yield delay(CONFIRMATION_INTERVAL);
+  } finally {
+    yield put(setSelectedPost(undefined));
+    yield put(showVotePostConfirmation(undefined));
+  }
 }

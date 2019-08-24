@@ -1,7 +1,7 @@
 import { settings } from '../settings';
 
 export const hotjar = settings.hotjar && {
-   __html: `
+  __html: `
     (function(h,o,t,j,a,r){
        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
        h._hjSettings={hjid:${settings.hotjar},hjsv:6};

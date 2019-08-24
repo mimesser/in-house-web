@@ -5,19 +5,19 @@ import { Input } from '../../atoms';
 import { spacing } from '../../../style';
 
 const Wrap = styled.div`
-   position: relative;
-   display: flex;
-   align-items: center;
+  position: relative;
+  display: flex;
+  align-items: center;
 
-   > :not(:first-child) {
-      position: absolute;
-      right: ${spacing.small};
-   }
+  > :not(:first-child) {
+    position: absolute;
+    right: ${spacing.small};
+  }
 `;
 
 export const IconInput = styled(({ className, icon, ...inputProps }) => (
-   <Wrap className={className}>
-      <Input {...inputProps} />
-      {icon}
-   </Wrap>
+  <Wrap className={className}>
+    <Input {...inputProps} />
+    {icon}
+  </Wrap>
 ))``;

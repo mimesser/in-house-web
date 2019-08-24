@@ -7,24 +7,24 @@ import { setPrivateShareItemId, selectSelectedVenue } from '../../../store/venue
 import { selectInDemo } from '../../../store/demo';
 
 const Share = ({ id, openModal, inDemo }) => {
-   const handleClick = useCallback(
-      e => {
-         e.stopPropagation();
-         openModal(id);
-      },
-      [id],
-   );
-   return !inDemo && <PokeButton onClick={handleClick} />;
+  const handleClick = useCallback(
+    e => {
+      e.stopPropagation();
+      openModal(id);
+    },
+    [id],
+  );
+  return !inDemo && <PokeButton onClick={handleClick} />;
 };
 
 const mapState = createStructuredSelector({
-   inDemo: selectInDemo,
+  inDemo: selectInDemo,
 });
 
 const mapDispatch = {
-   openModal: setPrivateShareItemId,
+  openModal: setPrivateShareItemId,
 };
 export default connect(
-   mapState,
-   mapDispatch,
+  mapState,
+  mapDispatch,
 )(Share);
