@@ -12,6 +12,7 @@ import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
 import { ScoreAndVoters } from './ScoreAndVoters';
 import { spacing } from '../../../style';
+import { SharePreviewCard } from './sharePreviewStyle';
 
 const PostCard = styled(ItemCard)`
    ${ScoreAndVoters} {
@@ -74,13 +75,13 @@ const PostTab = ({ venue: { id, posts }, loadPosts, setSelectedPost }) => {
          const { title, text, voteCount, voteRating } = findPost(id, posts);
 
          return (
-            <ItemCard preview>
-               <ScoreAndVoters voteCount={voteCount} voteRating={voteRating} sliderSize={80} />
+            <SharePreviewCard>
+               <ScoreAndVoters voteCount={voteCount} voteRating={voteRating} sliderSize={70} />
                <Main>
                   <ItemTitle>{title}</ItemTitle>
                   <ItemText>{text}</ItemText>
                </Main>
-            </ItemCard>
+            </SharePreviewCard>
          );
       },
       [posts],

@@ -4,15 +4,14 @@ import styled from 'styled-components';
 import isNil from 'lodash/isNil';
 
 import { Loader } from '../../atoms';
-import { Dial } from '../../molecules';
 import { setSelectedTag, loadRates } from '../../../store/venues';
-import { Votes } from './Votes';
 import { ItemCard, TabLayout, Main, ItemTitle, TabTitle } from './tabStyle';
 import { ScoreAndVoters } from './ScoreAndVoters';
 import RateTag from './RateTag';
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
 import { calcRem, spacing } from '../../../style';
+import { SharePreviewCard } from './sharePreviewStyle';
 
 const RateCard = styled(ItemCard)`
    min-height: ${({ preview }) => !preview && calcRem('150px')};
@@ -29,7 +28,7 @@ const Tag = ({ name, definitionId, userRate, voteCount, voteRating, setSelectedT
 
    return (
       <RateCard large onClick={open}>
-         <ScoreAndVoters voteCount={voteCount} voteRating={getTeamRateIfRated(userRate, voteRating)} sliderSize={80} />
+         <ScoreAndVoters voteCount={voteCount} voteRating={getTeamRateIfRated(userRate, voteRating)} sliderSize={70} />
          <Main>
             <ItemTitle>{name}</ItemTitle>
          </Main>
@@ -55,13 +54,16 @@ const RateTab = ({ venue: { rates: tags }, setSelectedTag, loadRates }) => {
          const { name, voteCount, userRate, voteRating } = findTag(id, tags);
 
          return (
-            <RateCard preview>
-               <Dial size={100} readonly value={getTeamRateIfRated(userRate, voteRating)} />
+            <SharePreviewCard>
+               <ScoreAndVoters
+                  voteCount={voteCount}
+                  voteRating={getTeamRateIfRated(userRate, voteRating)}
+                  sliderSize={70}
+               />
                <Main>
                   <ItemTitle>{name}</ItemTitle>
-                  <Votes count={voteCount} />
                </Main>
-            </RateCard>
+            </SharePreviewCard>
          );
       },
       [tags],

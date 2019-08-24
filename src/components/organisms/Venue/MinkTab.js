@@ -12,6 +12,7 @@ import VoteMink from './VoteMink';
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
 import { ScoreAndVoters } from './ScoreAndVoters';
+import { SharePreviewCard } from './sharePreviewStyle';
 
 const MinkCard = styled(ItemCard)`
    ${ItemTitle} {
@@ -97,13 +98,13 @@ const MinkTab = ({ venue: { id, minks, addedMinkId }, loadMinks, setSelectedMink
          const { created, question, voteCount, voteRating, myVote } = findMink(id, minks);
 
          return (
-            <MinkCard preview>
-               <ScoreAndVoters voteCount={voteCount} voteRating={myVote && voteRating} sliderSize={80} />
+            <SharePreviewCard>
+               <ScoreAndVoters voteCount={voteCount} voteRating={myVote && voteRating} sliderSize={70} />
                <Main>
-                  <time dateTime={created}>{formatDate(created)}</time>
+                  <ItemTime>{formatDate(created)}</ItemTime>
                   <ItemTitle>{question}</ItemTitle>
                </Main>
-            </MinkCard>
+            </SharePreviewCard>
          );
       },
       [minks],

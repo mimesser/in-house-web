@@ -13,7 +13,7 @@ import {
    setPrivateShareRecipientError,
 } from '../../../../store/venues';
 import { Modal } from '../../Modal';
-import { CounterInput, WinkConfirmation } from '../../../molecules';
+import { CounterInput, WinkConfirmation, PokeButton } from '../../../molecules';
 import { SendAnonymous, SubmitButton, Layout, Tip } from './style';
 
 const PrivateShare = ({
@@ -39,23 +39,28 @@ const PrivateShare = ({
       [recipientError],
    );
    const send = () => share(type, id, recipient, message || placeholder);
-   const placeholder = `${venueName} insider? someone wants you to know about — “${getItemTitle(id)}”`;
+   const placeholder = `${venueName} insider? someone thinks you should know about — “${getItemTitle(id)}”`;
 
    return (
       <Layout>
          {renderItem(id)}
-         <SendAnonymous>send anonymous</SendAnonymous>
-         <CounterInput
-            value={recipient}
-            onChange={handleRecipientChange}
-            max={50}
-            placeholder="recipient email/mobile"
-            error={recipientError}
-         />
-         <Tip>sent via in-house network</Tip>
-         <CounterInput value={message} onChange={setMessage} max={60} multiline rows={3} placeholder={placeholder} />
+         <SendAnonymous>
+            <span>send anonymous</span>
+            <PokeButton />
+         </SendAnonymous>
+         <Tip>send text or email via in-house network</Tip>
+         <CounterInput value={recipient} onChange={handleRecipientChange} max={50} error={recipientError} marginless />
          <Tip>anonymous message</Tip>
-         <SubmitButton visible={recipient.length > 0} loading={sending} onClick={send}>
+         <CounterInput
+            value={message}
+            onChange={setMessage}
+            max={60}
+            rows={4}
+            placeholder={placeholder}
+            multiline
+            marginless
+         />
+         <SubmitButton disabled={recipient.length === 0} loading={sending} onClick={send}>
             send to co-insider
          </SubmitButton>
       </Layout>
@@ -86,6 +91,7 @@ const mapState = createStructuredSelector({
    sent: selectPrivateShareSent,
    sending: selectPrivateShareSending,
 });
+
 const mapDispatch = {
    close: clearPrivateShareItemId,
    share: privateShare,

@@ -27,7 +27,9 @@ export const ItemText = styled.div`
    margin-top: ${spacing.nano};
 `;
 
-export const Main = styled.div``;
+export const Main = styled.div`
+   width: 100%;
+`;
 
 const adjustForPreview = ({ preview }) =>
    preview &&
