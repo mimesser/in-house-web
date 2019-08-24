@@ -6,21 +6,21 @@ import { Votes } from './Votes';
 import { spacing, calcRem, fontSize } from '../../../style';
 
 export const ScoreAndVoters = styled(({ voteRating, voteCount, sliderSize, className }) => (
-   <div className={className}>
-      <Dial size={sliderSize} readonly value={voteRating} />
-      <Votes count={voteCount} />
-   </div>
+  <div className={className}>
+    <Dial size={sliderSize} readonly value={voteRating} />
+    <Votes count={voteCount} />
+  </div>
 ))`
-   display: flex;
-   flex-direction: column;
-   min-width: ${calcRem('100px')};
+  display: flex;
+  flex-direction: column;
+  min-width: ${calcRem('100px')};
 
-   ${Votes} {
-      margin: ${spacing.tiny} auto 0 auto;
-      font-size: ${({ large }) => (large ? fontSize.small : fontSize.tiny)};
-   }
+  ${Votes} {
+    margin: ${spacing.tiny} auto 0 auto;
+    font-size: ${({ large }) => (large ? fontSize.small : fontSize.tiny)};
+  }
 
-   ${Dial} {
-      margin: 0 auto;
-   }
+  ${Dial} {
+    margin: 0 auto;
+  }
 `;

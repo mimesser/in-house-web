@@ -1,157 +1,143 @@
-import React, { useCallback, useState, useEffect } from 'react';
-import Router from 'next/router';
-import styled from 'styled-components';
+import React, { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { Check } from 'styled-icons/evil/Check';
-import { CloseO } from 'styled-icons/evil/CloseO';
-
 import {
-   selectSelectedVenue,
-   selectSelectedMink,
-   selectVoteMinkConfirmation,
-   selectAnswerMinkStatus,
-   setSelectedMink,
-   upvoteMink,
-   downvoteMink,
-   tryAnswerMink,
+  downvoteMink,
+  selectAnswerMinkStatus,
+  selectSelectedMink,
+  selectSelectedVenue,
+  selectVoteMinkConfirmation,
+  setSelectedMink,
+  tryAnswerMink,
+  upvoteMink,
 } from '../../../../store/venues';
-import { DEMO_VENUE_ID } from '../../../../store/demo/data';
 import { Modal } from '../../Modal';
-import { Loader, Icon } from '../../../atoms';
+import { Icon, Loader } from '../../../atoms';
 import { IconInput } from '../../../molecules';
-import { spacing, fontSize, font } from '../../../../style';
 import { formatDate } from '../../../../utils/format';
 import { RateConfirmation } from '../RateConfirmation';
 import { normalizeAnswer } from '../normalizeAnswer';
-import { ItemTitle, Layout, VoteArea, VoteButton } from '../openCardStyle';
+import { ItemDate, ItemTitle, Layout, VoteButton } from '../openCardStyle';
+import { Status, InputGroup } from './style';
 
-const AnswerStatus = styled(({ status, className }) => {
-   if (!status) {
-      return null;
-   }
+const AnswerStatus = ({ status, previouslyAnsweredCorrectly }) => {
+  if (!status) {
+    return previouslyAnsweredCorrectly ? <Status>previously answered</Status> : null;
+  }
 
-   const { loading, isAnswerCorrect } = status;
-   if (loading) {
-      return <Loader />;
-   }
-   return <span className={className}>{isAnswerCorrect ? 'correct answer' : 'wrong answer'}</span>;
-})`
-   font-size: ${fontSize.tiny};
-`;
+  const { loading, isAnswerCorrect } = status;
+  if (loading) {
+    return null;
+  }
+  return <Status>{isAnswerCorrect ? 'correct answer!' : 'wrong answer'}</Status>;
+};
 
-const VoteMinkLayout = styled(Layout)`
-   ${VoteArea} {
-      margin-top: ${spacing.xxLarge};
-   }
+const renderInputIcon = (answerStatus, previouslyAnsweredCorrectly) =>
+  (!answerStatus && previouslyAnsweredCorrectly) || (answerStatus && answerStatus.isAnswerCorrect) ? (
+    <Icon icon="winky" color="primaryLight" size={1.5} />
+  ) : null;
 
-   time {
-      font-size: ${fontSize.tiny};
-      font-family: ${font.number};
-      margin: ${spacing.large} 0;
-      display: block;
-   }
-`;
+const renderStatusIcon = answerStatus => {
+  if (!answerStatus) {
+    return null;
+  }
+  const { loading, isAnswerCorrect } = answerStatus;
+  if (loading) {
+    return <Loader />;
+  }
+  return <Icon size={1.5} icon={isAnswerCorrect ? 'check' : 'close'} />;
+};
 
 const VoteMink = ({
-   mink: { created, question, myCorrectAnswer, myVote, id: minkId },
-   venue: { id: venueId, name: venueName },
-   answerStatus,
-   tryAnswerMink,
-   upvoteMink,
-   downvoteMink,
+  mink: { created, question, myCorrectAnswer, myVote, id: minkId },
+  venue: { id: venueId },
+  answerStatus,
+  tryAnswerMink,
+  upvoteMink,
+  downvoteMink,
 }) => {
-   const [answer, setAnswer] = useState('');
-   const [answerAttemptMade, setAnswerAttemptMade] = useState(false);
-   const [dirty, setDirty] = useState(false);
-   const tryAnswer = useCallback(e => {
-      const value = normalizeAnswer(e.currentTarget.value);
-      setAnswer(value);
-      setDirty(true);
-      tryAnswerMink(venueId, minkId, value);
-   }, []);
-   useEffect(() => {
-      if (answerAttemptMade || !answerStatus || typeof answerStatus.isAnswerCorrect !== 'boolean') {
-         return;
-      }
-      setAnswerAttemptMade(true);
-   }, [answerStatus, answerAttemptMade]);
+  const [answer, setAnswer] = useState(myCorrectAnswer || '');
+  const [answerAttemptMade, setAnswerAttemptMade] = useState(false);
+  const tryAnswer = useCallback(e => {
+    const value = normalizeAnswer(e.currentTarget.value);
+    setAnswer(value);
+    tryAnswerMink(venueId, minkId, value);
+  }, []);
+  useEffect(() => {
+    if (answerAttemptMade || !answerStatus || typeof answerStatus.isAnswerCorrect !== 'boolean') {
+      return;
+    }
+    setAnswerAttemptMade(true);
+  }, [answerStatus, answerAttemptMade]);
 
-   const canVote = !!myCorrectAnswer || answerAttemptMade || typeof myVote === 'number';
-   const inputValue = (dirty ? answer : myCorrectAnswer) || '';
+  const canVote = !!myCorrectAnswer || answerAttemptMade || typeof myVote === 'number';
+  const previouslyAnsweredCorrectly = !!myCorrectAnswer;
 
-   return (
-      <VoteMinkLayout>
-         <VoteArea>
-            <div>
-               <VoteButton disabled={!canVote} onClick={upvoteMink} selected={myVote === 1}>
-                  <Check size={48} />
-               </VoteButton>
-               <VoteButton disabled={!canVote} onClick={downvoteMink} selected={myVote === -1}>
-                  <CloseO size={48} />
-               </VoteButton>
-            </div>
-            <div>
-               <ItemTitle>{question}</ItemTitle>
-               <time dateTime={created}>{formatDate(created)}</time>
-               <IconInput
-                  placeholder="try answer"
-                  autocomplete="off"
-                  spellcheck="false"
-                  value={inputValue}
-                  onChange={tryAnswer}
-                  icon={
-                     answerStatus && answerStatus.isAnswerCorrect ? (
-                        <Icon icon="winky" color="textDark" size={1.5} />
-                     ) : (
-                        undefined
-                     )
-                  }
-               />
-               <div>
-                  <AnswerStatus status={answerStatus} />
-               </div>
-            </div>
-         </VoteArea>
-      </VoteMinkLayout>
-   );
+  return (
+    <Layout>
+      <ItemDate dateTime={created}>{formatDate(created)}</ItemDate>
+      <ItemTitle>{question}</ItemTitle>
+      <InputGroup>
+        <div>
+          <IconInput
+            placeholder="try answer"
+            autocomplete="off"
+            spellcheck="false"
+            value={answer}
+            onChange={tryAnswer}
+            icon={renderInputIcon(answerStatus, previouslyAnsweredCorrectly)}
+          />
+          {renderStatusIcon(answerStatus)}
+        </div>
+        <AnswerStatus status={answerStatus} previouslyAnsweredCorrectly={previouslyAnsweredCorrectly} />
+      </InputGroup>
+      <div>
+        <VoteButton disabled={!canVote} onClick={upvoteMink} selected={myVote === 1}>
+          <Icon size={4} icon="arrow-up-circle" />
+        </VoteButton>
+        <VoteButton disabled={!canVote} onClick={downvoteMink} selected={myVote === -1}>
+          <Icon size={4} icon="arrow-down-circle" />
+        </VoteButton>
+      </div>
+    </Layout>
+  );
 };
 
 const ModalWrapper = props => {
-   const { mink, confirmation, setSelectedMink, venue } = props;
-   const close = useCallback(() => {
-      setSelectedMink(undefined);
-   }, []);
+  const { mink, confirmation, setSelectedMink, venue } = props;
+  const close = useCallback(() => {
+    setSelectedMink(undefined);
+  }, []);
 
-   return (
-      <Modal
-         open={!!mink}
-         closeModal={close}
-         canClose={!confirmation}
-         canDismiss={!confirmation}
-         inverse={mink && confirmation}
-         title={venue.name}
-      >
-         {mink && !confirmation ? <VoteMink {...props} /> : null}
-         {mink && confirmation ? <RateConfirmation title={mink.question} {...confirmation} /> : null}
-      </Modal>
-   );
+  return (
+    <Modal
+      open={!!mink}
+      closeModal={close}
+      canClose={!confirmation}
+      canDismiss={!confirmation}
+      inverse={mink && confirmation}
+      title={venue.name}
+    >
+      {mink && !confirmation ? <VoteMink {...props} /> : null}
+      {mink && confirmation ? <RateConfirmation title={mink.question} {...confirmation} /> : null}
+    </Modal>
+  );
 };
 
 const mapState = createStructuredSelector({
-   venue: selectSelectedVenue,
-   mink: selectSelectedMink,
-   confirmation: selectVoteMinkConfirmation,
-   answerStatus: selectAnswerMinkStatus,
+  venue: selectSelectedVenue,
+  mink: selectSelectedMink,
+  confirmation: selectVoteMinkConfirmation,
+  answerStatus: selectAnswerMinkStatus,
 });
 const mapDispatch = {
-   setSelectedMink,
-   upvoteMink,
-   downvoteMink,
-   tryAnswerMink,
+  setSelectedMink,
+  upvoteMink,
+  downvoteMink,
+  tryAnswerMink,
 };
 export default connect(
-   mapState,
-   mapDispatch,
+  mapState,
+  mapDispatch,
 )(ModalWrapper);

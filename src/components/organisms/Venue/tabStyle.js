@@ -7,43 +7,45 @@ import { PokeButton } from '../../molecules';
 export const CARD_MIN_HEIGHT = calcRem('125px');
 
 export const TabTitle = styled.div`
-   margin: ${spacing.large} 0;
-   text-transform: uppercase;
+  margin: ${spacing.large} 0;
+  text-transform: uppercase;
 `;
 
 export const ItemTime = styled.time`
-   font-size: ${fontSize.tiny};
-   font-family: ${font.number};
-   color: ${palette.textLight};
+  font-size: ${fontSize.tiny};
+  font-family: ${font.number};
+  color: ${palette.textLight};
 `;
 
 export const ItemTitle = styled.div`
-   margin-top: ${spacing.nano};
+  margin-top: ${spacing.nano};
 `;
 
 export const ItemText = styled.div`
-   font-size: ${fontSize.small};
-   color: ${palette.textLight};
-   margin-top: ${spacing.nano};
+  font-size: ${fontSize.small};
+  color: ${palette.textLight};
+  margin-top: ${spacing.nano};
 `;
 
-export const Main = styled.div``;
+export const Main = styled.div`
+  width: 100%;
+`;
 
 const adjustForPreview = ({ preview }) =>
-   preview &&
-   css`
-      border: none;
-      background: none;
-      box-shadow: none;
-   `;
+  preview &&
+  css`
+    border: none;
+    background: none;
+    box-shadow: none;
+  `;
 export const ItemCard = styled(Card)`
-   text-transform: lowercase;
+  text-transform: lowercase;
 
-   ${ItemTitle} {
-      font-size: ${({ large }) => (large ? `${fontSize.mediumLarge}` : `${fontSize.primary}`)};
-   }
+  ${ItemTitle} {
+    font-size: ${({ large }) => (large ? `${fontSize.mediumLarge}` : `${fontSize.primary}`)};
+  }
 
-   ${adjustForPreview};
+  ${adjustForPreview};
 `;
 
 export const TabLayout = styled.div`

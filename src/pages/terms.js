@@ -6,41 +6,41 @@ import { Container } from '../components/atoms';
 import { spacing } from '../style';
 
 const Content = styled.div`
-   margin: 0 ${spacing.medium};
-   strong {
-      font-weight: 600;
-   }
-   text-align: justify;
-   h2,
-   h3,
-   h4 {
-      font: inherit;
-      letter-spacing: inherit;
-      font-weight: 600;
-   }
-   h4 {
-      text-decoration: underline;
-   }
-   h2 {
-      text-align: center;
-   }
-   a {
-      color: inherit;
-   }
+  margin: 0 ${spacing.medium};
+  strong {
+    font-weight: 600;
+  }
+  text-align: justify;
+  h2,
+  h3,
+  h4 {
+    font: inherit;
+    letter-spacing: inherit;
+    font-weight: 600;
+  }
+  h4 {
+    text-decoration: underline;
+  }
+  h2 {
+    text-align: center;
+  }
+  a {
+    color: inherit;
+  }
 `;
 
 class TermsPage extends Component {
-   render() {
-      return (
-         <Page title="How It Works">
-            <Container>
-               <Content>
-                  <Terms />
-               </Content>
-            </Container>
-         </Page>
-      );
-   }
+  render() {
+    return (
+      <Page title="How It Works">
+        <Container>
+          <Content>
+            <Terms />
+          </Content>
+        </Container>
+      </Page>
+    );
+  }
 }
 
 export default TermsPage;

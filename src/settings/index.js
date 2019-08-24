@@ -4,29 +4,29 @@ import getConfig from 'next/config';
 const { publicRuntimeConfig: { MODE } = {} } = getConfig() || {};
 
 const local = {
-   apiUrl: 'http://localhost:5080/api',
+  apiUrl: 'http://localhost:5080/api',
 };
 
 const dev = {
-   apiUrl: 'https://in-house-dev-backend.azurewebsites.net/api',
+  apiUrl: 'https://in-house-dev-backend.azurewebsites.net/api',
 };
 
 const staging = {
-   apiUrl: 'https://in-house-staging-backend.azurewebsites.net/api',
-   hotjar: 1456032,
+  apiUrl: 'https://in-house-staging-backend.azurewebsites.net/api',
+  hotjar: 1456032,
 };
 
 const production = {
-   apiUrl: 'https://in-house-backend.azurewebsites.net/api',
-   preLaunchMode: true,
-   hotjar: 1456032,
+  apiUrl: 'https://in-house-backend.azurewebsites.net/api',
+  preLaunchMode: true,
+  hotjar: 1456032,
 };
 
 const settingsMap = {
-   local,
-   dev,
-   staging,
-   production,
+  local,
+  dev,
+  staging,
+  production,
 };
 
 const settings = settingsMap[MODE] || console.error('Environment not supplied!') || {};

@@ -7,23 +7,23 @@ import { handleForbiddenResponse } from './handleForbiddenResponse';
 import { selectIsActiveInsider, selectSelectedVenue } from '../selectors';
 
 export function* reloadVenueRateTags(id) {
-   try {
-      const { data } = yield call(api.get, `/venues/${id}/rateTags`);
-      yield put(setVenueRates(orderBy(data, t => t.orderIndex)));
-   } catch (e) {
-      if (isForbidden(e)) {
-         yield handleForbiddenResponse(id);
-         return;
-      }
-      throw e;
-   }
+  try {
+    const { data } = yield call(api.get, `/venues/${id}/rateTags`);
+    yield put(setVenueRates(orderBy(data, t => t.orderIndex)));
+  } catch (e) {
+    if (isForbidden(e)) {
+      yield handleForbiddenResponse(id);
+      return;
+    }
+    throw e;
+  }
 }
 
 export function* loadVenueRateTags() {
-   const { id, rates: loaded } = yield select(selectSelectedVenue);
-   const isActiveInsider = yield select(selectIsActiveInsider);
-   if (loaded || !isActiveInsider) {
-      return;
-   }
-   yield reloadVenueRateTags(id);
+  const { id, rates: loaded } = yield select(selectSelectedVenue);
+  const isActiveInsider = yield select(selectIsActiveInsider);
+  if (loaded || !isActiveInsider) {
+    return;
+  }
+  yield reloadVenueRateTags(id);
 }

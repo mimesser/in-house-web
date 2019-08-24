@@ -6,8 +6,8 @@ import { Number } from '../../../atoms/Number';
 import { Votes } from '../Votes';
 
 export const Back = styled(IconButton)`
-   margin-right: auto;
-   color: ${palette.white};
+  margin-right: auto;
+  color: ${palette.white};
 `;
 
 export const Header = styled.header`
@@ -44,31 +44,31 @@ export const Header = styled.header`
    }
 `;
 export const About = styled.div`
-   margin: auto 0;
-   ${Title} {
-      text-transform: lowercase;
-      margin-bottom: ${spacing.xLarge};
-   }
+  margin: auto 0;
+  ${Title} {
+    text-transform: lowercase;
+    margin-bottom: ${spacing.xLarge};
+  }
 `;
 export const Ratings = styled(Number)`
-   margin: ${spacing.large} 0 auto auto;
-   display: flex;
-   flex-direction: column;
+  margin: ${spacing.large} 0 auto auto;
+  display: flex;
+  flex-direction: column;
 
-   ${Votes} {
-      margin: ${spacing.large} auto 0 auto;
-   }
+  ${Votes} {
+    margin: ${spacing.large} auto 0 auto;
+  }
 `;
 export const Score = styled.div`
-   font-size: ${calcRem('80px')};
-   display: flex;
-   align-items: center;
-   sup {
-      font-size: 50%;
-      top: 0;
-      left: -${calcRem('10px')};
-   }
+  font-size: ${calcRem('80px')};
+  display: flex;
+  align-items: center;
+  sup {
+    font-size: 50%;
+    top: 0;
+    left: -${calcRem('10px')};
+  }
 `;
 export const Industry = styled.div`
-   text-transform: uppercase;
+  text-transform: uppercase;
 `;
