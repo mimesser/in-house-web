@@ -15,7 +15,7 @@ app.prepare()
       const router = new Router();
 
       if (!isInProdEnvironment) {
-         server.use(auth({ name: 'Radu', pass: 'Radu' }));
+         server.use(auth({ name: 'in7ouse', pass: 'in7ouse' }));
       }
 
       router.get('/houses/:id', async ctx => {
