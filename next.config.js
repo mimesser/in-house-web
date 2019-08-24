@@ -1,5 +1,5 @@
 module.exports = {
-   publicRuntimeConfig: {
-      MODE: process.env.MODE,
-   },
+  publicRuntimeConfig: {
+    MODE: process.env.MODE,
+  },
 };

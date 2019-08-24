@@ -10,50 +10,50 @@ import { Step4 } from './Step4';
 import { normalizeAnswer } from '../normalizeAnswer';
 
 const AddMink = ({ venue, createMink }) => {
-   const [step, setStep] = useState(1);
-   const [question, setQuestion] = useState('');
-   const [answer, setAnswer] = useState('');
-   const [loading, setLoading] = useState(false);
-   const setNormalizedAnswer = useCallback(value => setAnswer(normalizeAnswer(value)), [setAnswer]);
-   const edit = useCallback(() => setStep(1), [setStep]);
+  const [step, setStep] = useState(1);
+  const [question, setQuestion] = useState('');
+  const [answer, setAnswer] = useState('');
+  const [loading, setLoading] = useState(false);
+  const setNormalizedAnswer = useCallback(value => setAnswer(normalizeAnswer(value)), [setAnswer]);
+  const edit = useCallback(() => setStep(1), [setStep]);
 
-   return (
-      <>
-         {step === 1 && (
-            <Step1
-               venue={venue}
-               answer={answer}
-               setAnswer={setNormalizedAnswer}
-               question={question}
-               setQuestion={setQuestion}
-               setStep={setStep}
-            />
-         )}
-         {step === 2 && <Step2 venue={venue} answer={answer} question={question} edit={edit} setStep={setStep} />}
-         {step === 3 && <Step3 edit={edit} setStep={setStep} />}
-         {step === 4 && (
-            <Step4
-               edit={edit}
-               setStep={setStep}
-               loading={loading}
-               post={() => {
-                  setLoading(true);
-                  createMink(venue.id, question, answer);
-               }}
-            />
-         )}
-      </>
-   );
+  return (
+    <>
+      {step === 1 && (
+        <Step1
+          venue={venue}
+          answer={answer}
+          setAnswer={setNormalizedAnswer}
+          question={question}
+          setQuestion={setQuestion}
+          setStep={setStep}
+        />
+      )}
+      {step === 2 && <Step2 venue={venue} answer={answer} question={question} edit={edit} setStep={setStep} />}
+      {step === 3 && <Step3 edit={edit} setStep={setStep} />}
+      {step === 4 && (
+        <Step4
+          edit={edit}
+          setStep={setStep}
+          loading={loading}
+          post={() => {
+            setLoading(true);
+            createMink(venue.id, question, answer);
+          }}
+        />
+      )}
+    </>
+  );
 };
 
 const mapState = createStructuredSelector({
-   venue: selectSelectedVenue,
+  venue: selectSelectedVenue,
 });
 const mapDispatch = {
-   createMink,
+  createMink,
 };
 
 export default connect(
-   mapState,
-   mapDispatch,
+  mapState,
+  mapDispatch,
 )(AddMink);

@@ -4,21 +4,21 @@ import keyBy from 'lodash/keyBy';
 export const selectAggregate = state => state.aggregate;
 
 export const selectReady = createSelector(
-   selectAggregate,
-   ({ userId }) => !!userId,
+  selectAggregate,
+  ({ userId }) => !!userId,
 );
 
 export const selectIndustriesMap = createSelector(
-   selectAggregate,
-   ({ industries }) => industries && keyBy(industries, i => i.id),
+  selectAggregate,
+  ({ industries }) => industries && keyBy(industries, i => i.id),
 );
 
 export const selectInsiderVenueIds = createSelector(
-   selectAggregate,
-   ({ insiderVenueIds }) => insiderVenueIds,
+  selectAggregate,
+  ({ insiderVenueIds }) => insiderVenueIds,
 );
 
 export const selectAcceptedTerms = createSelector(
-   selectAggregate,
-   ({ isTermsAccepted }) => isTermsAccepted,
+  selectAggregate,
+  ({ isTermsAccepted }) => isTermsAccepted,
 );

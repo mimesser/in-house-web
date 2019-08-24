@@ -6,21 +6,21 @@ import rootSaga from './saga';
 import demoMiddleware from './demo/middleware';
 
 const bindMiddleware = middleware => {
-   if (process.env.NODE_ENV !== 'production') {
-      const { composeWithDevTools } = require('redux-devtools-extension');
-      return composeWithDevTools(applyMiddleware(...middleware));
-   }
-   return applyMiddleware(...middleware);
+  if (process.env.NODE_ENV !== 'production') {
+    const { composeWithDevTools } = require('redux-devtools-extension');
+    return composeWithDevTools(applyMiddleware(...middleware));
+  }
+  return applyMiddleware(...middleware);
 };
 
 function configureStore(initialState = {}) {
-   const sagaMiddleware = createSagaMiddleware();
-   const middlewares = [sagaMiddleware, demoMiddleware];
-   const store = createStore(rootReducer, initialState, bindMiddleware(middlewares));
+  const sagaMiddleware = createSagaMiddleware();
+  const middlewares = [sagaMiddleware, demoMiddleware];
+  const store = createStore(rootReducer, initialState, bindMiddleware(middlewares));
 
-   store.sagaTask = sagaMiddleware.run(rootSaga);
+  store.sagaTask = sagaMiddleware.run(rootSaga);
 
-   return store;
+  return store;
 }
 
 export default configureStore;

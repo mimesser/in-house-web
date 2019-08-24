@@ -12,30 +12,30 @@ const Bounce = keyframes`
 
 // TODO
 const Dot = styled.span`
-   width: ${props => (props.big ? '20px' : '12px')};
-   height: ${props => (props.big ? '20px' : '12px')};
-   background-color: ${props => (props.white ? palette.white : palette.black)};
-   border-radius: 100%;
-   display: inline-block;
-   animation: ${Bounce} 1s infinite ease-in-out both;
-   &:first-child {
-      animation-delay: -0.32s;
-   }
+  width: ${props => (props.big ? '20px' : '12px')};
+  height: ${props => (props.big ? '20px' : '12px')};
+  background-color: ${props => (props.white ? palette.white : palette.black)};
+  border-radius: 100%;
+  display: inline-block;
+  animation: ${Bounce} 1s infinite ease-in-out both;
+  &:first-child {
+    animation-delay: -0.32s;
+  }
 
-   &:nth-child(2) {
-      animation-delay: -0.16s;
-   }
+  &:nth-child(2) {
+    animation-delay: -0.16s;
+  }
 `;
 
 export const Loader = styled.div.attrs(props => ({
-   children: (
-      <>
-         <Dot {...props} />
-         <Dot {...props} />
-         <Dot {...props} />
-      </>
-   ),
+  children: (
+    <>
+      <Dot {...props} />
+      <Dot {...props} />
+      <Dot {...props} />
+    </>
+  ),
 }))`
-   display: inline-block;
-   margin: auto;
+  display: inline-block;
+  margin: auto;
 `;

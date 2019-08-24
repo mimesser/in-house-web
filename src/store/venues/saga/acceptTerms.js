@@ -5,7 +5,7 @@ import { termsAccepted } from '../../aggregate';
 import { setChallengeFormData } from '../actions';
 
 export function* acceptTerms() {
-   yield call(api.post, 'user/acceptTerms');
-   yield put(setChallengeFormData(undefined));
-   yield put(termsAccepted());
+  yield call(api.post, 'user/acceptTerms');
+  yield put(setChallengeFormData(undefined));
+  yield put(termsAccepted());
 }
