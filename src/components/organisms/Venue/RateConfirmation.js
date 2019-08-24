@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Dial } from '../../molecules';
 import { ItemTitle, Layout, SubTitle, ItemDate } from './openCardStyle';
 import { formatDate } from '../../../utils/format';
-import { fontSize, fontWeight, spacing, palette } from '../../../style';
+import { fontSize, spacing, palette } from '../../../style';
 
 const RateConfirmationLayout = styled(Layout)`
    margin-top: ${spacing.xxLarge};

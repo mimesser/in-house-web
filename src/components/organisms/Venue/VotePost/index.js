@@ -14,27 +14,25 @@ import {
 } from '../../../../store/venues';
 import { Modal } from '../../Modal';
 import { RateConfirmation } from '../RateConfirmation';
-import { Layout, ItemDate, ItemTitle, VoteArea, VoteButton } from '../openCardStyle';
+import { Layout, ItemDate, ItemTitle, VoteButton } from '../openCardStyle';
 import { formatDate } from '../../../../utils/format';
 
 const VotePost = ({ post: { created, title, text, myVote }, venue: { name: venueName }, upvotePost, downvotePost }) => {
    return (
       <Layout>
-         <VoteArea>
-            <div>
-               <ItemDate dateTime={created}>{formatDate(created)}</ItemDate>
-               <ItemTitle>{title}</ItemTitle>
-               {text}
-            </div>
-            <div>
-               <VoteButton onClick={upvotePost} selected={myVote === 1}>
-                  <Icon size={4} icon="arrow-up-circle" />
-               </VoteButton>
-               <VoteButton onClick={downvotePost} selected={myVote === -1}>
-                  <Icon size={4} icon="arrow-down-circle" />
-               </VoteButton>
-            </div>
-         </VoteArea>
+         <div>
+            <ItemDate dateTime={created}>{formatDate(created)}</ItemDate>
+            <ItemTitle>{title}</ItemTitle>
+            {text}
+         </div>
+         <div>
+            <VoteButton onClick={upvotePost} selected={myVote === 1}>
+               <Icon size={4} icon="arrow-up-circle" />
+            </VoteButton>
+            <VoteButton onClick={downvotePost} selected={myVote === -1}>
+               <Icon size={4} icon="arrow-down-circle" />
+            </VoteButton>
+         </div>
       </Layout>
    );
 };

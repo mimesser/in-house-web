@@ -15,9 +15,9 @@ const Wrap = styled.div`
    }
 `;
 
-export const IconInput = ({ icon, ...inputProps }) => (
-   <Wrap>
+export const IconInput = styled(({ className, icon, ...inputProps }) => (
+   <Wrap className={className}>
       <Input {...inputProps} />
       {icon}
    </Wrap>
-);
+))``;

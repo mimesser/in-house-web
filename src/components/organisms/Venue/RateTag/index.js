@@ -14,11 +14,7 @@ import { Modal } from '../../Modal';
 import { RateConfirmation } from '../RateConfirmation';
 import { Dial } from '../../../molecules';
 import { ItemTitle, Layout, SubTitle } from '../openCardStyle';
-import { fontSize, fontWeight, spacing, theme } from '../../../../style';
-
-const RateLayout = styled(Layout)`
-   margin-top: ${spacing.xxLarge};
-`;
+import { fontSize, spacing, theme } from '../../../../style';
 
 const RateItemTitle = styled(ItemTitle)`
    color: ${({ rated }) => rated && theme.colors.textUltraLight};
@@ -30,7 +26,7 @@ const RateSubTitle = styled(SubTitle)`
    visibility: ${({ rated }) => (rated ? 'visible' : 'hidden')};
 `;
 
-const RateTag = ({ tag, venue: { name: venueName }, rateTag, setRated, rated }) => {
+const RateTag = ({ tag, rateTag, setRated, rated }) => {
    const { name: tagName, userRate } = tag;
    const [value, setValue] = useState(userRate);
 
@@ -71,13 +67,13 @@ const RateTag = ({ tag, venue: { name: venueName }, rateTag, setRated, rated }) 
    }
 
    return (
-      <RateLayout>
+      <Layout>
          <RateSubTitle rated={rated}>you rated</RateSubTitle>
          <RateItemTitle rated={rated} keepSpace>
             {tagName}
          </RateItemTitle>
          <Dial value={value} valueColor={valueColor} onChange={handleChange} {...sliderProps} />
-      </RateLayout>
+      </Layout>
    );
 };
 

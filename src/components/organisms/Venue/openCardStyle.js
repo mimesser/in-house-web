@@ -20,29 +20,12 @@ export const ItemTitle = styled.div`
 
 export const VoteButton = styled(IconButton)`
    color: ${({ selected }) => (selected ? palette.textDark : palette.textLight)};
+   margin-top: ${spacing.xxxLarge};
    &[disabled] {
       color: ${palette.textUltraLight};
    }
-`;
-
-export const VoteArea = styled.div`
-   display: flex;
-   flex-direction: column;
-
-   > div:first-child {
-      flex: 1;
-      margin-top: ${spacing.large};
-   }
-
-   > div:nth-child(2) {
-      flex: 0;
-      margin-top: ${spacing.xxLarge};
-
-      ${VoteButton} {
-         &:last-child {
-            margin-left: ${spacing.large};
-         }
-      }
+   &:last-child {
+      margin-left: ${spacing.large};
    }
 `;
 
@@ -51,6 +34,7 @@ export const Layout = styled.div`
    display: flex;
    flex-direction: column;
    overflow: hidden;
+   padding-top: ${spacing.xxLarge};
 
    ${Dial} {
       margin-top: -100px;
@@ -60,7 +44,7 @@ export const Layout = styled.div`
 
 export const SubTitle = styled.div`
    font-size: ${fontSize.large};
-   fontWeight: ${fontWeight.bolder}
+   font-weight: ${fontWeight.bolder}
    color: ${palette.textLight};
    margin-bottom: ${spacing.large};
 `;

@@ -10,11 +10,7 @@ const Bounce = keyframes`
   }
 `;
 
-const StyledDotsLoader = styled.div`
-   display: inline-block;
-   margin: auto;
-`;
-
+// TODO
 const Dot = styled.span`
    width: ${props => (props.big ? '20px' : '12px')};
    height: ${props => (props.big ? '20px' : '12px')};
@@ -31,12 +27,15 @@ const Dot = styled.span`
    }
 `;
 
-export const Loader = props => {
-   return (
-      <StyledDotsLoader {...props}>
-         <Dot {...props} style={{}} />
-         <Dot {...props} style={{}} />
-         <Dot {...props} style={{}} />
-      </StyledDotsLoader>
-   );
-};
+export const Loader = styled.div.attrs(props => ({
+   children: (
+      <>
+         <Dot {...props} />
+         <Dot {...props} />
+         <Dot {...props} />
+      </>
+   ),
+}))`
+   display: inline-block;
+   margin: auto;
+`;
