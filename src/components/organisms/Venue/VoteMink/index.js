@@ -4,9 +4,6 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { Check } from 'styled-icons/evil/Check';
-import { CloseO } from 'styled-icons/evil/CloseO';
-
 import {
    selectSelectedVenue,
    selectSelectedMink,
@@ -25,7 +22,7 @@ import { spacing, fontSize, font } from '../../../../style';
 import { formatDate } from '../../../../utils/format';
 import { RateConfirmation } from '../RateConfirmation';
 import { normalizeAnswer } from '../normalizeAnswer';
-import { ItemTitle, Layout, VoteArea, VoteButton } from '../openCardStyle';
+import { ItemTitle, ItemDate, Layout, VoteArea, VoteButton } from '../openCardStyle';
 
 const AnswerStatus = styled(({ status, className }) => {
    if (!status) {
@@ -43,14 +40,7 @@ const AnswerStatus = styled(({ status, className }) => {
 
 const VoteMinkLayout = styled(Layout)`
    ${VoteArea} {
-      margin-top: ${spacing.xxLarge};
-   }
-
-   time {
-      font-size: ${fontSize.tiny};
-      font-family: ${font.number};
-      margin: ${spacing.large} 0;
-      display: block;
+      margin-top: ${spacing.small};
    }
 `;
 
@@ -85,16 +75,8 @@ const VoteMink = ({
       <VoteMinkLayout>
          <VoteArea>
             <div>
-               <VoteButton disabled={!canVote} onClick={upvoteMink} selected={myVote === 1}>
-                  <Check size={48} />
-               </VoteButton>
-               <VoteButton disabled={!canVote} onClick={downvoteMink} selected={myVote === -1}>
-                  <CloseO size={48} />
-               </VoteButton>
-            </div>
-            <div>
+               <ItemDate dateTime={created}>{formatDate(created)}</ItemDate>
                <ItemTitle>{question}</ItemTitle>
-               <time dateTime={created}>{formatDate(created)}</time>
                <IconInput
                   placeholder="try answer"
                   autocomplete="off"
@@ -103,7 +85,7 @@ const VoteMink = ({
                   onChange={tryAnswer}
                   icon={
                      answerStatus && answerStatus.isAnswerCorrect ? (
-                        <Icon icon="winky" color="textDark" size={1.5} />
+                        <Icon icon="winky" color="primaryLight" size={1.5} />
                      ) : (
                         undefined
                      )
@@ -112,6 +94,14 @@ const VoteMink = ({
                <div>
                   <AnswerStatus status={answerStatus} />
                </div>
+            </div>
+            <div>
+               <VoteButton disabled={!canVote} onClick={upvoteMink} selected={myVote === 1}>
+                  <Icon size={4} icon="arrow-up-circle" />
+               </VoteButton>
+               <VoteButton disabled={!canVote} onClick={downvoteMink} selected={myVote === -1}>
+                  <Icon size={4} icon="arrow-down-circle" />
+               </VoteButton>
             </div>
          </VoteArea>
       </VoteMinkLayout>

@@ -23,7 +23,6 @@ const RateLayout = styled(Layout)`
 const RateItemTitle = styled(ItemTitle)`
    color: ${({ rated }) => rated && theme.colors.textUltraLight};
    font-size: ${fontSize.large};
-   font-weight: ${fontWeight.primary};
    margin-top: ${spacing.nano};
 `;
 
