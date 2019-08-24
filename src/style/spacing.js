@@ -9,4 +9,5 @@ export const spacing = {
    large: calcRem('16px'),
    xLarge: calcRem('24px'),
    xxLarge: calcRem('32px'),
+   xxxLarge: calcRem('40px'),
 };

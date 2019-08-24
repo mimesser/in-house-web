@@ -13,7 +13,6 @@ export const Modal = ({ open, closeModal, title, canDismiss = true, canClose = t
       document.body.style.overflow = open ? 'hidden' : 'initial';
    }, [open]);
    const handleClose = useCallback(() => closeModal(), [closeModal]);
-
    return (
       <Portal>
          <Background open={open} onClick={canDismiss ? handleClose : undefined}>

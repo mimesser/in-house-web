@@ -9,8 +9,7 @@ export const Status = styled.div`
 
 export const CharLimit = styled.span`
    transition: color 0.5s;
-   color: ${({ warn }) => (warn ? palette.textDark : palette.textLight)};
-   font-size: ${fontSize.small};
+   font-size: ${fontSize.tiny};
    margin-left: auto;
 `;
 

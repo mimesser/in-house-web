@@ -52,16 +52,16 @@ export const Content = styled.div`
    ${colors};
 `;
 
-export const ModalHeader = styled.header`
-   display: flex;
-   align-items: center;
-   text-transform: uppercase;
-`;
-
 const CloseIcon = styled(Close).attrs({ size: 40 })``;
 
 export const CloseButton = styled(IconButton).attrs({
    children: <CloseIcon />,
 })`
    margin-left: auto;
+`;
+
+export const ModalHeader = styled.header`
+   display: flex;
+   align-items: center;
+   text-transform: uppercase;
 `;
