@@ -2,12 +2,13 @@ import React, { useCallback, useState } from 'react';
 import Router from 'next/router';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import Link from 'next/link';
 
 import { Loader, IconButton, Icon } from '../../atoms';
 
 import { selectVenues } from '../../../store/venues';
 import { VenueCard } from './VenueCard';
-import { SearchBox } from './style';
+import { ListYourHouse, SearchBox, Layout } from './style';
 
 const SearchBoxIcon = ({ applyFilter, clear }) =>
   applyFilter ? (
@@ -35,7 +36,7 @@ const List = ({ venues }) => {
   const venuesToShow = applyFilter ? venues.filter(v => v.name.toLowerCase().includes(filter)) : venues;
 
   return (
-    <>
+    <Layout>
       <SearchBox
         placeholder="beta houses"
         value={filter}
@@ -45,7 +46,10 @@ const List = ({ venues }) => {
       {venuesToShow.map(v => (
         <VenueCard key={v.id} venue={v} showVenue={showVenue} />
       ))}
-    </>
+      <Link href="/feedback">
+        <ListYourHouse>list your house</ListYourHouse>
+      </Link>
+    </Layout>
   );
 };
 

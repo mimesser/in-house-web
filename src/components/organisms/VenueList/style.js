@@ -1,15 +1,25 @@
 import styled from 'styled-components';
 
 import { calcRem, fontSize, palette, spacing } from '../../../style';
-import { Card, Address } from '../../atoms';
+import { Card, Address, Button } from '../../atoms';
 import { IconInput } from '../../molecules';
 
 // TODO: move to molecules?
 import { ScoreAndVoters } from '../Venue/ScoreAndVoters';
 import { Votes } from '../Venue/Votes';
 
+export const Layout = styled.div`
+  padding: 0 ${spacing.small};
+  display: flex;
+  flex-direction: column;
+`;
+
 export const SearchBox = styled(IconInput)`
   margin-bottom: ${spacing.xLarge};
+`;
+
+export const ListYourHouse = styled(Button).attrs(() => ({ secondary: true }))`
+  margin: 0 auto;
 `;
 
 export const VenueContainer = styled(Card)`
