@@ -12,6 +12,7 @@ const Wrapper = styled.span`
   height: ${({ size }) => size}rem;
   box-sizing: border-box;
   color: ${getColor};
+  transition: color 0.3s;
 
   & > svg {
     width: 100%;
