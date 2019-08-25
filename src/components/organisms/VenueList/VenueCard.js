@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 
 import { Address } from '../../atoms';
 import { ScoreAndVoters } from '../Venue/ScoreAndVoters';
-import { Container, Img, Industry, Name } from './style';
+import { VenueContainer, Img, Industry, Name } from './style';
 
 export const VenueCard = ({ venue, showVenue }) => {
   const handleClick = useCallback(() => showVenue(venue), [venue]);
@@ -17,7 +17,7 @@ export const VenueCard = ({ venue, showVenue }) => {
 
   return (
     // TODO: this should be a link
-    <Container onClick={handleClick}>
+    <VenueContainer onClick={handleClick}>
       <Img imageUrl={imageUrl} />
       <div>
         <Industry>{industry && industry.name}</Industry>
@@ -29,6 +29,6 @@ export const VenueCard = ({ venue, showVenue }) => {
         </Address>
       </div>
       <ScoreAndVoters voteCount={votesCount} voteRating={rating} sliderSize={72} />
-    </Container>
+    </VenueContainer>
   );
 };
