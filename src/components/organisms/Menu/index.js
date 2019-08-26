@@ -38,7 +38,11 @@ const A = styled.a`
   }
 `;
 
-const routes = [{ href: '/how-it-works', label: 'how it works' }, { href: '/feedback', label: 'feedback' }];
+const routes = [
+  { href: '/how-it-works', label: 'how it works' },
+  { href: '/feedback', label: 'feedback' },
+  { href: '/houses', label: 'see beta houses' },
+];
 
 export const Menu = withRouter(({ closeMenu, router }) => (
   <>
