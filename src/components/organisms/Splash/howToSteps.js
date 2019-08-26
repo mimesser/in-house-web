@@ -153,14 +153,9 @@ const ContinueButton = () => {
     );
   }
   return (
-    <>
-      <Link href="/houses">
-        <Button>see beta houses</Button>
-      </Link>
-      <Button tag="a" href={`/houses/${DEMO_VENUE_ID}`}>
-        test drive
-      </Button>
-    </>
+    <Button tag="a" href={`/houses/${DEMO_VENUE_ID}`}>
+      test drive
+    </Button>
   );
 };
 
