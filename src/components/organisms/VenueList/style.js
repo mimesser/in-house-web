@@ -1,13 +1,28 @@
 import styled from 'styled-components';
 
 import { calcRem, fontSize, palette, spacing } from '../../../style';
-import { Card, Address } from '../../atoms';
+import { Card, Address, Button } from '../../atoms';
+import { IconInput } from '../../molecules';
 
 // TODO: move to molecules?
 import { ScoreAndVoters } from '../Venue/ScoreAndVoters';
 import { Votes } from '../Venue/Votes';
 
-export const Container = styled(Card)`
+export const Layout = styled.div`
+  padding: 0 ${spacing.small};
+  display: flex;
+  flex-direction: column;
+`;
+
+export const SearchBox = styled(IconInput)`
+  margin-bottom: ${spacing.xLarge};
+`;
+
+export const ListYourHouse = styled(Button).attrs(() => ({ secondary: true }))`
+  margin: 0 auto;
+`;
+
+export const VenueContainer = styled(Card)`
   margin-bottom: ${spacing.large};
   padding: ${spacing.large};
 
@@ -24,6 +39,7 @@ export const Container = styled(Card)`
     color: ${palette.textLight};
   }
 `;
+
 export const Img = styled.div`
   width: 5.8rem;
   height: 5.8rem;
@@ -34,12 +50,14 @@ export const Img = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
 `;
+
 export const Industry = styled.div`
   font-size: ${fontSize.small};
   color: ${palette.textLight};
   text-transform: uppercase;
   margin-bottom: ${spacing.tiny};
 `;
+
 export const Name = styled.div`
   font-size: ${calcRem(20)};
   text-transform: lowercase;

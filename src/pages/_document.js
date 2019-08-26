@@ -38,6 +38,7 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/css?family=Roboto:300|Nunito+Sans:600|Source+Sans+Pro:300,400&display=swap"
             rel="stylesheet"
           />
+          <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
           <script dangerouslySetInnerHTML={hotjar} />
         </Head>
         <body>
