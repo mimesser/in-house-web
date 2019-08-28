@@ -86,6 +86,7 @@ const VoteMink = ({
             spellcheck="false"
             value={answer}
             onChange={tryAnswer}
+            readOnly={previouslyAnsweredCorrectly}
             icon={renderInputIcon(answerStatus, previouslyAnsweredCorrectly)}
           />
           {renderStatusIcon(answerStatus)}
