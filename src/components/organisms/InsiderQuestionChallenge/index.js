@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { ArrowRight } from 'styled-icons/feather/ArrowRight';
@@ -30,12 +30,14 @@ import AcceptTerms from './AcceptTerms';
 const Form = ({ topMink, wrongAnswer, answerTopMink }) => {
   const [answer, setAnswer] = useState('');
   const [showError, setShowError] = useState(false);
+  const answerRef = useRef(null);
 
   const handleSubmit = e => {
     e.preventDefault();
     if (answer) {
       answerTopMink(answer);
       setShowError(true);
+      answerRef.current.focus();
     }
   };
 
@@ -57,6 +59,7 @@ const Form = ({ topMink, wrongAnswer, answerTopMink }) => {
             value={answer}
             onChange={handleChange}
             strike={highlightError}
+            ref={answerRef}
           />
           <SubmitButton visible={!!answer.length}>
             {showError && !wrongAnswer ? <Loader white /> : !highlightError && <ArrowRight size={44} />}
