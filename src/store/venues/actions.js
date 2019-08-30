@@ -32,6 +32,7 @@ export const actionTypes = {
   SET_PRIVATE_SHARE_RECIPIENT_ERROR: 'SET_PRIVATE_SHARE_RECIPIENT_ERROR',
   PRIVATE_SHARE: 'PRIVATE_SHARE',
   SET_PRIVATE_SHARE_SENDING: 'SET_PRIVATE_SHARE_SENDING',
+  SET_NEW_MINK_ELECTED: 'SET_NEW_MINK_ELECTED',
 };
 
 export const initVenuesPage = idToSelect => ({
@@ -218,4 +219,9 @@ export const SEND_STATUS = {
 export const setPrivateShareSending = value => ({
   type: actionTypes.SET_PRIVATE_SHARE_SENDING,
   payload: { privateShareSending: value },
+});
+
+export const setNewMinkElected = newMinkElected => ({
+  type: actionTypes.SET_NEW_MINK_ELECTED,
+  payload: { newMinkElected },
 });

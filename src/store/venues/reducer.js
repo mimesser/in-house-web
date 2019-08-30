@@ -127,6 +127,9 @@ export function reducer(state = initialState, action) {
     case actionTypes.SET_ADDED_MINK_ID: {
       return setSelectedVenueProp(state, action, 'addedMinkId');
     }
+    case actionTypes.SET_NEW_MINK_ELECTED: {
+      return setSelectedVenueProp(state, action, 'newMinkElected');
+    }
 
     default:
       return state;
