@@ -11,7 +11,7 @@
       "start:watch": "npm run server:watch && npm run next:dev",
       "clean": "rimraf ./build",
       "build": "next build ./src",
-      "build:ci": "npm run clean && npm run build && copyfiles -a \"src/.next/**/*\" \"src/static/**/*\" server/*.* package.json package-lock.json next.config.js build",
+      "build:ci": "npm run clean && npm run build && copyfiles -a \"src/.next/**/*\" \"src/static/**/*\" \"src/public/**/*\" server/*.* package.json package-lock.json next.config.js build",
       "start": "cross-env NODE_ENV=production node server/index.js",
       "start:production": "cross-env NODE_ENV=production MODE=production node server/index.js",
       "test": "jest --env=jsdom --no-cache --colors test",
