@@ -1,5 +1,4 @@
 import React from 'react';
-import Link from 'next/link';
 import styled from 'styled-components';
 
 import { PaperPlane } from 'styled-icons/fa-solid';
@@ -8,7 +7,6 @@ import { ArrowRight } from 'styled-icons/evil/ArrowRight';
 import { Heading, Button, Strong } from '../../atoms';
 import { Patent as BasePatent } from '../../molecules';
 import { fontSize, spacing, fontWeight, palette } from '../../../style';
-import { settings } from '../../../settings';
 import { DEMO_VENUE_ID } from '../../../store/demo/data';
 
 const Patent = styled(BasePatent)`
@@ -145,13 +143,6 @@ const ContinueOptions = styled.div`
 `;
 
 const ContinueButton = () => {
-  if (settings.preLaunchMode) {
-    return (
-      <Link href="/notify">
-        <Button>get notified when live</Button>
-      </Link>
-    );
-  }
   return (
     <Button tag="a" href={`/houses/${DEMO_VENUE_ID}`}>
       test drive

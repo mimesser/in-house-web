@@ -18,7 +18,6 @@ const staging = {
 
 const production = {
   apiUrl: 'https://in-house-backend.azurewebsites.net/api',
-  preLaunchMode: true,
   hotjar: 1456032,
 };
 
