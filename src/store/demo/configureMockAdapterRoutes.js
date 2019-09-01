@@ -84,7 +84,7 @@ export default function configureMockAdapterRoutes(mock, store) {
     return [200, aggregate];
   });
 
-  mock.onGet(`/venues/${VENUE_ID}/minks`).reply(config => {
+  mock.onGet(`/venues/${VENUE_ID}/minks?orderBy=voteRating`).reply(config => {
     const { minks } = selectSelectedVenue(store.getState());
     const orderedMinks = orderBy(minks, ['voteRating'], ['desc']);
     return [200, { minks: orderedMinks, totalCount: orderedMinks.length }];
@@ -95,9 +95,9 @@ export default function configureMockAdapterRoutes(mock, store) {
     return [200, rateTags];
   });
 
-  mock.onGet(`/venues/${VENUE_ID}/feedback?OrderBy=VoteRating`).reply(config => {
+  mock.onGet(`/venues/${VENUE_ID}/feedback?OrderBy=VoteCount`).reply(config => {
     const { posts } = selectSelectedVenue(store.getState());
-    const orderedPosts = orderBy(posts, ['voteRating'], ['desc']);
+    const orderedPosts = orderBy(posts, ['voteCount'], ['desc']);
     return [200, { feedback: orderedPosts, totalCount: orderedPosts.length }];
   });
 

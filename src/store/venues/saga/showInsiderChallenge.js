@@ -5,7 +5,7 @@ import { getRecord } from './minkAnswerRecord';
 import { setChallengeFormData, setVenueTopMink } from '../actions';
 
 export function* showInsiderChallenge(venueId) {
-  const { blocked } = getRecord();
+  const { blocked } = getRecord(venueId);
   yield put(setChallengeFormData({ blocked }));
   if (blocked) {
     return;
