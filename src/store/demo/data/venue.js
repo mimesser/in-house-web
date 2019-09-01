@@ -28,6 +28,6 @@ export const venue = {
   },
   created,
   minks: orderBy(minks, ['voteRating'], ['desc']),
-  posts: orderBy(posts, ['voteRating'], ['desc']),
+  posts: orderBy(posts, ['voteCount'], ['desc']),
   rates: orderBy(rateTags, ['orderIndex']),
 };

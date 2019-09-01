@@ -8,7 +8,7 @@ export function* reloadVenueMinks(id) {
   // TODO: handle pagination, store total count
   const {
     data: { minks },
-  } = yield call(api.get, `/venues/${id}/minks`);
+  } = yield call(api.get, `/venues/${id}/minks?orderBy=voteRating`);
   yield put(setVenueMinks(minks));
 
   return minks;

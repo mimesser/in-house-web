@@ -9,6 +9,7 @@ import { Patent } from '../../molecules';
 import { TabLayout, ItemCard, Main, ItemTitle, ItemTime, TabTitle } from './tabStyle';
 import { formatDate } from '../../../utils/format';
 import VoteMink from './VoteMink';
+import NewMinkElected from './NewMinkElected';
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
 import { ScoreAndVoters } from './ScoreAndVoters';
@@ -118,6 +119,7 @@ const MinkTab = ({ venue: { id, minks, addedMinkId }, loadMinks, setSelectedMink
         <Button>new mink</Button>
       </Link>
       <VoteMink />
+      <NewMinkElected />
       <PrivateShare type="mink" renderItem={renderSharePreview} getItemTitle={getTitleForShare} />
     </TabLayout>
   );

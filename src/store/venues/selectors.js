@@ -31,6 +31,16 @@ export const selectIsActiveInsider = createSelector(
   (insiderVenueIds, selectedVenue) => insiderVenueIds && selectedVenue && insiderVenueIds.includes(selectedVenue.id),
 );
 
+const selectSelectedVenueMinks = createSelector(
+  selectSelectedVenue,
+  selectedVenue => selectedVenue && selectedVenue.minks,
+);
+
+export const selectSelectedVenueTopMinkId = createSelector(
+  selectSelectedVenueMinks,
+  minks => minks && minks[0].id,
+);
+
 export const selectSelectedMink = createSelector(
   selectSelectedVenue,
   selectedVenue =>
@@ -45,6 +55,11 @@ export const selectVoteMinkConfirmation = createSelector(
 export const selectAnswerMinkStatus = createSelector(
   selectSelectedVenue,
   selectedVenue => selectedVenue && selectedVenue.answerMinkStatus,
+);
+
+export const selectNewMinkElected = createSelector(
+  selectSelectedVenue,
+  selectedVenue => selectedVenue && selectedVenue.newMinkElected,
 );
 
 export const selectSelectedTag = createSelector(

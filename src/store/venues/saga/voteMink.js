@@ -1,12 +1,32 @@
-import { call, select, put, delay, fork } from 'redux-saga/effects';
+import { call, select, put, delay, fork, all } from 'redux-saga/effects';
 
 import api from '../../../api';
-import { selectSelectedMink, selectSelectedVenue } from '../selectors';
-import { showVoteMinkConfirmation, setSelectedMink } from '../actions';
+import { selectSelectedMink, selectSelectedVenue, selectSelectedVenueTopMinkId } from '../selectors';
+import { showVoteMinkConfirmation, setSelectedMink, setNewMinkElected } from '../actions';
 import { reloadVenueMinks } from './loadVenueMinks';
 import { reloadInsiderVenueIds } from './reloadInsiderVenueIds';
 
 const CONFIRMATION_INTERVAL = 1500;
+
+function* reloadMinksAndCheckIfNewElected(venue) {
+  const startLoading = Date.now();
+  const prevTopMink = yield select(selectSelectedVenueTopMinkId);
+  // order and top mink can change
+  yield all([reloadInsiderVenueIds(), reloadVenueMinks(venue.id)]);
+
+  const currentTopMink = yield select(selectSelectedVenueTopMinkId);
+  if (currentTopMink === prevTopMink) {
+    return;
+  }
+
+  const confirmationRemainingTime = Date.now() - startLoading;
+  if (confirmationRemainingTime > 0) {
+    yield delay(confirmationRemainingTime);
+  }
+  yield put(setNewMinkElected(true));
+  yield delay(CONFIRMATION_INTERVAL);
+  yield put(setNewMinkElected(false));
+}
 
 export function* voteMink({ payload: { vote } }) {
   const venue = yield select(selectSelectedVenue);
@@ -17,8 +37,7 @@ export function* voteMink({ payload: { vote } }) {
   try {
     yield put(showVoteMinkConfirmation(data));
     // order and top mink can change
-    yield fork(reloadVenueMinks, venue.id);
-    yield reloadInsiderVenueIds();
+    yield fork(reloadMinksAndCheckIfNewElected, venue);
     yield delay(CONFIRMATION_INTERVAL);
   } finally {
     yield put(setSelectedMink(undefined));

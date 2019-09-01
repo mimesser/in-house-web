@@ -29,9 +29,9 @@ export function* answerTopMink({ payload: { answer } }) {
   }
   yield put(setChallengeFormData({}));
 
-  const record = getRecord();
-
   const venue = yield select(selectSelectedVenue);
+
+  const record = getRecord(venue.id);
 
   try {
     const {
@@ -39,7 +39,7 @@ export function* answerTopMink({ payload: { answer } }) {
     } = yield call(api.post, `venues/${venue.id}/mink/${venue.topMink.id}/answer`, { answer });
 
     if (isAnswerCorrect) {
-      clearRecord();
+      clearRecord(venue.id);
       yield put(addInsiderVenue(venue.id));
       yield put(setChallengeFormData({ isAnswerCorrect }));
       const loadDataSaga = getLoadDataSaga();
@@ -59,14 +59,14 @@ export function* answerTopMink({ payload: { answer } }) {
       record.blocked = true;
       yield call(api.post, `venues/${venue.id}/mink/${venue.topMink.id}/block`);
     }
-    setRecord(record);
+    setRecord(record, venue.id);
     yield put(setChallengeFormData({ isAnswerCorrect, blocked: record.blocked }));
   } catch (e) {
     if (!isConflict(e)) {
       throw e;
     }
     const record = { blocked: true, time: Date.now() };
-    setRecord(record);
+    setRecord(record, venue.id);
     yield put(setChallengeFormData(record));
   }
 }
