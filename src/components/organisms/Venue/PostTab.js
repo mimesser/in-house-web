@@ -24,12 +24,17 @@ const PostCard = styled(ItemCard)`
   }
 `;
 
-const Post = ({ post: { id, created, title, text, voteCount, voteRating }, large, setSelectedPost }) => {
+const Post = ({ post: { id, created, title, text, voteCount, voteRating, myVote }, large, setSelectedPost }) => {
   const open = useCallback(() => setSelectedPost(id), [id]);
 
   return (
     <PostCard large={large} onClick={open}>
-      <ScoreAndVoters voteCount={voteCount} voteRating={voteRating} sliderSize={large ? 80 : 65} large={large} />
+      <ScoreAndVoters
+        voteCount={voteCount}
+        voteRating={myVote && voteRating}
+        sliderSize={large ? 80 : 65}
+        large={large}
+      />
       <Main>
         <ItemTime dateTime={created}>{formatDate(created)}</ItemTime>
         <ItemTitle>{title}</ItemTitle>
@@ -72,11 +77,11 @@ const PostTab = ({ venue: { id, posts }, loadPosts, setSelectedPost }) => {
 
   const renderSharePreview = useCallback(
     id => {
-      const { title, text, voteCount, voteRating } = findPost(id, posts);
+      const { title, text, voteCount, voteRating, myVote } = findPost(id, posts);
 
       return (
         <SharePreviewCard>
-          <ScoreAndVoters voteCount={voteCount} voteRating={voteRating} sliderSize={70} />
+          <ScoreAndVoters voteCount={voteCount} voteRating={myVote && voteRating} sliderSize={70} />
           <Main>
             <ItemTitle>{title}</ItemTitle>
             <ItemText>{text}</ItemText>
