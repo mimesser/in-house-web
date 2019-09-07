@@ -4,7 +4,6 @@ import { createStructuredSelector } from 'reselect';
 import { withRouter } from 'next/router';
 
 import { Page } from '../components/templates';
-import { Container } from '../components/atoms';
 import { Venue, VenueList } from '../components/organisms';
 import { initVenuesPage, selectLoadingVenues } from '../store/venues';
 
@@ -35,9 +34,7 @@ class Houses extends Component {
 
     return (
       <Page title="Houses" defaultHeader={defaultHeader}>
-        <Container fullVertical={this.houseId}>
-          <View />
-        </Container>
+        <View />
       </Page>
     );
   }

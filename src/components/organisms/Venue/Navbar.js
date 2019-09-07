@@ -9,6 +9,7 @@ import { selectIsActiveInsider } from '../../../store/venues';
 
 const Nav = styled.nav`
   display: flex;
+  flex-shrink: 0; // safari
   background-color: ${palette.white};
   ${panelBoxShadow}
 `;

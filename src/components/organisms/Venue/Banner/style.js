@@ -11,37 +11,37 @@ export const Back = styled(IconButton)`
 `;
 
 export const Header = styled.header`
-   position: relative;
-   height: ${calcRem('270px')};
-   padding: ${spacing.large};
-   color: ${palette.white};
-
-   display: flex;
-   flex-direction: column;
-   > div {
-      display: flex;
-      flex: 1;
-   }
-
-   > * {
-      z-index: 1;
-   }
-   
-   background-image: url("${({ imageUrl }) => imageUrl}");
-   background-size: cover;
-   background-repeat: no-repeat;
-   background-position: center center;  
-   
-   :after {
-      position: absolute;
-      top:0;
-      bottom: 0;
-      right: 0;
-      left: 0;
-      content: '';
-      background-color: rgba(85,116,128,0.5);
-      background: linear-gradient(180deg, rgba(129,149,156,0.5) 0%, rgba(0,0,0,0.5) 100%);
-   }
+  position: relative;
+  height: ${calcRem('270px')};
+  padding: ${spacing.large};
+  color: ${palette.white};
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  > div {
+    display: flex;
+    flex: 1;
+  }
+  
+  > * {
+    z-index: 1;
+  }
+  
+  background-image: url("${({ imageUrl }) => imageUrl}");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;  
+  
+  :after {
+    position: absolute;
+    top:0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    content: '';
+    background-color: rgba(85,116,128,0.5);
+    background: linear-gradient(180deg, rgba(129,149,156,0.5) 0%, rgba(0,0,0,0.5) 100%);
+  }
 `;
 export const About = styled.div`
   margin: auto 0;

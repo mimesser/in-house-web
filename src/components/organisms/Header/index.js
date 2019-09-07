@@ -10,6 +10,7 @@ const Layout = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: ${spacing.medium} ${spacing.large};
+  flex: none; // safari
 `;
 
 const MenuIconButton = styled.button`

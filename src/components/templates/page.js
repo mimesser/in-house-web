@@ -1,9 +1,40 @@
 import React, { useState, useCallback } from 'react';
+import styled, { css } from 'styled-components';
 import Head from 'next/head';
-import Sidebar from 'react-sidebar';
 
-import { Container } from '../atoms';
 import { Header, Menu } from '../organisms';
+import { panelBoxShadow } from '../../style';
+
+const mobileFrame = ({ theme: { desktop } }) =>
+  desktop &&
+  css`
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+
+    > div {
+      width: 400px;
+      height: 730px;
+      margin: auto;
+      min-height: initial;
+      overflow: auto;
+      flex: none;
+      ${panelBoxShadow};
+    }
+  `;
+
+const PageLayout = styled.div`
+  > div {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 100vh;
+    // noinspection CssInvalidPropertyValue
+    min-height: -webkit-fill-available;
+  }
+  ${mobileFrame};
+`;
 
 export const Page = ({ children, title = 'inHouse', defaultHeader = true }) => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -15,19 +46,13 @@ export const Page = ({ children, title = 'inHouse', defaultHeader = true }) => {
       <Head>
         <title>{title}</title>
       </Head>
-      <Sidebar
-        sidebar={<Menu closeMenu={closeMenu} />}
-        open={menuOpen}
-        onSetOpen={setMenuOpen}
-        styles={{ sidebar: { background: '#000', width: '260px' } }}
-        defaultSidebarWidth={260}
-        pullRight
-      >
-        <Container full fullVertical fullHeight>
+      <PageLayout>
+        <div id="rootContainer">
+          <Menu isOpen={menuOpen} closeMenu={closeMenu} />
           {defaultHeader && <Header openMenu={openMenu} />}
           {children}
-        </Container>
-      </Sidebar>
+        </div>
+      </PageLayout>
     </>
   );
 };

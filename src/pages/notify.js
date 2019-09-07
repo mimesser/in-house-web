@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Page } from '../components/templates';
-import { Container, Heading, Input } from '../components/atoms';
+import { Heading, Input } from '../components/atoms';
 import { NotifyLayout, SubmitButton } from '../components/organisms';
 import { isEmailValid } from '../utils/validation';
 
@@ -27,29 +27,27 @@ const Notify = () => {
 
   return (
     <Page title="In-House">
-      <Container>
-        {submitted ? (
-          <NotifyLayout>
-            <Heading>thank you!</Heading>
-            <p>we’ll let you know when we go live!</p>
-          </NotifyLayout>
-        ) : (
-          <NotifyLayout>
-            <Heading>notify me</Heading>
-            <p>we’ll let you know when we go live!</p>
-            <Input
-              disabled={loading}
-              value={email}
-              onChange={event => setEmail(event.target.value)}
-              placeholder="Email"
-              type="email"
-            />
-            <SubmitButton visible={emailValid} disabled={!emailValid || loading} onClick={submit}>
-              send
-            </SubmitButton>
-          </NotifyLayout>
-        )}
-      </Container>
+      {submitted ? (
+        <NotifyLayout>
+          <Heading>thank you!</Heading>
+          <p>we’ll let you know when we go live!</p>
+        </NotifyLayout>
+      ) : (
+        <NotifyLayout>
+          <Heading>notify me</Heading>
+          <p>we’ll let you know when we go live!</p>
+          <Input
+            disabled={loading}
+            value={email}
+            onChange={event => setEmail(event.target.value)}
+            placeholder="Email"
+            type="email"
+          />
+          <SubmitButton visible={emailValid} disabled={!emailValid || loading} onClick={submit}>
+            send
+          </SubmitButton>
+        </NotifyLayout>
+      )}
     </Page>
   );
 };

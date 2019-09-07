@@ -28,7 +28,9 @@ export const ItemText = styled.div`
 `;
 
 export const Main = styled.div`
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 `;
 
 const adjustForPreview = ({ preview }) =>
@@ -53,6 +55,8 @@ export const TabLayout = styled.div`
    flex: 1;
    flex-direction: column;
    padding: 0 ${spacing.medium} ${spacing.medium} ${spacing.medium};
+   flex-shrink: 0; // safari
+   flex-basis: auto; // safari
 
    ${Card} {
       position: relative;
