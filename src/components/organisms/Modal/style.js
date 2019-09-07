@@ -5,7 +5,10 @@ import { breakpoints, spacing, palette, appBackground } from '../../../style';
 import { Heading, HeadingTwo, IconButton, Icon } from '../../atoms';
 
 export const Background = styled.div`
-  position: fixed;
+  // position: fixed;
+  // TODO: changed this to absolute to support modals in "mobile frame", max height - same purpose
+  max-height: 100vh;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;

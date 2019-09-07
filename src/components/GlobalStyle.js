@@ -41,6 +41,10 @@ const GlobalStyle = createGlobalStyle`
       color: ${palette.textDark};
       letter-spacing: ${letterSpacing.large};
    }
+   
+   a {
+    color: currentColor;
+   }
 `;
 
 export default GlobalStyle;

@@ -2,38 +2,21 @@ import React from 'react';
 import { withRouter } from 'next/router';
 import Link from 'next/link';
 import styled from 'styled-components';
+import { Transition } from 'react-transition-group';
 
 import { Icon, IconButton } from '../../atoms';
 
 import { spacing, fontSize, palette } from '../../../style';
 
-const MenuContainer = styled.ul`
-  padding-left: ${spacing.large};
-  list-style: none;
-`;
-
 const CloseButton = styled(IconButton)`
   padding: ${spacing.small};
 `;
 
-const CloseIcon = styled(Icon)`
-  cursor: pointer;
-  color: ${palette.textUltraLight};
+const CloseIcon = styled(Icon).attrs(() => ({
+  icon: 'close',
+  height: 100,
+}))`
   :hover {
-    color: ${palette.white};
-  }
-`;
-
-const A = styled.a`
-  outline: none;
-  text-decoration: none;
-  cursor: pointer;
-  color: ${palette.textUltraLight};
-  font-family: Poppins;
-  font-size: ${fontSize.large};
-  padding: ${spacing.small} ${spacing.large};
-  display: block;
-  &:hover {
     color: ${palette.white};
   }
 `;
@@ -44,27 +27,69 @@ const routes = [
   { href: '/houses', label: 'see beta houses' },
 ];
 
-export const Menu = withRouter(({ closeMenu, router }) => (
-  <>
-    <CloseButton onClick={closeMenu}>
-      <CloseIcon icon="close" height={100} />
-    </CloseButton>
-    <MenuContainer>
-      {routes.map(route => (
-        <li key={route.href}>
-          {route.href === router.route ? (
-            /**
-             * If the target route is the same as the current one, simply close
-             * the menu. (Otherwize nothing will happen)
-             */
-            <A onClick={closeMenu}>{route.label}</A>
-          ) : (
-            <Link href={route.href} passHref>
-              <A>{route.label}</A>
-            </Link>
-          )}
-        </li>
-      ))}
-    </MenuContainer>
-  </>
+const duration = 300;
+
+const MENU_WIDTH = '16rem';
+const sidebarTransitionStyles = {
+  entering: { width: 0 },
+  entered: { width: MENU_WIDTH },
+  exiting: { width: MENU_WIDTH },
+  exited: { width: 0 },
+};
+
+const Panel = styled.div`
+  position: absolute;
+  right: 0;
+  z-index: 1;
+  height: 100%;
+  transition: width ${duration}ms;
+  box-shadow: rgba(0, 0, 0, 0.15) -2px 2px 4px;
+  background-color: ${palette.black};
+  white-space: nowrap;
+  overflow: hidden;
+  ${({ state }) => sidebarTransitionStyles[state]};
+  color: ${palette.textUltraLight};
+`;
+
+const MenuItems = styled.ul`
+  padding: ${spacing.large} 0;
+  margin: 0;
+  list-style: none;
+`;
+
+const A = styled.a`
+  outline: none;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: ${fontSize.large};
+  padding: ${spacing.small} ${spacing.xLarge};
+  display: block;
+  &:hover {
+    color: ${palette.white};
+  }
+`;
+
+export const Menu = withRouter(({ isOpen, router, closeMenu }) => (
+  <Transition in={isOpen} timeout={duration}>
+    {state => (
+      <Panel state={state}>
+        <CloseButton onClick={closeMenu}>
+          <CloseIcon />
+        </CloseButton>
+        <MenuItems state={state}>
+          {routes.map(route => (
+            <li key={route.href}>
+              {route.href === router.route ? (
+                <A onClick={closeMenu}>{route.label}</A>
+              ) : (
+                <Link href={route.href} passHref>
+                  <A>{route.label}</A>
+                </Link>
+              )}
+            </li>
+          ))}
+        </MenuItems>
+      </Panel>
+    )}
+  </Transition>
 ));

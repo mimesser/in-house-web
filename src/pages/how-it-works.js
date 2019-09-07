@@ -4,7 +4,6 @@ import inRange from 'lodash/inRange';
 
 import { Page } from '../components/templates';
 import { SplashLayout, MultiStep, Step1, Step2, Step3, Step4, Step5 } from '../components/organisms';
-import { Container } from '../components/atoms';
 
 class Intro extends Component {
   steps = [Step1, Step2, Step3, Step4, Step5];
@@ -26,11 +25,9 @@ class Intro extends Component {
   render() {
     return (
       <Page title="How It Works">
-        <Container>
-          <SplashLayout>
-            <MultiStep steps={this.steps} startStep={this.step} onStepChange={this.nextStepUrl} />
-          </SplashLayout>
-        </Container>
+        <SplashLayout>
+          <MultiStep steps={this.steps} startStep={this.step} onStepChange={this.nextStepUrl} />
+        </SplashLayout>
       </Page>
     );
   }

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import Terms from '../components/organisms/Terms';
 import { Page } from '../components/templates';
-import { Container } from '../components/atoms';
 import { spacing } from '../style';
 
 const Content = styled.div`
@@ -33,11 +32,9 @@ class TermsPage extends Component {
   render() {
     return (
       <Page title="How It Works">
-        <Container>
-          <Content>
-            <Terms />
-          </Content>
-        </Container>
+        <Content>
+          <Terms />
+        </Content>
       </Page>
     );
   }

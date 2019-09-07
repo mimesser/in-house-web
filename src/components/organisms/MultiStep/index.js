@@ -77,10 +77,10 @@ export function MultiStep({ steps, startStep = 0, onStepChange = noop }) {
   };
 
   return (
-    <Container full fullVertical onClick={nextStep}>
+    <>
       <ReactSwipe className="carousel" style={style} swipeOptions={swipeOptions} ref={swipeRef}>
         {steps.map((Step, key) => (
-          <Swipeable key={key}>
+          <Swipeable key={key} onClick={nextStep}>
             <Step />
           </Swipeable>
         ))}
@@ -90,6 +90,6 @@ export function MultiStep({ steps, startStep = 0, onStepChange = noop }) {
           <NavButton key={index} selected={selectedStep === index} onClick={() => setSelectedStep(index)} />
         ))}
       </Nav>
-    </Container>
+    </>
   );
 }

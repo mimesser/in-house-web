@@ -9,9 +9,10 @@ import { ScoreAndVoters } from '../Venue/ScoreAndVoters';
 import { Votes } from '../Venue/Votes';
 
 export const Layout = styled.div`
-  padding: 0 ${spacing.small};
+  padding: ${spacing.medium} ${spacing.small};
   display: flex;
   flex-direction: column;
+  flex: none; // safari
 `;
 
 export const SearchBox = styled(IconInput)`
