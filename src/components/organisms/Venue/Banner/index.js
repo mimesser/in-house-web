@@ -10,7 +10,7 @@ import { Votes } from '../Votes';
 import { Address, Title } from '../../../atoms';
 import { About, Back, Header, Industry, Ratings, Score } from './style';
 
-export const Banner = ({
+const Banner = ({
   venue: {
     industry: { name: industry } = {},
     name,
