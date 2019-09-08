@@ -9,6 +9,11 @@ export const mockRating = () => {
   return parseFloat(rating.toFixed(2));
 };
 
+export const mockVoteRating = () => {
+  const options = [1, -1];
+  return options[random(0, 1)];
+};
+
 export const mockCalculateRating = (rate, total) => {
   const change = random(1, true);
   const shouldIncrease = rate > 0;
