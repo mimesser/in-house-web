@@ -1,14 +1,11 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-import { breakpoints, spacing, palette, appBackground } from '../../../style';
+import { spacing, palette, appBackground } from '../../../style';
 import { Heading, HeadingTwo, IconButton, Icon } from '../../atoms';
 
 export const Background = styled.div`
-  // position: fixed;
-  // TODO: changed this to absolute to support modals in "mobile frame", max height - same purpose
-  max-height: 100vh;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -41,16 +38,22 @@ const colors = ({ inverse }) =>
       `
     : `background-color: ${appBackground};`;
 
+const mobileFrame = ({ theme: { desktop } }) =>
+  desktop &&
+  css`
+    width: 400px;
+    height: 730px;
+    margin: auto;
+  `;
+
 export const Content = styled.div`
   position: relative;
   overflow: auto;
   display: flex;
   flex-direction: column;
-  min-width: ${breakpoints.xs};
-  max-width: ${breakpoints.sm};
-  width: 100%;
   padding: ${spacing.xLarge};
-
+  width: 100%;
+  ${mobileFrame};
   ${colors};
 `;
 
