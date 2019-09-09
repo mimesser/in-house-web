@@ -14,8 +14,10 @@ export const Modal = ({ open, closeModal, title, canDismiss = true, canClose = t
     const element = containerRef.current || document.body;
     if (open) {
       element.style.overflow = 'hidden';
+      element.style.maxHeight = '100vh';
     } else {
       element.style.removeProperty('overflow');
+      element.style.removeProperty('maxHeight');
     }
   }, [open]);
   useEffect(() => {
