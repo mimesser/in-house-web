@@ -1,12 +1,10 @@
 import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 
 import { PokeButton } from '../../molecules';
-import { setPrivateShareItemId, selectSelectedVenue } from '../../../store/venues';
-import { selectInDemo } from '../../../store/demo';
+import { setPrivateShareItemId } from '../../../store/venues';
 
-const Share = ({ id, openModal, inDemo }) => {
+const Share = ({ id, openModal }) => {
   const handleClick = useCallback(
     e => {
       e.stopPropagation();
@@ -14,17 +12,14 @@ const Share = ({ id, openModal, inDemo }) => {
     },
     [id],
   );
-  return !inDemo && <PokeButton onClick={handleClick} />;
+  return <PokeButton onClick={handleClick} />;
 };
-
-const mapState = createStructuredSelector({
-  inDemo: selectInDemo,
-});
 
 const mapDispatch = {
   openModal: setPrivateShareItemId,
 };
+
 export default connect(
-  mapState,
+  undefined,
   mapDispatch,
 )(Share);

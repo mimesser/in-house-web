@@ -12,9 +12,24 @@ import {
   selectPrivateShareSending,
   setPrivateShareRecipientError,
 } from '../../../../store/venues';
+import { selectInDemo } from '../../../../store/demo';
 import { Modal } from '../../Modal';
+import { Button } from '../../../atoms';
 import { CounterInput, WinkConfirmation, PokeButton } from '../../../molecules';
 import { SendAnonymous, SubmitButton, Layout, Tip } from './style';
+import { DemoWinkConfirmationLayout } from '../demoStyle';
+
+const DemoWinkConfirmation = ({ onCloseClick }) => (
+  <DemoWinkConfirmationLayout>
+    <div>
+      <div>
+        in real life, this would send your message to the recipient through our system so you can stay anonymous
+      </div>
+      <WinkConfirmation size={12} />
+    </div>
+    <Button onClick={onCloseClick}>got it</Button>
+  </DemoWinkConfirmationLayout>
+);
 
 const PrivateShare = ({
   venue: { name: venueName },
@@ -68,7 +83,8 @@ const PrivateShare = ({
 };
 
 const ModalWrapper = props => {
-  const { id, sending, sent, close, venue } = props;
+  const { id, sending, sent, close, venue, inDemo } = props;
+
   return (
     <Modal
       open={!!id}
@@ -79,7 +95,7 @@ const ModalWrapper = props => {
       title={venue && venue.name}
     >
       {id && !sent && <PrivateShare {...props} />}
-      {id && sent && <WinkConfirmation />}
+      {id && sent && (inDemo ? <DemoWinkConfirmation onCloseClick={close} /> : <WinkConfirmation />)}
     </Modal>
   );
 };
@@ -90,6 +106,7 @@ const mapState = createStructuredSelector({
   recipientError: selectPrivateShareRecipientError,
   sent: selectPrivateShareSent,
   sending: selectPrivateShareSending,
+  inDemo: selectInDemo,
 });
 
 const mapDispatch = {

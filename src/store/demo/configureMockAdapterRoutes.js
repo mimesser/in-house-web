@@ -5,6 +5,7 @@ import { selectAggregate } from '../aggregate';
 import { selectSelectedVenue, setVenueMinks, setVenuePosts, setVenueRates } from '../venues';
 import { DEMO_VENUE_ID as VENUE_ID } from './data';
 import { mockCalculateRating } from './mockFunctions';
+import { TABS_MAB } from '../venues/saga/privateShare';
 
 export const RESPONSE_DELAY = 800;
 
@@ -79,6 +80,12 @@ export default function configureMockAdapterRoutes(mock, store) {
     });
   };
 
+  const configurePrivateShareRoute = (tabItemId, tabType) => {
+    mock.onPost(`venues/${VENUE_ID}/${TABS_MAB[tabType]}/${tabItemId}/share`).reply(config => {
+      return [200, {}];
+    });
+  };
+
   mock.onGet('aggregate').reply(config => {
     const aggregate = selectAggregate(store.getState());
     return [200, aggregate];
@@ -125,7 +132,9 @@ export default function configureMockAdapterRoutes(mock, store) {
       myVote: 0,
       isMy: true,
     };
+
     configurePostRoute(newPost);
+    configurePrivateShareRoute(newPost.id, 'post');
     const updatedPosts = posts.concat(newPost);
     store.dispatch(setVenuePosts(updatedPosts));
     return [200, newPost];
@@ -144,23 +153,28 @@ export default function configureMockAdapterRoutes(mock, store) {
       myCorrectAnswer: undefined,
       myVote: 0,
       question,
-      // TODO: move to some other state to maintain type consistency?
       answer,
     };
+
     configureMinkRoute(newMink);
+    configurePrivateShareRoute(newMink.id, 'mink');
     const updatedMinks = minks.concat(newMink);
     store.dispatch(setVenueMinks(updatedMinks));
+
     return [200, newMink];
   });
 
   const { minks: defaultMinks, posts: defaultPosts, rates: defaultRateTags } = selectSelectedVenue(store.getState());
   defaultMinks.forEach(mink => {
     configureMinkRoute(mink);
+    configurePrivateShareRoute(mink.id, 'mink');
   });
   defaultPosts.forEach(post => {
     configurePostRoute(post);
+    configurePrivateShareRoute(post.id, 'post');
   });
   defaultRateTags.forEach(rateTag => {
     configureRateTagRoute(rateTag);
+    configurePrivateShareRoute(rateTag.definitionId, 'rate');
   });
 }

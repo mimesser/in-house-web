@@ -5,10 +5,11 @@ import { isEmailValid, isPhoneNumberValid } from '../../../utils/validation';
 import { SEND_STATUS, setPrivateShareRecipientError, setPrivateShareSending, setPrivateShareItemId } from '../actions';
 import { VENUE_TABS } from '../../../../server/venueTabs';
 import { selectSelectedVenue } from '../selectors';
+import { DEMO_VENUE_ID } from '../../demo/data';
 
 const CONFIRMATION_DELAY = 1000;
 
-const TABS_MAB = {
+export const TABS_MAB = {
   [VENUE_TABS.rate]: 'ratetags',
   [VENUE_TABS.post]: 'feedback',
   [VENUE_TABS.mink]: 'minks',
@@ -40,6 +41,7 @@ export function* privateShare({ payload: { type, id, recipient, message } }) {
       message,
     });
     yield put(setPrivateShareSending(SEND_STATUS.sent));
+    if (venueId === DEMO_VENUE_ID) return;
     yield delay(CONFIRMATION_DELAY);
     yield put(setPrivateShareItemId(undefined));
   } catch (e) {
