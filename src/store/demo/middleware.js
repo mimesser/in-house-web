@@ -4,9 +4,9 @@ import api from '../../api';
 import configureMockAdapterRoutes, { RESPONSE_DELAY } from './configureMockAdapterRoutes';
 import { actionTypes } from './actions';
 
-const demoMiddleware = store => next => action => {
-  let mockAdapter;
+let mockAdapter;
 
+const demoMiddleware = store => next => action => {
   if (action.type === actionTypes.TURN_DEMO_ON) {
     mockAdapter = new MockAdapter(api, { delayResponse: RESPONSE_DELAY });
     configureMockAdapterRoutes(mockAdapter, store);
