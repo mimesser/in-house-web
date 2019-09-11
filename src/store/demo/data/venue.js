@@ -24,7 +24,7 @@ export const venue = {
     country: 'United States',
     hours: null,
     googleId: null,
-    imageUrl: 'https://media.kasperskydaily.com/wp-content/uploads/sites/92/2015/02/06041313/VK1.png',
+    imageUrl: '../../../static/demo_house.jpg',
   },
   created,
   minks: orderBy(minks, ['voteRating'], ['desc']),
