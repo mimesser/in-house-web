@@ -30,6 +30,10 @@ const GlobalStyle = createGlobalStyle`
       min-width: ${breakpoints.xs};
    }
 
+   body.hide-hotjar #_hj_poll_container {
+      visibility: hidden;
+   }
+
    h1,
    h2,
    h3,
@@ -41,7 +45,7 @@ const GlobalStyle = createGlobalStyle`
       color: ${palette.textDark};
       letter-spacing: ${letterSpacing.large};
    }
-   
+
    a {
     color: currentColor;
    }
