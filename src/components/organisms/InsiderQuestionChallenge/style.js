@@ -47,6 +47,8 @@ export const ChangeButton = styled(Button)`
   color: inherit;
   background-color: transparent;
   margin: auto;
+  padding-left: ${spacing.xxxLarge};
+  padding-right: ${spacing.xxxLarge};
 `;
 
 export const InputHelp = styled.span`
