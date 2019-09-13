@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import Head from 'next/head';
 
 import { Header, Menu } from '../organisms';
-import { panelBoxShadow } from '../../style';
+import { appBackground, panelBoxShadow, palette } from '../../style';
 
 const mobileFrame = ({ theme: { desktop } }) =>
   desktop &&
@@ -11,6 +11,7 @@ const mobileFrame = ({ theme: { desktop } }) =>
     display: flex;
     flex-direction: column;
     height: 100vh;
+    background-color: ${palette.black};
 
     > div {
       width: 400px;
@@ -20,6 +21,7 @@ const mobileFrame = ({ theme: { desktop } }) =>
       overflow: auto;
       flex: none;
       ${panelBoxShadow};
+      background-color: ${appBackground};
     }
   `;
 
