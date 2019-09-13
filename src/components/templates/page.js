@@ -8,10 +8,8 @@ import { appBackground, panelBoxShadow, palette } from '../../style';
 const mobileFrame = ({ theme: { desktop } }) =>
   desktop &&
   css`
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
     background-color: ${palette.black};
+    height: 100vh;
 
     > div {
       width: 400px;
@@ -26,6 +24,9 @@ const mobileFrame = ({ theme: { desktop } }) =>
   `;
 
 const PageLayout = styled.div`
+  display: flex;
+  flex-direction: column;
+
   > div {
     position: relative;
     display: flex;

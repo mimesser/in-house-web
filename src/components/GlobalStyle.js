@@ -18,6 +18,10 @@ const GlobalStyle = createGlobalStyle`
    * {
       box-sizing: border-box;
    }
+   
+   html, body {
+      height: 100%;
+   }
 
    body {
       font-size: ${BASE_FONT_SIZE};
@@ -28,6 +32,10 @@ const GlobalStyle = createGlobalStyle`
       color: ${palette.text};
       background-color: ${appBackground};
       min-width: ${breakpoints.xs};
+      
+      > div:first-child {
+        height: 100%;
+      }
    }
 
    body.hide-hotjar #_hj_poll_container {
