@@ -94,10 +94,10 @@ const VoteMink = ({
         <AnswerStatus status={answerStatus} previouslyAnsweredCorrectly={previouslyAnsweredCorrectly} />
       </InputGroup>
       <div>
-        <VoteButton disabled={!canVote} onClick={upvoteMink} selected={myVote === 1}>
+        <VoteButton disabled={!canVote} onClick={myVote !== 1 ? upvoteMink : undefined} selected={myVote === 1}>
           <Icon size={4} icon="arrow-up-circle" />
         </VoteButton>
-        <VoteButton disabled={!canVote} onClick={downvoteMink} selected={myVote === -1}>
+        <VoteButton disabled={!canVote} onClick={myVote !== -1 ? downvoteMink : undefined} selected={myVote === -1}>
           <Icon size={4} icon="arrow-down-circle" />
         </VoteButton>
       </div>
