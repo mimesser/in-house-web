@@ -32,6 +32,7 @@ const GlobalStyle = createGlobalStyle`
       color: ${palette.text};
       background-color: ${appBackground};
       min-width: ${breakpoints.xs};
+      word-break: break-word;
       
       > div:first-child {
         height: 100%;
