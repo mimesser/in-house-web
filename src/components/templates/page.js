@@ -8,7 +8,7 @@ import { appBackground, panelBoxShadow, palette } from '../../style';
 const mobileFrame = ({ theme: { desktop } }) =>
   desktop &&
   css`
-    background-color: ${palette.black};
+    background-color: #eee;
     height: 100vh;
 
     > div {
