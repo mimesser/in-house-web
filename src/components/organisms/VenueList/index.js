@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { Loader, IconButton, Icon } from '../../atoms';
 
 import { selectVenues } from '../../../store/venues';
+import { selectInDemo } from '../../../store/demo';
 import { VenueCard } from './VenueCard';
 import { ListYourHouse, SearchBox, Layout } from './style';
 
@@ -19,7 +20,7 @@ const SearchBoxIcon = ({ applyFilter, clear }) =>
     <Icon icon="search" />
   );
 
-const List = ({ venues }) => {
+const List = ({ venues, inDemo }) => {
   const [filter, setFilter] = useState('');
   const handleSearchChange = useCallback(e => setFilter(e.currentTarget.value.toLowerCase()), []);
   const clearSearch = useCallback(() => setFilter(''), []);
@@ -38,7 +39,7 @@ const List = ({ venues }) => {
   return (
     <Layout>
       <SearchBox
-        placeholder="beta houses"
+        placeholder={inDemo ? 'my house' : 'beta houses'}
         value={filter}
         icon={<SearchBoxIcon applyFilter={applyFilter} clear={clearSearch} />}
         onChange={handleSearchChange}
@@ -55,6 +56,7 @@ const List = ({ venues }) => {
 
 const mapStateToProps = createStructuredSelector({
   venues: selectVenues,
+  inDemo: selectInDemo,
 });
 
 export const VenueList = connect(mapStateToProps)(List);

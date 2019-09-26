@@ -7,7 +7,8 @@ import { loadVenuesDataSuccess, setSelectedVenue } from '../actions';
 import { selectVenues } from '../selectors';
 import { selectIndustriesMap } from '../../aggregate';
 
-import { DEMO_VENUE } from '../../demo/data';
+import { turnDemoOn, turnDemoOff } from '../../demo';
+import { DEMO_VENUE, DEMO_VENUES_ID } from '../../demo/data';
 
 function* fetchVenueList() {
   const venues = yield select(selectVenues);
@@ -29,12 +30,20 @@ function* fetchVenueList() {
 }
 
 export function* initVenuesPage({ payload: { idToSelect } }) {
+  const inDemo = idToSelect === DEMO_VENUE.id || idToSelect === DEMO_VENUES_ID;
+  if (inDemo) {
+    yield put(turnDemoOn());
+  } else {
+    yield put(turnDemoOff());
+  }
+
   const venues = yield fetchVenueList();
   if (!idToSelect) {
     return;
   }
+
   let venueToSelect;
-  if (idToSelect === DEMO_VENUE.id) {
+  if (inDemo) {
     venueToSelect = DEMO_VENUE;
   } else {
     venueToSelect = venues.find(v => v.id === +idToSelect);

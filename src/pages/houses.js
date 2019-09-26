@@ -6,10 +6,15 @@ import { withRouter } from 'next/router';
 import { Page } from '../components/templates';
 import { Venue, VenueList } from '../components/organisms';
 import { initVenuesPage, selectLoadingVenues } from '../store/venues';
+import { DEMO_VENUES_ID } from '../store/demo/data';
 
 class Houses extends Component {
   get houseId() {
     return this.props.router.query.id;
+  }
+
+  get inDemoVenues() {
+    return this.houseId === DEMO_VENUES_ID;
   }
 
   get isNewMinkOrPostPath() {
@@ -29,7 +34,7 @@ class Houses extends Component {
 
   render() {
     // TODO split and render separately?
-    const View = this.houseId ? Venue : VenueList;
+    const View = this.houseId && !this.inDemoVenues ? Venue : VenueList;
     const defaultHeader = !this.houseId || this.isNewMinkOrPostPath;
 
     return (

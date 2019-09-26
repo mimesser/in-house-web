@@ -62,13 +62,6 @@ export function* setSelectedVenue({ payload: { venue: { id } = {} } }) {
     return;
   }
 
-  if (id === DEMO_VENUE_ID) {
-    yield put(turnDemoOn());
-  } else {
-    // TODO: this should only get called once iff demo exit
-    yield put(turnDemoOff());
-  }
-
   const isActiveInsider = yield select(selectIsActiveInsider);
 
   const openItemData = parseOpenItemRequest(id);

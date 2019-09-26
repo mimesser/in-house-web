@@ -7,11 +7,11 @@ import minks from './minks';
 import posts from './posts';
 import rateTags from './rateTags';
 
-export const venue = {
+export default {
   id: VENUE_ID,
   industryId: industry.id,
   industry,
-  name: 'your job',
+  name: 'your house?',
   rating: mockRating(),
   votesCount: minks.reduce((sum, mink) => sum + mink.voteCount, 0),
   insidersCount: 30,
