@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Page } from '../components/templates';
 import { Button, Heading, Strong } from '../components/atoms';
 import { LandingLayout } from '../components/organisms';
+import { DEMO_VENUES_ID } from '../store/demo/data';
 
 const Index = () => (
   <Page>
@@ -17,8 +18,8 @@ const Index = () => (
       <p>
         <Strong>how will your life change?</Strong>
       </p>
-      <Link href="/how-it-works">
-        <Button>see how it works</Button>
+      <Link href={`/houses/${DEMO_VENUES_ID}`}>
+        <Button>try it</Button>
       </Link>
     </LandingLayout>
   </Page>

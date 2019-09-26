@@ -1,9 +1,8 @@
 import maxBy from 'lodash/maxBy';
 import orderBy from 'lodash/orderBy';
 
-import { selectAggregate } from '../aggregate';
 import { selectSelectedVenue, setVenueMinks, setVenuePosts, setVenueRates } from '../venues';
-import { DEMO_VENUE_ID as VENUE_ID } from './data';
+import { DEMO_VENUE_ID as VENUE_ID, DEMO_VENUE, DEMO_AGGREGATE } from './data';
 import { mockCalculateRating } from './mockFunctions';
 import { TABS_MAB } from '../venues/saga/privateShare';
 
@@ -86,9 +85,12 @@ export default function configureMockAdapterRoutes(mock, store) {
     });
   };
 
+  mock.onGet('venues').reply(config => {
+    return [200, [DEMO_VENUE]];
+  });
+
   mock.onGet('aggregate').reply(config => {
-    const aggregate = selectAggregate(store.getState());
-    return [200, aggregate];
+    return [200, DEMO_AGGREGATE];
   });
 
   mock.onGet(`/venues/${VENUE_ID}/minks?orderBy=voteRating`).reply(config => {
@@ -164,16 +166,15 @@ export default function configureMockAdapterRoutes(mock, store) {
     return [200, newMink];
   });
 
-  const { minks: defaultMinks, posts: defaultPosts, rates: defaultRateTags } = selectSelectedVenue(store.getState());
-  defaultMinks.forEach(mink => {
+  DEMO_VENUE.minks.forEach(mink => {
     configureMinkRoute(mink);
     configurePrivateShareRoute(mink.id, 'mink');
   });
-  defaultPosts.forEach(post => {
+  DEMO_VENUE.posts.forEach(post => {
     configurePostRoute(post);
     configurePrivateShareRoute(post.id, 'post');
   });
-  defaultRateTags.forEach(rateTag => {
+  DEMO_VENUE.rates.forEach(rateTag => {
     configureRateTagRoute(rateTag);
     configurePrivateShareRoute(rateTag.definitionId, 'rate');
   });
