@@ -30,10 +30,6 @@ const settingsMap = {
 
 const settings = settingsMap[MODE] || console.error('Environment not supplied!') || {};
 
-export const onboardingRoutesConfig = [
-  { path: '/', exact: true },
-  { path: '/how-it-works', exact: false },
-  { path: '/houses/demo', exact: false },
-];
+export const ONBOARDING_PATHS_REGEX = /(^\/$|^\/how-it-works|^\/houses\/demo)/;
 
 export { settings };
