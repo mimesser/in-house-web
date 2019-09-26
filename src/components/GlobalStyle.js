@@ -43,6 +43,10 @@ const GlobalStyle = createGlobalStyle`
       visibility: hidden;
    }
 
+   body.hide-hotjar #_hj_poll_container {
+      visibility: hidden;
+   }
+
    h1,
    h2,
    h3,

@@ -11,7 +11,7 @@ import createStore from '../store';
 import { theme } from '../style';
 import GlobalStyle from '../components/GlobalStyle';
 import { loadAggregateData } from '../store/aggregate';
-import { onboardingRoutesConfig } from '../settings';
+import { ONBOARDING_PATHS_REGEX } from '../settings';
 
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
@@ -23,22 +23,14 @@ class MyApp extends App {
   }
 
   handleRouteChangeStart = path => {
-    // TODO: find a better place to put this?
-    (function checkDisplayHotjar() {
-      const isOnboardingPath = onboardingRoutesConfig.some(routeConfig => {
-        if (routeConfig.exact) {
-          return path === routeConfig.path;
-        }
-        return path.startsWith(routeConfig.path);
-      });
+    const isOnboardingPath = ONBOARDING_PATHS_REGEX.test(path);
 
-      const body = document.querySelector('body');
-      if (isOnboardingPath) {
-        body.classList.remove('hide-hotjar');
-      } else {
-        body.classList.add('hide-hotjar');
-      }
-    })();
+    const body = document.querySelector('body');
+    if (isOnboardingPath) {
+      body.classList.remove('hide-hotjar');
+    } else {
+      body.classList.add('hide-hotjar');
+    }
   };
 
   componentDidMount() {
