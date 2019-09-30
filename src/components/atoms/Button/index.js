@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { Loader } from '../Loader';
 import { withForwardedRef } from '../../withForwardedRef';
-import { fontWeight, palette, fontSize, letterSpacing, spacing } from '../../../style';
+import { fontWeight, palette, fontSize, letterSpacing, spacing, calcRem } from '../../../style';
 
 const background = ({ secondary, disabled }) => {
   if (secondary) {
@@ -34,7 +34,7 @@ const BaseButton = styled.button`
   border: 1px solid ${border};
   background-color: ${background};
   color: ${color};
-  padding: ${fontSize.small} ${spacing.xxLarge};
+  padding: ${fontSize.small} ${calcRem('60px')};
   font-size: ${fontSize.small};
   font-weight: ${fontWeight.primary};
   letter-spacing: ${letterSpacing.primary};
