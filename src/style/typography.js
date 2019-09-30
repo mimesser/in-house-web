@@ -31,5 +31,6 @@ export const fontWeight = {
 
 export const letterSpacing = {
   primary: calcRem('0.5px'),
+  medium: calcRem('0.666667px'),
   large: calcRem('2px'),
 };

@@ -9,8 +9,8 @@ export const appColors = {
 
   // TODO: any better name?
   dim: '#002633',
-  dimDark: '#00000c',
   dimLight: '#2e4e5d',
+  dimExtraLight: '#5A727A',
 
   gray: '#d6dddf',
   grayDark: '#a5abad',
@@ -20,8 +20,8 @@ export const appColors = {
 
 export const themeColors = {
   primary: appColors.dim,
-  primaryDark: appColors.dimDark,
   primaryLight: appColors.dimLight,
+  primaryUltraLight: appColors.dimExtraLight,
 
   secondary: appColors.gray,
   secondaryDark: appColors.grayDark,
