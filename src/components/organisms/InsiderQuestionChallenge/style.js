@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { calcRem, fontSize, spacing, palette } from '../../../style';
-import { Button, Heading, IconButton, Input } from '../../atoms';
+import { Button, Heading, IconButton, Input, Strong } from '../../atoms';
 import { Patent } from '../../molecules';
 
 export const QuestionForm = styled.div`
@@ -74,4 +74,8 @@ export const AnswerInput = styled(Input)`
   ::placeholder {
     color: ${palette.secondaryDark};
   }
+`;
+
+export const Try = styled(Strong)`
+  color: ${palette.white};
 `;
