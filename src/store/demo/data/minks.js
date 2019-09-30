@@ -7,8 +7,8 @@ export default [
   {
     id: 1,
     created,
-    answer: 'happyworker2020',
-    question: 'what is the office wifi password? [happyworker2020]',
+    answer: 'bunny69',
+    question: 'what’s our wifi password',
     voteRating: topVoteRating,
     voteCount: 26,
     myCorrectAnswer: null,

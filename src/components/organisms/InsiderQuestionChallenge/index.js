@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { ArrowRight } from 'styled-icons/feather/ArrowRight';
 
-import { Heading, Loader } from '../../atoms';
+import { Heading, Loader, ToolTip } from '../../atoms';
 import { Patent, WinkConfirmation } from '../../molecules';
 import {
   answerTopMink,
@@ -20,14 +20,31 @@ import {
   InputHelp,
   ExplainMink,
   AnswerInput,
+  Try,
 } from './style';
 import { Modal } from '../Modal';
 import { normalizeAnswer } from '../Venue/normalizeAnswer';
 import AcceptTerms from './AcceptTerms';
+import { selectInDemo, getDefaultTopMink } from '../../../store/demo';
+import { useOutsideClick, useTimeout } from '../../../utils';
 
 // TODO: move this to Venue?
 
-const Form = ({ topMink, wrongAnswer, answerTopMink }) => {
+const TopMinkToolTip = () => {
+  const [open, setOpen] = useState(false);
+  const tooltipRef = useRef(null);
+
+  useTimeout(3000, () => setOpen(true));
+  useOutsideClick(tooltipRef, () => setOpen(false));
+
+  return (
+    <ToolTip ref={tooltipRef} open={open}>
+      <Try>try</Try> {getDefaultTopMink().answer}
+    </ToolTip>
+  );
+};
+
+const Form = ({ topMink, wrongAnswer, answerTopMink, inDemo }) => {
   const [answer, setAnswer] = useState('');
   const [showError, setShowError] = useState(false);
   const answerRef = useRef(null);
@@ -51,6 +68,7 @@ const Form = ({ topMink, wrongAnswer, answerTopMink }) => {
   return topMink ? (
     <>
       <Question>{topMink.question}</Question>
+      {inDemo && <TopMinkToolTip />}
       <Answer onSubmit={handleSubmit}>
         <div>
           <AnswerInput
@@ -73,7 +91,17 @@ const Form = ({ topMink, wrongAnswer, answerTopMink }) => {
   );
 };
 
-const renderSubview = (name, isAnswerCorrect, blocked, topMink, wrongAnswer, answerTopMink, dismissForm, showTerms) =>
+const renderSubview = (
+  name,
+  isAnswerCorrect,
+  blocked,
+  topMink,
+  wrongAnswer,
+  answerTopMink,
+  dismissForm,
+  showTerms,
+  inDemo,
+) =>
   showTerms ? (
     <AcceptTerms />
   ) : (
@@ -88,14 +116,22 @@ const renderSubview = (name, isAnswerCorrect, blocked, topMink, wrongAnswer, ans
             <Patent />
           </ExplainMink>
           {blocked && <p>Too many attempts. Please come back later</p>}
-          {!blocked && <Form topMink={topMink} wrongAnswer={wrongAnswer} answerTopMink={answerTopMink} />}
+          {!blocked && (
+            <Form topMink={topMink} wrongAnswer={wrongAnswer} answerTopMink={answerTopMink} inDemo={inDemo} />
+          )}
           <ChangeButton onClick={() => dismissForm(true)}>change this question</ChangeButton>
         </>
       )}
     </QuestionForm>
   );
 
-const InsiderQuestionChallenge = ({ venue: { name, topMink }, challengeFormData, dismissForm, answerTopMink }) => {
+const InsiderQuestionChallenge = ({
+  venue: { name, topMink },
+  challengeFormData,
+  dismissForm,
+  answerTopMink,
+  inDemo,
+}) => {
   const { blocked, isAnswerCorrect, showTerms } = challengeFormData || {};
   const wrongAnswer = isAnswerCorrect === false;
   const accessGranted = challengeFormData && challengeFormData.isAnswerCorrect;
@@ -110,7 +146,17 @@ const InsiderQuestionChallenge = ({ venue: { name, topMink }, challengeFormData,
       title={showTerms ? undefined : name}
     >
       {challengeFormData
-        ? renderSubview(name, isAnswerCorrect, blocked, topMink, wrongAnswer, answerTopMink, dismissForm, showTerms)
+        ? renderSubview(
+            name,
+            isAnswerCorrect,
+            blocked,
+            topMink,
+            wrongAnswer,
+            answerTopMink,
+            dismissForm,
+            showTerms,
+            inDemo,
+          )
         : null}
     </Modal>
   );
@@ -119,7 +165,9 @@ const InsiderQuestionChallenge = ({ venue: { name, topMink }, challengeFormData,
 const mapState = createStructuredSelector({
   venue: selectSelectedVenue,
   challengeFormData: selectInsiderChallengeForm,
+  inDemo: selectInDemo,
 });
+
 const mapDispatch = {
   answerTopMink,
   dismissForm: dismissChallengeForm,
