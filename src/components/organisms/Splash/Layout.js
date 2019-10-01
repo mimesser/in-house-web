@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { Button, Heading, HeadingTwo, Strong } from '../../atoms';
+import { Button, Heading, HeadingThree, Strong } from '../../atoms';
 import { spacing, lineHeight, letterSpacing, palette, fontWeight, fontSize } from '../../../style';
 
 export const SplashLayout = styled.div`
@@ -22,22 +22,23 @@ export const SplashLayout = styled.div`
 export const LandingLayout = styled(SplashLayout)`
   padding: 0 ${spacing.xLarge};
 
-  > ${HeadingTwo} {
-    margin-top: 3rem;
-
-    color: ${palette.primaryLight};
+  > ${Heading} {
     letter-spacing: ${letterSpacing.medium};
     line-height: 36px;
+    font-size: 28px;
     font-weight: ${fontWeight.primary};
   }
 
-  div:first-of-type {
-    margin-bottom: 4.5rem;
-
+  > ${Heading}:first-of-type {
     color: ${palette.primaryLight};
-    letter-spacing: ${letterSpacing.primary};
-    font-weight: ${fontWeight.primary};
-    font-size: ${fontSize.large};
+    margin-top: 2.5rem;
+
+    margin-bottom: 0;
+  }
+
+  > ${Heading}:last-of-type {
+    color: ${palette.textUltraLight};
+    margin-bottom: 2.5rem;
   }
 
   ${Strong}:first-of-type {
@@ -55,7 +56,15 @@ export const LandingLayout = styled(SplashLayout)`
     margin-bottom: ${spacing.medium};
   }
 
-  ${Button} {
-    margin: auto;
+  div:last-of-type {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+
+    > ${Button} {
+      margin: ${spacing.large} auto;
+      min-width: 12.5rem;
+    }
   }
 `;

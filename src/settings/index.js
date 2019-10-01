@@ -1,4 +1,5 @@
 import getConfig from 'next/config';
+import { DEMO_VENUE_ID, DEMO_VENUES_ID } from '../store/demo/data';
 
 // This way settings resolved at runtime and not at build time
 const { publicRuntimeConfig: { MODE } = {} } = getConfig() || {};
@@ -30,6 +31,6 @@ const settingsMap = {
 
 const settings = settingsMap[MODE] || console.error('Environment not supplied!') || {};
 
-export const ONBOARDING_PATHS_REGEX = /(^\/$|^\/how-it-works|^\/houses\/demo)/;
+export const ONBOARDING_PATHS_REGEX = new RegExp(`(^/$|^/houses/(${DEMO_VENUE_ID}|${DEMO_VENUES_ID}))`);
 
 export { settings };

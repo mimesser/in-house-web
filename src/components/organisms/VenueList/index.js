@@ -47,9 +47,11 @@ const List = ({ venues, inDemo }) => {
       {venuesToShow.map(v => (
         <VenueCard key={v.id} venue={v} showVenue={showVenue} />
       ))}
-      <Link href="/feedback">
-        <ListYourHouse>list your house</ListYourHouse>
-      </Link>
+      {!inDemo && (
+        <Link href="/feedback">
+          <ListYourHouse>list your house</ListYourHouse>
+        </Link>
+      )}
     </Layout>
   );
 };
