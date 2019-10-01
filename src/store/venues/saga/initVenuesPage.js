@@ -5,7 +5,7 @@ import { waitTillReady } from '../../aggregate/saga';
 import api from '../../../api';
 import { loadVenuesDataSuccess, setSelectedVenue } from '../actions';
 import { selectVenues } from '../selectors';
-import { selectIndustriesMap } from '../../aggregate';
+import { selectIndustriesMap, selectAggregate } from '../../aggregate';
 
 import { turnDemoOn, turnDemoOff } from '../../demo';
 import { DEMO_VENUE, DEMO_VENUES_ID } from '../../demo/data';
@@ -32,7 +32,12 @@ function* fetchVenueList() {
 export function* initVenuesPage({ payload: { idToSelect } }) {
   const inDemo = idToSelect === DEMO_VENUE.id || idToSelect === DEMO_VENUES_ID;
   if (inDemo) {
-    yield put(turnDemoOn());
+    // TODO: either have to cache the aggregate or make another api call
+    // not sure if theres better way yet in order to not have conflicting aggregates
+    yield waitTillReady();
+    const aggregate = yield select(selectAggregate);
+
+    yield put(turnDemoOn(aggregate));
   } else {
     yield put(turnDemoOff());
   }

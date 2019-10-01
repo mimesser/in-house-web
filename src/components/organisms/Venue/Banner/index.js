@@ -6,7 +6,7 @@ import { createStructuredSelector } from 'reselect';
 import { ArrowLeft } from 'styled-icons/feather/ArrowLeft';
 
 import { selectInDemo } from '../../../../store/demo';
-import { DEMO_VENUES_ID } from '../../../../store/demo/data';
+import { DEMO_VENUE_ID } from '../../../../store/demo/data';
 import { Votes } from '../Votes';
 import { Address, Title } from '../../../atoms';
 import { About, Back, Header, Industry, Ratings, Score } from './style';
@@ -22,7 +22,7 @@ const Banner = ({
   inDemo,
 }) => {
   const ratingParts = typeof rating === 'number' && rating.toFixed(1).split('.');
-  const href = inDemo ? `/houses/${DEMO_VENUES_ID}` : '/houses';
+  const href = inDemo ? `/` : '/houses';
 
   return (
     <Header imageUrl={imageUrl}>

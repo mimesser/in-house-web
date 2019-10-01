@@ -35,7 +35,7 @@ class Houses extends Component {
   render() {
     // TODO split and render separately?
     const View = this.houseId && !this.inDemoVenues ? Venue : VenueList;
-    const defaultHeader = !this.houseId || this.isNewMinkOrPostPath;
+    const defaultHeader = !this.houseId || this.isNewMinkOrPostPath || this.inDemoVenues;
 
     return (
       <Page title="Houses" defaultHeader={defaultHeader}>

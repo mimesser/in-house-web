@@ -2,15 +2,15 @@ import React from 'react';
 import Link from 'next/link';
 
 import { Page } from '../components/templates';
-import { Button, HeadingTwo, Strong } from '../components/atoms';
+import { Button, Heading, Strong } from '../components/atoms';
 import { LandingLayout } from '../components/organisms';
 import { DEMO_VENUES_ID } from '../store/demo/data';
 
 const Index = () => (
   <Page>
     <LandingLayout>
-      <HeadingTwo noMargin>if nothing ever changes</HeadingTwo>
-      <div>what’s the fucking point?</div>
+      <Heading>if nothing ever changes</Heading>
+      <Heading>what’s the fucking point?</Heading>
       <Strong>private / anonymous / collective team feedback</Strong>
       <p>raise issues without fear</p>
       <p>challenge favoritism & politics</p>
@@ -18,9 +18,14 @@ const Index = () => (
       <p>rate every issue democratically</p>
       <p>empower consensus</p>
       <Strong>remain untraceable</Strong>
-      <Link href={`/houses/${DEMO_VENUES_ID}`}>
-        <Button>try it</Button>
-      </Link>
+      <div>
+        <Link href={`/houses/${DEMO_VENUES_ID}`}>
+          <Button secondary>see how it works</Button>
+        </Link>
+        <Link href="/houses">
+          <Button>see active beta houses</Button>
+        </Link>
+      </div>
     </LandingLayout>
   </Page>
 );

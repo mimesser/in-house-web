@@ -1,6 +1,5 @@
-import React from 'react';
 import styled, { css } from 'styled-components';
-import { spacing, fontSize } from '../../../style';
+import { spacing } from '../../../style';
 
 const baseStyle = css`
   margin-bottom: ${props => props.noMargin && '0'};

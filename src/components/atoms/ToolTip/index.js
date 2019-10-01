@@ -10,6 +10,8 @@ const Wrapper = styled.div`
   position: 'relative';
 `;
 
+// TODO: in the future, use something like popper.js for these types of things
+
 // A tooltip that displays from the top direction only
 const ToolTip = styled.div`
   position: absolute;

@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useEffect } from 'react';
 
 export function useOutsideClick(ref, onOutsideClick) {
   const handleClick = event => {
@@ -14,7 +14,7 @@ export function useOutsideClick(ref, onOutsideClick) {
     return () => {
       document.removeEventListener('mousedown', handleClick);
     };
-  });
+  }, []);
 }
 
 export function useTimeout(time, onTimeout) {
