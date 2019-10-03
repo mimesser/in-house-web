@@ -36,7 +36,7 @@ const sidebarTransitionStyles = {
 const Panel = styled.div`
   position: absolute;
   right: 0;
-  z-index: 1;
+  z-index: 2;
   height: 100%;
   transition: width ${duration}ms;
   box-shadow: rgba(0, 0, 0, 0.15) -2px 2px 4px;
@@ -75,11 +75,11 @@ export const Menu = withRouter(({ isOpen, router, closeMenu }) => (
         <MenuItems state={state}>
           {routes.map(route => (
             <li key={route.href}>
-              {route.href === router.route ? (
+              {route.href === router.asPath ? (
                 <A onClick={closeMenu}>{route.label}</A>
               ) : (
                 <Link href={route.href} passHref>
-                  <A>{route.label}</A>
+                  <A onClick={closeMenu}>{route.label}</A>
                 </Link>
               )}
             </li>
