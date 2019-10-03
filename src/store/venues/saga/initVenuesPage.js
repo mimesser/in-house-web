@@ -45,6 +45,9 @@ export function* initVenuesPage({ payload: { idToSelect } }) {
     }
 
     if (!alreadyInDemo) {
+      yield waitTillReady();
+      cacheAggregate = yield select(selectAggregate);
+
       yield put(turnDemoOn());
     }
   } else {
