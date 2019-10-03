@@ -33,7 +33,12 @@ export const actionTypes = {
   PRIVATE_SHARE: 'PRIVATE_SHARE',
   SET_PRIVATE_SHARE_SENDING: 'SET_PRIVATE_SHARE_SENDING',
   SET_NEW_MINK_ELECTED: 'SET_NEW_MINK_ELECTED',
+  CLEAR_VENUES_DATA: 'CLEAR_VENUES_DATA',
 };
+
+export const clearVenuesData = () => ({
+  type: actionTypes.CLEAR_VENUES_DATA,
+});
 
 export const initVenuesPage = idToSelect => ({
   type: actionTypes.INIT_VENUES_PAGE,

@@ -22,6 +22,8 @@ const setSelectedVenueProp = (state, action, key) => {
 
 export function reducer(state = initialState, action) {
   switch (action.type) {
+    case actionTypes.CLEAR_VENUES_DATA:
+      return {};
     case actionTypes.LOAD_VENUES_DATA_SUCCESS:
       return { ...state, list: action.data };
     case actionTypes.SET_SELECTED_VENUE: {

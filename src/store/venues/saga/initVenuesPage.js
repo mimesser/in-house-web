@@ -2,16 +2,17 @@ import { put, call, select } from 'redux-saga/effects';
 import Router from 'next/router';
 
 import { waitTillReady } from '../../aggregate/saga';
-import api from '../../../api';
+import api, { setAuthorization } from '../../../api';
 import { loadVenuesDataSuccess, setSelectedVenue } from '../actions';
 import { selectVenues } from '../selectors';
-import { selectIndustriesMap, selectAggregate } from '../../aggregate';
+import { selectIndustriesMap, selectAggregate, loadAggregateDataSuccess } from '../../aggregate';
 
 import { turnDemoOn, turnDemoOff } from '../../demo';
 import { DEMO_VENUE, DEMO_VENUES_ID } from '../../demo/data';
 
 function* fetchVenueList() {
   const venues = yield select(selectVenues);
+
   if (venues) {
     return venues;
   }
@@ -29,16 +30,29 @@ function* fetchVenueList() {
   return normalized;
 }
 
+let alreadyInDemo = false;
+let cacheAggregate;
+
 export function* initVenuesPage({ payload: { idToSelect } }) {
   const inDemo = idToSelect === DEMO_VENUE.id || idToSelect === DEMO_VENUES_ID;
   if (inDemo) {
-    // TODO: either have to cache the aggregate or make another api call
-    // not sure if theres better way yet in order to not have conflicting aggregates
-    yield waitTillReady();
-    const aggregate = yield select(selectAggregate);
+    if (idToSelect === DEMO_VENUES_ID) {
+      alreadyInDemo = true;
+      yield waitTillReady();
+      cacheAggregate = yield select(selectAggregate);
 
-    yield put(turnDemoOn(aggregate));
+      yield put(turnDemoOn());
+    }
+
+    if (!alreadyInDemo) {
+      yield put(turnDemoOn());
+    }
   } else {
+    if (cacheAggregate) {
+      yield put(loadAggregateDataSuccess(cacheAggregate));
+      setAuthorization(cacheAggregate.userId);
+    }
+
     yield put(turnDemoOff());
   }
 

@@ -1,6 +1,7 @@
 import maxBy from 'lodash/maxBy';
 import orderBy from 'lodash/orderBy';
 
+import { loadAggregateDataSuccess } from '../aggregate';
 import { selectSelectedVenue, setVenueMinks, setVenuePosts, setVenueRates } from '../venues';
 import { DEMO_VENUE_ID as VENUE_ID, DEMO_VENUE, DEMO_AGGREGATE } from './data';
 import { mockCalculateRating } from './mockFunctions';
@@ -90,7 +91,19 @@ export default function configureMockAdapterRoutes(mock, store) {
   });
 
   mock.onGet('aggregate').reply(config => {
-    return [200, DEMO_AGGREGATE];
+    const date = new Date();
+    return [
+      200,
+      {
+        ...DEMO_AGGREGATE,
+        insiderVenueIds: [VENUE_ID],
+        date: date.toISOString(),
+        timestamp: date.getTime(),
+        isFormerInsider: true,
+        isTermsAccepted: true,
+        userId: '00000000-0000-0000-0000-000000000000',
+      },
+    ];
   });
 
   mock.onGet(`/venues/${VENUE_ID}/minks?orderBy=voteRating`).reply(config => {
@@ -166,6 +179,7 @@ export default function configureMockAdapterRoutes(mock, store) {
     return [200, newMink];
   });
 
+  store.dispatch(loadAggregateDataSuccess(DEMO_AGGREGATE));
   DEMO_VENUE.minks.forEach(mink => {
     configureMinkRoute(mink);
     configurePrivateShareRoute(mink.id, 'mink');
