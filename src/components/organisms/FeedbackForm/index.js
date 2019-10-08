@@ -7,7 +7,7 @@ import { Modal } from '../Modal';
 import { ButtonContainer, FormGroup, Container, SubmitButton } from './style';
 import { postFeedback, clearFeedback } from '../../../store/feedback';
 
-const subjectOptions = ['request new beta house', 'technical issue', 'general feedback', 'other issue'].map(value => ({
+const subjectOptions = ['list your house', 'technical issue', 'general feedback', 'other issue'].map(value => ({
   label: value,
   value,
 }));
