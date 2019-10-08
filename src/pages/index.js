@@ -10,7 +10,7 @@ const Index = () => (
   <Page>
     <LandingLayout>
       <Heading>if nothing ever changes</Heading>
-      <Heading>what’s the fucking point?</Heading>
+      <Heading>what’s the point?</Heading>
       <Strong>private / anonymous / collective team feedback</Strong>
       <p>raise issues without fear</p>
       <p>challenge favoritism & politics</p>
