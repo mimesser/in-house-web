@@ -20,22 +20,23 @@ const Layout = styled.div`
     align-items: center;
   }
 `;
-const LinkText = styled.button`
-  display: inline-block;
+
+const AgreementText = styled.span`
   margin-left: ${spacing.large};
-  color: ${palette.textDark};
-  margin-left: ${spacing.large};
-  border: none;
-  outline: none;
+
   font: inherit;
   font-family: ${font.heading};
   font-size: ${fontSize.large};
-  background: none;
+`;
+
+const LinkText = styled(AgreementText)`
+  margin-left: 0;
   padding: 0;
+  border: none;
+  outline: none;
+  background: none;
   cursor: pointer;
-  &:hover {
-    text-decoration: underline;
-  }
+  text-decoration: underline;
 `;
 
 const AcceptTerms = ({ acceptTerms }) => {
@@ -53,7 +54,12 @@ const AcceptTerms = ({ acceptTerms }) => {
       <div>to engage respectfully and offer the same objectivity and decency that i would hope for in return</div>
       <div>
         <Checkbox onChange={handleChange} checked={accepted} />
-        <LinkText onClick={() => showTermsModal(true)}>i agree to terms of use</LinkText>
+        <AgreementText>
+          i agree to{' '}
+          <LinkText as="button" onClick={() => showTermsModal(true)}>
+            terms of use
+          </LinkText>
+        </AgreementText>
       </div>
     </Layout>
   );
