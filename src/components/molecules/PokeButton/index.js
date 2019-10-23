@@ -1,19 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { PaperPlane } from 'styled-icons/fa-solid';
 
-import { IconButton } from '../../atoms';
+import { Icon, IconButton } from '../../atoms';
 import { palette } from '../../../style';
-
-const Icon = styled(PaperPlane).attrs({ size: 16 })`
-  transform: rotate(28deg);
-  color: ${palette.secondaryDark};
-  vertical-align: baseline;
-`;
 
 export const PokeButton = styled(props => (
   <IconButton {...props}>
-    <Icon />
+    <Icon icon="paper-plane" size={2} />
   </IconButton>
 ))`
   color: ${palette.text};

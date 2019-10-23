@@ -1,9 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { ArrowRight } from 'styled-icons/feather/ArrowRight';
 
-import { Heading, Loader, ToolTip } from '../../atoms';
+import { Heading, Loader, ToolTip, Icon } from '../../atoms';
 import { Patent, WinkConfirmation } from '../../molecules';
 import {
   answerTopMink,
@@ -80,7 +79,7 @@ const Form = ({ topMink, wrongAnswer, answerTopMink, inDemo }) => {
             ref={answerRef}
           />
           <SubmitButton visible={!!answer.length}>
-            {showError && !wrongAnswer ? <Loader white /> : !highlightError && <ArrowRight size={44} />}
+            {showError && !wrongAnswer ? <Loader white /> : !highlightError && <Icon icon="arrow-right" size={2} />}
           </SubmitButton>
         </div>
         <InputHelp highlight={highlightError}>{highlightError ? 'wrong answer' : 'one word / no spaces'}</InputHelp>

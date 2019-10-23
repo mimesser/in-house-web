@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { storiesOf } from '@storybook/react';
-import { Check } from 'styled-icons/evil';
 
 import { Button, IconButton } from '.';
+import { Icon } from '../Icon';
 
 const Container = styled.div`
   > * {
@@ -25,8 +25,8 @@ storiesOf('Button', module).add('Button', () => (
     </div>
     <div>
       <IconButton>
-        <Check size={48} />
-      </IconButton>{' '}
+        <Icon icon="check" />
+      </IconButton>
       icon button
     </div>
   </Container>

@@ -3,12 +3,10 @@ import Link from 'next/link';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { ArrowLeft } from 'styled-icons/feather/ArrowLeft';
-
 import { selectInDemo } from '../../../../store/demo';
 import { DEMO_VENUE_ID } from '../../../../store/demo/data';
 import { Votes } from '../Votes';
-import { Address, Title } from '../../../atoms';
+import { Address, Title, Icon } from '../../../atoms';
 import { About, Back, Header, Industry, Ratings, Score } from './style';
 
 const Banner = ({
@@ -28,7 +26,7 @@ const Banner = ({
     <Header imageUrl={imageUrl}>
       <Link href={href}>
         <Back>
-          <ArrowLeft size={32} />
+          <Icon icon="arrow-left" size={1.5} />
         </Back>
       </Link>
       <div>
