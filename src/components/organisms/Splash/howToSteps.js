@@ -1,10 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { PaperPlane } from 'styled-icons/fa-solid';
-import { ArrowRight } from 'styled-icons/evil/ArrowRight';
-
-import { Heading, Button, Strong } from '../../atoms';
+import { Heading, Button, Strong, Icon } from '../../atoms';
 import { Patent as BasePatent } from '../../molecules';
 import { fontSize, spacing, fontWeight, palette } from '../../../style';
 import { DEMO_VENUE_ID } from '../../../store/demo/data';
@@ -90,15 +87,15 @@ export const Step2 = () => (
       <div>what's the name of simone's new puppy?</div>
       <div>
         <div>cupcake</div>
-        <ArrowRight size={36} color="white" />
+        <Icon icon="arrow-right" color="white" />
       </div>
     </MinkSample>
   </>
 );
 
-const Poke = styled(PaperPlane).attrs(({ theme }) => ({
-  size: 24,
-  color: theme.colors.secondary,
+const Poke = styled(Icon).attrs(({ theme }) => ({
+  icon: 'paper-plane',
+  color: 'secondary',
 }))`
   transform: scale(1.5, 1) rotate(30deg);
   margin-left: ${spacing.tiny};

@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import isNumber from 'lodash/isNumber';
-import { Users } from 'styled-icons/feather';
 
-import { CircleSlider, Number } from '../../atoms';
+import { CircleSlider, Number, Icon } from '../../atoms';
 import { fontSize, palette } from '../../../style';
 
 const FONT_RATIO = 3.5;
@@ -19,9 +18,9 @@ const Value = styled(Number)`
   font-size: ${({ size, padd }) => (size - padd) / FONT_RATIO}px;
 `;
 
-export const Votes = styled(({ count, iconSize = 20, ...rest }) => (
+export const Votes = styled(({ count, iconSize = 1, ...rest }) => (
   <Number {...rest}>
-    <Users size={iconSize} /> <span>{count || 0}</span>
+    <Icon icon="users" size={iconSize} /> <span>{count || 0}</span>
   </Number>
 ))`
   font-size: ${fontSize.primary};

@@ -1,20 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { calcRem, palette, fontSize } from '../../../style';
+import { Icon } from '../Icon';
 
 const CheckboxContainer = styled.div`
   display: inline-block;
   vertical-align: middle;
-`;
-
-const Icon = styled.svg.attrs({
-  viewBox: '0 0 24 24',
-  children: <polyline points="20 6 9 17 4 12" />,
-})`
-  fill: none;
-  stroke: ${palette.text};
-  stroke-width: 2px;
 `;
 
 // Hide checkbox visually but remain accessible to screen readers.
@@ -32,30 +23,11 @@ const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
   width: 1px;
 `;
 
-const Container = styled.div`
-  display: inline-block;
-  width: ${fontSize.large};
-  height: ${fontSize.large};
-  border: 1px solid ${palette.secondary};
-  border-radius: ${calcRem('3px')};
-  transition: all 150ms;
-
-  ${HiddenCheckbox}:focus + & {
-    box-shadow: 0 0 0 2px ${palette.secondaryLight};
-  }
-
-  ${Icon} {
-    visibility: ${({ checked }) => (checked ? 'visible' : 'hidden')};
-  }
-`;
-
 export const Checkbox = ({ className, checked, ...props }) => (
   <label className={className}>
     <CheckboxContainer>
       <HiddenCheckbox checked={checked} {...props} />
-      <Container checked={checked}>
-        <Icon />
-      </Container>
+      <Icon icon={checked ? 'checkbox-marked' : 'checkbox'} size={1.5} />
     </CheckboxContainer>
   </label>
 );

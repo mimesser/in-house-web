@@ -26,11 +26,11 @@ export const Header = ({ openMenu }) => (
     <Link href="/">
       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
       <a>
-        <Icon size={1.5} color="secondaryDark" icon="logo" />
+        <Icon icon="logo" size={1.5} color="secondaryDark" />
       </a>
     </Link>
     <MenuIconButton>
-      <Icon size={2} icon="menu" onClick={openMenu} />
+      <Icon icon="menu" size={1.5} onClick={openMenu} />
     </MenuIconButton>
   </Layout>
 );
