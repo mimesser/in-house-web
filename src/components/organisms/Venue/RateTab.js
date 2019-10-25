@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import { createStructuredSelector } from 'reselect';
 import isNil from 'lodash/isNil';
 
-import { Loader } from '../../atoms';
-import { setSelectedTag, loadRates } from '../../../store/venues';
+import { Loader, HelpTip } from '../../atoms';
+import { setSelectedTag, loadRates, selectSelectedTag } from '../../../store/venues';
 import { ItemCard, TabLayout, Main, ItemTitle, TabTitle } from './tabStyle';
 import { ScoreAndVoters } from './ScoreAndVoters';
 import RateTag from './RateTag';
@@ -23,10 +24,9 @@ const RateCard = styled(ItemCard)`
 
 const getTeamRateIfRated = (userRate, voteRating) => (isNil(userRate) ? undefined : voteRating);
 
-const Tag = ({ name, definitionId, userRate, voteCount, voteRating, setSelectedTag }) => {
+const Tag = ({ name, definitionId, userRate, voteCount, voteRating, setSelectedTag, withHelp }) => {
   const open = useCallback(() => setSelectedTag(definitionId), [definitionId]);
-
-  return (
+  const card = (
     <RateCard large onClick={open}>
       <ScoreAndVoters voteCount={voteCount} voteRating={getTeamRateIfRated(userRate, voteRating)} sliderSize={70} />
       <Main>
@@ -35,6 +35,8 @@ const Tag = ({ name, definitionId, userRate, voteCount, voteRating, setSelectedT
       <PrivateShareButton id={definitionId} />
     </RateCard>
   );
+
+  return withHelp ? <HelpTip tip="see how everyone feels at a glance">{card}</HelpTip> : card;
 };
 
 const findTag = (id, tags) => {
@@ -45,7 +47,7 @@ const findTag = (id, tags) => {
   return tag;
 };
 
-const RateTab = ({ venue: { rates: tags }, setSelectedTag, loadRates }) => {
+const RateTab = ({ venue: { rates: tags }, setSelectedTag, loadRates, selectedTag }) => {
   useEffect(() => {
     loadRates();
   }, []);
@@ -69,12 +71,21 @@ const RateTab = ({ venue: { rates: tags }, setSelectedTag, loadRates }) => {
   return (
     <TabLayout>
       <TabTitle>Industry top 10</TabTitle>
-      {tags ? tags.map(t => <Tag {...t} key={t.definitionId} setSelectedTag={setSelectedTag} />) : <Loader big />}
+      {tags ? (
+        !selectedTag &&
+        tags.map((t, i) => <Tag {...t} key={t.definitionId} setSelectedTag={setSelectedTag} withHelp={i === 0} />)
+      ) : (
+        <Loader big />
+      )}
       <RateTag />
       <PrivateShare type="rate" renderItem={renderSharePreview} getItemTitle={getTitleForShare} />
     </TabLayout>
   );
 };
+
+const mapState = createStructuredSelector({
+  selectedTag: selectSelectedTag,
+});
 
 const mapDispatch = {
   setSelectedTag,
@@ -82,6 +93,6 @@ const mapDispatch = {
 };
 
 export default connect(
-  undefined,
+  mapState,
   mapDispatch,
 )(RateTab);

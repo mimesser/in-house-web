@@ -44,8 +44,8 @@ const List = ({ venues, inDemo }) => {
         icon={<SearchBoxIcon applyFilter={applyFilter} clear={clearSearch} />}
         onChange={handleSearchChange}
       />
-      {venuesToShow.map(v => (
-        <VenueCard key={v.id} venue={v} showVenue={showVenue} />
+      {venuesToShow.map((v, i) => (
+        <VenueCard key={v.id} venue={v} showVenue={showVenue} withHelp={i === 0} />
       ))}
       {!inDemo && (
         <Link href="/feedback">

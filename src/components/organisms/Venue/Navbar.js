@@ -5,14 +5,8 @@ import { createStructuredSelector } from 'reselect';
 import Link from 'next/link';
 
 import { panelBoxShadow, spacing, palette, fontWeight, calcRem } from '../../../style';
-import { selectIsActiveInsider } from '../../../store/venues';
-
-const Nav = styled.nav`
-  display: flex;
-  flex-shrink: 0; // safari
-  background-color: ${palette.white};
-  ${panelBoxShadow}
-`;
+import { selectAnyTabItemSelected, selectIsActiveInsider } from '../../../store/venues';
+import { HelpTip } from '../../atoms';
 
 const linkTextStyle = ({ active, deny }) => {
   if (deny) {
@@ -52,20 +46,47 @@ const A = styled.a`
   ${linkTextStyle};
 `;
 
-const TabHeader = ({ id, tab: { path, label, secured }, active, authorized }) =>
-  !authorized && secured ? (
-    <A deny>{label}</A>
-  ) : (
-    <Link href={`/houses?id=${id}&tab=${path}`} as={`/houses/${id}/${path}`} passHref>
-      <A active={active}>{label}</A>
-    </Link>
+const HelpWrap = styled.div`
+  flex: 1;
+  background-color: ${palette.white};
+  display: flex;
+`;
+
+const Nav = styled.nav`
+  display: flex;
+  flex-shrink: 0; // safari
+  background-color: ${palette.white};
+  ${panelBoxShadow};
+`;
+
+const TabHeader = ({ id, tab: { path, label, secured, help }, active, authorized }) => {
+  if (!authorized && secured) {
+    return <A deny>{label}</A>;
+  }
+  const link = (
+    <HelpWrap>
+      <Link href={`/houses?id=${id}&tab=${path}`} as={`/houses/${id}/${path}`} passHref>
+        <A active={active}>{label}</A>
+      </Link>
+    </HelpWrap>
   );
+
+  if (active && help) {
+    return (
+      <HelpTip tip={help} placement="top">
+        {link}
+      </HelpTip>
+    );
+  }
+  return link;
+};
 
 const tabs = [
   {
     path: 'rate',
     label: 'rate',
     secured: true,
+    help: 'rate individual details from bathrooms to ceo',
   },
   {
     path: 'post',
@@ -78,16 +99,23 @@ const tabs = [
   },
 ];
 
-const Navbar = ({ id, selected, authorized }) => (
+const Navbar = ({ id, selected, authorized, anyTabItemSelected }) => (
   <Nav>
     {tabs.map(t => (
-      <TabHeader id={id} key={t.path} tab={t} active={selected === t.path} authorized={authorized} />
+      <TabHeader
+        id={id}
+        key={t.path}
+        tab={t}
+        active={selected === t.path && !anyTabItemSelected}
+        authorized={authorized}
+      />
     ))}
   </Nav>
 );
 
 const mapState = createStructuredSelector({
   authorized: selectIsActiveInsider,
+  anyTabItemSelected: selectAnyTabItemSelected,
 });
 
 export default connect(mapState)(Navbar);

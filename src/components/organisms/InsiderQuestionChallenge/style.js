@@ -22,6 +22,12 @@ export const ExplainMink = styled.div`
   ${Patent} {
     color: ${palette.textLight};
   }
+  z-index: 1000;
+  > span {
+    > div {
+      padding-bottom: ${spacing.xxLarge};
+    }
+  }
 `;
 
 export const Question = styled.div`
@@ -42,11 +48,16 @@ export const SubmitButton = styled(IconButton).attrs({
   margin-left: ${spacing.medium};
 `;
 
+export const ChangeButtonWrapper = styled.div`
+  margin: auto;
+  padding-top: 1rem;
+`;
+
 export const ChangeButton = styled(Button)`
   border-color: ${palette.secondary};
   color: inherit;
   background-color: transparent;
-  margin: auto;
+  // margin: auto;
   padding-left: ${spacing.xxxLarge};
   padding-right: ${spacing.xxxLarge};
 `;

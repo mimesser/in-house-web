@@ -14,3 +14,6 @@ export { Number } from './Number';
 export { default as CircleSlider } from './CircleSlider';
 export * from './NoSSR';
 export { default as ToolTip } from './ToolTip';
+export { Tip } from './Tip';
+export { default as Overlay } from './Overlay';
+export * from './help';

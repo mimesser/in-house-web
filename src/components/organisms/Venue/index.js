@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { withRouter } from 'next/router';
 
 import InsiderQuestionChallenge from '../InsiderQuestionChallenge';
-import { selectSelectedVenue } from '../../../store/venues';
+import { selectInsiderChallengeForm, selectSelectedVenue } from '../../../store/venues';
 import { Loader } from '../../atoms';
 import Banner from './Banner';
 import Navbar from './Navbar';
@@ -22,7 +22,7 @@ const tabMap = {
 
 const knownTabs = Object.keys(tabMap);
 
-const Venue = ({ venue, router }) => {
+const Venue = ({ venue, router, challengeForm: challengeFormOpen }) => {
   const {
     query: { tab = 'rate' },
     asPath,
@@ -50,9 +50,13 @@ const Venue = ({ venue, router }) => {
 
   return (
     <>
-      <Banner venue={venue} />
-      <Navbar id={venue.id} selected={tab} />
-      <Tab venue={venue} />
+      {!challengeFormOpen && (
+        <>
+          <Banner venue={venue} />
+          <Navbar id={venue.id} selected={tab} />
+          <Tab venue={venue} />
+        </>
+      )}
       <InsiderQuestionChallenge />
     </>
   );
@@ -60,13 +64,7 @@ const Venue = ({ venue, router }) => {
 
 const mapStateToProps = createStructuredSelector({
   venue: selectSelectedVenue,
+  challengeForm: selectInsiderChallengeForm,
 });
 
-const mapDispatch = {};
-
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatch,
-  )(Venue),
-);
+export default withRouter(connect(mapStateToProps)(Venue));

@@ -1,25 +1,13 @@
 import styled from 'styled-components';
 
-import { Button, Heading, HeadingThree, Strong } from '../../atoms';
-import { spacing, lineHeight, letterSpacing, palette, fontWeight, fontSize } from '../../../style';
+import { Button, Heading, Strong } from '../../atoms';
+import { spacing, lineHeight, letterSpacing, palette, fontWeight } from '../../../style';
 
-export const SplashLayout = styled.div`
+export const LandingLayout = styled.div`
   display: flex;
   flex-direction: column;
   flex: auto;
-  padding: 0 ${spacing.large};
   line-height: ${lineHeight.medium};
-
-  p {
-    margin: 0 0 ${spacing.small} 0;
-  }
-
-  ${Heading} {
-    margin-bottom: 3rem;
-  }
-`;
-
-export const LandingLayout = styled(SplashLayout)`
   padding: 0 ${spacing.xLarge};
 
   > ${Heading} {
@@ -53,7 +41,7 @@ export const LandingLayout = styled(SplashLayout)`
 
   > p {
     color: ${palette.primaryUltraLight};
-    margin-bottom: ${spacing.medium};
+    margin: 0 0 ${spacing.medium} 0;
   }
 
   div:last-of-type {

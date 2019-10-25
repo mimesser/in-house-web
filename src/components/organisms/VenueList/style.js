@@ -13,6 +13,7 @@ export const Layout = styled.div`
   display: flex;
   flex-direction: column;
   flex: none; // safari
+  flex-grow: 1;
 `;
 
 export const SearchBox = styled(IconInput)`

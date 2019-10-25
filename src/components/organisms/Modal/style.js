@@ -5,7 +5,8 @@ import { spacing, palette, appBackground } from '../../../style';
 import { Heading, HeadingTwo, IconButton, Icon } from '../../atoms';
 
 export const Background = styled.div`
-  position: fixed;
+  // todo
+  position: ${({ showHelp }) => (showHelp ? 'absolute' : 'fixed')};
   top: 0;
   left: 0;
   right: 0;
@@ -14,7 +15,9 @@ export const Background = styled.div`
   visibility: ${props => (props.open ? `visible` : `hidden`)};
   opacity: ${props => (props.open ? `1` : `0`)};
   transition: 0.5s;
-  z-index: 1;
+  // TODO
+  ${({ showHelp }) => !showHelp && 'z-index: 1'};
+  // z-index: 1;
 `;
 
 export const Layout = styled.div`

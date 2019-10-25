@@ -81,6 +81,13 @@ export const selectSelectedPost = createSelector(
     selectedVenue && selectedVenue.posts && selectedVenue.posts.find(m => m.id === selectedVenue.selectedPostId),
 );
 
+export const selectAnyTabItemSelected = createSelector(
+  selectSelectedTag,
+  selectSelectedPost,
+  selectSelectedMink,
+  (...args) => args.some(i => !!i),
+);
+
 export const selectVotePostConfirmation = createSelector(
   selectSelectedVenue,
   selectedVenue => selectedVenue && selectedVenue.votePostConfirmation,

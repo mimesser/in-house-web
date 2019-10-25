@@ -1,2 +1,2 @@
 export * from './Layout';
-export * from './howToSteps';
+export { default as LandingHelp } from './LandingHelp';

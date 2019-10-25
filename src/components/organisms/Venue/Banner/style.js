@@ -24,7 +24,7 @@ export const Header = styled.header`
   }
   
   > * {
-    z-index: 1;
+    ${({ showHelp }) => !showHelp && 'z-index: 1'};
   }
   
   background-image: url("${({ imageUrl }) => imageUrl}");
