@@ -6,8 +6,7 @@ import { showRateTagConfirmation, setSelectedTag, updateVenueRate } from '../act
 import { handleForbiddenResponse } from './handleForbiddenResponse';
 import { showInsiderChallenge } from './showInsiderChallenge';
 import { reloadVenueRateTags } from './loadVenueRateTags';
-
-const CONFIRMATION_INTERVAL = 1500;
+import { CONFIRMATION_INTERVAL } from './consts';
 
 export function* rateTag({ payload: { rating } }) {
   const { id: venueId } = yield select(selectSelectedVenue);
@@ -26,6 +25,7 @@ export function* rateTag({ payload: { rating } }) {
   } = yield call(api.post, `venues/${venueId}/rateTag/${tag.definitionId}/rate`, { rate: rating });
 
   try {
+    yield delay(CONFIRMATION_INTERVAL);
     yield put(showRateTagConfirmation(venueRateTag));
     yield put(updateVenueRate(venue));
     yield fork(reloadVenueRateTags, venueId);

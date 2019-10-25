@@ -5,8 +5,7 @@ import { selectIsActiveInsider, selectSelectedPost, selectSelectedVenue } from '
 import { showVotePostConfirmation, setSelectedPost } from '../actions';
 import { reloadVenuePosts } from './loadVenuePosts';
 import { showInsiderChallenge } from './showInsiderChallenge';
-
-const CONFIRMATION_INTERVAL = 1500;
+import { CONFIRMATION_INTERVAL } from './consts';
 
 export function* votePost({ payload: { vote } }) {
   const venue = yield select(selectSelectedVenue);
