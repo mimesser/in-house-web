@@ -1,0 +1,1 @@
+export const CONFIRMATION_INTERVAL = 3000;

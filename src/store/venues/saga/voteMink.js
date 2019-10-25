@@ -5,8 +5,7 @@ import { selectSelectedMink, selectSelectedVenue, selectSelectedVenueTopMinkId }
 import { showVoteMinkConfirmation, setSelectedMink, setNewMinkElected } from '../actions';
 import { reloadVenueMinks } from './loadVenueMinks';
 import { reloadInsiderVenueIds } from './reloadInsiderVenueIds';
-
-const CONFIRMATION_INTERVAL = 1500;
+import { CONFIRMATION_INTERVAL } from './consts';
 
 function* reloadMinksAndCheckIfNewElected(venue) {
   const startLoading = Date.now();
