@@ -1,10 +1,11 @@
 import React, { useEffect, useCallback, useRef } from 'react';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import styled from 'styled-components';
 import Link from 'next/link';
 
-import { loadMinks, setSelectedMink, setAddedMinkId } from '../../../store/venues';
-import { Loader, Button } from '../../atoms';
+import { loadMinks, setSelectedMink, setAddedMinkId, selectSelectedMink } from '../../../store/venues';
+import { Loader, Button, HelpTip } from '../../atoms';
 import { Patent } from '../../molecules';
 import { TabLayout, ItemCard, Main, ItemTitle, ItemTime, TabTitle } from './tabStyle';
 import { formatDate } from '../../../utils/format';
@@ -27,6 +28,7 @@ const Mink = ({
   large,
   setSelectedMink,
   setAddedMinkId,
+  withHelp,
 }) => {
   const open = useCallback(() => setSelectedMink(id), [id]);
   const ref = useRef(null);
@@ -37,7 +39,7 @@ const Mink = ({
     }
   }, [isNew, setAddedMinkId]);
 
-  return (
+  const card = (
     <MinkCard large={large} onClick={open} ref={ref}>
       <ScoreAndVoters
         voteCount={voteCount}
@@ -52,35 +54,46 @@ const Mink = ({
       <PrivateShareButton id={id} />
     </MinkCard>
   );
+  return withHelp ? (
+    <HelpTip
+      placement="top"
+      tip="your team votes to select the TOP MINK, which all teammates must answer to get in your house"
+    >
+      {card}
+    </HelpTip>
+  ) : (
+    card
+  );
 };
 
-const renderMinks = (minks, setSelectedMink, addedMinkId, setAddedMinkId) => (
-  <>
-    {minks.length > 0 && (
-      <>
-        <TabTitle>
-          Top MINK<sup>©</sup>
-          <Patent />
-        </TabTitle>
-        <Mink mink={minks[0]} large setSelectedMink={setSelectedMink} />
-      </>
-    )}
-    {minks.length > 1 && (
-      <>
-        <TabTitle>Runners up:</TabTitle>
-        {minks.slice(1).map(m => (
-          <Mink
-            mink={m}
-            key={m.id}
-            setSelectedMink={setSelectedMink}
-            isNew={m.id === addedMinkId}
-            setAddedMinkId={setAddedMinkId}
-          />
-        ))}
-      </>
-    )}
-  </>
-);
+const renderMinks = (minks, setSelectedMink, addedMinkId, setAddedMinkId, selectedMink) =>
+  !selectedMink && (
+    <>
+      {minks.length > 0 && (
+        <>
+          <TabTitle>
+            Top MINK<sup>©</sup>
+            <Patent />
+          </TabTitle>
+          <Mink mink={minks[0]} large setSelectedMink={setSelectedMink} withHelp />
+        </>
+      )}
+      {minks.length > 1 && (
+        <>
+          <TabTitle>Runners up:</TabTitle>
+          {minks.slice(1).map(m => (
+            <Mink
+              mink={m}
+              key={m.id}
+              setSelectedMink={setSelectedMink}
+              isNew={m.id === addedMinkId}
+              setAddedMinkId={setAddedMinkId}
+            />
+          ))}
+        </>
+      )}
+    </>
+  );
 
 const findMink = (id, minks) => {
   const mink = minks.find(t => t.id === id);
@@ -90,7 +103,7 @@ const findMink = (id, minks) => {
   return mink;
 };
 
-const MinkTab = ({ venue: { id, minks, addedMinkId }, loadMinks, setSelectedMink, setAddedMinkId }) => {
+const MinkTab = ({ venue: { id, minks, addedMinkId }, loadMinks, setSelectedMink, setAddedMinkId, selectedMink }) => {
   useEffect(() => {
     loadMinks();
   }, []);
@@ -114,7 +127,7 @@ const MinkTab = ({ venue: { id, minks, addedMinkId }, loadMinks, setSelectedMink
 
   return (
     <TabLayout>
-      {minks ? renderMinks(minks, setSelectedMink, addedMinkId, setAddedMinkId) : <Loader big />}
+      {minks ? renderMinks(minks, setSelectedMink, addedMinkId, setAddedMinkId, selectedMink) : <Loader big />}
       <Link href={`/houses?id=${id}&tab=mink&new`} as={`/houses/${id}/mink/new`} passHref>
         <Button>new mink</Button>
       </Link>
@@ -125,6 +138,10 @@ const MinkTab = ({ venue: { id, minks, addedMinkId }, loadMinks, setSelectedMink
   );
 };
 
+const mapsState = createStructuredSelector({
+  selectedMink: selectSelectedMink,
+});
+
 const mapDispatch = {
   loadMinks,
   setSelectedMink,
@@ -132,6 +149,6 @@ const mapDispatch = {
 };
 
 export default connect(
-  undefined,
+  mapsState,
   mapDispatch,
 )(MinkTab);

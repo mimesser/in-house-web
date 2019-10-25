@@ -6,13 +6,14 @@ export const Container = styled.div`
   display: inline-block;
   width: ${({ size }) => size}px;
   height: ${({ size }) => size}px;
+  ${({ showHelp }) => showHelp && 'z-index: 1000;'};
 
   svg {
     padding: ${({ padd }) => padd}px;
   }
 `;
 
-export const Tip = styled.div`
+export const SliderLabel = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;

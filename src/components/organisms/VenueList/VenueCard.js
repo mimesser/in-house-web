@@ -1,10 +1,17 @@
 import React, { useCallback } from 'react';
 
-import { Address } from '../../atoms';
+import { Address, HelpTip } from '../../atoms';
 import { ScoreAndVoters } from '../Venue/ScoreAndVoters';
 import { VenueContainer, Img, Industry, Name } from './style';
 
-export const VenueCard = ({ venue, showVenue }) => {
+const helpTip = (
+  <>
+    <div>select your house to see inside</div>
+    <div>HOUSE (n): any business or organization</div>
+  </>
+);
+
+export const VenueCard = ({ venue, showVenue, withHelp }) => {
   const handleClick = useCallback(() => showVenue(venue), [venue]);
 
   const {
@@ -15,7 +22,7 @@ export const VenueCard = ({ venue, showVenue }) => {
     venueInfo: { imageUrl, address, city, state, zipCode },
   } = venue;
 
-  return (
+  const card = (
     // TODO: this should be a link
     <VenueContainer onClick={handleClick}>
       <Img imageUrl={imageUrl} />
@@ -31,4 +38,6 @@ export const VenueCard = ({ venue, showVenue }) => {
       <ScoreAndVoters voteCount={votesCount} voteRating={rating} sliderSize={72} />
     </VenueContainer>
   );
+
+  return withHelp ? <HelpTip tip={helpTip}>{card}</HelpTip> : card;
 };

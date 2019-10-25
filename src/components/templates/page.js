@@ -1,9 +1,12 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import Head from 'next/head';
 
+import { HelpToggle } from '../atoms';
 import { Header, Menu } from '../organisms';
-import { appBackground, panelBoxShadow, palette } from '../../style';
+import { appBackground, panelBoxShadow } from '../../style';
+
+const RootContainer = styled.div``;
 
 const mobileFrame = ({ theme: { desktop } }) =>
   desktop &&
@@ -11,7 +14,7 @@ const mobileFrame = ({ theme: { desktop } }) =>
     background-color: #eee;
     height: 100vh;
 
-    > div {
+    > ${RootContainer} {
       width: 400px;
       height: 730px;
       margin: auto;
@@ -27,7 +30,7 @@ const PageLayout = styled.div`
   display: flex;
   flex-direction: column;
 
-  > div {
+  > ${RootContainer} {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -43,6 +46,7 @@ export const Page = ({ children, title = 'inHouse', defaultHeader = true }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const openMenu = useCallback(() => setMenuOpen(true), []);
   const closeMenu = useCallback(() => setMenuOpen(false), []);
+  const ref = useRef(null);
 
   return (
     <>
@@ -50,11 +54,12 @@ export const Page = ({ children, title = 'inHouse', defaultHeader = true }) => {
         <title>{title}</title>
       </Head>
       <PageLayout>
-        <div id="rootContainer">
+        <RootContainer id="rootContainer" ref={ref}>
           <Menu isOpen={menuOpen} closeMenu={closeMenu} />
           {defaultHeader && <Header openMenu={openMenu} />}
           {children}
-        </div>
+          <HelpToggle containerRef={ref} />
+        </RootContainer>
       </PageLayout>
     </>
   );

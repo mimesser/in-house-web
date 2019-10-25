@@ -10,6 +10,7 @@ import {
   setSelectedTag,
   rateTag,
 } from '../../../../store/venues';
+import { selectShowHelp } from '../../../../store/help';
 import { Modal } from '../../Modal';
 import { RateConfirmation } from '../RateConfirmation';
 import { Dial } from '../../../molecules';
@@ -26,7 +27,7 @@ const RateSubTitle = styled(SubTitle)`
   visibility: ${({ rated }) => (rated ? 'visible' : 'hidden')};
 `;
 
-const RateTag = ({ tag, rateTag, setRated, rated }) => {
+const RateTag = ({ tag, rateTag, setRated, rated, showHelp }) => {
   const { name: tagName, userRate } = tag;
   const [value, setValue] = useState(userRate);
 
@@ -56,14 +57,14 @@ const RateTag = ({ tag, rateTag, setRated, rated }) => {
   };
 
   let valueColor;
-
   if (!rated) {
-    valueColor = theme.colors.secondaryDark;
+    const { secondary, secondaryDark } = theme.colors;
+    valueColor = secondaryDark;
 
-    sliderProps.color = theme.colors.secondaryDark;
-    sliderProps.knobColor = theme.colors.secondaryDark;
-    sliderProps.circleColor = theme.colors.secondary;
-    sliderProps.progressColor = theme.colors.secondaryDark;
+    sliderProps.color = secondaryDark;
+    sliderProps.knobColor = secondaryDark;
+    sliderProps.circleColor = secondary;
+    sliderProps.progressColor = secondaryDark;
   }
 
   return (
@@ -72,7 +73,14 @@ const RateTag = ({ tag, rateTag, setRated, rated }) => {
       <RateItemTitle rated={rated} keepSpace>
         {tagName}
       </RateItemTitle>
-      <Dial value={value} valueColor={valueColor} onChange={handleChange} {...sliderProps} />
+      <Dial
+        value={showHelp ? 10.9 : value}
+        valueColor={valueColor}
+        onChange={handleChange}
+        {...sliderProps}
+        showHelp={showHelp}
+        readonly={showHelp}
+      />
     </Layout>
   );
 };
@@ -98,6 +106,7 @@ const mapState = createStructuredSelector({
   venue: selectSelectedVenue,
   tag: selectSelectedTag,
   confirmation: selectRateTagConfirmation,
+  showHelp: selectShowHelp,
 });
 const mapDispatch = {
   setSelectedTag,

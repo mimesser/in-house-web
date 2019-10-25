@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { selectInDemo } from '../../../../store/demo';
-import { DEMO_VENUE_ID } from '../../../../store/demo/data';
+import { selectShowHelp } from '../../../../store/help';
 import { Votes } from '../Votes';
 import { Address, Title, Icon } from '../../../atoms';
 import { About, Back, Header, Industry, Ratings, Score } from './style';
@@ -18,12 +18,13 @@ const Banner = ({
     rating,
   },
   inDemo,
+  showHelp,
 }) => {
   const ratingParts = typeof rating === 'number' && rating.toFixed(1).split('.');
   const href = inDemo ? `/` : '/houses';
 
   return (
-    <Header imageUrl={imageUrl}>
+    <Header imageUrl={imageUrl} showHelp={showHelp}>
       <Link href={href}>
         <Back>
           <Icon icon="arrow-left" size={1.5} />
@@ -58,6 +59,7 @@ const Banner = ({
 
 const mapState = createStructuredSelector({
   inDemo: selectInDemo,
+  showHelp: selectShowHelp,
 });
 
 export default connect(mapState)(Banner);

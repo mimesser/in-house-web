@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import Terms from '../Terms';
 
-import { Heading, Checkbox } from '../../atoms';
-import { font, fontWeight, fontSize, spacing, palette } from '../../../style';
+import { Heading, Checkbox, HelpTip } from '../../atoms';
+import { font, fontWeight, fontSize, spacing, appBackground } from '../../../style';
 import { acceptTerms } from '../../../store/aggregate';
 
 const Layout = styled.div`
@@ -39,6 +39,12 @@ const LinkText = styled(AgreementText)`
   text-decoration: underline;
 `;
 
+const HelpWrap = styled.div`
+  background-color: ${appBackground};
+  padding: ${spacing.xLarge};
+  margin: 0 -${spacing.xLarge} ${spacing.xLarge};
+`;
+
 const AcceptTerms = ({ acceptTerms }) => {
   const [accepted, setAccepted] = useState(false);
   const [termsModal, showTermsModal] = useState(false);
@@ -52,15 +58,17 @@ const AcceptTerms = ({ acceptTerms }) => {
       <Terms open={termsModal} close={() => showTermsModal(false)} modal />
       <Heading>i agree to be fair</Heading>
       <div>to engage respectfully and offer the same objectivity and decency that i would hope for in return</div>
-      <div>
-        <Checkbox onChange={handleChange} checked={accepted} />
-        <AgreementText>
-          i agree to{' '}
-          <LinkText as="button" onClick={() => showTermsModal(true)}>
-            terms of use
-          </LinkText>
-        </AgreementText>
-      </div>
+      <HelpTip tip="don’t be a jerk">
+        <HelpWrap>
+          <Checkbox onChange={handleChange} checked={accepted} />
+          <AgreementText>
+            i agree to{' '}
+            <LinkText as="button" onClick={() => showTermsModal(true)}>
+              terms of use
+            </LinkText>
+          </AgreementText>
+        </HelpWrap>
+      </HelpTip>
     </Layout>
   );
 };

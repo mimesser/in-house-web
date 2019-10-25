@@ -5,8 +5,10 @@ import noop from 'lodash/noop';
 import isNumber from 'lodash/isNumber';
 
 import { StepHelper } from './stepHelper';
-import { theme } from '../../../style';
-import { Container, Tip } from './style';
+import { theme, palette } from '../../../style';
+import { Container, SliderLabel } from './style';
+// TODO: BAD - basic components can't be dependant on smart ones
+import { HelpTip } from '../help';
 
 const buildPath = (center, radius, direction, x, y) =>
   `M${center} ${center + radius} A ${radius} ${radius} 0 ${direction} 1 ${x} ${y}`;
@@ -93,12 +95,18 @@ class CircleSlider extends React.PureComponent {
     const value = initialValue >= 10 ? max : initialValue;
     this.stepHelper = new StepHelper(min, stepSize, max, value || 0);
 
-    if (!this.props.readonly) {
-      this.hoverEvents = {
-        onMouseEnter: this.handleMouseEnter,
-        onMouseLeave: this.handleMouseLeave,
-      };
-    }
+    this.handleHoverEvents();
+  }
+
+  handleHoverEvents() {
+    const { showHelp, readonly } = this.props;
+    this.hoverEvents =
+      readonly || showHelp
+        ? undefined
+        : {
+            onMouseEnter: this.handleMouseEnter,
+            onMouseLeave: this.handleMouseLeave,
+          };
   }
 
   handleMouseEnter = () => {
@@ -128,7 +136,8 @@ class CircleSlider extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.readonly && this.props.initialValue !== prevProps.initialValue) {
+    const { showHelp, readonly, initialValue } = this.props;
+    if ((readonly && initialValue !== prevProps.initialValue) || showHelp !== prevProps.showHelp) {
       this.updateSliderFromProps();
     }
   }
@@ -162,14 +171,16 @@ class CircleSlider extends React.PureComponent {
   };
 
   updateSliderFromProps = () => {
+    this.cleanupEventListeners();
+    this.handleHoverEvents();
     this.stopAnimation();
-    const { stepSize, initialValue } = this.props;
+    const { stepSize, initialValue, showHelp } = this.props;
     const newValue = Math.round(initialValue / stepSize) * stepSize;
     this.stepHelper.updateStepIndexFromValue(newValue);
     this.setState({
-      angle: this.stepHelper.getAngle(),
+      angle: showHelp ? 3 : this.stepHelper.getAngle(),
     });
-    if (!isNumber(initialValue)) {
+    if (!isNumber(initialValue) && !showHelp) {
       this.startAnimation();
     }
   };
@@ -259,11 +270,15 @@ class CircleSlider extends React.PureComponent {
   };
 
   render() {
-    const { size, padd, readonly, className, children, inverse } = this.props;
+    const { size, padd, readonly, className, children, inverse, showHelp } = this.props;
 
     let { knobColor, circleColor, progressColor } = this.props;
 
-    if (inverse) {
+    if (showHelp) {
+      knobColor = palette.white;
+      circleColor = palette.white;
+      progressColor = palette.white;
+    } else if (inverse) {
       knobColor = theme.colors.secondaryLight;
       circleColor = theme.colors.primaryLight;
       progressColor = theme.colors.secondaryLight;
@@ -272,6 +287,18 @@ class CircleSlider extends React.PureComponent {
     const { x, y } = this.getPointPosition();
     const center = this.getCenter();
     const animating = !!this.animationInterval;
+
+    const knob = (
+      <circle
+        style={{
+          fill: animating ? circleColor : knobColor || progressColor,
+          cursor: readonly ? 'initial' : 'pointer',
+        }}
+        r={this.knobRadius}
+        cx={x}
+        cy={y}
+      />
+    );
 
     return (
       <Container
@@ -282,11 +309,12 @@ class CircleSlider extends React.PureComponent {
         className={className}
         size={size}
         padd={padd}
+        showHelp={showHelp}
       >
         <svg width={`${size}px`} height={`${size}px`} viewBox={`0 0 ${size} ${size}`}>
           <circle
             style={{
-              strokeWidth: this.circleWidth,
+              strokeWidth: showHelp ? 9 : this.circleWidth,
               stroke: circleColor,
               fill: 'none',
             }}
@@ -305,17 +333,22 @@ class CircleSlider extends React.PureComponent {
               d={this.getPath()}
             />
           )}
-          <circle
-            style={{
-              fill: animating ? circleColor : knobColor || progressColor,
-              cursor: readonly ? 'initial' : 'pointer',
-            }}
-            r={this.knobRadius}
-            cx={x}
-            cy={y}
-          />
+          {showHelp ? (
+            <HelpTip
+              tip={
+                <>
+                  drag dial to select your rating <br /> let go to enter
+                </>
+              }
+              placement="top"
+            >
+              {knob}
+            </HelpTip>
+          ) : (
+            knob
+          )}
         </svg>
-        {children && <Tip>{children}</Tip>}
+        {children && !showHelp && <SliderLabel>{children}</SliderLabel>}
       </Container>
     );
   }

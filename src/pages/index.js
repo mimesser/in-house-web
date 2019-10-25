@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import { Page } from '../components/templates';
 import { Button, Heading, Strong } from '../components/atoms';
-import { LandingLayout } from '../components/organisms';
+import { LandingLayout, LandingHelp } from '../components/organisms';
 import { DEMO_VENUES_ID } from '../store/demo/data';
 
 const Index = () => (
@@ -27,6 +27,7 @@ const Index = () => (
         </Link>
       </div>
     </LandingLayout>
+    <LandingHelp />
   </Page>
 );
 

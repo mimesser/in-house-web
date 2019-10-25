@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { Heading, Loader, ToolTip, Icon } from '../../atoms';
+import { Heading, Loader, ToolTip, HelpTip, Icon } from '../../atoms';
 import { Patent, WinkConfirmation } from '../../molecules';
 import {
   answerTopMink,
@@ -20,6 +20,7 @@ import {
   ExplainMink,
   AnswerInput,
   Try,
+  ChangeButtonWrapper,
 } from './style';
 import { Modal } from '../Modal';
 import { normalizeAnswer } from '../Venue/normalizeAnswer';
@@ -111,14 +112,22 @@ const renderSubview = (
         <>
           <Heading>insider?</Heading>
           <ExplainMink>
-            answer the #1 MINK<sup>©</sup>
-            <Patent />
+            <HelpTip tip="#1 MINK (n): the most popular team password question">
+              <div>
+                answer the #1 MINK<sup>©</sup>
+                <Patent />
+              </div>
+            </HelpTip>
           </ExplainMink>
           {blocked && <p>Too many attempts. Please come back later</p>}
           {!blocked && (
             <Form topMink={topMink} wrongAnswer={wrongAnswer} answerTopMink={answerTopMink} inDemo={inDemo} />
           )}
-          <ChangeButton onClick={() => dismissForm(true)}>change this question</ChangeButton>
+          <HelpTip tip="create or vote for another MINK you think will better verify your team" placement="top">
+            <ChangeButtonWrapper>
+              <ChangeButton onClick={() => dismissForm(true)}>change this question</ChangeButton>
+            </ChangeButtonWrapper>
+          </HelpTip>
         </>
       )}
     </QuestionForm>

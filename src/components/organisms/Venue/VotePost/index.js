@@ -1,8 +1,9 @@
 import React, { useCallback } from 'react';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { Icon } from '../../../atoms';
+import { Icon, HelpTip } from '../../../atoms';
 
 import {
   selectSelectedVenue,
@@ -16,8 +17,18 @@ import { Modal } from '../../Modal';
 import { RateConfirmation } from '../RateConfirmation';
 import { Layout, ItemDate, ItemTitle, VoteButton } from '../openCardStyle';
 import { formatDate } from '../../../../utils/format';
+import { appBackground } from '../../../../style';
 
-const VotePost = ({ post: { created, title, text, myVote }, venue: { name: venueName }, upvotePost, downvotePost }) => {
+const VoteWrap = styled.div`
+  display: inline-flex;
+`;
+
+const VoteRow = styled.div`
+  z-index: 1000;
+  background: ${appBackground};
+`;
+
+const VotePost = ({ post: { created, title, text, myVote }, upvotePost, downvotePost }) => {
   return (
     <Layout>
       <div>
@@ -25,14 +36,18 @@ const VotePost = ({ post: { created, title, text, myVote }, venue: { name: venue
         <ItemTitle>{title}</ItemTitle>
         {text}
       </div>
-      <div>
-        <VoteButton onClick={upvotePost} selected={myVote === 1}>
-          <Icon size={4} icon="arrow-up-circle" />
-        </VoteButton>
-        <VoteButton onClick={downvotePost} selected={myVote === -1}>
-          <Icon size={4} icon="arrow-down-circle" />
-        </VoteButton>
-      </div>
+      <VoteRow>
+        <HelpTip placement="top" tip="agree or disagree">
+          <VoteWrap>
+            <VoteButton onClick={upvotePost} selected={myVote === 1}>
+              <Icon size={4} icon="arrow-up-circle" />
+            </VoteButton>
+            <VoteButton onClick={downvotePost} selected={myVote === -1}>
+              <Icon size={4} icon="arrow-down-circle" />
+            </VoteButton>
+          </VoteWrap>
+        </HelpTip>
+      </VoteRow>
     </Layout>
   );
 };
