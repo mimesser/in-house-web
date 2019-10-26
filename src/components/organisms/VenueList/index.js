@@ -48,7 +48,7 @@ const List = ({ venues, inDemo }) => {
         <VenueCard key={v.id} venue={v} showVenue={showVenue} withHelp={i === 0} />
       ))}
       {!inDemo && (
-        <Link href="/feedback">
+        <Link href="/quick-list">
           <ListYourHouse>list your house</ListYourHouse>
         </Link>
       )}

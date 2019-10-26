@@ -34,6 +34,8 @@ export const actionTypes = {
   SET_PRIVATE_SHARE_SENDING: 'SET_PRIVATE_SHARE_SENDING',
   SET_NEW_MINK_ELECTED: 'SET_NEW_MINK_ELECTED',
   CLEAR_VENUES_DATA: 'CLEAR_VENUES_DATA',
+  CREATE_VENUE: 'CREATE_VENUE',
+  SET_LOADING: 'SET_LOADING',
 };
 
 export const clearVenuesData = () => ({
@@ -229,4 +231,14 @@ export const setPrivateShareSending = value => ({
 export const setNewMinkElected = newMinkElected => ({
   type: actionTypes.SET_NEW_MINK_ELECTED,
   payload: { newMinkElected },
+});
+
+export const createVenue = venue => ({
+  type: actionTypes.CREATE_VENUE,
+  payload: { venue },
+});
+
+export const setLoading = loading => ({
+  type: actionTypes.SET_LOADING,
+  payload: { loading },
 });

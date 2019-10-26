@@ -21,16 +21,21 @@ const MenuIconButton = styled.button`
   cursor: pointer;
 `;
 
+const IconLink = ({ icon, href }) => (
+  <Link href={href}>
+    {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+    <a>
+      <Icon icon={icon} size={1.5} color="secondaryDark" />
+    </a>
+  </Link>
+);
+
 export const Header = ({ openMenu }) => (
   <Layout>
-    <Link href="/">
-      {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-      <a>
-        <Icon icon="logo" size={1.5} color="secondaryDark" />
-      </a>
-    </Link>
+    <IconLink icon="search" href="/houses" />
+    <IconLink icon="logo" href="/" />
     <MenuIconButton>
-      <Icon icon="menu" size={1.5} onClick={openMenu} />
+      <Icon icon="menu" size={1.5} onClick={openMenu} color="secondaryDark" />
     </MenuIconButton>
   </Layout>
 );

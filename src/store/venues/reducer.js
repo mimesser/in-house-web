@@ -132,6 +132,16 @@ export function reducer(state = initialState, action) {
     case actionTypes.SET_NEW_MINK_ELECTED: {
       return setSelectedVenueProp(state, action, 'newMinkElected');
     }
+    case actionTypes.SET_LOADING: {
+      const {
+        payload: { loading },
+      } = action;
+
+      return {
+        ...state,
+        loading,
+      };
+    }
 
     default:
       return state;

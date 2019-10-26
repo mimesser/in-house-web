@@ -21,7 +21,11 @@ const CloseIcon = styled(Icon).attrs(() => ({
   }
 `;
 
-const routes = [{ href: '/feedback', label: 'feedback' }, { href: '/houses', label: 'see beta houses' }];
+const routes = [
+  { href: '/feedback', label: 'feedback' },
+  { href: '/houses', label: 'see beta houses' },
+  { href: '/quick-list', label: 'list your house' },
+];
 
 const duration = 300;
 

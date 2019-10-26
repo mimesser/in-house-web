@@ -5,6 +5,11 @@ import { SEND_STATUS } from './actions';
 
 const selectVenueState = state => state.venues;
 
+export const selectLoading = createSelector(
+  selectVenueState,
+  ({ loading }) => loading,
+);
+
 export const selectVenues = createSelector(
   selectVenueState,
   ({ list }) => list,

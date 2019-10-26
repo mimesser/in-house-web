@@ -18,6 +18,7 @@ import { createPost } from './createPost';
 import { votePost } from './votePost';
 import { privateShare } from './privateShare';
 import { acceptTerms } from './acceptTerms';
+import { createVenue } from './createVenue';
 
 export default function* venuesSaga() {
   yield all([
@@ -36,5 +37,6 @@ export default function* venuesSaga() {
     takeLeading(actionTypes.VOTE_POST, withErrorReporter(votePost)),
     takeLeading(actionTypes.PRIVATE_SHARE, withErrorReporter(privateShare)),
     takeLeading(aggregateActions.ACCEPT_TERMS, withErrorReporter(acceptTerms)),
+    takeLeading(actionTypes.CREATE_VENUE, withErrorReporter(createVenue)),
   ]);
 }

@@ -22,8 +22,8 @@ const Index = () => (
         <Link href={`/houses/${DEMO_VENUES_ID}`}>
           <Button secondary>see how it works</Button>
         </Link>
-        <Link href="/houses">
-          <Button>see active beta houses</Button>
+        <Link href="/quick-list">
+          <Button>list your house</Button>
         </Link>
       </div>
     </LandingLayout>
