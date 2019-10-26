@@ -1,27 +1,23 @@
 import React from 'react';
-import Link from 'next/link';
 
-import { Button } from '../../../atoms';
-import { CounterInput, Patent, StepLayout, FormTip } from '../../../molecules';
-import { Title } from '../newItemStyle';
+import { Button, Heading } from '../../atoms';
+import { StepLayout } from './StepLayout';
+import { CounterInput } from '../../molecules/CounterInput';
+import { FormTip, Patent } from '../../molecules';
 
+// TODO: should be common with AddMink
 const MAX_QUESTION_LENGTH = 120;
 const MAX_ANSWER_LENGTH = 25;
 
-export const Step1 = ({ venue: { id, name }, answer, setAnswer, question, setQuestion, setStep }) => (
+export const Step4 = ({ setStep, answer, setAnswer, question, setQuestion }) => (
   <StepLayout
     main={
       <>
-        <Title
-          houseName={name}
-          verb="add"
-          action={
-            <>
-              new MINK<sup>©</sup>
-              <Patent />
-            </>
-          }
-        />
+        <Heading>
+          starter MINK<sup>©</sup>
+          <Patent />
+        </Heading>
+        <p>a team security question to that only your coworkers will know</p>
         <CounterInput
           value={question}
           onChange={setQuestion}
@@ -44,14 +40,14 @@ export const Step1 = ({ venue: { id, name }, answer, setAnswer, question, setQue
     }
     commands={
       <>
-        <Link href={`/houses?id=${id}&tab=mink`} as={`/houses/${id}/mink`}>
-          <Button secondary>Cancel</Button>
-        </Link>
-        <Button onClick={() => setStep(2)} disabled={!question.trim() || !answer.trim()}>
+        <Button secondary onClick={() => setStep(3)}>
+          back
+        </Button>
+        <Button disabled={!answer.trim() || !question.trim()} onClick={() => setStep(5)}>
           next
         </Button>
       </>
     }
-    step={1}
+    step={4}
   />
 );

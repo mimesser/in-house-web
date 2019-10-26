@@ -8,9 +8,14 @@ export const selectReady = createSelector(
   ({ userId }) => !!userId,
 );
 
-export const selectIndustriesMap = createSelector(
+export const selectIndustries = createSelector(
   selectAggregate,
-  ({ industries }) => industries && keyBy(industries, i => i.id),
+  ({ industries }) => industries,
+);
+
+export const selectIndustriesMap = createSelector(
+  selectIndustries,
+  industries => industries && keyBy(industries, i => i.id),
 );
 
 export const selectInsiderVenueIds = createSelector(

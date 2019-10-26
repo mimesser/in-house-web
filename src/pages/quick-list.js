@@ -1,12 +1,12 @@
 import React from 'react';
 
 import { Page } from '../components/templates';
-import FeedbackForm from '../components/organisms/FeedbackForm';
+import { QuickListForm } from '../components/organisms';
 
 function Feedback() {
   return (
-    <Page title="feedback">
-      <FeedbackForm />
+    <Page title="list your house">
+      <QuickListForm />
     </Page>
   );
 }

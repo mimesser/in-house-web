@@ -38,7 +38,7 @@ class Houses extends Component {
     const defaultHeader = !this.houseId || this.isNewMinkOrPostPath || this.inDemoVenues;
 
     return (
-      <Page title="Houses" defaultHeader={defaultHeader}>
+      <Page title="houses" defaultHeader={defaultHeader}>
         <View />
       </Page>
     );

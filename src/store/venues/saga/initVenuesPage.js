@@ -10,14 +10,7 @@ import { selectIndustriesMap, selectAggregate, loadAggregateDataSuccess } from '
 import { turnDemoOn, turnDemoOff } from '../../demo';
 import { DEMO_VENUE, DEMO_VENUES_ID } from '../../demo/data';
 
-function* fetchVenueList() {
-  const venues = yield select(selectVenues);
-
-  if (venues) {
-    return venues;
-  }
-
-  yield waitTillReady();
+export function* reloadVenues() {
   const { data } = yield call(api.get, 'venues');
   const industries = yield select(selectIndustriesMap);
 
@@ -28,6 +21,17 @@ function* fetchVenueList() {
 
   yield put(loadVenuesDataSuccess(normalized));
   return normalized;
+}
+
+function* fetchVenueList() {
+  const venues = yield select(selectVenues);
+
+  if (venues) {
+    return venues;
+  }
+
+  yield waitTillReady();
+  return yield reloadVenues();
 }
 
 let alreadyInDemo = false;

@@ -42,7 +42,7 @@ const PageLayout = styled.div`
   ${mobileFrame};
 `;
 
-export const Page = ({ children, title = 'inHouse', defaultHeader = true }) => {
+export const Page = ({ children, title = 'in-house', defaultHeader = true }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const openMenu = useCallback(() => setMenuOpen(true), []);
   const closeMenu = useCallback(() => setMenuOpen(false), []);

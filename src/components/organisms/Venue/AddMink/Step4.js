@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { Button } from '../../../atoms';
-import { StepLayout } from '../newItemStyle';
 import { FairSpeech } from '../FairSpeech';
+import { StepLayout } from '../../../molecules';
 
 export const Step4 = ({ setStep, edit, loading, post }) => (
   <StepLayout
