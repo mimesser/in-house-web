@@ -12,7 +12,7 @@ export function* createVenue({
     venue: {
       name,
       industry,
-      industryDesc,
+      industryDesc: industryDescription,
       country,
       city,
       address,
@@ -36,8 +36,6 @@ export function* createVenue({
       imageUrl = response.url;
     }
 
-    // TODO: industryDesc
-
     const { data: created } = yield call(api.post, `/venues`, {
       name,
       industryId: industry.id,
@@ -50,7 +48,7 @@ export function* createVenue({
       },
       minkAnswer,
       minkQuestion,
-      industryDesc,
+      industryDescription,
     });
 
     yield reloadInsiderVenueIds();
