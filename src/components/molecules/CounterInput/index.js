@@ -19,7 +19,7 @@ export const CounterInput = ({ value, onChange, max, multiline, label, marginles
     <FormGroup marginless={marginless}>
       <label>
         {label}
-        <Control {...inputProps} onChange={handleChange} value={value} />
+        <Control {...inputProps} onChange={handleChange} value={value} error={error} />
       </label>
       <Status>
         {error && <Error>{error}</Error>}

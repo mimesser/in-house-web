@@ -18,6 +18,7 @@ import { Button } from '../../../atoms';
 import { CounterInput, WinkConfirmation, PokeButton } from '../../../molecules';
 import { SendAnonymous, SubmitButton, Layout, Tip } from './style';
 import { DemoWinkConfirmationLayout } from '../demoStyle';
+import { isEmailValid, isPhoneNumberValid } from '../../../../utils/validation';
 
 const DemoWinkConfirmation = ({ onCloseClick }) => (
   <DemoWinkConfirmationLayout>
@@ -55,6 +56,7 @@ const PrivateShare = ({
   );
   const send = () => share(type, id, recipient, message || placeholder);
   const placeholder = `${venueName} insider? someone thinks you should know about — “${getItemTitle(id)}”`;
+  const isValidEmailOrPhone = isEmailValid(recipient) || isPhoneNumberValid(recipient);
 
   return (
     <Layout>
@@ -75,7 +77,7 @@ const PrivateShare = ({
         multiline
         marginless
       />
-      <SubmitButton disabled={recipient.length === 0} loading={sending} onClick={send}>
+      <SubmitButton disabled={!isValidEmailOrPhone} loading={sending} onClick={send}>
         send to co-insider
       </SubmitButton>
     </Layout>
