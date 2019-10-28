@@ -8,12 +8,7 @@ import { panelBoxShadow, spacing, palette, fontWeight, calcRem } from '../../../
 import { selectAnyTabItemSelected, selectIsActiveInsider } from '../../../store/venues';
 import { HelpTip } from '../../atoms';
 
-const linkTextStyle = ({ active, deny }) => {
-  if (deny) {
-    return css`
-      color: ${palette.textLight};
-    `;
-  }
+const linkTextStyle = ({ active }) => {
   if (active) {
     return css`
       color: ${palette.textDark};
@@ -30,10 +25,11 @@ const linkTextStyle = ({ active, deny }) => {
       }
     `;
   }
-  return undefined;
-};
 
-const cursor = ({ deny }) => (deny ? 'not-allowed' : 'pointer');
+  return css`
+    color: ${palette.textLight};
+  `;
+};
 
 const A = styled.a`
   flex: 1;
@@ -42,7 +38,6 @@ const A = styled.a`
   color: ${palette.text};
   text-decoration: none;
   transition: color 0.5s;
-  cursor: ${cursor};
   ${linkTextStyle};
 `;
 
@@ -61,8 +56,13 @@ const Nav = styled.nav`
 
 const TabHeader = ({ id, tab: { path, label, secured, help }, active, authorized }) => {
   if (!authorized && secured) {
-    return <A deny>{label}</A>;
+    return (
+      <Link href={`/houses/${id}`} passHref>
+        <A>{label}</A>
+      </Link>
+    );
   }
+
   const link = (
     <HelpWrap>
       <Link href={`/houses?id=${id}&tab=${path}`} as={`/houses/${id}/${path}`} passHref>
