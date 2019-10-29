@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { spacing } from '../../../style';
 import { withHelp } from './withHelp';
 import { Tip } from '../Tip';
+import { useRegisterTip } from './useRegisterTip';
 
 const width = ({ theme: { desktop } }) => -60 + (desktop ? 400 : window.document.body.offsetWidth);
 
@@ -17,6 +18,8 @@ const Message = styled.div`
 `;
 
 const HelpTip = ({ tip, toggleHelp, showHelp, children, placement = 'bottom' }) => {
+  useRegisterTip();
+
   if (!showHelp) {
     return children;
   }

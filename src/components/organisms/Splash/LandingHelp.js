@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { withHelp } from '../../atoms/help';
+import { withHelp, useRegisterTip } from '../../atoms/help';
 import { palette, cover, spacing, calcRem } from '../../../style';
 
 const Wrapper = styled.div`
@@ -17,18 +17,23 @@ const Secondary = styled.div`
   margin-bottom: ${spacing.xxxLarge};
 `;
 
-const LandingHelp = ({ showHelp, toggleHelp }) =>
-  showHelp && (
-    <Wrapper onClick={toggleHelp}>
-      <Main>verify your team</Main>
-      <Secondary>with team security questions, not emails</Secondary>
+const LandingHelp = ({ showHelp, toggleHelp }) => {
+  useRegisterTip();
 
-      <Main>share anonymously</Main>
-      <Secondary>to get your team talking easily & safely</Secondary>
+  return (
+    showHelp && (
+      <Wrapper onClick={toggleHelp}>
+        <Main>verify your team</Main>
+        <Secondary>with team security questions, not emails</Secondary>
 
-      <Main>speak your mind</Main>
-      <Secondary>and see your team’s anonymous consensus</Secondary>
-    </Wrapper>
+        <Main>share anonymously</Main>
+        <Secondary>to get your team talking easily & safely</Secondary>
+
+        <Main>speak your mind</Main>
+        <Secondary>and see your team’s anonymous consensus</Secondary>
+      </Wrapper>
+    )
   );
+};
 
 export default withHelp(LandingHelp);
