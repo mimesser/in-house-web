@@ -21,7 +21,7 @@ const Btn = styled(IconButton)`
   z-index: 1000;
 `;
 
-const HelpToggle = ({ showHelp, toggleHelp, containerRef }) => {
+const HelpToggle = ({ showHelp, hasTips, toggleHelp, containerRef }) => {
   useEffect(() => {
     if (containerRef.current) {
       setBoundariesElement(containerRef.current);
@@ -40,9 +40,11 @@ const HelpToggle = ({ showHelp, toggleHelp, containerRef }) => {
   return (
     <>
       {showHelp && <Overlay onClick={toggleHelp} />}
-      <Btn onClick={handleClick}>
-        <Icon icon={showHelp ? 'close' : 'question-mark'} />
-      </Btn>
+      {hasTips && (
+        <Btn onClick={handleClick}>
+          <Icon icon={showHelp ? 'close' : 'question-mark'} />
+        </Btn>
+      )}
     </>
   );
 };
