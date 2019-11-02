@@ -50,9 +50,9 @@ export const Page = ({ children, title = 'in-house', defaultHeader = true }) => 
 
   return (
     <>
-      <Head>
-        <title>{title}</title>
-      </Head>
+      {/* <Head> */}
+      {/* <title>{title}</title> */}
+      {/* </Head> */}
       <PageLayout>
         <RootContainer id="rootContainer" ref={ref}>
           <Menu isOpen={menuOpen} closeMenu={closeMenu} />
