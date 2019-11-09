@@ -70,7 +70,7 @@ const RateTab = ({ venue: { rates: tags }, setSelectedTag, loadRates, selectedTa
 
   return (
     <TabLayout>
-      <TabTitle>Industry top 10</TabTitle>
+      <TabTitle />
       {tags ? (
         !selectedTag &&
         tags.map((t, i) => <Tag {...t} key={t.definitionId} setSelectedTag={setSelectedTag} withHelp={i === 0} />)
