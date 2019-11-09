@@ -18,7 +18,7 @@ function* reloadMinksAndCheckIfNewElected(venue) {
     return;
   }
 
-  const confirmationRemainingTime = Date.now() - startLoading;
+  const confirmationRemainingTime = CONFIRMATION_INTERVAL - (Date.now() - startLoading);
   if (confirmationRemainingTime > 0) {
     yield delay(confirmationRemainingTime);
   }

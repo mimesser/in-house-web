@@ -20,12 +20,17 @@ export function* rateTag({ payload: { rating } }) {
     return;
   }
 
+  const startApiCall = Date.now();
+
   const {
     data: { venueRateTag, venue },
   } = yield call(api.post, `venues/${venueId}/rateTag/${tag.definitionId}/rate`, { rate: rating });
 
   try {
-    yield delay(CONFIRMATION_INTERVAL);
+    const confirmationRemainingTime = CONFIRMATION_INTERVAL - (Date.now() - startApiCall);
+    if (confirmationRemainingTime > 0) {
+      yield delay(confirmationRemainingTime);
+    }
     yield put(showRateTagConfirmation(venueRateTag));
     yield put(updateVenueRate(venue));
     yield fork(reloadVenueRateTags, venueId);
