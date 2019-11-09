@@ -25,6 +25,13 @@ export const ItemText = styled.div`
   font-size: ${fontSize.small};
   color: ${palette.textLight};
   margin-top: ${spacing.nano};
+  display: block;
+  display: -webkit-box;
+  max-width: 200px;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const Main = styled.div`
