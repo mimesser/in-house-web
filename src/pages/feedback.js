@@ -5,7 +5,7 @@ import FeedbackForm from '../components/organisms/FeedbackForm';
 
 function Feedback() {
   return (
-    <Page title="feedback">
+    <Page>
       <FeedbackForm />
     </Page>
   );
