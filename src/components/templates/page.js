@@ -42,7 +42,7 @@ const PageLayout = styled.div`
   ${mobileFrame};
 `;
 
-export const Page = ({ children, title = 'in-house', defaultHeader = true }) => {
+export const Page = ({ children, title = 'In-House | Speak as a Team | Remain Untraceable', defaultHeader = true }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const openMenu = useCallback(() => setMenuOpen(true), []);
   const closeMenu = useCallback(() => setMenuOpen(false), []);
@@ -50,9 +50,9 @@ export const Page = ({ children, title = 'in-house', defaultHeader = true }) => 
 
   return (
     <>
-      {/* <Head> */}
-      {/* <title>{title}</title> */}
-      {/* </Head> */}
+      <Head>
+        <title>{title}</title>
+      </Head>
       <PageLayout>
         <RootContainer id="rootContainer" ref={ref}>
           <Menu isOpen={menuOpen} closeMenu={closeMenu} />

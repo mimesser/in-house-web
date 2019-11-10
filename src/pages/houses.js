@@ -5,7 +5,7 @@ import { withRouter } from 'next/router';
 
 import { Page } from '../components/templates';
 import { Venue, VenueList } from '../components/organisms';
-import { initVenuesPage, selectLoadingVenues } from '../store/venues';
+import { initVenuesPage, selectLoadingVenues, selectSelectedVenue } from '../store/venues';
 import { DEMO_VENUES_ID } from '../store/demo/data';
 
 class Houses extends Component {
@@ -36,9 +36,12 @@ class Houses extends Component {
     // TODO split and render separately?
     const View = this.houseId && !this.inDemoVenues ? Venue : VenueList;
     const defaultHeader = !this.houseId || this.isNewMinkOrPostPath || this.inDemoVenues;
+    const title = this.props.selectedVenue
+      ? `In-House - ${this.props.selectedVenue.name} | Speak as a Team | Remain Untraceable`
+      : undefined;
 
     return (
-      <Page title="houses" defaultHeader={defaultHeader}>
+      <Page title={title} defaultHeader={defaultHeader}>
         <View />
       </Page>
     );
@@ -47,6 +50,7 @@ class Houses extends Component {
 
 const mapStateToProps = createStructuredSelector({
   loading: selectLoadingVenues,
+  selectedVenue: selectSelectedVenue,
 });
 
 const mapDispatch = {

@@ -31,7 +31,7 @@ const Content = styled.div`
 class TermsPage extends Component {
   render() {
     return (
-      <Page title="terms of service">
+      <Page title="Terms of Service">
         <Content>
           <Terms />
         </Content>
