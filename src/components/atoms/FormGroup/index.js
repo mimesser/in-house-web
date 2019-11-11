@@ -14,7 +14,7 @@ export const FormGroup = styled.div`
   }
 
   > label {
-    color: ${({ highlightValue }) => palette.secondary};
+    color: ${({ highlightValue }) => highlightValue && palette.secondary};
   }
 
   > p {
