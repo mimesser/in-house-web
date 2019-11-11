@@ -9,12 +9,12 @@ export const Step2 = ({ venue: { name }, title, message, edit, setStep }) => (
     main={
       <>
         <Title houseName={name} action="confirm" />
-        <FormGroup readonly>
+        <FormGroup highlightValue>
           <label>title</label>
           <p>{title}</p>
         </FormGroup>
-        <FormGroup readonly>
-          <label>comment</label>
+        <FormGroup highlightValue>
+          <label>comments</label>
           <p>{message}</p>
         </FormGroup>
       </>

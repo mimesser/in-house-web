@@ -8,11 +8,13 @@ export const FormGroup = styled.div`
     color: ${palette.textDark};
   }
 
-  > label {
-    ${({ readonly }) => readonly && `color: ${palette.secondary}`};
-
+  > ${({ highlightValue }) => (highlightValue ? 'p' : 'label')} {
     font-size: ${fontSize.large};
     color: ${palette.textDark};
+  }
+
+  > label {
+    color: ${({ highlightValue }) => palette.secondary};
   }
 
   > p {
