@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { Heading, Loader, ToolTip, HelpTip, Icon } from '../../atoms';
+import { Heading, Loader, ToolTip, HelpTip, Icon, Strong } from '../../atoms';
 import { Patent, WinkConfirmation } from '../../molecules';
 import {
   answerTopMink,
@@ -34,12 +34,14 @@ const TopMinkToolTip = () => {
   const [open, setOpen] = useState(false);
   const tooltipRef = useRef(null);
 
-  useTimeout(3000, () => setOpen(true));
+  useTimeout(1000, () => setOpen(true));
   useOutsideClick(tooltipRef, () => setOpen(false));
 
   return (
     <ToolTip ref={tooltipRef} open={open}>
-      <Try>try</Try> {getDefaultTopMink().answer}
+      <Try>
+        <Strong>try</Strong> {getDefaultTopMink().answer}
+      </Try>
     </ToolTip>
   );
 };

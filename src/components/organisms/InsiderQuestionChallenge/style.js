@@ -87,6 +87,10 @@ export const AnswerInput = styled(Input)`
   }
 `;
 
-export const Try = styled(Strong)`
-  color: ${palette.white};
+export const Try = styled.div`
+  font-size: ${fontSize.medium};
+
+  > ${Strong} {
+    color: ${palette.white};
+  }
 `;
