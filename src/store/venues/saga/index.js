@@ -20,6 +20,7 @@ import { privateShare } from './privateShare';
 import { acceptTerms } from './acceptTerms';
 import { createVenue } from './createVenue';
 import { togglePostFlag } from './togglePostFlag';
+import { toggleMinkFlag } from './toggleMinkFlag';
 
 export default function* venuesSaga() {
   yield all([
@@ -40,5 +41,6 @@ export default function* venuesSaga() {
     takeLeading(aggregateActions.ACCEPT_TERMS, withErrorReporter(acceptTerms)),
     takeLeading(actionTypes.CREATE_VENUE, withErrorReporter(createVenue)),
     takeLeading(actionTypes.TOGGLE_POST_FLAG, withErrorReporter(togglePostFlag)),
+    takeLeading(actionTypes.TOGGLE_MINK_FLAG, withErrorReporter(toggleMinkFlag)),
   ]);
 }
