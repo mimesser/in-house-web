@@ -27,6 +27,8 @@ export const actionTypes = {
   SET_VENUE_POSTS: 'SET_VENUE_POSTS',
   CREATE_POST: 'CREATE_POST',
   VOTE_POST: 'VOTE_POST',
+  TOGGLE_POST_FLAG: 'TOGGLE_POST_FLAG',
+  TOGGLE_MINK_FLAG: 'TOGGLE_MINK_FLAG',
   SHOW_VOTE_POST_CONFIRMATION: 'SHOW_VOTE_POST_CONFIRMATION',
   SET_PRIVATE_SHARE_ITEM_ID: 'SET_PRIVATE_SHARE_ITEM_ID',
   SET_PRIVATE_SHARE_RECIPIENT_ERROR: 'SET_PRIVATE_SHARE_RECIPIENT_ERROR',
@@ -185,6 +187,14 @@ export const createPost = (id, title, message) => ({
 export const upvotePost = () => ({
   type: actionTypes.VOTE_POST,
   payload: { vote: 1 },
+});
+
+export const togglePostFlag = () => ({
+  type: actionTypes.TOGGLE_POST_FLAG,
+});
+
+export const toggleMinkFlag = () => ({
+  type: actionTypes.TOGGLE_POST_FLAG,
 });
 
 export const downvotePost = () => ({
