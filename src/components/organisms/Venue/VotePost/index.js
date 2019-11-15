@@ -12,12 +12,14 @@ import {
   setSelectedPost,
   upvotePost,
   downvotePost,
+  togglePostFlag,
 } from '../../../../store/venues';
 import { Modal } from '../../Modal';
 import { RateConfirmation } from '../RateConfirmation';
 import { Layout, ItemDate, ItemTitle, VoteButton } from '../openCardStyle';
 import { formatDate } from '../../../../utils/format';
-import { appBackground } from '../../../../style';
+import { appBackground, spacing } from '../../../../style';
+import { FlagItem } from '../FlagItem';
 
 const VoteWrap = styled.div`
   display: inline-flex;
@@ -26,9 +28,18 @@ const VoteWrap = styled.div`
 const VoteRow = styled.div`
   z-index: 1000;
   background: ${appBackground};
+  display: flex;
+  align-items: center;
+  margin-top: ${spacing.xxxLarge};
 `;
 
-const VotePost = ({ post: { created, title, text, myVote }, upvotePost, downvotePost }) => {
+const VotePost = ({
+  post: { created, title, text, myVote, wasFlaggedByMe },
+  upvotePost,
+  downvotePost,
+  togglePostFlag,
+}) => {
+  const downvoted = myVote === -1;
   return (
     <Layout>
       <div>
@@ -42,11 +53,12 @@ const VotePost = ({ post: { created, title, text, myVote }, upvotePost, downvote
             <VoteButton onClick={upvotePost} selected={myVote === 1}>
               <Icon size={4} icon="arrow-up-circle" />
             </VoteButton>
-            <VoteButton onClick={downvotePost} selected={myVote === -1}>
+            <VoteButton onClick={downvotePost} selected={downvoted}>
               <Icon size={4} icon="arrow-down-circle" />
             </VoteButton>
           </VoteWrap>
         </HelpTip>
+        <FlagItem disabled={!downvoted} flagged={wasFlaggedByMe} toggleFlag={togglePostFlag} />
       </VoteRow>
     </Layout>
   );
@@ -80,6 +92,7 @@ const mapDispatch = {
   setSelectedPost,
   upvotePost,
   downvotePost,
+  togglePostFlag,
 };
 export default connect(
   mapState,

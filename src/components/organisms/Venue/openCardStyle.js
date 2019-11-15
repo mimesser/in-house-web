@@ -1,7 +1,8 @@
-import styled from 'styled-components';
+import React from 'react';
+import styled, { css } from 'styled-components';
 
 import { palette, spacing, fontSize, fontWeight } from '../../../style';
-import { IconButton } from '../../atoms';
+import { IconButton, Button } from '../../atoms';
 import { Dial } from '../../molecules';
 
 export const ItemDate = styled.div`
@@ -20,12 +21,30 @@ export const ItemTitle = styled.div`
 
 export const VoteButton = styled(IconButton)`
   color: ${({ selected }) => (selected ? palette.textDark : palette.textLight)};
-  margin-top: ${spacing.xxxLarge};
   &[disabled] {
     color: ${palette.textUltraLight};
   }
   &:last-child {
     margin-left: ${spacing.large};
+  }
+`;
+
+const flagText = ({ flagged }) =>
+  flagged &&
+  css`
+    color: ${palette.textLight};
+  `;
+
+export const FlagButton = styled(Button).attrs(() => ({
+  secondary: true,
+}))`
+  margin: 0 auto;
+  padding: ${spacing.tiny} ${spacing.large} ${spacing.tiny} ${spacing.small};
+  display: flex;
+  align-items: center;
+  > span {
+    margin-left: ${spacing.small};
+    ${flagText};
   }
 `;
 
