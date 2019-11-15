@@ -14,7 +14,7 @@ export const Step2 = ({ venue: { name }, title, message, edit, setStep }) => (
           <p>{title}</p>
         </FormGroup>
         <FormGroup highlightValue>
-          <label>comments</label>
+          <label>comment</label>
           <p>{message}</p>
         </FormGroup>
       </>
