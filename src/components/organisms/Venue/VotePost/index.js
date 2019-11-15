@@ -3,34 +3,25 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { Icon, HelpTip } from '../../../atoms';
+import { HelpTip, Icon } from '../../../atoms';
 
 import {
-  selectSelectedVenue,
+  downvotePost,
   selectSelectedPost,
+  selectSelectedVenue,
   selectVotePostConfirmation,
   setSelectedPost,
-  upvotePost,
-  downvotePost,
   togglePostFlag,
+  upvotePost,
 } from '../../../../store/venues';
 import { Modal } from '../../Modal';
 import { RateConfirmation } from '../RateConfirmation';
-import { Layout, ItemDate, ItemTitle, VoteButton } from '../openCardStyle';
+import { ItemDate, ItemTitle, Layout, VoteButton, VoteRow } from '../openCardStyle';
 import { formatDate } from '../../../../utils/format';
-import { appBackground, spacing } from '../../../../style';
 import { FlagItem } from '../FlagItem';
 
 const VoteWrap = styled.div`
   display: inline-flex;
-`;
-
-const VoteRow = styled.div`
-  z-index: 1000;
-  background: ${appBackground};
-  display: flex;
-  align-items: center;
-  margin-top: ${spacing.xxxLarge};
 `;
 
 const VotePost = ({

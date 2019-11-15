@@ -1,8 +1,8 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-import { palette, spacing, fontSize, fontWeight } from '../../../style';
-import { IconButton, Button } from '../../atoms';
+import { appBackground, fontSize, fontWeight, palette, spacing } from '../../../style';
+import { Button, IconButton } from '../../atoms';
 import { Dial } from '../../molecules';
 
 export const ItemDate = styled.div`
@@ -66,4 +66,12 @@ export const SubTitle = styled.div`
    font-weight: ${fontWeight.bolder}
    color: ${palette.textLight};
    margin-bottom: ${spacing.large};
+`;
+
+export const VoteRow = styled.div`
+  z-index: 1000;
+  background: ${appBackground};
+  display: flex;
+  align-items: center;
+  margin-top: ${spacing.xxxLarge};
 `;

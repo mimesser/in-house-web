@@ -11,6 +11,7 @@ import {
   setSelectedMink,
   tryAnswerMink,
   upvoteMink,
+  toggleMinkFlag,
 } from '../../../../store/venues';
 import { Modal } from '../../Modal';
 import { Icon, Loader } from '../../../atoms';
@@ -18,8 +19,9 @@ import { IconInput } from '../../../molecules';
 import { formatDate } from '../../../../utils/format';
 import { RateConfirmation } from '../RateConfirmation';
 import { normalizeAnswer } from '../normalizeAnswer';
-import { ItemDate, ItemTitle, Layout, VoteButton } from '../openCardStyle';
+import { ItemDate, ItemTitle, Layout, VoteButton, VoteRow } from '../openCardStyle';
 import { Status, InputGroup } from './style';
+import { FlagItem } from '../FlagItem';
 
 const AnswerStatus = ({ status, previouslyAnsweredCorrectly }) => {
   if (!status) {
@@ -50,12 +52,13 @@ const renderStatusIcon = answerStatus => {
 };
 
 const VoteMink = ({
-  mink: { created, question, myCorrectAnswer, myVote, id: minkId },
+  mink: { created, question, myCorrectAnswer, myVote, id: minkId, wasFlaggedByMe },
   venue: { id: venueId },
   answerStatus,
   tryAnswerMink,
   upvoteMink,
   downvoteMink,
+  toggleMinkFlag,
 }) => {
   const [answer, setAnswer] = useState(myCorrectAnswer || '');
   const [answerAttemptMade, setAnswerAttemptMade] = useState(false);
@@ -73,6 +76,7 @@ const VoteMink = ({
 
   const canVote = !!myCorrectAnswer || answerAttemptMade || typeof myVote === 'number';
   const previouslyAnsweredCorrectly = !!myCorrectAnswer;
+  const downvoted = myVote === -1;
 
   return (
     <Layout>
@@ -93,14 +97,15 @@ const VoteMink = ({
         </div>
         <AnswerStatus status={answerStatus} previouslyAnsweredCorrectly={previouslyAnsweredCorrectly} />
       </InputGroup>
-      <div>
+      <VoteRow>
         <VoteButton disabled={!canVote} onClick={myVote !== 1 ? upvoteMink : undefined} selected={myVote === 1}>
           <Icon size={4} icon="arrow-up-circle" />
         </VoteButton>
-        <VoteButton disabled={!canVote} onClick={myVote !== -1 ? downvoteMink : undefined} selected={myVote === -1}>
+        <VoteButton disabled={!canVote} onClick={myVote !== -1 ? downvoteMink : undefined} selected={downvoted}>
           <Icon size={4} icon="arrow-down-circle" />
         </VoteButton>
-      </div>
+        <FlagItem disabled={!downvoted} flagged={wasFlaggedByMe} toggleFlag={toggleMinkFlag} />
+      </VoteRow>
     </Layout>
   );
 };
@@ -137,6 +142,7 @@ const mapDispatch = {
   upvoteMink,
   downvoteMink,
   tryAnswerMink,
+  toggleMinkFlag,
 };
 export default connect(
   mapState,

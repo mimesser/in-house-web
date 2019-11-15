@@ -194,7 +194,7 @@ export const togglePostFlag = () => ({
 });
 
 export const toggleMinkFlag = () => ({
-  type: actionTypes.TOGGLE_POST_FLAG,
+  type: actionTypes.TOGGLE_MINK_FLAG,
 });
 
 export const downvotePost = () => ({
