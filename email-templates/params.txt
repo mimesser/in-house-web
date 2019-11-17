@@ -3,3 +3,4 @@ industry
 address
 itemTitle
 itemUrl
+message
