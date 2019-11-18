@@ -99,21 +99,21 @@ export const selectVotePostConfirmation = createSelector(
 );
 
 export const selectPrivateShareItemId = createSelector(
-  selectSelectedVenue,
-  selectedVenue => selectedVenue && selectedVenue.privateShareItemId,
+  selectVenueState,
+  ({ privateShareItemId }) => privateShareItemId,
 );
 
 export const selectPrivateShareRecipientError = createSelector(
-  selectSelectedVenue,
-  selectedVenue => selectedVenue && selectedVenue.privateShareRecipientError,
+  selectVenueState,
+  ({ privateShareRecipientError }) => privateShareRecipientError,
 );
 
 export const selectPrivateShareSending = createSelector(
-  selectSelectedVenue,
-  selectedVenue => selectedVenue && selectedVenue.privateShareSending === SEND_STATUS.sending,
+  selectVenueState,
+  ({ privateShareSending }) => privateShareSending === SEND_STATUS.sending,
 );
 
 export const selectPrivateShareSent = createSelector(
-  selectSelectedVenue,
-  selectedVenue => selectedVenue && selectedVenue.privateShareSending === SEND_STATUS.sent,
+  selectVenueState,
+  ({ privateShareSending }) => privateShareSending === SEND_STATUS.sent,
 );

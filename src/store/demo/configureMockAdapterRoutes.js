@@ -81,6 +81,12 @@ export default function configureMockAdapterRoutes(mock, store) {
   };
 
   const configurePrivateShareRoute = (tabItemId, tabType) => {
+    if (tabType === 'venue') {
+      mock.onPost(`Venues/${VENUE_ID}/share`).reply(config => {
+        return [200, {}];
+      });
+    }
+
     mock.onPost(`venues/${VENUE_ID}/${TABS_MAB[tabType]}/${tabItemId}/share`).reply(config => {
       return [200, {}];
     });
@@ -180,6 +186,7 @@ export default function configureMockAdapterRoutes(mock, store) {
   });
 
   store.dispatch(loadAggregateDataSuccess(DEMO_AGGREGATE));
+  configurePrivateShareRoute(VENUE_ID, 'venue');
   DEMO_VENUE.minks.forEach(mink => {
     configureMinkRoute(mink);
     configurePrivateShareRoute(mink.id, 'mink');

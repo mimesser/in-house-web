@@ -15,7 +15,13 @@ export const TABS_MAB = {
   [VENUE_TABS.mink]: 'minks',
 };
 
-const shareUrl = (venueId, type, id) => `/venues/${venueId}/${TABS_MAB[type]}/${id}/share`;
+const shareUrl = (venueId, type, id) => {
+  if (type === 'venue') {
+    return `/Venues/${venueId}/share`;
+  }
+
+  return `/venues/${venueId}/${TABS_MAB[type]}/${id}/share`;
+};
 
 const cleanPhoneNumber = n => n.replace(/[()\s-.]/g, '');
 
@@ -31,7 +37,7 @@ export function* privateShare({ payload: { type, id, recipient, message } }) {
 
   const contactDetails = viaEmail ? recipient : cleanPhoneNumber(recipient);
 
-  const { id: venueId } = yield select(selectSelectedVenue);
+  const venueId = type === 'venue' ? id : yield select(selectSelectedVenue).id;
 
   try {
     yield put(setPrivateShareSending(SEND_STATUS.sending));

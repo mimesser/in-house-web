@@ -16,9 +16,6 @@ import { VENUE_TABS } from '../../../../server/venueTabs';
 import api from '../../../api';
 import { selectAcceptedTerms } from '../../aggregate';
 
-import { turnDemoOn, turnDemoOff } from '../../demo';
-import { DEMO_VENUE_ID } from '../../demo/data';
-
 const DELAY_BEFORE_CHALLENGE = 500;
 const DELAY_CONFIRMATION = 1000;
 
@@ -75,6 +72,7 @@ export function* setSelectedVenue({ payload: { venue: { id } = {} } }) {
     yield showInsiderConfirmation();
     return;
   }
+
   if (openItemData) {
     if (!openItemData.url) {
       return;

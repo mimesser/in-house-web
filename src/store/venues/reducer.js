@@ -6,6 +6,9 @@ const initialState = {
   list: undefined,
   selectedVenue: undefined,
   insiderChallengeForm: undefined,
+  privateShareItemId: undefined,
+  privateShareRecipientError: undefined,
+  privateShareSending: undefined,
 };
 
 const setSelectedVenueProp = (state, action, key) => {
@@ -113,18 +116,22 @@ export function reducer(state = initialState, action) {
       return setSelectedVenueProp(state, action, 'votePostConfirmation');
     }
     case actionTypes.SET_PRIVATE_SHARE_ITEM_ID: {
-      const newState = setSelectedVenueProp(state, action, 'privateShareItemId');
-      if (newState.selectedVenue) {
-        delete newState.selectedVenue.privateShareRecipientError;
-        delete newState.selectedVenue.privateShareSending;
-      }
-      return newState;
+      const { privateShareItemId } = action.payload;
+
+      return {
+        ...state,
+        privateShareRecipientError: undefined,
+        privateShareSending: undefined,
+        privateShareItemId,
+      };
     }
     case actionTypes.SET_PRIVATE_SHARE_RECIPIENT_ERROR: {
-      return setSelectedVenueProp(state, action, 'privateShareRecipientError');
+      const { privateShareRecipientError } = action.payload;
+      return { ...state, privateShareRecipientError };
     }
     case actionTypes.SET_PRIVATE_SHARE_SENDING: {
-      return setSelectedVenueProp(state, action, 'privateShareSending');
+      const { privateShareSending } = action.payload;
+      return { ...state, privateShareSending };
     }
     case actionTypes.SET_ADDED_MINK_ID: {
       return setSelectedVenueProp(state, action, 'addedMinkId');
