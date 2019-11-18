@@ -10,6 +10,9 @@ import { selectVenues } from '../../../store/venues';
 import { selectInDemo } from '../../../store/demo';
 import { VenueCard } from './VenueCard';
 import { ListYourHouse, SearchBox, Layout } from './style';
+import PrivateShare from '../Venue/PrivateShare';
+import { SharePreviewCard } from '../Venue/sharePreviewStyle';
+import { Main, ItemText, ItemTitle } from '../Venue/tabStyle';
 
 const SearchBoxIcon = ({ applyFilter, clear }) =>
   applyFilter ? (
@@ -20,6 +23,14 @@ const SearchBoxIcon = ({ applyFilter, clear }) =>
     <Icon icon="search" />
   );
 
+const findVenue = (id, venues) => {
+  const venue = venues.find(t => t.id === id);
+  if (!venue) {
+    throw new Error(`Can't find venue ${id}`);
+  }
+  return venue;
+};
+
 const List = ({ venues, inDemo }) => {
   const [filter, setFilter] = useState('');
   const handleSearchChange = useCallback(e => setFilter(e.currentTarget.value.toLowerCase()), []);
@@ -28,6 +39,33 @@ const List = ({ venues, inDemo }) => {
     const { id } = venue;
     Router.push(`/houses?id=${id}`, `/houses/${id}`, { shallow: true });
   }, []);
+
+  const renderSharePreview = useCallback(
+    id => {
+      const {
+        name,
+        venueInfo: { address, city, state, zipCode },
+      } = findVenue(id, venues);
+
+      return (
+        <SharePreviewCard>
+          <Main>
+            <ItemTitle>{name}</ItemTitle>
+            <ItemText>{address}</ItemText>
+            <ItemText>
+              {city}, {state}
+            </ItemText>
+            <ItemText>{zipCode}</ItemText>
+          </Main>
+        </SharePreviewCard>
+      );
+    },
+    [venues],
+  );
+
+  const getVenue = useCallback(id => findVenue(id, venues), [venues]);
+
+  const getTitleForShare = useCallback(id => findVenue(id, venues).name, [venues]);
 
   if (!venues) {
     return <Loader big />;
@@ -52,6 +90,7 @@ const List = ({ venues, inDemo }) => {
           <ListYourHouse>list your house</ListYourHouse>
         </Link>
       )}
+      <PrivateShare type="venue" renderItem={renderSharePreview} getItemTitle={getTitleForShare} getVenue={getVenue} />
     </Layout>
   );
 };

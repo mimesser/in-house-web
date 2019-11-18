@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { PokeButton } from '../../molecules';
 import { setPrivateShareItemId } from '../../../store/venues';
 
-const Share = ({ id, openModal }) => {
+const Share = ({ id, type, openModal }) => {
   const handleClick = useCallback(
     e => {
       e.stopPropagation();

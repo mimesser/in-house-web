@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import { calcRem, fontSize, palette, spacing } from '../../../style';
 import { Card, Address, Button } from '../../atoms';
-import { IconInput } from '../../molecules';
+import { IconInput, PokeButton } from '../../molecules';
 
 // TODO: move to molecules?
 import { ScoreAndVoters } from '../Venue/ScoreAndVoters';
@@ -30,7 +30,7 @@ export const VenueContainer = styled(Card)`
 
   ${ScoreAndVoters} {
     min-width: initial;
-    margin-left: auto;
+    margin: auto ${spacing.small};
 
     ${Votes} {
       margin-top: ${spacing.tiny};
@@ -46,7 +46,6 @@ export const Img = styled.div`
   width: 5.8rem;
   height: 5.8rem;
   flex-shrink: 0;
-  margin-right: ${spacing.large};
   background-image: url(${({ imageUrl }) => imageUrl});
   background-position: center;
   background-size: cover;
@@ -64,4 +63,18 @@ export const Name = styled.div`
   font-size: ${calcRem(20)};
   text-transform: lowercase;
   margin-bottom: ${spacing.tiny};
+`;
+
+export const PrivateShareButtonLayout = styled.div`
+  position: relative;
+
+  > ${PokeButton} {
+    position: absolute;
+    top: -${spacing.medium};
+    right: -${spacing.small};
+  }
+`;
+
+export const Main = styled.div`
+  margin-right: auto;
 `;
