@@ -29,12 +29,14 @@ class MyDocument extends Document {
     }
   }
 
+  // TODO: move meta to app after upgrading next.js
+
   render() {
     return (
       <Html>
         <Head>
-          <title>In-House | Speak as a Team | Remain Untraceable</title>
-          <meta name="title" key="title" content="In-House | Speak as a Team | Remain Untraceable" />
+          {/* <title>In-House | Speak as a Team | Remain Untraceable</title> */}
+          {/* <meta name="title" content="In-House | Speak as a Team | Remain Untraceable" /> */}
           <meta
             name="description"
             content="Challenge favoritism and politics. Promote the best ideas and people. Are you an Insider?"
@@ -42,7 +44,7 @@ class MyDocument extends Document {
 
           <meta property="og:type" content="website" />
           <meta property="og:url" content="https://in-house.com/" />
-          <meta property="og:title" content="In-House | Speak as a Team | Remain Untraceable" />
+          {/* <meta property="og:title" content="In-House | Speak as a Team | Remain Untraceable" /> */}
           <meta
             property="og:description"
             content="Challenge favoritism and politics. Promote the best ideas and people. Are you an Insider?"
@@ -51,7 +53,7 @@ class MyDocument extends Document {
 
           <meta property="twitter:card" content="summary_large_image" />
           <meta property="twitter:url" content="https://in-house.com/" />
-          <meta property="twitter:title" content="In-House | Speak as a Team | Remain Untraceable" />
+          {/* <meta property="twitter:title" content="In-House | Speak as a Team | Remain Untraceable" /> */}
           <meta
             property="twitter:description"
             content="Challenge favoritism and politics. Promote the best ideas and people. Are you an Insider?"
