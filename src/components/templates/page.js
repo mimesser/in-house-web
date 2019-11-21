@@ -52,6 +52,7 @@ export const Page = ({ children, title = 'In-House | Speak as a Team | Remain Un
     <>
       <Head>
         <title>{title}</title>
+        <meta name="title" key="title" content={title} />
       </Head>
       <PageLayout>
         <RootContainer id="rootContainer" ref={ref}>

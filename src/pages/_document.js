@@ -34,7 +34,7 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <title>In-House | Speak as a Team | Remain Untraceable</title>
-          <meta name="title" content="In-House | Speak as a Team | Remain Untraceable" />
+          <meta name="title" key="title" content="In-House | Speak as a Team | Remain Untraceable" />
           <meta
             name="description"
             content="Challenge favoritism and politics. Promote the best ideas and people. Are you an Insider?"
