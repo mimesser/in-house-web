@@ -8,6 +8,7 @@ import {
   selectSelectedMink,
   selectSelectedVenue,
   selectVoteMinkConfirmation,
+  selectIsActiveInsider,
   setSelectedMink,
   tryAnswerMink,
   upvoteMink,
@@ -54,6 +55,7 @@ const renderStatusIcon = answerStatus => {
 const VoteMink = ({
   mink: { created, question, myCorrectAnswer, myVote, id: minkId, wasFlaggedByMe },
   venue: { id: venueId },
+  isActiveInsider,
   answerStatus,
   tryAnswerMink,
   upvoteMink,
@@ -104,7 +106,7 @@ const VoteMink = ({
         <VoteButton disabled={!canVote} onClick={myVote !== -1 ? downvoteMink : undefined} selected={downvoted}>
           <Icon size={4} icon="arrow-down-circle" />
         </VoteButton>
-        <FlagItem disabled={!downvoted} flagged={wasFlaggedByMe} toggleFlag={toggleMinkFlag} />
+        <FlagItem disabled={!isActiveInsider} flagged={wasFlaggedByMe} toggleFlag={toggleMinkFlag} />
       </VoteRow>
     </Layout>
   );
@@ -136,6 +138,7 @@ const mapState = createStructuredSelector({
   mink: selectSelectedMink,
   confirmation: selectVoteMinkConfirmation,
   answerStatus: selectAnswerMinkStatus,
+  isActiveInsider: selectIsActiveInsider,
 });
 const mapDispatch = {
   setSelectedMink,
