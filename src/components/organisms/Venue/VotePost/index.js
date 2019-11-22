@@ -49,7 +49,7 @@ const VotePost = ({
             </VoteButton>
           </VoteWrap>
         </HelpTip>
-        <FlagItem disabled={!downvoted} flagged={wasFlaggedByMe} toggleFlag={togglePostFlag} />
+        <FlagItem flagged={wasFlaggedByMe} toggleFlag={togglePostFlag} />
       </VoteRow>
     </Layout>
   );
