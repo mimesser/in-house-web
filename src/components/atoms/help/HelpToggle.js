@@ -21,6 +21,10 @@ const Btn = styled(IconButton)`
   z-index: 1000;
 `;
 
+const HelpOverlay = styled(Overlay)`
+  transition: background-color 1.5s;
+`;
+
 const HelpToggle = ({ showHelp, hasTips, toggleHelp, containerRef }) => {
   useEffect(() => {
     if (containerRef.current) {
@@ -39,7 +43,7 @@ const HelpToggle = ({ showHelp, hasTips, toggleHelp, containerRef }) => {
   }, [containerRef.current, showHelp]);
   return (
     <>
-      {showHelp && <Overlay onClick={toggleHelp} />}
+      {showHelp && <HelpOverlay onClick={toggleHelp} />}
       {hasTips && (
         <Btn onClick={handleClick}>
           <Icon icon={showHelp ? 'close' : 'question-mark'} />
