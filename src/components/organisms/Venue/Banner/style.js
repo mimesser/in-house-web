@@ -54,6 +54,7 @@ export const Ratings = styled(Number)`
   margin: ${spacing.large} 0 auto auto;
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
 
   ${Votes} {
     margin: ${spacing.large} auto 0 auto;
