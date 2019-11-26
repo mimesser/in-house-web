@@ -23,7 +23,7 @@ const shareUrl = (venueId, type, id) => {
   return `/venues/${venueId}/${TABS_MAB[type]}/${id}/share`;
 };
 
-const cleanPhoneNumber = n => n.replace(/[()\s-.]/g, '');
+const cleanPhoneNumber = n => n.replace(/[()\s-.+]/g, '');
 
 export function* privateShare({ payload: { type, id, recipient, message } }) {
   const viaEmail = recipient.indexOf('@') !== -1;
