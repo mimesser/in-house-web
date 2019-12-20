@@ -14,12 +14,10 @@ const dev = {
 
 const staging = {
   apiUrl: 'https://in-house-staging-backend.azurewebsites.net/api',
-  hotjar: 1456032,
 };
 
 const production = {
   apiUrl: 'https://in-house-backend.azurewebsites.net/api',
-  hotjar: 1456032,
 };
 
 const settingsMap = {

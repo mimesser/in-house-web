@@ -1,7 +1,6 @@
 import React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
-import { hotjar } from '../external-tools/hotjar';
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -67,7 +66,6 @@ class MyDocument extends Document {
             rel="stylesheet"
           />
           <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
-          <script dangerouslySetInnerHTML={hotjar} />
         </Head>
         <body>
           <Main />
