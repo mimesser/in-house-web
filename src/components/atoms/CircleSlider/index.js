@@ -34,8 +34,8 @@ const getElementSizes = size => {
     k = 3;
   }
   return {
-    circleWidth: 2 * k,
-    progressWidth: 3 * k,
+    circleWidth: 8 * k,
+    progressWidth: 8 * k,
     knobRadius: 6 * k,
   };
 };
@@ -46,8 +46,8 @@ class CircleSlider extends React.PureComponent {
   static defaultProps = {
     size: 350,
     padd: 0,
-    circleColor: theme.colors.secondary,
-    progressColor: theme.colors.primary,
+    circleColor: theme.colors.lightGray,
+    progressColor: theme.colors.darkGray,
     stepSize: 0.1,
     // TODO: quick and dirty zones support https://in-house.atlassian.net/browse/MVP-219
     min: 0,
@@ -104,9 +104,9 @@ class CircleSlider extends React.PureComponent {
       readonly || showHelp
         ? undefined
         : {
-            onMouseEnter: this.handleMouseEnter,
-            onMouseLeave: this.handleMouseLeave,
-          };
+          onMouseEnter: this.handleMouseEnter,
+          onMouseLeave: this.handleMouseLeave,
+        };
   }
 
   handleMouseEnter = () => {
@@ -279,26 +279,26 @@ class CircleSlider extends React.PureComponent {
       circleColor = palette.white;
       progressColor = palette.white;
     } else if (inverse) {
-      knobColor = theme.colors.secondaryLight;
-      circleColor = theme.colors.primaryLight;
-      progressColor = theme.colors.secondaryLight;
+      knobColor = theme.colors.lightGray;
+      circleColor = theme.colors.darkGray;
+      progressColor = theme.colors.lightGray;
     }
 
     const { x, y } = this.getPointPosition();
     const center = this.getCenter();
     const animating = !!this.animationInterval;
 
-    const knob = (
-      <circle
-        style={{
-          fill: animating ? circleColor : knobColor || progressColor,
-          cursor: readonly ? 'initial' : 'pointer',
-        }}
-        r={this.knobRadius}
-        cx={x}
-        cy={y}
-      />
-    );
+    // const knob = (
+    //   <circle
+    //     style={{
+    //       fill: animating ? circleColor : knobColor || progressColor,
+    //       cursor: readonly ? 'initial' : 'pointer',
+    //     }}
+    //     r={this.knobRadius}
+    //     cx={x}
+    //     cy={y}
+    //   />
+    // );
 
     return (
       <Container
@@ -325,7 +325,7 @@ class CircleSlider extends React.PureComponent {
           {!animating && (
             <path
               style={{
-                strokeLinecap: 'round',
+                // strokeLinecap: 'round',
                 strokeWidth: this.progressWidth,
                 stroke: progressColor,
                 fill: 'none',
@@ -333,20 +333,20 @@ class CircleSlider extends React.PureComponent {
               d={this.getPath()}
             />
           )}
-          {showHelp ? (
-            <HelpTip
-              tip={
-                <>
-                  drag dial to select your rating <br /> let go to enter
-                </>
-              }
-              placement="top"
-            >
-              {knob}
-            </HelpTip>
-          ) : (
-            knob
-          )}
+          {/* {showHelp ? ( */}
+          {/*  <HelpTip */}
+          {/*    tip={ */}
+          {/*      <> */}
+          {/*        drag dial to select your rating <br /> let go to enter */}
+          {/*      </> */}
+          {/*    } */}
+          {/*    placement="top" */}
+          {/*  > */}
+          {/*    {knob} */}
+          {/*  </HelpTip> */}
+          {/* ) : ( */}
+          {/*  knob */}
+          {/* )} */}
         </svg>
         {children && !showHelp && <SliderLabel>{children}</SliderLabel>}
       </Container>
