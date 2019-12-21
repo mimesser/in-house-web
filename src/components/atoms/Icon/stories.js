@@ -1,9 +1,19 @@
 import React from 'react';
+import styled from 'styled-components';
 import { storiesOf } from '@storybook/react';
 import { Icon } from '.';
 
+const svgs = require.context('./icons', true, /\.svg$/);
+const DemoIcon = styled(Icon)`
+  margin: 2rem;
+`;
+
 storiesOf('Icon', module)
-  .add('default', () => <Icon icon="close" />)
-  .add('palette', () => <Icon icon="close" palette="primary" />)
-  .add('palette reverse', () => <Icon icon="close" palette="primary" reverse />)
-  .add('height', () => <Icon icon="close" height={100} />);
+  .add('all', () =>
+    svgs
+      .keys()
+      .map(path => path.match(/\.\/([^.]+)\.svg$/)[1])
+      .map(key => <DemoIcon icon={key} key={key} size={3} />),
+  )
+  .add('color', () => <Icon icon="close" color="lightGray" />)
+  .add('size', () => <Icon icon="close" size={5} />);

@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 module.exports = new Proxy(
   {},
@@ -12,9 +11,6 @@ module.exports = new Proxy(
       };
 
       Mock.displayName = property;
-      Mock.propTypes = {
-        children: PropTypes.any,
-      };
 
       return Mock;
     },
