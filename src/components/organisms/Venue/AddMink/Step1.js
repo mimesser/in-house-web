@@ -1,8 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
 
-import { Button } from '../../../atoms';
-import { CounterInput, Patent, StepLayout, FormTip } from '../../../molecules';
+import { Button, Patent } from '../../../atoms';
+import { CounterInput, StepLayout, FormTip } from '../../../molecules';
 import { Title } from '../newItemStyle';
 
 const MAX_QUESTION_LENGTH = 120;

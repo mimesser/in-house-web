@@ -3,41 +3,40 @@ import styled from 'styled-components';
 
 import { Loader } from '../Loader';
 import { withForwardedRef } from '../../withForwardedRef';
-import { fontWeight, palette, fontSize, letterSpacing, spacing } from '../../../style';
+import { fontWeight, palette, fontSize, spacing } from '../../../style';
 
-const background = ({ secondary, disabled }) => {
-  if (secondary) {
-    return palette.white;
-  }
-
-  return disabled ? palette.secondary : palette.primaryLight;
-};
-
-const border = ({ secondary, disabled }) => {
-  if (secondary) {
-    return disabled ? palette.secondaryLight : palette.secondaryDark;
-  }
-
-  return disabled ? palette.secondary : palette.primaryLight;
-};
-
-const color = ({ secondary, disabled }) => {
-  if (secondary) {
-    return disabled ? palette.secondaryLight : palette.textDark;
-  }
-  return palette.white;
-};
+// const background = ({ secondary, disabled }) => {
+//   if (secondary) {
+//     return palette.white;
+//   }
+//
+//   return disabled ? palette.secondary : palette.primaryLight;
+// };
+//
+// const border = ({ secondary, disabled }) => {
+//   if (secondary) {
+//     return disabled ? palette.secondaryLight : palette.secondaryDark;
+//   }
+//
+//   return disabled ? palette.secondary : palette.primaryLight;
+// };
+//
+// const color = ({ secondary, disabled }) => {
+//   if (secondary) {
+//     return disabled ? palette.secondaryLight : palette.textDark;
+//   }
+//   return palette.white;
+// };
 
 const BaseButton = styled.button`
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   border-radius: 2em;
-  border: 1px solid ${border};
-  background-color: ${background};
-  color: ${color};
-  padding: ${fontSize.small} ${fontSize.xLarge};
-  font-size: ${fontSize.small};
+  // border: 1px solid ${border};
+  // background-color: ${background};
+  // color: ${color};
+  padding: ${spacing.sm} ${spacing.lg};
+  font-size: ${fontSize.sm};
   font-weight: ${fontWeight.primary};
-  letter-spacing: ${letterSpacing.primary};
   outline: none;
   text-decoration: none;
   text-align: center;

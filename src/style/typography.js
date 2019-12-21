@@ -1,36 +1,30 @@
 import { calcRem } from './calcRem';
 
-export const lineHeight = {
-  tiny: '1.1',
-  small: '1.2',
-  medium: '1.4',
-  large: '1.5',
-};
-
 export const font = {
-  primary: 'Source Sans Pro, sans-serif',
-  number: 'Roboto, sans-serif',
-  heading: 'Nunito Sans, sans-serif',
+  primary: 'Helvetica, Roboto, Arial, sans-serif',
 };
 
 export const fontSize = {
-  tiny: calcRem('12px'),
-  small: calcRem('14px'),
-  primary: '1rem',
-  medium: calcRem('18px'),
-  mediumLarge: calcRem('21px'),
-  large: calcRem('24px'),
-  xLarge: calcRem('32px'),
+  xs: calcRem('10px'),
+  sm: calcRem('14px'),
+  md: calcRem('18px'),
+  lg: calcRem('32px'),
+  xl: calcRem('72px'),
 };
 
+export const lineHeight = {
+  sm: '1.2',
+  md: '1.4',
+  lg: '1.5',
+};
+
+// TODO: fix once font supplied
 export const fontWeight = {
-  primary: 300,
-  bolder: 400,
+  light: 300,
+  normal: 400,
   bold: 600,
 };
 
-export const letterSpacing = {
-  primary: calcRem('0.5px'),
-  medium: calcRem('0.666667px'),
-  large: calcRem('2px'),
-};
+export const appLineHeight = lineHeight.sm;
+export const appFontSize = fontSize.sm;
+export const appFontWeight = fontWeight.normal;

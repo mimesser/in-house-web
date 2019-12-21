@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { Button, Heading } from '../../atoms';
+import { Button, Heading, Patent } from '../../atoms';
 import { StepLayout } from './StepLayout';
 import { CounterInput } from '../../molecules/CounterInput';
-import { FormTip, Patent } from '../../molecules';
+import { FormTip } from '../../molecules';
 
 // TODO: should be common with AddMink
 const MAX_QUESTION_LENGTH = 120;

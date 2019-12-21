@@ -6,7 +6,7 @@ import { createStructuredSelector } from 'reselect';
 import { selectInDemo } from '../../../../store/demo';
 import { selectShowHelp } from '../../../../store/help';
 import { Votes } from '../Votes';
-import { Address, Title, Icon } from '../../../atoms';
+import { Address, HouseNameLarge, Icon } from '../../../atoms';
 import { About, Back, Header, Industry, Ratings, Score } from './style';
 
 const Banner = ({
@@ -33,7 +33,7 @@ const Banner = ({
       <div>
         <About>
           <Industry>{industry}</Industry>
-          <Title>{name}</Title>
+          <HouseNameLarge>{name}</HouseNameLarge>
           <Address>
             {address}
             <br />

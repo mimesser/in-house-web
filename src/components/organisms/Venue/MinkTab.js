@@ -5,8 +5,7 @@ import styled from 'styled-components';
 import Link from 'next/link';
 
 import { loadMinks, setSelectedMink, setAddedMinkId, selectSelectedMink } from '../../../store/venues';
-import { Loader, Button, HelpTip } from '../../atoms';
-import { Patent } from '../../molecules';
+import { Loader, Button, HelpTip, Patent } from '../../atoms';
 import { TabLayout, ItemCard, Main, ItemTitle, ItemTime, TabTitle } from './tabStyle';
 import { formatDate } from '../../../utils/format';
 import VoteMink from './VoteMink';

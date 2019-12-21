@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 import { calcRem, palette, spacing } from '../../../../style';
 import { IconButton } from '../../../atoms/Button';
-import { Title } from '../../../atoms/Title';
-import { Number } from '../../../atoms/Number';
+import { HouseNameLarge } from '../../../atoms';
 import { Votes } from '../Votes';
 
 export const Back = styled(IconButton)`
@@ -22,16 +21,16 @@ export const Header = styled.header`
     display: flex;
     flex: 1;
   }
-  
+
   > * {
     ${({ showHelp }) => !showHelp && 'z-index: 1'};
   }
-  
+
   background-image: url("${({ imageUrl }) => imageUrl}");
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: center center;  
-  
+  background-position: center center;
+
   :after {
     position: absolute;
     top:0;
@@ -45,9 +44,8 @@ export const Header = styled.header`
 `;
 export const About = styled.div`
   margin: auto 0;
-  ${Title} {
-    text-transform: lowercase;
-    margin-bottom: ${spacing.xLarge};
+  ${HouseNameLarge} {
+    margin-bottom: ${spacing.xl};
   }
 `;
 export const Ratings = styled(Number)`
