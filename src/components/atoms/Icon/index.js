@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { palette } from '../../../style';
@@ -22,17 +21,8 @@ const Wrapper = styled.span`
   }
 `;
 
-export const Icon = ({ icon, ...props }) => {
+export const Icon = ({ icon, size = 1, className }) => {
   // eslint-disable-next-line global-require,import/no-dynamic-require
   const svg = require(`!raw-loader!./icons/${icon}.svg`);
-  return <Wrapper {...props} dangerouslySetInnerHTML={{ __html: svg.default || svg }} />;
-};
-
-Icon.propTypes = {
-  icon: PropTypes.string.isRequired,
-  size: PropTypes.number,
-};
-
-Icon.defaultProps = {
-  size: 1,
+  return <Wrapper size={size} className={className} dangerouslySetInnerHTML={{ __html: svg.default || svg }} />;
 };
