@@ -5,7 +5,7 @@ import { Button } from '../../../atoms';
 import { CounterInput, StepLayout } from '../../../molecules';
 import { Title } from '../newItemStyle';
 
-const MAX_TITLE_LENGTH = 25;
+const MAX_TITLE_LENGTH = 45;
 const MAX_MESSAGE_LENGTH = 250;
 
 export const Step1 = ({ venue: { id, name }, title, setTitle, message, setMessage, setStep }) => (
