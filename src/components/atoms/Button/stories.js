@@ -6,28 +6,30 @@ import { Button, IconButton } from '.';
 import { Icon } from '../Icon';
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   > * {
     margin-bottom: 1rem;
-    display: block;
   }
 `;
 
 storiesOf('Button', module).add('Button', () => (
   <Container>
-    <Button>Primary</Button>
-    <Button disabled>Disabled</Button>
-    <Button secondary>Secondary</Button>
-    <Button secondary disabled>
-      Secondary disabled
+    <Button>primary</Button>
+    <Button disabled>disabled</Button>
+    <Button wide>wide</Button>
+    <Button outline>outline</Button>
+    <Button outline disabled>
+      outline disabled
     </Button>
-    <div>
-      <Button loading>Loading</Button> loading indicator
-    </div>
-    <div>
-      <IconButton>
-        <Icon icon="check" />
-      </IconButton>
-      icon button
-    </div>
+    <Button dashed>dashed</Button>
+    <Button loading>loading</Button>
+    <IconButton>
+      <Icon icon="arrow-right" />
+    </IconButton>
+    <Button>
+      with, icon <Icon icon="arrow-right" />
+    </Button>
   </Container>
 ));
