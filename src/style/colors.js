@@ -7,28 +7,21 @@ export const constColors = {
 export const appColors = {
   ...constColors,
 
-  // TODO: any better name?
-  dim: '#002633',
-  dimLight: '#2e4e5d',
-  dimExtraLight: '#5A727A',
-
-  gray: '#d6dddf',
-  grayDark: '#a5abad',
-  grayLight: '#f1f4f4',
-  grayExtraLight: '#fafafa',
+  midnight: '#333333',
+  gray2: '#4F4F4F',
+  gray3: '#828282',
+  gray4: '#BDBDBD',
+  gray5: '#E0E0E0',
+  offWhite: '#F9F9F9',
 };
 
 export const themeColors = {
-  primary: appColors.dim,
-  primaryLight: appColors.dimLight,
-  primaryUltraLight: appColors.dimExtraLight,
+  primary: appColors.midnight,
+  darkGray: appColors.gray2,
+  mediumGray: appColors.gray3,
+  gray: appColors.gray4,
+  lightGray: appColors.gray5,
+  offWhite: appColors.offWhite,
 
-  secondary: appColors.gray,
-  secondaryDark: appColors.grayDark,
-  secondaryLight: appColors.grayLight,
-
-  text: appColors.dimLight,
-  textUltraLight: appColors.gray,
-  textLight: appColors.grayDark,
-  textDark: appColors.dim,
+  text: appColors.midnight,
 };
