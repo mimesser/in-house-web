@@ -9,16 +9,18 @@ import { IconButton } from '../Button';
 import { setBoundariesElement } from '../Tip';
 
 const Btn = styled(IconButton)`
-  padding: ${spacing.large};
-  background-color: ${palette.secondaryDark};
-  color: ${palette.white};
+  padding: ${spacing.lg};
+  background-color: ${palette.gray};
+  color: ${palette.offWhite};
   border-radius: 50%;
   position: fixed;
-  bottom: ${spacing.xLarge};
-  right: ${spacing.xLarge};
+  bottom: ${spacing.xl};
+  right: ${spacing.xl};
   display: flex;
   flex-shrink: 0;
   z-index: 1000;
+  opacity: 0.35;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 `;
 
 const HelpOverlay = styled(Overlay)`

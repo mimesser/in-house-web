@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-import { spacing, fontWeight, font, palette } from '../../../style';
+import { spacing, fontWeight, font, fontSize, palette } from '../../../style';
 
 const strikeThrough = ({ strike }) =>
   strike &&
@@ -10,14 +10,14 @@ const strikeThrough = ({ strike }) =>
   `;
 
 const borderWidth = ({ error }) => (error ? 3 : 1);
-const borderColor = ({ error }) => (error ? palette.primary : palette.lightGray);
+const borderColor = ({ error }) => (error ? palette.primary : palette.gray);
 
 export const placeholder = css`
   color: ${palette.gray};
 `;
 
 export const fontStyle = css`
-  font-size: 1rem;
+  font-size: ${fontSize.md};
   font-family: ${font.primary};
   font-weight: ${fontWeight.normal};
 `;
@@ -27,7 +27,7 @@ export const baseFormControlStyle = css`
   box-sizing: border-box;
   ${fontStyle};
   border: ${borderWidth}px solid ${borderColor};
-  color: ${palette.black};
+  color: ${palette.primary};
   transition: color 0.3s, border-color 0.3s;
   ${strikeThrough};
   ::placeholder {
@@ -36,8 +36,8 @@ export const baseFormControlStyle = css`
   :hover:not(:disabled),
   :active:not(:disabled),
   :focus:not(:disabled) {
-    color: ${palette.black};
-    border-color: ${palette.black};
+    color: ${palette.primary};
+    border-color: ${palette.primary};
     outline: none;
   }
   :disabled {

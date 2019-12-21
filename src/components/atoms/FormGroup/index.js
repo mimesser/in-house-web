@@ -2,19 +2,19 @@ import styled from 'styled-components';
 import { fontSize, spacing, palette } from '../../../style';
 
 export const FormGroup = styled.div`
-  margin-top: ${({ marginless }) => (marginless ? 0 : spacing.large)};
-  color: ${palette.textLight};
+  margin-top: ${({ marginless }) => (marginless ? 0 : spacing.lg)};
+  color: ${palette.primary};
   :focus-within {
-    color: ${palette.textDark};
+    color: ${palette.black};
   }
 
   > ${({ highlightValue }) => (highlightValue ? 'p' : 'label')} {
     font-size: ${fontSize.large};
-    color: ${palette.textDark};
+    color: ${palette.primary};
   }
 
   > label {
-    color: ${({ highlightValue }) => highlightValue && palette.secondary};
+    color: ${({ highlightValue }) => highlightValue && palette.gray};
   }
 
   > p {

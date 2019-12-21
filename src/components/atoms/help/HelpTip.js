@@ -11,9 +11,9 @@ const width = ({ theme: { desktop } }) => -60 + (desktop ? 400 : window.document
 const Message = styled.div`
   width: ${width}px;
   text-align: center;
-  padding: ${spacing.xLarge};
+  padding: ${spacing.xl};
   > div:not(:first-child) {
-    margin-top: ${spacing.xLarge};
+    margin-top: ${spacing.xl};
   }
 `;
 
