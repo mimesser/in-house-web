@@ -7,7 +7,7 @@ const HiddenInput = styled.input.attrs(() => ({ type: 'file' }))`
   display: none;
 `;
 
-export const FilePicker = ({ children, onChange, accept, secondary, disabled, className }) => {
+export const FilePicker = ({ children, onChange, accept, outline, dashed, disabled, className }) => {
   const inputRef = useRef(null);
   const handleClick = useCallback(() => inputRef.current.click(), [inputRef]);
   const handleChange = useCallback(
@@ -21,7 +21,7 @@ export const FilePicker = ({ children, onChange, accept, secondary, disabled, cl
   return (
     <>
       <HiddenInput ref={inputRef} onChange={handleChange} accept={accept} />
-      <Button secondary={secondary} disabled={disabled} onClick={handleClick} className={className}>
+      <Button outline={outline} dashed={dashed} disabled={disabled} onClick={handleClick} className={className}>
         {children}
       </Button>
     </>

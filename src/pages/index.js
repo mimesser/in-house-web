@@ -2,15 +2,15 @@ import React from 'react';
 import Link from 'next/link';
 
 import { Page } from '../components/templates';
-import { Button, Heading, Strong } from '../components/atoms';
+import { Button, H1, Strong } from '../components/atoms';
 import { LandingLayout, LandingHelp } from '../components/organisms';
 import { DEMO_VENUES_ID } from '../store/demo/data';
 
 const Index = () => (
   <Page>
     <LandingLayout>
-      <Heading>if nothing ever changes</Heading>
-      <Heading>what’s the point?</Heading>
+      <H1>if nothing ever changes</H1>
+      <H1>what’s the point?</H1>
       <Strong>private / anonymous / collective team feedback</Strong>
       <p>raise issues without fear</p>
       <p>challenge favoritism & politics</p>

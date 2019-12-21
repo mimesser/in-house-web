@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
 
-import { Button, Heading } from '../../atoms';
+import { Button, H1 } from '../../atoms';
 import { StepLayout } from './StepLayout';
 import { FilePicker } from '../../molecules';
 import { spacing } from '../../../style/spacing';
@@ -23,7 +23,7 @@ export const Step5 = ({ setStep, setImage }) => {
     <StepLayout
       main={
         <>
-          <Heading>interior photo</Heading>
+          <H1>interior photo</H1>
           <p>show us you’re a house insider</p>
 
           <div>

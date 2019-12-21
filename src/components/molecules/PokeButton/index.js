@@ -6,7 +6,7 @@ import { palette } from '../../../style';
 
 export const PokeButton = styled(props => (
   <IconButton {...props}>
-    <Icon icon="paper-plane" size={2} color="secondaryDark" />
+    <Icon icon="paper-plane" size={2} color="text" />
   </IconButton>
 ))`
   color: ${palette.text};

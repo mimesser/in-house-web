@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { spacing, palette } from '../../../style';
-import { Heading } from '../../atoms';
+import { H1 } from '../../atoms';
 
 export const Name = styled.div`
   text-transform: uppercase;
@@ -13,6 +13,6 @@ export const Name = styled.div`
 export const Title = ({ houseName, action }) => (
   <>
     <Name>{houseName}</Name>
-    <Heading>{action}</Heading>
+    <H1>{action}</H1>
   </>
 );

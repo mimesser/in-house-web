@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import isNumber from 'lodash/isNumber';
 
-import { CircleSlider, NumberLarge, Icon } from '../../atoms';
+import { CircleSlider, NumberLarge, NumberSmall, Icon } from '../../atoms';
 import { fontSize, palette } from '../../../style';
 
 const FONT_RATIO = 3.5;
@@ -19,14 +19,14 @@ const Value = styled(NumberLarge)`
 `;
 
 export const Votes = styled(({ count, iconSize = 1, ...rest }) => (
-  <Number {...rest}>
+  <NumberSmall {...rest}>
     <Icon icon="users" size={iconSize} /> <span>{count || 0}</span>
-  </Number>
+  </NumberSmall>
 ))`
-  font-size: ${fontSize.primary};
+  font-size: ${fontSize.sm};
   display: flex;
   justify-content: center;
-  color: ${palette.secondaryLight};
+  color: ${palette.gray};
   svg {
     padding: 0 3px 0 0;
   }

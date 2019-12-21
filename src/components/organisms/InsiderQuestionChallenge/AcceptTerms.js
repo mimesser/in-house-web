@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import Terms from '../Terms';
 
-import { Heading, Checkbox, HelpTip } from '../../atoms';
+import { H1, Checkbox, HelpTip } from '../../atoms';
 import { font, fontWeight, fontSize, spacing, appBackground } from '../../../style';
 import { acceptTerms } from '../../../store/aggregate';
 
@@ -25,7 +25,7 @@ const AgreementText = styled.span`
   margin-left: ${spacing.large};
 
   font: inherit;
-  font-family: ${font.heading};
+  font-family: ${font.H1};
   font-size: ${fontSize.large};
 `;
 
@@ -56,7 +56,7 @@ const AcceptTerms = ({ acceptTerms }) => {
   return (
     <Layout>
       <Terms open={termsModal} close={() => showTermsModal(false)} modal />
-      <Heading>i agree to be fair</Heading>
+      <H1>i agree to be fair</H1>
       <div>to engage respectfully and offer the same objectivity and decency that i would hope for in return</div>
       <HelpTip tip="don’t be a jerk">
         <HelpWrap>
