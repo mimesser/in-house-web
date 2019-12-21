@@ -11,22 +11,23 @@ export const Dropdown = styled(withNoSSR(Select)).attrs(() => ({
 }))`
   .react-select__control {
     ${baseFormControlStyle};
-    padding: calc(${spacing.tiny} - 1px);
+    padding: calc(${spacing.xxs} - 1px);
 
     &.react-select__control--menu-is-open,
     &.react-select__control--is-focused {
       outline: none;
       box-shadow: none;
-      color: ${palette.textDark};
-      border: 1px solid ${palette.primaryLight};
+      color: ${palette.black};
+      border: 1px solid ${palette.black};
     }
     &.react-select__control--is-disabled {
       background-color: transparent;
-      color: ${palette.secondaryLight};
-      border-color: ${palette.secondaryLight};
+      color: ${palette.lightGray};
+      border-color: ${palette.lightGray};
     }
     :hover {
       box-shadow: none;
+      border: 1px solid ${palette.black};
     }
 
     .react-select__single-value {
@@ -44,19 +45,19 @@ export const Dropdown = styled(withNoSSR(Select)).attrs(() => ({
 
   .react-select__menu {
     box-shadow: none;
-    border: 1px solid ${palette.primaryLight};
+    border: 1px solid ${palette.lightGray};
 
     .react-select__menu-list {
       padding: 0;
       ${fontStyle};
 
       .react-select__option {
-        &.react-select__option--is-focused {
-          background-color: ${palette.secondaryLight};
-        }
         &.react-select__option--is-selected {
-          color: ${palette.textDark};
-          background-color: ${palette.secondary};
+          color: ${palette.black};
+          background-color: ${palette.lightGray};
+        }
+        &.react-select__option--is-focused {
+          background-color: ${palette.gray};
         }
       }
     }

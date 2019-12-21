@@ -10,16 +10,16 @@ const strikeThrough = ({ strike }) =>
   `;
 
 const borderWidth = ({ error }) => (error ? 3 : 1);
-const borderColor = ({ error }) => (error ? palette.primary : palette.secondary);
+const borderColor = ({ error }) => (error ? palette.primary : palette.lightGray);
 
 export const placeholder = css`
-  color: ${palette.textUltraLight};
+  color: ${palette.gray};
 `;
 
 export const fontStyle = css`
   font-size: 1rem;
   font-family: ${font.primary};
-  font-weight: ${fontWeight.primary};
+  font-weight: ${fontWeight.normal};
 `;
 
 export const baseFormControlStyle = css`
@@ -27,7 +27,7 @@ export const baseFormControlStyle = css`
   box-sizing: border-box;
   ${fontStyle};
   border: ${borderWidth}px solid ${borderColor};
-  color: ${palette.textLight};
+  color: ${palette.black};
   transition: color 0.3s, border-color 0.3s;
   ${strikeThrough};
   ::placeholder {
@@ -36,20 +36,20 @@ export const baseFormControlStyle = css`
   :hover:not(:disabled),
   :active:not(:disabled),
   :focus:not(:disabled) {
-    color: ${palette.textDark};
-    border-color: ${palette.primaryLight};
+    color: ${palette.black};
+    border-color: ${palette.black};
     outline: none;
   }
   :disabled {
-    color: ${palette.secondaryLight};
-    border-color: ${palette.secondaryLight};
+    color: ${palette.lightGray};
+    border-color: ${palette.lightGray};
   }
 `;
 
 export const baseInputStyle = css`
   display: block;
   width: 100%;
-  padding: ${spacing.medium};
+  padding: ${spacing.md};
   ${baseFormControlStyle};
 `;
 
