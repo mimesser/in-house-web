@@ -23,8 +23,8 @@ const Container = styled.div`
 `;
 
 const Content = styled.div`
-  background-color: ${palette.secondary};
-  border: 1px solid ${palette.secondary};
+  background-color: ${palette.gray};
+  border: 1px solid ${palette.gray};
   display: flex;
   flex-direction: column;
   margin: 1rem;
@@ -42,7 +42,7 @@ const Arrow = styled.div`
     border-left: 1rem transparent;
     border-right: 1rem transparent;
 
-    border-bottom: 1rem ${palette.secondary};
+    border-bottom: 1rem ${palette.gray};
     top: 0;
   }
 
@@ -50,7 +50,7 @@ const Arrow = styled.div`
     border-left: 1rem transparent;
     border-right: 1rem transparent;
 
-    border-top: 1rem ${palette.secondary};
+    border-top: 1rem ${palette.gray};
     bottom: 0;
   }
 
@@ -58,7 +58,7 @@ const Arrow = styled.div`
   //   border-top: 1rem transparent;
   //   border-bottom: 1rem transparent;
   //
-  //   border-left: 1rem ${palette.secondary};
+  //   border-left: 1rem ${palette.gray};
   //   left: 0;
   // }
   //
@@ -66,7 +66,7 @@ const Arrow = styled.div`
   //   border-top: 1rem transparent;
   //   border-bottom: 1rem transparent;
   //
-  //   border-right: 1rem ${palette.secondary};
+  //   border-right: 1rem ${palette.gray};
   //   right: 0;
   // }
 `;
