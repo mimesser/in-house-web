@@ -7,7 +7,7 @@ import { withForwardedRef } from '../../withForwardedRef';
 const TIP_SIZE = '10px';
 
 const Wrapper = styled.div`
-  position: 'relative';
+  position: relative;
 `;
 
 // TODO: in the future, use something like popper.js for these types of things
@@ -18,21 +18,21 @@ const ToolTip = styled.div`
   transform: translateY(-100%);
   display: ${({ open }) => (open ? 'block' : 'none')};
 
-  padding: ${spacing.medium};
-  background-color: ${palette.primaryLight};
+  padding: ${spacing.md};
+  background-color: ${palette.gray};
 
-  margin-top: calc(-${TIP_SIZE} + -${spacing.tiny});
+  margin-top: calc(-${TIP_SIZE} + -${spacing.xs});
 
   ::after {
     content: '';
     position: absolute;
     bottom: -${TIP_SIZE};
 
-    left: calc(${TIP_SIZE} + ${spacing.tiny});
+    left: calc(${TIP_SIZE} + ${spacing.xs});
 
     border-width: ${TIP_SIZE} ${TIP_SIZE} 0 ${TIP_SIZE};
     border-style: solid;
-    border-color: ${palette.primaryLight} transparent transparent transparent;
+    border-color: ${palette.gray} transparent transparent transparent;
   }
 `;
 
