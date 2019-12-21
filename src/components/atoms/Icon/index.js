@@ -21,8 +21,8 @@ const Wrapper = styled.span`
   }
 `;
 
-export const Icon = ({ icon, size = 1, className }) => {
+export const Icon = styled(({ icon, size = 1, className }) => {
   // eslint-disable-next-line global-require,import/no-dynamic-require
   const svg = require(`!raw-loader!./icons/${icon}.svg`);
   return <Wrapper size={size} className={className} dangerouslySetInnerHTML={{ __html: svg.default || svg }} />;
-};
+})``;
