@@ -5,8 +5,9 @@ import { ThemeProvider } from 'styled-components';
 
 import configureStore from '../../src/store';
 import { theme } from '../../src/style';
+import { GlobalStyle } from '../../src/components';
 const store = configureStore();
-const req = require.context('../../src/components', true, /.stories.js$/);
+const req = require.context('../../src/', true, /stories\.js$/);
 
 function loadStories() {
   req.keys().forEach(filename => req(filename));
@@ -14,7 +15,12 @@ function loadStories() {
 
 addDecorator(story => (
   <Provider store={store}>
-    <ThemeProvider theme={theme}>{story()}</ThemeProvider>
+    <ThemeProvider theme={theme}>
+      <>
+        <GlobalStyle />
+        {story()}
+      </>
+    </ThemeProvider>
   </Provider>
 ));
 
