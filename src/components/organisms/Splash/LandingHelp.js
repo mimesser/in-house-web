@@ -6,15 +6,15 @@ import { palette, cover, spacing, calcRem } from '../../../style';
 
 const Wrapper = styled.div`
   ${cover()};
-  padding: ${calcRem('160px')} ${spacing.xLarge} 0;
+  padding: ${calcRem('160px')} ${spacing.xl} 0;
   color: ${palette.white};
   // TODO
   z-index: 1000;
 `;
 const Main = styled.div``;
 const Secondary = styled.div`
-  color: ${palette.textUltraLight};
-  margin-bottom: ${spacing.xxxLarge};
+  color: ${palette.lightGray};
+  margin-bottom: ${spacing.xxxl};
 `;
 
 const LandingHelp = ({ showHelp, toggleHelp }) => {

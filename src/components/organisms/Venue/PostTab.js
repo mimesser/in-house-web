@@ -17,7 +17,7 @@ import { SharePreviewCard } from './sharePreviewStyle';
 
 const PostCard = styled(ItemCard)`
   ${ScoreAndVoters} {
-    margin-top: ${spacing.large};
+    margin-top: ${spacing.lg};
   }
 
   ${ItemTitle} {

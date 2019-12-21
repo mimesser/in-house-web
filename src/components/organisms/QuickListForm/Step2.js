@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button, Heading } from '../../atoms';
+import { Button, H1 } from '../../atoms';
 import { StepLayout } from './StepLayout';
 import { CounterInput } from '../../molecules/CounterInput';
 
@@ -8,7 +8,7 @@ export const Step2 = ({ setStep, name, setName }) => (
   <StepLayout
     main={
       <>
-        <Heading>your job or org</Heading>
+        <H1>your job or org</H1>
         <CounterInput value={name} onChange={setName} max={30} placeholder="name of your organization" />
       </>
     }

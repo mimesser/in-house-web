@@ -7,19 +7,19 @@ import { formatDate } from '../../../utils/format';
 import { fontSize, spacing, palette } from '../../../style';
 
 const RateConfirmationLayout = styled(Layout)`
-  margin-top: ${spacing.xxLarge};
+  margin-top: ${spacing.xxl};
 
   ${ItemDate} {
-    margin-bottom: ${spacing.large};
+    margin-bottom: ${spacing.lg};
   }
 
   ${ItemTitle} {
-    color: ${palette.textUltraLight};
-    font-size: ${fontSize.large};
+    color: ${palette.lightGray};
+    font-size: ${fontSize.lg};
   }
 
   ${SubTitle} {
-    margin-bottom: ${spacing.nano};
+    margin-bottom: ${spacing.xxs};
   }
 
   ${Dial} {

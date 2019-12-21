@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
-import { Heading, Input, Dropdown, Loader } from '../../atoms';
+import { H1, Input, Dropdown, Loader } from '../../atoms';
 import { WinkConfirmation, CounterInput } from '../../molecules';
 import { Modal } from '../Modal';
 import { ButtonContainer, FormGroup, Container, SubmitButton } from './style';
@@ -54,7 +54,7 @@ function FeedbackForm(props) {
       >
         {props.loading ? <Loader white /> : <WinkConfirmation />}
       </Modal>
-      <Heading>let us know</Heading>
+      <H1>let us know</H1>
       <FormGroup>we keep everything confidential</FormGroup>
       <FormGroup>
         <Dropdown value={subject} placeholder="subject" options={subjectOptions} onChange={handleSubjectChange} />

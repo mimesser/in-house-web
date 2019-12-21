@@ -11,22 +11,22 @@ import { acceptTerms } from '../../../store/aggregate';
 const Layout = styled.div`
   display: flex;
   flex-direction: column;
-  padding-top: ${spacing.xxLarge};
+  padding-top: ${spacing.xxl};
 
   > div {
-    font-weight: ${fontWeight.bolder};
-    margin-top: ${spacing.xxLarge};
+    font-weight: ${fontWeight.bold};
+    margin-top: ${spacing.xxl};
     display: flex;
     align-items: center;
   }
 `;
 
 const AgreementText = styled.span`
-  margin-left: ${spacing.large};
+  margin-left: ${spacing.lg};
 
   font: inherit;
-  font-family: ${font.H1};
-  font-size: ${fontSize.large};
+  font-family: ${font.primary};
+  font-size: ${fontSize.lg};
 `;
 
 const LinkText = styled(AgreementText)`
@@ -41,8 +41,8 @@ const LinkText = styled(AgreementText)`
 
 const HelpWrap = styled.div`
   background-color: ${appBackground};
-  padding: ${spacing.xLarge};
-  margin: 0 -${spacing.xLarge} ${spacing.xLarge};
+  padding: ${spacing.xl};
+  margin: 0 -${spacing.xl} ${spacing.xl};
 `;
 
 const AcceptTerms = ({ acceptTerms }) => {

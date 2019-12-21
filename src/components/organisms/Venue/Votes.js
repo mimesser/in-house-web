@@ -2,19 +2,19 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { fontSize, spacing, lineHeight } from '../../../style';
-import { Number, Icon } from '../../atoms';
+import { NumberSmall, Icon } from '../../atoms';
 
 export const Votes = styled(({ count, iconSize = 0.8, ...rest }) => (
-  <Number {...rest}>
+  <NumberSmall {...rest}>
     <Icon icon="users" size={iconSize} />
     <span>{count || 0}</span>
-  </Number>
+  </NumberSmall>
 ))`
   display: inline-block;
-  font-size: ${fontSize.small};
+  font-size: ${fontSize.sm};
   span {
-    margin-left: ${spacing.nano};
-    line-height: ${lineHeight.tiny};
+    margin-left: ${spacing.xxs};
+    line-height: ${lineHeight.xs};
     vertical-align: middle;
   }
 `;

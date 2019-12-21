@@ -8,12 +8,12 @@ import { fontSize, palette, spacing } from '../../../style';
 import { selectLoading } from '../../../store/venues';
 
 const Label = styled.div`
-  color: ${palette.textLight};
-  margin-top: ${spacing.large};
+  color: ${palette.lightGray};
+  margin-top: ${spacing.lg};
 `;
 const Value = styled.div`
-  font-size: ${fontSize.large};
-  color: ${palette.textDark};
+  font-size: ${fontSize.lg};
+  color: ${palette.primary};
 `;
 const Uppercase = styled.div`
   text-transform: uppercase;
@@ -21,7 +21,7 @@ const Uppercase = styled.div`
 export const Img = styled.div`
   width: 5.8rem;
   height: 5.8rem;
-  margin-top: ${spacing.small};
+  margin-top: ${spacing.sm};
   background-image: url(${({ url }) => url});
   background-position: center;
   background-size: cover;

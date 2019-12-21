@@ -9,7 +9,7 @@ const Layout = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: ${spacing.medium} ${spacing.large};
+  padding: ${spacing.md} ${spacing.lg};
   flex: none; // safari
 `;
 

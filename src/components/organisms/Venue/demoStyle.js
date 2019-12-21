@@ -14,7 +14,7 @@ export const DemoWinkConfirmationLayout = styled.div`
   align-items: center;
   flex: 1;
 
-  color: ${palette.secondaryDark};
+  color: ${palette.gray};
   text-align: center;
 
   ::before {
@@ -23,7 +23,7 @@ export const DemoWinkConfirmationLayout = styled.div`
 
   ${WinkConfirmation} {
     flex: 0;
-    color: ${palette.secondaryDark};
+    color: ${palette.gray};
   }
 
   ${Button} {

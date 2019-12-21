@@ -5,7 +5,7 @@ import { Page } from '../components/templates';
 import { spacing } from '../style';
 
 const Content = styled.div`
-  margin: 0 ${spacing.medium};
+  margin: 0 ${spacing.md};
   strong {
     font-weight: 600;
   }

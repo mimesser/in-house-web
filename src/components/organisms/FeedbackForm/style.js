@@ -7,16 +7,16 @@ export const FormGroup = styled.div`
     font-weight: 600;
   }
   text-align: justify;
-  margin: ${spacing.xLarge} 0;
+  margin: ${spacing.xl} 0;
 `;
 
 export const ButtonContainer = styled.div`
-  padding-top: ${spacing.xLarge};
+  padding-top: ${spacing.xl};
   text-align: center;
 `;
 
 export const Container = styled.div`
-  padding: 0 ${spacing.large};
+  padding: 0 ${spacing.lg};
 `;
 
 export const SubmitButton = styled(Button).attrs({
@@ -24,5 +24,5 @@ export const SubmitButton = styled(Button).attrs({
 })`
   transition: opacity 0.5s;
   opacity: ${({ visible }) => (visible ? 1 : 0)};
-  margin: ${spacing.large} auto 0 auto;
+  margin: ${spacing.lg} auto 0 auto;
 `;

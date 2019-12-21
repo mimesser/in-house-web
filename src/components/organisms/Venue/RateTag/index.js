@@ -18,9 +18,9 @@ import { ItemTitle, Layout, SubTitle } from '../openCardStyle';
 import { fontSize, spacing, theme } from '../../../../style';
 
 const RateItemTitle = styled(ItemTitle)`
-  color: ${({ rated }) => rated && theme.colors.textUltraLight};
-  font-size: ${fontSize.large};
-  margin-top: ${spacing.nano};
+  color: ${({ rated }) => rated && theme.colors.lightGray};
+  font-size: ${fontSize.lg};
+  margin-top: ${spacing.xxs};
 `;
 
 const RateSubTitle = styled(SubTitle)`
@@ -58,13 +58,13 @@ const RateTag = ({ tag, rateTag, setRated, rated, showHelp }) => {
 
   let valueColor;
   if (!rated) {
-    const { secondary, secondaryDark } = theme.colors;
-    valueColor = secondaryDark;
+    const { mediumGray, darkGray } = theme.colors;
+    valueColor = darkGray;
 
-    sliderProps.color = secondaryDark;
-    sliderProps.knobColor = secondaryDark;
-    sliderProps.circleColor = secondary;
-    sliderProps.progressColor = secondaryDark;
+    sliderProps.color = darkGray;
+    sliderProps.knobColor = darkGray;
+    sliderProps.circleColor = mediumGray;
+    sliderProps.progressColor = darkGray;
   }
 
   return (

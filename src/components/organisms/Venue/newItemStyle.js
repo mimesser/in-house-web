@@ -6,8 +6,8 @@ import { H1 } from '../../atoms';
 
 export const Name = styled.div`
   text-transform: uppercase;
-  color: ${palette.textDark};
-  margin-bottom: ${spacing.medium};
+  color: ${palette.primary};
+  margin-bottom: ${spacing.md};
 `;
 
 export const Title = ({ houseName, action }) => (

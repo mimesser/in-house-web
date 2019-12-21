@@ -11,8 +11,8 @@ import { HelpTip } from '../../atoms';
 const linkTextStyle = ({ active }) => {
   if (active) {
     return css`
-      color: ${palette.textDark};
-      font-weight: ${fontWeight.bolder};
+      color: ${palette.primary};
+      font-weight: ${fontWeight.bold};
       position: relative;
       :after {
         content: '';
@@ -27,14 +27,14 @@ const linkTextStyle = ({ active }) => {
   }
 
   return css`
-    color: ${palette.textLight};
+    color: ${palette.lightGray};
   `;
 };
 
 const A = styled.a`
   flex: 1;
   text-align: center;
-  padding: ${spacing.small};
+  padding: ${spacing.sm};
   color: ${palette.text};
   text-decoration: none;
   transition: color 0.5s;
