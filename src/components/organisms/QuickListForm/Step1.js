@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 
-import { Button, Dropdown, Heading } from '../../atoms';
+import { Button, Dropdown, H1 } from '../../atoms';
 import { StepLayout } from './StepLayout';
 import { CounterInput } from '../../molecules';
 
@@ -13,7 +13,7 @@ export const Step1 = ({ setStep, industries, industry, setIndustry, industryDesc
     <StepLayout
       main={
         <>
-          <Heading>industry</Heading>
+          <H1>industry</H1>
           <Dropdown
             value={industry}
             placeholder="choose industry for your house"

@@ -4,9 +4,9 @@ import { fontSize, spacing, calcRem } from '../../../../style';
 import { IconInput } from '../../../molecules';
 
 export const Status = styled.span`
-  font-size: ${fontSize.tiny};
+  font-size: ${fontSize.xs};
   position: absolute;
-  margin-left: ${spacing.small};
+  margin-left: ${spacing.sm};
 `;
 
 export const InputGroup = styled.div`

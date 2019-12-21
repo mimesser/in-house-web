@@ -16,8 +16,8 @@ export const ScoreAndVoters = styled(({ voteRating, voteCount, sliderSize, class
   min-width: ${calcRem('100px')};
 
   ${Votes} {
-    margin: ${spacing.tiny} auto 0 auto;
-    font-size: ${({ large }) => (large ? fontSize.small : fontSize.tiny)};
+    margin: ${spacing.xs} auto 0 auto;
+    font-size: ${({ large }) => (large ? fontSize.sm : fontSize.xs)};
   }
 
   ${Dial} {

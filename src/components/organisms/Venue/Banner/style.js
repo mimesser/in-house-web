@@ -12,7 +12,7 @@ export const Back = styled(IconButton)`
 export const Header = styled.header`
   position: relative;
   height: ${calcRem('270px')};
-  padding: ${spacing.large};
+  padding: ${spacing.lg};
   color: ${palette.white};
   flex-shrink: 0;
   display: flex;
@@ -49,13 +49,13 @@ export const About = styled.div`
   }
 `;
 export const Ratings = styled(Number)`
-  margin: ${spacing.large} 0 auto auto;
+  margin: ${spacing.lg} 0 auto auto;
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
 
   ${Votes} {
-    margin: ${spacing.large} auto 0 auto;
+    margin: ${spacing.lg} auto 0 auto;
   }
 `;
 export const Score = styled.div`

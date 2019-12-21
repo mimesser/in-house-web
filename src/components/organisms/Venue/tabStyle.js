@@ -1,30 +1,29 @@
 import styled, { css } from 'styled-components';
 
-import { calcRem, spacing, fontWeight, fontSize, font, palette } from '../../../style';
+import { calcRem, spacing, fontSize, palette } from '../../../style';
 import { Card, Button } from '../../atoms';
 import { PokeButton } from '../../molecules';
 
 export const CARD_MIN_HEIGHT = calcRem('125px');
 
 export const TabTitle = styled.div`
-  margin: ${spacing.large} 0;
+  margin: ${spacing.lg} 0;
   text-transform: uppercase;
 `;
 
 export const ItemTime = styled.time`
-  font-size: ${fontSize.tiny};
-  font-family: ${font.number};
-  color: ${palette.textLight};
+  font-size: ${fontSize.xs};
+  color: ${palette.lightGray};
 `;
 
 export const ItemTitle = styled.div`
-  margin-top: ${spacing.nano};
+  margin-top: ${spacing.xxs};
 `;
 
 export const ItemText = styled.div`
-  font-size: ${fontSize.small};
-  color: ${palette.textLight};
-  margin-top: ${spacing.nano};
+  font-size: ${fontSize.sm};
+  color: ${palette.lightGray};
+  margin-top: ${spacing.xxs};
   display: block;
   display: -webkit-box;
   max-width: 200px;
@@ -51,7 +50,7 @@ export const ItemCard = styled(Card)`
   text-transform: lowercase;
 
   ${ItemTitle} {
-    font-size: ${({ large }) => (large ? `${fontSize.mediumLarge}` : `${fontSize.primary}`)};
+    font-size: ${({ large }) => (large ? `${fontSize.md}` : `${fontSize.sm}`)};
   }
 
   ${adjustForPreview};
@@ -61,28 +60,28 @@ export const TabLayout = styled.div`
    display: flex;
    flex: 1;
    flex-direction: column;
-   padding: 0 ${spacing.medium} ${spacing.medium} ${spacing.medium};
+   padding: 0 ${spacing.md} ${spacing.md} ${spacing.md};
    flex-shrink: 0; // safari
    flex-basis: auto; // safari
 
    ${Card} {
       position: relative;
       min-height: ${CARD_MIN_HEIGHT};
-      padding: ${spacing.large} ${spacing.medium} ${spacing.large};
+      padding: ${spacing.lg} ${spacing.md} ${spacing.lg};
 
       :last-of-type {
-         margin-bottom: ${spacing.large};
+         margin-bottom: ${spacing.lg};
       }
 
       ${PokeButton} {
          position: absolute;
-         top: ${spacing.medium};
-         right: ${spacing.xLarge};
+         top: ${spacing.md};
+         right: ${spacing.xl};
       }
    }
 
    ${Card} + ${Card} {
-      margin-top: ${spacing.medium};
+      margin-top: ${spacing.md};
    }
 
    > ${Button} {

@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 
 import { spacing, palette, appBackground } from '../../../style';
-import { Heading, HeadingTwo, IconButton, Icon } from '../../atoms';
+import { H1, H2, IconButton, Icon } from '../../atoms';
 
 export const Background = styled.div`
   // todo
@@ -34,9 +34,9 @@ const colors = ({ inverse }) =>
   inverse
     ? css`
         background-color: ${palette.primary};
-        color: ${palette.textUltraLight};
-        ${Heading}, ${HeadingTwo} {
-          color: ${palette.textUltraLight};
+        color: ${palette.lightGray};
+        ${H1}, ${H2} {
+          color: ${palette.lightGray};
         }
       `
     : `background-color: ${appBackground};`;
@@ -54,7 +54,7 @@ export const Content = styled.div`
   overflow: auto;
   display: flex;
   flex-direction: column;
-  padding: ${spacing.xLarge};
+  padding: ${spacing.xl};
   width: 100%;
   ${mobileFrame};
   ${colors};

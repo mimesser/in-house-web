@@ -9,7 +9,7 @@ import { Icon, IconButton } from '../../atoms';
 import { spacing, fontSize, palette } from '../../../style';
 
 const CloseButton = styled(IconButton)`
-  padding: ${spacing.small};
+  padding: ${spacing.sm};
 `;
 
 const CloseIcon = styled(Icon).attrs(() => ({
@@ -48,11 +48,11 @@ const Panel = styled.div`
   white-space: nowrap;
   overflow: hidden;
   ${({ state }) => sidebarTransitionStyles[state]};
-  color: ${palette.textUltraLight};
+  color: ${palette.lightGray};
 `;
 
 const MenuItems = styled.ul`
-  padding: ${spacing.large} 0;
+  padding: ${spacing.lg} 0;
   margin: 0;
   list-style: none;
 `;
@@ -61,8 +61,8 @@ const A = styled.a`
   outline: none;
   text-decoration: none;
   cursor: pointer;
-  font-size: ${fontSize.large};
-  padding: ${spacing.small} ${spacing.xLarge};
+  font-size: ${fontSize.lg};
+  padding: ${spacing.sm} ${spacing.xl};
   display: block;
   &:hover {
     color: ${palette.white};

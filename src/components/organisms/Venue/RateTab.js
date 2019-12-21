@@ -18,7 +18,7 @@ const RateCard = styled(ItemCard)`
   min-height: ${({ preview }) => !preview && calcRem('150px')};
 
   ${Main} {
-    margin-top: ${spacing.large};
+    margin-top: ${spacing.lg};
   }
 `;
 

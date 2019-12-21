@@ -5,17 +5,17 @@ import { createStructuredSelector } from 'reselect';
 
 import { selectNewMinkElected } from '../../../../store/venues';
 import { palette, spacing, calcRem } from '../../../../style';
-import { Title } from '../../../atoms';
+import { HeaderTitle } from '../../../atoms';
 import { WinkConfirmation } from '../../../molecules';
 import { Modal } from '../../Modal';
 
 const Layout = styled.div`
-  padding-top: ${spacing.xxxLarge};
-  ${Title} {
+  padding-top: ${spacing.xxxl};
+  ${HeaderTitle} {
     color: ${palette.white};
   }
   ${WinkConfirmation} {
-    color: ${palette.secondaryDark};
+    color: ${palette.gray};
     justify-content: left;
     position: relative;
     // TODO
@@ -27,11 +27,11 @@ const NewMinkElected = ({ open }) => {
   return (
     <Modal open={open} canClose={false} canDismiss={false} inverse>
       <Layout>
-        <Title>
+        <HeaderTitle>
           new <br />
           #1 MINK <sup>©</sup> <br />
           elected!
-        </Title>
+        </HeaderTitle>
         <WinkConfirmation />
       </Layout>
     </Modal>

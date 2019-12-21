@@ -4,10 +4,10 @@ import styled from 'styled-components';
 import { Button, H1 } from '../../atoms';
 import { StepLayout } from './StepLayout';
 import { FilePicker } from '../../molecules';
-import { spacing } from '../../../style/spacing';
+import { spacing } from '../../../style';
 
 const PickImage = styled(FilePicker)`
-  margin-top: ${spacing.xxxLarge};
+  margin-top: ${spacing.xxxl};
 `;
 
 export const Step5 = ({ setStep, setImage }) => {

@@ -13,13 +13,13 @@ const Container = styled.div`
   text-transform: lowercase;
 
   > div {
-    margin-right: ${spacing.large};
+    margin-right: ${spacing.lg};
   }
 `;
 const LinkText = styled.button`
   display: block;
-  margin-top: ${spacing.large};
-  color: ${palette.textLight};
+  margin-top: ${spacing.lg};
+  color: ${palette.lightGray};
   border: none;
   outline: none;
   font: inherit;

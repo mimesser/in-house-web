@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { calcRem, fontSize, spacing, palette } from '../../../style';
-import { Button, Heading, IconButton, Input, Strong, Patent } from '../../atoms';
+import { Button, H1, IconButton, Input, Patent } from '../../atoms';
 
 export const QuestionForm = styled.div`
   padding: ${calcRem('50px')} 0;
@@ -9,8 +9,8 @@ export const QuestionForm = styled.div`
   flex-direction: column;
   flex: 1;
 
-  ${Heading} {
-    margin-bottom: ${spacing.small};
+  ${H1} {
+    margin-bottom: ${spacing.sm};
     color: ${palette.white};
   }
 `;
@@ -19,32 +19,32 @@ export const ExplainMink = styled.div`
   margin-bottom: ${calcRem('80px')};
 
   ${Patent} {
-    color: ${palette.textLight};
+    color: ${palette.gray};
   }
   z-index: 1000;
   > span {
     > div {
-      padding-bottom: ${spacing.xxLarge};
+      padding-bottom: ${spacing.xxl};
     }
   }
 `;
 
 export const Question = styled.div`
   font-size: 2rem;
-  margin-bottom: ${spacing.xLarge};
+  margin-bottom: ${spacing.xl};
 `;
 export const Answer = styled.form`
   > div {
     display: flex;
   }
-  margin-bottom: ${spacing.xLarge};
+  margin-bottom: ${spacing.xl};
 `;
 export const SubmitButton = styled(IconButton).attrs({
   type: 'submit',
 })`
   transition: opacity 0.5s;
   opacity: ${({ visible }) => (visible ? 1 : 0)};
-  margin-left: ${spacing.medium};
+  margin-left: ${spacing.md};
 `;
 
 export const ChangeButtonWrapper = styled.div`
@@ -53,24 +53,24 @@ export const ChangeButtonWrapper = styled.div`
 `;
 
 export const ChangeButton = styled(Button)`
-  border-color: ${palette.secondary};
+  border-color: ${palette.gray};
   color: inherit;
   background-color: transparent;
   // margin: auto;
-  padding-left: ${spacing.xxxLarge};
-  padding-right: ${spacing.xxxLarge};
+  padding-left: ${spacing.xxxl};
+  padding-right: ${spacing.xxxl};
 `;
 
 export const InputHelp = styled.span`
-  font-size: ${fontSize.small};
-  margin-top: ${spacing.tiny};
-  margin-left: ${spacing.medium};
+  font-size: ${fontSize.sm};
+  margin-top: ${spacing.xs};
+  margin-left: ${spacing.md};
   color: ${({ highlight }) => (highlight ? palette.white : 'inherit')};
 `;
 
 export const AnswerInput = styled(Input)`
   max-width: calc(100% - ${calcRem('60px')});
-  border-color: ${palette.secondaryDark};
+  border-color: ${palette.darkGray};
   color: inherit;
   background-color: transparent;
   :hover:not(:disabled),
@@ -82,14 +82,14 @@ export const AnswerInput = styled(Input)`
   }
 
   ::placeholder {
-    color: ${palette.secondaryDark};
+    color: ${palette.darkGray};
   }
 `;
 
 export const Try = styled.div`
-  font-size: ${fontSize.medium};
+  font-size: ${fontSize.md};
 
-  > ${Strong} {
+  > b {
     color: ${palette.white};
   }
 `;

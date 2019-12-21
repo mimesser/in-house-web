@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button, Heading } from '../../atoms';
+import { Button, H1 } from '../../atoms';
 import { StepLayout } from './StepLayout';
 import { CounterInput } from '../../molecules/CounterInput';
 
@@ -8,7 +8,7 @@ export const Step3 = ({ setStep, address, setAddress, zip, setZip, country, setC
   <StepLayout
     main={
       <>
-        <Heading>address</Heading>
+        <H1>address</H1>
         <CounterInput value={country} onChange={setCountry} max={20} placeholder="country" />
         <CounterInput value={city} onChange={setCity} max={20} placeholder="city" />
         <CounterInput value={address} onChange={setAddress} max={40} placeholder="street address" />

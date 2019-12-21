@@ -9,7 +9,7 @@ import { ScoreAndVoters } from '../Venue/ScoreAndVoters';
 import { Votes } from '../Venue/Votes';
 
 export const Layout = styled.div`
-  padding: ${spacing.medium} ${spacing.small};
+  padding: ${spacing.md} ${spacing.sm};
   display: flex;
   flex-direction: column;
   flex: none; // safari
@@ -17,7 +17,7 @@ export const Layout = styled.div`
 `;
 
 export const SearchBox = styled(IconInput)`
-  margin-bottom: ${spacing.xLarge};
+  margin-bottom: ${spacing.xl};
 `;
 
 export const ListYourHouse = styled(Button).attrs(() => ({ secondary: true }))`
@@ -25,20 +25,20 @@ export const ListYourHouse = styled(Button).attrs(() => ({ secondary: true }))`
 `;
 
 export const VenueContainer = styled(Card)`
-  margin-bottom: ${spacing.large};
-  padding: ${spacing.large};
+  margin-bottom: ${spacing.lg};
+  padding: ${spacing.lg};
 
   ${ScoreAndVoters} {
     min-width: initial;
-    margin: auto ${spacing.small};
+    margin: auto ${spacing.sm};
 
     ${Votes} {
-      margin-top: ${spacing.tiny};
+      margin-top: ${spacing.xs};
     }
   }
 
   ${Address} {
-    color: ${palette.textLight};
+    color: ${palette.lightGray};
   }
 `;
 
@@ -53,16 +53,16 @@ export const Img = styled.div`
 `;
 
 export const Industry = styled.div`
-  font-size: ${fontSize.small};
-  color: ${palette.textLight};
+  font-size: ${fontSize.sm};
+  color: ${palette.lightGray};
   text-transform: uppercase;
-  margin-bottom: ${spacing.tiny};
+  margin-bottom: ${spacing.xs};
 `;
 
 export const Name = styled.div`
   font-size: ${calcRem(20)};
   text-transform: lowercase;
-  margin-bottom: ${spacing.tiny};
+  margin-bottom: ${spacing.xs};
 `;
 
 export const PrivateShareButtonLayout = styled.div`
@@ -70,8 +70,8 @@ export const PrivateShareButtonLayout = styled.div`
 
   > ${PokeButton} {
     position: absolute;
-    top: -${spacing.medium};
-    right: -${spacing.small};
+    top: -${spacing.md};
+    right: -${spacing.sm};
   }
 `;
 

@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { Heading, Loader, ToolTip, HelpTip, Icon, Strong, Patent } from '../../atoms';
+import { H1, Loader, ToolTip, HelpTip, Icon, Patent } from '../../atoms';
 import { WinkConfirmation } from '../../molecules';
 import {
   answerTopMink,
@@ -40,7 +40,7 @@ const TopMinkToolTip = () => {
   return (
     <ToolTip ref={tooltipRef} open={open}>
       <Try>
-        <Strong>try</Strong> {getDefaultTopMink().answer}
+        <b>try</b> {getDefaultTopMink().answer}
       </Try>
     </ToolTip>
   );
@@ -112,7 +112,7 @@ const renderSubview = (
         <WinkConfirmation />
       ) : (
         <>
-          <Heading>insider?</Heading>
+          <H1>insider?</H1>
           <ExplainMink>
             <HelpTip tip="#1 MINK (n): the most popular team password question">
               <div>
