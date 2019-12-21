@@ -2,32 +2,32 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { calcRem, spacing, palette, panelBoxShadow, fontSize } from '../../style';
-import { Button, Heading } from '../atoms';
+import { Button, H1 } from '../atoms';
 
 const Main = styled.div`
-  padding: ${spacing.large};
+  padding: ${spacing.lg};
   flex: 1;
   display: flex;
   flex-direction: column;
 
-  ${Heading} {
-    margin-bottom: ${spacing.xLarge};
+  ${H1} {
+    margin-bottom: ${spacing.xl};
   }
 `;
 
 const Commands = styled.div`
   position: relative;
-  padding: ${spacing.large} 0;
+  padding: ${spacing.lg} 0;
   display: flex;
   justify-content: space-around;
   margin-top: auto;
   background-color: ${palette.white};
-  border-top: 1px solid ${palette.secondary};
+  border-top: 1px solid ${palette.gray};
   ${panelBoxShadow};
 
   ${Button} {
     width: 40%;
-    margin: 0 ${spacing.small};
+    margin: 0 ${spacing.sm};
   }
 
   // progress bar
@@ -43,9 +43,9 @@ const Commands = styled.div`
 `;
 
 export const FormTip = styled.div`
-  margin: ${spacing.tiny} 0 ${spacing.xLarge};
-  color: ${palette.textLight};
-  font-size: ${fontSize.tiny};
+  margin: ${spacing.xs} 0 ${spacing.xl};
+  color: ${palette.lightGray};
+  font-size: ${fontSize.xs};
 `;
 
 // TODO: remove default for total steps

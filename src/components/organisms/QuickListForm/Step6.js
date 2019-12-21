@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 
-import { Button, Heading, Loader } from '../../atoms';
+import { Button, H1, Loader } from '../../atoms';
 import { StepLayout } from './StepLayout';
 import { fontSize, palette, spacing } from '../../../style';
 import { selectLoading } from '../../../store/venues';
@@ -83,7 +83,7 @@ export const Step6 = ({
           <Loader big />
         ) : (
           <>
-            <Heading>confirm</Heading>
+            <H1>confirm</H1>
             <Label>house info</Label>
             <Value>{name}</Value>
             <Uppercase>{industry.name}</Uppercase>

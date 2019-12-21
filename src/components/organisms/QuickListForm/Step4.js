@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button, Heading, Patent } from '../../atoms';
+import { Button, H1, Patent } from '../../atoms';
 import { StepLayout } from './StepLayout';
 import { CounterInput } from '../../molecules/CounterInput';
 import { FormTip } from '../../molecules';
@@ -13,10 +13,10 @@ export const Step4 = ({ setStep, answer, setAnswer, question, setQuestion }) => 
   <StepLayout
     main={
       <>
-        <Heading>
+        <H1>
           starter MINK<sup>©</sup>
           <Patent />
-        </Heading>
+        </H1>
         <p>a team security question to that only your coworkers will know</p>
         <CounterInput
           value={question}

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { Button, Heading, Strong } from '../../atoms';
+import { Button, H1, Strong } from '../../atoms';
 import { spacing, lineHeight, palette, fontWeight } from '../../../style';
 
 export const LandingLayout = styled.div`
@@ -10,20 +10,20 @@ export const LandingLayout = styled.div`
   line-height: ${lineHeight.medium};
   padding: 0 ${spacing.xLarge};
 
-  > ${Heading} {
+  > ${H1} {
     line-height: 36px;
     font-size: 28px;
     font-weight: ${fontWeight.primary};
   }
 
-  > ${Heading}:first-of-type {
+  > ${H1}:first-of-type {
     color: ${palette.primaryLight};
     margin-top: 2.5rem;
 
     margin-bottom: 0;
   }
 
-  > ${Heading}:last-of-type {
+  > ${H1}:last-of-type {
     color: ${palette.textUltraLight};
     margin-bottom: 2.5rem;
   }

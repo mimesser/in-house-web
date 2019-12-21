@@ -8,16 +8,16 @@ const Wrap = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  color: ${palette.textLight};
+  color: ${palette.primary};
 
   :focus-within,
   :hover {
-    color: ${palette.textDark};
+    color: ${palette.primary};
   }
 
   > :not(:first-child) {
     position: absolute;
-    right: ${spacing.small};
+    right: ${spacing.lg};
   }
 `;
 
