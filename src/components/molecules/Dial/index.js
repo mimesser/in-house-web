@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import isNumber from 'lodash/isNumber';
 
-import { CircleSlider, Number, Icon } from '../../atoms';
+import { CircleSlider, NumberLarge, Icon } from '../../atoms';
 import { fontSize, palette } from '../../../style';
 
 const FONT_RATIO = 3.5;
@@ -13,7 +13,7 @@ const SuperScriptDecimalSpan = styled.span`
   margin-left: -2px;
 `;
 
-const Value = styled(Number)`
+const Value = styled(NumberLarge)`
   color: ${({ color }) => color};
   font-size: ${({ size, padd }) => (size - padd) / FONT_RATIO}px;
 `;

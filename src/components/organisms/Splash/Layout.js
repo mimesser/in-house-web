@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { Button, Heading, Strong } from '../../atoms';
-import { spacing, lineHeight, letterSpacing, palette, fontWeight } from '../../../style';
+import { spacing, lineHeight, palette, fontWeight } from '../../../style';
 
 export const LandingLayout = styled.div`
   display: flex;
@@ -11,7 +11,6 @@ export const LandingLayout = styled.div`
   padding: 0 ${spacing.xLarge};
 
   > ${Heading} {
-    letter-spacing: ${letterSpacing.medium};
     line-height: 36px;
     font-size: 28px;
     font-weight: ${fontWeight.primary};

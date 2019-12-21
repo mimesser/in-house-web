@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
 import { calcRem, fontSize, spacing, palette } from '../../../style';
-import { Button, Heading, IconButton, Input, Strong } from '../../atoms';
-import { Patent } from '../../molecules';
+import { Button, Heading, IconButton, Input, Strong, Patent } from '../../atoms';
 
 export const QuestionForm = styled.div`
   padding: ${calcRem('50px')} 0;

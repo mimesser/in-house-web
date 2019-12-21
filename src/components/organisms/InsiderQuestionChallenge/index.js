@@ -2,8 +2,8 @@ import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { Heading, Loader, ToolTip, HelpTip, Icon, Strong } from '../../atoms';
-import { Patent, WinkConfirmation } from '../../molecules';
+import { Heading, Loader, ToolTip, HelpTip, Icon, Strong, Patent } from '../../atoms';
+import { WinkConfirmation } from '../../molecules';
 import {
   answerTopMink,
   dismissChallengeForm,
