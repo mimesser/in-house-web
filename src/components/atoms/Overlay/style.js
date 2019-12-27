@@ -19,8 +19,7 @@ const overlayEnter = ({ transition }) => `
 `;
 
 export const OverlayWrap = styled.div`
-  // ${cover('fixed')};
-  ${cover()};
+  ${cover('fixed')};
   z-index: ${MODAL_Z_INDEX};
   ${overlayEnter};
 `;
