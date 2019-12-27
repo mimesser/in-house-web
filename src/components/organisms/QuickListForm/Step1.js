@@ -1,40 +1,47 @@
 import React, { useCallback } from 'react';
+import Link from 'next/link';
 
-import { Button, Dropdown, H1 } from '../../atoms';
+import { Dropdown, FormGroup } from '../../atoms';
 import { StepLayout } from './StepLayout';
-import { CounterInput } from '../../molecules';
+import { CounterInput, NextButton, BackButton } from '../../molecules';
 
-const getOptionLabel = ({ name }) => name;
+const getOptionLabel = ({ name }) => name.toLowerCase();
 
 export const Step1 = ({ setStep, industries, industry, setIndustry, industryDesc, setIndustryDesc }) => {
   const handleIndustryChange = useCallback(i => setIndustry(i), [setIndustry]);
 
   return (
     <StepLayout
+      head="biz/org type"
       main={
         <>
-          <H1>industry</H1>
-          <Dropdown
-            value={industry}
-            placeholder="choose industry for your house"
-            options={industries}
-            onChange={handleIndustryChange}
-            getOptionLabel={getOptionLabel}
-          />
+          <FormGroup>
+            <Dropdown
+              value={industry}
+              placeholder="industry / sphere"
+              options={industries}
+              onChange={handleIndustryChange}
+              getOptionLabel={getOptionLabel}
+            />
+          </FormGroup>
           <CounterInput
             multiline
             value={industryDesc}
             onChange={setIndustryDesc}
-            max={500}
+            max={120}
             placeholder="please list any specific issues or pain points you want to be able to address for this industry (eg: “tips”, “equal opportunity”)"
-            rows={8}
+            subtext="comment"
+            rows={5}
           />
         </>
       }
       commands={
-        <Button disabled={!industry} onClick={() => setStep(2)}>
-          next
-        </Button>
+        <>
+          <Link href="/houses">
+            <BackButton>cancel</BackButton>
+          </Link>
+          <NextButton disabled={!industry} onClick={() => setStep(2)} />
+        </>
       }
       step={1}
     />

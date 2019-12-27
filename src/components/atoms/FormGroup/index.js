@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { fontSize, spacing, palette } from '../../../style';
 
 export const FormGroup = styled.div`
-  margin-top: ${({ marginless }) => (marginless ? 0 : spacing.lg)};
+  margin-top: ${({ marginless }) => (marginless ? 0 : spacing.xl)};
   color: ${palette.primary};
   :focus-within {
     color: ${palette.black};

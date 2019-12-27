@@ -31,5 +31,8 @@ storiesOf('Button', module).add('Button', () => (
     <Button>
       with, icon <Icon icon="arrow-right" />
     </Button>
+    <Button wide>
+      wide with, icon <Icon icon="arrow-right" />
+    </Button>
   </Container>
 ));

@@ -40,6 +40,7 @@ export const Patent = styled.span.attrs(() => ({
   children: 'U.S. patent no. 8,904,502',
 }))`
   font-size: ${fontSize.xs};
+  font-weight: ${fontWeight.normal};
   text-transform: lowercase;
 `;
 

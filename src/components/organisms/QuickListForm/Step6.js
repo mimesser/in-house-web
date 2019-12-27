@@ -2,30 +2,62 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 
-import { Button, H1, Loader } from '../../atoms';
+import { Icon, resetButtonStyles } from '../../atoms';
 import { StepLayout } from './StepLayout';
-import { fontSize, palette, spacing } from '../../../style';
+import { fontWeight, palette, spacing, cover } from '../../../style';
 import { selectLoading } from '../../../store/venues';
+import { BackButton, NextButton } from '../../molecules';
+import { Hint } from './Hint';
 
 const Label = styled.div`
-  color: ${palette.lightGray};
-  margin-top: ${spacing.lg};
-`;
-const Value = styled.div`
-  font-size: ${fontSize.lg};
-  color: ${palette.primary};
-`;
-const Uppercase = styled.div`
+  color: ${palette.gray};
   text-transform: uppercase;
 `;
-export const Img = styled.div`
-  width: 5.8rem;
-  height: 5.8rem;
-  margin-top: ${spacing.sm};
+const Value = styled.div`
+  color: ${palette.darkGray};
+  font-weight: ${fontWeight.bold};
+  margin-bottom: ${spacing.xl};
+  text-transform: lowercase;
+`;
+
+const ImgContainer = styled.div`
+  position: relative;
+  :after {
+    content: '';
+    display: block;
+    margin-top: 75%;
+  }
+`;
+const Img = styled.div`
+  ${cover()};
   background-image: url(${({ url }) => url});
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+`;
+const EditButton = styled.button`
+  ${resetButtonStyles};
+  color: ${palette.black};
+  margin-left: auto;
+`;
+
+const Row = styled(({ label, value, step, setStep, className }) => (
+  <div className={className}>
+    <div>
+      <Label>{label}</Label>
+      <EditButton onClick={() => setStep(step)}>edit</EditButton>
+    </div>
+    <Value>{value}</Value>
+  </div>
+))`
+  > div:first-child {
+    display: flex;
+    align-items: center;
+    margin-bottom: ${spacing.md};
+  }
+`;
+const Check = styled(Icon).attrs(() => ({ icon: 'check', size: 8, color: 'lightGray' }))`
+  margin: auto;
 `;
 
 // max 10MB for now
@@ -76,28 +108,34 @@ export const Step6 = ({
       image: validateSize(image) ? image : undefined,
     });
 
+  const fullAddress = `${city}, ${address}, ${zip}`;
+
   return (
     <StepLayout
+      head={loading ? 'submitted' : 'correct?'}
       main={
         loading ? (
-          <Loader big />
+          <>
+            <Hint>thanks for submitting your house, you will be redirected in a moment.</Hint>
+            <Check />
+          </>
         ) : (
           <>
-            <H1>confirm</H1>
-            <Label>house info</Label>
-            <Value>{name}</Value>
-            <Uppercase>{industry.name}</Uppercase>
-            <div>
-              {address}, {zip}
-            </div>
-            <Label>starter MINK</Label>
-            <Value>{question}</Value>
-            <Label>secret answer</Label>
-            <Value>{answer}</Value>
+            <Row label="name" value={name} step={2} setStep={setStep} />
+            <Row label="industry" value={industry.name} step={1} setStep={setStep} />
+            <Row label="address" value={fullAddress} step={3} setStep={setStep} />
+            <Row label="starter mink" value={question} step={4} setStep={setStep} />
+            <Row label="mink secret answer" value={name} step={4} setStep={setStep} />
+            <Row label="interior photo" step={5} setStep={setStep} />
             {!!image && (
               <>
-                <Label>interior photo</Label>
-                {validateSize(image) ? <Img url={previewUrl} /> : <Value>image is too big</Value>}
+                {validateSize(image) ? (
+                  <ImgContainer>
+                    <Img url={previewUrl} />
+                  </ImgContainer>
+                ) : (
+                  <Value>image is too big</Value>
+                )}
               </>
             )}
           </>
@@ -105,12 +143,10 @@ export const Step6 = ({
       }
       commands={
         <>
-          <Button disabled={loading} secondary onClick={() => setStep(1)}>
-            edit
-          </Button>
-          <Button disabled={loading} onClick={confirm}>
-            yes, confirm
-          </Button>
+          <BackButton disabled={loading} secondary onClick={() => setStep(5)} />
+          <NextButton disabled={loading} onClick={confirm}>
+            submit
+          </NextButton>
         </>
       }
       step={6}

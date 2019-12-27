@@ -4,8 +4,23 @@ import { storiesOf } from '@storybook/react';
 import { Icon } from '.';
 
 const svgs = require.context('./icons', true, /\.svg$/);
-const DemoIcon = styled(Icon)`
+const Sample = styled.div.attrs(({ icon }) => ({
+  children: (
+    <>
+      <Icon size={3} icon={icon} />
+      <span>{icon}</span>
+    </>
+  ),
+}))`
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
   margin: 2rem;
+  > * {
+    :first-child {
+      margin-bottom: 0.5rem;
+    }
+  }
 `;
 
 storiesOf('Icon', module)
@@ -13,7 +28,7 @@ storiesOf('Icon', module)
     svgs
       .keys()
       .map(path => path.match(/\.\/([^.]+)\.svg$/)[1])
-      .map(key => <DemoIcon icon={key} key={key} size={3} />),
+      .map(key => <Sample icon={key} key={key} />),
   )
-  .add('color', () => <Icon icon="close" color="lightGray" />)
-  .add('size', () => <Icon icon="close" size={5} />);
+  .add('color', () => <Icon icon="close" color="lightGray" size={5} />)
+  .add('size', () => <Icon icon="close" size={10} />);
