@@ -3,14 +3,24 @@ import styled from 'styled-components';
 import Link from 'next/link';
 
 import { Icon } from '../../atoms';
-import { spacing } from '../../../style';
+import { spacing, palette } from '../../../style';
 
 const Layout = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: ${spacing.md} ${spacing.lg};
+  padding: ${spacing.xl};
   flex: none; // safari
+  color: ${palette.darkGray};
+  border-bottom: ${palette.primary} solid 1px;
+  opacity: 0.25;
+
+  a {
+    text-decoration: none;
+
+    &:first-of-type {
+      margin-right: auto;
+    }
+  }
 `;
 
 const MenuIconButton = styled.button`
@@ -19,21 +29,23 @@ const MenuIconButton = styled.button`
   background: none;
   padding: 0;
   cursor: pointer;
+  color: currentColor;
+  margin-left: ${spacing.xl};
 `;
 
 const IconLink = ({ icon, href }) => (
   <Link href={href}>
     {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
     <a>
-      <Icon icon={icon} size={1.5} color="secondaryDark" />
+      <Icon icon={icon} size={1.5} />
     </a>
   </Link>
 );
 
 export const Header = ({ openMenu }) => (
   <Layout>
+    <Link href="/">IN-HOUSE</Link>
     <IconLink icon="search" href="/houses" />
-    <IconLink icon="logo" href="/" />
     <MenuIconButton>
       <Icon icon="menu" size={1.5} onClick={openMenu} color="secondaryDark" />
     </MenuIconButton>
