@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
 
-import { CharLimit, Status, Error } from './style';
+import { CharLimit, Status, SubText, Error } from './style';
 import { Textarea, Input, FormGroup } from '../../atoms';
 
-export const CounterInput = ({ value, onChange, max, multiline, label, marginless, error, ...inputProps }) => {
+export const CounterInput = ({ value, onChange, max, multiline, subtext, marginless, error, ...inputProps }) => {
   const handleChange = useCallback(
     e => {
       const { value } = e.currentTarget;
@@ -17,11 +17,9 @@ export const CounterInput = ({ value, onChange, max, multiline, label, marginles
 
   return (
     <FormGroup marginless={marginless}>
-      <label>
-        {label}
-        <Control {...inputProps} onChange={handleChange} value={value} error={error} />
-      </label>
+      <Control {...inputProps} onChange={handleChange} value={value} error={error} />
       <Status>
+        {!error && subtext && <SubText>{subtext}</SubText>}
         {error && <Error>{error}</Error>}
         <CharLimit>{`${characters}/${max}`}</CharLimit>
       </Status>
