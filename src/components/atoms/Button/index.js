@@ -49,18 +49,21 @@ const cursor = ({ disabled }) => (disabled ? 'not-allowed' : 'pointer');
 
 const width = ({ wide }) => wide && `width: 100%`;
 
-const resetStyles = css`
+// TODO: export ClearButton?
+export const resetButtonStyles = css`
   -webkit-appearance: none;
   -moz-appearance: none;
   cursor: pointer;
+  background: none;
   border: none;
   outline: none;
   text-decoration: none;
   text-align: center;
+  padding: 0;
 `;
 
 const BaseButton = styled.button`
-  ${resetStyles};
+  ${resetButtonStyles};
   display: inline-flex;
   align-items: center;
   ${width};
@@ -72,7 +75,7 @@ const BaseButton = styled.button`
   font-size: ${fontSize.md};
   font-weight: ${fontWeight.bold};
   > ${Icon} {
-    margin-left: ${spacing.xxl};
+    margin-left: ${({ wide }) => (wide ? 'auto' : spacing.xxl)};
   }
 `;
 
@@ -86,7 +89,7 @@ export const Button = styled(
 
 // TODO: active/focus etc
 export const IconButton = styled.button`
-  ${resetStyles};
+  ${resetButtonStyles};
   padding: 0;
   color: currentColor;
   background: transparent;

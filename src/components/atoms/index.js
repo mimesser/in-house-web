@@ -1,4 +1,4 @@
-export { Button, IconButton } from './Button';
+export { Button, IconButton, resetButtonStyles } from './Button';
 export { Card } from './Card';
 export { Icon } from './Icon';
 export { Input, Textarea } from './Input';
@@ -13,3 +13,4 @@ export { Tip } from './Tip';
 export { default as Overlay } from './Overlay';
 export * from './help';
 export * from './text';
+export { Progress } from './Progress';

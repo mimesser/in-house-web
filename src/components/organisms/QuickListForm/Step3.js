@@ -1,28 +1,32 @@
 import React from 'react';
 
-import { Button, H1 } from '../../atoms';
 import { StepLayout } from './StepLayout';
-import { CounterInput } from '../../molecules/CounterInput';
+import { CounterInput, BackButton, NextButton } from '../../molecules';
 
 export const Step3 = ({ setStep, address, setAddress, zip, setZip, country, setCountry, city, setCity }) => (
   <StepLayout
+    head="address"
     main={
       <>
-        <H1>address</H1>
-        <CounterInput value={country} onChange={setCountry} max={20} placeholder="country" />
-        <CounterInput value={city} onChange={setCity} max={20} placeholder="city" />
-        <CounterInput value={address} onChange={setAddress} max={40} placeholder="street address" />
-        <CounterInput value={zip} onChange={setZip} max={15} placeholder="zip code" />
+        <CounterInput value={country} onChange={setCountry} max={20} placeholder="my country" subtext="country" />
+        <CounterInput value={city} onChange={setCity} max={20} placeholder="my city" subtext="city" />
+        <CounterInput
+          value={address}
+          onChange={setAddress}
+          max={40}
+          placeholder="123 free speech way"
+          subtext="address"
+        />
+        <CounterInput value={zip} onChange={setZip} max={15} placeholder="11201" subtext="zip" />
       </>
     }
     commands={
       <>
-        <Button secondary onClick={() => setStep(2)}>
-          back
-        </Button>
-        <Button disabled={!address.trim() || !zip.trim() || !country.trim() || !city.trim()} onClick={() => setStep(4)}>
-          next
-        </Button>
+        <BackButton secondary onClick={() => setStep(2)} />
+        <NextButton
+          disabled={!country.trim() || !address.trim() || !zip.trim() || !city.trim()}
+          onClick={() => setStep(4)}
+        />
       </>
     }
     step={3}

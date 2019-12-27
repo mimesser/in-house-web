@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
@@ -35,7 +36,6 @@ const MenuIconButton = styled.button`
 
 const IconLink = ({ icon, href }) => (
   <Link href={href}>
-    {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
     <a>
       <Icon icon={icon} size={1.5} />
     </a>
@@ -44,7 +44,9 @@ const IconLink = ({ icon, href }) => (
 
 export const Header = ({ openMenu }) => (
   <Layout>
-    <Link href="/">IN-HOUSE</Link>
+    <Link href="/">
+      <a>IN-HOUSE</a>
+    </Link>
     <IconLink icon="search" href="/houses" />
     <MenuIconButton>
       <Icon icon="menu" size={1.5} onClick={openMenu} color="secondaryDark" />

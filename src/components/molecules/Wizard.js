@@ -1,45 +1,41 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { calcRem, spacing, palette, panelBoxShadow, fontSize } from '../../style';
-import { Button, H1 } from '../atoms';
+import { spacing, palette, fontSize, fontWeight } from '../../style';
+import { Button, resetButtonStyles, H1, Icon, Progress } from '../atoms';
 
 const Main = styled.div`
-  padding: ${spacing.lg};
+  padding: ${spacing.xxl};
   flex: 1;
   display: flex;
   flex-direction: column;
 
   ${H1} {
+    margin-bottom: ${spacing.xxxl};
+  }
+  ${Progress} {
     margin-bottom: ${spacing.xl};
   }
 `;
 
+export const NextButton = styled(({ children = 'next', ...btnProps }) => (
+  <Button {...btnProps}>
+    {children}
+    <Icon icon="arrow-right" />
+  </Button>
+))`
+  margin-left: auto;
+`;
+
+export const BackButton = styled.button.attrs(({ children = 'back' }) => ({ children }))`
+  ${resetButtonStyles};
+  font-weight: ${fontWeight.bold};
+`;
+
 const Commands = styled.div`
-  position: relative;
-  padding: ${spacing.lg} 0;
+  padding: ${spacing.lg} ${spacing.xxl};
   display: flex;
-  justify-content: space-around;
   margin-top: auto;
-  background-color: ${palette.white};
-  border-top: 1px solid ${palette.gray};
-  ${panelBoxShadow};
-
-  ${Button} {
-    width: 40%;
-    margin: 0 ${spacing.sm};
-  }
-
-  // progress bar
-  :before {
-    position: absolute;
-    top: ${calcRem('-3.5px')};
-    left: 0;
-    content: '';
-    height: ${calcRem('2px')};
-    background-color: ${palette.text};
-    width: ${({ step, totalSteps }) => (step * 100) / totalSteps}%;
-  }
 `;
 
 export const FormTip = styled.div`
@@ -48,14 +44,23 @@ export const FormTip = styled.div`
   font-size: ${fontSize.xs};
 `;
 
-// TODO: remove default for total steps
+const renderHeader = head => {
+  if (typeof head === 'string') {
+    return <H1>{head}</H1>;
+  }
+
+  return head || null;
+};
+
 // TODO: render props instead?
-export const StepLayout = ({ main, commands, step, totalSteps = 4 }) => (
+export const StepLayout = ({ head, main, commands, step, totalSteps }) => (
   <>
-    <Main>{main}</Main>
-    <Commands step={step} totalSteps={totalSteps}>
-      {commands}
-    </Commands>
+    <Main>
+      {renderHeader(head)}
+      <Progress step={step} totalSteps={totalSteps} />
+      {main}
+    </Main>
+    <Commands>{commands}</Commands>
   </>
 );
 

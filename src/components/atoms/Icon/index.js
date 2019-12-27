@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { palette } from '../../../style';
 
-const getColor = ({ color }) => (color ? palette[color] : 'currentColor');
+const getColor = ({ color }) => color || (color ? palette[color] : 'currentColor');
 
 const Wrapper = styled.span`
   display: inline-block;
@@ -21,8 +21,10 @@ const Wrapper = styled.span`
   }
 `;
 
-export const Icon = styled(({ icon, size = 1, className }) => {
+export const Icon = styled(({ icon, size = 1, color, className }) => {
   // eslint-disable-next-line global-require,import/no-dynamic-require
   const svg = require(`!raw-loader!./icons/${icon}.svg`);
-  return <Wrapper size={size} className={className} dangerouslySetInnerHTML={{ __html: svg.default || svg }} />;
+  return (
+    <Wrapper size={size} color={color} className={className} dangerouslySetInnerHTML={{ __html: svg.default || svg }} />
+  );
 })``;

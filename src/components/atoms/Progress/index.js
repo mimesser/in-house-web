@@ -19,10 +19,10 @@ const Steps = styled.div`
   }
 `;
 
-export const Progress = ({ step, totalSteps }) => (
-  <Steps step={step}>
+export const Progress = styled(({ step, totalSteps, className }) => (
+  <Steps step={step} className={className}>
     {Array.from({ length: totalSteps }, (_, i) => (
       <div key={i} />
     ))}
   </Steps>
-);
+))``;

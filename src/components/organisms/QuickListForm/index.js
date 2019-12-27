@@ -58,7 +58,7 @@ const QuickListForm = ({ industries, listHouse }) => {
       {step === 4 && (
         <Step4 setStep={setStep} question={question} setQuestion={setQuestion} answer={answer} setAnswer={setAnswer} />
       )}
-      {step === 5 && <Step5 setStep={setStep} setImage={setImage} />}
+      {step === 5 && <Step5 setStep={setStep} setImage={setImage} image={image} />}
       {step === 6 && (
         <Step6
           setStep={setStep}
