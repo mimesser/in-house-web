@@ -3,13 +3,16 @@ import styled from 'styled-components';
 import { fontSize, spacing, palette } from '../../../style';
 
 export const Status = styled.div`
-  margin-top: ${spacing.xs};
+  margin-top: ${spacing.sm};
   display: flex;
 `;
 
+export const SubText = styled.span`
+  color: ${palette.darkGray};
+`;
+
 export const CharLimit = styled.span`
-  transition: color 0.5s;
-  font-size: ${fontSize.xs};
+  color: ${palette.gray};
   margin-left: auto;
 `;
 
