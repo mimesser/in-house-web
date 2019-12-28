@@ -5,10 +5,10 @@ import { palette, spacing } from '../../../style';
 import { withHelp } from './withHelp';
 import Overlay from '../Overlay';
 import { Icon } from '../Icon';
-import { IconButton } from '../Button';
+import { ClearButton } from '../Button';
 import { setBoundariesElement } from '../Tip';
 
-const Btn = styled(IconButton)`
+const Btn = styled(ClearButton)`
   padding: ${spacing.lg};
   background-color: ${palette.gray};
   color: ${palette.offWhite};

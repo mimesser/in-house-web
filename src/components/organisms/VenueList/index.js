@@ -4,21 +4,21 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Link from 'next/link';
 
-import { Loader, IconButton, Icon } from '../../atoms';
+import { Loader, ClearButton, Icon, Button } from '../../atoms';
 
 import { selectVenues } from '../../../store/venues';
 import { selectInDemo } from '../../../store/demo';
 import { VenueCard } from './VenueCard';
-import { ListYourHouse, SearchBox, Layout } from './style';
+import { SearchBox, Layout, NoResults } from './style';
 import PrivateShare from '../Venue/PrivateShare';
 import { SharePreviewCard } from '../Venue/sharePreviewStyle';
 import { Main, ItemText, ItemTitle } from '../Venue/tabStyle';
 
 const SearchBoxIcon = ({ applyFilter, clear }) =>
   applyFilter ? (
-    <IconButton onClick={clear}>
+    <ClearButton onClick={clear}>
       <Icon icon="close" />
-    </IconButton>
+    </ClearButton>
   ) : (
     <Icon icon="search" />
   );
@@ -66,7 +66,6 @@ const List = ({ venues, inDemo }) => {
   const getVenue = useCallback(id => findVenue(id, venues), [venues]);
 
   const getTitleForShare = useCallback(id => findVenue(id, venues).name, [venues]);
-
   if (!venues) {
     return <Loader big />;
   }
@@ -77,17 +76,18 @@ const List = ({ venues, inDemo }) => {
   return (
     <Layout>
       <SearchBox
-        placeholder={inDemo ? 'my house' : 'beta houses'}
+        placeholder={inDemo ? 'my house' : 'find your org'}
         value={filter}
         icon={<SearchBoxIcon applyFilter={applyFilter} clear={clearSearch} />}
         onChange={handleSearchChange}
       />
+      {filter && venuesToShow.length === 0 && <NoResults>no results</NoResults>}
       {venuesToShow.map((v, i) => (
         <VenueCard key={v.id} venue={v} showVenue={showVenue} withHelp={i === 0} />
       ))}
       {!inDemo && (
-        <Link href="/quick-list">
-          <ListYourHouse>list your house</ListYourHouse>
+        <Link href="/quick-list" passHref>
+          <Button icon="arrow-right">list your org</Button>
         </Link>
       )}
       <PrivateShare type="venue" renderItem={renderSharePreview} getItemTitle={getTitleForShare} getVenue={getVenue} />

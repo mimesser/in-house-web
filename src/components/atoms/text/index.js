@@ -29,6 +29,7 @@ export const Category = styled.span`
 export const Address = styled.address`
   font-size: ${fontSize.sm};
   font-style: normal;
+  text-transform: lowercase;
 `;
 
 export const SubTitle = styled.span`
@@ -47,7 +48,7 @@ export const Patent = styled.span.attrs(() => ({
 export const HouseNameLarge = styled.span`
   font-size: ${fontSize.md};
   font-weight: ${fontWeight.bold};
-  text-transform: uppercase;
+  text-transform: lowercase;
 `;
 
 export const HeaderTitle = styled.span`

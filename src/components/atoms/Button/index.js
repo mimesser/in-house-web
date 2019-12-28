@@ -49,8 +49,7 @@ const cursor = ({ disabled }) => (disabled ? 'not-allowed' : 'pointer');
 
 const width = ({ wide }) => wide && `width: 100%`;
 
-// TODO: export ClearButton?
-export const resetButtonStyles = css`
+const resetButtonStyles = css`
   -webkit-appearance: none;
   -moz-appearance: none;
   cursor: pointer;
@@ -60,6 +59,7 @@ export const resetButtonStyles = css`
   text-decoration: none;
   text-align: center;
   padding: 0;
+  color: currentColor;
 `;
 
 const BaseButton = styled.button`
@@ -80,17 +80,17 @@ const BaseButton = styled.button`
 `;
 
 export const Button = styled(
-  withForwardedRef(({ loading, children, forwardedRef, tag, ...props }) => (
-    <BaseButton as={tag} {...props} ref={forwardedRef}>
+  withForwardedRef(({ icon, loading, children, forwardedRef, ...props }) => (
+    <BaseButton as={props.href && 'a'} {...props} ref={forwardedRef}>
       {loading ? <Loader small white /> : children}
+      {icon && <Icon icon={icon} />}
     </BaseButton>
   )),
 )``;
 
 // TODO: active/focus etc
-export const IconButton = styled.button`
+export const ClearButton = styled.button`
   ${resetButtonStyles};
-  padding: 0;
-  color: currentColor;
-  background: transparent;
+  display: inline-flex;
+  align-items: center;
 `;

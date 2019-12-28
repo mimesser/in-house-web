@@ -18,6 +18,8 @@ const Container = styled.div`
   height: 100%;
   max-width: ${breakpoints.sm};
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const Page = ({

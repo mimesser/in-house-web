@@ -4,11 +4,11 @@ import Link from 'next/link';
 import styled from 'styled-components';
 import { Transition } from 'react-transition-group';
 
-import { Icon, IconButton } from '../../atoms';
+import { Icon, ClearButton } from '../../atoms';
 
 import { spacing, fontSize, palette } from '../../../style';
 
-const CloseButton = styled(IconButton)`
+const CloseButton = styled(ClearButton)`
   padding: ${spacing.sm};
 `;
 

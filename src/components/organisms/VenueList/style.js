@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-import { calcRem, fontSize, palette, spacing } from '../../../style';
-import { Card, Address, Button } from '../../atoms';
+import { calcRem, palette, spacing, cover } from '../../../style';
+import { Card, Address, Button, Break } from '../../atoms';
 import { IconInput, PokeButton } from '../../molecules';
 
 // TODO: move to molecules?
@@ -9,60 +9,55 @@ import { ScoreAndVoters } from '../Venue/ScoreAndVoters';
 import { Votes } from '../Venue/Votes';
 
 export const Layout = styled.div`
-  padding: ${spacing.md} ${spacing.sm};
+  padding: ${spacing.lg} ${spacing.xxl} ${spacing.xxl};
   display: flex;
   flex-direction: column;
   flex: none; // safari
   flex-grow: 1;
+
+  > ${Button} {
+    margin-top: ${spacing.lg};
+    align-self: flex-start;
+  }
 `;
 
 export const SearchBox = styled(IconInput)`
-  margin-bottom: ${spacing.xl};
+  margin-bottom: ${spacing.lg};
 `;
 
-export const ListYourHouse = styled(Button).attrs(() => ({ secondary: true }))`
-  margin: 0 auto;
+export const NoResults = styled.div`
+  color: ${palette.gray};
+  margin-bottom: ${spacing.lg};
+`;
+
+export const Industry = styled.div`
+  text-transform: uppercase;
+  margin-bottom: ${spacing.xs};
 `;
 
 export const VenueContainer = styled(Card)`
+  box-shadow: 0 ${calcRem('3px')} ${calcRem('6px')} rgba(0, 0, 0, 0.161);
   margin-bottom: ${spacing.lg};
-  padding: ${spacing.lg};
 
   ${ScoreAndVoters} {
+    flex-shrink: 0;
     min-width: initial;
-    margin: auto ${spacing.sm};
+    margin: ${spacing.lg};
 
     ${Votes} {
       margin-top: ${spacing.xs};
     }
   }
 
-  ${Address} {
+  ${Address}, ${Industry} {
     color: ${palette.lightGray};
   }
-`;
 
-export const Img = styled.div`
-  width: 5.8rem;
-  height: 5.8rem;
-  flex-shrink: 0;
-  background-image: url(${({ imageUrl }) => imageUrl});
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-`;
-
-export const Industry = styled.div`
-  font-size: ${fontSize.sm};
-  color: ${palette.lightGray};
-  text-transform: uppercase;
-  margin-bottom: ${spacing.xs};
-`;
-
-export const Name = styled.div`
-  font-size: ${calcRem(20)};
-  text-transform: lowercase;
-  margin-bottom: ${spacing.xs};
+  ${Break} {
+    height: ${calcRem('2px')};
+    width: ${calcRem('40px')};
+    margin: ${spacing.sm} 0;
+  }
 `;
 
 export const PrivateShareButtonLayout = styled.div`
@@ -75,6 +70,23 @@ export const PrivateShareButtonLayout = styled.div`
   }
 `;
 
-export const Main = styled.div`
-  margin-right: auto;
+export const Main = styled.div.attrs(({ imageUrl }) => imageUrl && { style: { backgroundImage: `url(${imageUrl})` } })`
+  position: relative;
+  flex: 1;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  :before {
+    ${cover()};
+    content: '';
+    background-color: ${palette.black};
+    opacity: 0.5;
+  }
+
+  padding: ${spacing.md};
+  > * {
+    position: relative;
+    z-index: 1;
+    color: ${palette.offWhite};
+  }
 `;

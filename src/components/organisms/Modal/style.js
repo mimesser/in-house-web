@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 
 import { spacing, palette, appBackground } from '../../../style';
-import { H1, H2, IconButton, Icon } from '../../atoms';
+import { H1, H2, ClearButton, Icon } from '../../atoms';
 
 export const Background = styled.div`
   // todo
@@ -60,7 +60,7 @@ export const Content = styled.div`
   ${colors};
 `;
 
-export const CloseButton = styled(IconButton).attrs({
+export const CloseButton = styled(ClearButton).attrs({
   children: <Icon icon="close" />,
 })`
   margin-left: auto;

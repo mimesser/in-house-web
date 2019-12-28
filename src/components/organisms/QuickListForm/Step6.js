@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 
-import { Icon, resetButtonStyles } from '../../atoms';
+import { Icon, ClearButton } from '../../atoms';
 import { StepLayout } from './StepLayout';
 import { fontWeight, palette, spacing, cover } from '../../../style';
 import { selectLoading } from '../../../store/venues';
@@ -35,8 +35,7 @@ const Img = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
 `;
-const EditButton = styled.button`
-  ${resetButtonStyles};
+const EditButton = styled(ClearButton)`
   color: ${palette.black};
   margin-left: auto;
 `;
