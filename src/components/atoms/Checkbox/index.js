@@ -2,14 +2,21 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Icon } from '../Icon';
+import { spacing } from '../../../style';
 
 const CheckboxContainer = styled.div`
-  display: inline-block;
-  vertical-align: middle;
+  display: inline-flex;
+  align-items: flex-start;
   cursor: pointer;
 
-  svg {
-    fill: none;
+  ${Icon} {
+    flex-shrink: 0;
+    svg {
+      fill: none;
+    }
+  }
+  > span:last-of-type {
+    margin-left: ${spacing.md};
   }
 `;
 
@@ -28,11 +35,12 @@ const HiddenCheckbox = styled.input.attrs(() => ({ type: 'checkbox' }))`
   width: 1px;
 `;
 
-export const Checkbox = ({ className, checked, ...props }) => (
+export const Checkbox = ({ className, checked, children, ...props }) => (
   <label className={className}>
     <CheckboxContainer>
       <HiddenCheckbox checked={checked} {...props} />
       <Icon icon={checked ? 'checkbox-marked' : 'checkbox'} size={1.5} />
+      <span>{children}</span>
     </CheckboxContainer>
   </label>
 );

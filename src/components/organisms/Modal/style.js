@@ -78,6 +78,7 @@ export const Container = styled.div.attrs(() => ({
 `;
 
 export const Dialog = styled.div`
+  overflow: auto;
   display: flex;
   flex-direction: column;
   background: ${appBackground};
