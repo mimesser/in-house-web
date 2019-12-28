@@ -88,17 +88,20 @@ const ModalWrapper = props => {
   const { id, sending, sent, inDemo, close } = props;
   const venue = props.venue || (id ? props.getVenue(id) : undefined);
 
+  if (!id) {
+    return null;
+  }
+
   return (
     <Modal
-      open={!!id}
       closeModal={close}
       canClose={!sending && !sent}
       inverse={sent}
       canDismiss={false}
       title={venue && venue.name}
     >
-      {id && !sent && <PrivateShare {...props} venue={venue} />}
-      {id && sent && (inDemo ? <DemoWinkConfirmation onCloseClick={close} /> : <WinkConfirmation />)}
+      {!sent && <PrivateShare {...props} venue={venue} />}
+      {sent && (inDemo ? <DemoWinkConfirmation onCloseClick={close} /> : <WinkConfirmation />)}
     </Modal>
   );
 };

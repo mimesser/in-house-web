@@ -1,16 +1,28 @@
 import React, { useEffect, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import ReactDOM from 'react-dom';
+import { Transition } from 'react-transition-group';
 
 import { withNoSSR } from '../../atoms';
-import { Background, CloseButton, Content, Layout, ModalHeader } from './style';
+import { CloseButton, Container, Content, Dialog, ModalHeader, ModalWrap, Overlay } from './style';
 import { selectShowHelp } from '../../../store/help';
 
 const stopPropagation = event => event.stopPropagation();
 
 const Portal = withNoSSR(({ children, node = document.body }) => ReactDOM.createPortal(children, node));
 
-export const Modal = ({ open, closeModal, title, canDismiss = true, canClose = true, inverse, children }) => {
+export const Modal = ({
+  open,
+  closeModal,
+  title,
+  canDismiss = true,
+  canClose = true,
+  inverse,
+  children,
+  style,
+  className,
+  ...transitionProps
+}) => {
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : 'initial';
   }, [open]);
@@ -18,17 +30,22 @@ export const Modal = ({ open, closeModal, title, canDismiss = true, canClose = t
   const showHelp = useSelector(selectShowHelp);
   return (
     <Portal>
-      <Background open={open} onClick={canDismiss ? handleClose : undefined} showHelp={showHelp}>
-        <Layout>
-          <Content inverse={inverse} onClick={stopPropagation}>
-            <ModalHeader>
-              {title}
-              {canClose && <CloseButton onClick={handleClose} />}
-            </ModalHeader>
-            {children}
-          </Content>
-        </Layout>
-      </Background>
+      <Transition {...transitionProps} timeout={100} appear in unmountOnExit>
+        {transition => (
+          <ModalWrap {...{ className, style, transition }}>
+            <Overlay />
+            <Container onClick={canDismiss ? handleClose : undefined}>
+              <Dialog onClick={stopPropagation} inverse={inverse}>
+                <ModalHeader>
+                  {title}
+                  {canClose && <CloseButton onClick={handleClose} />}
+                </ModalHeader>
+                {children}
+              </Dialog>
+            </Container>
+          </ModalWrap>
+        )}
+      </Transition>
     </Portal>
   );
 };

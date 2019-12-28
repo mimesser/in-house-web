@@ -60,6 +60,7 @@ class MyDocument extends Document {
           <meta property="twitter:image" content="https://in-house.azureedge.net/webstatic/in-house-meta.png" />
 
           <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+          <meta name="theme-color" content="#333333" />
 
           <link
             href="https://fonts.googleapis.com/css?family=Roboto:300|Nunito+Sans:600|Source+Sans+Pro:300,400&display=swap"
