@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { Input } from '../../atoms';
+import { Icon, Input } from '../../atoms';
 import { spacing, palette } from '../../../style';
+import { withForwardedRef } from '../../withForwardedRef';
 
 const Wrap = styled.div`
   position: relative;
@@ -21,9 +22,13 @@ const Wrap = styled.div`
   }
 `;
 
-export const IconInput = styled(({ className, icon, ...inputProps }) => (
-  <Wrap className={className}>
-    <Input {...inputProps} />
-    {icon}
-  </Wrap>
-))``;
+// TODO: move functionality to regular input, consolidate icon options
+
+export const IconInput = styled(
+  withForwardedRef(({ className, icon, forwardedRef, ...inputProps }) => (
+    <Wrap className={className} ref={forwardedRef}>
+      <Input {...inputProps} />
+      {typeof icon === 'string' ? <Icon icon={icon} /> : icon}
+    </Wrap>
+  )),
+)``;

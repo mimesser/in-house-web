@@ -9,10 +9,7 @@ const colors = ({ inverse }) =>
   inverse
     ? css`
         background-color: ${palette.primary};
-        color: ${palette.lightGray};
-        ${H1}, ${H2} {
-          color: ${palette.lightGray};
-        }
+        color: ${palette.white};
       `
     : `background-color: ${appBackground};`;
 
