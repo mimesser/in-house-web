@@ -24,8 +24,8 @@ const Layout = styled.div`
 `;
 
 const NewMinkElected = ({ open }) => {
-  return (
-    <Modal open={open} canClose={false} canDismiss={false} inverse>
+  return open ? (
+    <Modal canClose={false} canDismiss={false} inverse>
       <Layout>
         <HeaderTitle>
           new <br />
@@ -35,7 +35,7 @@ const NewMinkElected = ({ open }) => {
         <WinkConfirmation />
       </Layout>
     </Modal>
-  );
+  ) : null;
 };
 
 const mapState = createStructuredSelector({

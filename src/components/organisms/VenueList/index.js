@@ -90,7 +90,7 @@ const List = ({ venues, inDemo }) => {
           <Button icon="arrow-right">list your org</Button>
         </Link>
       )}
-      <PrivateShare type="venue" renderItem={renderSharePreview} getItemTitle={getTitleForShare} getVenue={getVenue} />
+      {/* <PrivateShare type="venue" renderItem={renderSharePreview} getItemTitle={getTitleForShare} getVenue={getVenue} /> */}
     </Layout>
   );
 };

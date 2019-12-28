@@ -69,7 +69,7 @@ const Form = ({ topMink, wrongAnswer, answerTopMink, inDemo }) => {
 
   return topMink ? (
     <>
-      <Question>{topMink.question}</Question>
+      <H1>{topMink.question}</H1>
       {inDemo && <TopMinkToolTip />}
       <Answer onSubmit={handleSubmit}>
         <div>
@@ -142,32 +142,33 @@ const InsiderQuestionChallenge = ({
   answerTopMink,
   inDemo,
 }) => {
-  const { blocked, isAnswerCorrect, showTerms } = challengeFormData || {};
+  if (!challengeFormData) {
+    return null;
+  }
+
+  const { blocked, isAnswerCorrect, showTerms } = challengeFormData;
   const wrongAnswer = isAnswerCorrect === false;
-  const accessGranted = challengeFormData && challengeFormData.isAnswerCorrect;
+  const accessGranted = isAnswerCorrect;
 
   return (
     <Modal
       inverse={!showTerms}
-      open={!!challengeFormData}
       closeModal={dismissForm}
       canDismiss={!accessGranted && !showTerms}
-      canClose={!!challengeFormData && !accessGranted && !showTerms}
-      title={showTerms ? undefined : name}
+      canClose={!accessGranted && !showTerms}
+      title={showTerms ? undefined : `${name} | #1 MINK`}
     >
-      {challengeFormData
-        ? renderSubview(
-            name,
-            isAnswerCorrect,
-            blocked,
-            topMink,
-            wrongAnswer,
-            answerTopMink,
-            dismissForm,
-            showTerms,
-            inDemo,
-          )
-        : null}
+      {renderSubview(
+        name,
+        isAnswerCorrect,
+        blocked,
+        topMink,
+        wrongAnswer,
+        answerTopMink,
+        dismissForm,
+        showTerms,
+        inDemo,
+      )}
     </Modal>
   );
 };

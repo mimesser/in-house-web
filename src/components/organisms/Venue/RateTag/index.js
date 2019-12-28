@@ -90,12 +90,16 @@ const ModalWrapper = props => {
   const close = useCallback(() => setSelectedTag(undefined), []);
   const [rated, setRated] = useState(false);
 
-  const showRateTag = tag && !confirmation;
-  const showConfirmation = tag && confirmation;
+  if (!tag) {
+    return null;
+  }
+
+  const showRateTag = !confirmation;
+  const showConfirmation = confirmation;
   const inverse = showConfirmation || rated;
 
   return (
-    <Modal open={!!tag} closeModal={close} inverse={inverse} title={venue.name}>
+    <Modal closeModal={close} inverse={inverse} title={venue.name}>
       {showRateTag ? <RateTag {...props} rated={rated} setRated={setRated} /> : null}
       {showConfirmation ? <RateConfirmation title={tag.name} {...confirmation} /> : null}
     </Modal>

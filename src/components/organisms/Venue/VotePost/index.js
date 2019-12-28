@@ -59,17 +59,23 @@ const ModalWrapper = props => {
   const { post, confirmation, setSelectedPost, venue } = props;
   const close = useCallback(() => setSelectedPost(undefined), []);
 
+  if (!post) {
+    return null;
+  }
+
   return (
     <Modal
-      open={!!post}
       closeModal={close}
       canClose={!confirmation}
       canDismiss={!confirmation}
       title={venue && venue.name}
       inverse={post && confirmation}
     >
-      {post && !confirmation ? <VotePost {...props} /> : null}
-      {post && confirmation ? <RateConfirmation title={post.title} date={post.created} {...confirmation} /> : null}
+      {confirmation ? (
+        <RateConfirmation title={post.title} date={post.created} {...confirmation} />
+      ) : (
+        <VotePost {...props} />
+      )}
     </Modal>
   );
 };
