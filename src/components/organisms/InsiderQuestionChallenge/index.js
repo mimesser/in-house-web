@@ -10,18 +10,7 @@ import {
   selectSelectedVenue,
   selectInsiderChallengeForm,
 } from '../../../store/venues';
-import {
-  Answer,
-  SubmitButton,
-  ChangeButton,
-  Question,
-  QuestionForm,
-  InputHelp,
-  ExplainMink,
-  AnswerInput,
-  Try,
-  ChangeButtonWrapper,
-} from './style';
+import { Answer, SubmitButton, ChangeButton, QuestionForm, InputHelp, AnswerInput, Try } from './style';
 import { Modal } from '../Modal';
 import { normalizeAnswer } from '../Venue/normalizeAnswer';
 import AcceptTerms from './AcceptTerms';
@@ -67,29 +56,33 @@ const Form = ({ topMink, wrongAnswer, answerTopMink, inDemo }) => {
 
   const highlightError = wrongAnswer && showError;
 
-  return topMink ? (
+  if (!topMink) {
+    return <Loader white big />;
+  }
+
+  return (
     <>
-      <H1>{topMink.question}</H1>
+      <HelpTip tip="#1 MINK (n): the most popular team password question" placement="top">
+        <H1>{topMink.question}</H1>
+      </HelpTip>
       {inDemo && <TopMinkToolTip />}
       <Answer onSubmit={handleSubmit}>
-        <div>
-          <AnswerInput
-            autocomplete="off"
-            spellcheck="false"
-            value={answer}
-            onChange={handleChange}
-            strike={highlightError}
-            ref={answerRef}
-          />
-          <SubmitButton visible={!!answer.length}>
-            {showError && !wrongAnswer ? <Loader white /> : !highlightError && <Icon icon="arrow-right" size={2} />}
-          </SubmitButton>
-        </div>
-        <InputHelp highlight={highlightError}>{highlightError ? 'wrong answer' : 'one word / no spaces'}</InputHelp>
+        {/* TODO: use form group with sub text */}
+        <AnswerInput
+          autocomplete="off"
+          spellcheck="false"
+          value={answer}
+          onChange={handleChange}
+          ref={answerRef}
+          icon={highlightError ? 'close' : undefined}
+        />
+        <InputHelp>{highlightError ? 'wrong answer!' : 'one word / no spaces'}</InputHelp>
+        <SubmitButton disabled={!answer.length}>
+          enter
+          {showError && !wrongAnswer ? <Loader white /> : !highlightError}
+        </SubmitButton>
       </Answer>
     </>
-  ) : (
-    <Loader white big />
   );
 };
 
@@ -112,23 +105,14 @@ const renderSubview = (
         <WinkConfirmation />
       ) : (
         <>
-          <H1>insider?</H1>
-          <ExplainMink>
-            <HelpTip tip="#1 MINK (n): the most popular team password question">
-              <div>
-                answer the #1 MINK<sup>©</sup>
-                <Patent />
-              </div>
-            </HelpTip>
-          </ExplainMink>
           {blocked && <p>Too many attempts. Please come back later</p>}
           {!blocked && (
             <Form topMink={topMink} wrongAnswer={wrongAnswer} answerTopMink={answerTopMink} inDemo={inDemo} />
           )}
           <HelpTip tip="create or vote for another MINK you think will better verify your team" placement="top">
-            <ChangeButtonWrapper>
-              <ChangeButton onClick={() => dismissForm(true)}>change this question</ChangeButton>
-            </ChangeButtonWrapper>
+            <ChangeButton icon="arrow-right" onClick={() => dismissForm(true)}>
+              choose better question?
+            </ChangeButton>
           </HelpTip>
         </>
       )}
