@@ -41,14 +41,6 @@ const colors = ({ inverse }) =>
       `
     : `background-color: ${appBackground};`;
 
-const mobileFrame = ({ theme: { desktop } }) =>
-  desktop &&
-  css`
-    width: 400px;
-    height: 730px;
-    margin: auto;
-  `;
-
 export const Content = styled.div`
   position: relative;
   overflow: auto;
@@ -56,7 +48,6 @@ export const Content = styled.div`
   flex-direction: column;
   padding: ${spacing.xl};
   width: 100%;
-  ${mobileFrame};
   ${colors};
 `;
 

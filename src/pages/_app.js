@@ -13,6 +13,7 @@ import { loadAggregateData } from '../store/aggregate';
 
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
+    // TODO: remove, layouts etc. should be based on screen size
     const desktop = Bowser.getParser(
       (ctx && ctx.req && ctx.req.headers['user-agent']) || window.navigator.userAgent,
     ).is('desktop');
