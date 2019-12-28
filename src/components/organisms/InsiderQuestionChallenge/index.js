@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { H1, Loader, ToolTip, HelpTip, Icon, Patent } from '../../atoms';
+import { H1, Loader, ToolTip, HelpTip } from '../../atoms';
 import { WinkConfirmation } from '../../molecules';
 import {
   answerTopMink,
@@ -86,39 +86,6 @@ const Form = ({ topMink, wrongAnswer, answerTopMink, inDemo }) => {
   );
 };
 
-const renderSubview = (
-  name,
-  isAnswerCorrect,
-  blocked,
-  topMink,
-  wrongAnswer,
-  answerTopMink,
-  dismissForm,
-  showTerms,
-  inDemo,
-) =>
-  showTerms ? (
-    <AcceptTerms />
-  ) : (
-    <QuestionForm>
-      {isAnswerCorrect ? (
-        <WinkConfirmation />
-      ) : (
-        <>
-          {blocked && <p>Too many attempts. Please come back later</p>}
-          {!blocked && (
-            <Form topMink={topMink} wrongAnswer={wrongAnswer} answerTopMink={answerTopMink} inDemo={inDemo} />
-          )}
-          <HelpTip tip="create or vote for another MINK you think will better verify your team" placement="top">
-            <ChangeButton icon="arrow-right" onClick={() => dismissForm(true)}>
-              choose better question?
-            </ChangeButton>
-          </HelpTip>
-        </>
-      )}
-    </QuestionForm>
-  );
-
 const InsiderQuestionChallenge = ({
   venue: { name, topMink },
   challengeFormData,
@@ -140,18 +107,28 @@ const InsiderQuestionChallenge = ({
       closeModal={dismissForm}
       canDismiss={!accessGranted && !showTerms}
       canClose={!accessGranted && !showTerms}
-      title={showTerms ? undefined : `${name} | #1 MINK`}
+      title={`${name} | #1 MINK`}
     >
-      {renderSubview(
-        name,
-        isAnswerCorrect,
-        blocked,
-        topMink,
-        wrongAnswer,
-        answerTopMink,
-        dismissForm,
-        showTerms,
-        inDemo,
+      {showTerms ? (
+        <AcceptTerms />
+      ) : (
+        <QuestionForm>
+          {isAnswerCorrect ? (
+            <WinkConfirmation />
+          ) : (
+            <>
+              {blocked && <p>Too many attempts. Please come back later</p>}
+              {!blocked && (
+                <Form topMink={topMink} wrongAnswer={wrongAnswer} answerTopMink={answerTopMink} inDemo={inDemo} />
+              )}
+              <HelpTip tip="create or vote for another MINK you think will better verify your team" placement="top">
+                <ChangeButton icon="arrow-right" onClick={() => dismissForm(true)}>
+                  choose better question?
+                </ChangeButton>
+              </HelpTip>
+            </>
+          )}
+        </QuestionForm>
       )}
     </Modal>
   );
