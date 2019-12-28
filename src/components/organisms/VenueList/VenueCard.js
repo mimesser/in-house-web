@@ -1,9 +1,8 @@
 import React, { useCallback } from 'react';
 
-import { Address, HelpTip } from '../../atoms';
+import { Address, HelpTip, HouseNameLarge, Break } from '../../atoms';
 import { ScoreAndVoters } from '../Venue/ScoreAndVoters';
-import { VenueContainer, Main, Img, Industry, Name, PrivateShareButtonLayout } from './style';
-import PrivateShareButton from '../Venue/PrivateShareButton';
+import { VenueContainer, Main, Industry } from './style';
 
 const helpTip = (
   <>
@@ -26,20 +25,21 @@ export const VenueCard = ({ venue, showVenue, withHelp }) => {
   const card = (
     // TODO: this should be a link
     <VenueContainer onClick={handleClick}>
-      <Img imageUrl={imageUrl} />
       <ScoreAndVoters voteCount={votesCount} voteRating={rating} sliderSize={72} />
-      <Main>
+      <Main imageUrl={imageUrl}>
         <Industry>{industry && industry.name}</Industry>
-        <Name>{name}</Name>
+        <HouseNameLarge>{name}</HouseNameLarge>
+        <Break />
         <Address>
-          {address}
+          {address},
           <br />
-          {city}, {state} {zipCode}
+          {city} {zipCode}
         </Address>
       </Main>
-      <PrivateShareButtonLayout>
-        <PrivateShareButton id={venue.id} />
-      </PrivateShareButtonLayout>
+      {/* TODO: bring back once design provided */}
+      {/* <PrivateShareButtonLayout> */}
+      {/*  <PrivateShareButton id={venue.id} /> */}
+      {/* </PrivateShareButtonLayout> */}
     </VenueContainer>
   );
 

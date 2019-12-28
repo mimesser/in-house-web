@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { calcRem, fontSize, spacing, palette } from '../../../style';
-import { Button, H1, IconButton, Input, Patent } from '../../atoms';
+import { Button, H1, ClearButton, Input, Patent } from '../../atoms';
 
 export const QuestionForm = styled.div`
   padding: ${calcRem('50px')} 0;
@@ -39,7 +39,7 @@ export const Answer = styled.form`
   }
   margin-bottom: ${spacing.xl};
 `;
-export const SubmitButton = styled(IconButton).attrs({
+export const SubmitButton = styled(ClearButton).attrs({
   type: 'submit',
 })`
   transition: opacity 0.5s;

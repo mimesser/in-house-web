@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { spacing, palette, fontSize, fontWeight } from '../../style';
-import { Button, resetButtonStyles, H1, Icon, Progress } from '../atoms';
+import { Button, ClearButton, H1, Progress } from '../atoms';
 
 const Main = styled.div`
   padding: ${spacing.xxl};
@@ -19,16 +19,14 @@ const Main = styled.div`
 `;
 
 export const NextButton = styled(({ children = 'next', ...btnProps }) => (
-  <Button {...btnProps}>
+  <Button {...btnProps} icon="arrow-right">
     {children}
-    <Icon icon="arrow-right" />
   </Button>
 ))`
   margin-left: auto;
 `;
 
-export const BackButton = styled.button.attrs(({ children = 'back' }) => ({ children }))`
-  ${resetButtonStyles};
+export const BackButton = styled(ClearButton).attrs(({ children = 'back' }) => ({ children }))`
   font-weight: ${fontWeight.bold};
 `;
 

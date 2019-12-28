@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { storiesOf } from '@storybook/react';
 
-import { Button, IconButton } from '.';
+import { Button, ClearButton } from '.';
 import { Icon } from '../Icon';
 
 const Container = styled.div`
@@ -25,14 +25,18 @@ storiesOf('Button', module).add('Button', () => (
     </Button>
     <Button dashed>dashed</Button>
     <Button loading>loading</Button>
-    <IconButton>
+    <ClearButton>
+      clear button
       <Icon icon="arrow-right" />
-    </IconButton>
+    </ClearButton>
+    <ClearButton>
+      <Icon icon="arrow-right" />
+    </ClearButton>
     <Button>
       with, icon <Icon icon="arrow-right" />
     </Button>
-    <Button wide>
-      wide with, icon <Icon icon="arrow-right" />
+    <Button wide icon="arrow-right">
+      wide, with icon as a prop />
     </Button>
   </Container>
 ));

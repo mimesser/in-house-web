@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
 import { calcRem, palette, spacing } from '../../../../style';
-import { HouseNameLarge, IconButton } from '../../../atoms';
+import { HouseNameLarge, ClearButton } from '../../../atoms';
 import { Votes } from '../Votes';
 
-export const Back = styled(IconButton)`
+export const Back = styled(ClearButton)`
   margin-right: auto;
   color: ${palette.white};
 `;

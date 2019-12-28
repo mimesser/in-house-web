@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 
 import { appBackground, fontSize, fontWeight, palette, spacing } from '../../../style';
-import { Button, IconButton } from '../../atoms';
+import { Button, ClearButton } from '../../atoms';
 import { Dial } from '../../molecules';
 
 export const ItemDate = styled.div`
@@ -19,7 +19,7 @@ export const ItemTitle = styled.div`
   margin-bottom: ${({ keepSpace }) => (keepSpace ? '3.25rem' : spacing.sm)};
 `;
 
-export const VoteButton = styled(IconButton)`
+export const VoteButton = styled(ClearButton)`
   color: ${({ selected }) => (selected ? palette.primary : palette.lightGray)};
   &[disabled] {
     color: ${palette.lightGray};

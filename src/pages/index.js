@@ -3,10 +3,10 @@ import Link from 'next/link';
 import styled from 'styled-components';
 
 import { Page } from '../components/templates';
-import { Button, H1, H2, Break, Icon } from '../components/atoms';
+import { Button, H1, H2, Break } from '../components/atoms';
 import { LandingHelp } from '../components/organisms';
 import { DEMO_VENUES_ID } from '../store/demo/data';
-import { spacing, palette, lineHeight, fontSize } from '../style';
+import { spacing, palette, lineHeight, fontSize, cover } from '../style';
 
 const LandingPage = styled(Page)`
   background-image: url(https://in-house.azureedge.net/webstatic/unsplash.png);
@@ -14,13 +14,9 @@ const LandingPage = styled(Page)`
   background-repeat: no-repeat;
   background-position: center center;
   :after {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
+    ${cover()};
     content: '';
-    background-color: black;
+    background-color: ${palette.black};
     opacity: 0.7;
   }
 
@@ -72,14 +68,12 @@ const Landing = () => (
     <Links>
       <div>no login. no emails. no personal data</div>
       <Link href="/houses" passHref>
-        <Button outline wide tag="a">
-          ok <Icon icon="arrow-right" />
+        <Button outline wide icon="arrow-right">
+          ok
         </Button>
       </Link>
       <Link href={`/houses/${DEMO_VENUES_ID}`} passHref>
-        <Button secondary tag="a">
-          how it works <Icon icon="arrow-right" />
-        </Button>
+        <Button icon="arrow-right">how it works</Button>
       </Link>
     </Links>
     <LandingHelp />
