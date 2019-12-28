@@ -14,3 +14,4 @@ export { default as Overlay } from './Overlay';
 export * from './help';
 export * from './text';
 export { Progress } from './Progress';
+export { Break } from './Break';

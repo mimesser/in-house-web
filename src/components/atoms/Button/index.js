@@ -81,7 +81,7 @@ const BaseButton = styled.button`
 
 export const Button = styled(
   withForwardedRef(({ loading, children, forwardedRef, tag, ...props }) => (
-    <BaseButton {...props} as={tag} ref={forwardedRef}>
+    <BaseButton as={tag} {...props} ref={forwardedRef}>
       {loading ? <Loader small white /> : children}
     </BaseButton>
   )),
