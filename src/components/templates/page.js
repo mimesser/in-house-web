@@ -20,7 +20,12 @@ const Container = styled.div`
   margin: 0 auto;
 `;
 
-export const Page = ({ children, title = 'In-House | Speak as a Team | Remain Untraceable', defaultHeader = true }) => {
+export const Page = ({
+  children,
+  title = 'In-House | Speak as a Team | Remain Untraceable',
+  defaultHeader = true,
+  className,
+}) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const openMenu = useCallback(() => setMenuOpen(true), []);
   const closeMenu = useCallback(() => setMenuOpen(false), []);
@@ -34,7 +39,7 @@ export const Page = ({ children, title = 'In-House | Speak as a Team | Remain Un
         <meta property="og:title" content={title} />
         <meta property="twitter:title" content={title} />
       </Head>
-      <PageLayout ref={ref}>
+      <PageLayout ref={ref} className={className}>
         <Menu isOpen={menuOpen} closeMenu={closeMenu} />
         {defaultHeader && <Header openMenu={openMenu} />}
         <Container>{children}</Container>

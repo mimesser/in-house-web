@@ -1,7 +1,7 @@
 import styled from 'styled-components';
+
 import { calcRem, palette, spacing } from '../../../../style';
-import { IconButton } from '../../../atoms/Button';
-import { HouseNameLarge } from '../../../atoms';
+import { HouseNameLarge, IconButton } from '../../../atoms';
 import { Votes } from '../Votes';
 
 export const Back = styled(IconButton)`
