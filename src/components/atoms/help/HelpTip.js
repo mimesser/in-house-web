@@ -6,6 +6,7 @@ import { withHelp } from './withHelp';
 import { Tip } from '../Tip';
 import { useRegisterTip } from './useRegisterTip';
 
+// TODO
 const width = ({ theme: { desktop } }) => -60 + (desktop ? 400 : window.document.body.offsetWidth);
 
 const Message = styled.div`
