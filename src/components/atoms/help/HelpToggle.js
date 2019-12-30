@@ -13,11 +13,14 @@ const Btn = styled(ClearButton)`
   background-color: ${palette.gray};
   color: ${palette.offWhite};
   border-radius: 50%;
-  position: fixed;
+  &&& {
+    position: fixed;
+  }
   bottom: ${spacing.xl};
   right: ${spacing.xl};
   display: flex;
   flex-shrink: 0;
+  // TODO: should be relative to modal z-index
   z-index: 1000;
   opacity: 0.35;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);

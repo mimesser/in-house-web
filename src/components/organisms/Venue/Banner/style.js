@@ -1,29 +1,45 @@
 import styled from 'styled-components';
+import { rgba } from 'polished';
 
-import { calcRem, palette, spacing } from '../../../../style';
-import { HouseNameLarge, ClearButton } from '../../../atoms';
+import { cover, palette, spacing } from '../../../../style';
+import { H1, Industry, Address } from '../../../atoms';
 import { Votes } from '../Votes';
-
-export const Back = styled(ClearButton)`
-  margin-right: auto;
-  color: ${palette.white};
-`;
 
 export const Header = styled.header`
   position: relative;
-  height: ${calcRem('270px')};
-  padding: ${spacing.lg};
-  color: ${palette.white};
+  padding: ${spacing.xl} ${spacing.lg} ${spacing.xxl} ${spacing.xxl};
+  color: ${palette.offWhite};
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
   > div {
     display: flex;
     flex: 1;
+
+    > div:first-child {
+      margin-right: auto;
+    }
   }
 
   > * {
-    ${({ showHelp }) => !showHelp && 'z-index: 1'};
+    position: relative;
+  }
+
+  // > * {
+  //   ${({ showHelp }) => !showHelp && 'z-index: 1'};
+  // }
+
+  ${Industry} {
+    margin: ${spacing.xl} 0 ${spacing.md};
+  }
+
+  ${Industry}, ${Address} {
+    color: ${palette.gray};
+  }
+
+  ${H1} {
+    text-transform: lowercase;
+    margin-bottom: ${spacing.md};
   }
 
   background-image: url("${({ imageUrl }) => imageUrl}");
@@ -31,43 +47,20 @@ export const Header = styled.header`
   background-repeat: no-repeat;
   background-position: center center;
 
-  :after {
-    position: absolute;
-    top:0;
-    bottom: 0;
-    right: 0;
-    left: 0;
+  :before {
     content: '';
-    background-color: rgba(85,116,128,0.5);
-    background: linear-gradient(180deg, rgba(129,149,156,0.5) 0%, rgba(0,0,0,0.5) 100%);
+    ${cover()};
+    background-color: ${rgba(palette.black, 0.5)};
   }
 `;
-export const About = styled.div`
-  margin: auto 0;
-  ${HouseNameLarge} {
-    margin-bottom: ${spacing.xl};
-  }
-`;
-export const Ratings = styled(Number)`
-  margin: ${spacing.lg} 0 auto auto;
+
+export const Ratings = styled.div`
+  margin: auto 0 ${spacing.md} ${spacing.md};
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
 
   ${Votes} {
-    margin: ${spacing.lg} auto 0 auto;
+    margin: ${spacing.md} auto 0;
   }
-`;
-export const Score = styled.div`
-  font-size: ${calcRem('80px')};
-  display: flex;
-  align-items: center;
-  sup {
-    font-size: 50%;
-    top: 0;
-    left: -${calcRem('10px')};
-  }
-`;
-export const Industry = styled.div`
-  text-transform: uppercase;
 `;

@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 import { fontSize, fontWeight, lineHeight } from '../../../style';
 
+// TODO: remove not used / not generic
+
 export const H1 = styled.h1`
   font-weight: ${fontWeight.bold};
   font-size: ${fontSize.lg};
@@ -21,7 +23,8 @@ export const UserCounter = styled.span`
   font-size: ${fontSize.sm};
 `;
 
-export const Category = styled.span`
+export const Industry = styled.span`
+  display: inline-block;
   font-size: ${fontSize.sm};
   text-transform: uppercase;
 `;
@@ -63,6 +66,11 @@ export const FieldHint = styled.span`
 export const NumberLarge = styled.span`
   font-size: ${fontSize.xl};
   font-weight: ${fontWeight.light};
+  sup {
+    font-size: 50%;
+    top: -1.5rem;
+    left: -0.5rem;
+  }
 `;
 
 export const NumberSmall = styled.span`
