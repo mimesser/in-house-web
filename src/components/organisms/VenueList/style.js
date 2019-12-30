@@ -86,7 +86,6 @@ export const Main = styled.div.attrs(({ imageUrl }) => imageUrl && { style: { ba
   padding: ${spacing.md};
   > * {
     position: relative;
-    z-index: 1;
     color: ${palette.offWhite};
   }
 `;

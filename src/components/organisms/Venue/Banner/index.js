@@ -6,14 +6,14 @@ import { createStructuredSelector } from 'reselect';
 import { selectInDemo } from '../../../../store/demo';
 import { selectShowHelp } from '../../../../store/help';
 import { Votes } from '../Votes';
-import { Address, HouseNameLarge, Icon } from '../../../atoms';
-import { About, Back, Header, Industry, Ratings, Score } from './style';
+import { Address, ClearButton, H1, Icon, Industry, NumberLarge } from '../../../atoms';
+import { Header, Ratings } from './style';
 
 const Banner = ({
   venue: {
     industry: { name: industry } = {},
     name,
-    venueInfo: { address, city, state, zipCode, imageUrl },
+    venueInfo: { address, city, zipCode, imageUrl },
     votesCount,
     rating,
   },
@@ -26,22 +26,22 @@ const Banner = ({
   return (
     <Header imageUrl={imageUrl} showHelp={showHelp}>
       <Link href={href}>
-        <Back>
+        <ClearButton>
           <Icon icon="arrow-left" size={1.5} />
-        </Back>
+        </ClearButton>
       </Link>
       <div>
-        <About>
+        <div>
           <Industry>{industry}</Industry>
-          <HouseNameLarge>{name}</HouseNameLarge>
+          <H1>{name}</H1>
           <Address>
             {address}
             <br />
-            {city}, {state} {zipCode}
+            {city}, {zipCode}
           </Address>
-        </About>
+        </div>
         <Ratings>
-          <Score>
+          <NumberLarge>
             {ratingParts ? (
               <>
                 {ratingParts[0]}.<sup>{ratingParts[1]}</sup>
@@ -49,7 +49,7 @@ const Banner = ({
             ) : (
               '—'
             )}
-          </Score>
+          </NumberLarge>
           <Votes count={votesCount} />
         </Ratings>
       </div>

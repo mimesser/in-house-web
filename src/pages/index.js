@@ -13,15 +13,15 @@ const LandingPage = styled(Page)`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
-  :after {
+  :before {
     ${cover()};
     content: '';
     background-color: ${palette.black};
     opacity: 0.7;
   }
 
-  > * {
-    z-index: 1;
+  > *:not(:first-child) {
+    position: relative;
     color: ${palette.offWhite};
   }
 

@@ -10,10 +10,15 @@ const Container = styled.div`
   }
 `;
 
+const { NumberLarge } = textComponents;
+
 storiesOf('Typography', module).add('Text styles', () => (
   <Container>
     {Object.entries(textComponents).map(([name, Component]) => (
       <Component key={name}>{name}</Component>
     ))}
+    <NumberLarge>
+      9.<sup>2</sup>
+    </NumberLarge>
   </Container>
 ));
