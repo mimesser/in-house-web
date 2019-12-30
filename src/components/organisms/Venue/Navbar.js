@@ -12,17 +12,8 @@ const linkTextStyle = ({ active }) => {
   if (active) {
     return css`
       color: ${palette.primary};
-      font-weight: ${fontWeight.bold};
+      border-bottom-color: currentColor;
       position: relative;
-      :after {
-        content: '';
-        display: block;
-        border-bottom: ${calcRem('2px')} solid;
-        position: absolute;
-        width: 100%;
-        left: 0;
-        bottom: -${calcRem('2px')};
-      }
     `;
   }
 
@@ -34,10 +25,12 @@ const linkTextStyle = ({ active }) => {
 const A = styled.a`
   flex: 1;
   text-align: center;
-  padding: ${spacing.sm};
-  color: ${palette.text};
+  padding: ${spacing.md};
+  color: ${palette.gray};
+  font-weight: ${fontWeight.bold};
   text-decoration: none;
-  transition: color 0.5s;
+  transition: color 0.5s, border-color 0.5s;
+  border-bottom: ${calcRem('6px')} solid transparent;
   ${linkTextStyle};
 `;
 
@@ -51,7 +44,7 @@ const Nav = styled.nav`
   display: flex;
   flex-shrink: 0; // safari
   background-color: ${palette.white};
-  ${panelBoxShadow};
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
 `;
 
 const TabHeader = ({ id, tab: { path, label, secured, help }, active, authorized }) => {
