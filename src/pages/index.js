@@ -6,10 +6,15 @@ import { Page } from '../components/templates';
 import { Button, H1, H2, Break } from '../components/atoms';
 import { LandingHelp } from '../components/organisms';
 import { DEMO_VENUES_ID } from '../store/demo/data';
-import { spacing, palette, lineHeight, fontSize, cover } from '../style';
+import { spacing, palette, lineHeight, fontSize, cover, breakpoints } from '../style';
 
 const LandingPage = styled(Page)`
-  background-image: url(https://in-house.azureedge.net/webstatic/unsplash.png);
+  @media screen and (max-width: ${breakpoints.sm}) {
+    background-image: url(https://in-house.azureedge.net/webstatic/unsplash.png);
+  }
+  @media screen and (min-width: ${breakpoints.sm}) {
+    background-image: url(https://in-house.azureedge.net/webstatic/unsplash-big.png);
+  }
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
