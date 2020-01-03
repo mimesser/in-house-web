@@ -1,19 +1,19 @@
 import React from 'react';
 
-import { Button, FormGroup } from '../../../atoms';
-import { Title } from '../newItemStyle';
-import { StepLayout } from '../../../molecules';
+import { FormGroup } from '../../../atoms';
+import { StepLayout } from './StepLayout';
+import { BackButton, NextButton } from '../../../molecules';
 
-export const Step2 = ({ venue: { name }, answer, question, edit, setStep }) => (
+export const Step2 = ({ answer, question, edit, setStep }) => (
   <StepLayout
+    head="confirm"
     main={
       <>
-        <Title houseName={name} action="confirm" />
-        <FormGroup highlightValue>
+        <FormGroup>
           <label>mink question</label>
           <p>{question}</p>
         </FormGroup>
-        <FormGroup highlightValue>
+        <FormGroup>
           <label>insider answer</label>
           <p>{answer}</p>
         </FormGroup>
@@ -21,10 +21,8 @@ export const Step2 = ({ venue: { name }, answer, question, edit, setStep }) => (
     }
     commands={
       <>
-        <Button secondary onClick={edit}>
-          back
-        </Button>
-        <Button onClick={() => setStep(3)}>next</Button>
+        <BackButton secondary onClick={edit} />
+        <NextButton onClick={() => setStep(3)} />
       </>
     }
     step={2}

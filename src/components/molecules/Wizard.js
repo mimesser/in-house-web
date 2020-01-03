@@ -31,15 +31,9 @@ export const BackButton = styled(ClearButton).attrs(({ children = 'back' }) => (
 `;
 
 const Commands = styled.div`
-  padding: ${spacing.lg} ${spacing.xxl};
+  padding: ${spacing.xxl};
   display: flex;
   margin-top: auto;
-`;
-
-export const FormTip = styled.div`
-  margin: ${spacing.xs} 0 ${spacing.xl};
-  color: ${palette.lightGray};
-  font-size: ${fontSize.xs};
 `;
 
 const renderHeader = head => {
@@ -51,11 +45,11 @@ const renderHeader = head => {
 };
 
 // TODO: render props instead?
-export const StepLayout = ({ head, main, commands, step, totalSteps }) => (
+export const StepLayout = ({ head, main, commands, step, hideProgress, totalSteps }) => (
   <>
     <Main>
       {renderHeader(head)}
-      <Progress step={step} totalSteps={totalSteps} />
+      {!hideProgress && <Progress step={step} totalSteps={totalSteps} />}
       {main}
     </Main>
     <Commands>{commands}</Commands>
