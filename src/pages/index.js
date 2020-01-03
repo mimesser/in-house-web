@@ -18,6 +18,7 @@ const LandingPage = styled(Page)`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+  position: relative;
   :before {
     ${cover()};
     content: '';
