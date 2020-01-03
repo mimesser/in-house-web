@@ -31,6 +31,7 @@ export const GlobalStyle = createGlobalStyle`
       color: ${palette.text};
       background-color: ${appBackground};
       min-width: ${breakpoints.xs};
+      min-height: 650px;
       word-break: break-word;
 
       > * {
