@@ -1,18 +1,17 @@
 import React from 'react';
 
-import { Button } from '../../../atoms';
 import { FairSpeech } from '../FairSpeech';
-import { StepLayout } from '../../../molecules';
+import { BackButton, NextButton } from '../../../molecules';
+import { StepLayout } from './StepLayout';
 
 export const Step3 = ({ edit, setStep }) => (
   <StepLayout
+    hideProgress
     main={<FairSpeech acceptedTerms={false} toggleTerms={() => setStep(4)} />}
     commands={
       <>
-        <Button secondary onClick={edit}>
-          back
-        </Button>
-        <Button disabled>next</Button>
+        <BackButton secondary onClick={edit} />
+        <NextButton disabled>yes, post</NextButton>
       </>
     }
     step={3}

@@ -1,36 +1,46 @@
 import React from 'react';
+import styled from 'styled-components';
 import Link from 'next/link';
 
-import { Button, Patent } from '../../../atoms';
-import { CounterInput, StepLayout, FormTip } from '../../../molecules';
-import { Title } from '../newItemStyle';
+import { H1, Patent } from '../../../atoms';
+import { CounterInput, BackButton, NextButton } from '../../../molecules';
+import { calcRem, palette } from '../../../../style';
+import { StepLayout } from './StepLayout';
 
 const MAX_QUESTION_LENGTH = 120;
 const MAX_ANSWER_LENGTH = 25;
 
-export const Step1 = ({ venue: { id, name }, answer, setAnswer, question, setQuestion, setStep }) => (
+const Heading = styled(H1).attrs(() => ({
+  children: (
+    <>
+      new mink©️
+      <Patent />
+    </>
+  ),
+}))`
+  position: relative;
+  ${Patent} {
+    position: absolute;
+    left: 0;
+    top: ${calcRem('42px')};
+    color: ${palette.gray};
+  }
+`;
+
+export const Step1 = ({ venue: { id }, answer, setAnswer, question, setQuestion, setStep }) => (
   <StepLayout
+    head={<Heading />}
     main={
       <>
-        <Title
-          houseName={name}
-          verb="add"
-          action={
-            <>
-              new MINK<sup>©</sup>
-              <Patent />
-            </>
-          }
-        />
         <CounterInput
           value={question}
           onChange={setQuestion}
           multiline
           max={MAX_QUESTION_LENGTH}
           rows={4}
-          placeholder="eg: “what is the conference room’s wifi password”"
+          placeholder="eg: what is the conference room’s wifi password"
+          subtext="nothing someone could guess or google"
         />
-        <FormTip>(nothing someone could guess or google.)</FormTip>
         <CounterInput
           value={answer}
           onChange={setAnswer}
@@ -38,18 +48,16 @@ export const Step1 = ({ venue: { id, name }, answer, setAnswer, question, setQue
           placeholder="secret answer"
           autocomplete="off"
           spellcheck="false"
+          subtext="no spaces / not case sensitive"
         />
-        <FormTip>no spaces / not case sensitive</FormTip>
       </>
     }
     commands={
       <>
         <Link href={`/houses?id=${id}&tab=mink`} as={`/houses/${id}/mink`}>
-          <Button secondary>Cancel</Button>
+          <BackButton>cancel</BackButton>
         </Link>
-        <Button onClick={() => setStep(2)} disabled={!question.trim() || !answer.trim()}>
-          next
-        </Button>
+        <NextButton disabled={!question.trim() || !answer.trim()} onClick={() => setStep(2)} />
       </>
     }
     step={1}

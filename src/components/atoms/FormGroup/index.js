@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { fontSize, spacing, palette } from '../../../style';
+
+import { fontWeight, spacing, palette } from '../../../style';
 
 export const FormGroup = styled.div`
   margin-top: ${({ marginless }) => (marginless ? 0 : spacing.xl)};
@@ -8,16 +9,13 @@ export const FormGroup = styled.div`
     color: ${palette.black};
   }
 
-  > ${({ highlightValue }) => (highlightValue ? 'p' : 'label')} {
-    font-size: ${fontSize.large};
-    color: ${palette.primary};
-  }
-
   > label {
-    color: ${({ highlightValue }) => highlightValue && palette.gray};
+    text-transform: uppercase;
+    color: ${palette.gray};
   }
 
   > p {
-    margin: 0;
+    margin-top: ${spacing.md};
+    font-weight: ${fontWeight.bold};
   }
 `;
