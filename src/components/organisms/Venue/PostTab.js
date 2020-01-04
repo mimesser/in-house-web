@@ -11,8 +11,6 @@ import { ItemText, ItemTitle, ItemTime, Main, TabLayout, TabTitle } from './tabS
 import VotePost from './VotePost';
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
-import { ScoreAndVoters } from './ScoreAndVoters';
-import { SharePreviewCard } from './sharePreviewStyle';
 import { Dial } from '../../molecules';
 import { Votes } from './Votes';
 
@@ -80,16 +78,23 @@ const PostTab = ({ venue: { id, posts }, loadPosts, setSelectedPost, selectedPos
 
   const renderSharePreview = useCallback(
     id => {
-      const { title, text, voteCount, voteRating, myVote } = findPost(id, posts);
+      const { title, text, voteCount, voteRating, myVote, created } = findPost(id, posts);
 
       return (
-        <SharePreviewCard>
-          <ScoreAndVoters voteCount={voteCount} voteRating={myVote && voteRating} sliderSize={70} />
-          <Main>
-            <ItemTitle>{title}</ItemTitle>
-            <ItemText>{text}</ItemText>
-          </Main>
-        </SharePreviewCard>
+        <PostCard>
+          <div>
+            <Dial size={65} readonly value={myVote && voteRating} />
+            <Main>
+              <ItemTitle>{title}</ItemTitle>
+              <Break />
+              <div>
+                <Votes count={voteCount} />
+                <ItemTime dateTime={created}>{formatDate(created)}</ItemTime>
+              </div>
+            </Main>
+          </div>
+          <ItemText>{text}</ItemText>
+        </PostCard>
       );
     },
     [posts],
