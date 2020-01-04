@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { palette, spacing } from '../../../style';
 import { withHelp } from './withHelp';
@@ -7,6 +7,12 @@ import Overlay from '../Overlay';
 import { Icon } from '../Icon';
 import { ClearButton } from '../Button';
 import { setBoundariesElement } from '../Tip';
+
+const onStyles = ({ showHelp }) =>
+  showHelp &&
+  css`
+    opacity: 1;
+  `;
 
 const Btn = styled(ClearButton)`
   padding: ${spacing.lg};
@@ -22,8 +28,10 @@ const Btn = styled(ClearButton)`
   flex-shrink: 0;
   // TODO: should be relative to modal z-index
   z-index: 1000;
-  opacity: 0.35;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  opacity: 0.35;
+  transition: opacity 1.5s;
+  ${onStyles};
 `;
 
 const HelpOverlay = styled(Overlay)`
@@ -50,7 +58,7 @@ const HelpToggle = ({ showHelp, hasTips, toggleHelp, containerRef }) => {
     <>
       {showHelp && <HelpOverlay onClick={toggleHelp} />}
       {hasTips && (
-        <Btn onClick={handleClick}>
+        <Btn onClick={handleClick} showHelp={showHelp}>
           <Icon icon={showHelp ? 'close' : 'question-mark'} />
         </Btn>
       )}

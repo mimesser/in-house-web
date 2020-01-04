@@ -4,8 +4,8 @@ import { opacify } from 'polished';
 import { cover, theme } from '../../../style';
 
 const MODAL_Z_INDEX = 999;
-const BG_HIDE = `background-color: ${opacify(-1, theme.colors.darkGray)}`;
-const BG_SHOW = `background-color: ${theme.colors.darkGray}`;
+const BG_HIDE = `background-color: ${opacify(-1, theme.colors.primary)}`;
+const BG_SHOW = `background-color: ${opacify(-0.2, theme.colors.primary)}`;
 
 export const Overlay = styled.div`
   ${cover()};
