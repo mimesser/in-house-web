@@ -14,8 +14,8 @@ import { selectShowHelp } from '../../../../store/help';
 import { Modal } from '../../Modal';
 import { RateConfirmation } from '../RateConfirmation';
 import { Dial } from '../../../molecules';
-import { ItemTitle, Layout, SubTitle } from '../openCardStyle';
-import { fontSize, spacing, theme } from '../../../../style';
+import { ItemTitle, Layout } from '../openCardStyle';
+import { fontSize, spacing, theme, fontWeight, palette } from '../../../../style';
 
 const RateItemTitle = styled(ItemTitle)`
   color: ${({ rated }) => rated && theme.colors.lightGray};
@@ -23,7 +23,12 @@ const RateItemTitle = styled(ItemTitle)`
   margin-top: ${spacing.xxs};
 `;
 
-const RateSubTitle = styled(SubTitle)`
+// TODO
+const RateSubTitle = styled.div`
+  font-size: ${fontSize.lg};
+  font-weight: ${fontWeight.bold}
+  color: ${palette.lightGray};
+  margin-bottom: ${spacing.lg};
   visibility: ${({ rated }) => (rated ? 'visible' : 'hidden')};
 `;
 

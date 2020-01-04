@@ -64,13 +64,6 @@ export const Layout = styled.div`
   }
 `;
 
-export const SubTitle = styled.div`
-   font-size: ${fontSize.lg};
-   font-weight: ${fontWeight.bold}
-   color: ${palette.lightGray};
-   margin-bottom: ${spacing.lg};
-`;
-
 export const VoteRow = styled.div`
   z-index: 1000;
   background: ${appBackground};

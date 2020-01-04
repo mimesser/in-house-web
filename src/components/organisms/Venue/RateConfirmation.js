@@ -1,25 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { spacing } from '../../../style';
 import { Dial } from '../../molecules';
-import { ItemTitle, Layout, SubTitle, ItemDate } from './openCardStyle';
-import { formatDate } from '../../../utils/format';
-import { fontSize, spacing, palette } from '../../../style';
+import { H1, H2 } from '../../atoms';
+import { Layout } from './openCardStyle';
 
 const RateConfirmationLayout = styled(Layout)`
   margin-top: ${spacing.xxl};
 
-  ${ItemDate} {
-    margin-bottom: ${spacing.lg};
-  }
-
-  ${ItemTitle} {
-    color: ${palette.lightGray};
-    font-size: ${fontSize.lg};
-  }
-
-  ${SubTitle} {
-    margin-bottom: ${spacing.xxs};
+  ${H2} {
+    margin-top: ${spacing.xxl};
   }
 
   ${Dial} {
@@ -28,11 +19,10 @@ const RateConfirmationLayout = styled(Layout)`
   }
 `;
 
-export const RateConfirmation = ({ title, created, voteRating, voteCount }) => (
+export const RateConfirmation = ({ title, voteRating, voteCount }) => (
   <RateConfirmationLayout>
-    {created && <ItemDate dateTime={created}>{formatDate(created)}</ItemDate>}
-    <SubTitle>team average</SubTitle>
-    <ItemTitle>{title}</ItemTitle>
-    <Dial readonly value={voteRating} size={350} padd={78} inverse voteCount={voteCount} />
+    <H1>team average</H1>
+    <H2>{title}</H2>
+    <Dial readonly value={voteRating} size={450} padd={78} inverse voteCount={voteCount} />
   </RateConfirmationLayout>
 );
