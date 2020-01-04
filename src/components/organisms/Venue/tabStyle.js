@@ -1,33 +1,38 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
-import { calcRem, spacing, fontSize, palette } from '../../../style';
-import { Card, Button } from '../../atoms';
-import { PokeButton } from '../../molecules';
+import { calcRem, spacing, fontSize, palette, fontWeight } from '../../../style';
+import { Card, Button, Break } from '../../atoms';
+import { PokeButton, Dial } from '../../molecules';
+import { Votes } from './Votes';
 
 export const CARD_MIN_HEIGHT = calcRem('125px');
 
 export const TabTitle = styled.div`
-  margin: ${spacing.lg} 0;
+  margin: ${spacing.xl} ${spacing.xxl};
   text-transform: uppercase;
+  color: ${palette.mediumGray};
 `;
 
 export const ItemTime = styled.time`
-  font-size: ${fontSize.xs};
   color: ${palette.lightGray};
 `;
 
 export const ItemTitle = styled.div`
   margin-top: ${spacing.xxs};
+  color: ${palette.primary};
+  font-size: ${fontSize.md};
+  font-weight: ${fontWeight.bold};
+  width: 80%;
 `;
 
 export const ItemText = styled.div`
   font-size: ${fontSize.sm};
   color: ${palette.lightGray};
-  margin-top: ${spacing.xxs};
-  display: block;
-  display: -webkit-box;
-  max-width: 200px;
-  -webkit-line-clamp: 2;
+  margin-top: ${spacing.xl};
+  && {
+    display: -webkit-box;
+  }
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -37,55 +42,44 @@ export const Main = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-`;
-
-const adjustForPreview = ({ preview }) =>
-  preview &&
-  css`
-    border: none;
-    background: none;
-    box-shadow: none;
-  `;
-export const ItemCard = styled(Card)`
-  text-transform: lowercase;
-
-  ${ItemTitle} {
-    font-size: ${({ large }) => (large ? `${fontSize.md}` : `${fontSize.sm}`)};
-  }
-
-  ${adjustForPreview};
+  color: ${palette.gray};
 `;
 
 export const TabLayout = styled.div`
-   display: flex;
-   flex: 1;
-   flex-direction: column;
-   padding: 0 ${spacing.md} ${spacing.md} ${spacing.md};
-   flex-shrink: 0; // safari
-   flex-basis: auto; // safari
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding-bottom: ${spacing.md};
+  flex-shrink: 0; // safari
+  flex-basis: auto; // safari
 
-   ${Card} {
-      position: relative;
-      min-height: ${CARD_MIN_HEIGHT};
-      padding: ${spacing.lg} ${spacing.md} ${spacing.lg};
+  ${Card} {
+    position: relative;
+    min-height: ${CARD_MIN_HEIGHT};
+    border-bottom: 1px solid ${palette.lightGray};
+    padding: ${spacing.xl};
 
-      :last-of-type {
-         margin-bottom: ${spacing.lg};
-      }
+    ${PokeButton} {
+      position: absolute;
+      top: ${spacing.lg};
+      right: ${spacing.xl};
+    }
+    ${Dial} {
+      margin-right: ${spacing.xl};
+    }
+    ${Break} {
+      color: ${palette.primary};
+      height: ${calcRem('2px')};
+      width: ${calcRem('40px')};
+      margin: ${spacing.sm} 0;
+    }
+    ${Votes} {
+      margin-right: ${spacing.sm};
+    }
+  }
 
-      ${PokeButton} {
-         position: absolute;
-         top: ${spacing.md};
-         right: ${spacing.xl};
-      }
-   }
-
-   ${Card} + ${Card} {
-      margin-top: ${spacing.md};
-   }
-
-   > ${Button} {
-       min-width: 10rem;
-       margin: auto;
-   }
+  > ${Button} {
+    align-self: flex-start;
+    margin: ${spacing.xxl};
+  }
 `;

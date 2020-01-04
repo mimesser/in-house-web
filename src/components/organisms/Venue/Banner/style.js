@@ -38,7 +38,6 @@ export const Header = styled.header`
   }
 
   ${H1} {
-    text-transform: lowercase;
     margin-bottom: ${spacing.md};
   }
 

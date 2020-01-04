@@ -4,48 +4,37 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Link from 'next/link';
 
-import { formatDate } from '../../../utils/format';
 import { loadPosts, selectSelectedPost, setSelectedPost } from '../../../store/venues';
-import { Loader, Button, HelpTip } from '../../atoms';
-import { ItemCard, ItemText, ItemTitle, ItemTime, Main, TabLayout, TabTitle } from './tabStyle';
+import { Loader, Button, HelpTip, Break, Card } from '../../atoms';
+import { formatDate } from '../../../utils/format';
+import { ItemText, ItemTitle, ItemTime, Main, TabLayout, TabTitle } from './tabStyle';
 import VotePost from './VotePost';
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
 import { ScoreAndVoters } from './ScoreAndVoters';
-import { spacing } from '../../../style';
 import { SharePreviewCard } from './sharePreviewStyle';
+import { Dial } from '../../molecules';
+import { Votes } from './Votes';
 
-const PostCard = styled(ItemCard)`
-  ${ScoreAndVoters} {
-    margin-top: ${spacing.lg};
-  }
+const PostCard = styled(Card)``;
 
-  ${ItemTitle} {
-    width: 80%;
-  }
-`;
-
-const Post = ({
-  post: { id, created, title, text, voteCount, voteRating, myVote },
-  large,
-  setSelectedPost,
-  withHelp,
-}) => {
+const Post = ({ post: { id, created, title, text, voteCount, voteRating, myVote }, setSelectedPost, withHelp }) => {
   const open = useCallback(() => setSelectedPost(id), [id]);
 
   const card = (
-    <PostCard large={large} onClick={open}>
-      <ScoreAndVoters
-        voteCount={voteCount}
-        voteRating={myVote && voteRating}
-        sliderSize={large ? 80 : 65}
-        large={large}
-      />
-      <Main>
-        <ItemTime dateTime={created}>{formatDate(created)}</ItemTime>
-        <ItemTitle>{title}</ItemTitle>
-        <ItemText>{text}</ItemText>
-      </Main>
+    <PostCard onClick={open}>
+      <div>
+        <Dial size={65} readonly value={myVote && voteRating} />
+        <Main>
+          <ItemTitle>{title}</ItemTitle>
+          <Break />
+          <div>
+            <Votes count={voteCount} />
+            <ItemTime dateTime={created}>{formatDate(created)}</ItemTime>
+          </div>
+        </Main>
+      </div>
+      <ItemText>{text}</ItemText>
       <PrivateShareButton id={id} />
     </PostCard>
   );
@@ -58,12 +47,12 @@ const Post = ({
   );
 };
 
-const renderSection = (title, posts, setSelectedPost, large) =>
+const renderSection = (title, posts, setSelectedPost) =>
   posts.length > 0 && (
     <>
       <TabTitle>{title}</TabTitle>
       {posts.map((p, i) => (
-        <Post post={p} key={p.id} large={large} setSelectedPost={setSelectedPost} withHelp={i === 0} />
+        <Post post={p} key={p.id} setSelectedPost={setSelectedPost} withHelp={i === 0} />
       ))}
     </>
   );
@@ -111,7 +100,7 @@ const PostTab = ({ venue: { id, posts }, loadPosts, setSelectedPost, selectedPos
     <TabLayout>
       {posts ? renderPosts(posts, setSelectedPost, selectedPost) : <Loader big />}
       <Link href={`/houses?id=${id}&tab=post&new`} as={`/houses/${id}/post/new`} passHref>
-        <Button>new post</Button>
+        <Button icon="arrow-right">new</Button>
       </Link>
       <VotePost />
       <PrivateShare type="post" renderItem={renderSharePreview} getItemTitle={getTitleForShare} />

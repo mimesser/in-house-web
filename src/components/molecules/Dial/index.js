@@ -5,7 +5,7 @@ import isNumber from 'lodash/isNumber';
 import { CircleSlider, NumberLarge, NumberSmall, Icon } from '../../atoms';
 import { fontSize, palette } from '../../../style';
 
-const FONT_RATIO = 3.5;
+const FONT_RATIO = 3.6;
 
 const SuperScriptDecimalSpan = styled.span`
   vertical-align: super;

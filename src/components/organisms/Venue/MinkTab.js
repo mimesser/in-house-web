@@ -5,8 +5,8 @@ import styled from 'styled-components';
 import Link from 'next/link';
 
 import { loadMinks, setSelectedMink, setAddedMinkId, selectSelectedMink } from '../../../store/venues';
-import { Loader, Button, HelpTip, Patent } from '../../atoms';
-import { TabLayout, ItemCard, Main, ItemTitle, ItemTime, TabTitle } from './tabStyle';
+import { Loader, Button, HelpTip, Patent, Card } from '../../atoms';
+import { TabLayout, Main, ItemTitle, ItemTime, TabTitle } from './tabStyle';
 import { formatDate } from '../../../utils/format';
 import VoteMink from './VoteMink';
 import NewMinkElected from './NewMinkElected';
@@ -15,16 +15,11 @@ import PrivateShareButton from './PrivateShareButton';
 import { ScoreAndVoters } from './ScoreAndVoters';
 import { SharePreviewCard } from './sharePreviewStyle';
 
-const MinkCard = styled(ItemCard)`
-  ${ItemTitle} {
-    width: 80%;
-  }
-`;
+const MinkCard = styled(Card)``;
 
 const Mink = ({
   mink: { id, created, question, voteCount, voteRating, myVote },
   isNew,
-  large,
   setSelectedMink,
   setAddedMinkId,
   withHelp,
@@ -39,13 +34,8 @@ const Mink = ({
   }, [isNew, setAddedMinkId]);
 
   const card = (
-    <MinkCard large={large} onClick={open} ref={ref}>
-      <ScoreAndVoters
-        voteCount={voteCount}
-        voteRating={myVote && voteRating}
-        sliderSize={large ? 80 : 65}
-        large={large}
-      />
+    <MinkCard onClick={open} ref={ref}>
+      <ScoreAndVoters voteCount={voteCount} voteRating={myVote && voteRating} sliderSize={65} />
       <Main>
         <ItemTime dateTime={created}>{formatDate(created)}</ItemTime>
         <ItemTitle>{question}</ItemTitle>
@@ -74,7 +64,7 @@ const renderMinks = (minks, setSelectedMink, addedMinkId, setAddedMinkId, select
             Top MINK<sup>©</sup>
             <Patent />
           </TabTitle>
-          <Mink mink={minks[0]} large setSelectedMink={setSelectedMink} withHelp />
+          <Mink mink={minks[0]} setSelectedMink={setSelectedMink} withHelp />
         </>
       )}
       {minks.length > 1 && (

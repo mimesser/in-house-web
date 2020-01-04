@@ -4,30 +4,23 @@ import styled from 'styled-components';
 import { createStructuredSelector } from 'reselect';
 import isNil from 'lodash/isNil';
 
-import { Loader, HelpTip } from '../../atoms';
+import { Loader, HelpTip, Card } from '../../atoms';
 import { setSelectedTag, loadRates, selectSelectedTag } from '../../../store/venues';
-import { ItemCard, TabLayout, Main, ItemTitle, TabTitle } from './tabStyle';
+import { TabLayout, Main, ItemTitle, TabTitle } from './tabStyle';
 import { ScoreAndVoters } from './ScoreAndVoters';
 import RateTag from './RateTag';
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
-import { calcRem, spacing } from '../../../style';
 import { SharePreviewCard } from './sharePreviewStyle';
 
-const RateCard = styled(ItemCard)`
-  min-height: ${({ preview }) => !preview && calcRem('150px')};
-
-  ${Main} {
-    margin-top: ${spacing.lg};
-  }
-`;
+const RateCard = styled(Card)``;
 
 const getTeamRateIfRated = (userRate, voteRating) => (isNil(userRate) ? undefined : voteRating);
 
 const Tag = ({ name, definitionId, userRate, voteCount, voteRating, setSelectedTag, withHelp }) => {
   const open = useCallback(() => setSelectedTag(definitionId), [definitionId]);
   const card = (
-    <RateCard large onClick={open}>
+    <RateCard onClick={open}>
       <ScoreAndVoters voteCount={voteCount} voteRating={getTeamRateIfRated(userRate, voteRating)} sliderSize={70} />
       <Main>
         <ItemTitle>{name}</ItemTitle>
