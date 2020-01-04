@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { HelpTip, Icon } from '../../../atoms';
+import { HelpTip, Icon, Break } from '../../../atoms';
 
 import {
   downvotePost,
@@ -16,7 +16,7 @@ import {
 } from '../../../../store/venues';
 import { Modal } from '../../Modal';
 import { RateConfirmation } from '../RateConfirmation';
-import { ItemDate, ItemTitle, Layout, VoteButton, VoteRow } from '../openCardStyle';
+import { ItemDate, ItemTitle, ItemText, Layout, VoteButton, VoteRow } from '../openCardStyle';
 import { formatDate } from '../../../../utils/format';
 import { FlagItem } from '../FlagItem';
 
@@ -30,27 +30,28 @@ const VotePost = ({
   downvotePost,
   togglePostFlag,
 }) => {
+  const upvoted = myVote === 1;
   const downvoted = myVote === -1;
+
   return (
     <Layout>
-      <div>
-        <ItemDate dateTime={created}>{formatDate(created)}</ItemDate>
-        <ItemTitle>{title}</ItemTitle>
-        {text}
-      </div>
+      <ItemDate dateTime={created}>{formatDate(created)}</ItemDate>
+      <ItemTitle>{title}</ItemTitle>
+      <Break />
+      <ItemText>{text}</ItemText>
       <VoteRow>
         <HelpTip placement="top" tip="agree or disagree">
           <VoteWrap>
-            <VoteButton onClick={upvotePost} selected={myVote === 1}>
-              <Icon size={4} icon="arrow-up-circle" />
+            <VoteButton onClick={upvotePost} selected={upvoted}>
+              <Icon size={4} icon={upvoted ? 'arrow-up-circle-full' : 'arrow-up-circle'} />
             </VoteButton>
             <VoteButton onClick={downvotePost} selected={downvoted}>
-              <Icon size={4} icon="arrow-down-circle" />
+              <Icon size={4} icon={downvoted ? 'arrow-down-circle-full' : 'arrow-down-circle'} />
             </VoteButton>
           </VoteWrap>
         </HelpTip>
-        <FlagItem flagged={wasFlaggedByMe} toggleFlag={togglePostFlag} />
       </VoteRow>
+      <FlagItem flagged={wasFlaggedByMe} toggleFlag={togglePostFlag} />
     </Layout>
   );
 };

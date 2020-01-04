@@ -1,25 +1,26 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-import { appBackground, fontSize, fontWeight, palette, spacing } from '../../../style';
-import { Button, ClearButton } from '../../atoms';
+import { appBackground, fontSize, fontWeight, palette, spacing, calcRem } from '../../../style';
+import { ClearButton, H1, Break } from '../../atoms';
 import { Dial } from '../../molecules';
 
 export const ItemDate = styled.div`
-  color: ${palette.lightGray};
-  font-size: ${fontSize.sm};
+  color: ${palette.gray};
   margin-bottom: ${spacing.sm};
 `;
 
-export const ItemTitle = styled.div`
-  font-size: ${fontSize.xl};
-  font-weight: ${fontWeight.normal};
+export const ItemTitle = styled(H1)`
   // keep space for 'you rated'
   margin-bottom: ${({ keepSpace }) => (keepSpace ? '3.25rem' : spacing.sm)};
 `;
 
+export const ItemText = styled.div`
+  color: ${palette.darkGray};
+`;
+
 export const VoteButton = styled(ClearButton)`
-  color: ${({ selected }) => (selected ? palette.primary : palette.lightGray)};
+  color: ${palette.primary};
   &[disabled] {
     color: ${palette.lightGray};
   }
@@ -31,19 +32,16 @@ export const VoteButton = styled(ClearButton)`
 const flagText = ({ flagged }) =>
   flagged &&
   css`
-    color: ${palette.lightGray};
+    color: ${palette.darkGray};
+    font-weight: ${fontWeight.bold};
   `;
 
-export const FlagButton = styled(Button).attrs(() => ({
-  secondary: true,
-}))`
-  margin: 0 auto;
-  padding: ${spacing.tiny} ${spacing.lg} ${spacing.tiny} ${spacing.sm};
-  display: flex;
-  align-items: center;
-  > span {
-    margin-left: ${spacing.sm};
-    ${flagText};
+export const FlagButton = styled(ClearButton)`
+  color: ${palette.gray};
+  font-size: ${fontSize.md};
+  ${flagText};
+  > span:last-of-type {
+    margin-left: ${spacing.lg};
   }
 `;
 
@@ -52,7 +50,13 @@ export const Layout = styled.div`
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  padding-top: ${spacing.xxl};
+  padding-top: ${spacing.xl};
+
+  ${Break} {
+    margin: ${spacing.sm} 0 ${spacing.lg};
+    width: ${calcRem('80px')};
+    height: ${calcRem('3px')};
+  }
 
   ${Dial} {
     margin-top: -100px;
@@ -72,5 +76,5 @@ export const VoteRow = styled.div`
   background: ${appBackground};
   display: flex;
   align-items: center;
-  margin-top: ${spacing.xxxl};
+  margin: ${spacing.xxl} 0;
 `;
