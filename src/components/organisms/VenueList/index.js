@@ -4,14 +4,13 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Link from 'next/link';
 
-import { Loader, ClearButton, Icon, Button } from '../../atoms';
+import { Loader, ClearButton, Icon, Button, Card } from '../../atoms';
 
 import { selectVenues } from '../../../store/venues';
 import { selectInDemo } from '../../../store/demo';
 import { VenueCard } from './VenueCard';
 import { SearchBox, Layout, NoResults } from './style';
 import PrivateShare from '../Venue/PrivateShare';
-import { SharePreviewCard } from '../Venue/sharePreviewStyle';
 import { Main, ItemText, ItemTitle } from '../Venue/tabStyle';
 
 const SearchBoxIcon = ({ applyFilter, clear }) =>
@@ -48,7 +47,7 @@ const List = ({ venues, inDemo }) => {
       } = findVenue(id, venues);
 
       return (
-        <SharePreviewCard>
+        <Card>
           <Main>
             <ItemTitle>{name}</ItemTitle>
             <ItemText>{address}</ItemText>
@@ -57,7 +56,7 @@ const List = ({ venues, inDemo }) => {
             </ItemText>
             <ItemText>{zipCode}</ItemText>
           </Main>
-        </SharePreviewCard>
+        </Card>
       );
     },
     [venues],

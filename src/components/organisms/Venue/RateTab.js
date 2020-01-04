@@ -11,7 +11,6 @@ import { ScoreAndVoters } from './ScoreAndVoters';
 import RateTag from './RateTag';
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
-import { SharePreviewCard } from './sharePreviewStyle';
 
 const RateCard = styled(Card)``;
 
@@ -49,12 +48,12 @@ const RateTab = ({ venue: { rates: tags }, setSelectedTag, loadRates, selectedTa
       const { name, voteCount, userRate, voteRating } = findTag(id, tags);
 
       return (
-        <SharePreviewCard>
+        <RateCard>
           <ScoreAndVoters voteCount={voteCount} voteRating={getTeamRateIfRated(userRate, voteRating)} sliderSize={70} />
           <Main>
             <ItemTitle>{name}</ItemTitle>
           </Main>
-        </SharePreviewCard>
+        </RateCard>
       );
     },
     [tags],

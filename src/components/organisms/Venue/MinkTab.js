@@ -5,17 +5,50 @@ import styled from 'styled-components';
 import Link from 'next/link';
 
 import { loadMinks, setSelectedMink, setAddedMinkId, selectSelectedMink } from '../../../store/venues';
-import { Loader, Button, HelpTip, Patent, Card } from '../../atoms';
+import { palette, spacing } from '../../../style';
+import { Loader, Button, HelpTip, Patent, Card, Break } from '../../atoms';
 import { TabLayout, Main, ItemTitle, ItemTime, TabTitle } from './tabStyle';
 import { formatDate } from '../../../utils/format';
 import VoteMink from './VoteMink';
 import NewMinkElected from './NewMinkElected';
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
-import { ScoreAndVoters } from './ScoreAndVoters';
-import { SharePreviewCard } from './sharePreviewStyle';
+import { Dial } from '../../molecules/Dial';
+import { Votes } from './Votes';
 
 const MinkCard = styled(Card)``;
+
+const TopMinkContainer = styled.div`
+  background-color: ${palette.primary};
+  margin-top: 1px;
+  padding: ${spacing.xxxl} ${spacing.xxl};
+  ${TabTitle} {
+    display: flex;
+    align-items: center;
+    color: ${palette.lightGray};
+    padding: 0;
+
+    ${Patent} {
+      margin-left: auto;
+      color: ${palette.gray};
+    }
+  }
+  ${Card} {
+    background-color: ${palette.primary};
+    border: none;
+    padding: 0;
+    margin-top: ${spacing.sm};
+
+    ${Main}, ${ItemTitle}, ${Break}, ${Dial}, ${Votes} {
+      color: ${palette.white};
+    }
+  }
+`;
+
+const RunnersTitle = styled(TabTitle)`
+  padding-top: 0;
+  border-bottom: 1px solid ${palette.lightGray};
+`;
 
 const Mink = ({
   mink: { id, created, question, voteCount, voteRating, myVote },
@@ -35,11 +68,17 @@ const Mink = ({
 
   const card = (
     <MinkCard onClick={open} ref={ref}>
-      <ScoreAndVoters voteCount={voteCount} voteRating={myVote && voteRating} sliderSize={65} />
-      <Main>
-        <ItemTime dateTime={created}>{formatDate(created)}</ItemTime>
-        <ItemTitle>{question}</ItemTitle>
-      </Main>
+      <div>
+        <Dial size={65} readonly value={myVote && voteRating} />
+        <Main>
+          <ItemTitle>{question}</ItemTitle>
+          <Break />
+          <div>
+            <Votes count={voteCount} inverse />
+            <ItemTime dateTime={created}>{formatDate(created)}</ItemTime>
+          </div>
+        </Main>
+      </div>
       <PrivateShareButton id={id} />
     </MinkCard>
   );
@@ -55,21 +94,26 @@ const Mink = ({
   );
 };
 
-const renderMinks = (minks, setSelectedMink, addedMinkId, setAddedMinkId, selectedMink) =>
+const renderMinks = (minks, setSelectedMink, addedMinkId, setAddedMinkId, selectedMink, houseId) =>
   !selectedMink && (
     <>
       {minks.length > 0 && (
         <>
-          <TabTitle>
-            Top MINK<sup>©</sup>
-            <Patent />
-          </TabTitle>
-          <Mink mink={minks[0]} setSelectedMink={setSelectedMink} withHelp />
+          <TopMinkContainer>
+            <TabTitle>
+              Top MINK
+              <Patent />
+            </TabTitle>
+            <Mink mink={minks[0]} setSelectedMink={setSelectedMink} withHelp />
+          </TopMinkContainer>
+          <Link href={`/houses?id=${houseId}&tab=mink&new`} as={`/houses/${houseId}/mink/new`} passHref>
+            <Button icon="arrow-right">new</Button>
+          </Link>
         </>
       )}
       {minks.length > 1 && (
         <>
-          <TabTitle>Runners up:</TabTitle>
+          <RunnersTitle>Runners up</RunnersTitle>
           {minks.slice(1).map(m => (
             <Mink
               mink={m}
@@ -101,13 +145,19 @@ const MinkTab = ({ venue: { id, minks, addedMinkId }, loadMinks, setSelectedMink
       const { created, question, voteCount, voteRating, myVote } = findMink(id, minks);
 
       return (
-        <SharePreviewCard>
-          <ScoreAndVoters voteCount={voteCount} voteRating={myVote && voteRating} sliderSize={70} />
-          <Main>
-            <ItemTime>{formatDate(created)}</ItemTime>
-            <ItemTitle>{question}</ItemTitle>
-          </Main>
-        </SharePreviewCard>
+        <MinkCard>
+          <div>
+            <Dial size={65} readonly value={myVote && voteRating} />
+            <Main>
+              <ItemTitle>{question}</ItemTitle>
+              <Break />
+              <div>
+                <Votes count={voteCount} />
+                <ItemTime dateTime={created}>{formatDate(created)}</ItemTime>
+              </div>
+            </Main>
+          </div>
+        </MinkCard>
       );
     },
     [minks],
@@ -116,10 +166,7 @@ const MinkTab = ({ venue: { id, minks, addedMinkId }, loadMinks, setSelectedMink
 
   return (
     <TabLayout>
-      {minks ? renderMinks(minks, setSelectedMink, addedMinkId, setAddedMinkId, selectedMink) : <Loader big />}
-      <Link href={`/houses?id=${id}&tab=mink&new`} as={`/houses/${id}/mink/new`} passHref>
-        <Button>new mink</Button>
-      </Link>
+      {minks ? renderMinks(minks, setSelectedMink, addedMinkId, setAddedMinkId, selectedMink, id) : <Loader big />}
       <VoteMink />
       <NewMinkElected />
       <PrivateShare type="mink" renderItem={renderSharePreview} getItemTitle={getTitleForShare} />

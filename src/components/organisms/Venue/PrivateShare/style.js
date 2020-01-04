@@ -1,12 +1,16 @@
 import styled from 'styled-components';
 
-import { Button } from '../../../atoms';
+import { Button, Card } from '../../../atoms';
 import { fontSize, spacing, palette } from '../../../../style';
+import { cardStyle } from '../tabStyle';
 
 export const Layout = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0 ${spacing.xxxl};
+
+  ${Card} {
+    ${cardStyle};
+  }
 `;
 
 export const SubmitButton = styled(Button).attrs({

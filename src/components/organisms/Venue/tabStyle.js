@@ -1,14 +1,12 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { calcRem, spacing, fontSize, palette, fontWeight } from '../../../style';
 import { Card, Button, Break } from '../../atoms';
 import { PokeButton, Dial } from '../../molecules';
 import { Votes } from './Votes';
 
-export const CARD_MIN_HEIGHT = calcRem('125px');
-
 export const TabTitle = styled.div`
-  margin: ${spacing.xl} ${spacing.xxl};
+  padding: ${spacing.xl} ${spacing.xxl};
   text-transform: uppercase;
   color: ${palette.mediumGray};
 `;
@@ -18,7 +16,6 @@ export const ItemTime = styled.time`
 `;
 
 export const ItemTitle = styled.div`
-  margin-top: ${spacing.xxs};
   color: ${palette.primary};
   font-size: ${fontSize.md};
   font-weight: ${fontWeight.bold};
@@ -43,6 +40,34 @@ export const Main = styled.div`
   flex-direction: column;
   flex: 1;
   color: ${palette.gray};
+
+  > div:last-child {
+    display: flex;
+  }
+`;
+
+export const cardStyle = css`
+  position: relative;
+  border-bottom: 1px solid ${palette.lightGray};
+  padding: ${spacing.xl};
+
+  ${PokeButton} {
+    position: absolute;
+    top: ${spacing.lg};
+    right: ${spacing.xl};
+  }
+  ${Dial} {
+    margin-right: ${spacing.xl};
+  }
+  ${Break} {
+    color: ${palette.primary};
+    height: ${calcRem('2px')};
+    width: ${calcRem('40px')};
+    margin: ${spacing.md} 0;
+  }
+  ${Votes} {
+    margin-right: ${spacing.xl};
+  }
 `;
 
 export const TabLayout = styled.div`
@@ -54,28 +79,7 @@ export const TabLayout = styled.div`
   flex-basis: auto; // safari
 
   ${Card} {
-    position: relative;
-    min-height: ${CARD_MIN_HEIGHT};
-    border-bottom: 1px solid ${palette.lightGray};
-    padding: ${spacing.xl};
-
-    ${PokeButton} {
-      position: absolute;
-      top: ${spacing.lg};
-      right: ${spacing.xl};
-    }
-    ${Dial} {
-      margin-right: ${spacing.xl};
-    }
-    ${Break} {
-      color: ${palette.primary};
-      height: ${calcRem('2px')};
-      width: ${calcRem('40px')};
-      margin: ${spacing.sm} 0;
-    }
-    ${Votes} {
-      margin-right: ${spacing.sm};
-    }
+    ${cardStyle};
   }
 
   > ${Button} {

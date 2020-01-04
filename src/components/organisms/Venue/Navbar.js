@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import { createStructuredSelector } from 'reselect';
 import Link from 'next/link';
 
-import { panelBoxShadow, spacing, palette, fontWeight, calcRem } from '../../../style';
+import { spacing, palette, fontWeight, calcRem } from '../../../style';
 import { selectAnyTabItemSelected, selectIsActiveInsider } from '../../../store/venues';
 import { HelpTip } from '../../atoms';
 
