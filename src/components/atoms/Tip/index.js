@@ -23,8 +23,10 @@ const Container = styled.div`
 `;
 
 const Content = styled.div`
-  background-color: ${palette.gray};
-  border: 1px solid ${palette.gray};
+  background-color: ${palette.lightGray};
+  border: 1px solid ${palette.lightGray};
+  box-shadow: 0 1px 4px 2px rgba(0, 0, 0, 0.15);
+  border-radius: 2px;
   display: flex;
   flex-direction: column;
   margin: 1rem;
@@ -34,39 +36,36 @@ const Arrow = styled.div`
   width: 0;
   height: 0;
   position: absolute;
-  &&& {
-    border-style: solid;
-  }
 
   &[data-placement^='bottom'] {
-    border-left: 1rem transparent;
-    border-right: 1rem transparent;
+    border-left: 1rem solid transparent;
+    border-right: 1rem solid transparent;
 
-    border-bottom: 1rem ${palette.gray};
+    border-bottom: 1rem solid ${palette.lightGray};
     top: 0;
   }
 
   &[data-placement^='top'] {
-    border-left: 1rem transparent;
-    border-right: 1rem transparent;
+    border-left: 1rem solid transparent;
+    border-right: 1rem solid transparent;
 
-    border-top: 1rem ${palette.gray};
+    border-top: 1rem solid ${palette.lightGray};
     bottom: 0;
   }
 
   // &[data-placement^='right'] {
-  //   border-top: 1rem transparent;
-  //   border-bottom: 1rem transparent;
+  //   border-top: 1rem solid transparent;
+  //   border-bottom: 1rem solid transparent;
   //
-  //   border-left: 1rem ${palette.gray};
+  //   border-left: 1rem solid ${palette.lightGray};
   //   left: 0;
   // }
   //
   // &[data-placement^='left'] {
-  //   border-top: 1rem transparent;
-  //   border-bottom: 1rem transparent;
+  //   border-top: 1rem solid transparent;
+  //   border-bottom: 1rem solid transparent;
   //
-  //   border-right: 1rem ${palette.gray};
+  //   border-right: 1rem solid ${palette.lightGray};
   //   right: 0;
   // }
 `;
