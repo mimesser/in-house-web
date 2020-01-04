@@ -38,6 +38,8 @@ export const Industry = styled.div`
 export const VenueContainer = styled(Card)`
   box-shadow: 0 ${calcRem('3px')} ${calcRem('6px')} rgba(0, 0, 0, 0.161);
   margin-bottom: ${spacing.lg};
+  display: flex;
+  flex-direction: row;
 
   ${ScoreAndVoters} {
     flex-shrink: 0;

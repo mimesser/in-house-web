@@ -17,7 +17,6 @@ const Value = styled.div`
   color: ${palette.darkGray};
   font-weight: ${fontWeight.bold};
   margin-bottom: ${spacing.xl};
-  text-transform: lowercase;
 `;
 
 const ImgContainer = styled.div`

@@ -12,7 +12,6 @@ export const ItemDate = styled.div`
 `;
 
 export const ItemTitle = styled.div`
-  text-transform: lowercase;
   font-size: ${fontSize.xl};
   font-weight: ${fontWeight.normal};
   // keep space for 'you rated'

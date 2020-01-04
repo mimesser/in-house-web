@@ -25,17 +25,19 @@ export const VenueCard = ({ venue, showVenue, withHelp }) => {
   const card = (
     // TODO: this should be a link
     <VenueContainer onClick={handleClick}>
-      <ScoreAndVoters voteCount={votesCount} voteRating={rating} sliderSize={72} />
-      <Main imageUrl={imageUrl}>
-        <Industry>{industry && industry.name}</Industry>
-        <HouseNameLarge>{name}</HouseNameLarge>
-        <Break />
-        <Address>
-          {address},
-          <br />
-          {city} {zipCode}
-        </Address>
-      </Main>
+      <div>
+        <ScoreAndVoters voteCount={votesCount} voteRating={rating} sliderSize={72} />
+        <Main imageUrl={imageUrl}>
+          <Industry>{industry && industry.name}</Industry>
+          <HouseNameLarge>{name}</HouseNameLarge>
+          <Break />
+          <Address>
+            {address},
+            <br />
+            {city} {zipCode}
+          </Address>
+        </Main>
+      </div>
       {/* TODO: bring back once design provided */}
       {/* <PrivateShareButtonLayout> */}
       {/*  <PrivateShareButton id={venue.id} /> */}
