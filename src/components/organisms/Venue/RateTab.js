@@ -4,13 +4,14 @@ import styled from 'styled-components';
 import { createStructuredSelector } from 'reselect';
 import isNil from 'lodash/isNil';
 
-import { Loader, HelpTip, Card } from '../../atoms';
+import { Loader, HelpTip, Card, Break } from '../../atoms';
 import { setSelectedTag, loadRates, selectSelectedTag } from '../../../store/venues';
-import { TabLayout, Main, ItemTitle, TabTitle } from './tabStyle';
-import { ScoreAndVoters } from './ScoreAndVoters';
+import { TabLayout, Main, ItemTitle } from './tabStyle';
 import RateTag from './RateTag';
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
+import { Dial } from '../../molecules';
+import { Votes } from './Votes';
 
 const RateCard = styled(Card)``;
 
@@ -20,10 +21,16 @@ const Tag = ({ name, definitionId, userRate, voteCount, voteRating, setSelectedT
   const open = useCallback(() => setSelectedTag(definitionId), [definitionId]);
   const card = (
     <RateCard onClick={open}>
-      <ScoreAndVoters voteCount={voteCount} voteRating={getTeamRateIfRated(userRate, voteRating)} sliderSize={70} />
-      <Main>
-        <ItemTitle>{name}</ItemTitle>
-      </Main>
+      <div>
+        <Dial size={65} readonly value={getTeamRateIfRated(userRate, voteRating)} />
+        <Main>
+          <ItemTitle>{name}</ItemTitle>
+          <Break />
+          <div>
+            <Votes count={voteCount} />
+          </div>
+        </Main>
+      </div>
       <PrivateShareButton id={definitionId} />
     </RateCard>
   );
@@ -49,10 +56,16 @@ const RateTab = ({ venue: { rates: tags }, setSelectedTag, loadRates, selectedTa
 
       return (
         <RateCard>
-          <ScoreAndVoters voteCount={voteCount} voteRating={getTeamRateIfRated(userRate, voteRating)} sliderSize={70} />
-          <Main>
-            <ItemTitle>{name}</ItemTitle>
-          </Main>
+          <div>
+            <Dial size={65} readonly value={getTeamRateIfRated(userRate, voteRating)} />
+            <Main>
+              <ItemTitle>{name}</ItemTitle>
+              <Break />
+              <div>
+                <Votes count={voteCount} />
+              </div>
+            </Main>
+          </div>
         </RateCard>
       );
     },
@@ -62,7 +75,6 @@ const RateTab = ({ venue: { rates: tags }, setSelectedTag, loadRates, selectedTa
 
   return (
     <TabLayout>
-      <TabTitle />
       {tags ? (
         !selectedTag &&
         tags.map((t, i) => <Tag {...t} key={t.definitionId} setSelectedTag={setSelectedTag} withHelp={i === 0} />)
