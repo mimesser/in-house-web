@@ -87,12 +87,12 @@ export const Dialog = styled.div`
   box-shadow: 0 1px 4px 0 ${rgba(palette.black, 0.6)};
 
   width: 100%;
-  max-width: ${breakpoints.sm};
+  max-width: ${calcRem('500px')};
   height: 100%;
   max-height: ${calcRem('700px')};
 
   ${colors};
-  padding: ${spacing.xl};
+  padding: ${spacing.xxl};
 `;
 
 export const handleChildren = css`

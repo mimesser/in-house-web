@@ -4,36 +4,20 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { selectNewMinkElected } from '../../../../store/venues';
-import { palette, spacing, calcRem } from '../../../../style';
-import { HeaderTitle } from '../../../atoms';
+import { spacing } from '../../../../style';
 import { WinkConfirmation } from '../../../molecules';
 import { Modal } from '../../Modal';
+import { H1 } from '../../../atoms';
 
-const Layout = styled.div`
-  padding-top: ${spacing.xxxl};
-  ${HeaderTitle} {
-    color: ${palette.white};
-  }
-  ${WinkConfirmation} {
-    color: ${palette.gray};
-    justify-content: left;
-    position: relative;
-    // TODO
-    left: -${calcRem('40px')};
-  }
+const Message = styled(H1)`
+  margin-top: ${spacing.xxxl};
 `;
 
 const NewMinkElected = ({ open }) => {
   return open ? (
     <Modal canClose={false} canDismiss={false} inverse>
-      <Layout>
-        <HeaderTitle>
-          new <br />
-          #1 MINK <sup>©</sup> <br />
-          elected!
-        </HeaderTitle>
-        <WinkConfirmation />
-      </Layout>
+      <Message>new #1 MINK elected!</Message>
+      <WinkConfirmation />
     </Modal>
   ) : null;
 };
