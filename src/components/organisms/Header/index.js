@@ -17,6 +17,7 @@ const Layout = styled.div`
 
   a {
     text-decoration: none;
+    text-transform: uppercase;
 
     &:first-of-type {
       margin-right: auto;
