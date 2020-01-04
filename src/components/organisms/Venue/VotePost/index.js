@@ -72,11 +72,7 @@ const ModalWrapper = props => {
       title={venue && venue.name}
       inverse={post && confirmation}
     >
-      {confirmation ? (
-        <RateConfirmation title={post.title} date={post.created} {...confirmation} />
-      ) : (
-        <VotePost {...props} />
-      )}
+      {confirmation ? <RateConfirmation title={post.title} {...confirmation} /> : <VotePost {...props} />}
     </Modal>
   );
 };

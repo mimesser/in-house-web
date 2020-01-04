@@ -58,7 +58,7 @@ const Mink = ({
   isNew,
   setSelectedMink,
   setAddedMinkId,
-  withHelp,
+  topMink,
 }) => {
   const open = useCallback(() => setSelectedMink(id), [id]);
   const ref = useRef(null);
@@ -72,7 +72,7 @@ const Mink = ({
   const card = (
     <MinkCard onClick={open} ref={ref}>
       <div>
-        <Dial size={65} readonly value={myVote && voteRating} />
+        <Dial size={65} readonly value={myVote && voteRating} inverse={topMink} />
         <Main>
           <ItemTitle>{question}</ItemTitle>
           <Break />
@@ -85,7 +85,7 @@ const Mink = ({
       <PrivateShareButton id={id} />
     </MinkCard>
   );
-  return withHelp ? (
+  return topMink ? (
     <HelpTip
       placement="top"
       tip="your team votes to select the TOP MINK, which all teammates must answer to get in your house"
@@ -107,7 +107,7 @@ const renderMinks = (minks, setSelectedMink, addedMinkId, setAddedMinkId, select
               Top MINK
               <Patent />
             </TabTitle>
-            <Mink mink={minks[0]} setSelectedMink={setSelectedMink} withHelp />
+            <Mink mink={minks[0]} setSelectedMink={setSelectedMink} topMink />
           </TopMinkContainer>
           <Link href={`/houses?id=${houseId}&tab=mink&new`} as={`/houses/${houseId}/mink/new`} passHref>
             <Button icon="arrow-right">new</Button>
