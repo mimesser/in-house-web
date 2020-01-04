@@ -15,7 +15,7 @@ import {
   toggleMinkFlag,
 } from '../../../../store/venues';
 import { Modal } from '../../Modal';
-import { Icon, Loader } from '../../../atoms';
+import { Break, Icon, Loader } from '../../../atoms';
 import { IconInput } from '../../../molecules';
 import { formatDate } from '../../../../utils/format';
 import { RateConfirmation } from '../RateConfirmation';
@@ -78,12 +78,14 @@ const VoteMink = ({
 
   const canVote = !!myCorrectAnswer || answerAttemptMade || typeof myVote === 'number';
   const previouslyAnsweredCorrectly = !!myCorrectAnswer;
+  const upvoted = myVote === 1;
   const downvoted = myVote === -1;
 
   return (
     <Layout>
       <ItemDate dateTime={created}>{formatDate(created)}</ItemDate>
       <ItemTitle>{question}</ItemTitle>
+      <Break />
       <InputGroup>
         <div>
           <IconInput
@@ -101,13 +103,13 @@ const VoteMink = ({
       </InputGroup>
       <VoteRow>
         <VoteButton disabled={!canVote} onClick={myVote !== 1 ? upvoteMink : undefined} selected={myVote === 1}>
-          <Icon size={4} icon="arrow-up-circle" />
+          <Icon size={4} icon={upvoted ? 'arrow-up-circle-full' : 'arrow-up-circle'} />
         </VoteButton>
         <VoteButton disabled={!canVote} onClick={myVote !== -1 ? downvoteMink : undefined} selected={downvoted}>
-          <Icon size={4} icon="arrow-down-circle" />
+          <Icon size={4} icon={downvoted ? 'arrow-down-circle-full' : 'arrow-down-circle'} />
         </VoteButton>
-        <FlagItem disabled={!isActiveInsider} flagged={wasFlaggedByMe} toggleFlag={toggleMinkFlag} />
       </VoteRow>
+      <FlagItem disabled={!isActiveInsider} flagged={wasFlaggedByMe} toggleFlag={toggleMinkFlag} />
     </Layout>
   );
 };

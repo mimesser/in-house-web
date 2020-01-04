@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
-import { fontSize, spacing, calcRem } from '../../../../style';
+import { spacing, palette, calcRem } from '../../../../style';
 import { IconInput } from '../../../molecules';
 
 export const Status = styled.span`
-  font-size: ${fontSize.xs};
   position: absolute;
-  margin-left: ${spacing.sm};
+  margin-top: ${spacing.sm};
+  color: ${palette.darkGray};
 `;
 
 export const InputGroup = styled.div`
@@ -23,4 +23,5 @@ export const InputGroup = styled.div`
   > div:first-child {
     display: flex;
   }
+  margin-bottom: ${spacing.sm};
 `;
