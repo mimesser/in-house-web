@@ -110,7 +110,7 @@ export const handleChildren = css`
 `;
 
 export const ModalWrap = styled.div`
-  ${cover()};
+  ${cover('fixed')};
   transform-style: preserve-3d;
   z-index: ${MODAL_Z_INDEX};
 
