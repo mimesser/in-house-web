@@ -13,7 +13,7 @@ import VoteMink from './VoteMink';
 import NewMinkElected from './NewMinkElected';
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
-import { Dial } from '../../molecules/Dial';
+import { Dial, PokeButton } from '../../molecules';
 import { Votes } from './Votes';
 
 const MinkCard = styled(Card)``;
@@ -41,6 +41,9 @@ const TopMinkContainer = styled.div`
 
     ${Main}, ${ItemTitle}, ${Break}, ${Dial}, ${Votes} {
       color: ${palette.white};
+    }
+    ${PokeButton} {
+      display: none;
     }
   }
 `;

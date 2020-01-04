@@ -3,8 +3,9 @@ import styled from 'styled-components';
 
 import { Dial } from '../../molecules';
 import { Votes } from './Votes';
-import { spacing, calcRem, fontSize } from '../../../style';
+import { spacing, calcRem } from '../../../style';
 
+// TODO: move to venue list styles
 export const ScoreAndVoters = styled(({ voteRating, voteCount, sliderSize, className }) => (
   <div className={className}>
     <Dial size={sliderSize} readonly value={voteRating} />
@@ -17,7 +18,6 @@ export const ScoreAndVoters = styled(({ voteRating, voteCount, sliderSize, class
 
   ${Votes} {
     margin: ${spacing.xs} auto 0 auto;
-    font-size: ${fontSize.xs};
   }
 
   ${Dial} {

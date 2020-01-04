@@ -45,6 +45,7 @@ const Nav = styled.nav`
   flex-shrink: 0; // safari
   background-color: ${palette.white};
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  z-index: 1; // otherwise box-shadow is hidden in rate tab
 `;
 
 const TabHeader = ({ id, tab: { path, label, secured, help }, active, authorized }) => {
