@@ -1,15 +1,12 @@
 import React, { useEffect, useCallback } from 'react';
 import { useSelector } from 'react-redux';
-import ReactDOM from 'react-dom';
 import { Transition } from 'react-transition-group';
 
-import { withNoSSR } from '../../atoms';
-import { CloseButton, Container, Content, Dialog, ModalHeader, ModalWrap, Overlay } from './style';
+import { Portal } from '../../atoms';
+import { CloseButton, Container, Dialog, ModalHeader, ModalWrap, Overlay } from './style';
 import { selectShowHelp } from '../../../store/help';
 
 const stopPropagation = event => event.stopPropagation();
-
-const Portal = withNoSSR(({ children, node = document.body }) => ReactDOM.createPortal(children, node));
 
 export const Modal = ({
   open,
