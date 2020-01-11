@@ -86,7 +86,7 @@ const Form = ({ topMink, wrongAnswer, answerTopMink, inDemo }) => {
   );
 };
 
-const InsiderQuestionChallenge = ({
+const InsiderChallenge = ({
   venue: { name, topMink },
   challengeFormData,
   dismissForm,
@@ -148,4 +148,4 @@ const mapDispatch = {
 export default connect(
   mapState,
   mapDispatch,
-)(InsiderQuestionChallenge);
+)(InsiderChallenge);

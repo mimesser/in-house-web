@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { withRouter } from 'next/router';
 
-import InsiderQuestionChallenge from '../InsiderQuestionChallenge';
+import InsiderQuestionChallenge from '../InsiderChallenge';
 import { selectInsiderChallengeForm, selectSelectedVenue } from '../../../store/venues';
 import { Loader } from '../../atoms';
 import Banner from './Banner';
