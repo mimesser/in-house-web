@@ -3,7 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
 
-import { Icon } from '../../atoms';
+import { Icon, ClearButton } from '../../atoms';
 import { spacing, palette } from '../../../style';
 
 const Layout = styled.div`
@@ -25,13 +25,7 @@ const Layout = styled.div`
   }
 `;
 
-const MenuIconButton = styled.button`
-  outline: none;
-  border: none;
-  background: none;
-  padding: 0;
-  cursor: pointer;
-  color: currentColor;
+const MenuToggle = styled(ClearButton)`
   margin-left: ${spacing.xl};
 `;
 
@@ -49,8 +43,8 @@ export const Header = ({ openMenu }) => (
       <a>IN-HOUSE</a>
     </Link>
     <IconLink icon="search" href="/houses" />
-    <MenuIconButton>
-      <Icon icon="menu" size={1.5} onClick={openMenu} color="secondaryDark" />
-    </MenuIconButton>
+    <MenuToggle onClick={openMenu}>
+      <Icon icon="menu" size={1.5} />
+    </MenuToggle>
   </Layout>
 );

@@ -6,15 +6,14 @@ import { Transition } from 'react-transition-group';
 
 import { Icon, ClearButton } from '../../atoms';
 
-import { spacing, fontSize, palette } from '../../../style';
+import { spacing, fontSize, fontWeight, palette } from '../../../style';
 
 const CloseButton = styled(ClearButton)`
-  padding: ${spacing.sm};
+  margin: ${spacing.xl};
 `;
 
 const CloseIcon = styled(Icon).attrs(() => ({
   icon: 'close',
-  height: 100,
 }))`
   :hover {
     color: ${palette.white};
@@ -48,11 +47,11 @@ const Panel = styled.div`
   white-space: nowrap;
   overflow: hidden;
   ${({ state }) => sidebarTransitionStyles[state]};
-  color: ${palette.lightGray};
+  color: ${palette.offWhite};
 `;
 
 const MenuItems = styled.ul`
-  padding: ${spacing.lg} 0;
+  padding: 0;
   margin: 0;
   list-style: none;
 `;
@@ -61,8 +60,10 @@ const A = styled.a`
   outline: none;
   text-decoration: none;
   cursor: pointer;
-  font-size: ${fontSize.lg};
-  padding: ${spacing.sm} ${spacing.xl};
+  font-weight: ${fontWeight.bold};
+  font-size: ${fontSize.md};
+  padding: ${spacing.sm} 0 ${spacing.sm} ${spacing.xxxl};
+  margin-top: ${spacing.xxl};
   display: block;
   &:hover {
     color: ${palette.white};
@@ -76,7 +77,7 @@ export const Menu = withRouter(({ isOpen, router, closeMenu }) => (
         <CloseButton onClick={closeMenu}>
           <CloseIcon />
         </CloseButton>
-        <MenuItems state={state}>
+        <MenuItems>
           {routes.map(route => (
             <li key={route.href}>
               {route.href === router.asPath ? (
