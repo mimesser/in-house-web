@@ -21,8 +21,12 @@ export const Modal = ({
   ...transitionProps
 }) => {
   useEffect(() => {
-    document.body.style.overflow = open ? 'hidden' : 'initial';
-  }, [open]);
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.removeProperty('overflow');
+    };
+  }, []);
   const handleClose = useCallback(() => closeModal(), [closeModal]);
   const showHelp = useSelector(selectShowHelp);
   return (
