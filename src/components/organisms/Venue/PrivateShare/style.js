@@ -1,36 +1,29 @@
 import styled from 'styled-components';
 
-import { Button, Card } from '../../../atoms';
-import { fontSize, spacing, palette } from '../../../../style';
+import { Button, Card, FormGroup } from '../../../atoms';
+import { spacing } from '../../../../style';
 import { cardStyle } from '../tabStyle';
 
 export const Layout = styled.div`
   display: flex;
   flex-direction: column;
+  flex: 1;
 
   ${Card} {
     ${cardStyle};
+    background: transparent;
+    margin: 0 -${spacing.xxl} ${spacing.xl} -${spacing.xxl};
+  }
+
+  ${FormGroup}:last-of-type {
+    margin-bottom: ${spacing.xxxl};
   }
 `;
 
 export const SubmitButton = styled(Button).attrs({
   type: 'submit',
+  wide: true,
+  icon: 'arrow-right',
 })`
-  transition: opacity 0.5s;
-  margin: ${spacing.xxxl} auto 0 auto;
-`;
-
-export const SendAnonymous = styled.div`
-  font-size: ${fontSize.lg};
-  margin: 0 0 ${spacing.lg} 0;
-
-  span {
-    margin: 0 ${spacing.md} ${spacing.lg} 0;
-  }
-`;
-
-export const Tip = styled.div`
-  margin: ${spacing.xs} 0 ${spacing.xxs};
-  color: ${palette.lightGray};
-  font-size: ${fontSize.xs};
+  margin-top: auto;
 `;

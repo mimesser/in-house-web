@@ -12,7 +12,7 @@ export const TabTitle = styled.div`
 `;
 
 export const ItemTime = styled.time`
-  color: ${palette.lightGray};
+  color: ${palette.gray};
 `;
 
 export const ItemTitle = styled.div`
@@ -24,7 +24,7 @@ export const ItemTitle = styled.div`
 
 export const ItemText = styled.div`
   font-size: ${fontSize.sm};
-  color: ${palette.lightGray};
+  color: ${palette.gray};
   margin-top: ${spacing.xl};
   && {
     display: -webkit-box;

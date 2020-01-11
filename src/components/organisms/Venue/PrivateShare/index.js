@@ -14,9 +14,9 @@ import {
 } from '../../../../store/venues';
 import { selectInDemo } from '../../../../store/demo';
 import { Modal } from '../../Modal';
-import { Button } from '../../../atoms';
-import { CounterInput, WinkConfirmation, PokeButton } from '../../../molecules';
-import { SendAnonymous, SubmitButton, Layout, Tip } from './style';
+import { Button, H2 } from '../../../atoms';
+import { CounterInput, WinkConfirmation } from '../../../molecules';
+import { SubmitButton, Layout } from './style';
 import { DemoWinkConfirmationLayout } from '../demoStyle';
 import { isEmailValid, isPhoneNumberValid } from '../../../../utils/validation';
 
@@ -61,13 +61,14 @@ const PrivateShare = ({
   return (
     <Layout>
       {renderItem(id)}
-      <SendAnonymous>
-        <span>send anonymous</span>
-        <PokeButton />
-      </SendAnonymous>
-      <Tip>send text or email via in-house network</Tip>
-      <CounterInput value={recipient} onChange={handleRecipientChange} max={50} error={recipientError} marginless />
-      <Tip>anonymous message</Tip>
+      <H2>send anonymous</H2>
+      <CounterInput
+        value={recipient}
+        onChange={handleRecipientChange}
+        max={50}
+        error={recipientError}
+        subtext="sent via in-house network"
+      />
       <CounterInput
         value={message}
         onChange={setMessage}
@@ -75,7 +76,7 @@ const PrivateShare = ({
         rows={4}
         placeholder={placeholder}
         multiline
-        marginless
+        subtext="anonymous message"
       />
       <SubmitButton disabled={!isValidEmailOrPhone} loading={sending} onClick={send}>
         send to co-insider
