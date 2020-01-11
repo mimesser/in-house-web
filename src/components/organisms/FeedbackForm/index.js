@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
-import { H1, Input, Dropdown, Loader } from '../../atoms';
+import { H1, H2, Input, Dropdown } from '../../atoms';
 import { WinkConfirmation, CounterInput } from '../../molecules';
-import { Modal } from '../Modal';
-import { ButtonContainer, FormGroup, Container, SubmitButton } from './style';
+import { FormGroup, Container, SubmitButton } from './style';
 import { postFeedback, clearFeedback } from '../../../store/feedback';
 
 const subjectOptions = ['list your house', 'technical issue', 'general feedback', 'other issue'].map(value => ({
@@ -42,23 +41,15 @@ function FeedbackForm(props) {
     clear();
   }
 
+  if (props.success) {
+    return <WinkConfirmation />;
+  }
+
   return (
     <Container>
-      <Modal
-        open={props.success || props.loading}
-        closeModal={clear}
-        inverse
-        canDismiss={false}
-        canClose={false}
-        title="Success!"
-      >
-        {props.loading ? <Loader white /> : <WinkConfirmation />}
-      </Modal>
       <H1>let us know</H1>
-      <FormGroup>we keep everything confidential</FormGroup>
-      <FormGroup>
-        <Dropdown value={subject} placeholder="subject" options={subjectOptions} onChange={handleSubjectChange} />
-      </FormGroup>
+      <H2>we keep everything confidential</H2>
+      <Dropdown value={subject} placeholder="subject" options={subjectOptions} onChange={handleSubjectChange} />
       <CounterInput
         multiline
         disabled={!subject}
@@ -78,11 +69,9 @@ function FeedbackForm(props) {
         />
       </FormGroup>
       {props.error && <FormGroup>{props.error}</FormGroup>}
-      <ButtonContainer>
-        <SubmitButton visible={valid} onClick={submit}>
-          send
-        </SubmitButton>
-      </ButtonContainer>
+      <SubmitButton disabled={!valid} onClick={submit} icon="arrow-right" loading={props.loading}>
+        send
+      </SubmitButton>
     </Container>
   );
 }
