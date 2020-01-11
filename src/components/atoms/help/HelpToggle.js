@@ -7,6 +7,7 @@ import Overlay from '../Overlay';
 import { Icon } from '../Icon';
 import { ClearButton } from '../Button';
 import { setBoundariesElement } from '../Tip';
+import { Portal } from '../Portal';
 
 const onStyles = ({ showHelp }) =>
   showHelp &&
@@ -56,7 +57,11 @@ const HelpToggle = ({ showHelp, hasTips, toggleHelp, containerRef }) => {
   }, [containerRef.current, showHelp]);
   return (
     <>
-      {showHelp && <HelpOverlay onClick={toggleHelp} />}
+      {showHelp && (
+        <Portal>
+          <HelpOverlay onClick={toggleHelp} />
+        </Portal>
+      )}
       {hasTips && (
         <Btn onClick={handleClick} showHelp={showHelp}>
           <Icon icon={showHelp ? 'close' : 'question-mark'} />

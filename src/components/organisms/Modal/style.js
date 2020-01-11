@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 
 import { spacing, palette, appBackground, cover, calcRem, breakpoints, panelBoxShadow } from '../../../style';
-import { H1, H2, ClearButton, Icon } from '../../atoms';
+import { ClearButton, Icon } from '../../atoms';
 
 const colors = ({ inverse }) =>
   inverse
@@ -12,16 +12,6 @@ const colors = ({ inverse }) =>
         color: ${palette.white};
       `
     : `background-color: ${appBackground};`;
-
-export const Content = styled.div`
-  position: relative;
-  overflow: auto;
-  display: flex;
-  flex-direction: column;
-  padding: ${spacing.xl};
-  width: 100%;
-  ${colors};
-`;
 
 export const CloseButton = styled(ClearButton).attrs({
   children: <Icon icon="close" />,

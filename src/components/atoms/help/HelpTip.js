@@ -25,7 +25,7 @@ const HelpTip = ({ tip, toggleHelp, showHelp, children, placement = 'bottom' }) 
     return children;
   }
 
-  const triggerElementProps = { style: { zIndex: 1000 }, onClick: toggleHelp };
+  const triggerElementProps = { style: { zIndex: 1000, position: 'relative' }, onClick: toggleHelp };
 
   return (
     <Tip
