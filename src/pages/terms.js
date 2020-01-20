@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import Terms from '../components/organisms/Terms';
 import { Page } from '../components/templates';
-import { spacing } from '../style';
+import { spacing, fontWeight } from '../style';
 
 const Content = styled.div`
   margin: 0 ${spacing.md};
   strong {
-    font-weight: 600;
+    font-weight: ${fontWeight.bold};
   }
   text-align: justify;
   h2,
@@ -15,7 +15,7 @@ const Content = styled.div`
   h4 {
     font: inherit;
     letter-spacing: inherit;
-    font-weight: 600;
+    font-weight: ${fontWeight.bold};
   }
   h4 {
     text-decoration: underline;

@@ -56,8 +56,7 @@ const RateTag = ({ tag, rateTag, setRated, rated, showHelp }) => {
   );
 
   const sliderProps = {
-    size: 450,
-    padd: 100,
+    size: 420,
     inverse: rated,
   };
 
