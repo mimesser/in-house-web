@@ -59,8 +59,7 @@ export const Layout = styled.div`
   }
 
   ${Dial} {
-    margin-top: -100px;
-    margin-left: -100px;
+    margin: 0 auto;
   }
 `;
 

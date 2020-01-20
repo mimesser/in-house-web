@@ -10,19 +10,16 @@ const RateConfirmationLayout = styled(Layout)`
   margin-top: ${spacing.xxl};
 
   ${H2} {
-    margin-top: ${spacing.xxl};
-  }
-
-  ${Dial} {
-    margin-top: -30px;
-    margin-left: -75px;
+    margin: ${spacing.xxl} 0;
   }
 `;
 
-export const RateConfirmation = ({ title, voteRating, voteCount }) => (
-  <RateConfirmationLayout>
-    <H1>team average</H1>
-    <H2>{title}</H2>
-    <Dial readonly value={voteRating} size={450} padd={78} inverse voteCount={voteCount} />
-  </RateConfirmationLayout>
-);
+export const RateConfirmation = ({ title, voteRating, voteCount }) => {
+  return (
+    <RateConfirmationLayout>
+      <H1>team average</H1>
+      <H2>{title}</H2>
+      <Dial readonly value={voteRating} size={420} inverse voteCount={voteCount} />
+    </RateConfirmationLayout>
+  );
+};
