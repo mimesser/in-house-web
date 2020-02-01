@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { Page } from '../components/templates';
-import FeedbackForm from '../components/organisms/FeedbackForm';
+import { Page, FeedbackForm } from '../components/organisms';
 
 function Feedback() {
   return (

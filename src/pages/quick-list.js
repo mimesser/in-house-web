@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { Page } from '../components/templates';
-import { QuickListForm } from '../components/organisms';
+import { QuickListForm, Page } from '../components/organisms';
 
 function QuickList() {
   return (

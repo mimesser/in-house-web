@@ -5,16 +5,19 @@ import { fontSize, fontWeight, lineHeight } from '../../../style';
 // TODO: remove not used / not generic
 
 export const H1 = styled.h1`
+  margin: 0;
   font-weight: ${fontWeight.bold};
   font-size: ${fontSize.lg};
 `;
 
 export const H2 = styled.h2`
+  margin: 0;
   font-weight: ${fontWeight.bold};
   font-size: ${fontSize.md};
 `;
 
 export const H3 = styled.h3`
+  margin: 0;
   font-weight: ${fontWeight.bold};
   font-size: ${fontSize.sm};
 `;

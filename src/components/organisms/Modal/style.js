@@ -2,7 +2,17 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 
-import { spacing, palette, appBackground, cover, calcRem, breakpoints, panelBoxShadow } from '../../../style';
+import {
+  spacing,
+  palette,
+  appBackground,
+  cover,
+  calcRem,
+  breakpoints,
+  panelBoxShadow,
+  onDesktop,
+  deskPadRem,
+} from '../../../style';
 import { ClearButton, Icon } from '../../atoms';
 
 const colors = ({ inverse }) =>
@@ -23,6 +33,7 @@ export const ModalHeader = styled.header`
   display: flex;
   align-items: center;
   text-transform: uppercase;
+  ${onDesktop(`margin-left: ${deskPadRem}`)};
 `;
 
 export const MODAL_Z_INDEX = 999;
@@ -31,8 +42,8 @@ export const MODAL_Z_INDEX = 999;
 const BG_HIDE = `background-color: ${rgba('#4F4F4F', 0)}`;
 const BG_SHOW = `background-color: ${rgba('#4F4F4F', 0.9)}`;
 
-const CONTAINER_HIDE = 'transform: translate3d(0, -100%, 0)';
-const CONTAINER_SHOW = 'transform: translate3d(0, 0, 0)';
+const CONTAINER_HIDE = 'opacity: 0';
+const CONTAINER_SHOW = 'opacity: 1';
 
 export const Overlay = styled.div`
   ${cover()};
@@ -41,7 +52,7 @@ export const Overlay = styled.div`
 `;
 
 const containerEnter = ({ transition }) => `
-  transition: 0.3s transform cubic-bezier(0.29,-1.11, 0.91, 1.46);
+  transition: opacity 200ms;
   ${CONTAINER_HIDE};
   ${transition === 'entered' ? CONTAINER_SHOW : ''};
 `;
@@ -77,9 +88,9 @@ export const Dialog = styled.div`
   box-shadow: 0 1px 4px 0 ${rgba(palette.black, 0.6)};
 
   width: 100%;
-  max-width: ${calcRem('500px')};
+  // max-width: ${calcRem('500px')};
   height: 100%;
-  max-height: ${calcRem('700px')};
+  // max-height: ${calcRem('700px')};
 
   ${colors};
   padding: ${spacing.xxl};
