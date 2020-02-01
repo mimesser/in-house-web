@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+
 import Terms from '../components/organisms/Terms';
-import { Page } from '../components/templates';
+import { Page } from '../components/organisms';
 import { spacing, fontWeight } from '../style';
 
 const Content = styled.div`

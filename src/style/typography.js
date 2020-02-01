@@ -1,7 +1,9 @@
 import { calcRem } from './calcRem';
 
 export const font = {
-  primary: 'Helvetica, Roboto, Arial, sans-serif',
+  // TODO: until font supplied
+  // primary: 'Helvetica, Roboto, Arial, sans-serif',
+  primary: 'Roboto, sans-serif',
 };
 
 export const fontSize = {

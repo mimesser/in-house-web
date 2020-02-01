@@ -8,7 +8,7 @@ import Bowser from 'bowser';
 
 import createStore from '../store';
 import { theme } from '../style';
-import { GlobalStyle } from '../components';
+import { GlobalStyle } from '../components/GlobalStyle';
 import { loadAggregateData } from '../store/aggregate';
 
 class MyApp extends App {

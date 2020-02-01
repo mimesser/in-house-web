@@ -5,7 +5,7 @@ import { ThemeProvider } from 'styled-components';
 
 import configureStore from '../../src/store';
 import { theme } from '../../src/style';
-import { GlobalStyle } from '../../src/components';
+import { GlobalStyle } from '../../src/components/GlobalStyle';
 const store = configureStore();
 const req = require.context('../../src/', true, /stories\.js$/);
 

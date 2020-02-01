@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { withRouter } from 'next/router';
 
-import { Page } from '../components/templates';
-import { Venue, VenueList } from '../components/organisms';
+import { Venue, VenueList, Page } from '../components/organisms';
 import { initVenuesPage, selectLoadingVenues, selectSelectedVenue } from '../store/venues';
 import { DEMO_VENUES_ID } from '../store/demo/data';
 

@@ -16,3 +16,4 @@ export * from './text';
 export { Progress } from './Progress';
 export { Break } from './Break';
 export { Portal } from './Portal';
+export { Brand } from './Brand';

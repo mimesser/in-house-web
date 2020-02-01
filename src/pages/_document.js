@@ -62,10 +62,7 @@ class MyDocument extends Document {
           <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
           <meta name="theme-color" content="#333333" />
 
-          <link
-            href="https://fonts.googleapis.com/css?family=Roboto:300|Nunito+Sans:600|Source+Sans+Pro:300,400&display=swap"
-            rel="stylesheet"
-          />
+          <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,600&display=swap" rel="stylesheet" />
           <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
         </Head>
         <body>

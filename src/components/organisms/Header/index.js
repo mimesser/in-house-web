@@ -3,24 +3,33 @@ import React from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
 
-import { Icon, ClearButton } from '../../atoms';
-import { spacing, palette } from '../../../style';
+import { Icon, ClearButton, Brand } from '../../atoms';
+import { spacing, palette, onDesktop, deskPadRem } from '../../../style';
+
+const borderColor = ({ white }) => {
+  // TODO: add alpha support to palette functions
+  const c = white ? 249 : 51;
+  return `rgba(${c}, ${c}, ${c}, 0.2)`;
+};
 
 const Layout = styled.div`
-  display: flex;
-  align-items: center;
-  padding: ${spacing.xl};
   flex: none; // safari
-  color: ${palette.darkGray};
-  border-bottom: ${palette.primary} solid 1px;
-  opacity: 0.25;
+  color: ${({ white }) => (white ? palette.white : palette.primary)};
+  border-bottom: ${borderColor} solid 1px;
 
-  a {
-    text-decoration: none;
-    text-transform: uppercase;
+  > div {
+    display: flex;
+    align-items: center;
+    padding: ${spacing.xl};
 
-    &:first-of-type {
-      margin-right: auto;
+    ${onDesktop(`padding: ${spacing.xl} ${deskPadRem}`)};
+
+    a {
+      text-decoration: none;
+
+      &:first-of-type {
+        margin-right: auto;
+      }
     }
   }
 `;
@@ -37,14 +46,18 @@ const IconLink = ({ icon, href }) => (
   </Link>
 );
 
-export const Header = ({ openMenu }) => (
-  <Layout>
-    <Link href="/">
-      <a>IN-HOUSE</a>
-    </Link>
-    <IconLink icon="search" href="/houses" />
-    <MenuToggle onClick={openMenu}>
-      <Icon icon="menu" size={1.5} />
-    </MenuToggle>
+export const Header = ({ openMenu, white }) => (
+  <Layout white={white}>
+    <div>
+      <Link href="/">
+        <a>
+          <Brand />
+        </a>
+      </Link>
+      {/* <IconLink icon="search" href="/houses" /> */}
+      <MenuToggle onClick={openMenu}>
+        <Icon icon="menu" size={1.5} />
+      </MenuToggle>
+    </div>
   </Layout>
 );

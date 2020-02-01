@@ -9,7 +9,6 @@ import { selectShowHelp } from '../../../store/help';
 const stopPropagation = event => event.stopPropagation();
 
 export const Modal = ({
-  open,
   closeModal,
   title,
   canDismiss = true,
