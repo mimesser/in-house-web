@@ -48,10 +48,9 @@ const Overlay = styled.div`
 
 const useMatchesQuery = query => {
   const mediaQueryList = window.matchMedia(query);
-  console.log('initial', mediaQueryList.matches);
   const [result, setResult] = useState(mediaQueryList.matches);
   useEffect(() => {
-    const handleChange = ev => console.log('change', ev.matches) || setResult(ev.matches);
+    const handleChange = ev => setResult(ev.matches);
     mediaQueryList.addListener(handleChange);
 
     return () => mediaQueryList.removeListener(handleChange);
