@@ -13,6 +13,7 @@ const borderColor = ({ white }) => {
 };
 
 const Layout = styled.div`
+  position: relative;
   flex: none; // safari
   color: ${({ white }) => (white ? palette.white : palette.primary)};
   border-bottom: ${borderColor} solid 1px;

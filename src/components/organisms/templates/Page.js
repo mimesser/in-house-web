@@ -1,11 +1,11 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import Head from 'next/head';
 
-import { HelpToggle } from '../../atoms';
+import { HelpToggle, withNoSSR } from '../../atoms';
 import { Header } from '../Header';
 import { Menu } from '../Menu';
-import { appBackground, breakpoints, onDesktop, deskPad } from '../../../style';
+import { appBackground, breakpoints, onDesktop, deskPad, cover, palette } from '../../../style';
 
 const PageLayout = styled.div`
   height: 100%;
@@ -27,11 +27,56 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
+const Video = styled.video`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+`;
+
+const Overlay = styled.div`
+  ${cover('fixed')};
+  content: '';
+  background-color: ${palette.black};
+  opacity: 0.7;
+`;
+
+const useMatchesQuery = query => {
+  const mediaQueryList = window.matchMedia(query);
+  console.log('initial', mediaQueryList.matches);
+  const [result, setResult] = useState(mediaQueryList.matches);
+  useEffect(() => {
+    const handleChange = ev => console.log('change', ev.matches) || setResult(ev.matches);
+    mediaQueryList.addListener(handleChange);
+
+    return () => mediaQueryList.removeListener(handleChange);
+  }, []);
+
+  return result;
+};
+
+const BackVideo = withNoSSR(() => {
+  const mobile = useMatchesQuery(`(max-width: ${breakpoints.md})`);
+  const resource = `https://in-house.azureedge.net/webstatic/${mobile ? 'bg-mobile' : 'bg-desktop'}`;
+
+  return (
+    <Video poster={`${resource}.jpg`} playsInline autoPlay muted loop>
+      <source src={`${resource}.mp4`} type="video/mp4" />
+    </Video>
+  );
+});
+
 export const Page = ({
   children,
   title = 'In-House | Speak as a Team | Remain Untraceable',
   defaultHeader = true,
   className,
+  videoBack,
   whiteHead,
 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -48,6 +93,12 @@ export const Page = ({
         <meta property="twitter:title" content={title} />
       </Head>
       <PageLayout ref={ref} className={className}>
+        {videoBack && (
+          <>
+            <BackVideo />
+            <Overlay />
+          </>
+        )}
         <Menu isOpen={menuOpen} closeMenu={closeMenu} />
         {defaultHeader && <Header openMenu={openMenu} white={whiteHead} />}
         <Container>{children}</Container>

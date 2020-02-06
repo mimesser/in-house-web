@@ -1,12 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { palette } from '../../../style';
+import { palette, cover } from '../../../style';
 import { Icon } from '../../atoms';
 
 export const WinkConfirmation = styled.div.attrs(props => ({
   children: <Icon size={props.size || 15} icon="winky-circle" />,
 }))`
+  // TODO:
+  ${cover()};
   background-color: ${palette.primary};
   color: ${palette.mediumGray};
   flex: 1;

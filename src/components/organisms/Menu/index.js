@@ -40,7 +40,7 @@ const sidebarTransitionStyles = {
 const Panel = styled.div`
   position: absolute;
   right: 0;
-  z-index: 2;
+  z-index: 1;
   height: 100%;
   transition: width ${duration}ms;
   box-shadow: rgba(0, 0, 0, 0.15) -2px 2px 4px;

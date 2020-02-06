@@ -4,7 +4,6 @@ import { ThemeProvider } from 'styled-components';
 import App, { Container } from 'next/app';
 import withRedux from 'next-redux-wrapper';
 import withReduxSaga from 'next-redux-saga';
-import Bowser from 'bowser';
 
 import createStore from '../store';
 import { theme } from '../style';
@@ -13,12 +12,8 @@ import { loadAggregateData } from '../store/aggregate';
 
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
-    // TODO: remove, layouts etc. should be based on screen size
-    const desktop = Bowser.getParser(
-      (ctx && ctx.req && ctx.req.headers['user-agent']) || window.navigator.userAgent,
-    ).is('desktop');
     const pageProps = Component.getInitialProps ? await Component.getInitialProps({ ctx }) : {};
-    return { pageProps, isServer: ctx.isServer, pathname: ctx.pathname, asPath: ctx.asPath, desktop };
+    return { pageProps, isServer: ctx.isServer, pathname: ctx.pathname, asPath: ctx.asPath };
   }
 
   componentDidMount() {
@@ -27,8 +22,7 @@ class MyApp extends App {
   }
 
   render() {
-    const { Component, pageProps, store, desktop } = this.props;
-    theme.desktop = desktop;
+    const { Component, pageProps, store } = this.props;
 
     return (
       <Container>
