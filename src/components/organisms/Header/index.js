@@ -17,6 +17,7 @@ const Layout = styled.div`
   flex: none; // safari
   color: ${({ white }) => (white ? palette.white : palette.primary)};
   border-bottom: ${borderColor} solid 1px;
+  ${onDesktop(`border-bottom-color: transparent`)};
 
   > div {
     display: flex;
