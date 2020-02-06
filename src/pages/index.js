@@ -2,9 +2,9 @@ import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 
-import { LandingPage, HowItWorks, TransparentLinkStyle } from '../components/organisms';
+import { Page, HowItWorks, TransparentLinkStyle } from '../components/organisms';
 import { Button, H1, H3, Break, Icon } from '../components/atoms';
-import { spacing, palette, fontSize } from '../style';
+import { spacing, palette } from '../style';
 
 const Main = styled.div`
   position: relative;
@@ -56,7 +56,7 @@ const SocialLink = ({ href, icon }) => (
 const socialLinks = [
   {
     icon: 'facebook',
-    href: 'https://www.facebook.com/inhouse.movement/',
+    href: 'https://www.facebook.com/inhouse.movement',
   },
   {
     icon: 'twitter',
@@ -64,12 +64,12 @@ const socialLinks = [
   },
   {
     icon: 'linkedin',
-    href: 'https://www.linkedin.com/in/gigadime',
+    href: 'https://www.linkedin.com/company/in-house6',
   },
 ];
 
 const Landing = () => (
-  <LandingPage>
+  <Page whiteHead videoBack>
     <Main>
       <H1>a tool for people who can’t speak safely</H1>
       <Break />
@@ -89,7 +89,7 @@ const Landing = () => (
         </div>
       </Links>
     </Main>
-  </LandingPage>
+  </Page>
 );
 
 export default Landing;

@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { LandingPage, HowItWorks } from '../components/organisms';
-import { H1, H2, Break, H3 } from '../components/atoms';
+import { Page, HowItWorks } from '../components/organisms';
+import { H1, H2, Break } from '../components/atoms';
 import { palette, spacing } from '../style';
 
 const Main = styled.div`
@@ -30,7 +30,7 @@ const Links = styled.div`
 `;
 
 const About = () => (
-  <LandingPage>
+  <Page whiteHead videoBack>
     <Main>
       <H1>about</H1>
       <Break />
@@ -46,7 +46,7 @@ const About = () => (
         <HowItWorks />
       </Links>
     </Main>
-  </LandingPage>
+  </Page>
 );
 
 export default About;
