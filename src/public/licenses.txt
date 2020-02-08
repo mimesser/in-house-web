@@ -1,0 +1,27 @@
+
+/**
+ * @license
+ * MyFonts Webfont Build ID 3864856, 2020-02-07T15:13:52-0500
+ *
+ * The fonts listed in this notice are subject to the End User License
+ * Agreement(s) entered into by the website owner. All other parties are
+ * explicitly restricted from using the Licensed Webfonts(s).
+ *
+ * You may obtain a valid license at the URLs below.
+ *
+ * Webfont: HelveticaLTWXX-Light by Linotype
+ * URL: https://www.myfonts.com/fonts/linotype/helvetica/pro-light/
+ *
+ * Webfont: HelveticaLTWXX-Roman by Linotype
+ * URL: https://www.myfonts.com/fonts/linotype/helvetica/pro-regular/
+ *
+ * Webfont: HelveticaLTWXX-Bold by Linotype
+ * URL: https://www.myfonts.com/fonts/linotype/helvetica/pro-bold-174619/
+ *
+ *
+ * Licensed pageviews: 750,000
+ * Webfonts copyright: Copyright &#x00A9; 2014 Monotype Imaging Inc. All rights
+ * reserved.
+ *
+ * © 2020 MyFonts Inc
+*/
