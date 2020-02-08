@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { spacing, palette, fontSize, fontWeight } from '../../style';
+import { spacing, palette, fontSize, font } from '../../style';
 import { Button, ClearButton, H1, Progress } from '../atoms';
 
 const Main = styled.div`
@@ -27,7 +27,7 @@ export const NextButton = styled(({ children = 'next', ...btnProps }) => (
 `;
 
 export const BackButton = styled(ClearButton).attrs(({ children = 'back' }) => ({ children }))`
-  font-weight: ${fontWeight.bold};
+  ${font.bold};
 `;
 
 const Commands = styled.div`

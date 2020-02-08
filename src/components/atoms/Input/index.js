@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-import { spacing, fontWeight, font, fontSize, palette } from '../../../style';
+import { spacing, font, fontSize, palette } from '../../../style';
 
 const strikeThrough = ({ strike }) =>
   strike &&
@@ -18,8 +18,7 @@ export const placeholder = css`
 
 export const fontStyle = css`
   font-size: ${fontSize.md};
-  font-family: ${font.primary};
-  font-weight: ${fontWeight.normal};
+  ${font.primary};
 `;
 
 export const baseFormControlStyle = css`

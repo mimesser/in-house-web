@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { fontWeight, spacing, palette } from '../../../style';
+import { font, spacing, palette } from '../../../style';
 
 export const FormGroup = styled.div`
   margin-top: ${({ marginless }) => (marginless ? 0 : spacing.xl)};
@@ -16,6 +16,6 @@ export const FormGroup = styled.div`
 
   > p {
     margin-top: ${spacing.md};
-    font-weight: ${fontWeight.bold};
+    ${font.bold};
   }
 `;

@@ -3,12 +3,12 @@ import styled from 'styled-components';
 
 import Terms from '../components/organisms/Terms';
 import { Page } from '../components/organisms';
-import { spacing, fontWeight } from '../style';
+import { spacing, font } from '../style';
 
 const Content = styled.div`
   margin: 0 ${spacing.md};
   strong {
-    font-weight: ${fontWeight.bold};
+    ${font.bold};
   }
   text-align: justify;
   h2,
@@ -16,7 +16,7 @@ const Content = styled.div`
   h4 {
     font: inherit;
     letter-spacing: inherit;
-    font-weight: ${fontWeight.bold};
+    ${font.bold};
   }
   h4 {
     text-decoration: underline;

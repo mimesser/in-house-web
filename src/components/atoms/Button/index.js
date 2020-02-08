@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 
 import { Loader } from '../Loader';
 import { withForwardedRef } from '../../withForwardedRef';
-import { fontWeight, palette, fontSize, spacing } from '../../../style';
+import { font, palette, fontSize, spacing } from '../../../style';
 import { Icon } from '../Icon';
 
 const background = ({ outline, dashed, disabled }) => {
@@ -73,7 +73,7 @@ const BaseButton = styled.button`
   color: ${color};
   padding: ${spacing.md} ${spacing.xl};
   font-size: ${fontSize.md};
-  font-weight: ${fontWeight.bold};
+  ${font.bold};
   > ${Icon} {
     margin-left: ${({ wide }) => (wide ? 'auto' : spacing.xxl)};
   }

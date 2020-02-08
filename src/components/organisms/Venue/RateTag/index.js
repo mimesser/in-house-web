@@ -15,7 +15,7 @@ import { Modal } from '../../Modal';
 import { RateConfirmation } from '../RateConfirmation';
 import { Dial } from '../../../molecules';
 import { ItemTitle, Layout } from '../openCardStyle';
-import { fontSize, spacing, theme, fontWeight, palette } from '../../../../style';
+import { fontSize, spacing, theme, font, palette } from '../../../../style';
 
 const RateItemTitle = styled(ItemTitle)`
   color: ${({ rated }) => rated && theme.colors.lightGray};
@@ -26,7 +26,7 @@ const RateItemTitle = styled(ItemTitle)`
 // TODO
 const RateSubTitle = styled.div`
   font-size: ${fontSize.lg};
-  font-weight: ${fontWeight.bold}
+  ${font.bold};
   color: ${palette.lightGray};
   margin-bottom: ${spacing.lg};
   visibility: ${({ rated }) => (rated ? 'visible' : 'hidden')};

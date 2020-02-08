@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import isNumber from 'lodash/isNumber';
 
 import { CircleSlider, NumberLarge, NumberSmall, Icon } from '../../atoms';
-import { fontSize, fontWeight, palette } from '../../../style';
+import { fontSize, font, palette } from '../../../style';
 
 const FONT_RATIO = 3.6;
 
@@ -16,7 +16,7 @@ const SuperScriptDecimalSpan = styled.span`
 const Value = styled(NumberLarge)`
   color: ${({ color }) => color};
   font-size: ${({ size, padd }) => (size - padd) / FONT_RATIO}px;
-  font-weight: ${fontWeight.bold};
+  ${font.bold};
 `;
 
 export const Votes = styled(({ count, iconSize = 1, ...rest }) => (

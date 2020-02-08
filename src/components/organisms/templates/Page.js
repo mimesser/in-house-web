@@ -27,6 +27,7 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
+// noinspection CssInvalidPseudoSelector
 const Video = styled.video`
   position: fixed;
   top: 50%;
@@ -37,6 +38,10 @@ const Video = styled.video`
   height: auto;
   transform: translate(-50%, -50%);
   object-fit: cover;
+
+  //::-webkit-media-controls-start-playback-button {
+  //  display: none;
+  //}
 `;
 
 const Overlay = styled.div`
