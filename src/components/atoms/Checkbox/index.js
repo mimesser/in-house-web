@@ -11,9 +11,6 @@ const CheckboxContainer = styled.div`
 
   ${Icon} {
     flex-shrink: 0;
-    svg {
-      fill: none;
-    }
   }
   > span:last-of-type {
     margin-left: ${spacing.md};

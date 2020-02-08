@@ -40,7 +40,7 @@ const Links = styled.div`
   }
 
   > div {
-    margin-top: ${spacing.xl};
+    margin-top: ${spacing.xxl};
     > a {
       margin-right: ${spacing.lg};
     }
@@ -80,7 +80,7 @@ const Landing = () => (
       <Links>
         <HowItWorks />
         <Link href="/about" passHref>
-          <Button icon="arrow-right">our mission</Button>
+          <Button icon="mission">our mission</Button>
         </Link>
         <div>
           {socialLinks.map(link => (
