@@ -16,6 +16,8 @@ const Sample = styled.div.attrs(({ icon }) => ({
   flex-direction: column;
   align-items: center;
   margin: 2rem;
+  // to easily identify hardcoded backgrounds
+  background: aliceblue;
   > * {
     :first-child {
       margin-bottom: 0.5rem;
