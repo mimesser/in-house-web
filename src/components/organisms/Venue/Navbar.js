@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import { createStructuredSelector } from 'reselect';
 import Link from 'next/link';
 
-import { spacing, palette, fontWeight, calcRem } from '../../../style';
+import { spacing, palette, font, calcRem } from '../../../style';
 import { selectAnyTabItemSelected, selectIsActiveInsider } from '../../../store/venues';
 import { HelpTip } from '../../atoms';
 
@@ -27,7 +27,7 @@ const A = styled.a`
   text-align: center;
   padding: ${spacing.md};
   color: ${palette.gray};
-  font-weight: ${fontWeight.bold};
+  ${font.bold};
   text-decoration: none;
   transition: color 0.5s, border-color 0.5s;
   border-bottom: ${calcRem('6px')} solid transparent;

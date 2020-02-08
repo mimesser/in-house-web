@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-import { appBackground, fontSize, fontWeight, palette, spacing, calcRem } from '../../../style';
+import { appBackground, fontSize, font, palette, spacing, calcRem } from '../../../style';
 import { ClearButton, H1, Break } from '../../atoms';
 import { Dial } from '../../molecules';
 
@@ -33,7 +33,7 @@ const flagText = ({ flagged }) =>
   flagged &&
   css`
     color: ${palette.darkGray};
-    font-weight: ${fontWeight.bold};
+    ${font.bold};
   `;
 
 export const FlagButton = styled(ClearButton)`

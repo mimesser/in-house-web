@@ -6,7 +6,7 @@ import { Transition } from 'react-transition-group';
 
 import { Icon, ClearButton } from '../../atoms';
 
-import { spacing, fontSize, fontWeight, palette } from '../../../style';
+import { spacing, fontSize, font, palette } from '../../../style';
 
 const CloseButton = styled(ClearButton)`
   margin: ${spacing.xl};
@@ -61,7 +61,7 @@ const A = styled.a`
   outline: none;
   text-decoration: none;
   cursor: pointer;
-  font-weight: ${fontWeight.bold};
+  ${font.bold};
   font-size: ${fontSize.md};
   padding: ${spacing.sm} 0 ${spacing.sm} ${spacing.xxxl};
   margin-top: ${spacing.xxl};

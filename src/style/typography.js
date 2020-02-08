@@ -1,9 +1,20 @@
 import { calcRem } from './calcRem';
 
+export const fontFamily = {
+  light: 'HelveticaLTWXX-Light',
+  primary: 'HelveticaLTWXX-Roman',
+  bold: 'HelveticaLTWXX-Bold',
+};
+
+const useFamily = f => `
+  font-family: ${f};
+  font-weight: 300;
+`;
+
 export const font = {
-  // TODO: until font supplied
-  // primary: 'Helvetica, Roboto, Arial, sans-serif',
-  primary: 'Roboto, sans-serif',
+  light: useFamily(fontFamily.light),
+  primary: useFamily(fontFamily.primary),
+  bold: useFamily(fontFamily.bold),
 };
 
 export const fontSize = {
@@ -20,13 +31,13 @@ export const lineHeight = {
   lg: '1.5',
 };
 
-// TODO: fix once font supplied
-export const fontWeight = {
-  light: 300,
-  normal: 400,
-  bold: 600,
-};
+// // Currently not in use - we have separate font family for each font weight :/
+// export const fontWeight = {
+//   light: 300,
+//   normal: 400,
+//   bold: 600,
+// };
 
 export const appLineHeight = lineHeight.sm;
 export const appFontSize = fontSize.sm;
-export const appFontWeight = fontWeight.normal;
+// export const appFontWeight = fontWeight.normal;

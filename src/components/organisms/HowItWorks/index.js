@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 import { Button, Brand } from '../../atoms';
 import { Modal } from '../Modal';
-import { fontSize, fontWeight, palette, spacing, breakpoints, deskPadRem, onDesktop } from '../../../style';
+import { fontSize, font, palette, spacing, breakpoints, deskPadRem, onDesktop } from '../../../style';
 
 export const TransparentLinkStyle = css`
   background: none;
@@ -32,13 +32,13 @@ const Num = styled.div`
   align-items: center;
   justify-content: center;
   font-size: ${fontSize.md};
-  font-weight: ${fontWeight.bold};
+  ${font.bold};
   margin-right: ${spacing.xl};
 `;
 
 const Title = styled.div`
   font-size: ${fontSize.md};
-  font-weight: ${fontWeight.bold};
+  ${font.bold};
   margin-bottom: ${spacing.sm};
 `;
 
@@ -47,7 +47,7 @@ const Desc = styled.div`
     text-decoration: underline;
     background: none;
     color: currentColor;
-    font-weight: ${fontWeight.bold};
+    ${font.bold};
   }
 `;
 

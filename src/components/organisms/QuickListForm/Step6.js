@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 import { Icon, ClearButton } from '../../atoms';
 import { StepLayout } from './StepLayout';
-import { fontWeight, palette, spacing, cover } from '../../../style';
+import { font, palette, spacing, cover } from '../../../style';
 import { selectLoading } from '../../../store/venues';
 import { BackButton, NextButton } from '../../molecules';
 import { Hint } from './Hint';
@@ -15,7 +15,7 @@ const Label = styled.div`
 `;
 const Value = styled.div`
   color: ${palette.darkGray};
-  font-weight: ${fontWeight.bold};
+  ${font.bold};
   margin-bottom: ${spacing.xl};
 `;
 

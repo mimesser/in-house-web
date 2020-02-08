@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-import { calcRem, spacing, fontSize, palette, fontWeight } from '../../../style';
+import { calcRem, spacing, fontSize, palette, font } from '../../../style';
 import { Card, Button, Break } from '../../atoms';
 import { PokeButton, Dial } from '../../molecules';
 import { Votes } from './Votes';
@@ -18,7 +18,7 @@ export const ItemTime = styled.time`
 export const ItemTitle = styled.div`
   color: ${palette.primary};
   font-size: ${fontSize.md};
-  font-weight: ${fontWeight.bold};
+  ${font.bold};
   width: 80%;
 `;
 
