@@ -6,7 +6,13 @@ import { WinkConfirmation, CounterInput } from '../../molecules';
 import { FormGroup, Container, SubmitButton } from './style';
 import { postFeedback, clearFeedback } from '../../../store/feedback';
 
-const subjectOptions = ['list your house', 'technical issue', 'general feedback', 'other issue'].map(value => ({
+const subjectOptions = [
+  'notify when live',
+  'list your house',
+  'technical issue',
+  'general feedback',
+  'other issue',
+].map(value => ({
   label: value,
   value,
 }));
@@ -62,7 +68,7 @@ function FeedbackForm(props) {
       <FormGroup>
         <Input
           value={email}
-          disabled={!subject || !message}
+          disabled={!subject}
           onChange={handleEmailChange}
           placeholder="email (if you want a reply)"
           type="email"
