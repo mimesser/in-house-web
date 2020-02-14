@@ -40,7 +40,7 @@ class Houses extends Component {
       : undefined;
 
     return (
-      <Page title={title} defaultHeader={defaultHeader}>
+      <Page title={title} defaultHeader={defaultHeader} noPadd>
         <View />
       </Page>
     );

@@ -22,9 +22,9 @@ const Layout = styled.div`
   > div {
     display: flex;
     align-items: center;
-    padding: ${spacing.xl};
+    padding: ${spacing.xl} ${spacing.xxl};
 
-    ${onDesktop(`padding: ${spacing.xl} ${deskPadRem}`)};
+    ${({ noPadd }) => !noPadd && onDesktop(`padding: ${spacing.xl} ${deskPadRem}`)};
 
     a {
       text-decoration: none;
@@ -48,8 +48,8 @@ const IconLink = ({ icon, href }) => (
   </Link>
 );
 
-export const Header = ({ openMenu, white }) => (
-  <Layout white={white}>
+export const Header = ({ openMenu, white, noPadd }) => (
+  <Layout white={white} noPadd={noPadd}>
     <div>
       <Link href="/">
         <a>

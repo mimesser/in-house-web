@@ -13,3 +13,9 @@ export const onDesktop = style => css`
     ${style};
   }
 `;
+
+export const onDesktopOverflowAuto = css`
+  @media screen and (min-width: ${breakpoints.lg}) {
+    overflow: auto;
+  }
+`;

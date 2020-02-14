@@ -5,7 +5,7 @@ import Head from 'next/head';
 import { HelpToggle, withNoSSR } from '../../atoms';
 import { Header } from '../Header';
 import { Menu } from '../Menu';
-import { appBackground, breakpoints, onDesktop, deskPad, cover, palette } from '../../../style';
+import { appBackground, breakpoints, onDesktop, deskPad, cover, palette, onDesktopOverflowAuto } from '../../../style';
 
 const PageLayout = styled.div`
   height: 100%;
@@ -17,14 +17,11 @@ const PageLayout = styled.div`
 const paddings = deskPad - 32;
 
 const Container = styled.div`
-  width: 100%;
-  height: 100%;
-  max-width: ${breakpoints.sm};
-  margin: 0 auto;
-  // TODO: ? + move to landing
-  ${onDesktop(`margin-left: ${paddings}px`)};
+  flex: 1;
+  ${({ noPadd }) => !noPadd && onDesktop(`margin-left: ${paddings}px`)};
   display: flex;
   flex-direction: column;
+  ${onDesktopOverflowAuto};
 `;
 
 // noinspection CssInvalidPseudoSelector
@@ -82,6 +79,7 @@ export const Page = ({
   className,
   videoBack,
   whiteHead,
+  noPadd,
 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const openMenu = useCallback(() => setMenuOpen(true), []);
@@ -104,9 +102,9 @@ export const Page = ({
           </>
         )}
         <Menu isOpen={menuOpen} closeMenu={closeMenu} />
-        {defaultHeader && <Header openMenu={openMenu} white={whiteHead} />}
-        <Container>{children}</Container>
-        <HelpToggle containerRef={ref} />
+        {defaultHeader && <Header openMenu={openMenu} white={whiteHead} noPadd={noPadd} />}
+        <Container noPadd={noPadd}>{children}</Container>
+        {/* <HelpToggle containerRef={ref} /> */}
       </PageLayout>
     </>
   );

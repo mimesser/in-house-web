@@ -2,9 +2,9 @@ import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 
-import { Page, HowItWorks, TransparentLinkStyle } from '../components/organisms';
-import { Button, H1, H3, Break, Icon } from '../components/atoms';
-import { spacing, palette } from '../style';
+import { Page, HowItWorks } from '../components/organisms';
+import { Button, H1, H3, Break, Icon, TransparentLinkStyle } from '../components/atoms';
+import { spacing, palette, breakpoints } from '../style';
 
 const Main = styled.div`
   position: relative;
@@ -14,6 +14,7 @@ const Main = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
+  max-width: ${breakpoints.sm};
 
   ${H1} {
     margin-top: ${spacing.xl};

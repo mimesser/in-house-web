@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { Page, HowItWorks } from '../components/organisms';
 import { H1, H2, Break } from '../components/atoms';
-import { palette, spacing } from '../style';
+import { palette, spacing, breakpoints } from '../style';
 
 const Main = styled.div`
   position: relative;
@@ -13,6 +13,7 @@ const Main = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
+  max-width: ${breakpoints.sm};
 
   // ${H1} {
   //   margin-top: ${spacing.xl};
