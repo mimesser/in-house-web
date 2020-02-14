@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { spacing } from '../../../style';
+import { spacing, breakpoints } from '../../../style';
 import { Button, H2 } from '../../atoms';
 
 export const FormGroup = styled.div`
@@ -12,6 +12,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: ${spacing.xxl};
+  max-width: ${breakpoints.sm};
 
   ${H2} {
     margin: ${spacing.xl} 0;
