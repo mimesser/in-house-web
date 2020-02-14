@@ -94,3 +94,9 @@ export const ClearButton = styled.button`
   display: inline-flex;
   align-items: center;
 `;
+
+export const TransparentLinkStyle = css`
+  background: none;
+  font-size: ${fontSize.sm};
+  padding-left: 0;
+`;

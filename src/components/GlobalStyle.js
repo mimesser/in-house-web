@@ -57,6 +57,7 @@ export const GlobalStyle = createGlobalStyle`
     background-color: ${appBackground};
     min-width: ${breakpoints.xs};
     min-height: 650px;
+    height: 100%;
     word-break: break-word;
 
     > * {

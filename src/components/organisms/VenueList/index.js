@@ -4,12 +4,12 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Link from 'next/link';
 
-import { Loader, ClearButton, Icon, Button, Card } from '../../atoms';
+import { Loader, ClearButton, Icon, Button, Card, H1 } from '../../atoms';
 
 import { selectVenues } from '../../../store/venues';
 import { selectInDemo } from '../../../store/demo';
 import { VenueCard } from './VenueCard';
-import { SearchBox, Layout, NoResults } from './style';
+import { SearchBox, Layout, Results, NoResultsSearchLabel, SelectedItemArea, CantFindHouse } from './style';
 import PrivateShare from '../Venue/PrivateShare';
 import { Main, ItemText, ItemTitle } from '../Venue/tabStyle';
 
@@ -30,7 +30,7 @@ const findVenue = (id, venues) => {
   return venue;
 };
 
-const List = ({ venues, inDemo }) => {
+const SearchPage = ({ venues, inDemo }) => {
   const [filter, setFilter] = useState('');
   const handleSearchChange = useCallback(e => setFilter(e.currentTarget.value.toLowerCase()), []);
   const clearSearch = useCallback(() => setFilter(''), []);
@@ -71,25 +71,36 @@ const List = ({ venues, inDemo }) => {
 
   const applyFilter = !!filter;
   const venuesToShow = applyFilter ? venues.filter(v => v.name.toLowerCase().includes(filter)) : venues;
+  const nothingFound = venuesToShow.length === 0;
 
   return (
     <Layout>
-      <SearchBox
-        placeholder={inDemo ? 'my house' : 'find your org'}
-        value={filter}
-        icon={<SearchBoxIcon applyFilter={applyFilter} clear={clearSearch} />}
-        onChange={handleSearchChange}
-      />
-      {filter && venuesToShow.length === 0 && <NoResults>no results</NoResults>}
-      {venuesToShow.map((v, i) => (
-        <VenueCard key={v.id} venue={v} showVenue={showVenue} withHelp={i === 0} />
-      ))}
-      {!inDemo && (
-        <Link href="/quick-list" passHref>
-          <Button icon="arrow-right">list your org</Button>
-        </Link>
-      )}
-      {/* <PrivateShare type="venue" renderItem={renderSharePreview} getItemTitle={getTitleForShare} getVenue={getVenue} /> */}
+      <Results>
+        <SearchBox
+          placeholder={inDemo ? 'my house' : 'find your org'}
+          value={filter}
+          icon={<SearchBoxIcon applyFilter={applyFilter} clear={clearSearch} />}
+          onChange={handleSearchChange}
+        />
+        {filter && nothingFound && <NoResultsSearchLabel>no results</NoResultsSearchLabel>}
+        {venuesToShow.map((v, i) => (
+          <VenueCard key={v.id} venue={v} showVenue={showVenue} withHelp={i === 0} />
+        ))}
+        {!inDemo && nothingFound && (
+          <Link href="/quick-list" passHref>
+            <Button icon="arrow-right">list your org</Button>
+          </Link>
+        )}
+        {/* <PrivateShare type="venue" renderItem={renderSharePreview} getItemTitle={getTitleForShare} getVenue={getVenue} /> */}
+      </Results>
+      <SelectedItemArea>
+        <CantFindHouse>
+          <H1>can’t find your org?</H1>
+          <Link href="/quick-list" passHref>
+            <Button icon="arrow-right">add your organization</Button>
+          </Link>
+        </CantFindHouse>
+      </SelectedItemArea>
     </Layout>
   );
 };
@@ -99,4 +110,4 @@ const mapStateToProps = createStructuredSelector({
   inDemo: selectInDemo,
 });
 
-export const VenueList = connect(mapStateToProps)(List);
+export const VenueList = connect(mapStateToProps)(SearchPage);

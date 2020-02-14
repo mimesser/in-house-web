@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-import { calcRem, palette, spacing, cover } from '../../../style';
-import { Card, Address, Button, Break } from '../../atoms';
+import { calcRem, palette, spacing, cover, breakpoints, onDesktop, onDesktopOverflowAuto } from '../../../style';
+import { Card, Address, Button, Break, TransparentLinkStyle } from '../../atoms';
 import { IconInput, PokeButton } from '../../molecules';
 
 // TODO: move to molecules?
@@ -9,25 +9,53 @@ import { ScoreAndVoters } from '../Venue/ScoreAndVoters';
 import { Votes } from '../Venue/Votes';
 
 export const Layout = styled.div`
+  display: flex;
+  flex: 1;
+  ${onDesktopOverflowAuto};
+`;
+
+export const Results = styled.div`
   padding: ${spacing.lg} ${spacing.xxl} ${spacing.xxl};
   display: flex;
   flex-direction: column;
-  flex: none; // safari
-  flex-grow: 1;
+  flex: 1;
+  background-color: ${palette.offWhite};
+  ${onDesktop(`max-width: ${breakpoints.xs}`)};
+  ${onDesktopOverflowAuto};
 
   > ${Button} {
     margin-top: ${spacing.lg};
     align-self: flex-start;
   }
+
+  > * {
+    // safari
+    flex-shrink: 0;
+  }
+`;
+
+export const SelectedItemArea = styled.div`
+  display: none;
+  flex: 1;
+  ${onDesktop(`display: flex`)};
 `;
 
 export const SearchBox = styled(IconInput)`
+  margin-bottom: ${spacing.xl};
+`;
+
+export const NoResultsSearchLabel = styled.div`
+  color: ${palette.gray};
   margin-bottom: ${spacing.lg};
 `;
 
-export const NoResults = styled.div`
-  color: ${palette.gray};
-  margin-bottom: ${spacing.lg};
+export const CantFindHouse = styled.div`
+  margin: auto;
+  > a {
+    ${TransparentLinkStyle};
+    color: currentColor;
+    margin-top: ${spacing.xl};
+  }
 `;
 
 export const Industry = styled.div`

@@ -1,16 +1,10 @@
 import React, { useState, useCallback } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import Link from 'next/link';
 
-import { Button, Brand } from '../../atoms';
+import { Button, Brand, TransparentLinkStyle } from '../../atoms';
 import { Modal } from '../Modal';
 import { fontSize, font, palette, spacing, breakpoints, deskPadRem, onDesktop } from '../../../style';
-
-export const TransparentLinkStyle = css`
-  background: none;
-  font-size: ${fontSize.sm};
-  padding-left: 0;
-`;
 
 const OpenLink = styled(Button)`
   ${TransparentLinkStyle};
