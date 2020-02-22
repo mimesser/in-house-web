@@ -38,7 +38,7 @@ const fontFamilies = css`
 `;
 
 export const GlobalStyle = createGlobalStyle`
-  ${fontFamilies};
+  // ${fontFamilies};
   ${normalize()};
   * {
     box-sizing: border-box;

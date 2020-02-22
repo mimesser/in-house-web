@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 import { Loader, ClearButton, Icon, Button, Card, H1 } from '../../atoms';
 
-import { selectVenues } from '../../../store/venues';
+import { selectInsiderChallengeForm, selectSelectedVenue, selectVenues } from '../../../store/venues';
 import { selectInDemo } from '../../../store/demo';
 import { VenueCard } from './VenueCard';
 import { SearchBox, Layout, Results, NoResultsSearchLabel, SelectedItemArea, CantFindHouse } from './style';
@@ -108,6 +108,8 @@ const SearchPage = ({ venues, inDemo }) => {
 const mapStateToProps = createStructuredSelector({
   venues: selectVenues,
   inDemo: selectInDemo,
+  venue: selectSelectedVenue,
+  challengeForm: selectInsiderChallengeForm,
 });
 
 export const VenueList = connect(mapStateToProps)(SearchPage);
