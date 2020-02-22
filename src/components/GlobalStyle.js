@@ -8,7 +8,7 @@ const fontFamilies = css`
   @import url('//hello.myfonts.net/count/3af918');
   @font-face {
     font-family: 'HelveticaLTWXX-Light';
-    font-display: swap;
+    // font-display: swap;
     src: url('https://in-house.azureedge.net/webstatic/fonts/3AF918_0_0.eot');
     src: url('https://in-house.azureedge.net/webstatic/fonts/3AF918_0_0.eot?#iefix') format('embedded-opentype'),
       url('https://in-house.azureedge.net/webstatic/fonts/3AF918_0_0.woff2') format('woff2'),
@@ -18,7 +18,7 @@ const fontFamilies = css`
 
   @font-face {
     font-family: 'HelveticaLTWXX-Roman';
-    font-display: swap;
+    // font-display: swap;
     src: url('https://in-house.azureedge.net/webstatic/fonts/3AF918_1_0.eot');
     src: url('https://in-house.azureedge.net/webstatic/fonts/3AF918_1_0.eot?#iefix') format('embedded-opentype'),
       url('https://in-house.azureedge.net/webstatic/fonts/3AF918_1_0.woff2') format('woff2'),
@@ -28,7 +28,7 @@ const fontFamilies = css`
 
   @font-face {
     font-family: 'HelveticaLTWXX-Bold';
-    font-display: swap;
+    // font-display: swap;
     src: url('https://in-house.azureedge.net/webstatic/fonts/3AF918_2_0.eot');
     src: url('https://in-house.azureedge.net/webstatic/fonts/3AF918_2_0.eot?#iefix') format('embedded-opentype'),
       url('https://in-house.azureedge.net/webstatic/fonts/3AF918_2_0.woff2') format('woff2'),
@@ -38,7 +38,7 @@ const fontFamilies = css`
 `;
 
 export const GlobalStyle = createGlobalStyle`
-  // ${fontFamilies};
+  ${fontFamilies};
   ${normalize()};
   * {
     box-sizing: border-box;
