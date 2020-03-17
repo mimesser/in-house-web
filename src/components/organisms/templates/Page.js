@@ -44,7 +44,8 @@ const Video = styled.video`
 const Overlay = styled.div`
   ${cover('fixed')};
   content: '';
-  background-color: ${palette.black};
+  background-image: linear-gradient(150.98deg, rgba(0, 178, 255, 0.2) 0%, rgba(255, 230, 0, 0.17) 99.68%),
+    linear-gradient(150.46deg, #000000 0%, rgba(0, 0, 0, 0.35) 99.41%, rgba(0, 0, 0, 0.37) 99.42%);
   opacity: 0.7;
 `;
 
