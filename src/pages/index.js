@@ -72,7 +72,7 @@ const socialLinks = [
 const Landing = () => (
   <Page whiteHead videoBack>
     <Main>
-      <H1>a tool for people who can’t speak safely</H1>
+      <H1>a tool for people who can’t speak safely [staging]</H1>
       <Break />
       <H3 as="p">
         allowing only anonymous team members to share consensus truths about their organization *without any required
