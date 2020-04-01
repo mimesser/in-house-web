@@ -4,4 +4,5 @@ coverage/
 .idea/
 .bin/
 yarn-error.log
+yarn.lock
 build/
