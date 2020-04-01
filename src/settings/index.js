@@ -5,8 +5,7 @@ import { DEMO_VENUE_ID, DEMO_VENUES_ID } from '../store/demo/data';
 const { publicRuntimeConfig: { MODE } = {} } = getConfig() || {};
 
 const local = {
-  apiUrl: 'https://in-house-staging-backend.azurewebsites.net/api',
-  // apiUrl: 'http://localhost:5080/api',
+  apiUrl: 'http://localhost:5080/api',
 };
 
 const dev = {
