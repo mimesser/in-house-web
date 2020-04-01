@@ -24,6 +24,7 @@ const Main = styled.div`
   }
   ${H3} {
     margin-bottom: ${spacing.xxl};
+    font-family: inherit;
   }
 `;
 
