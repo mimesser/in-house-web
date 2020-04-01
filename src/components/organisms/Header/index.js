@@ -56,7 +56,7 @@ export const Header = ({ openMenu, white, noPadd }) => (
           <Brand />
         </a>
       </Link>
-      {/* <IconLink icon="search" href="/houses" /> */}
+      <IconLink icon="search" href="/houses" />
       <MenuToggle onClick={openMenu}>
         <Icon icon="menu" size={1.5} />
       </MenuToggle>
