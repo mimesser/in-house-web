@@ -3,6 +3,7 @@ import { DEMO_VENUE_ID, DEMO_VENUES_ID } from '../store/demo/data';
 
 // This way settings resolved at runtime and not at build time
 const { publicRuntimeConfig: { MODE } = {} } = getConfig() || {};
+console.log('\n\n\n', MODE, '\n\n\n');
 
 const local = {
   apiUrl: 'http://localhost:5080/api',
