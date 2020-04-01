@@ -3,7 +3,7 @@ import Link from 'next/link';
 import styled from 'styled-components';
 
 import { Page, HowItWorks } from '../components/organisms';
-import { Button, H1, H3, Break, Icon, TransparentLinkStyle } from '../components/atoms';
+import { Button, H1, H2, Break, Icon, TransparentLinkStyle } from '../components/atoms';
 import { spacing, palette, breakpoints } from '../style';
 
 const Main = styled.div`
@@ -22,7 +22,7 @@ const Main = styled.div`
   ${Break} {
     margin: ${spacing.xxl} 0;
   }
-  ${H3} {
+  ${H2} {
     margin-bottom: ${spacing.xxl};
     font-family: inherit;
   }
@@ -75,10 +75,10 @@ const Landing = () => (
     <Main>
       <H1>a tool for people who can’t speak safely</H1>
       <Break />
-      <H3 as="p">
+      <H2 as="p">
         allowing only anonymous team members to share consensus truths about their organization *without any required
         logins, emails or identifying personal data*
-      </H3>
+      </H2>
       <Links>
         <HowItWorks />
         <Link href="/about" passHref>
