@@ -5,6 +5,6 @@ module.exports = {
     publicDirectory: true,
   },
   publicRuntimeConfig: {
-    MODE: process.env.MODE,
+    API_URL: process.env.API_URL,
   },
 };
