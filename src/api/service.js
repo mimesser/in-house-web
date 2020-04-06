@@ -1,10 +1,9 @@
 import axios from 'axios';
-import { API_URL } from '../settings';
 
 const TOKEN_KEY = 'in-house/token';
 
 export const api = axios.create({
-  baseURL: API_URL,
+  baseURL: process.env.API_URL,
 });
 
 if (process.browser) {
