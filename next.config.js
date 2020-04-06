@@ -4,7 +4,8 @@ module.exports = {
   experimental: {
     publicDirectory: true,
   },
-  publicRuntimeConfig: {
+  env: {
     API_URL: process.env.API_URL,
+    PORT: process.env.PORT,
   },
 };
