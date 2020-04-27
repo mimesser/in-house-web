@@ -7,11 +7,17 @@ import { FormGroup, Container, SubmitButton } from './style';
 import { postFeedback, clearFeedback } from '../../../store/feedback';
 
 const subjectOptions = [
-  'notify when live',
-  'list your house',
-  'technical issue',
+  'get notified when live',
+  'beta trial your warehouse',
+  'beta trial your hospital',
+  'beta trial your supermarket',
+  'beta trial something else',
+  'join our team / movement',
+  'strategic partnership',
+  'technical difficulty',
+  'criticism / hate',
   'general feedback',
-  'other issue',
+  'other',
 ].map((value) => ({
   label: value,
   value,
