@@ -23,7 +23,7 @@ const SearchBoxIcon = ({ applyFilter, clear }) =>
   );
 
 const findVenue = (id, venues) => {
-  const venue = venues.find(t => t.id === id);
+  const venue = venues.find((t) => t.id === id);
   if (!venue) {
     throw new Error(`Can't find venue ${id}`);
   }
@@ -32,15 +32,15 @@ const findVenue = (id, venues) => {
 
 const SearchPage = ({ venues, inDemo }) => {
   const [filter, setFilter] = useState('');
-  const handleSearchChange = useCallback(e => setFilter(e.currentTarget.value.toLowerCase()), []);
+  const handleSearchChange = useCallback((e) => setFilter(e.currentTarget.value.toLowerCase()), []);
   const clearSearch = useCallback(() => setFilter(''), []);
-  const showVenue = useCallback(venue => {
+  const showVenue = useCallback((venue) => {
     const { id } = venue;
     Router.push(`/houses?id=${id}`, `/houses/${id}`, { shallow: true });
   }, []);
 
   const renderSharePreview = useCallback(
-    id => {
+    (id) => {
       const {
         name,
         venueInfo: { address, city, state, zipCode },
@@ -62,15 +62,15 @@ const SearchPage = ({ venues, inDemo }) => {
     [venues],
   );
 
-  const getVenue = useCallback(id => findVenue(id, venues), [venues]);
+  const getVenue = useCallback((id) => findVenue(id, venues), [venues]);
 
-  const getTitleForShare = useCallback(id => findVenue(id, venues).name, [venues]);
+  const getTitleForShare = useCallback((id) => findVenue(id, venues).name, [venues]);
   if (!venues) {
     return <Loader big />;
   }
 
   const applyFilter = !!filter;
-  const venuesToShow = applyFilter ? venues.filter(v => v.name.toLowerCase().includes(filter)) : venues;
+  const venuesToShow = applyFilter ? venues.filter((v) => v.name.toLowerCase().includes(filter)) : venues;
   const nothingFound = venuesToShow.length === 0;
 
   return (
@@ -86,9 +86,9 @@ const SearchPage = ({ venues, inDemo }) => {
         {venuesToShow.map((v, i) => (
           <VenueCard key={v.id} venue={v} showVenue={showVenue} withHelp={i === 0} />
         ))}
-        {!inDemo && nothingFound && (
+        {!inDemo && !nothingFound && (
           <Link href="/quick-list" passHref>
-            <Button icon="arrow-right">list your org</Button>
+            <Button icon="arrow-right">add</Button>
           </Link>
         )}
         {/* <PrivateShare type="venue" renderItem={renderSharePreview} getItemTitle={getTitleForShare} getVenue={getVenue} /> */}
