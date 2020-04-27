@@ -12,7 +12,7 @@ const subjectOptions = [
   'technical issue',
   'general feedback',
   'other issue',
-].map(value => ({
+].map((value) => ({
   label: value,
   value,
 }));
@@ -21,8 +21,8 @@ function FeedbackForm(props) {
   const [subject, setSubject] = useState(undefined);
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
-  const getHandler = setter => event => setter(event.target.value);
-  const handleSubjectChange = value => setSubject(value);
+  const getHandler = (setter) => (event) => setter(event.target.value);
+  const handleSubjectChange = (value) => setSubject(value);
   const handleEmailChange = getHandler(setEmail);
 
   const submit = () => {
@@ -35,7 +35,7 @@ function FeedbackForm(props) {
     setMessage('');
   };
 
-  const valid = !!subject && !!message;
+  const valid = !!subject && (!!message || !!email);
 
   /**
    * TODO: after submission, the form should clear.
@@ -82,7 +82,7 @@ function FeedbackForm(props) {
   );
 }
 
-const mapState = state => ({
+const mapState = (state) => ({
   ...state.feedback,
 });
 
@@ -91,7 +91,4 @@ const mapDispatch = {
   clearFeedback,
 };
 
-export default connect(
-  mapState,
-  mapDispatch,
-)(FeedbackForm);
+export default connect(mapState, mapDispatch)(FeedbackForm);
