@@ -26,11 +26,11 @@ const Layout = styled.div`
 
     ${({ noPadd }) => !noPadd && onDesktop(`padding: ${spacing.xl} ${deskPadRem}`)};
 
-    a {
-      text-decoration: none;
+    > span {
+      margin-right: auto;
 
-      &:first-of-type {
-        margin-right: auto;
+      & > a {
+        text-decoration: none;
       }
     }
   }
@@ -51,11 +51,7 @@ const IconLink = ({ icon, href }) => (
 export const Header = ({ openMenu, white, noPadd }) => (
   <Layout white={white} noPadd={noPadd}>
     <div>
-      <Link href="/">
-        <a>
-          <Brand />
-        </a>
-      </Link>
+      <Brand />
       <IconLink icon="search" href="/houses" />
       <MenuToggle onClick={openMenu}>
         <Icon icon="menu" size={1.5} />
