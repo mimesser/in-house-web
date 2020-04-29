@@ -8,11 +8,19 @@ import { spacing, palette, font, calcRem } from '../../../style';
 import { selectAnyTabItemSelected, selectIsActiveInsider } from '../../../store/venues';
 import { HelpTip } from '../../atoms';
 
-const linkTextStyle = ({ active }) => {
-  if (active) {
+const linkTextStyle = ({ active, custom }) => {
+  if (active && !custom) {
     return css`
       color: ${palette.primary};
       border-bottom-color: currentColor;
+      position: relative;
+    `;
+  }
+  if (custom) {
+    return css`
+      color: ${palette.white};
+      background-color: ${palette.primary};
+      border-bottom: none;
       position: relative;
     `;
   }
@@ -48,7 +56,7 @@ const Nav = styled.nav`
   z-index: 1; // otherwise box-shadow is hidden in rate tab
 `;
 
-const TabHeader = ({ id, tab: { path, label, secured, help }, active, authorized }) => {
+const TabHeader = ({ id, tab: { path, label, secured, help }, active, custom, authorized }) => {
   if (!authorized && secured) {
     return (
       <Link href={`/houses/${id}`} passHref>
@@ -60,7 +68,9 @@ const TabHeader = ({ id, tab: { path, label, secured, help }, active, authorized
   const link = (
     <HelpWrap>
       <Link href={`/houses?id=${id}&tab=${path}`} as={`/houses/${id}/${path}`} passHref>
-        <A active={active}>{label}</A>
+        <A active={active} custom={custom}>
+          {label}
+        </A>
       </Link>
     </HelpWrap>
   );
@@ -90,16 +100,18 @@ const tabs = [
   {
     path: 'mink',
     label: 'mink',
+    custom: true,
   },
 ];
 
 const Navbar = ({ id, selected, authorized, anyTabItemSelected }) => (
   <Nav>
-    {tabs.map(t => (
+    {tabs.map((t) => (
       <TabHeader
         id={id}
         key={t.path}
         tab={t}
+        custom={t.custom}
         active={selected === t.path && !anyTabItemSelected}
         authorized={authorized}
       />
