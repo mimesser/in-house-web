@@ -23,7 +23,7 @@ const shareUrl = (venueId, type, id) => {
   return `/venues/${venueId}/${TABS_MAB[type]}/${id}/share`;
 };
 
-const cleanPhoneNumber = n => n.replace(/[()\s-.+]/g, '');
+const cleanPhoneNumber = (n) => n.replace(/[()\s-.+]/g, '');
 
 export function* privateShare({ payload: { type, id, recipient, message } }) {
   const viaEmail = recipient.indexOf('@') !== -1;
@@ -37,7 +37,7 @@ export function* privateShare({ payload: { type, id, recipient, message } }) {
 
   const contactDetails = viaEmail ? recipient : cleanPhoneNumber(recipient);
 
-  const venueId = type === 'venue' ? id : yield select(selectSelectedVenue).id;
+  const venueId = type === 'venue' ? id : (yield select(selectSelectedVenue)).id;
 
   try {
     yield put(setPrivateShareSending(SEND_STATUS.sending));
