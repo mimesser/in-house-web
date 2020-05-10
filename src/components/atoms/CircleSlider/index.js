@@ -25,7 +25,7 @@ const calculateAngle = (container, { clientX, clientY }) => {
 
 const valueOutTransform = Math.floor;
 
-const getElementSizes = size => {
+const getElementSizes = (size) => {
   let k = 1;
   if (size > 150) {
     k = 2;
@@ -41,8 +41,12 @@ const getElementSizes = size => {
 };
 
 // TODO render text here?
-
+//
+// TODO: WTF is it with the onMoveMouse events?
+// It re-renders continuously?  (Possibly to do with drag handler to determine selected number in dial)
+//
 class CircleSlider extends React.PureComponent {
+  // eslint-disable-next-line react/static-property-placement
   static defaultProps = {
     size: 350,
     padd: 0,
@@ -75,6 +79,7 @@ class CircleSlider extends React.PureComponent {
 
   knobRadius;
 
+  // eslint-disable-next-line react/state-in-constructor
   state = {
     angle: 0,
   };
@@ -104,9 +109,9 @@ class CircleSlider extends React.PureComponent {
       readonly || showHelp
         ? undefined
         : {
-          onMouseEnter: this.handleMouseEnter,
-          onMouseLeave: this.handleMouseLeave,
-        };
+            onMouseEnter: this.handleMouseEnter,
+            onMouseLeave: this.handleMouseLeave,
+          };
   }
 
   handleMouseEnter = () => {
@@ -158,7 +163,7 @@ class CircleSlider extends React.PureComponent {
     this.animationInterval = undefined;
   };
 
-  updateAngle = event => {
+  updateAngle = (event) => {
     const angle = calculateAngle(this.ref.current, event);
     this.stepHelper.updateStepIndexFromAngle(angle);
     const currentStep = this.stepHelper.getCurrentStep();
@@ -220,18 +225,18 @@ class CircleSlider extends React.PureComponent {
     this.dragging = false;
   };
 
-  handleMouseMove = event => {
+  handleMouseMove = (event) => {
     event.preventDefault();
     this.updateAngle(event);
   };
 
-  handleMouseUp = event => {
+  handleMouseUp = (event) => {
     this.handleMouseMove(event);
     this.cleanupEventListeners();
     this.reportChange();
   };
 
-  handleMouseDown = event => {
+  handleMouseDown = (event) => {
     if (this.props.readonly) {
       return;
     }
@@ -242,7 +247,7 @@ class CircleSlider extends React.PureComponent {
     window.addEventListener('mouseup', this.handleMouseUp);
   };
 
-  handleTouchMove = event => {
+  handleTouchMove = (event) => {
     const { targetTouches, changedTouches } = event;
     const currentTouch =
       targetTouches.item(targetTouches.length - 1) ||
@@ -252,7 +257,7 @@ class CircleSlider extends React.PureComponent {
     }
   };
 
-  handleTouchEnd = event => {
+  handleTouchEnd = (event) => {
     event.preventDefault();
     this.handleTouchMove(event);
     this.cleanupEventListeners();
@@ -270,7 +275,7 @@ class CircleSlider extends React.PureComponent {
   };
 
   render() {
-    const { size, padd, readonly, className, children, inverse, showHelp } = this.props;
+    const { size, padd, readonly, className, children, inverse, showHelp, mobileFullscreen } = this.props;
 
     let { knobColor, circleColor, progressColor } = this.props;
 
@@ -299,19 +304,20 @@ class CircleSlider extends React.PureComponent {
     //     cy={y}
     //   />
     // );
-
     return (
       <Container
         ref={this.ref}
         onMouseDown={this.handleMouseDown}
         onTouchStart={this.handleTouchStart}
+        // eslint-disable-next-line react/jsx-props-no-spreading
         {...this.hoverEvents}
         className={className}
+        mobileFullscreen={mobileFullscreen}
         size={size}
         padd={padd}
         showHelp={showHelp}
       >
-        <svg width={`${size}px`} height={`${size}px`} viewBox={`0 0 ${size} ${size}`}>
+        <svg viewBox={`0 0 ${size} ${size}`}>
           <circle
             style={{
               strokeWidth: showHelp ? 9 : this.circleWidth,
