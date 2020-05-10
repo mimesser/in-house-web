@@ -41,7 +41,7 @@ const RateTag = ({ tag, rateTag, setRated, rated, showHelp }) => {
     return () => setRated(false);
   }, [tag]);
   const handleChange = useCallback(
-    newValue => {
+    (newValue) => {
       if (newValue < 0 || newValue > 10) {
         return;
       }
@@ -81,6 +81,8 @@ const RateTag = ({ tag, rateTag, setRated, rated, showHelp }) => {
         value={showHelp ? 10.9 : value}
         valueColor={valueColor}
         onChange={handleChange}
+        mobileFullscreen
+        // eslint-disable-next-line react/jsx-props-no-spreading
         {...sliderProps}
         showHelp={showHelp}
         readonly={showHelp}
@@ -89,7 +91,7 @@ const RateTag = ({ tag, rateTag, setRated, rated, showHelp }) => {
   );
 };
 
-const ModalWrapper = props => {
+const ModalWrapper = (props) => {
   const { tag, confirmation, setSelectedTag, venue } = props;
   const close = useCallback(() => setSelectedTag(undefined), []);
   const [rated, setRated] = useState(false);
@@ -104,7 +106,9 @@ const ModalWrapper = props => {
 
   return (
     <Modal closeModal={close} inverse={inverse} title={venue.name}>
+      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       {showRateTag ? <RateTag {...props} rated={rated} setRated={setRated} /> : null}
+      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       {showConfirmation ? <RateConfirmation title={tag.name} {...confirmation} /> : null}
     </Modal>
   );
@@ -120,7 +124,4 @@ const mapDispatch = {
   setSelectedTag,
   rateTag,
 };
-export default connect(
-  mapState,
-  mapDispatch,
-)(ModalWrapper);
+export default connect(mapState, mapDispatch)(ModalWrapper);

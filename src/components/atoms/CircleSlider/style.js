@@ -1,4 +1,10 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+/**
+ * TODO: rather use onDesktop like so, instead of like it was done in breakpoints.
+ * It works better with code highlighting.
+ */
+const onMobile = '@media (max-width: 576px)';
 
 export const Container = styled.div`
   box-sizing: border-box;
@@ -7,7 +13,14 @@ export const Container = styled.div`
   width: ${({ size }) => size}px;
   height: ${({ size }) => size}px;
   ${({ showHelp }) => showHelp && 'z-index: 1000;'};
-
+  ${(props) =>
+    props.mobileFullscreen &&
+    css`
+      ${onMobile} {
+        width: 100%;
+        height: auto;
+      }
+    `};
   svg {
     padding: ${({ padd }) => padd}px;
   }
