@@ -8,5 +8,6 @@ module.exports = {
     API_URL: process.env.API_URL,
     PORT: process.env.PORT,
     GA_KEY: process.env.GA_KEY,
+    G_OPTIMIZE_KEY: process.env.GA_KEY,
   },
 };
