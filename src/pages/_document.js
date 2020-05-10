@@ -10,7 +10,8 @@ class MyDocument extends Document {
     try {
       ctx.renderPage = () =>
         originalRenderPage({
-          enhanceApp: App => props => sheet.collectStyles(<App {...props} />),
+          // eslint-disable-next-line react/jsx-props-no-spreading
+          enhanceApp: (App) => (props) => sheet.collectStyles(<App {...props} />),
         });
 
       const initialProps = await Document.getInitialProps(ctx);
@@ -63,6 +64,8 @@ class MyDocument extends Document {
           <meta name="theme-color" content="#333333" />
 
           <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
+
+          <script src={`https://www.googleoptimize.com/optimize.js?id=${process.env.G_OPTIMIZE_KEY}`} />
         </Head>
         <body>
           <Main />
