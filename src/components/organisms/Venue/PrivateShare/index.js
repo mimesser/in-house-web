@@ -46,7 +46,7 @@ const PrivateShare = ({
   const [recipient, setRecipient] = useState('');
   const [message, setMessage] = useState('');
   const handleRecipientChange = useCallback(
-    value => {
+    (value) => {
       if (recipientError) {
         setError(undefined);
       }
@@ -55,6 +55,7 @@ const PrivateShare = ({
     [recipientError],
   );
   const send = () => share(type, id, recipient, message || placeholder);
+  const recipientPlaceholder = 'any email or phone #';
   const placeholder = `${venueName} insider? someone thinks you should know about — “${getItemTitle(id)}”`;
   const isValidEmailOrPhone = isEmailValid(recipient) || isPhoneNumberValid(recipient);
 
@@ -66,6 +67,7 @@ const PrivateShare = ({
         value={recipient}
         onChange={handleRecipientChange}
         max={50}
+        placeholder={recipientPlaceholder}
         error={recipientError}
         subtext="sent via in-house network"
       />
@@ -85,7 +87,7 @@ const PrivateShare = ({
   );
 };
 
-const ModalWrapper = props => {
+const ModalWrapper = (props) => {
   const { id, sending, sent, inDemo, close } = props;
   const venue = props.venue || (id ? props.getVenue(id) : undefined);
 
@@ -122,7 +124,4 @@ const mapDispatch = {
   setError: setPrivateShareRecipientError,
 };
 
-export default connect(
-  mapState,
-  mapDispatch,
-)(ModalWrapper);
+export default connect(mapState, mapDispatch)(ModalWrapper);
