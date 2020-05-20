@@ -6,7 +6,14 @@ export function reducer(state = initialState, action) {
   switch (action.type) {
     case actionTypes.LOAD_AGGREGATE_DATA_SUCCESS:
       return { ...state, ...action.data };
-    case actionTypes.BETA_AUTHORIZE_SUCCESS || action.BETA_AUTHORIZE_REDIRECT:
+
+    case actionTypes.BETA_AUTHORIZE_SUCCESS || BETA_AUTHORIZE:
+      return {
+        ...state,
+        wrongAnswer: false,
+      };
+
+    case action.BETA_AUTHORIZE_REDIRECT:
       return {
         ...state,
         wrongAnswer: false,

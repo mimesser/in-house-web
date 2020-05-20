@@ -19,13 +19,6 @@ import { spacing, font } from '../../../style';
 import { normalizeAnswer } from '../Venue/normalizeAnswer';
 
 import {
-  answerTopMink,
-  dismissChallengeForm,
-  selectSelectedVenue,
-  selectInsiderChallengeForm,
-} from '../../../store/venues';
-
-import {
   checkBetaAuth,
   selectBetaWrongAnswer,
   selectAuthorizedBetaUser,
@@ -94,6 +87,7 @@ const Form = ({ checkBetaAuth, wrongAnswer, ...props }) => {
           onChange={handleChange}
           ref={answerRef}
           placeholder="password"
+          type="password"
           icon={wrongAnswer ? 'close' : undefined}
         />
         <InputHelp>one word / no spaces</InputHelp>
@@ -104,12 +98,21 @@ const Form = ({ checkBetaAuth, wrongAnswer, ...props }) => {
 };
 export const BetaChallange = ({
   checkBetaAuth,
-  wrongAnswer,
+  wrongAnswer = false,
   isAuthorizedBetaUser,
   performBetaAuthRedirect,
+  showPopup = false,
   ...props
 }) => {
-  const [show, setShow] = useState(false);
+  console.log({
+    checkBetaAuth,
+    wrongAnswer,
+    isAuthorizedBetaUser,
+    performBetaAuthRedirect,
+    showPopup,
+    ...props,
+  });
+  const [show, setShow] = useState(showPopup);
   const [accessGranted, setAccessGranted] = useState(!wrongAnswer || isAuthorizedBetaUser);
   const open = useCallback(() => {
     setShow(true);
@@ -119,7 +122,6 @@ export const BetaChallange = ({
     }
   }, []);
   const close = useCallback(() => setShow(false), []);
-  const [blocked, setBlocked] = useState(false);
 
   return (
     <>
@@ -128,18 +130,17 @@ export const BetaChallange = ({
         see beta houses
       </BetaLink>
       {show && (
-        <Modal inverse closeModal={close} canDismiss canClose={!accessGranted} title="">
+        <Modal inverse closeModal={close} canDismiss canClose={!accessGranted && !showPopup} title="">
           <QuestionForm>
-            {accessGranted ? (
+            {!wrongAnswer ? (
               <WinkConfirmation />
             ) : (
               <>
-                {blocked && <p>Too many attempts. Please come back later</p>}
-                {!blocked && <Form wrongAnswer={wrongAnswer} checkBetaAuth={checkBetaAuth} />}
+                <Form wrongAnswer={wrongAnswer} checkBetaAuth={checkBetaAuth} />
               </>
             )}
           </QuestionForm>
-          <ExitButton onClick={close} />
+          {!accessGranted && !showPopup ? <ExitButton onClick={close} /> : undefined}
         </Modal>
       )}
     </>
@@ -147,8 +148,6 @@ export const BetaChallange = ({
 };
 
 const mapState = createStructuredSelector({
-  venue: selectSelectedVenue,
-  challengeFormData: selectInsiderChallengeForm,
   wrongAnswer: selectBetaWrongAnswer,
   isAuthorizedBetaUser: selectAuthorizedBetaUser,
 });
@@ -156,7 +155,6 @@ const mapState = createStructuredSelector({
 const mapDispatch = {
   checkBetaAuth,
   performBetaAuthRedirect,
-  dismissChallengeForm,
 };
 
 export default connect(mapState, mapDispatch)(BetaChallange);
