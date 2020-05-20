@@ -1,9 +1,9 @@
 import React, { useState, useCallback, useRef } from 'react';
 import styled from 'styled-components';
-import { Button, HelpTip, H1, ClearButton } from '../../atoms';
 import { connect } from 'react-redux';
 import Router from 'next/router';
 import { createStructuredSelector } from 'reselect';
+import { Button, HelpTip, H1, ClearButton } from '../../atoms';
 import {
   Answer,
   SubmitButton,
@@ -12,7 +12,7 @@ import {
   InputHelp,
   AnswerInput,
   Try,
-} from '../../organisms/InsiderChallenge/style';
+} from '../InsiderChallenge/style';
 import { WinkConfirmation } from '../../molecules';
 import { Modal } from '../Modal';
 import { spacing, font } from '../../../style';
@@ -28,6 +28,7 @@ import {
 const BetaLink = styled(Button)`
   margin-top: ${spacing.md};
   margin-bottom: ${spacing.xxxl};
+  border: none;
 `;
 
 const Desc = styled.div`

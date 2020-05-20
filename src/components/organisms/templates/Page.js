@@ -31,14 +31,13 @@ const Video = styled.video`
   left: 50%;
   min-width: 100%;
   min-height: 100%;
-  width: auto;
+  /* For some reason we have a 1px white line on mobile. */
+  width: calc(100% + 1px);
   height: auto;
   transform: translate(-50%, -50%);
   object-fit: cover;
 
-  //::-webkit-media-controls-start-playback-button {
-  //  display: none;
-  //}
+  ${onDesktop(`width: auto`)};
 `;
 
 const Overlay = styled.div`
