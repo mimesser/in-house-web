@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { Page, HowItWorks } from '../components/organisms';
 import { Button, H1, H2, Break, Icon, TransparentLinkStyle } from '../components/atoms';
 import { spacing, palette, breakpoints } from '../style';
+import BetaChallange from '../components/organisms/BetaChallange';
 
 const Main = styled.div`
   position: relative;
@@ -84,8 +85,10 @@ const Landing = () => (
         <Link href="/about" passHref>
           <Button icon="mission">our mission</Button>
         </Link>
+
+        <BetaChallange />
         <div>
-          {socialLinks.map(link => (
+          {socialLinks.map((link) => (
             <SocialLink {...link} key={link.icon} />
           ))}
         </div>

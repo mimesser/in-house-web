@@ -52,7 +52,6 @@ export const Header = ({ openMenu, white, noPadd }) => (
   <Layout white={white} noPadd={noPadd}>
     <div>
       <Brand />
-      <IconLink icon="search" href="/houses" />
       <MenuToggle onClick={openMenu}>
         <Icon icon="menu" size={1.5} />
       </MenuToggle>
