@@ -1,4 +1,4 @@
-import { all, put, takeLatest, select, take, call, delay } from 'redux-saga/effects';
+import { all, put, takeLatest, select, take, call, delay, fork } from 'redux-saga/effects';
 import Router from 'next/router';
 
 import api, { isUnauthorized, setAuthorization, clearAuthorization } from '../../api';
@@ -43,7 +43,6 @@ export function* waitTillReady() {
 export function* checkBetaAuth({ payload: { password } }) {
   try {
     const res = yield call(api.post, `User/betaPassword`, { password });
-
     yield put(checkBetaAuthSuccess());
     yield performBetaAuthRedirect();
   } catch (error) {
@@ -53,6 +52,9 @@ export function* checkBetaAuth({ payload: { password } }) {
 }
 
 export function* performBetaAuthRedirect() {
+  yield loadAggregateDataSaga({ meta: {} });
+  yield put(checkBetaAuthSuccess());
+
   yield delay(REDIRECT_DELAY);
   Router.push('/houses');
 }

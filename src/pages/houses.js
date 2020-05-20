@@ -37,7 +37,7 @@ class Houses extends Component {
     // TODO split and render separately?
     let View = this.houseId && !this.inDemoVenues ? Venue : VenueList;
     if (!this.props.isAuthorizedBetaUser) {
-      View = BetaChallange;
+      View = () => <BetaChallange showPopup />;
     }
     const defaultHeader = !this.houseId || this.isNewMinkOrPostPath || this.inDemoVenues;
     const title = this.props.selectedVenue
