@@ -49,11 +49,11 @@ const Overlay = styled.div`
   opacity: 0.7;
 `;
 
-const useMatchesQuery = query => {
+const useMatchesQuery = (query) => {
   const mediaQueryList = window.matchMedia(query);
   const [result, setResult] = useState(mediaQueryList.matches);
   useEffect(() => {
-    const handleChange = ev => setResult(ev.matches);
+    const handleChange = (ev) => setResult(ev.matches);
     mediaQueryList.addListener(handleChange);
 
     return () => mediaQueryList.removeListener(handleChange);
@@ -64,10 +64,10 @@ const useMatchesQuery = query => {
 
 const BackVideo = withNoSSR(() => {
   const mobile = useMatchesQuery(`(max-width: ${breakpoints.md})`);
-  const resource = `https://in-house.azureedge.net/webstatic/${mobile ? 'bg-mobile' : 'bg-desktop'}`;
+  const resource = `https://in-house.azureedge.net/webstatic/${mobile ? 'bg-mobile-2' : 'bg-desktop-2'}`;
 
   return (
-    <Video poster={`${resource}.jpg`} playsInline autoPlay muted loop>
+    <Video poster={`${resource}.png`} playsInline autoPlay muted loop>
       <source src={`${resource}.mp4`} type="video/mp4" />
     </Video>
   );
