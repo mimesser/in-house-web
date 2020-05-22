@@ -33,11 +33,15 @@ class Houses extends Component {
     }
   }
 
+  onClose = () => {
+    this.props.router.push('/');
+  };
+
   render() {
     // TODO split and render separately?
     let View = this.houseId && !this.inDemoVenues ? Venue : VenueList;
     if (!this.props.isAuthorizedBetaUser) {
-      View = () => <BetaChallange showPopup />;
+      View = () => <BetaChallange showPopup onClose={this.onClose} />;
     }
     const defaultHeader = !this.houseId || this.isNewMinkOrPostPath || this.inDemoVenues;
     const title = this.props.selectedVenue
