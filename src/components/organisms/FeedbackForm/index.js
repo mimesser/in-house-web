@@ -23,8 +23,9 @@ const subjectOptions = [
   value,
 }));
 
-function FeedbackForm(props) {
-  const [subject, setSubject] = useState(undefined);
+function FeedbackForm({ subjectIndex }, ...props) {
+  const subjectId = subjectIndex || 0;
+  const [subject, setSubject] = useState(subjectOptions[subjectId]);
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const getHandler = (setter) => (event) => setter(event.target.value);

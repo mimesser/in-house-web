@@ -1,13 +1,17 @@
 import React from 'react';
-
+import { withRouter } from 'next/router';
 import { Page, FeedbackForm } from '../components/organisms';
 
-function Feedback() {
+function Feedback(props) {
+  const {
+    query: { subjectIndex },
+  } = props.router;
+  console.log(subjectIndex);
   return (
     <Page>
-      <FeedbackForm />
+      <FeedbackForm subjectIndex={subjectIndex} />
     </Page>
   );
 }
 
-export default Feedback;
+export default withRouter(Feedback);
