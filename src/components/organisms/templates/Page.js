@@ -9,6 +9,7 @@ import { appBackground, breakpoints, onDesktop, deskPad, cover, palette, onDeskt
 
 const PageLayout = styled.div`
   height: 100%;
+  position: relative;
   background-color: ${appBackground};
   display: flex;
   flex-direction: column;
