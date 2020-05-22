@@ -100,7 +100,6 @@ const tabs = [
   {
     path: 'mink',
     label: 'mink',
-    custom: true,
   },
 ];
 
