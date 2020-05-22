@@ -26,8 +26,9 @@ import {
 } from '../../../store/aggregate';
 
 const BetaLink = styled(Button)`
-  margin-top: ${spacing.md};
-  margin-bottom: ${spacing.xxxl};
+  margin-top: ${spacing.sm};
+  margin-bottom: auto;
+  min-height: 42px;
   border: none;
 `;
 

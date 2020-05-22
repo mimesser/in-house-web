@@ -35,6 +35,7 @@ const Links = styled.div`
   flex-direction: column;
   align-items: flex-start;
 
+  flex-grow: 2;
   > a {
     ${TransparentLinkStyle};
     :last-of-type {
@@ -43,7 +44,7 @@ const Links = styled.div`
   }
 
   > div {
-    margin-top: ${spacing.xxl};
+    margin-top: ${spacing.xl};
     > a {
       margin-right: ${spacing.lg};
     }
