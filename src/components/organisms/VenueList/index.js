@@ -87,17 +87,16 @@ const SearchPage = ({ venues, inDemo }) => {
           <VenueCard key={v.id} venue={v} showVenue={showVenue} withHelp={i === 0} />
         ))}
         {!inDemo && !nothingFound && (
-          <Link href="/quick-list" passHref>
-            <Button icon="arrow-right">add</Button>
+          <Link href="/beta-list" passHref>
+            <Button icon="arrow-right">beta-list my workplace</Button>
           </Link>
         )}
         {/* <PrivateShare type="venue" renderItem={renderSharePreview} getItemTitle={getTitleForShare} getVenue={getVenue} /> */}
       </Results>
       <SelectedItemArea>
         <CantFindHouse>
-          <H1>can’t find your org?</H1>
-          <Link href="/quick-list" passHref>
-            <Button icon="arrow-right">add your organization</Button>
+          <Link href="/beta-list" passHref>
+            <Button icon="arrow-right">beta-list my workplace</Button>
           </Link>
         </CantFindHouse>
       </SelectedItemArea>

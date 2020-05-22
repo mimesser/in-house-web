@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { spacing, palette, fontSize, font } from '../../style';
 import { Button, ClearButton, H1, Progress } from '../atoms';
 
-const Main = styled.div`
+export const Main = styled.div`
   padding: ${spacing.xxl};
   flex: 1;
   display: flex;
@@ -30,13 +30,13 @@ export const BackButton = styled(ClearButton).attrs(({ children = 'back' }) => (
   ${font.bold};
 `;
 
-const Commands = styled.div`
+export const Commands = styled.div`
   padding: ${spacing.xxl};
   display: flex;
   margin-top: auto;
 `;
 
-const renderHeader = head => {
+const renderHeader = (head) => {
   if (typeof head === 'string') {
     return <H1>{head}</H1>;
   }
@@ -56,4 +56,4 @@ export const StepLayout = ({ head, main, commands, step, hideProgress, totalStep
   </>
 );
 
-export const createStepLayout = totalSteps => props => <StepLayout {...props} totalSteps={totalSteps} />;
+export const createStepLayout = (totalSteps) => (props) => <StepLayout {...props} totalSteps={totalSteps} />;
