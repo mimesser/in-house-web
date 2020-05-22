@@ -29,7 +29,7 @@ const TopMinkContainer = styled.div`
     padding: 0;
 
     ${Patent} {
-      margin-left: auto;
+      margin-left: 22px;
       color: ${palette.gray};
     }
   }
@@ -44,6 +44,7 @@ const TopMinkContainer = styled.div`
     }
     ${PokeButton} {
       margin-right: -2rem;
+      top: -0.5em;
       color: #fff;
     }
   }
@@ -107,7 +108,7 @@ const renderMinks = (minks, setSelectedMink, addedMinkId, setAddedMinkId, select
             <TabTitle>
               Top MINK
               <Patent />
-              <PrivateShareButton id="2" />
+              {/* <PrivateShareButton id="2" /> */}
             </TabTitle>
             <Mink mink={minks[0]} setSelectedMink={setSelectedMink} topMink />
           </TopMinkContainer>
