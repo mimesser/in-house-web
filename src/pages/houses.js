@@ -34,7 +34,7 @@ class Houses extends Component {
   }
 
   onClose = () => {
-    this.props.router.push('/houses');
+    this.props.router.push('/');
   };
 
   render() {
