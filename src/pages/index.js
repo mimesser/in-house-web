@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { Page, HowItWorks } from '../components/organisms';
 import { Button, H1, H2, Break, Icon, TransparentLinkStyle } from '../components/atoms';
 import { spacing, palette, breakpoints } from '../style';
-import BetaChallange from '../components/organisms/BetaChallange';
+import BetaChallenge from '../components/organisms/BetaChallange';
 
 const Main = styled.div`
   position: relative;
@@ -17,15 +17,32 @@ const Main = styled.div`
   flex: 1;
   max-width: ${breakpoints.sm};
 
-  ${H1} {
-    margin-top: ${spacing.xl};
-  }
   ${Break} {
-    margin: ${spacing.xxl} 0;
+    margin: ${spacing.xl} 0;
   }
   ${H2} {
-    margin-bottom: ${spacing.xxl};
+    margin-bottom: ${spacing.lg};
     font-family: inherit;
+  }
+  ${H1} {
+    line-height: 1em;
+  }
+
+  /*
+    anything that's not really small
+    TODO: page should be designed properly, and no hard-coded '400px'
+  */
+  @media screen and (min-width: 400px) {
+    ${H1} {
+      margin-top: ${spacing.xl};
+      line-height: inherit;
+    }
+    ${Break} {
+      margin: ${spacing.xxl} 0;
+    }
+    ${H2} {
+      margin-bottom: ${spacing.xxl};
+    }
   }
 `;
 
@@ -38,13 +55,32 @@ const Links = styled.div`
   flex-grow: 2;
   > a {
     ${TransparentLinkStyle};
+
     :last-of-type {
-      margin-top: ${spacing.lg};
+      margin-top: ${spacing.sm};
+    }
+    /*
+      anything that's not really small
+      TODO: page should be designed properly, and no hard-coded '400px'
+    */
+    @media screen and (min-width: 400px) {
+      :last-of-type {
+        margin-top: ${spacing.lg};
+      }
     }
   }
 
   > div {
-    margin-top: ${spacing.xl};
+    margin-top: ${spacing.lg};
+    /*
+      anything that's not really small
+      TODO: page should be designed properly, and no hard-coded '400px'
+    */
+    @media screen and (min-width: 400px) {
+      :last-of-type {
+        margin-top: ${spacing.lg};
+      }
+    }
     > a {
       margin-right: ${spacing.lg};
     }
@@ -87,9 +123,10 @@ const Landing = () => (
           <Button icon="mission">our mission</Button>
         </Link>
 
-        <BetaChallange />
+        <BetaChallenge />
         <div>
           {socialLinks.map((link) => (
+            // eslint-disable-next-line react/jsx-props-no-spreading
             <SocialLink {...link} key={link.icon} />
           ))}
         </div>
