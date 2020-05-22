@@ -23,8 +23,8 @@ const subjectOptions = [
   value,
 }));
 
-function FeedbackForm({ subjectIndex }, ...props) {
-  const subjectId = subjectIndex || 0;
+function FeedbackForm(props) {
+  const subjectId = props.subjectIndex || 0;
   const [subject, setSubject] = useState(subjectOptions[subjectId]);
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
