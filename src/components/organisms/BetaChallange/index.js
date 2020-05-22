@@ -103,16 +103,9 @@ export const BetaChallange = ({
   isAuthorizedBetaUser,
   performBetaAuthRedirect,
   showPopup = false,
+  onClose,
   ...props
 }) => {
-  console.log({
-    checkBetaAuth,
-    wrongAnswer,
-    isAuthorizedBetaUser,
-    performBetaAuthRedirect,
-    showPopup,
-    ...props,
-  });
   const [show, setShow] = useState(showPopup);
   const [accessGranted, setAccessGranted] = useState(!wrongAnswer || isAuthorizedBetaUser);
   const open = useCallback(() => {
@@ -122,7 +115,13 @@ export const BetaChallange = ({
       performBetaAuthRedirect();
     }
   }, []);
-  const close = useCallback(() => setShow(false), []);
+  const close = useCallback(() => {
+    if (onClose) {
+      onClose();
+    } else {
+      setShow(false);
+    }
+  }, []);
 
   return (
     <>
@@ -131,7 +130,7 @@ export const BetaChallange = ({
         see beta houses
       </BetaLink>
       {show && (
-        <Modal inverse closeModal={close} canDismiss canClose={!accessGranted && !showPopup} title="">
+        <Modal inverse closeModal={close} canDismiss canClose={!accessGranted} title="">
           <QuestionForm>
             {!wrongAnswer ? (
               <WinkConfirmation />
@@ -141,7 +140,7 @@ export const BetaChallange = ({
               </>
             )}
           </QuestionForm>
-          {!accessGranted && !showPopup ? <ExitButton onClick={close} /> : undefined}
+          {!accessGranted ? <ExitButton onClick={close} /> : undefined}
         </Modal>
       )}
     </>
