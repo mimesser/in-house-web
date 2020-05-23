@@ -48,6 +48,9 @@ export const GlobalStyle = createGlobalStyle`
     height: 100%;
   }
 
+  input, textarea {
+    border-radius: 0;
+  }
   body {
     text-transform: lowercase;
     font-size: ${BASE_FONT_SIZE};

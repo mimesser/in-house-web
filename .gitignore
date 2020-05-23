@@ -3,5 +3,7 @@ coverage/
 .next/
 .idea/
 .bin/
+.env
 yarn-error.log
+yarn.lock
 build/

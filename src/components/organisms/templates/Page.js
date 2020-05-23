@@ -9,6 +9,7 @@ import { appBackground, breakpoints, onDesktop, deskPad, cover, palette, onDeskt
 
 const PageLayout = styled.div`
   height: 100%;
+  position: relative;
   background-color: ${appBackground};
   display: flex;
   flex-direction: column;
@@ -31,14 +32,13 @@ const Video = styled.video`
   left: 50%;
   min-width: 100%;
   min-height: 100%;
-  width: auto;
+  /* For some reason we have a 1px white line on mobile. */
+  width: calc(100% + 1px);
   height: auto;
   transform: translate(-50%, -50%);
   object-fit: cover;
 
-  //::-webkit-media-controls-start-playback-button {
-  //  display: none;
-  //}
+  ${onDesktop(`width: auto`)};
 `;
 
 const Overlay = styled.div`
@@ -49,11 +49,11 @@ const Overlay = styled.div`
   opacity: 0.7;
 `;
 
-const useMatchesQuery = query => {
+const useMatchesQuery = (query) => {
   const mediaQueryList = window.matchMedia(query);
   const [result, setResult] = useState(mediaQueryList.matches);
   useEffect(() => {
-    const handleChange = ev => setResult(ev.matches);
+    const handleChange = (ev) => setResult(ev.matches);
     mediaQueryList.addListener(handleChange);
 
     return () => mediaQueryList.removeListener(handleChange);
@@ -64,10 +64,10 @@ const useMatchesQuery = query => {
 
 const BackVideo = withNoSSR(() => {
   const mobile = useMatchesQuery(`(max-width: ${breakpoints.md})`);
-  const resource = `https://in-house.azureedge.net/webstatic/${mobile ? 'bg-mobile' : 'bg-desktop'}`;
+  const resource = `https://in-house.azureedge.net/webstatic/${mobile ? 'bg-mobile' : 'bg-desktop-2'}`;
 
   return (
-    <Video poster={`${resource}.jpg`} playsInline autoPlay muted loop>
+    <Video poster={`${resource}.${mobile ? 'jpg' : 'png'}`} playsInline autoPlay muted loop>
       <source src={`${resource}.mp4`} type="video/mp4" />
     </Video>
   );

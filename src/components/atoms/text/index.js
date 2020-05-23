@@ -65,6 +65,7 @@ export const FieldHint = styled.span`
 
 export const NumberLarge = styled.span`
   font-size: ${fontSize.xl};
+  word-break: keep-all;
   ${font.light};
   sup {
     font-size: 50%;
