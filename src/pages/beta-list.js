@@ -2,15 +2,19 @@ import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 import { Page } from '../components/organisms';
-import { BackButton, NextButton } from '../components/molecules';
+import { BackButton } from '../components/molecules';
 
 import { Main, Commands } from '../components/molecules/Wizard';
-import { Break, H1 } from '../components/atoms';
+import { Break, H1, Button } from '../components/atoms';
 
 const Paper = styled(Page)`
   margin-right: auto;
   max-width: 750px;
   padding-top: 97px;
+`;
+
+const ActionButton = styled(Button)`
+  margin-left: auto;
 `;
 function BetaList() {
   return (
@@ -29,7 +33,7 @@ function BetaList() {
             <BackButton secondary>cancel</BackButton>
           </Link>
           <Link href="/feedback?subjectIndex=1">
-            <NextButton> contact us</NextButton>
+            <ActionButton icon="arrow-right">contact us</ActionButton>
           </Link>
         </Commands>
       </Paper>
