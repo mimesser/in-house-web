@@ -3,8 +3,9 @@ import Link from 'next/link';
 import styled from 'styled-components';
 
 import { Page, HowItWorks } from '../components/organisms';
-import { Button, H1, H3, Break, Icon, TransparentLinkStyle } from '../components/atoms';
+import { Button, H1, H2, Break, Icon, TransparentLinkStyle } from '../components/atoms';
 import { spacing, palette, breakpoints } from '../style';
+import BetaChallenge from '../components/organisms/BetaChallange';
 
 const Main = styled.div`
   position: relative;
@@ -16,15 +17,32 @@ const Main = styled.div`
   flex: 1;
   max-width: ${breakpoints.sm};
 
-  ${H1} {
-    margin-top: ${spacing.xl};
-  }
   ${Break} {
-    margin: ${spacing.xxl} 0;
+    margin: ${spacing.xl} 0;
   }
-  ${H3} {
-    margin-bottom: ${spacing.xxl};
+  ${H2} {
+    margin-bottom: ${spacing.lg};
     font-family: inherit;
+  }
+  ${H1} {
+    line-height: 1em;
+  }
+
+  /*
+    anything that's not really small
+    TODO: page should be designed properly, and no hard-coded '400px'
+  */
+  @media screen and (min-width: 400px) {
+    ${H1} {
+      margin-top: ${spacing.xl};
+      line-height: inherit;
+    }
+    ${Break} {
+      margin: ${spacing.xxl} 0;
+    }
+    ${H2} {
+      margin-bottom: ${spacing.xxl};
+    }
   }
 `;
 
@@ -34,15 +52,35 @@ const Links = styled.div`
   flex-direction: column;
   align-items: flex-start;
 
+  flex-grow: 2;
   > a {
     ${TransparentLinkStyle};
+
     :last-of-type {
-      margin-top: ${spacing.lg};
+      margin-top: ${spacing.sm};
+    }
+    /*
+      anything that's not really small
+      TODO: page should be designed properly, and no hard-coded '400px'
+    */
+    @media screen and (min-width: 400px) {
+      :last-of-type {
+        margin-top: ${spacing.lg};
+      }
     }
   }
 
   > div {
-    margin-top: ${spacing.xxl};
+    margin-top: ${spacing.lg};
+    /*
+      anything that's not really small
+      TODO: page should be designed properly, and no hard-coded '400px'
+    */
+    @media screen and (min-width: 400px) {
+      :last-of-type {
+        margin-top: ${spacing.lg};
+      }
+    }
     > a {
       margin-right: ${spacing.lg};
     }
@@ -75,17 +113,20 @@ const Landing = () => (
     <Main>
       <H1>a tool for people who can’t speak safely</H1>
       <Break />
-      <H3 as="p">
+      <H2 as="p">
         allowing only anonymous team members to share consensus truths about their organization *without any required
         logins, emails or identifying personal data*
-      </H3>
+      </H2>
       <Links>
         <HowItWorks />
         <Link href="/about" passHref>
           <Button icon="mission">our mission</Button>
         </Link>
+
+        <BetaChallenge />
         <div>
-          {socialLinks.map(link => (
+          {socialLinks.map((link) => (
+            // eslint-disable-next-line react/jsx-props-no-spreading
             <SocialLink {...link} key={link.icon} />
           ))}
         </div>

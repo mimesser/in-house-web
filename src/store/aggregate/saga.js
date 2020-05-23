@@ -1,14 +1,14 @@
-import { all, put, takeLatest, select, take, call, delay } from 'redux-saga/effects';
+import { all, put, takeLatest, select, take, call, delay, fork } from 'redux-saga/effects';
 import Router from 'next/router';
 
 import api, { isUnauthorized, setAuthorization, clearAuthorization } from '../../api';
 
-import { actionTypes, loadAggregateDataSuccess } from './actions';
+import { actionTypes, loadAggregateDataSuccess, checkBetaAuthFailure, checkBetaAuthSuccess } from './actions';
 import { selectReady } from './selectors';
 import { withErrorReporter } from '../error/saga';
 
 const REDIRECT_FORMER_INSIDER_FROM = ['/'];
-const REDIRECT_DELAY = 600;
+const REDIRECT_DELAY = 1000;
 
 function* loadAggregateDataSaga({ meta: { isServer, pathname } }) {
   let response;
@@ -40,6 +40,29 @@ export function* waitTillReady() {
   }
 }
 
+export function* checkBetaAuth({ payload: { password } }) {
+  try {
+    const res = yield call(api.post, `User/betaPassword`, { password });
+    yield put(checkBetaAuthSuccess());
+    yield performBetaAuthRedirect();
+  } catch (error) {
+    console.log(error);
+    yield put(checkBetaAuthFailure());
+  }
+}
+
+export function* performBetaAuthRedirect() {
+  yield loadAggregateDataSaga({ meta: {} });
+  yield put(checkBetaAuthSuccess());
+
+  yield delay(REDIRECT_DELAY);
+  Router.push('/houses');
+}
+
 export default function* aggregateSaga() {
-  yield all([takeLatest(actionTypes.LOAD_AGGREGATE_DATA, withErrorReporter(loadAggregateDataSaga))]);
+  yield all([
+    takeLatest(actionTypes.LOAD_AGGREGATE_DATA, withErrorReporter(loadAggregateDataSaga)),
+    takeLatest(actionTypes.BETA_AUTHORIZE, withErrorReporter(checkBetaAuth)),
+    takeLatest(actionTypes.BETA_AUTHORIZE_REDIRECT, withErrorReporter(performBetaAuthRedirect)),
+  ]);
 }

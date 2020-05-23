@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
 
-import { Button, Brand, TransparentLinkStyle } from '../../atoms';
+import { Button, Brand, TransparentLinkStyle, Icon } from '../../atoms';
 import { Modal } from '../Modal';
 import { fontSize, font, palette, spacing, breakpoints, deskPadRem, onDesktop } from '../../../style';
 
@@ -34,6 +34,7 @@ const Title = styled.div`
   font-size: ${fontSize.md};
   ${font.bold};
   margin-bottom: ${spacing.sm};
+  position: relative;
 `;
 
 const Desc = styled.div`
@@ -72,6 +73,11 @@ const Layout = styled.div`
   margin: 0 auto;
   ${onDesktop(`margin-left: ${deskPadRem}`)};
 `;
+const PaperPlan = styled(Icon)`
+  position: absolute;
+  margin-left: 10px;
+  bottom: 0px;
+`;
 
 export const HowItWorks = () => {
   const [show, setShow] = useState(false);
@@ -106,7 +112,10 @@ export const HowItWorks = () => {
                 </Desc>
               </>
               <>
-                <Title>share with your team</Title>
+                <Title>
+                  share with your team
+                  <PaperPlan icon="paper-plane" size={1.5} color="text" />
+                </Title>
                 <Desc>
                   yup, <mark>anonymously</mark>
                 </Desc>
@@ -114,7 +123,7 @@ export const HowItWorks = () => {
               <>
                 <Title>let leadership hear you</Title>
                 <Desc>
-                  safely & <mark>anonymously</mark> for the first time ever
+                  safely, <mark>anonymously</mark> and in-consensus — for the first time ever
                 </Desc>
               </>
             </Steps>
