@@ -96,7 +96,7 @@ const SearchPage = ({ venues, inDemo }) => {
         {venuesToShow.map((v, i) => (
           <VenueCard key={v.id} venue={v} showVenue={showVenue} withHelp={i === 0} />
         ))}
-        {!inDemo && !nothingFound && (
+        {!inDemo && (
           <Link href="/beta-list" passHref>
             <Button icon="arrow-right">beta-list my workplace</Button>
           </Link>
