@@ -4,7 +4,9 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Link from 'next/link';
 
-import { Loader, ClearButton, Icon, Button, Card, H1 } from '../../atoms';
+import styled from 'styled-components';
+import { spacing, font } from '../../../style';
+import { Loader, ClearButton, Icon, Button, Card, H1, Portal } from '../../atoms';
 
 import { selectInsiderChallengeForm, selectSelectedVenue, selectVenues } from '../../../store/venues';
 import { selectInDemo } from '../../../store/demo';
@@ -12,6 +14,14 @@ import { VenueCard } from './VenueCard';
 import { SearchBox, Layout, Results, NoResultsSearchLabel, SelectedItemArea, CantFindHouse } from './style';
 import PrivateShare from '../Venue/PrivateShare';
 import { Main, ItemText, ItemTitle } from '../Venue/tabStyle';
+
+const BetaLink = styled(Button)`
+  margin: auto;
+  min-height: ${spacing.xl};
+  border: none;
+  bacground-color: white;
+  padding: 0;
+`;
 
 const SearchBoxIcon = ({ applyFilter, clear }) =>
   applyFilter ? (
@@ -94,11 +104,11 @@ const SearchPage = ({ venues, inDemo }) => {
         {/* <PrivateShare type="venue" renderItem={renderSharePreview} getItemTitle={getTitleForShare} getVenue={getVenue} /> */}
       </Results>
       <SelectedItemArea>
-        <CantFindHouse>
+        <BetaLink>
           <Link href="/beta-list" passHref>
             <Button icon="arrow-right">beta-list my workplace</Button>
           </Link>
-        </CantFindHouse>
+        </BetaLink>
       </SelectedItemArea>
     </Layout>
   );
