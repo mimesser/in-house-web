@@ -22,7 +22,6 @@ const CloseIcon = styled(Icon).attrs(() => ({
 
 const routes = [
   { href: '/houses', label: 'see beta houses' },
-  { href: '/quick-list', label: 'list your house' },
   { href: '/about', label: 'about' },
   { href: '/feedback', label: 'feedback' },
 ];
@@ -73,13 +72,13 @@ const A = styled.a`
 
 export const Menu = withRouter(({ isOpen, router, closeMenu }) => (
   <Transition in={isOpen} timeout={duration}>
-    {state => (
+    {(state) => (
       <Panel state={state}>
         <CloseButton onClick={closeMenu}>
           <CloseIcon />
         </CloseButton>
         <MenuItems>
-          {routes.map(route => (
+          {routes.map((route) => (
             <li key={route.href}>
               {route.href === router.asPath ? (
                 <A onClick={closeMenu}>{route.label}</A>
