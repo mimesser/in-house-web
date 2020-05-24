@@ -52,7 +52,6 @@ const Links = styled.div`
   flex-direction: column;
   align-items: flex-start;
 
-  flex-grow: 2;
   > a {
     ${TransparentLinkStyle};
 
@@ -71,14 +70,15 @@ const Links = styled.div`
   }
 
   > div {
-    margin-top: ${spacing.lg};
+    margin-top: ${spacing.xl};
     /*
       anything that's not really small
       TODO: page should be designed properly, and no hard-coded '400px'
     */
     @media screen and (min-width: 400px) {
+      margin-top: ${spacing.xxxl};
       :last-of-type {
-        margin-top: ${spacing.lg};
+        margin-top: 80px;
       }
     }
     > a {
@@ -113,10 +113,7 @@ const Landing = () => (
     <Main>
       <H1>a tool for people who can’t speak safely</H1>
       <Break />
-      <H2 as="p">
-        allowing only anonymous team members to share consensus truths about their organization *without any required
-        logins, emails or identifying personal data*
-      </H2>
+      <H2 as="p">share truths about your organization with 100% anonymous team voting (on everything)</H2>
       <Links>
         <HowItWorks />
         <Link href="/about" passHref>
