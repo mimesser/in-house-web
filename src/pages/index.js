@@ -100,7 +100,7 @@ const socialLinks = [
   },
   {
     icon: 'twitter',
-    href: 'https://twitter.com/inhousemovement',
+    href: 'https://twitter.com/iH_movement',
   },
   {
     icon: 'linkedin',
