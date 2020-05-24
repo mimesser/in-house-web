@@ -19,7 +19,7 @@ export const RateConfirmation = ({ title, voteRating, voteCount }) => {
     <RateConfirmationLayout>
       <H1>team average</H1>
       <H2>{title}</H2>
-      <Dial readonly value={voteRating} size={420} inverse voteCount={voteCount} />
+      <Dial readonly value={voteRating} size={420} mobileFullscreen inverse voteCount={voteCount} />
     </RateConfirmationLayout>
   );
 };

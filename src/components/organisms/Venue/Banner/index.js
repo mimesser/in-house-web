@@ -50,7 +50,7 @@ const Banner = ({
               '—'
             )}
           </NumberLarge>
-          <Votes count={votesCount} />
+          <Votes count={votesCount} inverse />
         </Ratings>
       </div>
     </Header>

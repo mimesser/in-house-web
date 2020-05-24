@@ -3,10 +3,8 @@ const nextApp = require('next');
 const Router = require('koa-router');
 const auth = require('koa-basic-auth');
 
-const port = parseInt(process.env.PORT || process.env.port, 10) || 3000;
-const dev = process.env.NODE_ENV !== 'production';
-const isInProdEnvironment = process.env.MODE === 'production';
-const app = nextApp({ dir: './src', dev });
+const port = process.env.PORT || 3000;
+const app = nextApp({ dir: './src', dev: process.env.NODE_ENV === 'locale' });
 const handle = app.getRequestHandler();
 
 app
@@ -15,17 +13,13 @@ app
     const server = new Koa();
     const router = new Router();
 
-    if (!isInProdEnvironment) {
-      server.use(auth({ name: 'in7ouse', pass: 'in7ouse' }));
-    }
-
-    router.get('/houses/:id', async ctx => {
+    router.get('/houses/:id', async (ctx) => {
       const { req, res, params } = ctx;
       await app.render(req, res, '/houses', { id: params.id });
       ctx.respond = false;
     });
 
-    router.get(`/houses/:id/:tab`, async ctx => {
+    router.get(`/houses/:id/:tab`, async (ctx) => {
       const {
         req,
         res,
@@ -35,7 +29,7 @@ app
       ctx.respond = false;
     });
 
-    router.get(`/houses/:id/:tab/:itemId`, async ctx => {
+    router.get(`/houses/:id/:tab/:itemId`, async (ctx) => {
       const {
         req,
         res,
@@ -47,7 +41,7 @@ app
     });
 
     for (const tab of ['mink', 'post']) {
-      router.all(`/houses/:id/${tab}/new`, async ctx => {
+      router.all(`/houses/:id/${tab}/new`, async (ctx) => {
         const {
           req,
           res,
@@ -59,7 +53,7 @@ app
       });
     }
 
-    router.get('*', async ctx => {
+    router.get('*', async (ctx) => {
       await handle(ctx.req, ctx.res);
       ctx.respond = false;
     });
@@ -70,7 +64,7 @@ app
     });
 
     server.use(router.routes());
-    server.listen(port, err => {
+    server.listen(port, (err) => {
       if (err) {
         throw err;
       }
@@ -78,7 +72,7 @@ app
       console.log(`> Ready on http://localhost:${port}`);
     });
   })
-  .catch(ex => {
+  .catch((ex) => {
     console.error(ex.stack);
     process.exit(1);
   });

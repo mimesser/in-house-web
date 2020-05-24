@@ -29,7 +29,7 @@ const TopMinkContainer = styled.div`
     padding: 0;
 
     ${Patent} {
-      margin-left: auto;
+      margin-left: 22px;
       color: ${palette.gray};
     }
   }
@@ -43,7 +43,9 @@ const TopMinkContainer = styled.div`
       color: ${palette.white};
     }
     ${PokeButton} {
-      display: none;
+      margin-right: -2rem;
+      top: -0.5em;
+      color: #fff;
     }
   }
 `;
@@ -106,6 +108,7 @@ const renderMinks = (minks, setSelectedMink, addedMinkId, setAddedMinkId, select
             <TabTitle>
               Top MINK
               <Patent />
+              {/* <PrivateShareButton id="2" /> */}
             </TabTitle>
             <Mink mink={minks[0]} setSelectedMink={setSelectedMink} topMink />
           </TopMinkContainer>
@@ -117,7 +120,7 @@ const renderMinks = (minks, setSelectedMink, addedMinkId, setAddedMinkId, select
       {minks.length > 1 && (
         <>
           <RunnersTitle>Runners up</RunnersTitle>
-          {minks.slice(1).map(m => (
+          {minks.slice(1).map((m) => (
             <Mink
               mink={m}
               key={m.id}
@@ -132,7 +135,7 @@ const renderMinks = (minks, setSelectedMink, addedMinkId, setAddedMinkId, select
   );
 
 const findMink = (id, minks) => {
-  const mink = minks.find(t => t.id === id);
+  const mink = minks.find((t) => t.id === id);
   if (!mink) {
     throw new Error(`Can't find mink ${id}`);
   }
@@ -144,7 +147,7 @@ const MinkTab = ({ venue: { id, minks, addedMinkId }, loadMinks, setSelectedMink
     loadMinks();
   }, []);
   const renderSharePreview = useCallback(
-    id => {
+    (id) => {
       const { created, question, voteCount, voteRating, myVote } = findMink(id, minks);
 
       return (
@@ -165,7 +168,7 @@ const MinkTab = ({ venue: { id, minks, addedMinkId }, loadMinks, setSelectedMink
     },
     [minks],
   );
-  const getTitleForShare = useCallback(id => findMink(id, minks).question, [minks]);
+  const getTitleForShare = useCallback((id) => findMink(id, minks).question, [minks]);
 
   return (
     <TabLayout>
@@ -187,7 +190,4 @@ const mapDispatch = {
   setAddedMinkId,
 };
 
-export default connect(
-  mapsState,
-  mapDispatch,
-)(MinkTab);
+export default connect(mapsState, mapDispatch)(MinkTab);

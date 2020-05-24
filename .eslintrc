@@ -31,7 +31,7 @@
         "react/jsx-filename-extension": "off",
         "react/jsx-one-expression-per-line": "off",
         "react/jsx-indent-props": ["warn", 2],
-        "indent": ["warn", 2, { "SwitchCase": 1, "FunctionDeclaration": {"body": 1, "parameters": 2} }],
+        "indent": ["warn", 2, { "SwitchCase": 1, "ignoredNodes": ["TemplateLiteral"], "FunctionDeclaration": {"body": 1, "parameters": 2} }],
         "react/jsx-indent": ["warn", 2],
         "no-unused-vars": "off",
         "no-console": "off",

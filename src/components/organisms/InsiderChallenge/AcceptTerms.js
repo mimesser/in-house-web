@@ -39,11 +39,13 @@ const AcceptTerms = ({ acceptTerms }) => {
   return (
     <Layout>
       {termsModal && <Terms close={() => showTermsModal(false)} modal />}
-      <H1>i agree to be fair</H1>
+      <H1>haters beware</H1>
       <HelpTip tip="don’t be a jerk">
         <HelpWrap>
           <Checkbox onChange={handleChange} checked={accepted}>
-            to engage respectfully and offer the same objectivity and decency that i would hope for in return
+            i agree to engage respectfully with the same objectivity and decency that i would expect in return, and i
+            understand that any actions by me that this platform deems intentionally malicious, corrupting, or confusing
+            will be removed and that my ability to access this platform in the future may be permanently blocked.
           </Checkbox>
         </HelpWrap>
       </HelpTip>
@@ -58,7 +60,4 @@ const AcceptTerms = ({ acceptTerms }) => {
 const mapDispatch = {
   acceptTerms,
 };
-export default connect(
-  undefined,
-  mapDispatch,
-)(AcceptTerms);
+export default connect(undefined, mapDispatch)(AcceptTerms);
