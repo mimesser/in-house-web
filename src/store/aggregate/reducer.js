@@ -1,13 +1,23 @@
 import { actionTypes } from './actions';
 
-const initialState = { wrongAnswer: true };
+/**
+ * TODO: wrongAnswer should not be stored on the global aggregate object.
+ * Added undefined state to show: true=failed, false=success, undefined=unknown/loading
+ */
+const initialState = { wrongAnswer: undefined };
 
 export function reducer(state = initialState, action) {
   switch (action.type) {
     case actionTypes.LOAD_AGGREGATE_DATA_SUCCESS:
       return { ...state, ...action.data };
 
-    case actionTypes.BETA_AUTHORIZE_SUCCESS || BETA_AUTHORIZE:
+    case actionTypes.BETA_AUTHORIZE:
+      return {
+        ...state,
+        wrongAnswer: undefined,
+      };
+
+    case actionTypes.BETA_AUTHORIZE_SUCCESS:
       return {
         ...state,
         wrongAnswer: false,
