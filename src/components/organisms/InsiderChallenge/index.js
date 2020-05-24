@@ -17,7 +17,7 @@ import { normalizeAnswer } from '../Venue/normalizeAnswer';
 import AcceptTerms from './AcceptTerms';
 import { selectInDemo, getDefaultTopMink } from '../../../store/demo';
 import { useOutsideClick, useTimeout } from '../../../utils';
-import { calcRem, palette } from '../../../style';
+import { calcRem, palette, spacing, breakpoints } from '../../../style';
 
 // TODO: move this to Venue?
 const Heading = styled(H1).attrs(({ title }) => ({
@@ -30,10 +30,15 @@ const Heading = styled(H1).attrs(({ title }) => ({
 }))`
   position: relative;
   ${Patent} {
-    position: absolute;
-    right: 0;
-    bottom: 0;
+    margin: ${spacing.xs} 0;
     color: ${palette.gray};
+    display: block;
+    @media screen and (min-width: ${breakpoints.lg}) {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      margin: 0;
+    }
   }
 `;
 

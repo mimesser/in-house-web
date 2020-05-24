@@ -56,15 +56,10 @@ const renderSection = (title, posts, setSelectedPost) =>
   );
 
 const renderPosts = (posts, setSelectedPost, selectedPost) =>
-  !selectedPost && (
-    <>
-      {renderSection('Top 5 posts', posts.slice(0, 5), setSelectedPost, true)}
-      {renderSection('Chatter', posts.slice(5), setSelectedPost)}
-    </>
-  );
+  !selectedPost && <>{renderSection('Chatter', posts, setSelectedPost)}</>;
 
 const findPost = (id, posts) => {
-  const post = posts.find(t => t.id === id);
+  const post = posts.find((t) => t.id === id);
   if (!post) {
     throw new Error(`Can't find post ${id}`);
   }
@@ -77,7 +72,7 @@ const PostTab = ({ venue: { id, posts }, loadPosts, setSelectedPost, selectedPos
   }, []);
 
   const renderSharePreview = useCallback(
-    id => {
+    (id) => {
       const { title, text, voteCount, voteRating, myVote, created } = findPost(id, posts);
 
       return (
@@ -99,7 +94,7 @@ const PostTab = ({ venue: { id, posts }, loadPosts, setSelectedPost, selectedPos
     },
     [posts],
   );
-  const getTitleForShare = useCallback(id => findPost(id, posts).title, [posts]);
+  const getTitleForShare = useCallback((id) => findPost(id, posts).title, [posts]);
 
   return (
     <TabLayout>
@@ -122,7 +117,4 @@ const mapDispatch = {
   setSelectedPost,
 };
 
-export default connect(
-  mapState,
-  mapDispatch,
-)(PostTab);
+export default connect(mapState, mapDispatch)(PostTab);
