@@ -1,8 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import styled from 'styled-components';
 
-import { H1, Loader, ToolTip, HelpTip } from '../../atoms';
+import { H1, Loader, ToolTip, HelpTip, Patent } from '../../atoms';
 import { WinkConfirmation } from '../../molecules';
 import {
   answerTopMink,
@@ -16,8 +17,25 @@ import { normalizeAnswer } from '../Venue/normalizeAnswer';
 import AcceptTerms from './AcceptTerms';
 import { selectInDemo, getDefaultTopMink } from '../../../store/demo';
 import { useOutsideClick, useTimeout } from '../../../utils';
+import { calcRem, palette } from '../../../style';
 
 // TODO: move this to Venue?
+const Heading = styled(H1).attrs(({ title }) => ({
+  children: (
+    <>
+      {title}
+      <Patent />
+    </>
+  ),
+}))`
+  position: relative;
+  ${Patent} {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    color: ${palette.gray};
+  }
+`;
 
 const TopMinkToolTip = () => {
   const [open, setOpen] = useState(false);
@@ -40,7 +58,7 @@ const Form = ({ topMink, wrongAnswer, answerTopMink, inDemo }) => {
   const [showError, setShowError] = useState(false);
   const answerRef = useRef(null);
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (answer) {
       answerTopMink(answer);
@@ -49,7 +67,7 @@ const Form = ({ topMink, wrongAnswer, answerTopMink, inDemo }) => {
     }
   };
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     setAnswer(normalizeAnswer(e.target.value));
     setShowError(false);
   };
@@ -63,7 +81,7 @@ const Form = ({ topMink, wrongAnswer, answerTopMink, inDemo }) => {
   return (
     <>
       <HelpTip tip="#1 MINK (n): the most popular team password question" placement="top">
-        <H1>{topMink.question}</H1>
+        <Heading title={topMink.question} />
       </HelpTip>
       {inDemo && <TopMinkToolTip />}
       <Answer onSubmit={handleSubmit}>
@@ -86,13 +104,7 @@ const Form = ({ topMink, wrongAnswer, answerTopMink, inDemo }) => {
   );
 };
 
-const InsiderChallenge = ({
-  venue: { name, topMink },
-  challengeFormData,
-  dismissForm,
-  answerTopMink,
-  inDemo,
-}) => {
+const InsiderChallenge = ({ venue: { name, topMink }, challengeFormData, dismissForm, answerTopMink, inDemo }) => {
   if (!challengeFormData) {
     return null;
   }
@@ -145,7 +157,4 @@ const mapDispatch = {
   dismissForm: dismissChallengeForm,
 };
 
-export default connect(
-  mapState,
-  mapDispatch,
-)(InsiderChallenge);
+export default connect(mapState, mapDispatch)(InsiderChallenge);

@@ -6,6 +6,8 @@ import { withRouter } from 'next/router';
 import { Venue, VenueList, Page } from '../components/organisms';
 import { initVenuesPage, selectLoadingVenues, selectSelectedVenue } from '../store/venues';
 import { DEMO_VENUES_ID } from '../store/demo/data';
+import BetaChallange from '../components/organisms/BetaChallange';
+import { selectAuthorizedBetaUser } from '../store/aggregate';
 
 class Houses extends Component {
   get houseId() {
@@ -31,9 +33,16 @@ class Houses extends Component {
     }
   }
 
+  onClose = () => {
+    this.props.router.push('/');
+  };
+
   render() {
     // TODO split and render separately?
-    const View = this.houseId && !this.inDemoVenues ? Venue : VenueList;
+    let View = this.houseId && !this.inDemoVenues ? Venue : VenueList;
+    if (!this.props.isAuthorizedBetaUser) {
+      View = () => <BetaChallange showPopup onClose={this.onClose} />;
+    }
     const defaultHeader = !this.houseId || this.isNewMinkOrPostPath || this.inDemoVenues;
     const title = this.props.selectedVenue
       ? `In-House - ${this.props.selectedVenue.name} | Speak as a Team | Remain Untraceable`
@@ -50,15 +59,11 @@ class Houses extends Component {
 const mapStateToProps = createStructuredSelector({
   loading: selectLoadingVenues,
   selectedVenue: selectSelectedVenue,
+  isAuthorizedBetaUser: selectAuthorizedBetaUser,
 });
 
 const mapDispatch = {
   initVenuesPage,
 };
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatch,
-  )(Houses),
-);
+export default withRouter(connect(mapStateToProps, mapDispatch)(Houses));

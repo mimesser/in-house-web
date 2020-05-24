@@ -23,6 +23,7 @@ const Main = styled.div`
   // }
   ${H2} {
     margin-bottom: ${spacing.xxl};
+    font-family: inherit;
   }
 `;
 

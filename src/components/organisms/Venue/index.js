@@ -50,13 +50,11 @@ const Venue = ({ venue, router, challengeForm: challengeFormOpen }) => {
 
   return (
     <>
-      {
-        <>
-          <Banner venue={venue} />
-          <Navbar id={venue.id} selected={tab} />
-          <Tab venue={venue} />
-        </>
-      }
+      <>
+        <Banner venue={venue} />
+        <Navbar id={venue.id} selected={tab} />
+        <Tab venue={venue} />
+      </>
       <InsiderQuestionChallenge />
     </>
   );
