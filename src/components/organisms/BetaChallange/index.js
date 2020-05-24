@@ -99,7 +99,7 @@ const Form = ({ checkBetaAuth, wrongAnswer, ...props }) => {
 };
 export const BetaChallange = ({
   checkBetaAuth,
-  wrongAnswer = false,
+  wrongAnswer,
   isAuthorizedBetaUser,
   performBetaAuthRedirect,
   showPopup = false,
@@ -132,7 +132,7 @@ export const BetaChallange = ({
       {show && (
         <Modal inverse closeModal={close} canDismiss canClose={!accessGranted} title="">
           <QuestionForm>
-            {!wrongAnswer ? (
+            {wrongAnswer === false ? (
               <WinkConfirmation />
             ) : (
               <>

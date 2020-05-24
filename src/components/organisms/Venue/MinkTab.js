@@ -170,7 +170,6 @@ const MinkTab = ({ venue: { id, minks, addedMinkId }, loadMinks, setSelectedMink
   );
   const getTitleForShare = useCallback((id) => findMink(id, minks).question, [minks]);
 
-  console.log({ minks });
   return (
     <TabLayout>
       {minks ? renderMinks(minks, setSelectedMink, addedMinkId, setAddedMinkId, selectedMink, id) : <Loader big />}
