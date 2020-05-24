@@ -79,7 +79,7 @@ const Mink = ({
           <ItemTitle>{question}</ItemTitle>
           <Break />
           <div>
-            <Votes count={voteCount} inverse />
+            <Votes count={voteCount} inverse={topMink} />
             <ItemTime dateTime={created}>{formatDate(created)}</ItemTime>
           </div>
         </Main>
@@ -170,6 +170,7 @@ const MinkTab = ({ venue: { id, minks, addedMinkId }, loadMinks, setSelectedMink
   );
   const getTitleForShare = useCallback((id) => findMink(id, minks).question, [minks]);
 
+  console.log({ minks });
   return (
     <TabLayout>
       {minks ? renderMinks(minks, setSelectedMink, addedMinkId, setAddedMinkId, selectedMink, id) : <Loader big />}
