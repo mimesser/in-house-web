@@ -96,7 +96,7 @@ const SocialLink = ({ href, icon }) => (
 const socialLinks = [
   {
     icon: 'facebook',
-    href: 'https://www.facebook.com/inhouse.movement',
+    href: 'https://www.facebook.com/iH.movement/',
   },
   {
     icon: 'twitter',
