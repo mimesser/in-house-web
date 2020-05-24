@@ -27,7 +27,6 @@ import {
 
 const BetaLink = styled(Button)`
   margin-top: ${spacing.sm};
-  margin-bottom: auto;
   min-height: 42px;
   border: none;
 `;
