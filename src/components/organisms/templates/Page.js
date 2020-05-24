@@ -65,9 +65,36 @@ const useMatchesQuery = (query) => {
 const BackVideo = withNoSSR(() => {
   const mobile = useMatchesQuery(`(max-width: ${breakpoints.md})`);
   const resource = `https://in-house.azureedge.net/webstatic/${mobile ? 'bg-mobile-2' : 'bg-desktop-2'}`;
+  const ref = useRef(null);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    if (bgVideo) {
+      bgVideo.addEventListener('loadeddata', () => {
+        console.log('# loaded video');
+        setLoading(false);
+      });
+    }
+    return () => {};
+  }, [loading]);
+
+  let bgVideo = null;
+  console.log('# before return');
   return (
-    <Video poster={`${resource}.png`} playsInline autoPlay muted loop>
+    <Video
+      ref={(ref) => {
+        bgVideo = ref;
+      }}
+      style={{
+        opacity: loading ? 0 : 1,
+        transition: 'opacity, 1s ease-in-out',
+      }}
+      poster={`${resource}.png`}
+      playsInline
+      autoPlay
+      muted
+      loop
+    >
       <source src={`${resource}.mp4`} type="video/mp4" />
     </Video>
   );
