@@ -81,27 +81,24 @@ const BackVideo = withNoSSR(() => {
   let bgVideo = null;
   console.log('# before return');
   return (
-    <>
-      {!mobile && (
-        <Video
-          ref={(ref) => {
-            bgVideo = ref;
-          }}
-          style={{
-            opacity: loading ? 0 : 1,
-            transition: 'opacity, 1s ease-in-out',
-          }}
-          preload="metadata"
-          poster={`${resource}.png`}
-          playsInline
-          autoPlay
-          muted
-          loop
-        >
-          <source src={`${resource}.mp4`} type="video/mp4" />
-        </Video>
-      )}
-    </>
+    <Video
+      ref={(ref) => {
+        bgVideo = ref;
+      }}
+      style={{
+        opacity: loading ? 0 : 1,
+        transition: 'opacity, 1s ease-in-out',
+      }}
+      preload="metadata"
+      poster={`${resource}.png`}
+      playsInline
+      autoPlay
+      muted
+      loop
+      disablePictureInPicture="true"
+    >
+      <source src={`${resource}.mp4`} type="video/mp4" />
+    </Video>
   );
 });
 
