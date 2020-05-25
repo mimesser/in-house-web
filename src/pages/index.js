@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 
@@ -109,9 +109,15 @@ const socialLinks = [
 ];
 
 const Landing = () => {
+  const [videoReady, setVideoReady] = useState(false);
+  const onVideoReady = () => {
+    setVideoReady(true);
+    console.log('#onVideoReady');
+  };
+
   console.log('# rendering loading page');
   return (
-    <Page whiteHead videoBack>
+    <Page whiteHead videoBack onVideoReady={onVideoReady}>
       <Main>
         <H1>a tool for people who can’t speak safely</H1>
         <Break />

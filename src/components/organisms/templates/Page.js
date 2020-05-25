@@ -62,7 +62,7 @@ const useMatchesQuery = (query) => {
   return result;
 };
 
-const BackVideo = withNoSSR(() => {
+const BackVideo = withNoSSR(({ onVideoReady }) => {
   const mobile = useMatchesQuery(`(max-width: ${breakpoints.md})`);
   const resource = `https://in-house.azureedge.net/webstatic/${mobile ? 'bg-mobile-2' : 'bg-desktop-2'}`;
   const ref = useRef(null);
@@ -73,6 +73,9 @@ const BackVideo = withNoSSR(() => {
       bgVideo.addEventListener('loadeddata', () => {
         console.log('# loaded video');
         setLoading(false);
+        if (onVideoReady) {
+          onVideoReady();
+        }
       });
     }
     return () => {};
@@ -95,7 +98,7 @@ const BackVideo = withNoSSR(() => {
       autoPlay
       muted
       loop
-      disablePictureInPicture="true"
+      disablePictureInPicture
     >
       <source src={`${resource}.mp4`} type="video/mp4" />
     </Video>
@@ -110,6 +113,7 @@ export const Page = ({
   videoBack,
   whiteHead,
   noPadd,
+  onVideoReady,
 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const openMenu = useCallback(() => setMenuOpen(true), []);
@@ -128,7 +132,7 @@ export const Page = ({
       <PageLayout ref={ref} className={className}>
         {videoBack && (
           <>
-            <BackVideo />
+            <BackVideo onVideoReady={onVideoReady} />
             <Overlay />
           </>
         )}
