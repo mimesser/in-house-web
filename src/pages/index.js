@@ -118,7 +118,7 @@ const Landing = () => {
   console.log('# rendering loading page');
   return (
     <Page whiteHead videoBack onVideoReady={onVideoReady}>
-      <Main>
+      <Main className={videoReady ? '' : '__WebInspectorHideElement__'}>
         <H1>a tool for people who can’t speak safely</H1>
         <Break />
         <H2 as="p">share truths about your organization with 100% anonymous team voting (on everything)</H2>
