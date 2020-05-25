@@ -70,8 +70,8 @@ const BackVideo = withNoSSR(({ onVideoReady }) => {
 
   useEffect(() => {
     if (bgVideo) {
-      bgVideo.addEventListener('loadeddata', () => {
-        console.log('# loaded video');
+      bgVideo.addEventListener('play', () => {
+        console.log('# loaded video - rea');
         setLoading(false);
         if (onVideoReady) {
           onVideoReady();
@@ -83,6 +83,7 @@ const BackVideo = withNoSSR(({ onVideoReady }) => {
 
   let bgVideo = null;
   console.log('# before return');
+  if (mobile) return null;
   return (
     <Video
       ref={(ref) => {
