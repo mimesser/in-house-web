@@ -108,28 +108,31 @@ const socialLinks = [
   },
 ];
 
-const Landing = () => (
-  <Page whiteHead videoBack>
-    <Main>
-      <H1>a tool for people who can’t speak safely</H1>
-      <Break />
-      <H2 as="p">share truths about your organization with 100% anonymous team voting (on everything)</H2>
-      <Links>
-        <HowItWorks />
-        <Link href="/about" passHref>
-          <Button icon="mission">our mission</Button>
-        </Link>
+const Landing = () => {
+  console.log('# rendering loading page');
+  return (
+    <Page whiteHead videoBack>
+      <Main>
+        <H1>a tool for people who can’t speak safely</H1>
+        <Break />
+        <H2 as="p">share truths about your organization with 100% anonymous team voting (on everything)</H2>
+        <Links>
+          <HowItWorks />
+          <Link href="/about" passHref>
+            <Button icon="mission">our mission</Button>
+          </Link>
 
-        <BetaChallenge />
-        <div>
-          {socialLinks.map((link) => (
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            <SocialLink {...link} key={link.icon} />
-          ))}
-        </div>
-      </Links>
-    </Main>
-  </Page>
-);
+          <BetaChallenge />
+          <div>
+            {socialLinks.map((link) => (
+              // eslint-disable-next-line react/jsx-props-no-spreading
+              <SocialLink {...link} key={link.icon} />
+            ))}
+          </div>
+        </Links>
+      </Main>
+    </Page>
+  );
+};
 
 export default Landing;

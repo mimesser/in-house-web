@@ -89,11 +89,13 @@ const BackVideo = withNoSSR(() => {
         opacity: loading ? 0 : 1,
         transition: 'opacity, 1s ease-in-out',
       }}
+      preload="metadata"
       poster={`${resource}.png`}
       playsInline
       autoPlay
       muted
       loop
+      disablePictureInPicture="true"
     >
       <source src={`${resource}.mp4`} type="video/mp4" />
     </Video>
@@ -114,6 +116,7 @@ export const Page = ({
   const closeMenu = useCallback(() => setMenuOpen(false), []);
   const ref = useRef(null);
 
+  console.log('# rendering page');
   return (
     <>
       <Head>
