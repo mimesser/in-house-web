@@ -13,6 +13,10 @@ app
     const server = new Koa();
     const router = new Router();
 
+    if (process.env.NODE_ENV !== 'production') {
+      server.use(auth({ name: 'in7ouse', pass: 'in7ouse' }));
+    }
+
     router.get('/houses/:id', async (ctx) => {
       const { req, res, params } = ctx;
       await app.render(req, res, '/houses', { id: params.id });
