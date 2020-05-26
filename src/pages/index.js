@@ -112,10 +112,8 @@ const Landing = () => {
   const [videoReady, setVideoReady] = useState(false);
   const onVideoReady = () => {
     setVideoReady(true);
-    console.log('#onVideoReady');
   };
 
-  console.log('# rendering loading page');
   return (
     <Page whiteHead videoBack onVideoReady={onVideoReady}>
       <Main>
