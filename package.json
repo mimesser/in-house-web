@@ -25,6 +25,7 @@
     "koa": "2.11.0",
     "koa-basic-auth": "4.0.0",
     "koa-router": "8.0.8",
+    "koa-slow": "^2.1.0",
     "lodash": "4.17.15",
     "moment": "^2.25.3",
     "next": "9.3.6",

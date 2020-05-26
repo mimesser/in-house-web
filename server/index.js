@@ -3,6 +3,8 @@ const nextApp = require('next');
 const Router = require('koa-router');
 const auth = require('koa-basic-auth');
 
+var slow = require('koa-slow');
+
 const port = process.env.PORT || 3000;
 const app = nextApp({ dir: './src', dev: process.env.NODE_ENV === 'locale' });
 const handle = app.getRequestHandler();
@@ -13,9 +15,20 @@ app
     const server = new Koa();
     const router = new Router();
 
-    if (process.env.NODE_ENV !== 'production') {
-      server.use(auth({ name: 'in7ouse', pass: 'in7ouse' }));
-    }
+    server.use(
+      slow({
+        url: /\.[jpg|jpeg|mp4|png]$/i,
+        delay: 500,
+      }),
+    );
+    server.use(async (ctx, next) => {
+      try {
+        await next();
+      } catch (err) {
+        err.status = err.statusCode || err.status || 500;
+        throw err;
+      }
+    });
 
     router.get('/houses/:id', async (ctx) => {
       const { req, res, params } = ctx;
