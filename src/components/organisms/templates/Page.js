@@ -83,7 +83,7 @@ const BackVideo = withNoSSR(({ onVideoReady }) => {
 
   let bgVideo = null;
   console.log('# before return');
-  if (mobile) return null;
+
   return (
     <Video
       ref={(ref) => {
