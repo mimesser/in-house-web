@@ -19,7 +19,6 @@ class MyApp extends App {
 
   componentDidMount() {
     const { isServer, pathname } = this.props;
-    console.log(`# app mounted: isServer: ${isServer} at path: ${pathname}`);
     this.props.store.dispatch(loadAggregateData(isServer, pathname));
 
     initGA();

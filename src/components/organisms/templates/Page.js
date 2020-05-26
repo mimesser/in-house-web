@@ -62,45 +62,12 @@ const useMatchesQuery = (query) => {
   return result;
 };
 
-const BackVideo = withNoSSR(({ onVideoReady }) => {
+const BackVideo = withNoSSR(() => {
   const mobile = useMatchesQuery(`(max-width: ${breakpoints.md})`);
   const resource = `https://in-house.azureedge.net/webstatic/${mobile ? 'bg-mobile-2' : 'bg-desktop-2'}`;
-  const ref = useRef(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (bgVideo) {
-      bgVideo.addEventListener('play', () => {
-        console.log('# loaded video - rea');
-        setLoading(false);
-        if (onVideoReady) {
-          onVideoReady();
-        }
-      });
-    }
-    return () => {};
-  }, [loading]);
-
-  let bgVideo = null;
-  console.log('# before return');
 
   return (
-    <Video
-      ref={(ref) => {
-        bgVideo = ref;
-      }}
-      style={{
-        opacity: loading ? 0 : 1,
-        transition: 'opacity, 1s ease-in-out',
-      }}
-      preload="metadata"
-      poster={`${resource}.png`}
-      playsInline
-      autoPlay
-      muted
-      loop
-      disablePictureInPicture
-    >
+    <Video poster={`${resource}.png`} playsInline autoPlay muted loop>
       <source src={`${resource}.mp4`} type="video/mp4" />
     </Video>
   );
@@ -114,14 +81,12 @@ export const Page = ({
   videoBack,
   whiteHead,
   noPadd,
-  onVideoReady,
 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const openMenu = useCallback(() => setMenuOpen(true), []);
   const closeMenu = useCallback(() => setMenuOpen(false), []);
   const ref = useRef(null);
 
-  console.log('# rendering page');
   return (
     <>
       <Head>
@@ -133,7 +98,7 @@ export const Page = ({
       <PageLayout ref={ref} className={className}>
         {videoBack && (
           <>
-            <BackVideo onVideoReady={onVideoReady} />
+            <BackVideo />
             <Overlay />
           </>
         )}
