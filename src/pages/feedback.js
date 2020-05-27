@@ -4,12 +4,12 @@ import { Page, FeedbackForm } from '../components/organisms';
 
 function Feedback(props) {
   const {
-    query: { subjectIndex },
+    query: { subjectIndex, redirect },
   } = props.router;
-  console.log(subjectIndex);
+  console.log(subjectIndex, redirect);
   return (
     <Page>
-      <FeedbackForm subjectIndex={subjectIndex} />
+      <FeedbackForm subjectIndex={subjectIndex} redirectLink={redirect} />
     </Page>
   );
 }

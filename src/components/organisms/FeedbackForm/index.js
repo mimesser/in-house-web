@@ -25,6 +25,7 @@ const subjectOptions = [
 
 function FeedbackForm(props) {
   const subjectId = props.subjectIndex || 0;
+  const { redirectLink } = props;
   const [subject, setSubject] = useState(subjectOptions[subjectId]);
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
@@ -33,7 +34,7 @@ function FeedbackForm(props) {
   const handleEmailChange = getHandler(setEmail);
 
   const submit = () => {
-    props.postFeedback({ email, subject: subject.value, message });
+    props.postFeedback({ email, subject: subject.value, message, redirectLink });
   };
 
   const clear = () => {
