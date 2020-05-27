@@ -7,7 +7,7 @@ import { setFeedbackError, setFeedbackLoading, setFeedbackSuccess, actionTypes, 
 
 const CONFIRMATION_DELAY = 2000;
 
-export function* postFeedback({ payload: { subject, message, email } }) {
+export function* postFeedback({ payload: { subject, message, email, redirectLink } }) {
   const valid = email ? isEmailValid(email) : true;
   if (!valid) {
     yield put(setFeedbackError('Please provide a valid email'));
@@ -19,12 +19,16 @@ export function* postFeedback({ payload: { subject, message, email } }) {
     yield call(api.post, 'email/contactus', {
       subject,
       message: message || 'null',
-      useremail: email || 'null',
+      useremail: email,
     });
     yield put(setFeedbackSuccess());
     yield delay(CONFIRMATION_DELAY);
     yield put(clearFeedback());
-    Router.back();
+    if (redirectLink) {
+      Router.push(redirectLink);
+    } else {
+      Router.back();
+    }
   } catch (e) {
     yield put(setFeedbackError('Something went wrong...'));
   }

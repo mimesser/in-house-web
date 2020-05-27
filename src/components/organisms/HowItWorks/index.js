@@ -77,6 +77,7 @@ const PaperPlan = styled(Icon)`
   position: absolute;
   margin-left: 10px;
   bottom: 0px;
+  color: white;
 `;
 
 export const HowItWorks = () => {

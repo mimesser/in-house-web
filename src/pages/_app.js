@@ -17,12 +17,20 @@ class MyApp extends App {
     return { pageProps, isServer: ctx.isServer, pathname: ctx.pathname, asPath: ctx.asPath };
   }
 
+  forceRefresh = () => {
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    console.log(`# page refresh ... safari: ${isSafari}`);
+    window.location.reload();
+  };
+
   componentDidMount() {
     const { isServer, pathname } = this.props;
     this.props.store.dispatch(loadAggregateData(isServer, pathname));
 
     initGA();
     logPageView();
+
+    window.onbeforeunload = this.forceRefresh;
   }
 
   render() {
