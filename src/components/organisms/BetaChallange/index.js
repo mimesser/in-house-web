@@ -107,7 +107,7 @@ export const BetaChallange = ({
   ...props
 }) => {
   const [show, setShow] = useState(showPopup);
-  const [accessGranted, setAccessGranted] = useState(!wrongAnswer || isAuthorizedBetaUser);
+  const [accessGranted, setAccessGranted] = useState(wrongAnswer === false || isAuthorizedBetaUser);
   const open = useCallback(() => {
     setShow(true);
     setAccessGranted(!wrongAnswer || isAuthorizedBetaUser);
@@ -130,7 +130,7 @@ export const BetaChallange = ({
         see beta houses
       </BetaLink>
       {show && (
-        <Modal inverse closeModal={close} canDismiss canClose={!accessGranted} title="">
+        <Modal inverse closeModal={close} canDismiss canClose={wrongAnswer !== false} title="">
           <QuestionForm>
             {wrongAnswer === false ? (
               <WinkConfirmation />
@@ -140,7 +140,7 @@ export const BetaChallange = ({
               </>
             )}
           </QuestionForm>
-          {!accessGranted ? <ExitButton onClick={close} /> : undefined}
+          {wrongAnswer !== false ? <ExitButton onClick={close} /> : undefined}
         </Modal>
       )}
     </>
