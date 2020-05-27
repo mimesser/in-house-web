@@ -107,7 +107,7 @@ export const BetaChallange = ({
   ...props
 }) => {
   const [show, setShow] = useState(showPopup);
-  const [accessGranted, setAccessGranted] = useState(!wrongAnswer || isAuthorizedBetaUser);
+  const [accessGranted, setAccessGranted] = useState(wrongAnswer === false || isAuthorizedBetaUser);
   const open = useCallback(() => {
     setShow(true);
     setAccessGranted(!wrongAnswer || isAuthorizedBetaUser);
