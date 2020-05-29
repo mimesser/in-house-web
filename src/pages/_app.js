@@ -1,6 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
+import axios from 'axios';
 import App, { Container } from 'next/app';
 import withRedux from 'next-redux-wrapper';
 import withReduxSaga from 'next-redux-saga';
@@ -11,6 +12,8 @@ import { GlobalStyle } from '../components/GlobalStyle';
 import { loadAggregateData } from '../store/aggregate';
 import { initGA, logPageView } from '../utils/analytics';
 
+const LAST_RELOAD_KEY = 'in-house/lastReload';
+
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
     const pageProps = Component.getInitialProps ? await Component.getInitialProps({ ctx }) : {};
@@ -19,8 +22,17 @@ class MyApp extends App {
 
   forceRefresh = () => {
     const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-    console.log(`# page refresh ... safari: ${isSafari}`);
-    window.location.reload();
+
+    const lastReload = parseInt(localStorage.getItem(LAST_RELOAD_KEY) || '0');
+    const now = new Date().getTime();
+    if (
+      isSafari &&
+      now - lastReload > 60 * 1000 // Prevent infinite reloading.
+    ) {
+      console.log(`# page refresh FORCED on safari: ${isSafari}`);
+      localStorage.setItem('lastReload', now);
+      window.location.reload(true); // force page reload
+    }
   };
 
   componentDidMount() {
