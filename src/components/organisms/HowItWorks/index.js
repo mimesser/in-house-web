@@ -63,6 +63,10 @@ const Steps = styled(({ children, className }) => (
 
 const NotifyLink = styled(Button)`
   margin-bottom: ${spacing.xxxl};
+
+  padding: ${spacing.xl};
+  min-height: ${spacing.xxxl};
+  height: ${spacing.xxxl};
 `;
 
 const Layout = styled.div`
@@ -80,6 +84,12 @@ const PaperPlan = styled(Icon)`
   color: white;
 `;
 
+const StyledBrand = styled(Brand)`
+  > a {
+    text-decoration: none;
+  }
+`;
+
 export const HowItWorks = () => {
   const [show, setShow] = useState(false);
   const open = useCallback(() => setShow(true), []);
@@ -91,7 +101,7 @@ export const HowItWorks = () => {
         how it works
       </OpenLink>
       {show && (
-        <Modal closeModal={close} inverse title={<Brand />}>
+        <Modal closeModal={close} inverse title={<StyledBrand />}>
           <Layout>
             <Steps>
               <>
