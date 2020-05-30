@@ -70,7 +70,7 @@ app
       });
     }
 
-    router.get('*', async (ctx) => {
+    server.use(async (ctx, next) => {
       await handle(ctx.req, ctx.res);
       ctx.respond = false;
     });
