@@ -135,9 +135,11 @@ const Landing = () => {
 
           <section>
             <BetaDesc>no email, no login, no personal data</BetaDesc>
-            <BetaLink icon="arrow-right" wide outline href="/houses">
-              see beta houses
-            </BetaLink>
+            <Link href="/houses">
+              <BetaLink icon="arrow-right" wide outline>
+                see beta houses
+              </BetaLink>
+            </Link>
           </section>
 
           <div>
