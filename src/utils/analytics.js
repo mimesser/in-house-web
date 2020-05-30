@@ -1,8 +1,6 @@
 import ReactGA from 'react-ga';
 
 export const initGA = () => {
-  console.log('GA init');
-  console.log(window.GA_INITIALIZED, process.env.GA_KEY);
   if (!window.GA_INITIALIZED) {
     if (process.env.GA_KEY) {
       ReactGA.initialize(process.env.GA_KEY);

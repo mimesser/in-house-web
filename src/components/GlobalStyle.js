@@ -5,7 +5,7 @@ import { normalize } from 'polished';
 import { breakpoints, BASE_FONT_SIZE, appFontSize, font, appLineHeight, appBackground, palette } from '../style';
 
 const fontFamilies = css`
-  @import url('//hello.myfonts.net/count/3af918');
+  /* @import url('//hello.myfonts.net/count/3af918'); */
   @font-face {
     font-family: 'HelveticaLTWXX-Light';
     font-display: swap;

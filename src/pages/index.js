@@ -129,13 +129,13 @@ const Landing = () => {
         </H2>
         <Links>
           <HowItWorks />
-          <Link href="/about" passHref>
+          <Link href="/about" passHref prefetch={false}>
             <Button icon="mission">our mission</Button>
           </Link>
 
           <section>
             <BetaDesc>no email, no login, no personal data</BetaDesc>
-            <Link href="/houses">
+            <Link href="/houses" prefetch={false}>
               <BetaLink icon="arrow-right" wide outline>
                 see beta houses
               </BetaLink>
