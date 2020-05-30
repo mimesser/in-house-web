@@ -25,13 +25,21 @@ import {
   performBetaAuthRedirect,
 } from '../../../store/aggregate';
 
-const BetaLink = styled(Button)`
+export const BetaLink = styled(Button)`
   margin-top: ${spacing.sm};
   min-height: 42px;
   border: none;
 `;
 
-const Desc = styled.div`
+const BetaList = styled(BetaLink)`
+  margin-top: ${spacing.xxxl};
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: ${spacing.md};
+  text-align: left;
+`;
+
+export const BetaDesc = styled.div`
   mark {
     text-decoration: underline;
     background: none;
@@ -50,7 +58,7 @@ const Heading = styled(H1).attrs(({ title }) => ({
 `;
 
 export const ExitButton = styled(ClearButton).attrs({
-  children: <Desc>exit</Desc>,
+  children: <BetaDesc>exit</BetaDesc>,
 })`
   margin-right: auto;
   margin-bottom: ${spacing.md};
@@ -125,10 +133,6 @@ export const BetaChallange = ({
 
   return (
     <>
-      <Desc>no email, no login, no personal data</Desc>
-      <BetaLink icon="arrow-right" wide outline onClick={open}>
-        see beta houses
-      </BetaLink>
       {show && (
         <Modal inverse closeModal={close} canDismiss canClose={wrongAnswer !== false} title="">
           <QuestionForm>
@@ -139,7 +143,12 @@ export const BetaChallange = ({
                 <Form wrongAnswer={wrongAnswer} checkBetaAuth={checkBetaAuth} />
               </>
             )}
+
+            <BetaList icon="arrow-right" href="/beta-list">
+              request to list your workplace
+            </BetaList>
           </QuestionForm>
+
           {wrongAnswer !== false ? <ExitButton onClick={close} /> : undefined}
         </Modal>
       )}
