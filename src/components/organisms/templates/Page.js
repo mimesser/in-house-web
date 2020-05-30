@@ -66,6 +66,8 @@ const BackVideo = withNoSSR(() => {
   const mobile = useMatchesQuery(`(max-width: ${breakpoints.md})`);
   const resource = `https://in-house.azureedge.net/webstatic/${mobile ? 'bg-mobile-2' : 'bg-desktop-2'}`;
 
+  if (mobile) return null;
+
   return (
     <Video poster={`${resource}.png`} playsInline autoPlay muted loop>
       <source src={`${resource}.mp4`} type="video/mp4" />
