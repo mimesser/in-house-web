@@ -119,7 +119,10 @@ const Landing = () => {
       <Main>
         <H1>a tool for people who can’t speak safely</H1>
         <Break />
-        <H2 as="p">share truths about your organization with 100% anonymous team voting (on everything)</H2>
+        <H2 as="p">
+          just answer an 'insider' password to share and learn truths about your organization with 100% anonymous,
+          full-team polling & feedback (on everything)
+        </H2>
         <Links>
           <HowItWorks />
           <Link href="/about" passHref>
