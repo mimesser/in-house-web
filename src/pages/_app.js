@@ -11,6 +11,7 @@ import { theme } from '../style';
 import { GlobalStyle } from '../components/GlobalStyle';
 import { loadAggregateData } from '../store/aggregate';
 import { initGA, logPageView } from '../utils/analytics';
+import { Helmet } from 'react-helmet';
 
 const LAST_RELOAD_KEY = 'in-house/lastReload';
 
@@ -60,6 +61,9 @@ class MyApp extends App {
     return (
       <ThemeProvider theme={theme}>
         <>
+          <Helmet>
+            <link rel="canonical" href="'//hello.myfonts.net/count/3af918'" />
+          </Helmet>
           <GlobalStyle />
           {/* eslint-disable-next-line react/jsx-props-no-spreading */}
           <Component {...pageProps} />
