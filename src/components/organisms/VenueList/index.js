@@ -5,14 +5,13 @@ import { createStructuredSelector } from 'reselect';
 import Link from 'next/link';
 
 import styled from 'styled-components';
-import { spacing, font } from '../../../style';
+import { spacing } from '../../../style';
 import { Loader, ClearButton, Icon, Button, Card, H1, Portal } from '../../atoms';
 
 import { selectInsiderChallengeForm, selectSelectedVenue, selectVenues } from '../../../store/venues';
 import { selectInDemo } from '../../../store/demo';
 import { VenueCard } from './VenueCard';
-import { SearchBox, Layout, Results, NoResultsSearchLabel, SelectedItemArea, CantFindHouse } from './style';
-import PrivateShare from '../Venue/PrivateShare';
+import { SearchBox, Layout, Results, NoResultsSearchLabel, SelectedItemArea } from './style';
 import { Main, ItemText, ItemTitle } from '../Venue/tabStyle';
 
 const BetaLink = styled(Button)`
@@ -21,6 +20,18 @@ const BetaLink = styled(Button)`
   border: none;
   bacground-color: white;
   padding: 0;
+`;
+
+const BetaCard = styled(BetaLink)`
+  margin: 0;
+  width: 100%;
+
+  padding: ${spacing.md};
+  min-height: ${spacing.xxxl};
+  margin-bottom: ${spacing.xl};
+  > a {
+    width: 100%;
+  }
 `;
 
 const SearchBoxIcon = ({ applyFilter, clear }) =>
@@ -97,9 +108,13 @@ const SearchPage = ({ venues, inDemo }) => {
           <VenueCard key={v.id} venue={v} showVenue={showVenue} withHelp={i === 0} />
         ))}
         {!inDemo && (
-          <Link href="/beta-list" passHref>
-            <Button icon="arrow-right">beta-list my workplace</Button>
-          </Link>
+          <section>
+            {/* <Link href="/beta-list" passHref> */}
+            <BetaCard icon="arrow-right" href="/beta-list">
+              beta-list my workplace
+            </BetaCard>
+            {/* </Link> */}
+          </section>
         )}
         {/* <PrivateShare type="venue" renderItem={renderSharePreview} getItemTitle={getTitleForShare} getVenue={getVenue} /> */}
       </Results>
