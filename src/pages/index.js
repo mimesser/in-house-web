@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { Page, HowItWorks } from '../components/organisms';
 import { Button, H1, H2, Break, Icon, TransparentLinkStyle } from '../components/atoms';
 import { spacing, palette, breakpoints } from '../style';
-import BetaChallenge from '../components/organisms/BetaChallange';
+import BetaChallange, { BetaLink, BetaDesc } from '../components/organisms/BetaChallange';
 
 const Main = styled.div`
   position: relative;
@@ -68,6 +68,10 @@ const Links = styled.div`
       }
     }
   }
+  > section {
+    margin-top: ${spacing.xxxl};
+    width: 100%;
+  }
 
   > div {
     margin-top: ${spacing.xl};
@@ -129,7 +133,13 @@ const Landing = () => {
             <Button icon="mission">our mission</Button>
           </Link>
 
-          <BetaChallenge />
+          <section>
+            <BetaDesc>no email, no login, no personal data</BetaDesc>
+            <BetaLink icon="arrow-right" wide outline href="/houses">
+              see beta houses
+            </BetaLink>
+          </section>
+
           <div>
             {socialLinks.map((link) => (
               // eslint-disable-next-line react/jsx-props-no-spreading
