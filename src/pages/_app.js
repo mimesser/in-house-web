@@ -23,36 +23,18 @@ class MyApp extends App {
 
     const { isServer, pathname, store } = ctx;
 
+    store.dispatch(loadAggregateData(isServer, pathname));
     if (ctx.req) {
       store.dispatch(END);
       await ctx.store.sagaTask.toPromise();
     }
 
-    store.dispatch(loadAggregateData(isServer, pathname));
-
     return { pageProps, isServer: ctx.isServer, pathname: ctx.pathname, asPath: ctx.asPath, store };
   }
-
-  forceRefresh = () => {
-    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-
-    const lastReload = parseInt(localStorage.getItem(LAST_RELOAD_KEY) || '0');
-    const now = new Date().getTime();
-    if (
-      isSafari &&
-      now - lastReload > 60 * 1000 // Prevent infinite reloading.
-    ) {
-      console.log(`# page refresh FORCED on safari: ${isSafari}`);
-      localStorage.setItem('lastReload', now);
-      window.location.reload(true); // force page reload
-    }
-  };
 
   componentDidMount() {
     initGA();
     logPageView();
-
-    window.onbeforeunload = this.forceRefresh;
   }
 
   render() {

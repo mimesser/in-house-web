@@ -23,7 +23,7 @@ function* loadAggregateDataSaga({ meta: { isServer, pathname } }) {
     }
   }
   const { data } = response;
-  setAuthorization(data.userId);
+  if (!isServer) setAuthorization(data.userId);
   // TODO: currently only landing pages should be shown
   // const pathNotChanged = pathname === Router.router.pathname;
   // if (isServer && pathNotChanged && REDIRECT_FORMER_INSIDER_FROM.includes(pathname) && data.isFormerInsider) {
