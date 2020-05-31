@@ -7,7 +7,8 @@ import { Venue, VenueList, Page } from '../components/organisms';
 import { initVenuesPage, selectLoadingVenues, selectSelectedVenue } from '../store/venues';
 import { DEMO_VENUES_ID } from '../store/demo/data';
 import BetaChallange from '../components/organisms/BetaChallange';
-import { selectAuthorizedBetaUser } from '../store/aggregate';
+import { selectAuthorizedBetaUser, loadAggregateData } from '../store/aggregate';
+import { END } from 'redux-saga';
 
 class Houses extends Component {
   get houseId() {
@@ -23,7 +24,16 @@ class Houses extends Component {
     return asPath.endsWith('mink/new') || asPath.endsWith('post/new');
   }
 
+  static async getInitialProps({ store }) {
+    if (!store.getState().isAuthorizedBetaUser) {
+      store.dispatch(loadAggregateData());
+      store.dispatch(END);
+    }
+    await store.sagaTask.toPromise();
+  }
+
   componentDidMount() {
+    this.props.loadAggregateData();
     this.props.initVenuesPage(this.houseId);
   }
 
@@ -64,6 +74,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatch = {
   initVenuesPage,
+  loadAggregateData,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatch)(Houses));

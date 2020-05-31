@@ -14,7 +14,9 @@ if (process.browser) {
 }
 
 export function setAuthorization(token) {
-  localStorage.setItem(TOKEN_KEY, token);
+  if (process.browser) {
+    localStorage.setItem(TOKEN_KEY, token);
+  }
   api.defaults.headers.Authorization = `token ${token}`;
 }
 
