@@ -1,5 +1,5 @@
 import { actionTypes } from './actions';
-
+import { HYDRATE } from 'next-redux-wrapper';
 /**
  * TODO: wrongAnswer should not be stored on the global aggregate object.
  * Added undefined state to show: true=failed, false=success, undefined=unknown/loading
@@ -8,6 +8,8 @@ const initialState = { wrongAnswer: undefined };
 
 export function reducer(state = initialState, action) {
   switch (action.type) {
+    case HYDRATE:
+      return { ...state, ...action.payload };
     case actionTypes.LOAD_AGGREGATE_DATA_SUCCESS:
       return { ...state, ...action.data };
 

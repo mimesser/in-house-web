@@ -6,7 +6,6 @@ function Feedback(props) {
   const {
     query: { subjectIndex, redirect },
   } = props.router;
-  console.log(subjectIndex, redirect);
   return (
     <Page>
       <FeedbackForm subjectIndex={subjectIndex} redirectLink={redirect} />
