@@ -4,6 +4,8 @@ import { createStructuredSelector } from 'reselect';
 import { withRouter } from 'next/router';
 
 import { Venue, VenueList, Page } from '../components/organisms';
+
+import { Loader } from '../components/atoms';
 import { initVenuesPage, selectLoadingVenues, selectSelectedVenue } from '../store/venues';
 import { DEMO_VENUES_ID } from '../store/demo/data';
 import BetaChallange from '../components/organisms/BetaChallange';
@@ -27,9 +29,8 @@ class Houses extends Component {
   static async getInitialProps({ store }) {
     if (!store.getState().isAuthorizedBetaUser) {
       store.dispatch(loadAggregateData());
-      store.dispatch(END);
     }
-    await store.sagaTask.toPromise();
+    // await store.sagaTask.toPromise();
   }
 
   componentDidMount() {
@@ -58,6 +59,9 @@ class Houses extends Component {
       ? `In-House - ${this.props.selectedVenue.name} | Speak as a Team | Remain Untraceable`
       : undefined;
 
+    if (this.props.loading) {
+      View = () => <Loader big />;
+    }
     return (
       <Page title={title} defaultHeader={defaultHeader} noPadd>
         <View />
