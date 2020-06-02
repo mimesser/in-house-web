@@ -66,7 +66,7 @@ export const ExitButton = styled(ClearButton).attrs({
 
 const Form = ({ checkBetaAuth, wrongAnswer, ...props }) => {
   const [password, setPassword] = useState('');
-  const [showError, setShowError] = useState(false);
+  const [showError, setShowError] = useState(props.showError);
   const answerRef = useRef(null);
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -111,6 +111,7 @@ export const BetaChallange = ({
   isAuthorizedBetaUser,
   performBetaAuthRedirect,
   showPopup = false,
+  showError = false,
   onClose,
   ...props
 }) => {
@@ -140,7 +141,7 @@ export const BetaChallange = ({
               <WinkConfirmation />
             ) : (
               <>
-                <Form wrongAnswer={wrongAnswer} checkBetaAuth={checkBetaAuth} />
+                <Form wrongAnswer={wrongAnswer} checkBetaAuth={checkBetaAuth} showError={showError} />
               </>
             )}
 
