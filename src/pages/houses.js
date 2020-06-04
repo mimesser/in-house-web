@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { withRouter } from 'next/router';
-
+import { END } from 'redux-saga';
 import { Venue, VenueList, Page } from '../components/organisms';
 
 import { Loader } from '../components/atoms';
@@ -10,7 +10,6 @@ import { initVenuesPage, selectLoadingVenues, selectSelectedVenue } from '../sto
 import { DEMO_VENUES_ID } from '../store/demo/data';
 import BetaChallange from '../components/organisms/BetaChallange';
 import { selectAuthorizedBetaUser, loadAggregateData } from '../store/aggregate';
-import { END } from 'redux-saga';
 
 class Houses extends Component {
   get houseId() {
