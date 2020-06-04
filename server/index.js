@@ -1,9 +1,8 @@
 const Koa = require('koa');
 const nextApp = require('next');
-const Router = require('koa-router');
-const auth = require('koa-basic-auth');
+const Router = require('@koa/router');
 
-var slow = require('koa-slow');
+const slow = require('koa-slow');
 
 const port = process.env.PORT || 3000;
 const app = nextApp({ dir: './src', dev: process.env.NODE_ENV === 'locale' });
@@ -70,17 +69,19 @@ app
       });
     }
 
-    server.use(async (ctx, next) => {
+    router.get('(.*)', async (ctx) => {
       await handle(ctx.req, ctx.res);
       ctx.respond = false;
     });
 
     server.use(async (ctx, next) => {
+      // Koa doesn't seems to set the default statusCode.
+      // So, this middleware does that
       ctx.res.statusCode = 200;
       await next();
     });
 
-    server.use(router.routes());
+    server.use(router.routes()).use(router.allowedMethods());
     server.listen(port, (err) => {
       if (err) {
         throw err;
