@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import {
   selectSelectedVenue,
+  selectSelectedPoll,
   selectSelectedTag,
   selectRateTagConfirmation,
   setSelectedTag,

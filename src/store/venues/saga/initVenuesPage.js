@@ -46,7 +46,6 @@ function* fetchPollsList() {
 }
 
 export function* reloadPolls() {
-  console.log('# realod polls');
   const { data } = yield call(api.get, 'polls');
   const industries = yield select(selectIndustriesMap);
 
@@ -56,7 +55,6 @@ export function* reloadPolls() {
     isPoll: true,
   }));
 
-  console.log(normalized);
   yield put(loadPollsDataSuccess(normalized));
   return normalized;
 }
@@ -109,7 +107,6 @@ export function* initVenuesPage({ payload: { idToSelect } }) {
 }
 
 export function* initPollsPage({ payload: { idToSelect } }) {
-  console.log('# initPollsPage saga');
   if (cacheAggregate) {
     yield put(loadAggregateDataSuccess(cacheAggregate));
     setAuthorization(cacheAggregate.userId);

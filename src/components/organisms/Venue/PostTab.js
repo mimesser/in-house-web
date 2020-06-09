@@ -95,7 +95,6 @@ const PostTab = ({ venue: { id, posts }, loadPosts, setSelectedPost, selectedPos
     [posts],
   );
   const getTitleForShare = useCallback((id) => findPost(id, posts).title, [posts]);
-  console.log({ venueType });
   return (
     <TabLayout>
       {posts ? renderPosts(posts, setSelectedPost, selectedPost) : <Loader big />}

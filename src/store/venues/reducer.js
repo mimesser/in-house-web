@@ -98,7 +98,7 @@ export function reducer(state = initialState, action) {
 
       // TODO: consider storing items as map for easier updates
 
-      const list = state.list.slice();
+      const list = (state.list && state.list.slice()) || (state.polls && state.polls.slice());
       const index = list.findIndex((v) => v.id === venue.id);
       list[index] = venue;
 

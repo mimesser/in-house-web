@@ -6,7 +6,7 @@ import { StickyContainer, Sticky } from 'react-sticky';
 
 import styled from 'styled-components';
 import { palette, cover, spacing } from '../../../style';
-import InsiderQuestionChallenge from '../InsiderChallenge';
+import PollChallenge from '../InsiderChallenge/PollChallenge';
 import { selectInsiderChallengeForm, selectSelectedVenue } from '../../../store/venues';
 import { Loader, Icon } from '../../atoms';
 import { WinkConfirmation } from '../../molecules';
@@ -152,7 +152,7 @@ const PollVenue = ({ venue, router, challengeForm: challengeFormOpen }) => {
         {banner}
         <Tab venue={venue} venueType={venueType} />
       </StickyContainer>
-      <InsiderQuestionChallenge />
+      <PollChallenge />
     </>
   );
 };
