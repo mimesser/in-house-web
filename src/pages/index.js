@@ -132,6 +132,9 @@ const Landing = () => {
           <Link href="/about" passHref prefetch={false}>
             <Button icon="mission">our mission</Button>
           </Link>
+          <Link href="/polls" passHref prefetch={false}>
+            <Button icon="users">essential worker polls</Button>
+          </Link>
 
           <section>
             <BetaDesc>no email, no login, no personal data</BetaDesc>
