@@ -30,7 +30,6 @@ class Houses extends Component {
     if (this.houseId !== prevProps.router.query.id) {
       this.props.initPollsPage(this.houseId);
     }
-    console.log(`@ componentDidUpdate: ${this.props.loading}`);
   }
 
   onClose = () => {
@@ -50,7 +49,6 @@ class Houses extends Component {
       View = () => <Loader big />;
     }
 
-    console.log(`@ polls -> render loading: ${this.props.loading} view: ${this.houseId}`);
     return (
       <Page title={title} defaultHeader={defaultHeader} noPadd>
         <View />

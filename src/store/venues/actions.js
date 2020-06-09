@@ -57,8 +57,6 @@ export const initPollsPage = (idToSelect) => ({
 });
 
 export const loadPollsDataSuccess = (data) => {
-  console.log('@ loadPollsDataSuccess');
-
   return {
     type: actionTypes.LOAD_POLLS_DATA_SUCCESS,
     data,
@@ -66,7 +64,6 @@ export const loadPollsDataSuccess = (data) => {
 };
 
 export const loadVenuesDataSuccess = (data) => {
-  console.log('@ loadVenuesDataSuccess');
   return {
     type: actionTypes.LOAD_VENUES_DATA_SUCCESS,
     data,
