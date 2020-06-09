@@ -24,7 +24,6 @@ export function* reloadVenues() {
 }
 
 function* fetchVenueList() {
-  console.log('@ fetchVenueList');
   const venues = yield select(selectVenues);
 
   if (venues) {
