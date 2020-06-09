@@ -1,4 +1,6 @@
 export const actionTypes = {
+  INIT_POLLS_PAGE: 'INIT_POLLS_PAGE',
+  LOAD_POLLS_DATA_SUCCESS: 'LOAD_POLLS_DATA_SUCCESS',
   INIT_VENUES_PAGE: 'INIT_VENUES_PAGE',
   LOAD_VENUES_DATA_SUCCESS: 'LOAD_VENUES_DATA_SUCCESS',
   SET_SELECTED_VENUE: 'SET_SELECTED_VENUE',
@@ -44,37 +46,54 @@ export const clearVenuesData = () => ({
   type: actionTypes.CLEAR_VENUES_DATA,
 });
 
-export const initVenuesPage = idToSelect => ({
+export const initVenuesPage = (idToSelect) => ({
   type: actionTypes.INIT_VENUES_PAGE,
   payload: { idToSelect },
 });
 
-export const loadVenuesDataSuccess = data => ({
-  type: actionTypes.LOAD_VENUES_DATA_SUCCESS,
-  data,
+export const initPollsPage = (idToSelect) => ({
+  type: actionTypes.INIT_POLLS_PAGE,
+  payload: { idToSelect },
 });
 
-export const setSelectedVenue = venue => ({
+export const loadPollsDataSuccess = (data) => {
+  console.log('@ loadPollsDataSuccess');
+
+  return {
+    type: actionTypes.LOAD_POLLS_DATA_SUCCESS,
+    data,
+  };
+};
+
+export const loadVenuesDataSuccess = (data) => {
+  console.log('@ loadVenuesDataSuccess');
+  return {
+    type: actionTypes.LOAD_VENUES_DATA_SUCCESS,
+    data,
+  };
+};
+
+export const setSelectedVenue = (venue) => ({
   type: actionTypes.SET_SELECTED_VENUE,
   payload: { venue },
 });
 
-export const setVenueTopMink = topMink => ({
+export const setVenueTopMink = (topMink) => ({
   type: actionTypes.SET_VENUE_TOP_MINK,
   payload: { topMink },
 });
 
-export const answerTopMink = answer => ({
+export const answerTopMink = (answer) => ({
   type: actionTypes.ANSWER_TOP_MINK,
   payload: { answer },
 });
 
-export const setChallengeFormData = payload => ({
+export const setChallengeFormData = (payload) => ({
   type: actionTypes.SET_CHALLENGE_FORM_DATA,
   payload,
 });
 
-export const dismissChallengeForm = showMinks => ({
+export const dismissChallengeForm = (showMinks) => ({
   type: actionTypes.DISMISS_CHALLENGE_FORM,
   payload: { showMinks },
 });
@@ -83,7 +102,7 @@ export const loadRates = () => ({
   type: actionTypes.LOAD_RATES,
 });
 
-export const setVenueRates = rates => ({
+export const setVenueRates = (rates) => ({
   type: actionTypes.SET_VENUE_RATES,
   payload: { rates },
 });
@@ -92,7 +111,7 @@ export const loadMinks = () => ({
   type: actionTypes.LOAD_MINKS,
 });
 
-export const setVenueMinks = minks => ({
+export const setVenueMinks = (minks) => ({
   type: actionTypes.SET_VENUE_MINKS,
   payload: { minks },
 });
@@ -102,12 +121,12 @@ export const createMink = (id, question, answer) => ({
   payload: { id, question, answer },
 });
 
-export const setAddedMinkId = addedMinkId => ({
+export const setAddedMinkId = (addedMinkId) => ({
   type: actionTypes.SET_ADDED_MINK_ID,
   payload: { addedMinkId },
 });
 
-export const setSelectedMink = selectedMinkId => ({
+export const setSelectedMink = (selectedMinkId) => ({
   type: actionTypes.SET_SELECTED_MINK,
   payload: { selectedMinkId },
 });
@@ -122,7 +141,7 @@ export const downvoteMink = () => ({
   payload: { vote: -1 },
 });
 
-export const showVoteMinkConfirmation = value => ({
+export const showVoteMinkConfirmation = (value) => ({
   type: actionTypes.SHOW_VOTE_MINK_CONFIRMATION,
   payload: { voteMinkConfirmation: value },
 });
@@ -132,7 +151,7 @@ export const tryAnswerMink = (venueId, minkId, answer) => ({
   payload: { venueId, minkId, answer },
 });
 
-export const setAnswerMinkStatus = answerMinkStatus => ({
+export const setAnswerMinkStatus = (answerMinkStatus) => ({
   type: actionTypes.SET_ANSWER_MINK_STATUS,
   payload: { answerMinkStatus },
 });
@@ -145,22 +164,22 @@ export const setMyCorrectAnswer = (minkId, answer) => ({
   },
 });
 
-export const setSelectedTag = selectedTagId => ({
+export const setSelectedTag = (selectedTagId) => ({
   type: actionTypes.SET_SELECTED_TAG,
   payload: { selectedTagId },
 });
 
-export const rateTag = rating => ({
+export const rateTag = (rating) => ({
   type: actionTypes.RATE_TAG,
   payload: { rating },
 });
 
-export const showRateTagConfirmation = value => ({
+export const showRateTagConfirmation = (value) => ({
   type: actionTypes.SHOW_RATE_TAG_CONFIRMATION,
   payload: { rateTagConfirmation: value },
 });
 
-export const updateVenueRate = venue => ({
+export const updateVenueRate = (venue) => ({
   type: actionTypes.UPDATE_VENUE_RATE,
   payload: { venue },
 });
@@ -169,12 +188,12 @@ export const loadPosts = () => ({
   type: actionTypes.LOAD_POSTS,
 });
 
-export const setSelectedPost = selectedPostId => ({
+export const setSelectedPost = (selectedPostId) => ({
   type: actionTypes.SET_SELECTED_POST,
   payload: { selectedPostId },
 });
 
-export const setVenuePosts = posts => ({
+export const setVenuePosts = (posts) => ({
   type: actionTypes.SET_VENUE_POSTS,
   payload: { posts },
 });
@@ -202,12 +221,12 @@ export const downvotePost = () => ({
   payload: { vote: -1 },
 });
 
-export const showVotePostConfirmation = value => ({
+export const showVotePostConfirmation = (value) => ({
   type: actionTypes.SHOW_VOTE_POST_CONFIRMATION,
   payload: { votePostConfirmation: value },
 });
 
-export const setPrivateShareItemId = id => ({
+export const setPrivateShareItemId = (id) => ({
   type: actionTypes.SET_PRIVATE_SHARE_ITEM_ID,
   payload: { privateShareItemId: id },
 });
@@ -217,7 +236,7 @@ export const clearPrivateShareItemId = () => ({
   payload: { privateShareItemId: undefined },
 });
 
-export const setPrivateShareRecipientError = error => ({
+export const setPrivateShareRecipientError = (error) => ({
   type: actionTypes.SET_PRIVATE_SHARE_RECIPIENT_ERROR,
   payload: { privateShareRecipientError: error },
 });
@@ -233,22 +252,22 @@ export const SEND_STATUS = {
   sent: 'sent',
 };
 
-export const setPrivateShareSending = value => ({
+export const setPrivateShareSending = (value) => ({
   type: actionTypes.SET_PRIVATE_SHARE_SENDING,
   payload: { privateShareSending: value },
 });
 
-export const setNewMinkElected = newMinkElected => ({
+export const setNewMinkElected = (newMinkElected) => ({
   type: actionTypes.SET_NEW_MINK_ELECTED,
   payload: { newMinkElected },
 });
 
-export const createVenue = venue => ({
+export const createVenue = (venue) => ({
   type: actionTypes.CREATE_VENUE,
   payload: { venue },
 });
 
-export const setLoading = loading => ({
+export const setLoading = (loading) => ({
   type: actionTypes.SET_LOADING,
   payload: { loading },
 });

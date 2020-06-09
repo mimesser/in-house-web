@@ -3,8 +3,8 @@ import Router from 'next/router';
 
 import { waitTillReady } from '../../aggregate/saga';
 import api, { setAuthorization } from '../../../api';
-import { loadVenuesDataSuccess, setSelectedVenue } from '../actions';
-import { selectVenues } from '../selectors';
+import { loadVenuesDataSuccess, setSelectedVenue, loadPollsDataSuccess } from '../actions';
+import { selectVenues, selectPolls } from '../selectors';
 import { selectIndustriesMap, selectAggregate, loadAggregateDataSuccess } from '../../aggregate';
 
 import { turnDemoOn, turnDemoOff } from '../../demo';
@@ -24,6 +24,7 @@ export function* reloadVenues() {
 }
 
 function* fetchVenueList() {
+  console.log('@ fetchVenueList');
   const venues = yield select(selectVenues);
 
   if (venues) {
@@ -32,6 +33,33 @@ function* fetchVenueList() {
 
   yield waitTillReady();
   return yield reloadVenues();
+}
+
+function* fetchPollsList() {
+  const polls = yield select(selectPolls);
+
+  if (polls) {
+    return polls;
+  }
+
+  yield waitTillReady();
+  return yield reloadPolls();
+}
+
+export function* reloadPolls() {
+  console.log('# realod polls');
+  const { data } = yield call(api.get, 'polls');
+  const industries = yield select(selectIndustriesMap);
+
+  const normalized = data.map((v, i) => ({
+    ...v,
+    industry: industries[v.industryId],
+    isPoll: true,
+  }));
+
+  console.log(normalized);
+  yield put(loadPollsDataSuccess(normalized));
+  return normalized;
 }
 
 let alreadyInDemo = false;
@@ -72,11 +100,33 @@ export function* initVenuesPage({ payload: { idToSelect } }) {
   if (inDemo) {
     venueToSelect = DEMO_VENUE;
   } else {
-    venueToSelect = venues.find(v => v.id === +idToSelect);
+    venueToSelect = venues.find((v) => v.id === +idToSelect);
   }
   if (venueToSelect) {
     yield put(setSelectedVenue(venueToSelect));
   } else {
     Router.push('/houses', '/houses', { shallow: true });
+  }
+}
+
+export function* initPollsPage({ payload: { idToSelect } }) {
+  console.log('# initPollsPage saga');
+  if (cacheAggregate) {
+    yield put(loadAggregateDataSuccess(cacheAggregate));
+    setAuthorization(cacheAggregate.userId);
+  }
+  yield put(turnDemoOff());
+
+  const polls = yield fetchPollsList();
+  if (!idToSelect) {
+    return;
+  }
+
+  const venueToSelect = polls.find((v) => v.id === +idToSelect);
+
+  if (venueToSelect) {
+    yield put(setSelectedVenue(venueToSelect));
+  } else {
+    Router.push('/polls', '/polls', { shallow: true });
   }
 }

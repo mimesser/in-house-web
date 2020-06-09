@@ -5,7 +5,7 @@ import { withRouter } from 'next/router';
 
 import InsiderQuestionChallenge from '../InsiderChallenge';
 import { selectInsiderChallengeForm, selectSelectedVenue } from '../../../store/venues';
-import { Loader } from '../../atoms';
+import { Loader, Icon } from '../../atoms';
 import Banner from './Banner';
 import Navbar from './Navbar';
 import RateTab from './RateTab';
@@ -15,17 +15,35 @@ import AddMink from './AddMink';
 import AddPost from './AddPost';
 
 const tabMap = {
-  rate: RateTab,
+  poll: RateTab,
   post: PostTab,
-  mink: MinkTab,
 };
 
-const knownTabs = Object.keys(tabMap);
+const tabs = [
+  {
+    path: 'poll',
+    label: 'poll',
+    secured: true,
+  },
+  {
+    path: 'post',
+    label: 'post',
+    secured: true,
+  },
+];
 
-const Venue = ({ venue, router, challengeForm: challengeFormOpen }) => {
+const knownTabs = Object.keys(tabMap);
+const SocialLink = ({ href, icon }) => (
+  <span>
+    <a href={href} rel="noopener noreferrer" target="_blank">
+      <Icon icon={icon} size={1.5} />
+    </a>
+  </span>
+);
+const PollVenue = ({ venue, router, challengeForm: challengeFormOpen }) => {
   const venueType = venue && venue.isPoll ? 'polls' : 'houses';
   const {
-    query: { tab = 'rate' },
+    query: { tab = 'poll' },
     asPath,
   } = router;
 
@@ -48,11 +66,35 @@ const Venue = ({ venue, router, challengeForm: challengeFormOpen }) => {
   }
 
   const Tab = tabMap[tab] || RateTab;
+
+  const socialLinks = [
+    {
+      icon: 'facebook',
+      href: 'https://www.facebook.com/iH.movement/',
+    },
+    {
+      icon: 'twitter',
+      href: 'https://twitter.com/iH_movement',
+    },
+    {
+      icon: 'linkedin',
+      href: 'https://www.linkedin.com/company/in-house6',
+    },
+  ];
+
+  const shareLinks = (
+    <div>
+      {socialLinks.map((link) => (
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        <SocialLink {...link} key={link.icon} />
+      ))}
+    </div>
+  );
   return (
     <>
       <>
-        <Banner venue={venue} />
-        <Navbar id={venue.id} selected={tab} venueType={venueType} />
+        <Banner venue={venue} venueType={venueType} shareLinks={shareLinks} />
+        <Navbar id={venue.id} selected={tab} venueType={venueType} tabs={tabs} />
         <Tab venue={venue} venueType={venueType} />
       </>
       <InsiderQuestionChallenge />
@@ -65,4 +107,4 @@ const mapStateToProps = createStructuredSelector({
   challengeForm: selectInsiderChallengeForm,
 });
 
-export default withRouter(connect(mapStateToProps)(Venue));
+export default withRouter(connect(mapStateToProps)(PollVenue));

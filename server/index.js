@@ -29,44 +29,52 @@ app
       }
     });
 
-    router.get('/houses/:id', async (ctx) => {
-      const { req, res, params } = ctx;
-      await app.render(req, res, '/houses', { id: params.id });
-      ctx.respond = false;
-    });
+    for (const venue of ['houses', 'polls']) {
+      router.get(`/${venue}/:id`, async (ctx) => {
+        const { req, res, params } = ctx;
+        await app.render(req, res, `/${venue}`, { id: params.id });
+        ctx.respond = false;
+      });
+    }
 
-    router.get(`/houses/:id/:tab`, async (ctx) => {
-      const {
-        req,
-        res,
-        params: { id, tab },
-      } = ctx;
-      await app.render(req, res, '/houses', { id, tab });
-      ctx.respond = false;
-    });
-
-    router.get(`/houses/:id/:tab/:itemId`, async (ctx) => {
-      const {
-        req,
-        res,
-        query: { token },
-        params: { id, tab, itemId },
-      } = ctx;
-      await app.render(req, res, '/houses', { id, tab, itemId, token });
-      ctx.respond = false;
-    });
-
-    for (const tab of ['mink', 'post']) {
-      router.all(`/houses/:id/${tab}/new`, async (ctx) => {
+    for (const venue of ['houses', 'polls']) {
+      router.get(`/${venue}/:id/:tab`, async (ctx) => {
         const {
           req,
           res,
-          params: { id },
+          params: { id, tab },
         } = ctx;
-
-        ctx.redirect(`/houses/${id}/${tab}`);
-        ctx.status = 301;
+        await app.render(req, res, `/${venue}`, { id, tab });
+        ctx.respond = false;
       });
+    }
+    for (const venue of ['houses', 'polls']) {
+      router.get(`/${venue}/:id/:tab/:itemId`, async (ctx) => {
+        const {
+          req,
+          res,
+          query: { token },
+          params: { id, tab, itemId },
+        } = ctx;
+        await app.render(req, res, `/${venue}`, { id, tab, itemId, token });
+        ctx.respond = false;
+      });
+    }
+
+    for (const venue of ['houses', 'polls']) {
+      const tabs = venue === 'houses' ? ['mink', 'post'] : ['post'];
+      for (const tab of tabs) {
+        router.all(`/${venue}/:id/${tab}/new`, async (ctx) => {
+          const {
+            req,
+            res,
+            params: { id },
+          } = ctx;
+
+          ctx.redirect(`/${venue}/${id}/${tab}`);
+          ctx.status = 301;
+        });
+      }
     }
 
     router.get('(.*)', async (ctx) => {

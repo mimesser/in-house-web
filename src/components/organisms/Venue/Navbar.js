@@ -56,10 +56,10 @@ const Nav = styled.nav`
   z-index: 1; // otherwise box-shadow is hidden in rate tab
 `;
 
-const TabHeader = ({ id, tab: { path, label, secured, help }, active, custom, authorized }) => {
+const TabHeader = ({ id, tab: { path, label, secured, help }, active, custom, authorized, venueType = 'houses' }) => {
   if (!authorized && secured) {
     return (
-      <Link href={`/houses/${id}`} passHref>
+      <Link href={`/${venueType}/${id}`} passHref>
         <A>{label}</A>
       </Link>
     );
@@ -67,7 +67,7 @@ const TabHeader = ({ id, tab: { path, label, secured, help }, active, custom, au
 
   const link = (
     <HelpWrap>
-      <Link href={`/houses?id=${id}&tab=${path}`} as={`/houses/${id}/${path}`} passHref>
+      <Link href={`/${venueType}?id=${id}&tab=${path}`} as={`/${venueType}/${id}/${path}`} passHref>
         <A active={active} custom={custom}>
           {label}
         </A>
@@ -85,7 +85,7 @@ const TabHeader = ({ id, tab: { path, label, secured, help }, active, custom, au
   return link;
 };
 
-const tabs = [
+const defaultTabs = [
   {
     path: 'rate',
     label: 'rate',
@@ -103,20 +103,23 @@ const tabs = [
   },
 ];
 
-const Navbar = ({ id, selected, authorized, anyTabItemSelected }) => (
-  <Nav>
-    {tabs.map((t) => (
-      <TabHeader
-        id={id}
-        key={t.path}
-        tab={t}
-        custom={t.custom}
-        active={selected === t.path && !anyTabItemSelected}
-        authorized={authorized}
-      />
-    ))}
-  </Nav>
-);
+const Navbar = ({ id, selected, authorized, anyTabItemSelected, venueType = 'houses', tabs = defaultTabs }) => {
+  return (
+    <Nav>
+      {tabs.map((t) => (
+        <TabHeader
+          id={id}
+          key={t.path}
+          tab={t}
+          custom={t.custom}
+          active={selected === t.path && !anyTabItemSelected}
+          authorized={authorized}
+          venueType={venueType}
+        />
+      ))}
+    </Nav>
+  );
+};
 
 const mapState = createStructuredSelector({
   authorized: selectIsActiveInsider,

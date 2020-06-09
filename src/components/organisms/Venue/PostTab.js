@@ -66,7 +66,7 @@ const findPost = (id, posts) => {
   return post;
 };
 
-const PostTab = ({ venue: { id, posts }, loadPosts, setSelectedPost, selectedPost }) => {
+const PostTab = ({ venue: { id, posts }, loadPosts, setSelectedPost, selectedPost, venueType = 'houses' }) => {
   useEffect(() => {
     loadPosts();
   }, []);
@@ -95,11 +95,11 @@ const PostTab = ({ venue: { id, posts }, loadPosts, setSelectedPost, selectedPos
     [posts],
   );
   const getTitleForShare = useCallback((id) => findPost(id, posts).title, [posts]);
-
+  console.log({ venueType });
   return (
     <TabLayout>
       {posts ? renderPosts(posts, setSelectedPost, selectedPost) : <Loader big />}
-      <Link href={`/houses?id=${id}&tab=post&new`} as={`/houses/${id}/post/new`} passHref>
+      <Link href={`/${venueType}?id=${id}&tab=post&new`} as={`/${venueType}/${id}/post/new`} passHref>
         <Button icon="arrow-right">new</Button>
       </Link>
       <VotePost />
