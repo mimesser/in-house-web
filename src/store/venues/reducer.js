@@ -3,6 +3,8 @@ import { actionTypes as aggregateActions } from '../aggregate';
 
 // listing props just for documentation
 const initialState = {
+  polls: undefined,
+  selectedPoll: undefined,
   list: undefined,
   selectedVenue: undefined,
   insiderChallengeForm: undefined,
@@ -29,6 +31,8 @@ export function reducer(state = initialState, action) {
       return initialState;
     case actionTypes.LOAD_VENUES_DATA_SUCCESS:
       return { ...state, list: action.data };
+    case actionTypes.LOAD_POLLS_DATA_SUCCESS:
+      return { ...state, polls: action.data };
     case actionTypes.SET_SELECTED_VENUE: {
       const {
         payload: { venue: selectedVenue },
@@ -68,7 +72,7 @@ export function reducer(state = initialState, action) {
         payload: { minkId, answer },
       } = action;
       const minks = state.selectedVenue.minks.slice();
-      const index = minks.findIndex(m => m.id === minkId);
+      const index = minks.findIndex((m) => m.id === minkId);
       minks[index] = { ...minks[index], myCorrectAnswer: answer };
 
       return { ...state, selectedVenue: { ...state.selectedVenue, minks } };
@@ -81,7 +85,7 @@ export function reducer(state = initialState, action) {
         payload: { id },
       } = action;
 
-      const selectedVenue = state.list && state.list.find(v => v.id === id);
+      const selectedVenue = state.list && state.list.find((v) => v.id === id);
       return { ...state, selectedVenue };
     }
     case actionTypes.SHOW_RATE_TAG_CONFIRMATION: {
@@ -95,7 +99,7 @@ export function reducer(state = initialState, action) {
       // TODO: consider storing items as map for easier updates
 
       const list = state.list.slice();
-      const index = list.findIndex(v => v.id === venue.id);
+      const index = list.findIndex((v) => v.id === venue.id);
       list[index] = venue;
 
       const selectedVenue = state.selectedVenue && {

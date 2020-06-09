@@ -1,5 +1,7 @@
 import React, { useCallback } from 'react';
 
+import styled from 'styled-components';
+import { spacing } from '../../../style';
 import { Address, HelpTip, HouseNameLarge, Break } from '../../atoms';
 import { ScoreAndVoters } from '../Venue/ScoreAndVoters';
 import { VenueContainer, Main, Industry } from './style';
@@ -10,6 +12,11 @@ const helpTip = (
     <div>HOUSE (n): any business or organization</div>
   </>
 );
+
+const BoldBreak = styled(Break)`
+  min-width: 42px;
+  min-height: 6px;
+`;
 
 export const VenueCard = ({ venue, showVenue, withHelp }) => {
   const handleClick = useCallback(() => showVenue(venue), [venue]);
@@ -22,6 +29,22 @@ export const VenueCard = ({ venue, showVenue, withHelp }) => {
     venueInfo: { imageUrl, address, city, state, zipCode },
   } = venue;
 
+  const addressBlock = venue.isPoll ? (
+    <>
+      <BoldBreak />
+      <Address>{address}</Address>
+    </>
+  ) : (
+    <>
+      <Break />
+      <Address>
+        {address},
+        <br />
+        {city} {zipCode}
+      </Address>
+    </>
+  );
+
   const card = (
     // TODO: this should be a link
     <VenueContainer onClick={handleClick}>
@@ -30,12 +53,8 @@ export const VenueCard = ({ venue, showVenue, withHelp }) => {
         <Main imageUrl={imageUrl}>
           <Industry>{industry && industry.name}</Industry>
           <HouseNameLarge>{name}</HouseNameLarge>
-          <Break />
-          <Address>
-            {address},
-            <br />
-            {city} {zipCode}
-          </Address>
+
+          {addressBlock}
         </Main>
       </div>
       {/* TODO: bring back once design provided */}

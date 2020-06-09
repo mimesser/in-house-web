@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 import styled from 'styled-components';
 import { spacing } from '../../../style';
-import { Loader, ClearButton, Icon, Button, Card, H1, Portal } from '../../atoms';
+import { Loader, ClearButton, Icon, Button, Card, H2, Break } from '../../atoms';
 
 import {
   selectInsiderChallengeForm,
@@ -40,76 +40,36 @@ const BetaCard = styled(BetaLink)`
   }
 `;
 
-const SearchBoxIcon = ({ applyFilter, clear }) =>
-  applyFilter ? (
-    <ClearButton onClick={clear}>
-      <Icon icon="close" />
-    </ClearButton>
-  ) : (
-    <Icon icon="search" />
-  );
-
-const findVenue = (id, venues) => {
-  const venue = venues.find((t) => t.id === id);
-  if (!venue) {
-    throw new Error(`Can't find venue ${id}`);
-  }
-  return venue;
-};
+const PageHeader = styled.div`
+  margin: ${spacing.xl} 0 ${spacing.lg};
+  margin-bottom: ${spacing.xxl};
+`;
 
 const SearchPage = ({ venues, inDemo }) => {
-  const [filter, setFilter] = useState('');
-  const handleSearchChange = useCallback((e) => setFilter(e.currentTarget.value.toLowerCase()), []);
-  const clearSearch = useCallback(() => setFilter(''), []);
   const showVenue = useCallback((venue) => {
     const { id } = venue;
-    Router.push(`/houses?id=${id}`, `/houses/${id}`, { shallow: true });
+    Router.push(`/polls?id=${id}`, `/polls/${id}`, { shallow: true });
   }, []);
 
-  const renderSharePreview = useCallback(
-    (id) => {
-      const {
-        name,
-        venueInfo: { address, city, state, zipCode },
-      } = findVenue(id, venues);
-
-      return (
-        <Card>
-          <Main>
-            <ItemTitle>{name}</ItemTitle>
-            <ItemText>{address}</ItemText>
-            <ItemText>
-              {city}, {state}
-            </ItemText>
-            <ItemText>{zipCode}</ItemText>
-          </Main>
-        </Card>
-      );
-    },
-    [venues],
-  );
-
-  const getVenue = useCallback((id) => findVenue(id, venues), [venues]);
-
-  const getTitleForShare = useCallback((id) => findVenue(id, venues).name, [venues]);
   if (!venues) {
     return <Loader big />;
   }
 
-  const applyFilter = !!filter;
-  const venuesToShow = applyFilter ? venues.filter((v) => v.name.toLowerCase().includes(filter)) : venues;
+  const venuesToShow = venues;
   const nothingFound = venuesToShow.length === 0;
 
   return (
     <Layout>
       <Results>
-        <SearchBox
-          placeholder={inDemo ? 'my house' : 'find your org'}
-          value={filter}
-          icon={<SearchBoxIcon applyFilter={applyFilter} clear={clearSearch} />}
-          onChange={handleSearchChange}
-        />
-        {filter && nothingFound && <NoResultsSearchLabel>no results</NoResultsSearchLabel>}
+        <PageHeader>
+          <H2>essential worker polls</H2>
+          <Break />
+          <>
+            during the current state of the world, we have created this space to allow essential workers to connect and
+            share their realities on the ground so that thei leadership can hear them
+          </>
+        </PageHeader>
+        {nothingFound && <NoResultsSearchLabel>no polls</NoResultsSearchLabel>}
         {venuesToShow.map((v, i) => (
           <VenueCard key={v.id} venue={v} showVenue={showVenue} withHelp={i === 0} />
         ))}
@@ -117,7 +77,7 @@ const SearchPage = ({ venues, inDemo }) => {
           <section>
             {/* <Link href="/beta-list" passHref> */}
             <BetaCard icon="arrow-right" href="/beta-list">
-              beta-list my workplace
+              request your industry
             </BetaCard>
             {/* </Link> */}
           </section>
@@ -135,11 +95,11 @@ const SearchPage = ({ venues, inDemo }) => {
   );
 };
 
-const mapStateToProps = createStructuredSelector({
-  venues: selectVenues,
+const mapPollsStateToProps = createStructuredSelector({
+  venues: selectPolls,
   inDemo: selectInDemo,
-  venue: selectSelectedVenue,
+  venue: selectSelectedPoll,
   challengeForm: selectInsiderChallengeForm,
 });
 
-export const VenueList = connect(mapStateToProps)(SearchPage);
+export const PollList = connect(mapPollsStateToProps)(SearchPage);
