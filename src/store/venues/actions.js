@@ -1,6 +1,7 @@
 export const actionTypes = {
   INIT_POLLS_PAGE: 'INIT_POLLS_PAGE',
   LOAD_POLLS_DATA_SUCCESS: 'LOAD_POLLS_DATA_SUCCESS',
+  DISMISS_POLL_CHALLENGE_FORM: 'DISMISS_POLL_CHALLENGE_FORM',
   INIT_VENUES_PAGE: 'INIT_VENUES_PAGE',
   LOAD_VENUES_DATA_SUCCESS: 'LOAD_VENUES_DATA_SUCCESS',
   SET_SELECTED_VENUE: 'SET_SELECTED_VENUE',
@@ -93,6 +94,11 @@ export const setChallengeFormData = (payload) => ({
 export const dismissChallengeForm = (showMinks) => ({
   type: actionTypes.DISMISS_CHALLENGE_FORM,
   payload: { showMinks },
+});
+
+export const dismissPollChallengeForm = (showContactForm) => ({
+  type: actionTypes.DISMISS_POLL_CHALLENGE_FORM,
+  payload: { showContactForm },
 });
 
 export const loadRates = () => ({
