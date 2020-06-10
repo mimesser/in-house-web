@@ -32,7 +32,7 @@ function BetaList() {
           <Link href="/houses" passHref>
             <BackButton secondary>cancel</BackButton>
           </Link>
-          <Link href="/feedback?subjectIndex=1&redirect=/houses">
+          <Link href="/feedback?subjectIndex=2&redirect=/houses">
             <ActionButton icon="arrow-right">contact us</ActionButton>
           </Link>
         </Commands>
