@@ -8,8 +8,8 @@ import { postFeedback, clearFeedback } from '../../../store/feedback';
 
 const subjectOptions = [
   'get notified when live',
-  'beta trial your warehouse',
   'request new industry poll',
+  'beta trial your warehouse',
   'beta trial your hospital',
   'beta trial your supermarket',
   'beta trial something else',
