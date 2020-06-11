@@ -88,6 +88,10 @@ export const selectVotePostConfirmation = createSelector(
   selectSelectedVenue,
   (selectedVenue) => selectedVenue && selectedVenue.votePostConfirmation,
 );
+export const selectPostFlagError = createSelector(
+  selectSelectedVenue,
+  (selectedVenue) => selectedVenue && selectedVenue.message,
+);
 
 export const selectPrivateShareItemId = createSelector(
   selectVenueState,
