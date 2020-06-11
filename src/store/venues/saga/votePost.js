@@ -2,7 +2,7 @@ import { call, select, put, delay, fork } from 'redux-saga/effects';
 
 import api from '../../../api';
 import { selectIsActiveInsider, selectSelectedPost, selectSelectedVenue } from '../selectors';
-import { showVotePostConfirmation, setSelectedPost } from '../actions';
+import { showVotePostConfirmation, setSelectedPost, toggleFlagError } from '../actions';
 import { reloadVenuePosts } from './loadVenuePosts';
 import { showInsiderChallenge } from './showInsiderChallenge';
 import { CONFIRMATION_INTERVAL } from './consts';
@@ -27,6 +27,7 @@ export function* votePost({ payload: { vote } }) {
     yield fork(reloadVenuePosts, venue.id);
     yield delay(CONFIRMATION_INTERVAL);
   } finally {
+    yield put(toggleFlagError(''));
     yield put(setSelectedPost(undefined));
     yield put(showVotePostConfirmation(undefined));
   }

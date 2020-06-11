@@ -113,6 +113,9 @@ export function reducer(state = initialState, action) {
     case actionTypes.SET_VENUE_POSTS: {
       return setSelectedVenueProp(state, action, 'posts');
     }
+    case actionTypes.TOGGLE_FLAG_ERROR: {
+      return setSelectedVenueProp(state, action, 'message');
+    }
     case actionTypes.SET_SELECTED_POST: {
       return setSelectedVenueProp(state, action, 'selectedPostId');
     }

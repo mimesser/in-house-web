@@ -32,6 +32,7 @@ export const actionTypes = {
   VOTE_POST: 'VOTE_POST',
   TOGGLE_POST_FLAG: 'TOGGLE_POST_FLAG',
   TOGGLE_MINK_FLAG: 'TOGGLE_MINK_FLAG',
+  TOGGLE_FLAG_ERROR: 'TOGGLE_FLAG_ERROR',
   SHOW_VOTE_POST_CONFIRMATION: 'SHOW_VOTE_POST_CONFIRMATION',
   SET_PRIVATE_SHARE_ITEM_ID: 'SET_PRIVATE_SHARE_ITEM_ID',
   SET_PRIVATE_SHARE_RECIPIENT_ERROR: 'SET_PRIVATE_SHARE_RECIPIENT_ERROR',
@@ -213,6 +214,11 @@ export const upvotePost = () => ({
 
 export const togglePostFlag = () => ({
   type: actionTypes.TOGGLE_POST_FLAG,
+});
+
+export const toggleFlagError = (errorMessage) => ({
+  type: actionTypes.TOGGLE_FLAG_ERROR,
+  payload: { message: errorMessage },
 });
 
 export const toggleMinkFlag = () => ({

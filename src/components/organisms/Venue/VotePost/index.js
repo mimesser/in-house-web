@@ -11,6 +11,7 @@ import {
   selectSelectedVenue,
   selectVotePostConfirmation,
   setSelectedPost,
+  selectPostFlagError,
   togglePostFlag,
   upvotePost,
 } from '../../../../store/venues';
@@ -29,6 +30,7 @@ const VotePost = ({
   upvotePost,
   downvotePost,
   togglePostFlag,
+  errorMessage,
 }) => {
   const upvoted = myVote === 1;
   const downvoted = myVote === -1;
@@ -52,11 +54,12 @@ const VotePost = ({
         </HelpTip>
       </VoteRow>
       <FlagItem flagged={wasFlaggedByMe} toggleFlag={togglePostFlag} />
+      <p>{errorMessage}</p>
     </Layout>
   );
 };
 
-const ModalWrapper = props => {
+const ModalWrapper = (props) => {
   const { post, confirmation, setSelectedPost, venue } = props;
   const close = useCallback(() => setSelectedPost(undefined), []);
 
@@ -81,6 +84,7 @@ const mapState = createStructuredSelector({
   venue: selectSelectedVenue,
   post: selectSelectedPost,
   confirmation: selectVotePostConfirmation,
+  errorMessage: selectPostFlagError,
 });
 const mapDispatch = {
   setSelectedPost,
@@ -88,7 +92,4 @@ const mapDispatch = {
   downvotePost,
   togglePostFlag,
 };
-export default connect(
-  mapState,
-  mapDispatch,
-)(ModalWrapper);
+export default connect(mapState, mapDispatch)(ModalWrapper);
