@@ -124,6 +124,7 @@ const Form = ({ topMink, wrongAnswer, answerTopMink, inDemo }) => {
           spellcheck="false"
           value={answer}
           onChange={handleChange}
+          type="password"
           ref={answerRef}
           icon={highlightError ? 'winky-circle-sad' : undefined}
         />
