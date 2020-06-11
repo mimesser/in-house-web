@@ -8,13 +8,13 @@ import { Step2 } from './Step2';
 import { Step3 } from './Step3';
 import { Step4 } from './Step4';
 
-const AddPost = ({ venue, createPost }) => {
+const AddPost = ({ venue, createPost, venueType = 'houses' }) => {
   const [step, setStep] = useState(1);
   const [title, setTitle] = useState('');
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const edit = useCallback(() => setStep(1), [setStep]);
-  const setNormalizedTitle = useCallback(t => setTitle(t.toLowerCase()), [setTitle]);
+  const setNormalizedTitle = useCallback((t) => setTitle(t.toLowerCase()), [setTitle]);
 
   return (
     <>
@@ -38,7 +38,7 @@ const AddPost = ({ venue, createPost }) => {
           venue={venue}
           post={() => {
             setLoading(true);
-            createPost(venue.id, title, message);
+            createPost(venue.id, title, message, venueType);
           }}
         />
       )}
@@ -53,7 +53,4 @@ const mapDispatch = {
   createPost,
 };
 
-export default connect(
-  mapState,
-  mapDispatch,
-)(AddPost);
+export default connect(mapState, mapDispatch)(AddPost);

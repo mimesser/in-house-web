@@ -95,12 +95,8 @@ const PollVenue = ({ venue, router, challengeForm: challengeFormOpen }) => {
     return <Loader big />;
   }
 
-  if (asPath.endsWith('mink/new') && venue && !venue.isPoll) {
-    return <AddMink />;
-  }
-
   if (asPath.endsWith('post/new')) {
-    return <AddPost />;
+    return <AddPost venueType={venueType} />;
   }
 
   const Tab = tabMap[tab] || RateTab;
