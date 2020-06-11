@@ -157,8 +157,10 @@ const Landing = () => {
           </div>
         </Links>
         <VersionFooter>
-          {version}
-          {process.env.REACT_APP_GIT_SHA}
+          <p>
+            v{version}
+            {process.env.REACT_APP_GIT_SHA}
+          </p>
         </VersionFooter>
       </Main>
     </Page>
