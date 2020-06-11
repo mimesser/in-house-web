@@ -1,7 +1,7 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
-
+import Router from 'next/router';
 import { Button, Brand, TransparentLinkStyle, Icon } from '../../atoms';
 import { Modal } from '../Modal';
 import { fontSize, font, palette, spacing, breakpoints, deskPadRem, onDesktop } from '../../../style';
@@ -95,6 +95,17 @@ export const HowItWorks = () => {
   const open = useCallback(() => setShow(true), []);
   const close = useCallback(() => setShow(false), []);
 
+  useEffect(() => {
+    const handleRouteChange = (url) => {
+      console.log('App is changing to: ', url);
+      setShow(false);
+    };
+
+    Router.events.on('routeChangeStart', handleRouteChange);
+    return () => {
+      Router.events.off('routeChangeStart', handleRouteChange);
+    };
+  }, []);
   return (
     <>
       <OpenLink icon="arrow-right" onClick={open}>
