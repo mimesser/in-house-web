@@ -6,7 +6,7 @@ import { Page, HowItWorks } from '../components/organisms';
 import { Button, H1, H2, Break, Icon, TransparentLinkStyle } from '../components/atoms';
 import { spacing, palette, breakpoints } from '../style';
 import BetaChallange, { BetaLink, BetaDesc } from '../components/organisms/BetaChallange';
-
+import { version } from '../../package.json';
 const Main = styled.div`
   position: relative;
   color: ${palette.offWhite};
@@ -46,6 +46,10 @@ const Main = styled.div`
   }
 `;
 
+const VersionFooter = styled.footer`
+  text-align: right;
+  color: ${palette.lightGray};
+`;
 const Links = styled.div`
   margin-top: auto;
   display: flex;
@@ -152,6 +156,10 @@ const Landing = () => {
             ))}
           </div>
         </Links>
+        <VersionFooter>
+          {version}
+          {process.env.REACT_APP_GIT_SHA}
+        </VersionFooter>
       </Main>
     </Page>
   );
