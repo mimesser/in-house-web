@@ -4,6 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { withRouter } from 'next/router';
 
 import InsiderQuestionChallenge from '../InsiderChallenge';
+import WelcomePopup from './WelcomePopup';
 import { selectInsiderChallengeForm, selectSelectedVenue } from '../../../store/venues';
 import { Loader } from '../../atoms';
 import Banner from './Banner';
@@ -56,6 +57,7 @@ const Venue = ({ venue, router, challengeForm: challengeFormOpen }) => {
         <Tab venue={venue} venueType={venueType} />
       </>
       <InsiderQuestionChallenge />
+      {venue && venue.showWelcome && <WelcomePopup />}
     </>
   );
 };
