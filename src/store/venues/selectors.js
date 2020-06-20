@@ -24,6 +24,11 @@ export const selectInsiderChallengeForm = createSelector(
   ({ insiderChallengeForm }) => insiderChallengeForm,
 );
 
+export const selectSkipWelcome = createSelector(
+  selectSelectedVenue,
+  (selectedVenue) => (selectedVenue && selectedVenue.skipWelcome) || false,
+);
+
 export const selectIsActiveInsider = createSelector(
   selectInsiderVenueIds,
   selectSelectedVenue,

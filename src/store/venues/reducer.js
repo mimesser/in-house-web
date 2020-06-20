@@ -43,6 +43,16 @@ export function reducer(state = initialState, action) {
       const { payload } = action;
       return { ...state, insiderChallengeForm: payload };
     }
+    case actionTypes.DISMISS_WELCOME_FORM: {
+      const {
+        payload: { skipWelcome },
+      } = action;
+      return { ...state, selectedVenue: { ...state.selectedVenue, skipWelcome } };
+    }
+    case actionTypes.SHOW_WELCOME_FORM: {
+      const { showWelcome } = action.payload;
+      return { ...state, selectedVenue: { ...state.selectedVenue, showWelcome } };
+    }
     case actionTypes.SET_VENUE_TOP_MINK: {
       return setSelectedVenueProp(state, action, 'topMink');
     }

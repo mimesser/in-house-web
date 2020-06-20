@@ -6,6 +6,8 @@ export const actionTypes = {
   LOAD_VENUES_DATA_SUCCESS: 'LOAD_VENUES_DATA_SUCCESS',
   SET_SELECTED_VENUE: 'SET_SELECTED_VENUE',
   SET_VENUE_TOP_MINK: 'SET_VENUE_TOP_MINK',
+  SHOW_WELCOME_FORM: 'SHOW_WELCOME_FORM',
+  DISMISS_WELCOME_FORM: 'DISMISS_WELCOME_FORM',
   ANSWER_TOP_MINK: 'ANSWER_TOP_MINK',
   SET_CHALLENGE_FORM_DATA: 'SET_CHALLENGE_FORM_DATA',
   DISMISS_CHALLENGE_FORM: 'DISMISS_CHALLENGE_FORM',
@@ -56,6 +58,16 @@ export const initVenuesPage = (idToSelect) => ({
 export const initPollsPage = (idToSelect) => ({
   type: actionTypes.INIT_POLLS_PAGE,
   payload: { idToSelect },
+});
+
+export const dismissWelcomeForm = (skipWelcome) => ({
+  type: actionTypes.DISMISS_WELCOME_FORM,
+  payload: { skipWelcome },
+});
+
+export const showWelcomeForm = () => ({
+  type: actionTypes.SHOW_WELCOME_FORM,
+  payload: { showWelcome: true },
 });
 
 export const loadPollsDataSuccess = (data) => {

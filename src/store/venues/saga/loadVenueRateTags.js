@@ -1,9 +1,9 @@
 import { call, put, select } from 'redux-saga/effects';
 
 import api, { isForbidden } from '../../../api';
-import { setVenueRates } from '../actions';
+import { setVenueRates, showWelcomeForm } from '../actions';
 import { handleForbiddenResponse } from './handleForbiddenResponse';
-import { selectIsActiveInsider, selectSelectedVenue } from '../selectors';
+import { selectIsActiveInsider, selectSelectedVenue, selectSkipWelcome } from '../selectors';
 
 export function* reloadVenueRateTags(id) {
   try {

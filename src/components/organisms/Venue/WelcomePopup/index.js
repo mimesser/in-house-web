@@ -5,6 +5,7 @@ import { createStructuredSelector } from 'reselect';
 import { Button, HelpTip, H1, Checkbox, ClearButton } from '../../../atoms';
 import { spacing, appBackground, calcRem, palette } from '../../../../style';
 import { Modal } from '../../Modal';
+import { dismissWelcomeForm, selectSkipWelcome } from '../../../../store/venues';
 
 const Message = styled(H1)`
   margin-top: ${spacing.xxxl};
@@ -36,29 +37,47 @@ export const OkButton = styled(Button).attrs(() => ({
   margin-bottom: 100px;
   transition: all 0.3s linear;
 `;
-export const WelcomePopup = () => {
-  const [accepted, setAccepted] = useState(false);
-  const handleChange = () => setAccepted(!accepted);
+export const WelcomePopup = ({ skipWelcome, dismissWelcomeForm }) => {
+  const [dontShow, setDontShow] = useState(skipWelcome);
+  const handleChange = () => setDontShow(!dontShow);
+  const handleOk = () => {
+    console.log(`@ handle welcom ok button -> ${dismissWelcomeForm}`);
+    setShow(false);
+    dismissWelcomeForm(dontShow);
+  };
+  const [show, setShow] = useState(!skipWelcome);
   return (
-    <Modal canClose={false} canDismiss={false} inverse>
-      <p>IN-HOUSE</p>
-      <Heading>welcome insider</Heading>
-      <HelpTip tip="don’t be a jerk">
-        <HelpWrap>
-          <p>
-            after 10% of the insiders have rated this biz/org we will notify & invite your ownership to hear your team’s
-            consensus
-          </p>
+    <>
+      {show && (
+        <Modal canClose={false} canDismiss={false} inverse>
+          <p>IN-HOUSE</p>
+          <Heading>welcome insider</Heading>
+          <HelpTip tip="don’t be a jerk">
+            <HelpWrap>
+              <p>
+                after 10% of the insiders have rated this biz/org we will notify & invite your ownership to hear your
+                team’s consensus
+              </p>
 
-          <HelpWrap>
-            <StyledCheckbox onChange={handleChange} checked={accepted} classname="welcomeCheckbox">
-              don't show me this again
-            </StyledCheckbox>
-          </HelpWrap>
-        </HelpWrap>
-      </HelpTip>
+              <HelpWrap>
+                <StyledCheckbox onChange={handleChange} checked={dontShow} classname="welcomeCheckbox">
+                  don't show me this again
+                </StyledCheckbox>
+              </HelpWrap>
+            </HelpWrap>
+          </HelpTip>
 
-      <OkButton>ok</OkButton>
-    </Modal>
+          <OkButton onClick={handleOk}>ok</OkButton>
+        </Modal>
+      )}
+    </>
   );
 };
+const mapState = createStructuredSelector({
+  skipWelcome: selectSkipWelcome,
+});
+
+const mapDispatch = {
+  dismissWelcomeForm,
+};
+export default connect(mapState, mapDispatch)(WelcomePopup);
