@@ -62,7 +62,6 @@ const VoteMink = ({
   downvoteMink,
   toggleMinkFlag,
 }) => {
-  console.log(`# vote mink: ${myCorrectAnswer} -> ${answer}`);
   const [answer, setAnswer] = useState(myCorrectAnswer || '');
   const [answerAttemptMade, setAnswerAttemptMade] = useState(false);
   const tryAnswer = useCallback((e) => {

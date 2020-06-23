@@ -39,7 +39,7 @@ export function* voteMink({ payload: { vote } }) {
 
   try {
     const answerStatus = yield select(selectAnswerMinkStatus);
-    if (typeof answerStatus.isAnswerCorrect !== 'boolean') {
+    if (!answerStatus || typeof answerStatus.isAnswerCorrect !== 'boolean' || !!answerStatus.isAnswerCorrect) {
       const {
         data: { isAnswerCorrect },
       } = yield call(api.post, `venues/${venue.id}/mink/${mink.id}/answer`, { answer: 'null' });
