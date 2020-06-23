@@ -41,7 +41,7 @@ const renderInputIcon = (answerStatus, previouslyAnsweredCorrectly) =>
     <Icon icon="winky" color="primaryLight" size={1.5} />
   ) : null;
 
-const renderStatusIcon = answerStatus => {
+const renderStatusIcon = (answerStatus) => {
   if (!answerStatus) {
     return null;
   }
@@ -62,9 +62,10 @@ const VoteMink = ({
   downvoteMink,
   toggleMinkFlag,
 }) => {
+  console.log(`# vote mink: ${myCorrectAnswer} -> ${answer}`);
   const [answer, setAnswer] = useState(myCorrectAnswer || '');
   const [answerAttemptMade, setAnswerAttemptMade] = useState(false);
-  const tryAnswer = useCallback(e => {
+  const tryAnswer = useCallback((e) => {
     const value = normalizeAnswer(e.currentTarget.value);
     setAnswer(value);
     tryAnswerMink(venueId, minkId, value);
@@ -76,7 +77,8 @@ const VoteMink = ({
     setAnswerAttemptMade(true);
   }, [answerStatus, answerAttemptMade]);
 
-  const canVote = !!myCorrectAnswer || answerAttemptMade || typeof myVote === 'number';
+  // TODO check if this is needed !!myCorrectAnswer || answerAttemptMade || typeof myVote === 'number';
+  const canVote = true;
   const previouslyAnsweredCorrectly = !!myCorrectAnswer;
   const upvoted = myVote === 1;
   const downvoted = myVote === -1;
@@ -114,7 +116,7 @@ const VoteMink = ({
   );
 };
 
-const ModalWrapper = props => {
+const ModalWrapper = (props) => {
   const { mink, confirmation, setSelectedMink, venue } = props;
   const close = useCallback(() => {
     setSelectedMink(undefined);
@@ -151,7 +153,4 @@ const mapDispatch = {
   tryAnswerMink,
   toggleMinkFlag,
 };
-export default connect(
-  mapState,
-  mapDispatch,
-)(ModalWrapper);
+export default connect(mapState, mapDispatch)(ModalWrapper);

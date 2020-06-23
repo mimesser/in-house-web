@@ -1,11 +1,17 @@
 import { call, select, put, delay, fork, all } from 'redux-saga/effects';
 
 import api from '../../../api';
-import { selectSelectedMink, selectSelectedVenue, selectSelectedVenueTopMinkId } from '../selectors';
-import { showVoteMinkConfirmation, setSelectedMink, setNewMinkElected } from '../actions';
+import {
+  selectSelectedMink,
+  selectSelectedVenue,
+  selectSelectedVenueTopMinkId,
+  selectAnswerMinkStatus,
+} from '../selectors';
+import { showVoteMinkConfirmation, setSelectedMink, setNewMinkElected, tryAnswerMink } from '../actions';
 import { reloadVenueMinks } from './loadVenueMinks';
 import { reloadInsiderVenueIds } from './reloadInsiderVenueIds';
 import { CONFIRMATION_INTERVAL } from './consts';
+import { watchMinkAnswerAttempts } from './watchMinkAnswerAttempts';
 
 function* reloadMinksAndCheckIfNewElected(venue) {
   const startLoading = Date.now();
@@ -30,6 +36,17 @@ function* reloadMinksAndCheckIfNewElected(venue) {
 export function* voteMink({ payload: { vote } }) {
   const venue = yield select(selectSelectedVenue);
   const mink = yield select(selectSelectedMink);
+
+  try {
+    const answerStatus = yield select(selectAnswerMinkStatus);
+    if (typeof answerStatus.isAnswerCorrect !== 'boolean') {
+      const {
+        data: { isAnswerCorrect },
+      } = yield call(api.post, `venues/${venue.id}/mink/${mink.id}/answer`, { answer: 'null' });
+    }
+  } catch (error) {
+    console.log(error);
+  }
 
   const { data } = yield call(api.post, `venues/${venue.id}/mink/${mink.id}/rate`, { vote });
 
