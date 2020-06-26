@@ -12,9 +12,12 @@ export function* reloadVenuePosts(id) {
       data: { feedback },
     } = yield call(api.get, `/venues/${id}/feedback?OrderBy=VoteCount`);
     const posts = feedback || [];
+    const {
+      venueInfo: { imageUrl },
+    } = yield select(selectSelectedVenue);
     // TODO remove default image mapping
     posts.forEach((post) => {
-      post.imageURL = post.imageURL || 'https://tanzolymp.com/images/default-non-user-no-photo-1.jpg';
+      post.imageURL = post.imageURL || imageUrl; //'https://tanzolymp.com/images/default-non-user-no-photo-1.jpg';
     });
     yield put(setVenuePosts(posts));
 
