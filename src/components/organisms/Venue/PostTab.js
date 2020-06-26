@@ -24,7 +24,8 @@ const PostImage = styled.div.attrs(({ imageUrl }) => imageUrl && { style: { back
   margin-top: auto;
   float: right;
   background-repeat: no-repeat;
-  background-size: 48px 48px;
+  background-size: cover;
+  background-position: center;
 `;
 
 const PostText = styled(ItemText)`
