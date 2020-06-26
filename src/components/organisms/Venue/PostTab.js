@@ -16,7 +16,26 @@ import { Votes } from './Votes';
 
 const PostCard = styled(Card)``;
 
-const Post = ({ post: { id, created, title, text, voteCount, voteRating, myVote }, setSelectedPost, withHelp }) => {
+const PostImage = styled.div.attrs(({ imageUrl }) => imageUrl && { style: { backgroundImage: `url(${imageUrl})` } })`
+  min-height: 48px;
+  max-width: 48px;
+  min-width: 48px;
+  margin-left: auto;
+  margin-top: auto;
+  float: right;
+  background-repeat: no-repeat;
+  background-size: 48px 48px;
+`;
+
+const PostText = styled(ItemText)`
+  margin-right: 39px;
+`;
+
+const Post = ({
+  post: { id, created, title, text, voteCount, voteRating, myVote, imageURL },
+  setSelectedPost,
+  withHelp,
+}) => {
   const open = useCallback(() => setSelectedPost(id), [id]);
 
   const card = (
@@ -32,7 +51,10 @@ const Post = ({ post: { id, created, title, text, voteCount, voteRating, myVote 
           </div>
         </Main>
       </div>
-      <ItemText>{text}</ItemText>
+      <div>
+        <PostText>{text}</PostText>
+        <PostImage imageUrl={imageURL} alt="post image" />
+      </div>
       <PrivateShareButton id={id} />
     </PostCard>
   );
