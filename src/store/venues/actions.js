@@ -60,9 +60,8 @@ export const initPollsPage = (idToSelect) => ({
   payload: { idToSelect },
 });
 
-export const dismissWelcomeForm = (skipWelcome) => ({
+export const dismissWelcomeForm = () => ({
   type: actionTypes.DISMISS_WELCOME_FORM,
-  payload: { skipWelcome },
 });
 
 export const showWelcomeForm = () => ({

@@ -44,10 +44,7 @@ export function reducer(state = initialState, action) {
       return { ...state, insiderChallengeForm: payload };
     }
     case actionTypes.DISMISS_WELCOME_FORM: {
-      const {
-        payload: { skipWelcome },
-      } = action;
-      return { ...state, selectedVenue: { ...state.selectedVenue, skipWelcome } };
+      return { ...state, selectedVenue: { ...state.selectedVenue } };
     }
     case actionTypes.SHOW_WELCOME_FORM: {
       const { showWelcome } = action.payload;

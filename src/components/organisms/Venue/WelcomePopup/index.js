@@ -1,80 +1,117 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { Button, HelpTip, H1, Checkbox, ClearButton } from '../../../atoms';
+import { Button, HelpTip, H3, H1, H2, Checkbox, ClearButton, Card } from '../../../atoms';
+import { Dial, PokeButton } from '../../../molecules';
 import { spacing, appBackground, calcRem, palette } from '../../../../style';
 import { Modal } from '../../Modal';
-import { dismissWelcomeForm, selectSkipWelcome } from '../../../../store/venues';
+import { dismissWelcomeForm, selectSkipWelcome, selectSelectedVenue } from '../../../../store/venues';
+import { DrawerMenu } from '../../DrawerMenu';
+import { Container } from '../../../organisms/Modal/style';
+import PrivateShare from '../PrivateShare';
+import PrivateShareButton from '../PrivateShareButton';
+import { Main, ItemText, ItemTitle } from '../tabStyle';
 
-const Message = styled(H1)`
+const LightMessage = styled.p`
+  white-space: normal;
+  margin-left: ${spacing.xl};
+  margin-right: ${spacing.xl};
   margin-top: ${spacing.xxxl};
+  color: ${palette.mediumGray};
+  font-size: 16px;
 `;
-const Heading = styled(H1)`
+
+const GreyMessage = styled(LightMessage)`
+  color: ${palette.darkGray};
+`;
+
+const Heading = styled(H2)`
   position: relative;
-  margin-top: 89px;
-  color: white;
+  margin-top: 100px;
+
+  margin-left: ${spacing.xl};
+  color: ${palette.mediumGray};
 `;
 const HelpWrap = styled.div`
   margin-top: ${spacing.xxxl};
 `;
 
-const StyledCheckbox = styled(Checkbox)`
-  margin-top: 100px;
-  span,
-  div {
-    margin: auto;
+const PrivateShareButtonLayout = styled.div`
+  position: relative;
+
+  margin-right: ${spacing.xxxl};
+  > ${PokeButton} {
+    color: ${palette.mediumGray};
+    position: absolute;
+    top: -${spacing.md};
+    right: -${spacing.sm};
   }
 `;
-export const OkButton = styled(Button).attrs(() => ({
-  type: 'submit',
-  outline: true,
-  icon: 'arrow-right',
-  wide: true,
-}))`
-  height: 50px;
-  margin-top: auto;
-  margin-bottom: 100px;
-  transition: all 0.3s linear;
-`;
-export const WelcomePopup = ({ skipWelcome, dismissWelcomeForm }) => {
+
+export const WelcomePopup = ({ skipWelcome, dismissWelcomeForm, venue }) => {
   const [dontShow, setDontShow] = useState(skipWelcome);
   const handleChange = () => setDontShow(!dontShow);
   const handleOk = () => {
-    console.log(`@ handle welcom ok button -> ${dismissWelcomeForm}`);
-    setShow(false);
-    dismissWelcomeForm(dontShow);
+    setOpened(false);
+    dismissWelcomeForm();
   };
   const [show, setShow] = useState(!skipWelcome);
+  const [opened, setOpened] = useState(!skipWelcome);
+
+  const renderVenueSharePreview = useCallback(
+    (id) => {
+      const {
+        name,
+        venueInfo: { address, city, state, zipCode },
+      } = venue;
+
+      return (
+        <Card>
+          <Main>
+            <ItemTitle>{name}</ItemTitle>
+            <ItemText>{address}</ItemText>
+            <ItemText>
+              {city}, {state}
+            </ItemText>
+            <ItemText>{zipCode}</ItemText>
+          </Main>
+        </Card>
+      );
+    },
+    [venue],
+  );
+
+  const getVenueTitleForShare = useCallback((id) => venue.name, [venue]);
   return (
     <>
+      <PrivateShare
+        type="venue"
+        renderItem={renderVenueSharePreview}
+        getItemTitle={getVenueTitleForShare}
+        getVenue={venue}
+      />
       {show && (
-        <Modal canClose={false} canDismiss={false} inverse>
-          <p>IN-HOUSE</p>
-          <Heading>welcome insider</Heading>
+        <DrawerMenu isOpen={opened} closeMenu={() => handleOk()}>
+          <Heading>launch this house</Heading>
+          <PrivateShareButtonLayout>
+            <PrivateShareButton />
+          </PrivateShareButtonLayout>
+
           <HelpTip tip="don’t be a jerk">
             <HelpWrap>
-              <p>
-                after 10% of the insiders have rated this biz/org we will notify & invite your ownership to hear your
-                team’s consensus
-              </p>
-
-              <HelpWrap>
-                <StyledCheckbox onChange={handleChange} checked={dontShow} classname="welcomeCheckbox">
-                  don't show me this again
-                </StyledCheckbox>
-              </HelpWrap>
+              <LightMessage>your boss will be notified when 15% of this team begins speaking</LightMessage>
+              <GreyMessage>(speak as a team - remain untraceable)</GreyMessage>
             </HelpWrap>
           </HelpTip>
-
-          <OkButton onClick={handleOk}>ok</OkButton>
-        </Modal>
+        </DrawerMenu>
       )}
     </>
   );
 };
 const mapState = createStructuredSelector({
   skipWelcome: selectSkipWelcome,
+  venue: selectSelectedVenue,
 });
 
 const mapDispatch = {
