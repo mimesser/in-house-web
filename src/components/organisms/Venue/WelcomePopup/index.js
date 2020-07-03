@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Button, HelpTip, H3, H1, H2, Checkbox, ClearButton, Card } from '../../../atoms';
-import { Dial, PokeButton } from '../../../molecules';
+import { PokeButton } from '../../../molecules';
 import { spacing, appBackground, calcRem, palette } from '../../../../style';
 import { Modal } from '../../Modal';
 import { dismissWelcomeForm, selectSkipWelcome, selectSelectedVenue } from '../../../../store/venues';
