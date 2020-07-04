@@ -15,8 +15,8 @@ const SliderContainer = styled.div`
   background-color: ${theme.colors.lightGray};
   user-select: none;
   box-sizing: border-box;
-  width: 323px;
-  height: 8px;
+  width: 100%;
+  height: 100%;
 `;
 
 const SliderKnob = styled.div`
@@ -136,6 +136,9 @@ const BaseSlider = ({ disabled, x, min, max, step, onChange, onSlideStart, onSli
 
   function handleClick(e) {
     if (disabled) return;
+
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
 
     const clientPos = getClientPosition(e);
     const rect = container.current.getBoundingClientRect();
