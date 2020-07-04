@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import isNumber from 'lodash/isNumber';
 
 import { CircleSlider, NumberLarge, NumberSmall, Icon, Slider, SlidingValue } from '../../atoms';
@@ -28,6 +28,7 @@ const Title = styled.div`
   color: ${({ color }) => color};
   ${font.bold};
   font-size: ${fontSize.md};
+  z-index: 10;
 `;
 
 const Wrapper = styled.div`
@@ -35,6 +36,15 @@ const Wrapper = styled.div`
   width: 376px;
   height: 97px;
   border-bottom: 1px solid #e0e0e0;
+`;
+
+const TouchHelper = styled.div`
+  position: absolute
+  width: 100%;
+  height: 100vh;
+  border-bottom: 1px solid #e0e0e0;
+  z-index: -10;
+  margin-top: -50vh;
 `;
 
 export const Votes = styled(({ count, iconSize = 1, ...rest }) => (
@@ -64,21 +74,63 @@ export const Votes = styled(({ count, iconSize = 1, ...rest }) => (
 
 const SlidingWrapper = styled.div`
   width: 70px;
+  higth: 54px;
   margin-top: -2em;
   margin-left: auto;
+  z-index: 10;
+`;
+
+const Expand = keyframes`
+  0% {
+
+    height: 8px;
+    width: 322px;
+    margin-left: 24px;
+    opacity: 1;
+  }
+  50% {
+    margin-top: -50px;
+    height: 40%;
+  }
+  100% {
+    margin: 0px;
+    margin-top: -65px;
+    height: 100%;
+    width: 100%;
+    opacity: 0.5;
+    margin-left: 0px;
+  }
+`;
+
+const Colapse = keyframes`
+  0% {
+    margin-top: -97px;
+    height: 100%;
+    width: 100%;
+    margin-left: 0px;
+    opacity: 0.5;
+  }
+  50% {
+      height: 40%;
+    }
+  }
+  100% {
+    margin-top: -50px;
+    height: 8px;
+    width: 322px;
+    margin-left: 24px;
+    opacity: 1;
+  }
 `;
 
 const SliderWrapper = styled.div`
   position: relative;
   width: 322px;
   height: 8px;
-  top: 65px;
   margin-left: 24px;
-
-  ${Slider} {
-    height: 100%;
-    margin: 0;
-  }
+  animation: ${({ expanded }) => (expanded === true ? Expand : Colapse)} linear ${({ duration }) => `${duration}s`};
+  background: ${({ expanded }) => (expanded === true ? theme.colors.darkGray : theme.colors.lightGray)}}
+  animation-fill-mode: forwards;
 `;
 
 export const Indicator = styled(({ count, iconSize = 0.75, ...rest }) => (
@@ -130,23 +182,29 @@ const BaseRateSlider = ({
   }, [initialValue]);
 
   return (
-    <Wrapper onClick={() => setExpanded(!isExpanded)}>
-      <SliderWrapper>
-        <Slider onChange={setValue} x={initialValue} disabled={readonly || !isExpanded}>
-          {userRate && <Indicator percentage={userRate * 10} />}
-        </Slider>
-      </SliderWrapper>
-
-      <Title>{title}</Title>
-      <Votes count={voteCount} />
-      {value && (
+    <>
+      <Wrapper
+        onClick={() => {
+          setExpanded(!isExpanded);
+        }}
+      >
+        <Title>{title}</Title>
+        <Votes count={voteCount} />
         <SlidingWrapper>
-          <SlidingValue fontSize={fontSize.lg} value={`${Math.floor(value * 10)}`}>
-            <Dot size={140} padd={padd} color={valueColor} />
-          </SlidingValue>
+          {value && (
+            <SlidingValue fontSize={fontSize.lg} value={`${Math.floor(value * 10)}`}>
+              <Dot size={140} padd={padd} color={valueColor} />
+            </SlidingValue>
+          )}
         </SlidingWrapper>
-      )}
-    </Wrapper>
+        <SliderWrapper expanded={isExpanded} duration={0.3}>
+          <Slider onChange={setValue} x={initialValue} disabled={readonly || !isExpanded}>
+            {userRate && !isExpanded && <Indicator percentage={userRate * 10} />}
+          </Slider>
+        </SliderWrapper>
+        {isExpanded && <TouchHelper />}
+      </Wrapper>
+    </>
   );
 };
 
