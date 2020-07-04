@@ -7,6 +7,7 @@ import SlidingCharacter from './Character';
 import Text from './Text';
 
 const Wrapper = styled.div`
+  position: relative;
   display: flex;
   color: ${({ color }) => color};
   font-size: ${({ fontSize }) => fontSize};
@@ -20,8 +21,8 @@ const Wrapper = styled.div`
 
 const defaultProps = {
   background: palette.transparent,
-  characterSet: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.'],
-  characterWidth: '2em',
+  characterSet: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
+  characterWidth: '1em',
   fontSize: '2em',
   minLength: 2,
   padDirection: 'left',
@@ -53,8 +54,8 @@ export const SlidingValue = ({
   step = defaultProps.step,
   textColor = defaultProps.textColor,
   value = defaultProps.value,
+  ...props
 }) => {
-  console.log('@ Sliding Value');
   const initialValue = Array(value.length).fill(characterSet[0]).join('');
   const [prevValue, setPrevValue] = useState(initialValue);
   const [currValue, setCurrValue] = useState(initialValue);
@@ -120,7 +121,6 @@ export const SlidingValue = ({
   return (
     <Wrapper color={textColor} fontSize={fontSize}>
       {prevChars.map((v, idx) => {
-        console.log('###### VVV = ', v);
         return (
           <SlidingCharacter
             key={`sliding-${idx}`}
@@ -133,6 +133,8 @@ export const SlidingValue = ({
           />
         );
       })}
+
+      {props.children}
     </Wrapper>
   );
 };

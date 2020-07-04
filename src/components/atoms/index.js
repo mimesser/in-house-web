@@ -17,3 +17,5 @@ export { Progress } from './Progress';
 export { Break } from './Break';
 export { Portal } from './Portal';
 export { Brand } from './Brand';
+export { Slider } from './Slider';
+export { default as SlidingValue } from './SlidingValue';

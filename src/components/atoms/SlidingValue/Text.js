@@ -1,6 +1,7 @@
 import React from 'react';
 
 import styled from 'styled-components';
+import { fontSize, font, palette } from '../../../style';
 
 const Text = styled.div`
   background: ${({ position, color }) =>
@@ -11,6 +12,16 @@ const Text = styled.div`
   -webkit-background-clip: text;
   text-fill-color: transparent;
   -webkit-text-fill-color: transparent;
+
+  word-break: keep-all;
+  sup {
+    font-size: 50%;
+    top: -1.5rem;
+    left: -0.5rem;
+  }
+
+  color: ${({ color }) => color};
+  ${font.bold};
 `;
 
 const TextComponent = ({ children, color, position }) => (
