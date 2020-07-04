@@ -7,7 +7,7 @@ const Character = styled.div`
   background: ${({ background }) => background};
   display: flex;
   justify-content: center;
-  padding: 0.1em;
+  padding: 0.25em;
   position: relative;
   &:after {
     content: ' ';

@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import styled from 'styled-components';
 
-import SplitFlapDisplay from './index';
+import SlidingValue from './index';
 import Text from './Text';
 import SlidingCharacter from './Character';
 
@@ -38,6 +38,6 @@ storiesOf('RateSlidingValue', module)
   ))
   .add('SlidingValue', () => (
     <Container>
-      <SplitFlapDisplay value="93" />
+      <SlidingValue value="93" />
     </Container>
   ));

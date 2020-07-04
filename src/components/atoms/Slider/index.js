@@ -10,18 +10,16 @@ const clamp = (value, min, max) => {
 };
 
 const SliderContainer = styled.div`
-  padding: 0 !important;
   position: relative;
   display: inline-block;
   background-color: ${theme.colors.lightGray};
   user-select: none;
   box-sizing: border-box;
-  width: 300px;
-  height: 80px;
+  width: 323px;
+  height: 8px;
 `;
 
 const SliderKnob = styled.div`
-  padding: 0 !important;
   position: relative;
   display: block;
   width: 20px;
@@ -41,7 +39,7 @@ const SliderFilled = styled.div`
   top: 0;
 `;
 
-const Slider = ({ disabled, x, min, max, step, onChange, onSlideStart, onSlideEnd, onClick, ...props }) => {
+const BaseSlider = ({ disabled, x, min, max, step, onChange, onSlideStart, onSlideEnd, onClick, ...props }) => {
   const container = useRef(null);
   const handle = useRef(null);
   const start = useRef({});
@@ -53,7 +51,6 @@ const Slider = ({ disabled, x, min, max, step, onChange, onSlideStart, onSlideEn
     const left = clamp(pos, 0, 100);
     const top = 100;
 
-    console.log('#####-->', left);
     return { top, left };
   }
 
@@ -165,11 +162,13 @@ const Slider = ({ disabled, x, min, max, step, onChange, onSlideStart, onSlideEn
           e.nativeEvent.stopImmediatePropagation();
         }}
       />
+
+      {props.children}
     </SliderContainer>
   );
 };
 
-Slider.defaultProps = {
+BaseSlider.defaultProps = {
   disabled: false,
   x: 50,
   min: 0,
@@ -177,4 +176,4 @@ Slider.defaultProps = {
   step: 0.1,
 };
 
-export default styled(Slider)``;
+export const Slider = styled(BaseSlider)``;
