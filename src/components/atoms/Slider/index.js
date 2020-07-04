@@ -150,7 +150,12 @@ const BaseSlider = ({ disabled, x, min, max, step, onChange, onSlideStart, onSli
 
   const pos = getPosition();
 
+  if (value !== x) {
+    setValue(x);
+  }
+
   const percentage = `${pos.left}%`;
+
   return (
     <SliderContainer {...props} disabled ref={container} onClick={handleClick}>
       <SliderFilled percentage={percentage} />
@@ -160,9 +165,9 @@ const BaseSlider = ({ disabled, x, min, max, step, onChange, onSlideStart, onSli
         ref={handle}
         onTouchStart={handleMouseDown}
         onMouseDown={handleMouseDown}
-        onClick={function (e) {
+        onClick={(e) => {
           e.stopPropagation();
-          e.nativeEvent.stopImmediatePropagation();
+          //e.nativeEvent.stopImmediatePropagation();
         }}
       />
 

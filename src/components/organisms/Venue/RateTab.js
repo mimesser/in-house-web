@@ -10,36 +10,45 @@ import { TabLayout, Main, ItemTitle } from './tabStyle';
 import RateTag from './RateTag';
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
-import { Dial } from '../../molecules';
+import { Dial, RateSlider } from '../../molecules';
 import { Votes } from './Votes';
 
 const RateCard = styled(Card)``;
 
 const getTeamRateIfRated = (userRate, voteRating) => (isNil(userRate) ? undefined : voteRating);
 
+const log = (value) => console.log(value);
+
+const ShareLayout = styled.div`
+  position: relative;
+  margin-top: -97px;
+  margin-left: 330px;
+  width: 32px;
+  height: 97px;
+  z-index: 9;
+`;
 const Tag = ({ name, definitionId, userRate, voteCount, voteRating, setSelectedTag, withHelp }) => {
   const open = useCallback(() => setSelectedTag(definitionId), [definitionId]);
   const card = (
-    <RateCard onClick={open}>
-      <div>
-        <Dial size={65} readonly value={getTeamRateIfRated(userRate, voteRating)} />
-        <Main>
-          <ItemTitle>{name}</ItemTitle>
-          <Break />
-          <div>
-            <Votes count={voteCount} />
-          </div>
-        </Main>
-      </div>
-      <PrivateShareButton id={definitionId} />
-    </RateCard>
+    <>
+      <RateSlider
+        title={name}
+        onChange={log}
+        value={getTeamRateIfRated(userRate, voteRating)}
+        userRate={userRate}
+        voteCount={voteCount}
+      />
+      <ShareLayout>
+        <PrivateShareButton id={definitionId} />
+      </ShareLayout>
+    </>
   );
 
   return withHelp ? <HelpTip tip="see how everyone feels at a glance">{card}</HelpTip> : card;
 };
 
 const findTag = (id, tags) => {
-  const tag = tags.find(t => t.definitionId === id);
+  const tag = tags.find((t) => t.definitionId === id);
   if (!tag) {
     throw new Error(`Can't find tag ${id}`);
   }
@@ -51,7 +60,7 @@ const RateTab = ({ venue: { rates: tags }, setSelectedTag, loadRates, selectedTa
     loadRates();
   }, []);
   const renderSharePreview = useCallback(
-    id => {
+    (id) => {
       const { name, voteCount, userRate, voteRating } = findTag(id, tags);
 
       return (
@@ -71,7 +80,7 @@ const RateTab = ({ venue: { rates: tags }, setSelectedTag, loadRates, selectedTa
     },
     [tags],
   );
-  const getTitleForShare = useCallback(id => findTag(id, tags).name, [tags]);
+  const getTitleForShare = useCallback((id) => findTag(id, tags).name, [tags]);
 
   return (
     <TabLayout>
@@ -96,7 +105,4 @@ const mapDispatch = {
   loadRates,
 };
 
-export default connect(
-  mapState,
-  mapDispatch,
-)(RateTab);
+export default connect(mapState, mapDispatch)(RateTab);

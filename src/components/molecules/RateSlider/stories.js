@@ -21,7 +21,12 @@ storiesOf('RateSlider', module)
   ))
   .add('no value (animate)', () => (
     <Container>
-      <RateSlider onChange={log} value={undefined} readonly />
+      <RateSlider onChange={log} value={undefined} />
+    </Container>
+  ))
+  .add('not rated (animate)', () => (
+    <Container>
+      <RateSlider onChange={log} value={8.9} userRate={undefined} voteCount={43} />
     </Container>
   ))
   .add('rated', () => (
@@ -31,6 +36,6 @@ storiesOf('RateSlider', module)
   ))
   .add('rate in progress', () => (
     <Container>
-      <RateSlider onChange={log} value={6.7} expanded />
+      <RateSlider onChange={log} value={6.7} expanded userRate={6.1} />
     </Container>
   ));

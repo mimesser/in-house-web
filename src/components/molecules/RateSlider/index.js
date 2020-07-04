@@ -47,10 +47,10 @@ const TouchHelper = styled.div`
   margin-top: -50vh;
 `;
 
-export const Votes = styled(({ count, iconSize = 1, ...rest }) => (
+export const Votes = styled(({ count, iconSize = 1, userRate, ...rest }) => (
   <NumberSmall {...rest}>
     <Icon icon="users" size={iconSize} /> <span className="count">{count || 0}</span>{' '}
-    <span className="divide">{'   /'}</span>
+    {userRate ? <span className="divide">{'   /'}</span> : <span className="divide">{' insiders'}</span>}
   </NumberSmall>
 ))`
   position: relative;
@@ -74,8 +74,8 @@ export const Votes = styled(({ count, iconSize = 1, ...rest }) => (
 
 const SlidingWrapper = styled.div`
   width: 70px;
-  higth: 54px;
-  margin-top: -2em;
+  height: 54px;
+  margin-top: -20px;
   margin-left: auto;
   z-index: 10;
 `;
@@ -94,7 +94,7 @@ const Expand = keyframes`
   }
   100% {
     margin: 0px;
-    margin-top: -65px;
+    margin-top: -75px;
     height: 100%;
     width: 100%;
     opacity: 0.5;
@@ -165,7 +165,7 @@ const renderValue = (value, decimal) => {
 
 const BaseRateSlider = ({
   value: initialValue = null,
-  voteCount = 213,
+  voteCount = 0,
   valueColor,
   title = 'rate & appreciation',
   userRate = null,
@@ -175,6 +175,7 @@ const BaseRateSlider = ({
 }) => {
   const { readonly: decimal, size, padd } = sliderProps;
   const [value, setValue] = useState(initialValue);
+  const [userValue, setUserValue] = useState(userRate);
   const [isExpanded, setExpanded] = useState(expanded);
 
   useEffect(() => {
@@ -189,21 +190,26 @@ const BaseRateSlider = ({
         }}
       >
         <Title>{title}</Title>
-        <Votes count={voteCount} />
+        <Votes count={voteCount} userRate={userRate} />
         <SlidingWrapper>
-          {value && (
-            <SlidingValue fontSize={fontSize.lg} value={`${Math.floor(value * 10)}`}>
+          {value && userValue && (
+            <SlidingValue fontSize={fontSize.lg} value={`${Math.floor((isExpanded ? userValue : value) * 10)}`}>
               <Dot size={140} padd={padd} color={valueColor} />
             </SlidingValue>
           )}
         </SlidingWrapper>
         <SliderWrapper expanded={isExpanded} duration={0.3}>
-          <Slider onChange={setValue} x={initialValue} disabled={readonly || !isExpanded}>
-            {userRate && !isExpanded && <Indicator percentage={userRate * 10} />}
+          <Slider
+            onChange={setUserValue}
+            x={(isExpanded && userValue) || (!isExpanded && value)}
+            disabled={readonly || !isExpanded}
+          >
+            {userValue && !isExpanded && <Indicator percentage={userValue * 10} />}
           </Slider>
         </SliderWrapper>
         {isExpanded && <TouchHelper />}
       </Wrapper>
+      {sliderProps.children}
     </>
   );
 };
