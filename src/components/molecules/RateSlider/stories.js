@@ -3,12 +3,15 @@ import { storiesOf } from '@storybook/react';
 import styled from 'styled-components';
 
 import { RateSlider } from './index';
+import { spacing } from '../../../style';
 
-const Container = styled.div`
+export const Container = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
+  flex: 1;
+  flex-direction: column;
+  padding-bottom: ${spacing.md};
+  flex-shrink: 0; // safari
+  flex-basis: auto; // safari
 `;
 
 const log = (value) => console.log(value);
@@ -17,6 +20,13 @@ storiesOf('RateSlider', module)
   .add('default', () => (
     <Container>
       <RateSlider onChange={log} value={7.6} userRate={6.1} />
+      <RateSlider onChange={log} value={undefined} />
+
+      <RateSlider onChange={log} value={5.4} userRate={6.1} />
+      <RateSlider onChange={log} value={5.1} userRate={6.1} />
+      <RateSlider onChange={log} value={6.4} userRate={6.1} />
+      <RateSlider onChange={log} value={7.4} userRate={6.1} />
+      <RateSlider onChange={log} value={8.4} userRate={6.1} />
     </Container>
   ))
   .add('no value (animate)', () => (
