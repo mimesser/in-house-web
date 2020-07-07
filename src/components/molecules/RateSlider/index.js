@@ -22,18 +22,26 @@ const Dot = styled(({ size, padd, ...rest }) => <NumberLarge {...rest}>.</Number
 `;
 
 const Title = styled.div`
+  position: relative;
   margin-left: 24px;
-
-  margin-top: 1.7em;
+  // background-color: red;
+  top: 2.5em;
   color: ${({ color }) => color};
   ${font.bold};
   font-size: ${fontSize.md};
-  z-index: 10;
+  z-index: 2;
+  pointer-events: none;
+  user-select: none; /* supported by Chrome and Opera */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
 `;
 
 const Wrapper = styled.div`
+  position: relative;
   background-color: #f9f9f9;
-  width: 376px;
+  width: 100%;
   height: 97px;
   border-bottom: 1px solid #e0e0e0;
 `;
@@ -57,10 +65,11 @@ export const Votes = styled(({ count, iconSize = 1, userRate, ...rest }) => (
   font-size: ${fontSize.sm};
   display: flex;
   color: ${theme.colors.mediumGray};
-  width: 150px;
-  margin-top: -2em;
-  left: 250px;
+  width: 120px;
+  top: -2em;
+  margin-left: auto;
   top: 10px;
+  pointer-events: none;
   svg {
     padding: 0 3px 0 0;
   }
@@ -75,17 +84,16 @@ export const Votes = styled(({ count, iconSize = 1, userRate, ...rest }) => (
 const SlidingWrapper = styled.div`
   width: 70px;
   height: 54px;
-  margin-top: -20px;
+  pointer-events: none;
+  margin-top: -16px;
   margin-left: auto;
-  z-index: 10;
+  z-index: 11;
 `;
 
 const Expand = keyframes`
   0% {
-
     height: 8px;
-    width: 322px;
-    margin-left: 24px;
+    margin: 24px;
     opacity: 1;
   }
   50% {
@@ -96,18 +104,16 @@ const Expand = keyframes`
     margin: 0px;
     margin-top: -75px;
     height: 100%;
-    width: 100%;
     opacity: 0.5;
-    margin-left: 0px;
   }
 `;
 
 const Colapse = keyframes`
   0% {
+    margin: 0px;
     margin-top: -97px;
     height: 100%;
-    width: 100%;
-    margin-left: 0px;
+
     opacity: 0.5;
   }
   50% {
@@ -115,9 +121,9 @@ const Colapse = keyframes`
     }
   }
   100% {
+    margin: 25px;
     margin-top: -50px;
     height: 8px;
-    width: 322px;
     margin-left: 24px;
     opacity: 1;
   }
@@ -125,9 +131,10 @@ const Colapse = keyframes`
 
 const SliderWrapper = styled.div`
   position: relative;
-  width: 322px;
+  width: auto;
   height: 8px;
-  margin-left: 24px;
+  margin: 25px;
+  margin-top: 0px;
   animation: ${({ expanded }) => (expanded === true ? Expand : Colapse)} linear ${({ duration }) => `${duration}s`};
   background: ${({ expanded }) => (expanded === true ? theme.colors.darkGray : theme.colors.lightGray)}}
   animation-fill-mode: forwards;
@@ -182,6 +189,16 @@ const BaseRateSlider = ({
     setValue(initialValue);
   }, [initialValue]);
 
+  if (expanded !== isExpanded) {
+    setExpanded(expanded);
+  }
+
+  function preventDefault(e) {
+    console.log('# preenting default: ', e.cancelable);
+    if (e.cancelable) {
+      e.preventDefault();
+    }
+  }
   return (
     <>
       <Wrapper
@@ -189,7 +206,16 @@ const BaseRateSlider = ({
           setExpanded(!isExpanded);
         }}
       >
-        <Title>{title}</Title>
+        <Title
+          onClick={(e) => {
+            preventDefault(e);
+            setExpanded(!isExpanded);
+          }}
+          onTouchStart={preventDefault}
+          onMouseDown={preventDefault}
+        >
+          {title}
+        </Title>
         <Votes count={voteCount} userRate={userRate} />
         <SlidingWrapper>
           {value && userValue && (
@@ -198,6 +224,7 @@ const BaseRateSlider = ({
             </SlidingValue>
           )}
         </SlidingWrapper>
+        {/* {isExpanded && <TouchHelper />} */}
         <SliderWrapper expanded={isExpanded} duration={0.3}>
           <Slider
             onChange={setUserValue}
@@ -207,7 +234,6 @@ const BaseRateSlider = ({
             {userValue && !isExpanded && <Indicator percentage={userValue * 10} />}
           </Slider>
         </SliderWrapper>
-        {isExpanded && <TouchHelper />}
       </Wrapper>
       {sliderProps.children}
     </>

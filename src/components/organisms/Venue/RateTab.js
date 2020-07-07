@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { createStructuredSelector } from 'reselect';
@@ -22,26 +22,31 @@ const log = (value) => console.log(value);
 const ShareLayout = styled.div`
   position: relative;
   margin-top: -97px;
-  margin-left: 330px;
+  right: 30px;
   width: 32px;
   height: 97px;
   z-index: 9;
 `;
-const Tag = ({ name, definitionId, userRate, voteCount, voteRating, setSelectedTag, withHelp }) => {
-  const open = useCallback(() => setSelectedTag(definitionId), [definitionId]);
+
+const CellWrapper = styled.div``;
+const Tag = ({ name, definitionId, userRate, voteCount, voteRating, setSelectedTag, withHelp, expanded }) => {
+  const open = useCallback(() => {
+    setSelectedTag(definitionId);
+  }, [definitionId]);
   const card = (
-    <>
+    <CellWrapper onClick={open}>
       <RateSlider
         title={name}
         onChange={log}
         value={getTeamRateIfRated(userRate, voteRating)}
         userRate={userRate}
         voteCount={voteCount}
+        expanded={expanded}
       />
       <ShareLayout>
-        <PrivateShareButton id={definitionId} />
+        <PrivateShareButton id={setSelectedTag} />
       </ShareLayout>
-    </>
+    </CellWrapper>
   );
 
   return withHelp ? <HelpTip tip="see how everyone feels at a glance">{card}</HelpTip> : card;
@@ -56,6 +61,7 @@ const findTag = (id, tags) => {
 };
 
 const RateTab = ({ venue: { rates: tags }, setSelectedTag, loadRates, selectedTag }) => {
+  const [selected, setSelected] = useState(null);
   useEffect(() => {
     loadRates();
   }, []);
@@ -85,12 +91,21 @@ const RateTab = ({ venue: { rates: tags }, setSelectedTag, loadRates, selectedTa
   return (
     <TabLayout>
       {tags ? (
-        !selectedTag &&
-        tags.map((t, i) => <Tag {...t} key={t.definitionId} setSelectedTag={setSelectedTag} withHelp={i === 0} />)
+        tags.map((t, i) => (
+          <Tag
+            {...t}
+            key={t.definitionId}
+            setSelectedTag={(definitionId) => {
+              setSelected(definitionId);
+              // selectSelectedTag(definitionId);
+            }}
+            withHelp={i === 0}
+            expanded={selected === t.definitionId}
+          />
+        ))
       ) : (
         <Loader big />
       )}
-      <RateTag />
       <PrivateShare type="rate" renderItem={renderSharePreview} getItemTitle={getTitleForShare} />
     </TabLayout>
   );

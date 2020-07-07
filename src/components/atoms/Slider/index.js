@@ -17,15 +17,18 @@ const SliderContainer = styled.div`
   box-sizing: border-box;
   width: 100%;
   height: 100%;
+  z-index: auto;
 `;
 
 const SliderKnob = styled.div`
+  // background-color: blue;
   position: relative;
   display: block;
-  width: 20px;
+  width: 60px;
   height: 100%;
   transform: translate(-50%, 0%);
   left: ${(props) => props.percentage};
+  z-index: 99;
 `;
 
 const SliderFilled = styled.div`
@@ -37,6 +40,7 @@ const SliderFilled = styled.div`
   box-sizing: 'border-box';
   width: ${(props) => props.percentage};
   top: 0;
+  z-index: auto;
 `;
 
 const BaseSlider = ({ disabled, x, min, max, step, onChange, onSlideStart, onSlideEnd, onClick, ...props }) => {
@@ -48,7 +52,7 @@ const BaseSlider = ({ disabled, x, min, max, step, onChange, onSlideStart, onSli
 
   function getPosition() {
     const pos = ((value - min) / (max - min)) * 100;
-    const left = clamp(pos, 0, 100);
+    const left = clamp(pos, 1, 99);
     const top = 100;
 
     return { top, left };
@@ -71,7 +75,9 @@ const BaseSlider = ({ disabled, x, min, max, step, onChange, onSlideStart, onSli
   function handleMouseDown(e) {
     if (disabled) return;
 
-    e.preventDefault();
+    if (e.cancelable) {
+      e.preventDefault();
+    }
 
     const clientPos = getClientPosition(e);
     const rect = container.current.getBoundingClientRect();
@@ -95,6 +101,9 @@ const BaseSlider = ({ disabled, x, min, max, step, onChange, onSlideStart, onSli
     document.addEventListener('touchmove', handleDrag, { passive: false });
     document.addEventListener('touchend', handleDragEnd);
     document.addEventListener('touchcancel', handleDragEnd);
+    document.addEventListener('ondragstart', () => {
+      console.log('# on drag start');
+    });
     if (onSlideStart) {
       onSlideStart();
     }
@@ -111,14 +120,18 @@ const BaseSlider = ({ disabled, x, min, max, step, onChange, onSlideStart, onSli
   function handleDrag(e) {
     if (disabled) return;
 
-    e.preventDefault();
+    if (e.cancelable) {
+      e.preventDefault();
+    }
     const { left, top } = getPos(e);
     change(left);
   }
 
   function handleDragEnd(e) {
     if (disabled) return;
-    e.preventDefault();
+    if (e.cancelable) {
+      e.preventDefault();
+    }
 
     document.removeEventListener('mousemove', handleDrag);
     document.removeEventListener('mouseup', handleDragEnd);
@@ -157,7 +170,14 @@ const BaseSlider = ({ disabled, x, min, max, step, onChange, onSlideStart, onSli
   const percentage = `${pos.left}%`;
 
   return (
-    <SliderContainer {...props} disabled ref={container} onClick={handleClick}>
+    <SliderContainer
+      {...props}
+      disabled
+      ref={container}
+      onClick={handleClick}
+      onTouchStart={handleMouseDown}
+      onMouseDown={handleMouseDown}
+    >
       <SliderFilled percentage={percentage} />
 
       <SliderKnob
