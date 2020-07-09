@@ -184,10 +184,13 @@ export const setSelectedTag = (selectedTagId) => ({
   payload: { selectedTagId },
 });
 
-export const rateTag = (rating) => ({
-  type: actionTypes.RATE_TAG,
-  payload: { rating },
-});
+export const rateTag = (rating, newTagId) => {
+  console.log('# action dispatched: rateTag:', rating, newTagId);
+  return {
+    type: actionTypes.RATE_TAG,
+    payload: { rating, newTagId },
+  };
+};
 
 export const showRateTagConfirmation = (value) => ({
   type: actionTypes.SHOW_RATE_TAG_CONFIRMATION,
