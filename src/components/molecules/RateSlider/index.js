@@ -178,6 +178,7 @@ const BaseRateSlider = ({
   userRate = null,
   readonly,
   expanded,
+  onChange,
   ...sliderProps
 }) => {
   const { readonly: decimal, size, padd } = sliderProps;
@@ -197,6 +198,13 @@ const BaseRateSlider = ({
     console.log('# preenting default: ', e.cancelable);
     if (e.cancelable) {
       e.preventDefault();
+    }
+  }
+
+  function handleChange(userRate) {
+    setUserValue(userRate);
+    if (onChange) {
+      onChange(userRate);
     }
   }
   return (
@@ -227,7 +235,7 @@ const BaseRateSlider = ({
         {/* {isExpanded && <TouchHelper />} */}
         <SliderWrapper expanded={isExpanded} duration={0.3}>
           <Slider
-            onChange={setUserValue}
+            onChange={handleChange}
             x={(isExpanded && userValue) || (!isExpanded && value)}
             disabled={readonly || !isExpanded}
           >

@@ -5,9 +5,9 @@ import { createStructuredSelector } from 'reselect';
 import isNil from 'lodash/isNil';
 
 import { Loader, HelpTip, Card, Break } from '../../atoms';
-import { setSelectedTag, loadRates, selectSelectedTag } from '../../../store/venues';
+import { setSelectedTag, loadRates, selectSelectedTag, rateTag } from '../../../store/venues';
 import { TabLayout, Main, ItemTitle } from './tabStyle';
-import RateTag from './RateTag';
+
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
 import { Dial, RateSlider } from '../../molecules';
@@ -16,8 +16,6 @@ import { Votes } from './Votes';
 const RateCard = styled(Card)``;
 
 const getTeamRateIfRated = (userRate, voteRating) => (isNil(userRate) ? undefined : voteRating);
-
-const log = (value) => console.log(value);
 
 const ShareLayout = styled.div`
   position: relative;
@@ -29,20 +27,45 @@ const ShareLayout = styled.div`
 `;
 
 const CellWrapper = styled.div``;
-const Tag = ({ name, definitionId, userRate, voteCount, voteRating, setSelectedTag, withHelp, expanded }) => {
+
+const StyledLoader = styled(Loader)`
+  position: relative;
+  display: block;
+  height: 50px;
+  width: 40px;
+
+  margin: auto;
+  margin-top: -50px;
+`;
+
+const Tag = ({
+  name,
+  definitionId,
+  userRate,
+  voteCount,
+  voteRating,
+  setSelectedTag,
+  withHelp,
+  expanded,
+  rateTag,
+  rateInProgress,
+}) => {
+  const [rateValue, setRateValue] = useState(userRate);
   const open = useCallback(() => {
-    setSelectedTag(definitionId);
+    rateTag(rateValue, definitionId);
   }, [definitionId]);
   const card = (
     <CellWrapper onClick={open}>
       <RateSlider
         title={name}
-        onChange={log}
+        onChange={setRateValue}
         value={getTeamRateIfRated(userRate, voteRating)}
         userRate={userRate}
         voteCount={voteCount}
         expanded={expanded}
-      />
+      >
+        {expanded && rateInProgress === definitionId ? <StyledLoader black /> : null}
+      </RateSlider>
       <ShareLayout>
         <PrivateShareButton id={setSelectedTag} />
       </ShareLayout>
@@ -60,8 +83,7 @@ const findTag = (id, tags) => {
   return tag;
 };
 
-const RateTab = ({ venue: { rates: tags }, setSelectedTag, loadRates, selectedTag }) => {
-  const [selected, setSelected] = useState(null);
+const RateTab = ({ venue: { rates: tags }, setSelectedTag, loadRates, selectedTag, rateTag }) => {
   useEffect(() => {
     loadRates();
   }, []);
@@ -87,7 +109,11 @@ const RateTab = ({ venue: { rates: tags }, setSelectedTag, loadRates, selectedTa
     [tags],
   );
   const getTitleForShare = useCallback((id) => findTag(id, tags).name, [tags]);
-
+  const [rateInProgress, setRateInProgress] = useState(null);
+  console.log('# updating selected tag:', selectedTag);
+  if (!selectedTag && rateInProgress) {
+    setRateInProgress(null);
+  }
   return (
     <TabLayout>
       {tags ? (
@@ -95,12 +121,14 @@ const RateTab = ({ venue: { rates: tags }, setSelectedTag, loadRates, selectedTa
           <Tag
             {...t}
             key={t.definitionId}
-            setSelectedTag={(definitionId) => {
-              setSelected(definitionId);
-              // selectSelectedTag(definitionId);
+            setSelectedTag={setSelectedTag}
+            rateTag={(rate, tag) => {
+              if (selectedTag) setRateInProgress(selectedTag.definitionId);
+              if (rate !== t.userRate) rateTag(rate, tag);
             }}
             withHelp={i === 0}
-            expanded={selected === t.definitionId}
+            rateInProgress={rateInProgress}
+            expanded={selectedTag && selectedTag.definitionId === t.definitionId}
           />
         ))
       ) : (
@@ -118,6 +146,7 @@ const mapState = createStructuredSelector({
 const mapDispatch = {
   setSelectedTag,
   loadRates,
+  rateTag,
 };
 
 export default connect(mapState, mapDispatch)(RateTab);
