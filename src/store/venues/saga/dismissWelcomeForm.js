@@ -13,6 +13,6 @@ export function* dismissWelcomeForm() {
   try {
     localStorageAccessor.set(storageKey, count + 1);
   } catch (e) {
-    console.log(`# Error on request: ${restCallUrl} -> ${e}`);
+    console.log(`Error on request: ${restCallUrl} -> ${e}`);
   }
 }
