@@ -123,9 +123,11 @@ const Colapse = keyframes`
   100% {
     margin: 25px;
     margin-top: -50px;
+    margin-bottom: 0px;
     height: 8px;
     margin-left: 24px;
     opacity: 1;
+    padding:0px;
   }
 `;
 
@@ -135,8 +137,9 @@ const SliderWrapper = styled.div`
   height: 8px;
   margin: 25px;
   margin-top: 0px;
+  margin-bottom: 0px;
   animation: ${({ expanded }) => (expanded === true ? Expand : Colapse)} linear ${({ duration }) => `${duration}s`};
-  background: ${({ expanded }) => (expanded === true ? theme.colors.darkGray : theme.colors.lightGray)}}
+  background: ${({ expanded }) => (expanded === true ? theme.colors.darkGray : palette.transparent)}}
   animation-fill-mode: forwards;
 `;
 
@@ -236,7 +239,7 @@ const BaseRateSlider = ({
         <SliderWrapper expanded={isExpanded} duration={0.3}>
           <Slider
             onChange={handleChange}
-            x={(isExpanded && userValue) || (!isExpanded && value)}
+            x={(isExpanded && (userValue || 0.0)) || (!isExpanded && value)}
             disabled={readonly || !isExpanded}
           >
             {userValue && !isExpanded && <Indicator percentage={userValue * 10} />}

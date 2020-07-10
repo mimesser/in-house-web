@@ -65,6 +65,9 @@ export function reducer(state = initialState, action) {
     case actionTypes.SET_SELECTED_TAG: {
       return setSelectedVenueProp(state, action, 'selectedTagId');
     }
+    case actionTypes.RATE_IN_PROGRESS: {
+      return setSelectedVenueProp(state, action, 'rateInProgress');
+    }
     case actionTypes.SHOW_VOTE_MINK_CONFIRMATION: {
       return setSelectedVenueProp(state, action, 'voteMinkConfirmation');
     }

@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 import { theme, palette } from '../../../style';
 // import { Container, SliderLabel } from './style';
@@ -18,6 +18,35 @@ const SliderContainer = styled.div`
   width: 100%;
   height: 100%;
   z-index: auto;
+  // overflow: hidden;
+`;
+
+const Sliding = keyframes`
+  0% {
+    left:-185px;
+  }
+  100% {
+    left:100%;
+  }
+`;
+
+const GradientWrapper = styled.div`
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  height: 8px;
+`;
+
+const GradientFill = styled.div`
+  // pointer-events: none;
+  position: relative;
+  width: 185px;
+  height: 8px;
+  background: radial-gradient(38.33% 51071.18% at 50% 50%, #bfbfbf 0%, #e0e0e0 86.98%);
+  animation: ${Sliding} 2s ease-in-out infinite;
+  animation-delay: ${(props) => props.delay}s;
 `;
 
 const SliderKnob = styled.div`
@@ -101,9 +130,6 @@ const BaseSlider = ({ disabled, x, min, max, step, onChange, onSlideStart, onSli
     document.addEventListener('touchmove', handleDrag, { passive: false });
     document.addEventListener('touchend', handleDragEnd);
     document.addEventListener('touchcancel', handleDragEnd);
-    document.addEventListener('ondragstart', () => {
-      console.log('# on drag start');
-    });
     if (onSlideStart) {
       onSlideStart();
     }
@@ -178,8 +204,13 @@ const BaseSlider = ({ disabled, x, min, max, step, onChange, onSlideStart, onSli
       onTouchStart={handleMouseDown}
       onMouseDown={handleMouseDown}
     >
-      <SliderFilled percentage={percentage} />
-
+      {value ? (
+        <SliderFilled percentage={percentage} />
+      ) : (
+        <GradientWrapper>
+          <GradientFill delay={Math.random()} />
+        </GradientWrapper>
+      )}
       <SliderKnob
         percentage={percentage}
         ref={handle}
@@ -190,7 +221,6 @@ const BaseSlider = ({ disabled, x, min, max, step, onChange, onSlideStart, onSli
           //e.nativeEvent.stopImmediatePropagation();
         }}
       />
-
       {props.children}
     </SliderContainer>
   );

@@ -2,7 +2,7 @@ import { call, select, put, delay, fork } from 'redux-saga/effects';
 
 import api, { isForbidden } from '../../../api';
 import { selectIsActiveInsider, selectSelectedTag, selectSelectedVenue } from '../selectors';
-import { showRateTagConfirmation, setSelectedTag, updateVenueRate } from '../actions';
+import { showRateTagConfirmation, setSelectedTag, updateVenueRate, setRateInProgress } from '../actions';
 import { handleForbiddenResponse } from './handleForbiddenResponse';
 import { showInsiderChallenge } from './showInsiderChallenge';
 import { reloadVenueRateTags } from './loadVenueRateTags';
@@ -13,6 +13,7 @@ export function* rateTag({ payload: { rating, newTagId } }) {
   const tag = yield select(selectSelectedTag);
 
   if (tag && tag.definitionId !== newTagId) {
+    yield put(setRateInProgress(tag.definitionId));
     const { id: venueId } = yield select(selectSelectedVenue);
     const isActiveInsider = yield select(selectIsActiveInsider);
 
@@ -45,8 +46,10 @@ export function* rateTag({ payload: { rating, newTagId } }) {
       throw e;
     } finally {
       yield put(setSelectedTag(undefined));
+      yield put(setRateInProgress(undefined));
     }
   } else {
     yield put(setSelectedTag(newTagId));
+    yield put(setRateInProgress(undefined));
   }
 }

@@ -5,7 +5,13 @@ import { createStructuredSelector } from 'reselect';
 import isNil from 'lodash/isNil';
 
 import { Loader, HelpTip, Card, Break } from '../../atoms';
-import { setSelectedTag, loadRates, selectSelectedTag, rateTag } from '../../../store/venues';
+import {
+  setSelectedTag,
+  loadRates,
+  selectSelectedTag,
+  rateTag,
+  selectSelectedRateInProgeress,
+} from '../../../store/venues';
 import { TabLayout, Main, ItemTitle } from './tabStyle';
 
 import PrivateShare from './PrivateShare';
@@ -26,7 +32,9 @@ const ShareLayout = styled.div`
   z-index: 9;
 `;
 
-const CellWrapper = styled.div``;
+const CellWrapper = styled.div`
+  overflow: hidden;
+`;
 
 const StyledLoader = styled(Loader)`
   position: relative;
@@ -83,7 +91,7 @@ const findTag = (id, tags) => {
   return tag;
 };
 
-const RateTab = ({ venue: { rates: tags }, setSelectedTag, loadRates, selectedTag, rateTag }) => {
+const RateTab = ({ venue: { rates: tags }, setSelectedTag, loadRates, selectedTag, rateTag, rateInProgress }) => {
   useEffect(() => {
     loadRates();
   }, []);
@@ -109,11 +117,8 @@ const RateTab = ({ venue: { rates: tags }, setSelectedTag, loadRates, selectedTa
     [tags],
   );
   const getTitleForShare = useCallback((id) => findTag(id, tags).name, [tags]);
-  const [rateInProgress, setRateInProgress] = useState(null);
-  console.log('# updating selected tag:', selectedTag);
-  if (!selectedTag && rateInProgress) {
-    setRateInProgress(null);
-  }
+  console.log('# updating selected tag:', selectedTag && selectedTag.definitionId, rateInProgress);
+
   return (
     <TabLayout>
       {tags ? (
@@ -122,9 +127,16 @@ const RateTab = ({ venue: { rates: tags }, setSelectedTag, loadRates, selectedTa
             {...t}
             key={t.definitionId}
             setSelectedTag={setSelectedTag}
-            rateTag={(rate, tag) => {
-              if (selectedTag) setRateInProgress(selectedTag.definitionId);
-              if (rate !== t.userRate) rateTag(rate, tag);
+            rateTag={(rate, tag, target = selectedTag) => {
+              if (target) {
+                if (rate !== t.userRate) {
+                  rateTag(rate, tag);
+                } else {
+                  setSelectedTag(undefined);
+                }
+              } else {
+                rateTag(rate, tag);
+              }
             }}
             withHelp={i === 0}
             rateInProgress={rateInProgress}
@@ -141,6 +153,7 @@ const RateTab = ({ venue: { rates: tags }, setSelectedTag, loadRates, selectedTa
 
 const mapState = createStructuredSelector({
   selectedTag: selectSelectedTag,
+  rateInProgress: selectSelectedRateInProgeress,
 });
 
 const mapDispatch = {

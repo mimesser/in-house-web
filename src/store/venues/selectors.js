@@ -63,6 +63,11 @@ export const selectNewMinkElected = createSelector(
   (selectedVenue) => selectedVenue && selectedVenue.newMinkElected,
 );
 
+export const selectSelectedRateInProgeress = createSelector(
+  selectSelectedVenue,
+  (selectedVenue) => selectedVenue && selectedVenue.rateInProgress,
+);
+
 export const selectSelectedTag = createSelector(
   selectSelectedVenue,
   (selectedVenue) =>
