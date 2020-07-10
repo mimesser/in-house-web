@@ -56,9 +56,6 @@ app
           query: { token },
           params: { id, tab, itemId },
         } = ctx;
-        if (venue === 'houses') {
-          continue;
-        }
         await app.render(req, res, `/${venue}`, { id, tab, itemId, token });
         ctx.respond = false;
       });
