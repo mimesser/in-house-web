@@ -15,10 +15,7 @@ export function* reloadVenuePosts(id) {
     const {
       venueInfo: { imageUrl },
     } = yield select(selectSelectedVenue);
-    // TODO remove default image mapping
-    posts.forEach((post) => {
-      post.imageURL = post.imageURL || imageUrl; //'https://tanzolymp.com/images/default-non-user-no-photo-1.jpg';
-    });
+
     yield put(setVenuePosts(posts));
 
     return posts;

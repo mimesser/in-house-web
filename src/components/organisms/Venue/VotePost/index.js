@@ -44,7 +44,7 @@ const FullImage = styled.div.attrs(({ imageUrl }) => imageUrl && { style: { back
 `;
 
 const VotePost = ({
-  post: { created, title, text, myVote, wasFlaggedByMe, imageURL },
+  post: { created, title, text, myVote, wasFlaggedByMe, imageUrl },
   upvotePost,
   downvotePost,
   togglePostFlag,
@@ -63,7 +63,7 @@ const VotePost = ({
         <ItemDate dateTime={created}>{formatDate(created)}</ItemDate>
         <ItemTitle>{title}</ItemTitle>
         <Break />
-        <PostImage imageUrl={imageURL} alt="post image" onClick={open} />
+        <PostImage imageUrl={imageUrl} alt="post image" onClick={open} />
         <ItemText>{text}</ItemText>
         <VoteRow>
           <HelpTip placement="top" tip="agree or disagree">
@@ -84,7 +84,7 @@ const VotePost = ({
       {showFullImage ? (
         <Modal closeModal={close} canClose canDismiss inverse>
           <Layout>
-            <FullImage imageUrl={imageURL} alt="post image" />
+            <FullImage imageUrl={imageUrl} alt="post image" />
           </Layout>
         </Modal>
       ) : null}
