@@ -33,7 +33,7 @@ const PostText = styled(ItemText)`
 `;
 
 const Post = ({
-  post: { id, created, title, text, voteCount, voteRating, myVote, imageURL },
+  post: { id, created, title, text, voteCount, voteRating, myVote, imageUrl },
   setSelectedPost,
   withHelp,
 }) => {
@@ -54,7 +54,7 @@ const Post = ({
       </div>
       <div>
         <PostText>{text}</PostText>
-        <PostImage imageUrl={imageURL} alt="post image" />
+        <PostImage imageUrl={imageUrl} alt="post image" />
       </div>
       <PrivateShareButton id={id} />
     </PostCard>

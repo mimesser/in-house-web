@@ -222,9 +222,9 @@ export const setVenuePosts = (posts) => ({
   payload: { posts },
 });
 
-export const createPost = (id, title, message, venueType) => ({
+export const createPost = (id, title, image, message, venueType) => ({
   type: actionTypes.CREATE_POST,
-  payload: { id, title, message, venueType },
+  payload: { id, title, image, message, venueType },
 });
 
 export const upvotePost = () => ({

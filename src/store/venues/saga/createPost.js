@@ -5,9 +5,19 @@ import api, { isForbidden } from '../../../api';
 import { reloadVenuePosts } from './loadVenuePosts';
 import { handleForbiddenResponse } from './handleForbiddenResponse';
 
-export function* createPost({ payload: { id, title, message: text, venueType = 'houses' } }) {
+export function* createPost({ payload: { id, title, image, message: text, venueType = 'houses' } }) {
   try {
-    yield call(api.post, `/venues/${id}/feedback`, { title, text });
+    let imageUrl;
+    if (image) {
+      const formData = new FormData();
+      formData.append('file', image, Date.now() + image.name);
+      const { data: response } = yield call(api.post, `/venues/${id}/feedback/image`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      imageUrl = response.url;
+    }
+
+    yield call(api.post, `/venues/${id}/feedback`, { title, text, imageUrl });
 
     // TODO: optimize and insert into existing list?
     // order can change

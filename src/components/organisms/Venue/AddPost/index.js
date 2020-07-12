@@ -11,6 +11,7 @@ import { Step4 } from './Step4';
 const AddPost = ({ venue, createPost, venueType = 'houses' }) => {
   const [step, setStep] = useState(1);
   const [title, setTitle] = useState('');
+  const [image, setImage] = useState(undefined);
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const edit = useCallback(() => setStep(1), [setStep]);
@@ -23,12 +24,16 @@ const AddPost = ({ venue, createPost, venueType = 'houses' }) => {
           venue={venue}
           title={title}
           setTitle={setNormalizedTitle}
+          image={image}
+          setImage={setImage}
           message={message}
           setMessage={setMessage}
           setStep={setStep}
         />
       )}
-      {step === 2 && <Step2 venue={venue} title={title} message={message} edit={edit} setStep={setStep} />}
+      {step === 2 && (
+        <Step2 venue={venue} title={title} message={message} image={image} edit={edit} setStep={setStep} />
+      )}
       {step === 3 && <Step3 venue={venue} edit={edit} setStep={setStep} />}
       {step === 4 && (
         <Step4
@@ -38,7 +43,7 @@ const AddPost = ({ venue, createPost, venueType = 'houses' }) => {
           venue={venue}
           post={() => {
             setLoading(true);
-            createPost(venue.id, title, message, venueType);
+            createPost(venue.id, title, image, message, venueType);
           }}
         />
       )}
