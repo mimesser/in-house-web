@@ -53,14 +53,6 @@ export function* answerTopMink({ payload: { answer } }) {
       const acceptedTerms = yield select(selectAcceptedTerms);
       yield put(setChallengeFormData(acceptedTerms ? undefined : { showTerms: true }));
       yield put(setMyCorrectAnswer(venue.topMink.id, answer));
-      yield delay(5000);
-      const { userId } = yield select(selectAggregate);
-      const storageKey = `user/${userId}/skipWelcomeCout`;
-      const skipWelcome = localStorageAccessor.get(storageKey, 0);
-
-      if (skipWelcome < 2) {
-        yield put(showWelcomeForm());
-      }
 
       return;
     }
