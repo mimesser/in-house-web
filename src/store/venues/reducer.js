@@ -8,7 +8,10 @@ const initialState = {
   list: undefined,
   selectedVenue: undefined,
   insiderChallengeForm: undefined,
-  privateShareItemId: undefined,
+  privateShareItem: {
+    id: undefined,
+    type: undefined,
+  },
   privateShareRecipientError: undefined,
   privateShareSending: undefined,
 };
@@ -132,14 +135,14 @@ export function reducer(state = initialState, action) {
     case actionTypes.SHOW_VOTE_POST_CONFIRMATION: {
       return setSelectedVenueProp(state, action, 'votePostConfirmation');
     }
-    case actionTypes.SET_PRIVATE_SHARE_ITEM_ID: {
-      const { privateShareItemId } = action.payload;
+    case actionTypes.SET_PRIVATE_SHARE_ITEM: {
+      const { privateShareItemId, type } = action.payload;
 
       return {
         ...state,
         privateShareRecipientError: undefined,
         privateShareSending: undefined,
-        privateShareItemId,
+        privateShareItem: { id: privateShareItemId, type },
       };
     }
     case actionTypes.SET_PRIVATE_SHARE_RECIPIENT_ERROR: {

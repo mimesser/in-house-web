@@ -2,7 +2,7 @@ import { put, call, delay, select } from 'redux-saga/effects';
 
 import api from '../../../api';
 import { isEmailValid, isPhoneNumberValid } from '../../../utils/validation';
-import { SEND_STATUS, setPrivateShareRecipientError, setPrivateShareSending, setPrivateShareItemId } from '../actions';
+import { SEND_STATUS, setPrivateShareRecipientError, setPrivateShareSending, setPrivateShareItem } from '../actions';
 import { VENUE_TABS } from '../../../../server/venueTabs';
 import { selectSelectedVenue } from '../selectors';
 import { DEMO_VENUE_ID } from '../../demo/data';
@@ -49,7 +49,7 @@ export function* privateShare({ payload: { type, id, recipient, message } }) {
     yield put(setPrivateShareSending(SEND_STATUS.sent));
     if (venueId === DEMO_VENUE_ID) return;
     yield delay(CONFIRMATION_DELAY);
-    yield put(setPrivateShareItemId(undefined));
+    yield put(setPrivateShareItem(undefined));
   } catch (e) {
     yield put(setPrivateShareRecipientError('Please provide a valid email or mobile'));
     yield put(setPrivateShareSending(SEND_STATUS.idle));
