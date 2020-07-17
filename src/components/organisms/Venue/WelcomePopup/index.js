@@ -95,7 +95,7 @@ export const WelcomePopup = ({ skipWelcome, dismissWelcomeForm, venue }) => {
         <DrawerMenu isOpen={opened} closeMenu={() => handleOk()}>
           <Heading>launch this house</Heading>
           <PrivateShareButtonLayout>
-            <PrivateShareButton />
+            <PrivateShareButton id={venue.id} type="venue" onOpenSharePopup={() => handleOk()} />
           </PrivateShareButtonLayout>
 
           <HelpTip tip="don’t be a jerk">

@@ -103,10 +103,7 @@ export const selectPostFlagError = createSelector(
   (selectedVenue) => selectedVenue && selectedVenue.message,
 );
 
-export const selectPrivateShareItemId = createSelector(
-  selectVenueState,
-  ({ privateShareItemId }) => privateShareItemId,
-);
+export const selectPrivateShareItem = createSelector(selectVenueState, ({ privateShareItem }) => privateShareItem);
 
 export const selectPrivateShareRecipientError = createSelector(
   selectVenueState,

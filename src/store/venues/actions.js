@@ -37,7 +37,7 @@ export const actionTypes = {
   TOGGLE_MINK_FLAG: 'TOGGLE_MINK_FLAG',
   TOGGLE_FLAG_ERROR: 'TOGGLE_FLAG_ERROR',
   SHOW_VOTE_POST_CONFIRMATION: 'SHOW_VOTE_POST_CONFIRMATION',
-  SET_PRIVATE_SHARE_ITEM_ID: 'SET_PRIVATE_SHARE_ITEM_ID',
+  SET_PRIVATE_SHARE_ITEM: 'SET_PRIVATE_SHARE_ITEM',
   SET_PRIVATE_SHARE_RECIPIENT_ERROR: 'SET_PRIVATE_SHARE_RECIPIENT_ERROR',
   PRIVATE_SHARE: 'PRIVATE_SHARE',
   SET_PRIVATE_SHARE_SENDING: 'SET_PRIVATE_SHARE_SENDING',
@@ -255,14 +255,14 @@ export const showVotePostConfirmation = (value) => ({
   payload: { votePostConfirmation: value },
 });
 
-export const setPrivateShareItemId = (id) => ({
-  type: actionTypes.SET_PRIVATE_SHARE_ITEM_ID,
-  payload: { privateShareItemId: id },
+export const setPrivateShareItem = (id, type) => ({
+  type: actionTypes.SET_PRIVATE_SHARE_ITEM,
+  payload: { privateShareItemId: id, type },
 });
 
-export const clearPrivateShareItemId = () => ({
-  type: actionTypes.SET_PRIVATE_SHARE_ITEM_ID,
-  payload: { privateShareItemId: undefined },
+export const clearPrivateShareItem = () => ({
+  type: actionTypes.SET_PRIVATE_SHARE_ITEM,
+  payload: { privateShareItemId: undefined, type: undefined },
 });
 
 export const setPrivateShareRecipientError = (error) => ({

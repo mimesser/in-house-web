@@ -37,7 +37,7 @@ export const Step1 = ({ venue: { id }, title, setTitle, message, setMessage, set
         <>
           <CounterInput value={title} onChange={setTitle} placeholder="title" max={MAX_TITLE_LENGTH} />
 
-          <PickImage onChange={handleFileChange} accept="image/*" wide outline>
+          <PickImage onChange={handleFileChange} accept="image/png, image/jpeg, image/gif" wide outline>
             <IconWrapper>
               <Icon icon="camera" size={1.5} />
             </IconWrapper>
