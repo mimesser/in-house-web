@@ -68,6 +68,9 @@ export function reducer(state = initialState, action) {
     case actionTypes.SET_SELECTED_TAG: {
       return setSelectedVenueProp(state, action, 'selectedTagId');
     }
+    case actionTypes.SET_SELECTED_TAG_TARGET_RATE: {
+      return setSelectedVenueProp(state, action, 'selectedTagTargetRate');
+    }
     case actionTypes.RATE_IN_PROGRESS: {
       return setSelectedVenueProp(state, action, 'rateInProgress');
     }

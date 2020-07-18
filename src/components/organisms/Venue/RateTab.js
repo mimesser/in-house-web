@@ -9,6 +9,7 @@ import {
   setSelectedTag,
   loadRates,
   selectSelectedTag,
+  setSelectedTagTargetRate,
   rateTag,
   selectSelectedRateInProgeress,
 } from '../../../store/venues';
@@ -53,6 +54,7 @@ const Tag = ({
   voteCount,
   voteRating,
   setSelectedTag,
+  setSelectedTagTargetRate,
   withHelp,
   expanded,
   rateTag,
@@ -60,13 +62,16 @@ const Tag = ({
 }) => {
   const [rateValue, setRateValue] = useState(userRate);
   const open = useCallback(() => {
-    rateTag(rateValue, definitionId);
+    rateTag(definitionId);
   }, [definitionId]);
   const card = (
     <CellWrapper onClick={open}>
       <RateSlider
         title={name}
-        onChange={setRateValue}
+        onChange={(value) => {
+          setRateValue(value);
+          setSelectedTagTargetRate(value);
+        }}
         value={getTeamRateIfRated(userRate, voteRating)}
         userRate={userRate}
         voteCount={voteCount}
@@ -91,7 +96,15 @@ const findTag = (id, tags) => {
   return tag;
 };
 
-const RateTab = ({ venue: { rates: tags }, setSelectedTag, loadRates, selectedTag, rateTag, rateInProgress }) => {
+const RateTab = ({
+  venue: { rates: tags },
+  setSelectedTag,
+  setSelectedTagTargetRate,
+  loadRates,
+  selectedTag,
+  rateTag,
+  rateInProgress,
+}) => {
   useEffect(() => {
     loadRates();
   }, []);
@@ -117,7 +130,6 @@ const RateTab = ({ venue: { rates: tags }, setSelectedTag, loadRates, selectedTa
     [tags],
   );
   const getTitleForShare = useCallback((id) => findTag(id, tags).name, [tags]);
-  console.log('# updating selected tag:', selectedTag && selectedTag.definitionId, rateInProgress);
 
   return (
     <TabLayout>
@@ -126,18 +138,11 @@ const RateTab = ({ venue: { rates: tags }, setSelectedTag, loadRates, selectedTa
           <Tag
             {...t}
             key={t.definitionId}
+            definitionId={t.definitionId}
             setSelectedTag={setSelectedTag}
-            rateTag={(rate, tag, target = selectedTag) => {
-              if (target) {
-                if (rate !== t.userRate) {
-                  rateTag(rate, tag);
-                } else {
-                  setSelectedTag(undefined);
-                }
-              } else {
-                rateTag(rate, tag);
-              }
-            }}
+            setSelectedTagTargetRate={setSelectedTagTargetRate}
+            rateTag={rateTag}
+            userRate={t.userRate ? t.userRate : null}
             withHelp={i === 0}
             rateInProgress={rateInProgress}
             expanded={selectedTag && selectedTag.definitionId === t.definitionId}
@@ -158,6 +163,7 @@ const mapState = createStructuredSelector({
 
 const mapDispatch = {
   setSelectedTag,
+  setSelectedTagTargetRate,
   loadRates,
   rateTag,
 };

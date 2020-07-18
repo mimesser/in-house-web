@@ -1,18 +1,29 @@
 import { call, select, put, delay, fork } from 'redux-saga/effects';
 
 import api, { isForbidden } from '../../../api';
-import { selectIsActiveInsider, selectSelectedTag, selectSelectedVenue } from '../selectors';
+import {
+  selectIsActiveInsider,
+  selectSelectedTag,
+  selectSelectedVenue,
+  selectSelectedTagTargetValue,
+} from '../selectors';
 import { showRateTagConfirmation, setSelectedTag, updateVenueRate, setRateInProgress } from '../actions';
 import { handleForbiddenResponse } from './handleForbiddenResponse';
 import { showInsiderChallenge } from './showInsiderChallenge';
 import { reloadVenueRateTags } from './loadVenueRateTags';
 import { CONFIRMATION_INTERVAL } from './consts';
 
-export function* rateTag({ payload: { rating, newTagId } }) {
-  console.log('# trying to rate tag:', rating, newTagId);
+export function* rateTag({ payload: { newTagId } }) {
   const tag = yield select(selectSelectedTag);
+  const targetRate = yield select(selectSelectedTagTargetValue);
+  if (
+    targetRate &&
+    tag &&
+    tag.definitionId !== newTagId &&
+    (!tag.userRate || (tag.userRate && Math.abs(tag.userRate - targetRate) > 0.1))
+  ) {
+    console.log(`# trying to tag rate from: ${tag.userRate} to: ${targetRate} for tag:`, tag);
 
-  if (tag && tag.definitionId !== newTagId) {
     yield put(setRateInProgress(tag.definitionId));
     const { id: venueId } = yield select(selectSelectedVenue);
     const isActiveInsider = yield select(selectIsActiveInsider);
@@ -26,9 +37,10 @@ export function* rateTag({ payload: { rating, newTagId } }) {
 
     const startApiCall = Date.now();
 
+    // TODO remove round to int
     const {
       data: { venueRateTag, venue },
-    } = yield call(api.post, `venues/${venueId}/rateTag/${tag.definitionId}/rate`, { rate: rating });
+    } = yield call(api.post, `venues/${venueId}/rateTag/${tag.definitionId}/rate`, { rate: Math.round(targetRate) });
 
     try {
       const confirmationRemainingTime = CONFIRMATION_INTERVAL - (Date.now() - startApiCall);

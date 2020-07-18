@@ -24,8 +24,7 @@ const Dot = styled(({ size, padd, ...rest }) => <NumberLarge {...rest}>.</Number
 const Title = styled.div`
   position: relative;
   margin-left: 24px;
-  // background-color: red;
-  top: 2.5em;
+  top: 2.2em;
   color: ${({ color }) => color};
   ${font.bold};
   font-size: ${fontSize.md};
@@ -68,7 +67,7 @@ export const Votes = styled(({ count, iconSize = 1, userRate, ...rest }) => (
   width: 120px;
   top: -2em;
   margin-left: auto;
-  top: 10px;
+  top: 30px;
   pointer-events: none;
   svg {
     padding: 0 3px 0 0;
@@ -79,15 +78,17 @@ export const Votes = styled(({ count, iconSize = 1, userRate, ...rest }) => (
   .count {
     color: ${theme.colors.darkGray};
   }
+  visibility: ${({ expanded }) => (expanded === true ? 'hidden' : 'visible')};
 `;
 
 const SlidingWrapper = styled.div`
   width: 70px;
   height: 54px;
   pointer-events: none;
-  margin-top: -16px;
+  margin-top: ${({ expanded }) => (expanded === true ? '-16px' : '4px')};
   margin-left: auto;
   z-index: 11;
+  padding-top: 4px;
 `;
 
 const Expand = keyframes`
@@ -97,7 +98,7 @@ const Expand = keyframes`
     opacity: 1;
   }
   50% {
-    margin-top: -50px;
+    margin-top: -40px;
     height: 40%;
   }
   100% {
@@ -122,7 +123,7 @@ const Colapse = keyframes`
   }
   100% {
     margin: 25px;
-    margin-top: -50px;
+    margin-top: -40px;
     margin-bottom: 0px;
     height: 8px;
     margin-left: 24px;
@@ -138,8 +139,9 @@ const SliderWrapper = styled.div`
   margin: 25px;
   margin-top: 0px;
   margin-bottom: 0px;
+  top: ${({ expanded }) => (expanded === true ? '0' : '-20')}px;
   animation: ${({ expanded }) => (expanded === true ? Expand : Colapse)} linear ${({ duration }) => `${duration}s`};
-  background: ${({ expanded }) => (expanded === true ? theme.colors.darkGray : palette.transparent)}}
+  background: ${({ expanded }) => (expanded === true ? theme.colors.darkGray : palette.transparent)};
   animation-fill-mode: forwards;
 `;
 
@@ -227,11 +229,14 @@ const BaseRateSlider = ({
         >
           {title}
         </Title>
-        <Votes count={voteCount} userRate={userRate} />
-        <SlidingWrapper>
-          {value && userValue && (
-            <SlidingValue fontSize={fontSize.lg} value={`${Math.floor((isExpanded ? userValue : value) * 10)}`}>
-              <Dot size={140} padd={padd} color={valueColor} />
+        <Votes count={voteCount} userRate={userRate} expanded={isExpanded} />
+        <SlidingWrapper expanded={isExpanded}>
+          {(isExpanded || (userValue && value)) && (
+            <SlidingValue
+              fontSize={isExpanded ? fontSize.lg : fontSize.md}
+              value={`${Math.floor((isExpanded ? userValue : value) * 10)}`}
+            >
+              <Dot size={isExpanded ? 140 : 80} padd={padd} color={valueColor} />
             </SlidingValue>
           )}
         </SlidingWrapper>
