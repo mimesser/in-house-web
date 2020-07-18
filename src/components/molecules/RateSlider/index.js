@@ -184,6 +184,8 @@ const BaseRateSlider = ({
   readonly,
   expanded,
   onChange,
+  onSlideStart,
+  onSlideEnd,
   ...sliderProps
 }) => {
   const { readonly: decimal, size, padd } = sliderProps;
@@ -244,8 +246,10 @@ const BaseRateSlider = ({
         <SliderWrapper expanded={isExpanded} duration={0.3}>
           <Slider
             onChange={handleChange}
+            onSlideStart={onSlideStart}
+            onSlideEnd={onSlideEnd}
             x={(isExpanded && (userValue || 0.0)) || (!isExpanded && value)}
-            disabled={readonly || !isExpanded}
+            disabled={readonly}
           >
             {userValue && !isExpanded && <Indicator percentage={userValue * 10} />}
           </Slider>
