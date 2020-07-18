@@ -24,6 +24,7 @@ export const actionTypes = {
   SET_ANSWER_MINK_STATUS: 'SET_ANSWER_MINK_STATUS',
   SET_MY_CORRECT_ANSWER: 'SET_MY_CORRECT_ANSWER',
   SET_SELECTED_TAG: 'SET_SELECTED_TAG',
+  SET_SELECTED_TAG_TARGET_RATE: 'SET_SELECTED_TAG_TARGET_RATE',
   RATE_IN_PROGRESS: 'RATE_IN_PROGRESS',
   RATE_TAG: 'RATE_TAG',
   SHOW_RATE_TAG_CONFIRMATION: 'SHOW_RATE_TAG_CONFIRMATION',
@@ -190,13 +191,18 @@ export const setRateInProgress = (rateInProgress) => ({
   payload: { rateInProgress },
 });
 
-export const rateTag = (rating, newTagId) => {
-  console.log('# action dispatched: rateTag:', rating, newTagId);
+export const setSelectedTagTargetRate = (selectedTagTargetRate) => {
+  selectedTagTargetRate = Math.round(selectedTagTargetRate * 10) / 10;
   return {
-    type: actionTypes.RATE_TAG,
-    payload: { rating, newTagId },
+    type: actionTypes.SET_SELECTED_TAG_TARGET_RATE,
+    payload: { selectedTagTargetRate },
   };
 };
+
+export const rateTag = (newTagId) => ({
+  type: actionTypes.RATE_TAG,
+  payload: { newTagId },
+});
 
 export const showRateTagConfirmation = (value) => ({
   type: actionTypes.SHOW_RATE_TAG_CONFIRMATION,
