@@ -6,12 +6,13 @@ import { Transition } from 'react-transition-group';
 import { useSwipeable } from 'react-swipeable';
 import { Icon, ClearButton, Overlay } from '../../atoms';
 
-import { spacing, fontSize, font, palette } from '../../../style';
+import { spacing, fontSize, font, palette, calcRem } from '../../../style';
 
 const CloseButton = styled(ClearButton)`
   float: right;
   margin: ${spacing.xl};
   margin-left: auto;
+  margin-right: 4px;
   min-width: 40px;
   width: 40px;
 `;
@@ -19,8 +20,8 @@ const CloseButton = styled(ClearButton)`
 const CloseIcon = styled(Icon).attrs(() => ({
   icon: 'angle-down',
 }))`
-  width: 32px;
-  height: 32px;
+  width: 24px;
+  height: 24px;
   :hover {
     color: ${palette.white};
   }
@@ -28,7 +29,7 @@ const CloseIcon = styled(Icon).attrs(() => ({
 
 const duration = 300;
 
-const MENU_HEIGHT = '20rem';
+const MENU_HEIGHT = calcRem('322px');
 const sidebarTransitionStyles = {
   entering: { height: 0 },
   entered: { height: MENU_HEIGHT },
@@ -51,11 +52,12 @@ const Panel = styled.div`
   bottom: 0;
   z-index: 1000;
   width: 100%;
-  transition: width ${duration}ms;
+  transition: height ${duration}ms;
   box-shadow: rgba(0, 0, 0, 0.15) -2px 2px 4px;
-  background-color: ${palette.black};
+  background-color: ${palette.primary};
   white-space: nowrap;
   overflow: hidden;
+  height: 0;
   ${({ state }) => sidebarTransitionStyles[state]};
   color: ${palette.offWhite};
 `;
@@ -87,14 +89,14 @@ export const DrawerMenu = withRouter(({ isOpen, router, closeMenu, ...props }) =
     trackMouse: true,
   });
   return (
-    <Transition in={isOpen} timeout={duration}>
+    <Transition in={isOpen} timeout={duration} {...handlers}>
       {(state) => (
-        <>
+        <div {...handlers}>
           {
             // eslint-disable-next-line react/jsx-props-no-spreading
             isOpen ? (
               <CustomOverlay>
-                <div {...handlers} />{' '}
+                <div {...handlers} />
               </CustomOverlay>
             ) : null
           }
@@ -104,7 +106,7 @@ export const DrawerMenu = withRouter(({ isOpen, router, closeMenu, ...props }) =
             </CloseButton>
             {props.children}
           </Panel>{' '}
-        </>
+        </div>
       )}
     </Transition>
   );
