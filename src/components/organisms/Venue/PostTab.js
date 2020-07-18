@@ -71,7 +71,6 @@ const Post = ({
 const renderSection = (title, posts, setSelectedPost) =>
   posts.length > 0 && (
     <>
-      <TabTitle>{title}</TabTitle>
       {posts.map((p, i) => (
         <Post post={p} key={p.id} setSelectedPost={setSelectedPost} withHelp={i === 0} />
       ))}
