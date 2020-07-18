@@ -16,12 +16,8 @@ import { CONFIRMATION_INTERVAL } from './consts';
 export function* rateTag({ payload: { newTagId } }) {
   const tag = yield select(selectSelectedTag);
   const targetRate = yield select(selectSelectedTagTargetValue);
-  if (
-    targetRate &&
-    tag &&
-    tag.definitionId !== newTagId &&
-    (!tag.userRate || (tag.userRate && Math.abs(tag.userRate - targetRate) > 0.1))
-  ) {
+  console.log('# rateTAG: ', { tag, targetRate, newTagId });
+  if (targetRate && tag && (!tag.userRate || (tag.userRate && Math.abs(tag.userRate - targetRate) > 0.1))) {
     console.log(`# trying to tag rate from: ${tag.userRate} to: ${targetRate} for tag:`, tag);
 
     yield put(setRateInProgress(tag.definitionId));
@@ -61,7 +57,7 @@ export function* rateTag({ payload: { newTagId } }) {
       yield put(setRateInProgress(undefined));
     }
   } else {
-    yield put(setSelectedTag(newTagId));
+    yield put(setSelectedTag(undefined));
     yield put(setRateInProgress(undefined));
   }
 }

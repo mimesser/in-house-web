@@ -61,9 +61,13 @@ const Tag = ({
   rateInProgress,
 }) => {
   const [rateValue, setRateValue] = useState(userRate);
-  const open = useCallback(() => {
-    rateTag(definitionId);
-  }, [definitionId]);
+  const open = useCallback(
+    (e) => {
+      console.log('# open:', { definitionId, e });
+      setSelectedTag(definitionId);
+    },
+    [definitionId],
+  );
   const card = (
     <CellWrapper onClick={open}>
       <RateSlider
@@ -71,6 +75,14 @@ const Tag = ({
         onChange={(value) => {
           setRateValue(value);
           setSelectedTagTargetRate(value);
+        }}
+        onSlideStart={(value) => {
+          console.log('Slide START :', { definitionId, userRate });
+          setSelectedTag(definitionId);
+        }}
+        onSlideEnd={(value) => {
+          console.log('Slide END :', { definitionId, userRate });
+          rateTag(definitionId);
         }}
         value={getTeamRateIfRated(userRate, voteRating)}
         userRate={userRate}

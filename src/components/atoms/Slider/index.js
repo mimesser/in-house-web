@@ -116,8 +116,8 @@ const BaseSlider = ({ disabled, x, min, max, step, onChange, onSlideStart, onSli
     const dom = handle.current;
 
     start.current = {
-      x: dom.offsetLeft,
-      y: dom.offsetTop,
+      x: clientPos.x,
+      y: clientPos.y,
     };
 
     offset.current = {
@@ -218,7 +218,6 @@ const BaseSlider = ({ disabled, x, min, max, step, onChange, onSlideStart, onSli
         onMouseDown={handleMouseDown}
         onClick={(e) => {
           e.stopPropagation();
-          //e.nativeEvent.stopImmediatePropagation();
         }}
       />
       {props.children}
