@@ -17,34 +17,35 @@ const LightMessage = styled.p`
   white-space: normal;
   margin-left: ${spacing.xl};
   margin-right: ${spacing.xl};
-  margin-top: ${spacing.xxxl};
-  color: ${palette.mediumGray};
+  margin-top: 0px;
+  color: ${palette.lightGray};
   font-size: 16px;
 `;
 
 const GreyMessage = styled(LightMessage)`
-  color: ${palette.darkGray};
+  margin-top: 0px;
+  color: ${palette.mediumGray};
 `;
 
 const Heading = styled(H2)`
   position: relative;
-  margin-top: 100px;
-
+  margin-top: 131px;
+  font-size: 18px;
   margin-left: ${spacing.xl};
-  color: ${palette.mediumGray};
+  color: ${palette.lightGray};
 `;
 const HelpWrap = styled.div`
-  margin-top: ${spacing.xxxl};
+  margin-top: ${spacing.xl};
 `;
 
 const PrivateShareButtonLayout = styled.div`
   position: relative;
 
-  margin-right: ${spacing.xxxl};
+  margin-right: ${spacing.xl};
   > ${PokeButton} {
-    color: ${palette.mediumGray};
+    color: ${palette.lightGray};
     position: absolute;
-    top: -${spacing.md};
+    top: -32px;
     right: -${spacing.sm};
   }
 `;
@@ -93,11 +94,12 @@ export const WelcomePopup = ({ skipWelcome, dismissWelcomeForm, venue }) => {
       />
       {show && (
         <DrawerMenu isOpen={opened} closeMenu={() => handleOk()}>
-          <Heading>launch this house</Heading>
-          <PrivateShareButtonLayout>
-            <PrivateShareButton id={venue.id} type="venue" onOpenSharePopup={() => handleOk()} />
-          </PrivateShareButtonLayout>
-
+          <Heading>
+            launch this house
+            <PrivateShareButtonLayout>
+              <PrivateShareButton id={venue.id} type="venue" onOpenSharePopup={() => handleOk()} />
+            </PrivateShareButtonLayout>
+          </Heading>
           <HelpTip tip="don’t be a jerk">
             <HelpWrap>
               <LightMessage>your boss will be notified when 15% of this team begins speaking</LightMessage>
