@@ -97,7 +97,7 @@ export function* initVenuesPage({ payload: { idToSelect } }) {
   if (inDemo) {
     venueToSelect = DEMO_VENUE;
   } else {
-    venueToSelect = venues.find((v) => v.id === +idToSelect);
+    venueToSelect = venues.find((v) => v.id === idToSelect);
   }
   if (venueToSelect) {
     yield put(setSelectedVenue(venueToSelect));
@@ -118,7 +118,7 @@ export function* initPollsPage({ payload: { idToSelect } }) {
     return;
   }
 
-  const venueToSelect = polls.find((v) => v.id === +idToSelect);
+  const venueToSelect = polls.find((v) => v.id === idToSelect);
 
   if (venueToSelect) {
     yield put(setSelectedVenue(venueToSelect));
