@@ -6,7 +6,7 @@
     "scripts": {
         "build:ci": "cross-env npm run clean && npm run build && copyfiles -a \"src/.next/**/*\" \"src/static/**/*\" \"src/public/**/*\" server/*.* package.json package-lock.json next.config.js build",
         "build": "cross-env next build ./src",
-        "clean": "rimraf ./build",
+        "clean": "cross-env rimraf ./build",
         "coverage": "npm test -- --coverage",
         "lint": "eslint --ext .js src server/index.js",
         "next:dev": "next dev ./src",
