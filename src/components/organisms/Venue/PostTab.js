@@ -14,7 +14,9 @@ import PrivateShareButton from './PrivateShareButton';
 import { Dial } from '../../molecules';
 import { Votes } from './Votes';
 
-const PostCard = styled(Card)``;
+const PostCard = styled(Card)`
+  min-height: 160px;
+`;
 
 const PostImage = styled.div.attrs(({ imageUrl }) => imageUrl && { style: { backgroundImage: `url(${imageUrl})` } })`
   min-height: 48px;
