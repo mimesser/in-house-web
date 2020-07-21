@@ -44,6 +44,9 @@ const CustomOverlay = styled(Overlay)`
   height: 100%;
   bottom: 0;
   white-space: nowrap;
+  background-color: white;
+  opacity: 0.7;
+  backdrop-filter: blur(8px);
   ${({ state }) => sidebarTransitionStyles[state]};
 `;
 
