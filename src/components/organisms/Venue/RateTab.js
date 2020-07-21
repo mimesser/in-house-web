@@ -20,7 +20,9 @@ import PrivateShareButton from './PrivateShareButton';
 import { Dial, RateSlider, PokeButton } from '../../molecules';
 import { Votes } from './Votes';
 
-const RateCard = styled(Card)``;
+const RateCard = styled(Card)`
+  min-height: 120px;
+`;
 
 const getTeamRateIfRated = (userRate, voteRating) => (isNil(userRate) ? undefined : voteRating);
 
