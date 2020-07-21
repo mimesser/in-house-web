@@ -2,16 +2,16 @@ import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { Button, HelpTip, H3, H1, H2, Checkbox, ClearButton, Card } from '../../../../atoms';
-import { PokeButton } from '../../../../molecules';
-import { spacing, appBackground, calcRem, palette } from '../../../../../style';
-import { Modal } from '../../../Modal';
-import { dismissWelcomeForm, selectSkipWelcome, selectSelectedVenue } from '../../../../../store/venues';
-import { DrawerMenu } from '../../../DrawerMenu';
-import { Container } from '../../../Modal/style';
-import PrivateShare from '../../PrivateShare';
-import PrivateShareButton from '../../PrivateShareButton';
-import { Main, ItemText, ItemTitle } from '../../tabStyle';
+import { Button, HelpTip, H3, H1, H2, Checkbox, ClearButton, Card } from '../../../atoms';
+import { PokeButton } from '../../../molecules';
+import { spacing, appBackground, calcRem, palette } from '../../../../style';
+import { Modal } from '../../Modal';
+import { dismissWelcomeForm, selectSkipWelcome, selectSelectedVenue } from '../../../../store/venues';
+import { DrawerMenu } from '../../DrawerMenu';
+import { Container } from '../../Modal/style';
+import PrivateShare from '../PrivateShare';
+import PrivateShareButton from '../PrivateShareButton';
+import { Main, ItemText, ItemTitle } from '../tabStyle';
 
 const VenueCard = styled(Card)`
   min-height: 120px;

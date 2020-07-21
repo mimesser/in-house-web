@@ -4,6 +4,7 @@ import Router from 'next/router';
 import api, { isForbidden } from '../../../api';
 import { reloadVenuePosts } from './loadVenuePosts';
 import { handleForbiddenResponse } from './handleForbiddenResponse';
+import { upvotePost } from '..';
 
 export function* createPost({ payload: { id, title, image, message: text, venueType = 'houses' } }) {
   try {
@@ -17,8 +18,12 @@ export function* createPost({ payload: { id, title, image, message: text, venueT
       imageUrl = response.url;
     }
 
-    yield call(api.post, `/venues/${id}/feedback`, { title, text, imageUrl });
-
+    const { data: post } = yield call(api.post, `/venues/${id}/feedback`, { title, text, imageUrl });
+    try {
+      yield call(api.post, `venues/${id}/feedback/${post.id}/vote`, { vote: 1 });
+    } catch (e) {
+      console.log(e);
+    }
     // TODO: optimize and insert into existing list?
     // order can change
     yield reloadVenuePosts(id);
