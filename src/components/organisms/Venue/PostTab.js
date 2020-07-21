@@ -56,7 +56,7 @@ const Post = ({
         <PostText>{text}</PostText>
         <PostImage imageUrl={imageUrl} alt="post image" />
       </div>
-      <PrivateShareButton id={id} />
+      <PrivateShareButton id={id} type="post" />
     </PostCard>
   );
   return withHelp ? (

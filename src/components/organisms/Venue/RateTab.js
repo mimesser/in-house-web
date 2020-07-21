@@ -17,7 +17,7 @@ import { TabLayout, Main, ItemTitle } from './tabStyle';
 
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
-import { Dial, RateSlider } from '../../molecules';
+import { Dial, RateSlider, PokeButton } from '../../molecules';
 import { Votes } from './Votes';
 
 const RateCard = styled(Card)``;
@@ -26,11 +26,16 @@ const getTeamRateIfRated = (userRate, voteRating) => (isNil(userRate) ? undefine
 
 const ShareLayout = styled.div`
   position: relative;
-  margin-top: -97px;
+  float: right;
+  margin-top: -87px;
   right: 30px;
   width: 32px;
   height: 97px;
   z-index: 9;
+  color: #d0d0d0;
+  ${PokeButton} {
+    color: #d0d0d0;
+  }
 `;
 
 const CellWrapper = styled.div`
@@ -91,9 +96,11 @@ const Tag = ({
       >
         {expanded && rateInProgress === definitionId ? <StyledLoader black /> : null}
       </RateSlider>
-      <ShareLayout>
-        <PrivateShareButton id={setSelectedTag} />
-      </ShareLayout>
+      {!expanded && (
+        <ShareLayout>
+          <PrivateShareButton id={definitionId} type="rate" />
+        </ShareLayout>
+      )}
     </CellWrapper>
   );
 

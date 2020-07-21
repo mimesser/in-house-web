@@ -84,7 +84,7 @@ const Mink = ({
           </div>
         </Main>
       </div>
-      <PrivateShareButton id={id} />
+      <PrivateShareButton id={id} type="mink" />
     </MinkCard>
   );
   return topMink ? (
