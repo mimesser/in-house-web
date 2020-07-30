@@ -12,13 +12,18 @@ import {
   setSelectedTagTargetRate,
   rateTag,
   selectSelectedRateInProgeress,
+  selectSelectedCategory,
+  setSelectedCategory,
+  selectFilteredTags,
 } from '../../../store/venues';
+import { selectEsgCategories } from '../../../store/aggregate';
 import { TabLayout, Main, ItemTitle } from './tabStyle';
-
+import { appColors } from '../../../style';
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
 import { Dial, RateSlider, PokeButton } from '../../molecules';
 import { Votes } from './Votes';
+import { RateCategory } from '../../molecules/RateCategory';
 
 const RateCard = styled(Card)`
   min-height: 120px;
@@ -66,6 +71,7 @@ const Tag = ({
   expanded,
   rateTag,
   rateInProgress,
+  category,
 }) => {
   const [rateValue, setRateValue] = useState(userRate);
   const open = useCallback(
@@ -95,6 +101,7 @@ const Tag = ({
         userRate={userRate}
         voteCount={voteCount}
         expanded={expanded}
+        fillColor={category && appColors[category.color]}
       >
         {expanded && rateInProgress === definitionId ? <StyledLoader black /> : null}
       </RateSlider>
@@ -119,16 +126,21 @@ const findTag = (id, tags) => {
 
 const RateTab = ({
   venue: { rates: tags },
+  filteredTags,
+  setSelectedCategory,
   setSelectedTag,
   setSelectedTagTargetRate,
   loadRates,
   selectedTag,
   rateTag,
   rateInProgress,
+  categories,
+  selectedCategory,
 }) => {
   useEffect(() => {
     loadRates();
   }, []);
+
   const renderSharePreview = useCallback(
     (id) => {
       const { name, voteCount, userRate, voteRating } = findTag(id, tags);
@@ -152,23 +164,43 @@ const RateTab = ({
   );
   const getTitleForShare = useCallback((id) => findTag(id, tags).name, [tags]);
 
+  const rateTags = filteredTags || tags;
+  console.log(' ###', categories);
   return (
     <TabLayout>
+      {categories
+        ? categories.map((category, i) => (
+            <RateCategory
+              key={category.id}
+              category={category}
+              value={`7.${i}`}
+              expanded={selectedCategory && selectedCategory.id === category.id}
+              onClick={() => {
+                console.log('# slected cat:', category, setSelectedCategory, setSelectedTag);
+                setSelectedCategory(category);
+                setSelectedTag(null);
+              }}
+            />
+          ))
+        : null}
       {tags ? (
-        tags.map((t, i) => (
-          <Tag
-            {...t}
-            key={t.definitionId}
-            definitionId={t.definitionId}
-            setSelectedTag={setSelectedTag}
-            setSelectedTagTargetRate={setSelectedTagTargetRate}
-            rateTag={rateTag}
-            userRate={t.userRate ? t.userRate : null}
-            withHelp={i === 0}
-            rateInProgress={rateInProgress}
-            expanded={selectedTag && selectedTag.definitionId === t.definitionId}
-          />
-        ))
+        rateTags
+          // .filter((t) => (selectedCategory && selectedCategory.id === t.rateTagCategoryId) || !selectedCategory)
+          .map((t, i) => (
+            <Tag
+              {...t}
+              key={t.definitionId}
+              definitionId={t.definitionId}
+              setSelectedTag={setSelectedTag}
+              setSelectedTagTargetRate={setSelectedTagTargetRate}
+              rateTag={rateTag}
+              userRate={t.userRate ? t.userRate : null}
+              withHelp={i === 0}
+              rateInProgress={rateInProgress}
+              expanded={selectedTag && selectedTag.definitionId === t.definitionId}
+              category={selectedCategory}
+            />
+          ))
       ) : (
         <Loader big />
       )}
@@ -178,11 +210,15 @@ const RateTab = ({
 };
 
 const mapState = createStructuredSelector({
+  categories: selectEsgCategories,
   selectedTag: selectSelectedTag,
   rateInProgress: selectSelectedRateInProgeress,
+  selectedCategory: selectSelectedCategory,
+  filteredTags: selectFilteredTags,
 });
 
 const mapDispatch = {
+  setSelectedCategory,
   setSelectedTag,
   setSelectedTagTargetRate,
   loadRates,

@@ -13,7 +13,7 @@
         "postcoverage": "open-cli coverage/lcov-report/index.html",
         "server:watch": "nodemon server/index.js",
         "start:watch": "npm run server:watch && npm run next:dev",
-        "start": "node server/index.js",
+        "start": "next dev ./src",
         "storybook": "start-storybook -p 9001 -c config/storybook",
         "test:watch": "npm test -- --watch",
         "test": "jest --env=jsdom --no-cache --colors test"

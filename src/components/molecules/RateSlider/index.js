@@ -45,15 +45,6 @@ const Wrapper = styled.div`
   border-bottom: 1px solid #e0e0e0;
 `;
 
-const TouchHelper = styled.div`
-  position: absolute
-  width: 100%;
-  height: 100vh;
-  border-bottom: 1px solid #e0e0e0;
-  z-index: -10;
-  margin-top: -50vh;
-`;
-
 export const Votes = styled(({ count, iconSize = 1, userRate, ...rest }) => (
   <NumberSmall {...rest}>
     <Icon icon="users" size={iconSize} /> <span className="count">{count || 0}</span>{' '}
@@ -112,18 +103,14 @@ const Expand = keyframes`
 const Colapse = keyframes`
   0% {
     margin: 0px;
-    margin-top: -97px;
+    margin-top: -75px;
     height: 100%;
-
     opacity: 0.5;
   }
-  50% {
-      height: 40%;
-    }
-  }
+
   100% {
     margin: 25px;
-    margin-top: -40px;
+    margin-top: 0px;
     margin-bottom: 0px;
     height: 8px;
     margin-left: 24px;
@@ -140,7 +127,7 @@ const SliderWrapper = styled.div`
   margin-top: 0px;
   margin-bottom: 0px;
   top: ${({ expanded }) => (expanded === true ? '0' : '-20')}px;
-  animation: ${({ expanded }) => (expanded === true ? Expand : Colapse)} linear ${({ duration }) => `${duration}s`};
+  animation: ${({ expanded }) => (expanded === true ? Expand : Colapse)} ease-in-out ${({ duration }) => `${duration}s`};
   background: ${({ expanded }) => (expanded === true ? theme.colors.darkGray : palette.transparent)};
   animation-fill-mode: forwards;
 `;
@@ -188,7 +175,7 @@ const BaseRateSlider = ({
   onSlideEnd,
   ...sliderProps
 }) => {
-  const { readonly: decimal, size, padd } = sliderProps;
+  const { readonly: decimal, size, padd, fillColor = palette.darkGray } = sliderProps;
   const [value, setValue] = useState(initialValue);
   const [userValue, setUserValue] = useState(userRate);
   const [isExpanded, setExpanded] = useState(expanded);
@@ -248,6 +235,7 @@ const BaseRateSlider = ({
             onChange={handleChange}
             onSlideStart={onSlideStart}
             onSlideEnd={onSlideEnd}
+            fillColor={fillColor}
             x={(isExpanded && (userValue || 0.0)) || (!isExpanded && value)}
             disabled={readonly}
           >
