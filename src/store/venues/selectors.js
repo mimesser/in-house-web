@@ -76,6 +76,23 @@ export const selectSelectedTag = createSelector(
     selectedVenue.rates.find((t) => t.definitionId === selectedVenue.selectedTagId),
 );
 
+export const selectSelectedCategory = createSelector(
+  selectSelectedVenue,
+  (selectedVenue) => selectedVenue && selectedVenue.selectedCategory,
+);
+
+export const selectFilteredTags = createSelector(
+  selectSelectedVenue,
+  (selectedVenue) =>
+    selectedVenue &&
+    selectedVenue.rates &&
+    selectedVenue.rates.filter(
+      (t) =>
+        (selectedVenue.selectedCategory && t.rateTagCategoryId === selectedVenue.selectedCategory.id) ||
+        !selectedVenue.selectedCategory,
+    ),
+);
+
 export const selectSelectedTagTargetValue = createSelector(
   selectSelectedVenue,
   (selectedVenue) => (selectedVenue && selectedVenue.selectedTagTargetRate) || undefined,

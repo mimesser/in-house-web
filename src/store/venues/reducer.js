@@ -65,6 +65,9 @@ export function reducer(state = initialState, action) {
     case actionTypes.SET_SELECTED_MINK: {
       return setSelectedVenueProp(state, action, 'selectedMinkId');
     }
+    case actionTypes.SET_SELECTED_CATEGORY: {
+      return setSelectedVenueProp(state, action, 'selectedCategory');
+    }
     case actionTypes.SET_SELECTED_TAG: {
       return setSelectedVenueProp(state, action, 'selectedTagId');
     }

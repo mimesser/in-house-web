@@ -5,3 +5,4 @@ export * from './spacing';
 export * from './breakpoints';
 export * from './theme';
 export * from './globals';
+export * from './colors';

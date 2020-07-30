@@ -64,7 +64,7 @@ const SliderFilled = styled.div`
   height: 100%;
   padding: 0;
   position: absolute;
-  background-color: ${theme.colors.mediumGray};
+  background-color: ${({ fillColor }) => fillColor};
   user-select: 'none';
   box-sizing: 'border-box';
   width: ${(props) => props.percentage};
@@ -72,7 +72,19 @@ const SliderFilled = styled.div`
   z-index: auto;
 `;
 
-const BaseSlider = ({ disabled, x, min, max, step, onChange, onSlideStart, onSlideEnd, onClick, ...props }) => {
+const BaseSlider = ({
+  disabled,
+  x,
+  min,
+  max,
+  step,
+  onChange,
+  fillColor,
+  onSlideStart,
+  onSlideEnd,
+  onClick,
+  ...props
+}) => {
   const container = useRef(null);
   const handle = useRef(null);
   const start = useRef({});
@@ -205,7 +217,7 @@ const BaseSlider = ({ disabled, x, min, max, step, onChange, onSlideStart, onSli
       onMouseDown={handleMouseDown}
     >
       {value ? (
-        <SliderFilled percentage={percentage} />
+        <SliderFilled percentage={percentage} fillColor={fillColor} />
       ) : (
         <GradientWrapper>
           <GradientFill delay={Math.random()} />

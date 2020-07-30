@@ -23,6 +23,7 @@ export const actionTypes = {
   TRY_ANSWER_MINK: 'TRY_ANSWER_MINK',
   SET_ANSWER_MINK_STATUS: 'SET_ANSWER_MINK_STATUS',
   SET_MY_CORRECT_ANSWER: 'SET_MY_CORRECT_ANSWER',
+  SET_SELECTED_CATEGORY: 'SET_SELECTED_CATEGORY',
   SET_SELECTED_TAG: 'SET_SELECTED_TAG',
   SET_SELECTED_TAG_TARGET_RATE: 'SET_SELECTED_TAG_TARGET_RATE',
   RATE_IN_PROGRESS: 'RATE_IN_PROGRESS',
@@ -184,6 +185,11 @@ export const setMyCorrectAnswer = (minkId, answer) => ({
 export const setSelectedTag = (selectedTagId) => ({
   type: actionTypes.SET_SELECTED_TAG,
   payload: { selectedTagId },
+});
+
+export const setSelectedCategory = (selectedCategory) => ({
+  type: actionTypes.SET_SELECTED_CATEGORY,
+  payload: { selectedCategory },
 });
 
 export const setRateInProgress = (rateInProgress) => ({
