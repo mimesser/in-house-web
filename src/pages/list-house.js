@@ -19,7 +19,7 @@ const Underline = styled.span`
 `;
 const HorizontalBreak = styled(Break)`
   margin-top:0;
-  margin-bottom:3.5em;`
+  margin-bottom:3.5em;
 `;
 const Description = styled.p``
 function BetaList() {
