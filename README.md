@@ -3,12 +3,20 @@
 ## Global dependencies and tools
 Node.js and npm https://nodejs.org/en/
   
+## Install dependencies
+`npm install`
+
+## Create a .env file in the root project folder and add the following line:
+`
+API_URL=https://ih-dev-api.azurewebsites.net/api
+`
+
 ## Building project 
 `npm ci`
 
 ## Running locally
-Start local web server in dev mode (with hot reloading) pointing to back-end in dev environment   
-`npm run local-dev`   
+Start local web server in dev mode (with hot reloading) pointing to the staging back-end in dev environment   
+`npm run next:dev`   
 
 ## Running tests
 Our test framework is Jest https://jestjs.io/  
