@@ -81,6 +81,11 @@ export const selectSelectedCategory = createSelector(
   (selectedVenue) => selectedVenue && selectedVenue.selectedCategory,
 );
 
+export const selectCategoryRatings = createSelector(
+  selectSelectedVenue,
+  (selectedVenue) => selectedVenue && selectedVenue.rateTagCategories,
+);
+
 export const selectFilteredTags = createSelector(
   selectSelectedVenue,
   (selectedVenue) =>
