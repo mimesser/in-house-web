@@ -14,16 +14,14 @@ const Paper = styled(Page)`
 const ActionButton = styled(Button)`
   margin-left: auto;
 `;
-// THESE ARE THE STYLES I ADDED - (Mari)
 const Underline = styled.span`
   text-decoration:underline;
 `;
 const HorizontalBreak = styled(Break)`
   margin-top:0;
-  margin-bottom:3.5em;
+  margin-bottom:3.5em;`
 `;
 const Description = styled.p``
-// /////////////////////////////////////
 function BetaList() {
   return (
     <>
