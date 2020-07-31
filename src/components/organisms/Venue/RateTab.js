@@ -15,6 +15,7 @@ import {
   selectSelectedCategory,
   setSelectedCategory,
   selectFilteredTags,
+  selectCategoryRatings,
 } from '../../../store/venues';
 import { selectEsgCategories } from '../../../store/aggregate';
 import { TabLayout, Main, ItemTitle } from './tabStyle';
@@ -124,6 +125,11 @@ const findTag = (id, tags) => {
   return tag;
 };
 
+const findCategoryRating = (id, categoryRatings) => {
+  const cat = categoryRatings && categoryRatings.find((c) => c.id === id);
+  return cat && cat.rating;
+};
+
 const RateTab = ({
   venue: { rates: tags },
   filteredTags,
@@ -136,6 +142,7 @@ const RateTab = ({
   rateInProgress,
   categories,
   selectedCategory,
+  categoryRatings,
 }) => {
   useEffect(() => {
     loadRates();
@@ -173,10 +180,10 @@ const RateTab = ({
             <RateCategory
               key={category.id}
               category={category}
-              value={`7.${i}`}
+              value={findCategoryRating(category.id, categoryRatings)}
               expanded={selectedCategory && selectedCategory.id === category.id}
               onClick={() => {
-                console.log('# slected cat:', category, setSelectedCategory, setSelectedTag);
+                console.log('# slected cat:', category, categoryRatings);
                 setSelectedCategory(category);
                 setSelectedTag(null);
               }}
@@ -211,6 +218,7 @@ const RateTab = ({
 
 const mapState = createStructuredSelector({
   categories: selectEsgCategories,
+  categoryRatings: selectCategoryRatings,
   selectedTag: selectSelectedTag,
   rateInProgress: selectSelectedRateInProgeress,
   selectedCategory: selectSelectedCategory,
