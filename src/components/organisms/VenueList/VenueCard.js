@@ -1,10 +1,15 @@
 import React, { useCallback } from 'react';
 
 import styled from 'styled-components';
-import { spacing } from '../../../style';
+import { spacing, palette, calcRem, fontSize } from '../../../style';
 import { Address, HelpTip, HouseNameLarge, Break } from '../../atoms';
+import { PokeButton } from '../../molecules';
 import { ScoreAndVoters } from '../Venue/ScoreAndVoters';
 import { VenueContainer, Main, Industry } from './style';
+
+import PrivateShareButton from '../Venue/PrivateShareButton';
+import PrivateShare from '../Venue/PrivateShare';
+import { ItemText, ItemTitle } from '../Venue/tabStyle';
 
 const helpTip = (
   <>
@@ -14,20 +19,41 @@ const helpTip = (
 );
 
 const BoldBreak = styled(Break)`
-  min-width: 42px;
-  min-height: 6px;
+  width: 58px;
+  height: ${calcRem('18px')};
 `;
 
-export const VenueCard = ({ venue, showVenue, withHelp }) => {
-  const handleClick = useCallback(() => showVenue(venue), [venue]);
+const Wrapper = styled.div`
+  ${Industry} {
+    font-size: ${fontSize.xs};
+  }
+  ${Address} {
+    font-size: ${fontSize.xs};
+  }
+  ${HouseNameLarge} {
+    font-size: ${fontSize.sm};
+  }
+  display: block;
+`;
 
-  const {
-    votesCount,
-    industry,
-    name,
-    rating,
-    venueInfo: { imageUrl, address, city, state, zipCode },
-  } = venue;
+const PrivateShareButtonLayout = styled.div`
+  display: block;
+  position: relative;
+  height: 20px;
+  width: 20px;
+  margin: 0;
+  margin-left: auto;
+  top: -8px;
+  margin-top: -20px;
+  > ${PokeButton} {
+    color: ${palette.lightGray};
+    width: 20px;
+  }
+`;
+
+export const VenueCard = ({ venue = {}, showVenue, withHelp, categoryRatings }) => {
+  const handleClick = useCallback(() => showVenue(venue), [venue]);
+  const { votesCount, industry, name, rating, venueInfo: { imageUrl, address, city, state, zipCode } = {} } = venue;
 
   const addressBlock = venue.isPoll ? (
     <>
@@ -47,21 +73,27 @@ export const VenueCard = ({ venue, showVenue, withHelp }) => {
 
   const card = (
     // TODO: this should be a link
-    <VenueContainer onClick={handleClick}>
-      <div>
-        <ScoreAndVoters voteCount={votesCount} voteRating={rating} sliderSize={72} />
-        <Main imageUrl={imageUrl}>
-          <Industry>{industry && industry.name}</Industry>
-          <HouseNameLarge>{name}</HouseNameLarge>
+    <Wrapper>
+      <VenueContainer onClick={handleClick}>
+        <div>
+          <ScoreAndVoters
+            voteCount={votesCount}
+            voteRating={rating}
+            sliderSize={72}
+            categoryRatings={categoryRatings}
+          />
+          <Main imageUrl={imageUrl}>
+            <Industry>{industry && industry.name}</Industry>
+            <PrivateShareButtonLayout>
+              <PrivateShareButton id={venue.id} type="venue" />
+            </PrivateShareButtonLayout>
+            <HouseNameLarge>{name}</HouseNameLarge>
 
-          {addressBlock}
-        </Main>
-      </div>
-      {/* TODO: bring back once design provided */}
-      {/* <PrivateShareButtonLayout> */}
-      {/*  <PrivateShareButton id={venue.id} /> */}
-      {/* </PrivateShareButtonLayout> */}
-    </VenueContainer>
+            {addressBlock}
+          </Main>
+        </div>
+      </VenueContainer>
+    </Wrapper>
   );
 
   return withHelp ? <HelpTip tip={helpTip}>{card}</HelpTip> : card;
