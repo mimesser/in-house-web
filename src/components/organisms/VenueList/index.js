@@ -7,7 +7,7 @@ import Link from 'next/link';
 import styled from 'styled-components';
 import { spacing } from '../../../style';
 import { Loader, ClearButton, Icon, Button, Card, H1, Portal } from '../../atoms';
-
+import PrivateShare from '../Venue/PrivateShare';
 import {
   selectInsiderChallengeForm,
   selectSelectedVenue,
@@ -15,6 +15,7 @@ import {
   selectPolls,
   selectSelectedPoll,
 } from '../../../store/venues';
+import { selectEsgCategories } from '../../../store/aggregate';
 import { selectInDemo } from '../../../store/demo';
 import { VenueCard } from './VenueCard';
 import { SearchBox, Layout, Results, NoResultsSearchLabel, SelectedItemArea } from './style';
@@ -50,14 +51,12 @@ const SearchBoxIcon = ({ applyFilter, clear }) =>
   );
 
 const findVenue = (id, venues) => {
-  const venue = venues.find((t) => t.id === id);
-  if (!venue) {
-    throw new Error(`Can't find venue ${id}`);
-  }
+  const venue = id && venues && venues.find((t) => t.id === id);
+
   return venue;
 };
 
-const SearchPage = ({ venues, inDemo }) => {
+const SearchPage = ({ venues, inDemo, categories }) => {
   const [filter, setFilter] = useState('');
   const handleSearchChange = useCallback((e) => setFilter(e.currentTarget.value.toLowerCase()), []);
   const clearSearch = useCallback(() => setFilter(''), []);
@@ -95,6 +94,10 @@ const SearchPage = ({ venues, inDemo }) => {
   if (!venues) {
     return <Loader big />;
   }
+  const findCategoryRating = (id, categoryRatings) => {
+    const cat = categoryRatings && categoryRatings.find((c) => c.id === id);
+    return cat && cat.rating;
+  };
 
   const applyFilter = !!filter;
   const venuesToShow = applyFilter ? venues.filter((v) => v.name.toLowerCase().includes(filter)) : venues;
@@ -110,9 +113,25 @@ const SearchPage = ({ venues, inDemo }) => {
           onChange={handleSearchChange}
         />
         {filter && nothingFound && <NoResultsSearchLabel>no results</NoResultsSearchLabel>}
-        {venuesToShow.map((v, i) => (
-          <VenueCard key={v.id} venue={v} showVenue={showVenue} withHelp={i === 0} />
-        ))}
+        {venuesToShow.map((v, i) => {
+          console.log('# combining data: ', categories, v.rateTagCategories);
+
+          const venueCategories =
+            categories &&
+            categories.map((category, i) => {
+              return { ...category, rating: findCategoryRating(category.id, v.rateTagCategories) };
+            });
+          console.log('# combining result: ', venueCategories);
+          return (
+            <VenueCard
+              key={v.id}
+              venue={v}
+              showVenue={showVenue}
+              withHelp={i === 0}
+              categoryRatings={venueCategories}
+            />
+          );
+        })}
         {!inDemo && (
           <section>
             {/* <Link href="/list" passHref> */}
@@ -122,7 +141,14 @@ const SearchPage = ({ venues, inDemo }) => {
             {/* </Link> */}
           </section>
         )}
-        {/* <PrivateShare type="venue" renderItem={renderSharePreview} getItemTitle={getTitleForShare} getVenue={getVenue} /> */}
+        {venues && (
+          <PrivateShare
+            type="venue"
+            renderItem={renderSharePreview}
+            getItemTitle={getTitleForShare}
+            getVenue={getVenue}
+          />
+        )}
       </Results>
       <SelectedItemArea>
         <BetaLink>
@@ -140,6 +166,7 @@ const mapStateToProps = createStructuredSelector({
   inDemo: selectInDemo,
   venue: selectSelectedVenue,
   challengeForm: selectInsiderChallengeForm,
+  categories: selectEsgCategories,
 });
 
 export const VenueList = connect(mapStateToProps)(SearchPage);

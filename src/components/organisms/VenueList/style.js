@@ -15,7 +15,7 @@ export const Layout = styled.div`
 `;
 
 export const Results = styled.div`
-  padding: ${spacing.lg} ${spacing.xxl} ${spacing.xxl};
+  padding: ${spacing.lg} ${spacing.md} ${spacing.md};
   display: flex;
   flex-direction: column;
   flex: 1;
