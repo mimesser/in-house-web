@@ -2,13 +2,16 @@ import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
 
 import { PokeButton } from '../../molecules';
-import { setPrivateShareItemId } from '../../../store/venues';
+import { setPrivateShareItem } from '../../../store/venues';
 
-const Share = ({ id, type, openModal }) => {
+const Share = ({ id, type, openModal, onOpenSharePopup }) => {
   const handleClick = useCallback(
-    e => {
+    (e) => {
       e.stopPropagation();
-      openModal(id);
+      openModal(id, type);
+      if (onOpenSharePopup && typeof onOpenSharePopup === 'function') {
+        onOpenSharePopup();
+      }
     },
     [id],
   );
@@ -16,10 +19,7 @@ const Share = ({ id, type, openModal }) => {
 };
 
 const mapDispatch = {
-  openModal: setPrivateShareItemId,
+  openModal: setPrivateShareItem,
 };
 
-export default connect(
-  undefined,
-  mapDispatch,
-)(Share);
+export default connect(undefined, mapDispatch)(Share);

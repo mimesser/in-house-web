@@ -75,7 +75,7 @@ const SearchPage = ({ venues, inDemo }) => {
         ))}
         {!inDemo && (
           <section>
-            {/* <Link href="/beta-list" passHref> */}
+            {/* <Link href="/list-house" passHref> */}
             <BetaCard icon="arrow-right" href="/feedback?subjectIndex=1&redirect=/polls">
               request your industry
             </BetaCard>

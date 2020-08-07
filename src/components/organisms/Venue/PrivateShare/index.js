@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import {
-  clearPrivateShareItemId,
-  selectPrivateShareItemId,
+  clearPrivateShareItem,
+  selectPrivateShareItem,
   selectPrivateShareRecipientError,
   selectSelectedVenue,
   privateShare,
@@ -88,10 +88,10 @@ const PrivateShare = ({
 };
 
 const ModalWrapper = (props) => {
-  const { id, sending, sent, inDemo, close } = props;
-  const venue = props.venue || (id ? props.getVenue(id) : undefined);
+  const { shareItem, sending, sent, inDemo, close } = props;
+  const venue = props.venue || (shareItem ? props.getVenue(shareItem.id) : undefined);
 
-  if (!id) {
+  if (!shareItem || shareItem.type !== props.type) {
     return null;
   }
 
@@ -103,14 +103,14 @@ const ModalWrapper = (props) => {
       canDismiss={false}
       title={venue && venue.name}
     >
-      {!sent && <PrivateShare {...props} venue={venue} />}
+      {!sent && <PrivateShare {...props} venue={venue} id={shareItem.id} />}
       {sent && (inDemo ? <DemoWinkConfirmation onCloseClick={close} /> : <WinkConfirmation />)}
     </Modal>
   );
 };
 
 const mapState = createStructuredSelector({
-  id: selectPrivateShareItemId,
+  shareItem: selectPrivateShareItem,
   venue: selectSelectedVenue,
   recipientError: selectPrivateShareRecipientError,
   sent: selectPrivateShareSent,
@@ -119,7 +119,7 @@ const mapState = createStructuredSelector({
 });
 
 const mapDispatch = {
-  close: clearPrivateShareItemId,
+  close: clearPrivateShareItem,
   share: privateShare,
   setError: setPrivateShareRecipientError,
 };

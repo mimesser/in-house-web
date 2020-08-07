@@ -24,8 +24,8 @@ function BetaList() {
           <H1>your workspace?</H1>
           <Break />
           <>
-            we will only be offering this platform to essential workforces during our beta trial. please contact us if
-            you like to include yours
+            we will only be offering this platform to essential workforces or on demand. please contact us if you like
+            to include yours
           </>
         </Main>
         <Commands>

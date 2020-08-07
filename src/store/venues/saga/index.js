@@ -7,6 +7,7 @@ import { answerTopMink } from './answerTopMink';
 import { initVenuesPage, initPollsPage } from './initVenuesPage';
 import { setSelectedVenue } from './setSelectedVenue';
 import { loadVenueMinks } from './loadVenueMinks';
+import { dismissWelcomeForm } from './dismissWelcomeForm';
 import { dismissChallengeForm } from './dismissChallengeForm';
 import { dismissPollChallengeForm } from './dismissPollChallengeForm';
 import { createMink } from './createMink';
@@ -30,6 +31,7 @@ export default function* venuesSaga() {
     takeLatest(actionTypes.SET_SELECTED_VENUE, withErrorReporter(setSelectedVenue)),
     takeLeading(actionTypes.ANSWER_TOP_MINK, withErrorReporter(answerTopMink)),
     takeLatest(actionTypes.LOAD_MINKS, withErrorReporter(loadVenueMinks)),
+    takeLatest(actionTypes.DISMISS_WELCOME_FORM, withErrorReporter(dismissWelcomeForm)),
     takeLatest(actionTypes.DISMISS_CHALLENGE_FORM, withErrorReporter(dismissChallengeForm)),
     takeLatest(actionTypes.DISMISS_POLL_CHALLENGE_FORM, withErrorReporter(dismissPollChallengeForm)),
     takeLeading(actionTypes.CREATE_MINK, withErrorReporter(createMink)),

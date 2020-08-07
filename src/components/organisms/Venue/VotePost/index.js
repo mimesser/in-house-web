@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -25,8 +25,26 @@ const VoteWrap = styled.div`
   display: inline-flex;
 `;
 
+const PostImage = styled.div.attrs(({ imageUrl }) => imageUrl && { style: { backgroundImage: `url(${imageUrl})` } })`
+  min-height: 140px;
+  max-width: 140px;
+  min-width: 140px;
+  margin: 20px 20px 20px 0px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+`;
+
+const FullImage = styled.div.attrs(({ imageUrl }) => imageUrl && { style: { backgroundImage: `url(${imageUrl})` } })`
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+`;
+
 const VotePost = ({
-  post: { created, title, text, myVote, wasFlaggedByMe },
+  post: { created, title, text, myVote, wasFlaggedByMe, imageUrl },
   upvotePost,
   downvotePost,
   togglePostFlag,
@@ -34,28 +52,43 @@ const VotePost = ({
 }) => {
   const upvoted = myVote === 1;
   const downvoted = myVote === -1;
+  const [showFullImage, setShowFullImage] = useState(false);
+
+  const close = useCallback(() => setShowFullImage(false));
+  const open = useCallback(() => setShowFullImage(true));
 
   return (
-    <Layout>
-      <ItemDate dateTime={created}>{formatDate(created)}</ItemDate>
-      <ItemTitle>{title}</ItemTitle>
-      <Break />
-      <ItemText>{text}</ItemText>
-      <VoteRow>
-        <HelpTip placement="top" tip="agree or disagree">
-          <VoteWrap>
-            <VoteButton onClick={upvotePost} selected={upvoted}>
-              <Icon size={4} icon={upvoted ? 'arrow-up-circle-full' : 'arrow-up-circle'} />
-            </VoteButton>
-            <VoteButton onClick={downvotePost} selected={downvoted}>
-              <Icon size={4} icon={downvoted ? 'arrow-down-circle-full' : 'arrow-down-circle'} />
-            </VoteButton>
-          </VoteWrap>
-        </HelpTip>
-      </VoteRow>
-      <FlagItem flagged={wasFlaggedByMe} toggleFlag={togglePostFlag} />
-      <p>{errorMessage}</p>
-    </Layout>
+    <>
+      <Layout>
+        <ItemDate dateTime={created}>{formatDate(created)}</ItemDate>
+        <ItemTitle>{title}</ItemTitle>
+        <Break />
+        <PostImage imageUrl={imageUrl} alt="post image" onClick={open} />
+        <ItemText>{text}</ItemText>
+        <VoteRow>
+          <HelpTip placement="top" tip="agree or disagree">
+            <VoteWrap>
+              <VoteButton onClick={upvotePost} selected={upvoted}>
+                <Icon size={4} icon={upvoted ? 'arrow-up-circle-full' : 'arrow-up-circle'} />
+              </VoteButton>
+              <VoteButton onClick={downvotePost} selected={downvoted}>
+                <Icon size={4} icon={downvoted ? 'arrow-down-circle-full' : 'arrow-down-circle'} />
+              </VoteButton>
+            </VoteWrap>
+          </HelpTip>
+        </VoteRow>
+        <FlagItem flagged={wasFlaggedByMe} toggleFlag={togglePostFlag} />
+        <p>{errorMessage}</p>
+      </Layout>
+
+      {showFullImage ? (
+        <Modal closeModal={close} canClose canDismiss inverse>
+          <Layout>
+            <FullImage imageUrl={imageUrl} alt="post image" />
+          </Layout>
+        </Modal>
+      ) : null}
+    </>
   );
 };
 

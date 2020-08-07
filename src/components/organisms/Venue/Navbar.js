@@ -54,6 +54,10 @@ const Nav = styled.nav`
   background-color: ${palette.white};
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   z-index: 1; // otherwise box-shadow is hidden in rate tab
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+  z-index: 3;
 `;
 
 const TabHeader = ({ id, tab: { path, label, secured, help }, active, custom, authorized, venueType = 'houses' }) => {

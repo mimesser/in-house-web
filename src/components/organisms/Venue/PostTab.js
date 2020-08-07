@@ -14,9 +14,31 @@ import PrivateShareButton from './PrivateShareButton';
 import { Dial } from '../../molecules';
 import { Votes } from './Votes';
 
-const PostCard = styled(Card)``;
+const PostCard = styled(Card)`
+  min-height: 160px;
+`;
 
-const Post = ({ post: { id, created, title, text, voteCount, voteRating, myVote }, setSelectedPost, withHelp }) => {
+const PostImage = styled.div.attrs(({ imageUrl }) => imageUrl && { style: { backgroundImage: `url(${imageUrl})` } })`
+  min-height: 48px;
+  max-width: 48px;
+  min-width: 48px;
+  margin-left: auto;
+  margin-top: auto;
+  float: right;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+`;
+
+const PostText = styled(ItemText)`
+  margin-right: 39px;
+`;
+
+const Post = ({
+  post: { id, created, title, text, voteCount, voteRating, myVote, imageUrl },
+  setSelectedPost,
+  withHelp,
+}) => {
   const open = useCallback(() => setSelectedPost(id), [id]);
 
   const card = (
@@ -32,8 +54,11 @@ const Post = ({ post: { id, created, title, text, voteCount, voteRating, myVote 
           </div>
         </Main>
       </div>
-      <ItemText>{text}</ItemText>
-      <PrivateShareButton id={id} />
+      <div>
+        <PostText>{text}</PostText>
+        <PostImage imageUrl={imageUrl} alt="post image" />
+      </div>
+      <PrivateShareButton id={id} type="post" />
     </PostCard>
   );
   return withHelp ? (
@@ -48,7 +73,6 @@ const Post = ({ post: { id, created, title, text, voteCount, voteRating, myVote 
 const renderSection = (title, posts, setSelectedPost) =>
   posts.length > 0 && (
     <>
-      <TabTitle>{title}</TabTitle>
       {posts.map((p, i) => (
         <Post post={p} key={p.id} setSelectedPost={setSelectedPost} withHelp={i === 0} />
       ))}

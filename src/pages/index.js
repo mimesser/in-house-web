@@ -144,7 +144,7 @@ const Landing = () => {
             <BetaDesc>no email, no login, no personal data</BetaDesc>
             <Link href="/houses" prefetch={false}>
               <BetaLink icon="arrow-right" wide outline>
-                see beta houses
+                see houses
               </BetaLink>
             </Link>
           </section>

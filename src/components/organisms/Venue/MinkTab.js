@@ -16,7 +16,9 @@ import PrivateShareButton from './PrivateShareButton';
 import { Dial, PokeButton } from '../../molecules';
 import { Votes } from './Votes';
 
-const MinkCard = styled(Card)``;
+const MinkCard = styled(Card)`
+  min-height: 160px;
+`;
 
 const TopMinkContainer = styled.div`
   background-color: ${palette.primary};
@@ -84,7 +86,7 @@ const Mink = ({
           </div>
         </Main>
       </div>
-      <PrivateShareButton id={id} />
+      <PrivateShareButton id={id} type="mink" />
     </MinkCard>
   );
   return topMink ? (
