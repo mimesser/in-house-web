@@ -27,7 +27,7 @@ export function* togglePostFlag() {
       yield put(setVenuePosts(updatedPosts));
     }
   } catch (error) {
-    console.log('### could not flag:', error);
+    console.log('Could not flag:', error);
     yield put(toggleFlagError("User can't ask to remove post when he didn't vote for it"));
   }
 }

@@ -8,7 +8,10 @@ const initialState = {
   list: undefined,
   selectedVenue: undefined,
   insiderChallengeForm: undefined,
-  privateShareItemId: undefined,
+  privateShareItem: {
+    id: undefined,
+    type: undefined,
+  },
   privateShareRecipientError: undefined,
   privateShareSending: undefined,
 };
@@ -43,6 +46,13 @@ export function reducer(state = initialState, action) {
       const { payload } = action;
       return { ...state, insiderChallengeForm: payload };
     }
+    case actionTypes.DISMISS_WELCOME_FORM: {
+      return { ...state, selectedVenue: { ...state.selectedVenue } };
+    }
+    case actionTypes.SHOW_WELCOME_FORM: {
+      const { showWelcome } = action.payload;
+      return { ...state, selectedVenue: { ...state.selectedVenue, showWelcome } };
+    }
     case actionTypes.SET_VENUE_TOP_MINK: {
       return setSelectedVenueProp(state, action, 'topMink');
     }
@@ -55,8 +65,17 @@ export function reducer(state = initialState, action) {
     case actionTypes.SET_SELECTED_MINK: {
       return setSelectedVenueProp(state, action, 'selectedMinkId');
     }
+    case actionTypes.SET_SELECTED_CATEGORY: {
+      return setSelectedVenueProp(state, action, 'selectedCategory');
+    }
     case actionTypes.SET_SELECTED_TAG: {
       return setSelectedVenueProp(state, action, 'selectedTagId');
+    }
+    case actionTypes.SET_SELECTED_TAG_TARGET_RATE: {
+      return setSelectedVenueProp(state, action, 'selectedTagTargetRate');
+    }
+    case actionTypes.RATE_IN_PROGRESS: {
+      return setSelectedVenueProp(state, action, 'rateInProgress');
     }
     case actionTypes.SHOW_VOTE_MINK_CONFIRMATION: {
       return setSelectedVenueProp(state, action, 'voteMinkConfirmation');
@@ -98,15 +117,16 @@ export function reducer(state = initialState, action) {
 
       // TODO: consider storing items as map for easier updates
 
-      const list = (state.list && state.list.slice()) || (state.polls && state.polls.slice());
-      const index = list.findIndex((v) => v.id === venue.id);
-      list[index] = venue;
-
       const selectedVenue = state.selectedVenue && {
         ...state.selectedVenue,
+        venueInfo: { ...state.selectedVenue.venueInfo },
+        industry: { ...state.selectedVenue.industry },
         votesCount: venue.votesCount,
         rating: venue.rating,
       };
+      const list = (state.list && state.list.slice()) || (state.polls && state.polls.slice());
+      const index = list.findIndex((v) => v.id === venue.id);
+      list[index] = selectedVenue;
 
       return { ...state, list, selectedVenue };
     }
@@ -122,14 +142,14 @@ export function reducer(state = initialState, action) {
     case actionTypes.SHOW_VOTE_POST_CONFIRMATION: {
       return setSelectedVenueProp(state, action, 'votePostConfirmation');
     }
-    case actionTypes.SET_PRIVATE_SHARE_ITEM_ID: {
-      const { privateShareItemId } = action.payload;
+    case actionTypes.SET_PRIVATE_SHARE_ITEM: {
+      const { privateShareItemId, type } = action.payload;
 
       return {
         ...state,
         privateShareRecipientError: undefined,
         privateShareSending: undefined,
-        privateShareItemId,
+        privateShareItem: { id: privateShareItemId, type },
       };
     }
     case actionTypes.SET_PRIVATE_SHARE_RECIPIENT_ERROR: {

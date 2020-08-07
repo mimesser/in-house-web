@@ -12,6 +12,10 @@ export function* reloadVenuePosts(id) {
       data: { feedback },
     } = yield call(api.get, `/venues/${id}/feedback?OrderBy=VoteCount`);
     const posts = feedback || [];
+    const {
+      venueInfo: { imageUrl },
+    } = yield select(selectSelectedVenue);
+
     yield put(setVenuePosts(posts));
 
     return posts;

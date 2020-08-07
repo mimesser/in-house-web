@@ -21,3 +21,9 @@ export const selectAuthorizedBetaUser = createSelector(
   ({ isAuthorizedBetaUser }) => isAuthorizedBetaUser || false,
 );
 export const selectBetaWrongAnswer = createSelector(selectAggregate, ({ wrongAnswer }) => wrongAnswer);
+
+export const selectEsgCategories = createSelector(selectAggregate, ({ rateTagGroups }) => {
+  const item = rateTagGroups.filter((object) => object.name === 'E.S.G');
+  console.log(item);
+  return item && item[0] && item[0].categories;
+});

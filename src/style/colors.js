@@ -13,6 +13,10 @@ export const appColors = {
   gray4: '#BDBDBD',
   gray5: '#E0E0E0',
   offWhite: '#F9F9F9',
+
+  green: '#43821E',
+  red: '#943838',
+  blue: '#2F528D',
 };
 
 export const themeColors = {

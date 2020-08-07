@@ -24,6 +24,11 @@ export const selectInsiderChallengeForm = createSelector(
   ({ insiderChallengeForm }) => insiderChallengeForm,
 );
 
+export const selectSkipWelcome = createSelector(
+  selectSelectedVenue,
+  (selectedVenue) => (selectedVenue && selectedVenue.skipWelcome) || false,
+);
+
 export const selectIsActiveInsider = createSelector(
   selectInsiderVenueIds,
   selectSelectedVenue,
@@ -58,12 +63,44 @@ export const selectNewMinkElected = createSelector(
   (selectedVenue) => selectedVenue && selectedVenue.newMinkElected,
 );
 
+export const selectSelectedRateInProgeress = createSelector(
+  selectSelectedVenue,
+  (selectedVenue) => selectedVenue && selectedVenue.rateInProgress,
+);
+
 export const selectSelectedTag = createSelector(
   selectSelectedVenue,
   (selectedVenue) =>
     selectedVenue &&
     selectedVenue.rates &&
     selectedVenue.rates.find((t) => t.definitionId === selectedVenue.selectedTagId),
+);
+
+export const selectSelectedCategory = createSelector(
+  selectSelectedVenue,
+  (selectedVenue) => selectedVenue && selectedVenue.selectedCategory,
+);
+
+export const selectCategoryRatings = createSelector(
+  selectSelectedVenue,
+  (selectedVenue) => selectedVenue && selectedVenue.rateTagCategories,
+);
+
+export const selectFilteredTags = createSelector(
+  selectSelectedVenue,
+  (selectedVenue) =>
+    selectedVenue &&
+    selectedVenue.rates &&
+    selectedVenue.rates.filter(
+      (t) =>
+        (selectedVenue.selectedCategory && t.rateTagCategoryId === selectedVenue.selectedCategory.id) ||
+        !selectedVenue.selectedCategory,
+    ),
+);
+
+export const selectSelectedTagTargetValue = createSelector(
+  selectSelectedVenue,
+  (selectedVenue) => (selectedVenue && selectedVenue.selectedTagTargetRate) || undefined,
 );
 
 export const selectRateTagConfirmation = createSelector(
@@ -93,10 +130,7 @@ export const selectPostFlagError = createSelector(
   (selectedVenue) => selectedVenue && selectedVenue.message,
 );
 
-export const selectPrivateShareItemId = createSelector(
-  selectVenueState,
-  ({ privateShareItemId }) => privateShareItemId,
-);
+export const selectPrivateShareItem = createSelector(selectVenueState, ({ privateShareItem }) => privateShareItem);
 
 export const selectPrivateShareRecipientError = createSelector(
   selectVenueState,

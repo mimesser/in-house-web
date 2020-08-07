@@ -21,8 +21,8 @@ const CloseIcon = styled(Icon).attrs(() => ({
 `;
 
 const routes = [
-  { href: '/houses', label: 'see beta houses' },
-  { href: '/beta-list', label: 'beta-list workplace' },
+  { href: '/houses', label: 'see houses' },
+  { href: '/list-house', label: 'list workplace' },
   { href: '/about', label: 'about' },
   { href: '/feedback', label: 'contact us' },
 ];

@@ -6,6 +6,8 @@ export const actionTypes = {
   LOAD_VENUES_DATA_SUCCESS: 'LOAD_VENUES_DATA_SUCCESS',
   SET_SELECTED_VENUE: 'SET_SELECTED_VENUE',
   SET_VENUE_TOP_MINK: 'SET_VENUE_TOP_MINK',
+  SHOW_WELCOME_FORM: 'SHOW_WELCOME_FORM',
+  DISMISS_WELCOME_FORM: 'DISMISS_WELCOME_FORM',
   ANSWER_TOP_MINK: 'ANSWER_TOP_MINK',
   SET_CHALLENGE_FORM_DATA: 'SET_CHALLENGE_FORM_DATA',
   DISMISS_CHALLENGE_FORM: 'DISMISS_CHALLENGE_FORM',
@@ -21,7 +23,10 @@ export const actionTypes = {
   TRY_ANSWER_MINK: 'TRY_ANSWER_MINK',
   SET_ANSWER_MINK_STATUS: 'SET_ANSWER_MINK_STATUS',
   SET_MY_CORRECT_ANSWER: 'SET_MY_CORRECT_ANSWER',
+  SET_SELECTED_CATEGORY: 'SET_SELECTED_CATEGORY',
   SET_SELECTED_TAG: 'SET_SELECTED_TAG',
+  SET_SELECTED_TAG_TARGET_RATE: 'SET_SELECTED_TAG_TARGET_RATE',
+  RATE_IN_PROGRESS: 'RATE_IN_PROGRESS',
   RATE_TAG: 'RATE_TAG',
   SHOW_RATE_TAG_CONFIRMATION: 'SHOW_RATE_TAG_CONFIRMATION',
   UPDATE_VENUE_RATE: 'UPDATE_VENUE_RATE',
@@ -34,7 +39,7 @@ export const actionTypes = {
   TOGGLE_MINK_FLAG: 'TOGGLE_MINK_FLAG',
   TOGGLE_FLAG_ERROR: 'TOGGLE_FLAG_ERROR',
   SHOW_VOTE_POST_CONFIRMATION: 'SHOW_VOTE_POST_CONFIRMATION',
-  SET_PRIVATE_SHARE_ITEM_ID: 'SET_PRIVATE_SHARE_ITEM_ID',
+  SET_PRIVATE_SHARE_ITEM: 'SET_PRIVATE_SHARE_ITEM',
   SET_PRIVATE_SHARE_RECIPIENT_ERROR: 'SET_PRIVATE_SHARE_RECIPIENT_ERROR',
   PRIVATE_SHARE: 'PRIVATE_SHARE',
   SET_PRIVATE_SHARE_SENDING: 'SET_PRIVATE_SHARE_SENDING',
@@ -56,6 +61,15 @@ export const initVenuesPage = (idToSelect) => ({
 export const initPollsPage = (idToSelect) => ({
   type: actionTypes.INIT_POLLS_PAGE,
   payload: { idToSelect },
+});
+
+export const dismissWelcomeForm = () => ({
+  type: actionTypes.DISMISS_WELCOME_FORM,
+});
+
+export const showWelcomeForm = () => ({
+  type: actionTypes.SHOW_WELCOME_FORM,
+  payload: { showWelcome: true },
 });
 
 export const loadPollsDataSuccess = (data) => {
@@ -173,9 +187,27 @@ export const setSelectedTag = (selectedTagId) => ({
   payload: { selectedTagId },
 });
 
-export const rateTag = (rating) => ({
+export const setSelectedCategory = (selectedCategory) => ({
+  type: actionTypes.SET_SELECTED_CATEGORY,
+  payload: { selectedCategory },
+});
+
+export const setRateInProgress = (rateInProgress) => ({
+  type: actionTypes.RATE_IN_PROGRESS,
+  payload: { rateInProgress },
+});
+
+export const setSelectedTagTargetRate = (selectedTagTargetRate) => {
+  selectedTagTargetRate = Math.round(selectedTagTargetRate * 10) / 10;
+  return {
+    type: actionTypes.SET_SELECTED_TAG_TARGET_RATE,
+    payload: { selectedTagTargetRate },
+  };
+};
+
+export const rateTag = (newTagId) => ({
   type: actionTypes.RATE_TAG,
-  payload: { rating },
+  payload: { newTagId },
 });
 
 export const showRateTagConfirmation = (value) => ({
@@ -202,9 +234,9 @@ export const setVenuePosts = (posts) => ({
   payload: { posts },
 });
 
-export const createPost = (id, title, message, venueType) => ({
+export const createPost = (id, title, image, message, venueType) => ({
   type: actionTypes.CREATE_POST,
-  payload: { id, title, message, venueType },
+  payload: { id, title, image, message, venueType },
 });
 
 export const upvotePost = () => ({
@@ -235,14 +267,14 @@ export const showVotePostConfirmation = (value) => ({
   payload: { votePostConfirmation: value },
 });
 
-export const setPrivateShareItemId = (id) => ({
-  type: actionTypes.SET_PRIVATE_SHARE_ITEM_ID,
-  payload: { privateShareItemId: id },
+export const setPrivateShareItem = (id, type) => ({
+  type: actionTypes.SET_PRIVATE_SHARE_ITEM,
+  payload: { privateShareItemId: id, type },
 });
 
-export const clearPrivateShareItemId = () => ({
-  type: actionTypes.SET_PRIVATE_SHARE_ITEM_ID,
-  payload: { privateShareItemId: undefined },
+export const clearPrivateShareItem = () => ({
+  type: actionTypes.SET_PRIVATE_SHARE_ITEM,
+  payload: { privateShareItemId: undefined, type: undefined },
 });
 
 export const setPrivateShareRecipientError = (error) => ({
