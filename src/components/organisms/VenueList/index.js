@@ -114,14 +114,11 @@ const SearchPage = ({ venues, inDemo, categories }) => {
         />
         {filter && nothingFound && <NoResultsSearchLabel>no results</NoResultsSearchLabel>}
         {venuesToShow.map((v, i) => {
-          console.log('# combining data: ', categories, v.rateTagCategories);
-
           const venueCategories =
             categories &&
             categories.map((category, i) => {
               return { ...category, rating: findCategoryRating(category.id, v.rateTagCategories) };
             });
-          console.log('# combining result: ', venueCategories);
           return (
             <VenueCard
               key={v.id}

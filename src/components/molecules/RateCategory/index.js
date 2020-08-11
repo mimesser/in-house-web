@@ -137,7 +137,6 @@ const BaseRateCategory = ({
   }
 
   function preventDefault(e) {
-    console.log('# preenting default: ', e.cancelable);
     if (e.cancelable) {
       e.preventDefault();
     }

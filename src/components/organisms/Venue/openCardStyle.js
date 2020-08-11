@@ -37,8 +37,9 @@ const flagText = ({ flagged }) =>
   `;
 
 export const FlagButton = styled(ClearButton)`
+  background: red;
   color: ${palette.gray};
-  font-size: ${fontSize.md};
+  font-size: ${fontSize.xs};
   ${flagText};
   > span:last-of-type {
     margin-left: ${spacing.lg};
@@ -47,6 +48,7 @@ export const FlagButton = styled(ClearButton)`
 
 export const Layout = styled.div`
   flex: 1;
+  z-index: 11;
   display: flex;
   flex-direction: column;
   overflow: hidden;

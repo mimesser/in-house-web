@@ -6,7 +6,7 @@ import { NumberSmall, Icon } from '../../atoms';
 
 export const Votes = styled(({ count, iconSize = 0.8, inverse, ...rest }) => (
   <NumberSmall {...rest}>
-    <Icon icon="users" size={iconSize} />
+    <Icon icon="users" size={iconSize} {...rest} />
     <span>{count || 0}</span>
   </NumberSmall>
 ))`

@@ -16,10 +16,7 @@ import { CONFIRMATION_INTERVAL } from './consts';
 export function* rateTag({ payload: { newTagId } }) {
   const tag = yield select(selectSelectedTag);
   const targetRate = yield select(selectSelectedTagTargetValue);
-  console.log('# rateTAG: ', { tag, targetRate, newTagId });
   if (targetRate && tag && (!tag.userRate || (tag.userRate && Math.abs(tag.userRate - targetRate) > 0.1))) {
-    console.log(`# trying to tag rate from: ${tag.userRate} to: ${targetRate} for tag:`, tag);
-
     yield put(setRateInProgress(tag.definitionId));
     const { id: venueId } = yield select(selectSelectedVenue);
     const isActiveInsider = yield select(selectIsActiveInsider);
