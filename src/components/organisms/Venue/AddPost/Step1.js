@@ -24,7 +24,6 @@ const IconWrapper = styled.div`
 export const Step1 = ({ venue: { id }, title, setTitle, message, setMessage, setStep, image, setImage }) => {
   const handleFileChange = useCallback(
     (file) => {
-      console.log('# selected: ', file);
       setImage(file);
     },
     [setImage],

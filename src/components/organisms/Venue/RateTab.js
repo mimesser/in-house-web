@@ -77,7 +77,6 @@ const Tag = ({
   const [rateValue, setRateValue] = useState(userRate);
   const open = useCallback(
     (e) => {
-      console.log('# open:', { definitionId, e });
       setSelectedTag(definitionId);
     },
     [definitionId],
@@ -91,11 +90,9 @@ const Tag = ({
           setSelectedTagTargetRate(value);
         }}
         onSlideStart={(value) => {
-          console.log('Slide START :', { definitionId, userRate });
           setSelectedTag(definitionId);
         }}
         onSlideEnd={(value) => {
-          console.log('Slide END :', { definitionId, userRate });
           rateTag(definitionId);
         }}
         value={getTeamRateIfRated(userRate, voteRating)}
@@ -172,7 +169,6 @@ const RateTab = ({
   const getTitleForShare = useCallback((id) => findTag(id, tags).name, [tags]);
 
   const rateTags = filteredTags || tags;
-  console.log(' ###', categories);
   return (
     <TabLayout>
       {categories
@@ -183,7 +179,6 @@ const RateTab = ({
               value={findCategoryRating(category.id, categoryRatings)}
               expanded={selectedCategory && selectedCategory.id === category.id}
               onClick={() => {
-                console.log('# slected cat:', category, categoryRatings);
                 setSelectedCategory(category);
                 setSelectedTag(null);
               }}

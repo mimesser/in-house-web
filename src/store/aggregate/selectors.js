@@ -24,6 +24,5 @@ export const selectBetaWrongAnswer = createSelector(selectAggregate, ({ wrongAns
 
 export const selectEsgCategories = createSelector(selectAggregate, ({ rateTagGroups }) => {
   const item = rateTagGroups.filter((object) => object.name === 'E.S.G');
-  console.log(item);
   return item && item[0] && item[0].categories;
 });
