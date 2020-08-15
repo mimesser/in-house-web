@@ -11,7 +11,7 @@ import { spacing, calcRem, fontSize, appColors } from '../../../style';
 const SmallCircle = styled(CircleSlider)`
   margin: 0;
   padding: 0;
-  margin-top: 13px;
+  margin-top: 11px;
 `;
 
 const PieWrapper = styled.div`
@@ -66,7 +66,8 @@ export const ScoreAndVoters = styled(
     width: 72px;
     height: 10px;
     margin: 0;
-    top: -35px;
+    top: -17px;
+    left:-3px;
     font-size: ${fontSize.xs};
   }
 
