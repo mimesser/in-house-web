@@ -37,7 +37,6 @@ const flagText = ({ flagged }) =>
   `;
 
 export const FlagButton = styled(ClearButton)`
-  background: red;
   color: ${palette.gray};
   font-size: ${fontSize.xs};
   ${flagText};

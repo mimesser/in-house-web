@@ -300,7 +300,6 @@ const PostTab = ({
   );
   const getTitleForShare = useCallback((id) => findPost(id, posts).title, [posts]);
 
-  console.log('# selected post: ', selectedPost);
   return (
     <TabLayout>
       {posts ? (
