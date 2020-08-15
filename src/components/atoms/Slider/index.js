@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 
 import { theme, palette } from '../../../style';
@@ -116,10 +116,6 @@ const BaseSlider = ({
   function handleMouseDown(e) {
     if (disabled) return;
 
-    if (e.cancelable) {
-      e.preventDefault();
-    }
-
     const clientPos = getClientPosition(e);
     const rect = container.current.getBoundingClientRect();
 
@@ -158,18 +154,12 @@ const BaseSlider = ({
   function handleDrag(e) {
     if (disabled) return;
 
-    if (e.cancelable) {
-      e.preventDefault();
-    }
     const { left, top } = getPos(e);
     change(left);
   }
 
   function handleDragEnd(e) {
     if (disabled) return;
-    if (e.cancelable) {
-      e.preventDefault();
-    }
 
     document.removeEventListener('mousemove', handleDrag);
     document.removeEventListener('mouseup', handleDragEnd);
