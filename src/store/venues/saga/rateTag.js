@@ -33,7 +33,7 @@ export function* rateTag({ payload: { newTagId } }) {
     // TODO remove round to int
     const {
       data: { venueRateTag, venue },
-    } = yield call(api.post, `venues/${venueId}/rateTag/${tag.definitionId}/rate`, { rate: Math.round(targetRate) });
+    } = yield call(api.post, `venues/${venueId}/rateTag/${tag.definitionId}/rate`, { rate: targetRate });
 
     try {
       const confirmationRemainingTime = CONFIRMATION_INTERVAL - (Date.now() - startApiCall);
