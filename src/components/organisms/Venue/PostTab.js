@@ -13,7 +13,7 @@ import {
   togglePostFlag,
   upvoteMink,
 } from '../../../store/venues';
-import { Loader, Button, HelpTip, Break, Card, Icon } from '../../atoms';
+import { Loader, Button, HelpTip, Break, Card, Icon, NumberLarge, NumberSmall } from '../../atoms';
 import { formatDate } from '../../../utils/format';
 import { ItemText, ItemTitle, ItemTime, Main, TabLayout, TabTitle } from './tabStyle';
 import { appBackground, spacing, calcRem, appColors } from '../../../style';
@@ -21,7 +21,7 @@ import VotePost from './VotePost';
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
 import { Dial, PokeButton } from '../../molecules';
-import { Votes } from './Votes';
+import { Votes } from '../../molecules/RateSlider';
 import { FlagItem } from './FlagItem';
 import { VoteButton, Layout } from './openCardStyle';
 
@@ -89,12 +89,67 @@ const VoteWrap = styled.div`
 `;
 
 const CellHeader = styled.div`
+  position: relative;
   padding: 0 ${spacing.xxxl} ${spacing.lg} 60px;
+  height: 16px;
+  max-height: 16px;
+  margin-bottom: 10px;
   ${PokeButton} {
-    margin-top: 8px;
+    position: relative;
+    margin-top: 0px;
     width: 22px;
-    height: 9px;
-    color: ${appColors.grey6};
+    height: 16px;
+    top: -0px !important;
+    right: 0px !important;
+    color: ${appColors.gray4};
+  }
+  ${Votes} {
+    position: relative;
+    width: 80px;
+    margin-right: 10px;
+    margin-left: auto;
+    font-size: 13px;
+    top: 16px;
+    text-align: right;
+    align-items: right;
+    display: flex;
+    justify-content: flex-end;
+
+    height: 16px;
+    vertical-align: bottom;
+
+    color: ${({ color }) => color};
+    ${Icon} {
+      position: relative;
+      width: 13px;
+      height: 13px;
+      top: -2px;
+    }
+  }
+  ${NumberLarge} {
+    position: relative;
+    top: -2px;
+    font-size: 18px;
+    font-weight: bold;
+
+    height: 18px;
+    vertical-align: bottom;
+
+    span {
+      vertical-align: bottom;
+    }
+  }
+  ${NumberSmall} {
+    position: relative;
+    height: 16px;
+    vertical-align: bottom;
+    align-self: flex-end;
+    span {
+      position: relative;
+      vertical-align: baseline;
+      top: -4x;
+      align-self: flex-end;
+    }
   }
 `;
 
@@ -109,16 +164,6 @@ const Footer = styled.div`
   ${Icon} {
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1);
-  }
-`;
-
-const StyledVotes = styled(Votes)`
-  margin-left: auto;
-  margin-right: 20px;
-
-  color: ${appColors.grey7};
-  span:last-of-type {
-    color: ${appColors.grey7};
   }
 `;
 
@@ -161,11 +206,12 @@ const Post = ({
 
   const card = (
     <PostCard onClick={select} selected={selected}>
-      <CellHeader>
+      <CellHeader color={upvoted || downvoted ? appColors.gray4 : appColors.gray6}>
         <ItemTime dateTime={created}>{formatDate(created)}</ItemTime>
         {!selected && (
           <>
-            <StyledVotes count={voteCount} color={appColors.gray7} />
+            <Votes count={voteCount} userRate={upvoted || downvoted} />
+            {(upvoted || downvoted) && <NumberLarge>{voteRating}</NumberLarge>}
             <StyledShareButton id={id} type="post" color={appColors.gray6} />
           </>
         )}

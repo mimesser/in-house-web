@@ -188,22 +188,8 @@ const BaseRateSlider = ({
     setExpanded(expanded);
   }
 
-  useEffect(() => {
-    document.addEventListener('touchstart', preventDefaultTouchmoveEvent, {
-      passive: false,
-    });
-    document.addEventListener('mousedown', preventDefaultTouchmoveEvent, {
-      passive: false,
-    });
-    return () => {
-      document.removeEventListener('touchstart', preventDefaultTouchmoveEvent);
-      document.removeEventListener('mousedown', preventDefaultTouchmoveEvent);
-    };
-  }, []);
-
-  function preventDefaultTouchmoveEvent(e) {
-    if (e.target.classList.value.includes('SlidingWrapper')) {
-      console.log('# preventing: ', e.target.classList.value);
+  function preventDefault(e) {
+    if (e.cancelable) {
       e.preventDefault();
     }
   }
@@ -223,8 +209,11 @@ const BaseRateSlider = ({
       >
         <Title
           onClick={(e) => {
+            preventDefault(e);
             setExpanded(!isExpanded);
           }}
+          onTouchStart={preventDefault}
+          onMouseDown={preventDefault}
         >
           {title}
         </Title>
