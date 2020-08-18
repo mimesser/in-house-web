@@ -13,6 +13,7 @@ export const TabTitle = styled.div`
 
 export const ItemTime = styled.time`
   color: ${palette.gray};
+  font-size: ${fontSize.xs};
 `;
 
 export const ItemTitle = styled.div`
@@ -64,9 +65,6 @@ export const cardStyle = css`
     height: ${calcRem('2px')};
     width: ${calcRem('40px')};
     margin: ${spacing.md} 0;
-  }
-  ${Votes} {
-    margin-right: ${spacing.xl};
   }
 `;
 

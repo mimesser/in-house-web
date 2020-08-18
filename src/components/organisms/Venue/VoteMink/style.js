@@ -23,5 +23,4 @@ export const InputGroup = styled.div`
   > div:first-child {
     display: flex;
   }
-  margin-bottom: ${spacing.sm};
 `;
