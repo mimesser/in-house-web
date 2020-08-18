@@ -48,7 +48,7 @@ export const baseFormControlStyle = css`
 export const baseInputStyle = css`
   display: block;
   width: 100%;
-  padding: ${spacing.md};
+  padding: ${spacing.sm} ${spacing.md};
   ${baseFormControlStyle};
 `;
 

@@ -21,11 +21,9 @@ export const ItemText = styled.div`
 
 export const VoteButton = styled(ClearButton)`
   color: ${palette.primary};
+  margin-bottom: ${spacing.md};
   &[disabled] {
     color: ${palette.lightGray};
-  }
-  &:last-child {
-    margin-left: ${spacing.lg};
   }
 `;
 
