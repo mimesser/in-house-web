@@ -4,8 +4,11 @@
     "main": "server/index.js",
     "version": "1.2.7",
     "scripts": {
-        "build:ci": "cross-env npm run clean && npm run build && copyfiles -a \"src/.next/**/*\" \"src/static/**/*\" \"src/public/**/*\" server/*.* package.json package-lock.json next.config.js build",
-        "build": "cross-env next build ./src",
+        "build:ci": "cross-env npm run clean && cross-env npm run build && copyfiles -a \"src/.next/**/*\" \"src/static/**/*\" \"src/public/**/*\" server/*.* package.json package-lock.json next.config.js build",
+        "build:ci1": "cross-env npm run clean ",
+        "build:ci2": "cross-env npm run build",
+        "build:ci3": "copyfiles -a \"src/.next/**/*\" \"src/static/**/*\" \"src/public/**/*\" server/*.* package.json package-lock.json next.config.js build",
+        "build:ci0": "cross-env npm run build:ci1 && cross-env npm run build:ci2 && cross-env npm run build:ci2",
         "clean": "cross-env rimraf ./build",
         "coverage": "npm test -- --coverage",
         "lint": "eslint --ext .js src server/index.js",
