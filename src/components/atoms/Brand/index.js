@@ -14,7 +14,7 @@ export const Brand = styled(({ className }) => (
     </Link>{' '}
     |{' '}
     <Link href="/about">
-      <a>movement</a>
+      <a>org 2.0</a>
     </Link>
   </span>
 ))`
