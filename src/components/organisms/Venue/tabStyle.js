@@ -26,7 +26,7 @@ export const ItemTitle = styled.div`
 export const ItemText = styled.div`
   font-size: ${fontSize.sm};
   color: ${palette.gray};
-  margin-top: ${spacing.xl};
+  margin-top: ${spacing.sm};
   && {
     display: -webkit-box;
   }

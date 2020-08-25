@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Link from 'next/link';
@@ -14,9 +14,9 @@ import {
   upvoteMink,
 } from '../../../store/venues';
 import { Loader, Button, HelpTip, Break, Card, Icon, NumberLarge, NumberSmall } from '../../atoms';
-import { formatDate } from '../../../utils/format';
+import { formatDateTime, formatRating } from '../../../utils/format';
 import { ItemText, ItemTitle, ItemTime, Main, TabLayout, TabTitle } from './tabStyle';
-import { appBackground, spacing, calcRem, appColors } from '../../../style';
+import { appBackground, spacing, appColors, palette } from '../../../style';
 import VotePost from './VotePost';
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
@@ -27,7 +27,68 @@ import { VoteButton, Layout } from './openCardStyle';
 
 import { Modal } from '../Modal';
 import { Dialog } from '../Modal/style';
+
+const transition = {
+  in: '0.25s',
+  out: '0.2s',
+};
+
+const VoteColumn = styled.div`
+  display:block;
+  // background: ${appBackground};
+
+  width: 36px;
+  height: 92px;
+  margin-right: ${spacing.lg};
+`;
+
+const defaultVoteAnimation = css`
+  ${VoteColumn} ${VoteButton} {
+    span:last-child > svg {
+      transition: transform ${transition.out} ease-in;
+
+      circle {
+        transition: ${transition.out} ease-in;
+      }
+      path:nth-child(2) {
+        transition: ${transition.out} ease-in;
+        opacity: 1;
+      }
+      path:nth-child(3) {
+        transition: ${transition.out} ease-in;
+      }
+    }
+  }
+`;
+
+const activeVoteAnimation = css`
+  ${VoteColumn} ${VoteButton}:active {
+    span:last-child > svg {
+      transition: transform ${transition.in} ease-out;
+      transform: scale(3);
+
+      circle {
+        transition: ${transition.in} ease-out;
+        fill: ${palette.gray};
+        opacity: 0.7;
+      }
+      path:nth-child(2) {
+        transition: ${transition.in} ease-out;
+        opacity: 0;
+      }
+      path:nth-child(3) {
+        transition: ${transition.in} ease-out;
+        transform: translate(25%, 25%) scale(0.5);
+        stroke: ${palette.primary};
+        stroke-width: 5;
+      }
+    }
+  }
+`;
+
 const PostCard = styled(Card)`
+  ${defaultVoteAnimation}
+  ${({ selected }) => selected && activeVoteAnimation}
   min-height: 190px;
   background: ${({ selected }) => (selected ? appColors.gray5 : appColors.white)};
 `;
@@ -65,15 +126,6 @@ const FullImage = styled.div.attrs(({ imageUrl }) => imageUrl && { style: { back
 
 const PostText = styled(ItemText)`
   margin-right: 39px;
-`;
-
-export const VoteColumn = styled.div`
-display:block;
-  // background: ${appBackground};
-
-  width: 36px;
-  height: 92px;
-  margin-right: ${spacing.xl};
 `;
 
 const VoteWrap = styled.div`
@@ -167,10 +219,11 @@ const Footer = styled.div`
   }
 `;
 
-const SelectedIndicator = styled(({ count, ...rest }) => <Icon {...rest} icon="radio-marked" size={calcRem(16)} />)`
+const SelectedIndicator = styled(({ show, count, ...rest }) => <Icon {...rest} icon="radio-marked" size={0.3} />)`
   display: block;
   justify-content: center;
   color: ${appColors.black};
+  visibility: ${({ show }) => (show ? 'visible' : 'hidden')};
 
   svg {
     padding: 0 0px 3px 0;
@@ -180,7 +233,6 @@ const SelectedIndicator = styled(({ count, ...rest }) => <Icon {...rest} icon="r
   padding: 0 !important;
   position: relative;
   display: block;
-  width: 20px;
   height: 100%;
 
   left: ${(props) => `${props.percentage}%`};
@@ -197,6 +249,7 @@ const Post = ({
 }) => {
   const upvoted = myVote === 1;
   const downvoted = myVote === -1;
+  const size = upvoted || downvoted ? 1.7 : 2.2;
   const selected = selectedPost && selectedPost.id === id;
   const [showFullImage, setShowFullImage] = useState(false);
 
@@ -207,11 +260,11 @@ const Post = ({
   const card = (
     <PostCard onClick={select} selected={selected}>
       <CellHeader color={upvoted || downvoted ? appColors.gray4 : appColors.gray6}>
-        <ItemTime dateTime={created}>{formatDate(created)}</ItemTime>
+        <ItemTime dateTime={created}>{formatDateTime(created)}</ItemTime>
         {!selected && (
           <>
             <Votes count={voteCount} userRate={upvoted || downvoted} />
-            {(upvoted || downvoted) && <NumberLarge>{voteRating}</NumberLarge>}
+            {(upvoted || downvoted) && <NumberLarge>{formatRating(voteRating)}</NumberLarge>}
             <StyledShareButton id={id} type="post" color={appColors.gray6} />
           </>
         )}
@@ -228,8 +281,8 @@ const Post = ({
                 selected={upvoted}
                 disabled={!selected}
               >
-                {upvoted && <SelectedIndicator />}
-                <Icon size={calcRem(36)} icon="arrow-up-circle" />
+                <SelectedIndicator show={upvoted} />
+                <Icon size={size} icon="arrow-up-circle" />
               </VoteButton>
               <VoteButton
                 onClick={(e) => {
@@ -239,8 +292,8 @@ const Post = ({
                 selected={downvoted}
                 disabled={!selected}
               >
-                {downvoted && <SelectedIndicator />}
-                <Icon size={calcRem(36)} icon="arrow-down-circle" />
+                <SelectedIndicator show={downvoted} />
+                <Icon size={size} icon="arrow-down-circle" />
               </VoteButton>
             </VoteWrap>
           </HelpTip>
@@ -334,7 +387,7 @@ const PostTab = ({
               <Break />
               <div>
                 <Votes count={voteCount} />
-                <ItemTime dateTime={created}>{formatDate(created)}</ItemTime>
+                <ItemTime dateTime={created}>{formatDateTime(created)}</ItemTime>
               </div>
             </Main>
           </div>

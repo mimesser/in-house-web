@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import styled from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 import Link from 'next/link';
 
 import {
@@ -16,7 +16,7 @@ import {
   selectIsActiveInsider,
   toggleMinkFlag,
 } from '../../../store/venues';
-import { palette, spacing, fontSize, font, theme } from '../../../style';
+import { palette, spacing, fontSize, font } from '../../../style';
 import { Loader, Button, HelpTip, Patent, Card, Break, Icon } from '../../atoms';
 import { TabLayout, Main, ItemTitle, ItemTime, TabTitle } from './tabStyle';
 import { formatDateTime, formatRating } from '../../../utils/format';
@@ -24,52 +24,77 @@ import VoteMink from './VoteMink';
 import { NewMinkElected } from './NewMinkElected';
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
-import { Dial, PokeButton, IconInput } from '../../molecules';
+import { PokeButton, IconInput } from '../../molecules';
 import { Votes } from './Votes';
 import { VoteButton } from './openCardStyle';
 import { Status, InputGroup } from './VoteMink/style';
 import { FlagItem } from './FlagItem';
 import { normalizeAnswer } from './normalizeAnswer';
 
-const active = {
-  opacity: 1,
-  backgroundColor: theme.colors.lightGray,
-};
-
-const MinkCard = styled(Card)`
-  ${Votes} > span:last-of-type {
-    position: static;
-  }
-  ${ItemTime} {
-    align-self: center;
-    color: ${palette.mediumGray};
-  }
-  ${Icon} {
-    padding-left: ${spacing.xs};
-  }
-  ${PokeButton} {
-    color: ${palette.darkGray};
-    // to be removed if implemented
-    // in all tabs
-    position: static !important;
-  }
-  ${ItemTitle} {
-    padding-bottom: ${spacing.md};
-  }
-  ${InputGroup} {
-    padding-bottom: ${spacing.xxl};
-  }
-  transition: all 0.2s ease-in-out;
-  opacity: 0.8;
-  ${(props) => props.active && active}
-`;
-
 const VoteWrap = styled.div`
   margin-top: ${spacing.xxl};
   display: flex;
   flex-direction: column;
-  // align-self: center;
   padding-right: ${spacing.lg};
+`;
+
+const transition = {
+  in: '0.25s',
+  out: '0.2s',
+};
+
+const defaultVoteAnimation = css`
+  ${VoteWrap} > ${VoteButton} {
+    svg {
+      transition: transform ${transition.out} ease-in;
+
+      circle {
+        transition: ${transition.out} ease-in;
+      }
+      path:nth-child(2) {
+        transition: ${transition.out} ease-in;
+        opacity: 1;
+      }
+      path:nth-child(3) {
+        transition: ${transition.out} ease-in;
+      }
+    }
+  }
+
+  ${VoteWrap} + ${Main} > ${InputGroup} {
+    transition: ${transition.out} ease-in;
+    opacity: 1;
+  }
+`;
+
+const activeVoteAnimation = css`
+  ${VoteWrap} > ${VoteButton}:active {
+    svg {
+      transition: transform ${transition.in} ease-out;
+      transform: scale(3);
+      
+      circle {
+        transition: ${transition.in} ease-out;
+        fill: ${palette.gray};
+        opacity: 0.7;
+      }
+      path:nth-child(2) {
+        transition: ${transition.in} ease-out;
+        opacity: 0;
+      }
+      path:nth-child(3) {
+        transition: ${transition.in} ease-out;
+        transform: translate(25%, 25%) scale(0.5);
+        stroke: ${palette.primary};
+        stroke-width: 5;
+      }
+    }
+  }
+
+  ${VoteWrap}:active + ${Main} > ${InputGroup} {
+    transition: ${transition.in} ease-out;
+    opacity: 0;
+  }
 `;
 
 const VoteRating = styled.span`
@@ -84,6 +109,7 @@ const Dot = styled.span`
   }
   visibility: ${(props) => (props.show ? 'visible' : 'hidden')};
   font-size: ${fontSize.sm};
+  color: ${palette.primary};
 `;
 
 const ShareWrap = styled.div`
@@ -119,6 +145,47 @@ const TopWrap = styled.div`
 const Subtitle = styled.div`
   padding: ${spacing.sm} 0 ${spacing.xl};
   font-size: ${fontSize.xs};
+  color: ${palette.mediumGray};
+`;
+
+const FlagItemWrap = styled.div``;
+
+const active = css`
+  opacity: 1;
+  background-color: ${palette.lightGray};
+`;
+
+const MinkCard = styled(Card)`
+  ${ShareWrap}, ${FlagItemWrap} {
+    visibility: ${(props) => (props.active ? 'hidden' : 'visible')};
+  }
+  ${Votes} > span:last-of-type {
+    position: static;
+  }
+  ${ItemTime} {
+    align-self: center;
+    color: ${palette.mediumGray};
+  }
+  ${Icon} {
+    padding-left: ${spacing.xs};
+  }
+  ${PokeButton} {
+    color: ${palette.darkGray};
+    // to be removed if implemented
+    // in all tabs
+    position: static !important;
+  }
+  ${ItemTitle} {
+    padding-bottom: ${spacing.md};
+  }
+  ${InputGroup} {
+    padding-bottom: ${spacing.xxl};
+  }
+  transition: all 0.2s ease-in-out;
+  opacity: 0.8;
+  ${(props) => props.active && active}
+  ${defaultVoteAnimation}
+  ${(props) => props.active && activeVoteAnimation}
 `;
 
 const TopMinkContainer = styled.div`
@@ -131,15 +198,12 @@ const TopMinkContainer = styled.div`
   ${TabTitle} {
     display: flex;
     align-items: center;
-    color: ${palette.white};
+    color: ${palette.lightGray};
     padding: 0;
 
     ${Patent} {
       color: ${palette.gray};
     }
-  }
-  ${Subtitle} {
-    color: ${palette.gray};
   }
   ${Card} {
     background-color: ${palette.primary};
@@ -148,10 +212,10 @@ const TopMinkContainer = styled.div`
     margin-top: ${spacing.sm};
 
     * {
-      color: ${palette.lightGray};
+      color: ${palette.offWhite};
     }
     ${ItemTime} {
-      color: ${palette.gray};
+      color: ${palette.mediumGray};
     }
     ${PokeButton} {
       color: #fff;
@@ -285,10 +349,10 @@ const Mink = ({
               active={active}
             />
           </InputGroup>
-          <div>
-            <FlagItem disabled={isActiveInsider || !active} flagged={wasFlaggedByMe} toggleFlag={toggleMinkFlag} />
+          <FlagItemWrap>
+            <FlagItem disabled={isActiveInsider} flagged={wasFlaggedByMe} toggleFlag={toggleMinkFlag} />
             <Push />
-          </div>
+          </FlagItemWrap>
         </Main>
       </div>
     </MinkCard>
@@ -326,7 +390,6 @@ const renderMinks = (
             Top MINK
             <Push />
             <Patent />
-            {/* <PrivateShareButton id="2" /> */}
           </TabTitle>
           <Subtitle>the top mink at any time verifies insiders</Subtitle>
           <hr />
