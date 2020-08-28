@@ -1,10 +1,16 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { spacing, palette, fontSize, font } from '../../style';
 import { Button, ClearButton, H1, Progress } from '../atoms';
 
+const darkModeStyle = css`
+  background-color: ${palette.primary};
+  color: ${palette.white};
+`;
+
 export const Main = styled.div`
+  ${({ darkMode }) => darkMode && darkModeStyle}
   padding: ${spacing.xxl};
   flex: 1;
   display: flex;
@@ -18,8 +24,8 @@ export const Main = styled.div`
   }
 `;
 
-export const NextButton = styled(({ children = 'next', ...btnProps }) => (
-  <Button {...btnProps} icon="arrow-right">
+export const NextButton = styled(({ children = 'next', darkMode, ...btnProps }) => (
+  <Button {...btnProps} icon="arrow-right" darkMode={darkMode}>
     {children}
   </Button>
 ))`
@@ -31,6 +37,7 @@ export const BackButton = styled(ClearButton).attrs(({ children = 'back' }) => (
 `;
 
 export const Commands = styled.div`
+  ${({ darkMode }) => darkMode && darkModeStyle}
   padding: ${spacing.xxl};
   display: flex;
   margin-top: auto;
@@ -45,14 +52,14 @@ const renderHeader = (head) => {
 };
 
 // TODO: render props instead?
-export const StepLayout = ({ head, main, commands, step, hideProgress, totalSteps }) => (
+export const StepLayout = ({ head, main, commands, step, hideProgress, totalSteps, darkMode }) => (
   <>
-    <Main>
+    <Main darkMode={darkMode}>
       {renderHeader(head)}
-      {!hideProgress && <Progress step={step} totalSteps={totalSteps} />}
+      {!hideProgress && <Progress step={step} totalSteps={totalSteps} darkMode={darkMode}/>}
       {main}
     </Main>
-    <Commands>{commands}</Commands>
+    <Commands darkMode={darkMode}>{commands}</Commands>
   </>
 );
 

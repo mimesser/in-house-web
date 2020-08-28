@@ -6,20 +6,20 @@ import { withForwardedRef } from '../../withForwardedRef';
 import { font, palette, fontSize, spacing } from '../../../style';
 import { Icon } from '../Icon';
 
-const background = ({ outline, dashed, disabled }) => {
+const background = ({ outline, dashed, disabled, darkMode }) => {
   if (disabled) {
-    return palette.lightGray;
+    return darkMode ? palette.darkGray : palette.lightGray;
   }
   if (outline || dashed) {
     return palette.white;
   }
 
-  return palette.primary;
+  return darkMode ? palette.white : palette.primary;
 };
 
-const border = ({ outline, dashed, disabled }) => {
+const border = ({ outline, dashed, disabled, darkMode }) => {
   if (disabled) {
-    return palette.lightGray;
+    return darkMode ? palette.darkGray : palette.lightGray;
   }
   if (outline) {
     return palette.black;
@@ -32,9 +32,9 @@ const border = ({ outline, dashed, disabled }) => {
 
 const borderStyle = ({ dashed }) => (dashed ? 'dashed' : 'solid');
 
-const color = ({ outline, dashed, disabled }) => {
+const color = ({ outline, dashed, disabled, darkMode }) => {
   if (disabled) {
-    return palette.offWhite;
+    return darkMode ? palette.gray : palette.offWhite;
   }
   if (dashed) {
     return palette.primary;
@@ -42,7 +42,7 @@ const color = ({ outline, dashed, disabled }) => {
   if (outline) {
     return palette.black;
   }
-  return palette.white;
+  return darkMode ? palette.primary : palette.white;
 };
 
 const cursor = ({ disabled }) => (disabled ? 'not-allowed' : 'pointer');
@@ -80,8 +80,8 @@ const BaseButton = styled.button`
 `;
 
 export const Button = styled(
-  withForwardedRef(({ icon, loading, children, forwardedRef, ...props }) => (
-    <BaseButton as={props.href && 'a'} {...props} ref={forwardedRef}>
+  withForwardedRef(({ icon, loading, children, forwardedRef, darkMode, ...props }) => (
+    <BaseButton as={props.href && 'a'} {...props} ref={forwardedRef} darkMode={darkMode}>
       {loading ? <Loader small white /> : children}
       {icon && <Icon icon={icon} />}
     </BaseButton>

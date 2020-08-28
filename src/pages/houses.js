@@ -53,7 +53,7 @@ class Houses extends Component {
     if (!this.props.isAuthorizedBetaUser) {
       View = () => <BetaChallange showPopup onClose={this.onClose} />;
     }
-    const defaultHeader = !this.houseId || this.isNewMinkOrPostPath || this.inDemoVenues;
+    const defaultHeader = !this.houseId || this.inDemoVenues;
     const title = this.props.selectedVenue
       ? `In-House - ${this.props.selectedVenue.name} | Speak as a Team | Remain Untraceable`
       : undefined;
