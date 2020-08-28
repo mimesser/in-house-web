@@ -4,18 +4,19 @@ import { FairSpeech } from '../FairSpeech';
 import { BackButton, NextButton } from '../../../molecules';
 import { StepLayout } from './StepLayout';
 
-export const Step4 = ({ setStep, edit, loading, post }) => (
+export const Step4 = ({ setStep, edit, loading, post, darkMode }) => (
   <StepLayout
     hideProgress
     main={<FairSpeech acceptedTerms toggleTerms={() => setStep(3)} />}
     commands={
       <>
         <BackButton onClick={edit} />
-        <NextButton loading={loading} onClick={post}>
+        <NextButton loading={loading} onClick={post} darkMode={darkMode}>
           yes, post
         </NextButton>
       </>
     }
     step={4}
+    darkMode={darkMode}
   />
 );

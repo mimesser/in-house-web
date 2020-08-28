@@ -8,7 +8,7 @@ export const Status = styled.div`
 `;
 
 export const SubText = styled.span`
-  color: ${palette.darkGray};
+  color: ${({ darkMode }) => darkMode ? palette.offWhite : palette.darkGray};
 `;
 
 export const CharLimit = styled.span`

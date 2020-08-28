@@ -27,7 +27,7 @@ const Heading = styled(H1).attrs(() => ({
   }
 `;
 
-export const Step1 = ({ venue: { id }, answer, setAnswer, question, setQuestion, setStep }) => (
+export const Step1 = ({ venue: { id }, answer, setAnswer, question, setQuestion, setStep, darkMode }) => (
   <StepLayout
     head={<Heading />}
     main={
@@ -40,6 +40,7 @@ export const Step1 = ({ venue: { id }, answer, setAnswer, question, setQuestion,
           rows={4}
           placeholder="eg: what is the conference room’s wifi password"
           subtext="nothing someone could guess or google"
+          darkMode={darkMode}
         />
         <CounterInput
           value={answer}
@@ -49,6 +50,7 @@ export const Step1 = ({ venue: { id }, answer, setAnswer, question, setQuestion,
           autocomplete="off"
           spellcheck="false"
           subtext="no spaces / not case sensitive"
+          darkMode={darkMode}
         />
       </>
     }
@@ -57,9 +59,10 @@ export const Step1 = ({ venue: { id }, answer, setAnswer, question, setQuestion,
         <Link href={`/houses?id=${id}&tab=mink`} as={`/houses/${id}/mink`}>
           <BackButton>cancel</BackButton>
         </Link>
-        <NextButton disabled={!question.trim() || !answer.trim()} onClick={() => setStep(2)} />
+        <NextButton disabled={!question.trim() || !answer.trim()} onClick={() => setStep(2)} darkMode={darkMode} />
       </>
     }
     step={1}
+    darkMode={darkMode}
   />
 );

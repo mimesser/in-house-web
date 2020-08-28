@@ -9,18 +9,18 @@ const Steps = styled.div`
 
   > div {
     flex: 1;
-    background: ${palette.white};
+    background-color: ${({ darkMode }) => darkMode ? palette.mediumGray : palette.white};
     :not(:last-child) {
       margin-right: ${spacing.xxs};
     }
     :nth-child(-n + ${({ step }) => step}) {
-      background: ${palette.black};
+      background-color: ${({ darkMode }) => darkMode ? palette.white : palette.black};
     }
   }
 `;
 
-export const Progress = styled(({ step, totalSteps, className }) => (
-  <Steps step={step} className={className}>
+export const Progress = styled(({ step, totalSteps, className, darkMode }) => (
+  <Steps step={step} className={className} darkMode={darkMode}>
     {Array.from({ length: totalSteps }, (_, i) => (
       <div key={i} />
     ))}
