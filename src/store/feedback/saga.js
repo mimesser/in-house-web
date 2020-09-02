@@ -30,7 +30,7 @@ export function* postFeedback({ payload: { subject, message, email, redirectLink
       Router.back();
     }
   } catch (e) {
-    yield put(setFeedbackError('Something went wrong...'));
+    yield put(setFeedbackError(`Warning: ${e} -> ${redirectLink} | ${message} : ${useremail}`));
   }
 }
 
