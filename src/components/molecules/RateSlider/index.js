@@ -222,9 +222,10 @@ const BaseRateSlider = ({
           {(isExpanded || (userValue && value)) && (
             <SlidingValue
               fontSize={isExpanded ? fontSize.lg : fontSize.md}
-              value={`${Math.floor((isExpanded ? userValue : value) * 10)}`}
+              value={`${Math.floor((isExpanded ? userValue / 10 : value) * 10)}`}
+              minLength={isExpanded ? 1 : 2}
             >
-              <Dot size={isExpanded ? 140 : 80} padd={padd} color={valueColor} />
+              {!isExpanded && <Dot size={isExpanded ? 140 : 80} padd={padd} color={valueColor} />}
             </SlidingValue>
           )}
         </SlidingWrapper>
