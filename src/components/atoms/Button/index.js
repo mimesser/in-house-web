@@ -6,20 +6,20 @@ import { withForwardedRef } from '../../withForwardedRef';
 import { font, palette, fontSize, spacing } from '../../../style';
 import { Icon } from '../Icon';
 
-const background = ({ outline, dashed, disabled, darkMode }) => {
+const background = ({ outline, dashed, disabled, inverse }) => {
   if (disabled) {
-    return darkMode ? palette.darkGray : palette.lightGray;
+    return inverse ? palette.darkGray : palette.lightGray;
   }
   if (outline || dashed) {
     return palette.white;
   }
 
-  return darkMode ? palette.white : palette.primary;
+  return inverse ? palette.white : palette.primary;
 };
 
-const border = ({ outline, dashed, disabled, darkMode }) => {
+const border = ({ outline, dashed, disabled, inverse }) => {
   if (disabled) {
-    return darkMode ? palette.darkGray : palette.lightGray;
+    return inverse ? palette.darkGray : palette.lightGray;
   }
   if (outline) {
     return palette.black;
@@ -32,9 +32,9 @@ const border = ({ outline, dashed, disabled, darkMode }) => {
 
 const borderStyle = ({ dashed }) => (dashed ? 'dashed' : 'solid');
 
-const color = ({ outline, dashed, disabled, darkMode }) => {
+const color = ({ outline, dashed, disabled, inverse }) => {
   if (disabled) {
-    return darkMode ? palette.gray : palette.offWhite;
+    return inverse ? palette.gray : palette.offWhite;
   }
   if (dashed) {
     return palette.primary;
@@ -42,7 +42,7 @@ const color = ({ outline, dashed, disabled, darkMode }) => {
   if (outline) {
     return palette.black;
   }
-  return darkMode ? palette.primary : palette.white;
+  return inverse ? palette.primary : palette.white;
 };
 
 const cursor = ({ disabled }) => (disabled ? 'not-allowed' : 'pointer');
@@ -80,8 +80,8 @@ const BaseButton = styled.button`
 `;
 
 export const Button = styled(
-  withForwardedRef(({ icon, loading, children, forwardedRef, darkMode, ...props }) => (
-    <BaseButton as={props.href && 'a'} {...props} ref={forwardedRef} darkMode={darkMode}>
+  withForwardedRef(({ icon, loading, children, forwardedRef, inverse, ...props }) => (
+    <BaseButton as={props.href && 'a'} {...props} ref={forwardedRef} inverse={inverse}>
       {loading ? <Loader small white /> : children}
       {icon && <Icon icon={icon} />}
     </BaseButton>

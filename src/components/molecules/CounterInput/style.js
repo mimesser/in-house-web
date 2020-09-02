@@ -8,7 +8,7 @@ export const Status = styled.div`
 `;
 
 export const SubText = styled.span`
-  color: ${({ darkMode }) => darkMode ? palette.offWhite : palette.darkGray};
+  color: ${({ inverse }) => inverse ? palette.offWhite : palette.darkGray};
 `;
 
 export const CharLimit = styled.span`

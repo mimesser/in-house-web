@@ -16,7 +16,6 @@ const AddMink = ({ venue, createMink }) => {
   const [loading, setLoading] = useState(false);
   const setNormalizedAnswer = useCallback(value => setAnswer(normalizeAnswer(value)), [setAnswer]);
   const edit = useCallback(() => setStep(1), [setStep]);
-  const darkMode = true;
 
   return (
     <>
@@ -28,15 +27,15 @@ const AddMink = ({ venue, createMink }) => {
           question={question}
           setQuestion={setQuestion}
           setStep={setStep}
-          darkMode={darkMode}
         />
       )}
       {step === 2 && (
-        <Step2 venue={venue} answer={answer} question={question} edit={edit} setStep={setStep} darkMode={darkMode} />
+        <Step2 venue={venue} answer={answer} question={question} edit={edit} setStep={setStep} />
       )}
-      {step === 3 && <Step3 edit={edit} setStep={setStep} darkMode={darkMode} />}
+      {step === 3 && <Step3 venue={venue} edit={edit} setStep={setStep} />}
       {step === 4 && (
         <Step4
+          venue={venue}
           edit={edit}
           setStep={setStep}
           loading={loading}
@@ -44,7 +43,6 @@ const AddMink = ({ venue, createMink }) => {
             setLoading(true);
             createMink(venue.id, question, answer);
           }}
-          darkMode={darkMode}
         />
       )}
     </>

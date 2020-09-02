@@ -2,34 +2,58 @@ import React from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
 
-import { H1, Patent } from '../../../atoms';
-import { CounterInput, BackButton, NextButton } from '../../../molecules';
-import { calcRem, palette } from '../../../../style';
+import { H1, Patent, Industry, Icon, ClearButton } from '../../../atoms';
+import { CounterInput, BackButton, NextButton, Cl } from '../../../molecules';
+import { palette } from '../../../../style';
 import { StepLayout } from './StepLayout';
 
 const MAX_QUESTION_LENGTH = 120;
 const MAX_ANSWER_LENGTH = 25;
 
+const FlexWrap = styled.div`
+  display: flex;
+  align-items: flex-start;
+`;
+
 const Heading = styled(H1).attrs(() => ({
   children: (
     <>
-      new mink©️
+      <div>
+        new mink <small>©️</small>
+      </div>
       <Patent />
     </>
   ),
 }))`
-  position: relative;
+  small {
+    font-size: 60%;
+  }
   ${Patent} {
-    position: absolute;
-    left: 0;
-    top: ${calcRem('42px')};
     color: ${palette.gray};
+    display: flex;
   }
 `;
 
-export const Step1 = ({ venue: { id }, answer, setAnswer, question, setQuestion, setStep, darkMode }) => (
+const Push = styled.span`
+  margin-left: auto;
+`;
+
+export const Step1 = ({ venue: { id, name }, answer, setAnswer, question, setQuestion, setStep }) => (
   <StepLayout
-    head={<Heading />}
+    head={
+      <>
+        <FlexWrap>
+          <Industry>{name}</Industry>
+          <Push />
+          <Link href={`/houses?id=${id}&tab=mink`} as={`/houses/${id}/mink`}>
+            <ClearButton>
+              <Icon icon="close" />
+            </ClearButton>
+          </Link>
+        </FlexWrap>
+        <Heading />
+      </>
+    }
     main={
       <>
         <CounterInput
@@ -40,7 +64,6 @@ export const Step1 = ({ venue: { id }, answer, setAnswer, question, setQuestion,
           rows={4}
           placeholder="eg: what is the conference room’s wifi password"
           subtext="nothing someone could guess or google"
-          darkMode={darkMode}
         />
         <CounterInput
           value={answer}
@@ -50,7 +73,6 @@ export const Step1 = ({ venue: { id }, answer, setAnswer, question, setQuestion,
           autocomplete="off"
           spellcheck="false"
           subtext="no spaces / not case sensitive"
-          darkMode={darkMode}
         />
       </>
     }
@@ -59,10 +81,10 @@ export const Step1 = ({ venue: { id }, answer, setAnswer, question, setQuestion,
         <Link href={`/houses?id=${id}&tab=mink`} as={`/houses/${id}/mink`}>
           <BackButton>cancel</BackButton>
         </Link>
-        <NextButton disabled={!question.trim() || !answer.trim()} onClick={() => setStep(2)} darkMode={darkMode} />
+        <NextButton disabled={!question.trim() || !answer.trim()} onClick={() => setStep(2)} inverse />
       </>
     }
     step={1}
-    darkMode={darkMode}
+    inverse
   />
 );
