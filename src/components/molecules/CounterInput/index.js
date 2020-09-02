@@ -19,7 +19,7 @@ export const CounterInput = ({ value, onChange, max, multiline, subtext, marginl
     <FormGroup marginless={marginless}>
       <Control {...inputProps} onChange={handleChange} value={value} error={error} />
       <Status>
-        {!error && subtext && <SubText>{subtext}</SubText>}
+        {!error && subtext && <SubText inverse>{subtext}</SubText>}
         {error && <Error>{error}</Error>}
         <CharLimit>{`${characters}/${max}`}</CharLimit>
       </Status>

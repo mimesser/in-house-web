@@ -29,10 +29,13 @@ const AddMink = ({ venue, createMink }) => {
           setStep={setStep}
         />
       )}
-      {step === 2 && <Step2 venue={venue} answer={answer} question={question} edit={edit} setStep={setStep} />}
-      {step === 3 && <Step3 edit={edit} setStep={setStep} />}
+      {step === 2 && (
+        <Step2 venue={venue} answer={answer} question={question} edit={edit} setStep={setStep} />
+      )}
+      {step === 3 && <Step3 venue={venue} edit={edit} setStep={setStep} />}
       {step === 4 && (
         <Step4
+          venue={venue}
           edit={edit}
           setStep={setStep}
           loading={loading}
@@ -53,7 +56,4 @@ const mapDispatch = {
   createMink,
 };
 
-export default connect(
-  mapState,
-  mapDispatch,
-)(AddMink);
+export default connect(mapState, mapDispatch)(AddMink);

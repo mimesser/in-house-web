@@ -4,7 +4,7 @@ import { font, spacing, palette } from '../../../style';
 
 export const FormGroup = styled.div`
   margin-top: ${({ marginless }) => (marginless ? 0 : spacing.xl)};
-  color: ${palette.primary};
+  color: ${({ inverse }) => inverse ? palette.white : palette.primary};
   :focus-within {
     color: ${palette.black};
   }
