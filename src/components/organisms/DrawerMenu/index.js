@@ -3,7 +3,7 @@ import { withRouter } from 'next/router';
 import Link from 'next/link';
 import styled from 'styled-components';
 import { Transition } from 'react-transition-group';
-// import { useSwipeable } from 'react-swipeable';
+import { useSwipeable } from 'react-swipeable';
 import { Icon, ClearButton, Overlay } from '../../atoms';
 
 import { spacing, fontSize, font, palette, calcRem } from '../../../style';
