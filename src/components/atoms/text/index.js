@@ -47,6 +47,7 @@ export const Patent = styled.span.attrs(() => ({
 }))`
   font-size: ${fontSize.xs};
   ${font.primary};
+  visibility: ${({ hide }) => hide ? "hidden" : "visible"};
 `;
 
 export const HouseNameLarge = styled.span`
