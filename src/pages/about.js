@@ -32,7 +32,7 @@ const Links = styled.div`
 `;
 
 const About = () => (
-  <Page whiteHead videoBack>
+  <Page whiteHead overlayBack>
     <Main>
       <H1>Org 2.0</H1>
       <Break />

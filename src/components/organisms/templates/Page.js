@@ -79,6 +79,7 @@ export const Page = ({
   defaultHeader = true,
   className,
   videoBack,
+  overlayBack,
   whiteHead,
   noPadd,
 }) => {
@@ -96,12 +97,11 @@ export const Page = ({
         <meta property="twitter:title" content={title} />
       </Head>
       <PageLayout ref={ref} className={className}>
-        {videoBack && (
-          <>
-            <BackVideo />
-            <Overlay />
-          </>
-        )}
+        <>
+          {videoBack && <BackVideo />}
+          {overlayBack && <Overlay />}
+        </>
+
         <Menu isOpen={menuOpen} closeMenu={closeMenu} />
         {defaultHeader && <Header openMenu={openMenu} white={whiteHead} noPadd={noPadd} />}
         <Container noPadd={noPadd}>{children}</Container>

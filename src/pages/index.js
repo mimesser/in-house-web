@@ -123,7 +123,7 @@ const Landing = () => {
   };
 
   return (
-    <Page whiteHead videoBack onVideoReady={onVideoReady}>
+    <Page whiteHead overlayBack>
       <Main>
         <H1>a tool for people who can’t speak safely</H1>
         <Break />
