@@ -149,14 +149,14 @@ export const setSelectedMink = (selectedMinkId) => ({
   payload: { selectedMinkId },
 });
 
-export const upvoteMink = () => ({
+export const upvoteMink = (minkId) => ({
   type: actionTypes.VOTE_MINK,
-  payload: { vote: 1 },
+  payload: { vote: 1, minkId },
 });
 
-export const downvoteMink = () => ({
+export const downvoteMink = (minkId) => ({
   type: actionTypes.VOTE_MINK,
-  payload: { vote: -1 },
+  payload: { vote: -1, minkId },
 });
 
 export const showVoteMinkConfirmation = (value) => ({
