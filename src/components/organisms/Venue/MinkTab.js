@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import styled, { keyframes, css } from 'styled-components';
 import Link from 'next/link';
+import { debounce } from 'lodash';
 
 import {
   loadMinks,
@@ -17,7 +18,7 @@ import {
   toggleMinkFlag,
 } from '../../../store/venues';
 import { palette, spacing, fontSize, font } from '../../../style';
-import { Loader, Button, HelpTip, Patent, Card, Break, Icon } from '../../atoms';
+import { Loader, Button, HelpTip, Patent, Card, Break, Icon, SlidingValue } from '../../atoms';
 import { TabLayout, Main, ItemTitle, ItemTime, TabTitle } from './tabStyle';
 import { formatDateTime, formatRating } from '../../../utils/format';
 import VoteMink from './VoteMink';
@@ -31,12 +32,69 @@ import { Status, InputGroup } from './VoteMink/style';
 import { FlagItem } from './FlagItem';
 import { normalizeAnswer } from './normalizeAnswer';
 
+const Dot = styled.span`
+  &:before {
+    content: '\\2022';
+  }
+  font-size: ${fontSize.sm};
+  color: ${palette.primary};
+  opacity: ${({ hide, topMink }) => (hide && !topMink ? 0 : 1)};
+`;
+
 const VoteWrap = styled.div`
   margin-top: ${spacing.xxl};
   display: flex;
   flex-direction: column;
   padding-right: ${spacing.lg};
+
+  & ${Dot} {
+    transition: opacity 0.2s ease-in;
+    transition: opacity 0.25s ease-out;
+  }
 `;
+
+const VoteRating = styled.span`
+  visibility: ${({ hideRate, topMink }) => (hideRate && !topMink ? 'hidden' : 'visible')};
+  font-size: ${fontSize.md};
+  color: ${palette.primary};
+  ${font.bold};
+`;
+
+const RatingWrap = styled.span`
+  display: inline-flex;
+  align-items: center;
+
+  ${VoteRating} > div {
+    & > div:nth-child(2) {
+      order: 3;
+    }
+    & > span {
+      align-self: flex-end;
+    }
+    & > div {
+      padding: ${spacing.xxs};
+    }
+  }
+`;
+
+const ShareWrap = styled.div`
+  display: inline-flex;
+  align-items: center;
+  color: ${palette.darkGray};
+
+  & > *:not(:first-child) {
+    margin-left: ${spacing.xs};
+  }
+  & > *:last-child {
+    margin-left: ${spacing.xl};
+  }
+
+  ${VoteRating} {
+    margin-left: ${spacing.md};
+  }
+`;
+
+const FlagItemWrap = styled.div``;
 
 const transition = {
   in: '0.25s',
@@ -61,13 +119,14 @@ const defaultVoteAnimation = css`
     }
   }
 
-  ${VoteWrap} + ${Main} > ${InputGroup} {
+  ${VoteWrap} + ${Main} > ${InputGroup},
+  ${VoteWrap} + ${Main} {
     transition: ${transition.out} ease-in;
     opacity: 1;
   }
 `;
 
-const activeVoteAnimation = css`
+const activeVoteAnimation = (color, opacity) => css`
   ${VoteWrap} > ${VoteButton}:active {
     svg {
       transition: transform ${transition.in} ease-out;
@@ -75,8 +134,8 @@ const activeVoteAnimation = css`
       
       circle {
         transition: ${transition.in} ease-out;
-        fill: ${palette.gray};
-        opacity: 0.7;
+        fill: ${color};
+        opacity: ${opacity};
       }
       path:nth-child(2) {
         transition: ${transition.in} ease-out;
@@ -90,42 +149,21 @@ const activeVoteAnimation = css`
       }
     }
   }
+`;
 
-  ${VoteWrap}:active + ${Main} > ${InputGroup} {
+const hideInputOnVote = css`
+  ${VoteWrap}:active + ${Main} ${InputGroup},
+  ${VoteWrap}:active + ${Main} ${ShareWrap},
+  ${VoteWrap}:active + ${Main} ${FlagItemWrap} {
     transition: ${transition.in} ease-out;
     opacity: 0;
   }
 `;
 
-const VoteRating = styled.span`
-  font-size: ${fontSize.md};
-  color: ${palette.primary};
-  ${font.bold};
-`;
-
-const Dot = styled.span`
-  &:before {
-    content: '\\2022';
-  }
-  visibility: ${(props) => (props.show ? 'visible' : 'hidden')};
-  font-size: ${fontSize.sm};
-  color: ${palette.primary};
-`;
-
-const ShareWrap = styled.div`
-  display: inline-flex;
-  align-items: center;
-  color: ${palette.darkGray};
-
-  & > *:not(:first-child) {
-    margin-left: ${spacing.xs};
-  }
-  & > *:last-child {
-    margin-left: ${spacing.xl};
-  }
-
-  ${VoteRating} {
-    margin-left: ${spacing.md};
+const lowerOpacityOnVote = css`
+  ${VoteWrap}:active + ${Main} {
+    transition: ${transition.in} ease-out;
+    opacity: 0.5;
   }
 `;
 
@@ -148,16 +186,15 @@ const Subtitle = styled.div`
   color: ${palette.mediumGray};
 `;
 
-const FlagItemWrap = styled.div``;
-
-const active = css`
-  opacity: 1;
+const activeStyle = css`
   background-color: ${palette.lightGray};
 `;
 
 const MinkCard = styled(Card)`
+  user-select: none;
+
   ${ShareWrap}, ${FlagItemWrap} {
-    visibility: ${(props) => (props.active ? 'hidden' : 'visible')};
+    visibility: ${({ active, topMink }) => (active && !topMink ? 'hidden' : 'visible')};
   }
   ${Votes} > span:last-of-type {
     position: static;
@@ -182,10 +219,11 @@ const MinkCard = styled(Card)`
     padding-bottom: ${spacing.xxl};
   }
   transition: all 0.2s ease-in-out;
-  opacity: 0.8;
-  ${(props) => props.active && active}
+
+  ${({ active }) => active && activeStyle}
   ${defaultVoteAnimation}
-  ${(props) => props.active && activeVoteAnimation}
+  ${({ topMink }) => (topMink ? activeVoteAnimation(palette.lightGray, 1) : activeVoteAnimation(palette.gray, 0.7))}
+  ${({ topMink }) => (topMink ? lowerOpacityOnVote : hideInputOnVote)}
 `;
 
 const TopMinkContainer = styled.div`
@@ -218,7 +256,7 @@ const TopMinkContainer = styled.div`
       color: ${palette.mediumGray};
     }
     ${PokeButton} {
-      color: #fff;
+      color: ${palette.white};
     }
   }
 `;
@@ -279,9 +317,11 @@ const Mink = ({
   toggleMinkFlag,
 }) => {
   const selectMink = useCallback(() => setSelectedMink(minkId), [minkId]);
+  const deselectMink = useCallback(() => setSelectedMink(undefined), [minkId]);
   const ref = useRef(null);
-  const upvoted = myVote === 1;
-  const downvoted = myVote === -1;
+  const [vote, setVote] = useState(myVote);
+  const upvoted = vote === 1;
+  const downvoted = vote === -1;
   const active = selectedMink && selectedMink.id === minkId;
   const size = upvoted || downvoted ? 1.7 : 2.2;
   const [answer, setAnswer] = useState(myCorrectAnswer || '');
@@ -291,6 +331,15 @@ const Mink = ({
     setAnswer(value);
     tryAnswerMink(houseId, minkId, value);
   }, []);
+  const voteMink = useCallback(
+    debounce((e, id, value) => {
+      e.stopPropagation();
+      setVote(value);
+      if (value === 1) upvoteMink(id);
+      if (value === -1) downvoteMink(id);
+    }, 500),
+    [],
+  );
 
   useEffect(() => {
     if (isNew) {
@@ -300,28 +349,33 @@ const Mink = ({
   }, [isNew, setAddedMinkId]);
 
   const card = (
-    <MinkCard onClick={!active ? selectMink : undefined} ref={ref} active={active}>
+    <MinkCard ref={ref} active={active} topMink={topMink}>
       <div>
         <VoteWrap>
-          <VoteButton onClick={() => upvoteMink()} disabled={!active}>
-            <Dot show={upvoted} />
+          <VoteButton onClick={(e) => voteMink(e, minkId, 1)}>
+            <Dot hide={!upvoted} />
             <Icon size={size} icon="arrow-up-circle" />
           </VoteButton>
-          <VoteButton onClick={() => downvoteMink()} disabled={!active}>
-            <Dot show={downvoted} />
+          <VoteButton onClick={(e) => voteMink(e, minkId, -1)}>
+            <Dot hide={!downvoted} />
             <Icon size={size} icon="arrow-down-circle" />
           </VoteButton>
         </VoteWrap>
-        <Main>
+        <Main onClick={active ? deselectMink : selectMink}>
           <TopWrap>
             <ItemTime dateTime={created}>{formatDateTime(created)}</ItemTime>
             <Push />
             <ShareWrap>
               <Votes count={voteCount} inverse={topMink} iconSize={1} />
               {myVote ? (
-                <span>
-                  /<VoteRating>{formatRating(voteRating)}</VoteRating>
-                </span>
+                <RatingWrap>
+                  /
+                  <VoteRating hideRate={active} topMink={topMink}>
+                    <SlidingValue fontSize={fontSize.md} value={`${formatRating(voteRating) * 10}`} inverse={topMink}>
+                      <Dot hide={active} topMink={topMink} />
+                    </SlidingValue>
+                  </VoteRating>
+                </RatingWrap>
               ) : (
                 <InsiderText>Insider(s)</InsiderText>
               )}
@@ -340,6 +394,7 @@ const Mink = ({
                 readOnly={previouslyAnsweredCorrectly}
                 icon={renderInputIcon(answerStatus, previouslyAnsweredCorrectly, active)}
                 onFocus={selectMink}
+                onClick={(e) => e.stopPropagation()}
               />
               {active && renderStatusIcon(answerStatus)}
             </div>

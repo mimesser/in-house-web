@@ -33,28 +33,26 @@ function* reloadMinksAndCheckIfNewElected(venue) {
   yield put(setNewMinkElected(false));
 }
 
-export function* voteMink({ payload: { vote } }) {
+export function* voteMink({ payload: { vote, minkId } }) {
   const venue = yield select(selectSelectedVenue);
-  const mink = yield select(selectSelectedMink);
 
   try {
     const answerStatus = yield select(selectAnswerMinkStatus);
     if (!answerStatus || typeof answerStatus.isAnswerCorrect !== 'boolean' || !!answerStatus.isAnswerCorrect) {
       const {
         data: { isAnswerCorrect },
-      } = yield call(api.post, `venues/${venue.id}/mink/${mink.id}/answer`, { answer: 'null' });
+      } = yield call(api.post, `venues/${venue.id}/mink/${minkId}/answer`, { answer: 'null' });
     }
   } catch (error) {
     console.log(error);
   }
 
-  const { data } = yield call(api.post, `venues/${venue.id}/mink/${mink.id}/rate`, { vote });
+  const { data } = yield call(api.post, `venues/${venue.id}/mink/${minkId}/rate`, { vote });
 
   try {
     yield put(showVoteMinkConfirmation(data));
     // order and top mink can change
     yield fork(reloadMinksAndCheckIfNewElected, venue);
-    yield delay(CONFIRMATION_INTERVAL);
   } finally {
     yield put(setSelectedMink(undefined));
     yield put(showVoteMinkConfirmation(undefined));
