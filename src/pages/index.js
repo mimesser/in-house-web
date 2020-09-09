@@ -123,7 +123,7 @@ const Landing = () => {
   };
 
   return (
-    <Page whiteHead overlayBack>
+    <Page whiteHead imageBack overlayBack>
       <Main>
         <H1>a tool for people who can’t speak safely</H1>
         <Break />
