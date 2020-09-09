@@ -28,6 +28,7 @@ const defaultProps = {
   padDirection: 'left',
   step: 200,
   textColor: theme.colors.primary,
+  textColorInverse: theme.colors.offWhite,
   value: '0.0',
 };
 
@@ -52,7 +53,8 @@ export const SlidingValue = ({
   minLength = defaultProps.minLength,
   padDirection = defaultProps.padDirection,
   step = defaultProps.step,
-  textColor = defaultProps.textColor,
+  inverse,
+  textColor = inverse ? defaultProps.textColorInverse : defaultProps.textColor,
   value = defaultProps.value,
   ...props
 }) => {
