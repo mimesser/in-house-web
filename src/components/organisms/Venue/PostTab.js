@@ -1,9 +1,9 @@
-import React, { useEffect, useCallback, useState } from 'react';
-import styled, { css } from 'styled-components';
+import React, { useEffect, useCallback, useState, useRef } from 'react';
+import styled, { css, keyframes } from 'styled-components';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Link from 'next/link';
-
+import { useScrollPosition } from '@n8tb1t/use-scroll-position';
 import {
   loadPosts,
   selectSelectedPost,
@@ -16,7 +16,7 @@ import {
 import { Loader, Button, HelpTip, Break, Card, Icon, NumberLarge, NumberSmall } from '../../atoms';
 import { formatDateTime, formatRating } from '../../../utils/format';
 import { ItemText, ItemTitle, ItemTime, Main, TabLayout, TabTitle } from './tabStyle';
-import { appBackground, spacing, appColors, palette } from '../../../style';
+import { appBackground, spacing, appColors, palette, calcRem, font, fontSize } from '../../../style';
 import VotePost from './VotePost';
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
@@ -34,8 +34,7 @@ const transition = {
 };
 
 const VoteColumn = styled.div`
-  display:block;
-  // background: ${appBackground};
+  display: block;
 
   width: 36px;
   height: 92px;
@@ -108,7 +107,6 @@ const PostImage = styled.div.attrs(({ imageUrl }) => imageUrl && { style: { back
   min-height: 100px;
   max-width: 200px;
   min-width: 100px;
-  // margin-left: auto;
   margin-top: 10px;
   margin-right: 70px;
 
@@ -134,8 +132,6 @@ const VoteWrap = styled.div`
   height: 100%;
   ${VoteButton} {
     margin: 0;
-    // margin-left: 5px;
-
     padding-bottom: 20px;
   }
 `;
@@ -327,6 +323,50 @@ const Post = ({
   );
 };
 
+export const NewPostButton = styled(Button)`
+  width: 100%;
+  min-height: ${calcRem('38px')};
+  border: 1px solid ${appColors.gray5};
+  ${font.light};
+  font-size: ${fontSize.sm};
+  color: ${appColors.gray4};
+  padding: ${spacing.sm};
+`;
+
+const SlideIn = keyframes`
+  0% {
+    transform: translateY(-70%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity:1;
+  }
+`;
+
+const SlideOut = keyframes`
+  0% {
+    transform: translateY(0);
+    opacity:1;
+  }
+  100% {
+    transform: translateY(-70%);
+    opacity: 0;
+  }
+`;
+
+const NewPostSection = styled.div`
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  flex-shrink: 0; // safari
+  top: 46px;
+  padding: ${spacing.sm} ${spacing.md} ${spacing.sm} ${spacing.md};
+  background-color: ${appColors.offWhite};
+  z-index: 1;
+  animation: ${({ sticky }) => (sticky ? SlideIn : SlideOut)} linear ${({ duration }) => `${duration}s`};
+  animation-fill-mode: forwards;
+`;
+
 const renderSection = (title, posts, setSelectedPost, selectedPost, upvotePost, downvotePost, togglePostFlag) => {
   return (
     posts.length > 0 && (
@@ -399,18 +439,54 @@ const PostTab = ({
   );
   const getTitleForShare = useCallback((id) => findPost(id, posts).title, [posts]);
 
+  const handleScroll = useCallback((e) => {
+    console.log('# handle scroll', window.document.scrollTop, e);
+  });
+
+  const [scrolled, setScrolled] = useState(false);
+  const [hideOnScroll, setHideOnScroll] = useState(true);
+
+  const scrollRef = useRef();
+  useScrollPosition(
+    ({ prevPos, currPos }) => {
+      const isShow = currPos.y > prevPos.y;
+      if (isShow !== hideOnScroll) setHideOnScroll(isShow);
+    },
+    [hideOnScroll],
+    false,
+    false,
+    300,
+  );
+  useScrollPosition(
+    ({ currPos }) => {
+      const scrolledEnough = currPos.y < 60;
+      if (scrolledEnough !== scrolled) setScrolled(scrolledEnough);
+    },
+    [scrolled],
+    scrollRef,
+    false,
+    300,
+  );
   return (
-    <TabLayout>
-      {posts ? (
-        renderPosts(posts, setSelectedPost, selectedPost, upvotePost, downvotePost, togglePostFlag)
-      ) : (
-        <Loader big />
-      )}
-      <Link href={`/${venueType}?id=${id}&tab=post&new`} as={`/${venueType}/${id}/post/new`} passHref>
-        <Button icon="arrow-right">new</Button>
-      </Link>
-      <PrivateShare type="post" renderItem={renderSharePreview} getItemTitle={getTitleForShare} />
-    </TabLayout>
+    <>
+      <NewPostSection sticky={hideOnScroll || !scrolled} duration={1} ref={scrollRef}>
+        <Link href={`/${venueType}?id=${id}&tab=post&new`} as={`/${venueType}/${id}/post/new`} passHref>
+          <NewPostButton icon="plus" wide outline>
+            what's in your mind?
+          </NewPostButton>
+        </Link>
+      </NewPostSection>
+
+      <TabLayout onScroll={handleScroll}>
+        {posts ? (
+          renderPosts(posts, setSelectedPost, selectedPost, upvotePost, downvotePost, togglePostFlag)
+        ) : (
+          <Loader big />
+        )}
+
+        <PrivateShare type="post" renderItem={renderSharePreview} getItemTitle={getTitleForShare} />
+      </TabLayout>
+    </>
   );
 };
 
