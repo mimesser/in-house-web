@@ -51,9 +51,8 @@ export function* voteMink({ payload: { vote, minkId } }) {
 
   try {
     yield put(showVoteMinkConfirmation(data));
-    yield fork(reloadMinksAndCheckIfNewElected, venue);
     // order and top mink can change
-    // yield delay(CONFIRMATION_INTERVAL);
+    yield fork(reloadMinksAndCheckIfNewElected, venue);
   } finally {
     yield put(setSelectedMink(undefined));
     yield put(showVoteMinkConfirmation(undefined));

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import styled, { keyframes, css } from 'styled-components';
 import Link from 'next/link';
+import { debounce } from 'lodash';
 
 import {
   loadMinks,
@@ -331,13 +332,13 @@ const Mink = ({
     tryAnswerMink(houseId, minkId, value);
   }, []);
   const voteMink = useCallback(
-    (e, id, value) => {
+    debounce((e, id, value) => {
       e.stopPropagation();
       setVote(value);
       if (value === 1) upvoteMink(id);
       if (value === -1) downvoteMink(id);
-    },
-    [minkId],
+    }, 500),
+    [],
   );
 
   useEffect(() => {
@@ -348,7 +349,7 @@ const Mink = ({
   }, [isNew, setAddedMinkId]);
 
   const card = (
-    <MinkCard onClick={!active ? selectMink : deselectMink} ref={ref} active={active} topMink={topMink}>
+    <MinkCard ref={ref} active={active} topMink={topMink}>
       <div>
         <VoteWrap>
           <VoteButton onClick={(e) => voteMink(e, minkId, 1)}>
@@ -360,7 +361,7 @@ const Mink = ({
             <Icon size={size} icon="arrow-down-circle" />
           </VoteButton>
         </VoteWrap>
-        <Main>
+        <Main onClick={active ? deselectMink : selectMink}>
           <TopWrap>
             <ItemTime dateTime={created}>{formatDateTime(created)}</ItemTime>
             <Push />
@@ -392,6 +393,8 @@ const Mink = ({
                 onChange={tryAnswer}
                 readOnly={previouslyAnsweredCorrectly}
                 icon={renderInputIcon(answerStatus, previouslyAnsweredCorrectly, active)}
+                onFocus={selectMink}
+                onClick={(e) => e.stopPropagation()}
               />
               {active && renderStatusIcon(answerStatus)}
             </div>
