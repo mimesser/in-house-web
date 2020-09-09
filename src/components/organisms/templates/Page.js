@@ -5,7 +5,16 @@ import Head from 'next/head';
 import { HelpToggle, withNoSSR } from '../../atoms';
 import { Header } from '../Header';
 import { Menu } from '../Menu';
-import { appBackground, breakpoints, onDesktop, deskPad, cover, palette, onDesktopOverflowAuto } from '../../../style';
+import {
+  appBackground,
+  breakpoints,
+  onDesktop,
+  deskPad,
+  cover,
+  palette,
+  onDesktopOverflowAuto,
+  device,
+} from '../../../style';
 
 const PageLayout = styled.div`
   height: 100%;
@@ -49,6 +58,45 @@ const Overlay = styled.div`
   opacity: 0.7;
 `;
 
+// mobileS: '320px',
+// mobileM: '375px',
+// mobileL: '425px',
+// tablet: '768px',
+// laptop: '1024px',
+// laptopL: '1440px',
+// desktop: '2560px',
+
+const BackgroundImage = styled.div`
+  ${cover('fixed')};
+  background-size: cover;
+  content: '';
+
+  background-image: url(static/mobile_xs_750x1334.jpg);
+
+  //
+  @media ${device.tablet} {
+    background-image: url(static/web_sm_1024x768.jpg);
+  }
+  @media ${device.laptop} {
+    background-image: url(static/web_md_1440x900.jpg);
+  }
+  @media ${device.laptopL} {
+    background-image: url(static/web_lg_1920x1080.jpg);
+  }
+  @media ${device.desktop} {
+    background-image: url(static/web_xl_2880x1800.jpg);
+  }
+  @media ${device.mobileS} {
+    background-image: url(static/mobile_sm_1125x2436.jpg);
+  }
+  @media ${device.mobileM} {
+    background-image: url(static/mobile_md_1242x2208.jpg);
+  }
+  @media ${device.mobileL} {
+    background-image: url(static/mobile_lg_1536x2408.jpg);
+  }
+`;
+
 const useMatchesQuery = (query) => {
   const mediaQueryList = window.matchMedia(query);
   const [result, setResult] = useState(mediaQueryList.matches);
@@ -79,6 +127,7 @@ export const Page = ({
   defaultHeader = true,
   className,
   videoBack,
+  imageBack,
   overlayBack,
   whiteHead,
   noPadd,
@@ -99,6 +148,7 @@ export const Page = ({
       <PageLayout ref={ref} className={className}>
         <>
           {videoBack && <BackVideo />}
+          {imageBack && <BackgroundImage />}
           {overlayBack && <Overlay />}
         </>
 
