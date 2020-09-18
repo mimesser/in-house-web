@@ -1,24 +1,19 @@
 import styled from 'styled-components';
 import { rgba } from 'polished';
 
-import { cover, palette, spacing } from '../../../../style';
-import { H1, Industry, Address } from '../../../atoms';
+import { cover, palette, spacing, fontSize } from '../../../../style';
+import { H1, Industry, Address, NumberLarge } from '../../../atoms';
 import { Votes } from '../Votes';
 
 export const Header = styled.header`
   position: relative;
-  padding: ${spacing.xl} ${spacing.lg} ${spacing.xxl} ${spacing.xxl};
+  padding: ${spacing.xxl};
   color: ${palette.offWhite};
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
   > div {
     display: flex;
-    flex: 1;
-
-    > div:first-child {
-      margin-right: auto;
-    }
   }
 
   > * {
@@ -30,7 +25,7 @@ export const Header = styled.header`
   // }
 
   ${Industry} {
-    margin: ${spacing.xl} 0 ${spacing.md};
+    margin: ${spacing.xl} 0 ${spacing.sm};
   }
 
   ${Industry}, ${Address} {
@@ -39,6 +34,25 @@ export const Header = styled.header`
 
   ${H1} {
     margin-bottom: ${spacing.md};
+  }
+
+  ${NumberLarge} {
+    align-self: center;
+  }
+
+  ${Votes} {
+    align-self: flex-end;
+    line-height: 1;
+    margin-bottom: ${spacing.xxs};
+
+    span:last-of-type {
+      font-size: ${fontSize.md};
+    }
+  }
+
+  sup {
+    top: -${spacing.xl};
+    left: 0;
   }
 
   background-image: url("${({ imageUrl }) => imageUrl}");
@@ -54,12 +68,7 @@ export const Header = styled.header`
 `;
 
 export const Ratings = styled.div`
-  margin: auto 0 ${spacing.md} ${spacing.md};
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
-
-  ${Votes} {
-    margin: ${spacing.md} auto 0;
-  }
 `;

@@ -16,7 +16,5 @@ export const Votes = styled(({ count, iconSize = 0.8, inverse, ...rest }) => (
   span:last-of-type {
     margin-left: ${spacing.xs};
     color: ${({ inverse }) => (inverse ? palette.white : palette.primary)};
-    position:absolute;
-    top:-17px;
   }
 `;

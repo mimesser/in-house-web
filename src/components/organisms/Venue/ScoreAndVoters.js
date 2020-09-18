@@ -69,6 +69,11 @@ export const ScoreAndVoters = styled(
     top: -17px;
     left:-3px;
     font-size: ${fontSize.xs};
+
+    span:last-of-type {
+      position: absolute;
+      top: -17px;
+    }
   }
 
   ${Dial} {
