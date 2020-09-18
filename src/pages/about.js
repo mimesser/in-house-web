@@ -44,9 +44,6 @@ const About = () => (
         tool. we use it ourselves, we have learned to listen, and it works. we believe it is time for a new day … for
         everyone.
       </H2>
-      <Links>
-        <HowItWorks />
-      </Links>
     </Main>
   </Page>
 );
