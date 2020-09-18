@@ -70,8 +70,6 @@ export const NumberLarge = styled.span`
   ${font.light};
   sup {
     font-size: 50%;
-    top: -1.5rem;
-    left: -0.5rem;
   }
 `;
 
