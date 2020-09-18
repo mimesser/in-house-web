@@ -47,7 +47,15 @@ export const Patent = styled.span.attrs(() => ({
 }))`
   font-size: ${fontSize.xs};
   ${font.primary};
-  visibility: ${({ hide }) => hide ? "hidden" : "visible"};
+  visibility: ${({ hide }) => (hide ? 'hidden' : 'visible')};
+`;
+
+export const Copyright = styled.span.attrs(() => ({
+  children: 'Minklist Digital, LLC, 2020 all rights reserved',
+}))`
+  font-size: ${fontSize.xs};
+  ${font.primary};
+  visibility: ${({ hide }) => (hide ? 'hidden' : 'visible')};
 `;
 
 export const HouseNameLarge = styled.span`

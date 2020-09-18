@@ -3,15 +3,16 @@ import Link from 'next/link';
 import styled from 'styled-components';
 
 import { Page, HowItWorks } from '../components/organisms';
-import { Button, H1, H2, Break, Icon, TransparentLinkStyle } from '../components/atoms';
+import { Button, H1, H2, Break, Icon, ClearButton } from '../components/atoms';
 import { spacing, palette, breakpoints } from '../style';
 import BetaChallange, { BetaLink, BetaDesc } from '../components/organisms/BetaChallange';
 import { version } from '../../package.json';
+import { Footer } from '../components/organisms/Footer';
 const Main = styled.div`
   position: relative;
   color: ${palette.offWhite};
 
-  padding: ${spacing.xxl};
+  padding: 0;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -28,13 +29,9 @@ const Main = styled.div`
     line-height: 1em;
   }
 
-  /*
-    anything that's not really small
-    TODO: page should be designed properly, and no hard-coded '400px'
-  */
-  @media screen and (min-width: 400px) {
+  @media screen and (min-width: ${breakpoints.xs}) {
     ${H1} {
-      margin-top: ${spacing.xl};
+      margin-top: 105.5px;
       line-height: inherit;
     }
     ${Break} {
@@ -46,75 +43,53 @@ const Main = styled.div`
   }
 `;
 
+const MainSection = styled.section`
+  padding: ${spacing.xxl};
+  min-height: 740px;
+  height: 667px;
+  height: 100%;
+  height: 100vh;
+  scroll-snap-align: start;
+`;
+
+const HowToSection = styled.section`
+  widht: 100vw;
+  height: 100vh;
+  scroll-snap-align: start;
+`;
+
 const VersionFooter = styled.footer`
+  position: absolute;
+  right: 20px;
+  top: 90vh;
   text-align: right;
   color: ${palette.lightGray};
 `;
-const Links = styled.div`
-  margin-top: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
 
-  > a {
-    ${TransparentLinkStyle};
-
-    :last-of-type {
-      margin-top: ${spacing.sm};
-    }
-    /*
-      anything that's not really small
-      TODO: page should be designed properly, and no hard-coded '400px'
-    */
-    @media screen and (min-width: 400px) {
-      :last-of-type {
-        margin-top: ${spacing.lg};
-      }
-    }
-  }
-  > section {
-    margin-top: ${spacing.xxxl};
-    width: 100%;
-  }
-
-  > div {
-    margin-top: ${spacing.xl};
-    /*
-      anything that's not really small
-      TODO: page should be designed properly, and no hard-coded '400px'
-    */
-    @media screen and (min-width: 400px) {
-      margin-top: ${spacing.xxxl};
-      :last-of-type {
-        margin-top: 80px;
-      }
-    }
-    > a {
-      margin-right: ${spacing.lg};
-    }
-  }
+const ScrollPage = styled(Page)`
+  scroll-snap-type: y proximity;
+  scroll-padding: 50%;
 `;
 
-const SocialLink = ({ href, icon }) => (
-  <a href={href} rel="noopener noreferrer" target="_blank">
-    <Icon icon={icon} size={1.5} />
-  </a>
-);
+const ScrollButton = styled(ClearButton)`
+  position: absolute;
+  width: auto;
+  top: 90vh;
+  margin-left: -45vw;
+  width: 10vw;
+  margin-right: 40vw;
+  padding: 0;
+`;
 
-const socialLinks = [
-  {
-    icon: 'facebook',
-    href: 'https://www.facebook.com/iH.movement/',
-  },
-  {
-    icon: 'twitter',
-    href: 'https://twitter.com/iH_movement',
-  },
-  {
-    icon: 'linkedin',
-    href: 'https://www.linkedin.com/company/in-house6',
-  },
-];
+const CloseIcon = styled(Icon).attrs(() => ({
+  icon: 'angle-down',
+}))`
+  width: 24px;
+  height: 24px;
+  :hover {
+    color: ${palette.white};
+  }
+`;
 
 const Landing = () => {
   const [videoReady, setVideoReady] = useState(false);
@@ -122,48 +97,46 @@ const Landing = () => {
     setVideoReady(true);
   };
 
+  const scrollMenu = (id = 'howitworks') => {
+    console.log('# scroll menu');
+    setTimeout(() => {
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 0);
+  };
+
   return (
-    <Page whiteHead imageBack overlayBack>
+    <ScrollPage whiteHead imageBack overlayBack>
       <Main>
-        <H1>a tool for people who can’t speak safely</H1>
-        <Break />
-        <H2 as="p">
-          just answer an 'insider' password to share and learn truths about your organization with 100% anonymous,
-          full-team polling & feedback (on everything)
-        </H2>
-        <Links>
+        <MainSection>
+          <H1>make your voice heard</H1>
+          <Break />
+          <H2 as="p">let management know how they're doing, without compromise</H2>
+          <Link href="/houses" prefetch={false}>
+            <BetaLink icon="arrow-right" wide outline>
+              see houses
+            </BetaLink>
+          </Link>
+          <VersionFooter>
+            <p>
+              v{version}
+              {process.env.REACT_APP_GIT_SHA}
+            </p>
+          </VersionFooter>
+          <ScrollButton onClick={() => scrollMenu()}>
+            <CloseIcon />
+          </ScrollButton>
+        </MainSection>
+
+        <HowToSection id="howitworks">
           <HowItWorks />
-          <Link href="/about" passHref prefetch={false}>
-            <Button icon="mission">our mission</Button>
-          </Link>
-          <Link href="/polls" passHref prefetch={false}>
-            <Button icon="users">essential worker polls</Button>
-          </Link>
+        </HowToSection>
 
-          <section>
-            <BetaDesc>no email, no login, no personal data</BetaDesc>
-            <Link href="/houses" prefetch={false}>
-              <BetaLink icon="arrow-right" wide outline>
-                see houses
-              </BetaLink>
-            </Link>
-          </section>
-
-          <div>
-            {socialLinks.map((link) => (
-              // eslint-disable-next-line react/jsx-props-no-spreading
-              <SocialLink {...link} key={link.icon} />
-            ))}
-          </div>
-        </Links>
-        <VersionFooter>
-          <p>
-            v{version}
-            {process.env.REACT_APP_GIT_SHA}
-          </p>
-        </VersionFooter>
+        <Footer />
       </Main>
-    </Page>
+    </ScrollPage>
   );
 };
 

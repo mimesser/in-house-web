@@ -4,8 +4,9 @@ import Link from 'next/link';
 import Router from 'next/router';
 import { Button, Brand, TransparentLinkStyle, Icon } from '../../atoms';
 import { Modal } from '../Modal';
-import { fontSize, font, palette, spacing, breakpoints, deskPadRem, onDesktop } from '../../../style';
+import { fontSize, font, palette, spacing, breakpoints, deskPadRem, onDesktop, appColors } from '../../../style';
 
+import { rgba } from 'polished';
 const OpenLink = styled(Button)`
   ${TransparentLinkStyle};
 `;
@@ -56,9 +57,10 @@ const Steps = styled(({ children, className }) => (
     ))}
   </div>
 ))`
-  margin-top: ${spacing.xxxl};
+  margin-top: ${spacing.sm};
   ${onDesktop(`margin-top: auto`)};
   margin-bottom: auto;
+  padding: ${spacing.xxxl};
 `;
 
 const NotifyLink = styled(Button)`
@@ -70,12 +72,16 @@ const NotifyLink = styled(Button)`
 `;
 
 const Layout = styled.div`
+  height: 100vh;
+  width: 100%;
   flex: 1;
   display: flex;
   flex-direction: column;
-  max-width: ${breakpoints.sm};
-  margin: 0 auto;
-  ${onDesktop(`margin-left: ${deskPadRem}`)};
+
+  background: ${appColors.midnight};
+
+  margin: 0;
+  paddding: ${spacing.xl};
 `;
 const PaperPlan = styled(Icon)`
   position: absolute;
@@ -84,79 +90,54 @@ const PaperPlan = styled(Icon)`
   color: white;
 `;
 
-const StyledBrand = styled(Brand)`
-  > a {
-    text-decoration: none;
-  }
+const PageTitle = styled(Title)`
+  font-size: ${fontSize.lg};
+  margin: ${spacing.xxxl} ${spacing.xl} ${spacing.sm} ${spacing.xl};
 `;
-
+const StepSection = styled.span`
+  display: block;
+`;
 export const HowItWorks = () => {
-  const [show, setShow] = useState(false);
-  const open = useCallback(() => setShow(true), []);
-  const close = useCallback(() => setShow(false), []);
-
-  useEffect(() => {
-    const handleRouteChange = (url) => {
-      console.log('App is changing to: ', url);
-      setShow(false);
-    };
-
-    Router.events.on('routeChangeStart', handleRouteChange);
-    return () => {
-      Router.events.off('routeChangeStart', handleRouteChange);
-    };
-  }, []);
   return (
     <>
-      <OpenLink icon="arrow-right" onClick={open}>
-        how it works
-      </OpenLink>
-      {show && (
-        <Modal closeModal={close} inverse title={<StyledBrand />}>
-          <Layout>
-            <Steps>
-              <>
-                <Title>list your workplace</Title>
-                <Desc>
-                  free & <mark>anonymous</mark>
-                </Desc>
-              </>
-              <>
-                <Title>add a starter “mink”</Title>
-                <Desc>
-                  a team security question allowing only insiders to speak — <mark>anonymously</mark>
-                </Desc>
-              </>
-              <>
-                <Title>rate your workplace</Title>
-                <Desc>
-                  staying 100% <mark>anonymous</mark> without logins or emails
-                </Desc>
-              </>
-              <>
-                <Title>
-                  share with your team
-                  <PaperPlan icon="paper-plane" size={1.5} color="text" />
-                </Title>
-                <Desc>
-                  yup, <mark>anonymously</mark>
-                </Desc>
-              </>
-              <>
-                <Title>let leadership hear you</Title>
-                <Desc>
-                  safely, <mark>anonymously</mark> and in-consensus — for the first time ever
-                </Desc>
-              </>
-            </Steps>
-            <Link href="/feedback" passHref>
-              <NotifyLink icon="arrow-right" wide outline>
-                get notified when live
-              </NotifyLink>
-            </Link>
-          </Layout>
-        </Modal>
-      )}
+      <Layout>
+        <PageTitle>how it works</PageTitle>
+        <Steps>
+          <StepSection>
+            <Title>list your workplace</Title>
+            <Desc>
+              free & <mark>anonymous</mark>
+            </Desc>
+          </StepSection>
+          <StepSection>
+            <Title>add a starter “mink”</Title>
+            <Desc>
+              a team security question allowing only insiders to speak — <mark>anonymously</mark>
+            </Desc>
+          </StepSection>
+          <StepSection>
+            <Title>rate your workplace</Title>
+            <Desc>
+              staying 100% <mark>anonymous</mark> without logins or emails
+            </Desc>
+          </StepSection>
+          <StepSection>
+            <Title>
+              share with your team
+              <PaperPlan icon="paper-plane" size={1.5} color="text" />
+            </Title>
+            <Desc>
+              yup, <mark>anonymously</mark>
+            </Desc>
+          </StepSection>
+          <StepSection>
+            <Title>let leadership hear you</Title>
+            <Desc>
+              safely, <mark>anonymously</mark> and in-consensus — for the first time ever
+            </Desc>
+          </StepSection>
+        </Steps>
+      </Layout>
     </>
   );
 };
