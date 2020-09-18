@@ -68,9 +68,10 @@ const Overlay = styled.div`
 
 const BackgroundImage = styled.div`
   ${cover('fixed')};
-  background-size: cover;
+  // background-size: cover;
   content: '';
-
+  background-position-x: left;
+  background-position-y: top;
   background-image: url(static/mobile_xs_750x1334.jpg);
 
   //
