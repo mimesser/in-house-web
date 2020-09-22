@@ -47,8 +47,6 @@ export const GlobalStyle = createGlobalStyle`
   html, body {
     height: 100%;
 
-    scroll-snap-type: y proximity;
-
   }
 
   input, textarea {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { connect } from 'react-redux';
 
 import Router from 'next/router';
@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { withRouter } from 'next/router';
 import { Page, HowItWorks } from '../components/organisms';
 import { Button, H1, H2, H3, Break, Icon, ClearButton, Dropdown } from '../components/atoms';
-import { spacing, palette, breakpoints, appColors, font, fontSize } from '../style';
+import { spacing, palette, breakpoints, appColors, font, fontSize, device } from '../style';
 import { version } from '../../package.json';
 import { Footer } from '../components/organisms/Footer';
 import { createStructuredSelector } from 'reselect';
@@ -33,36 +33,46 @@ const Main = styled.div`
   max-width: ${breakpoints.sm};
 
   ${Break} {
-    margin: ${spacing.xl} 0;
+    margin: ${spacing.lg} 0;
   }
-  ${H2} {
+  ${H3} {
     margin-bottom: ${spacing.lg};
     font-family: inherit;
   }
   ${H1} {
     line-height: 1em;
+    margin-top: ${spacing.sm};
   }
 
   @media screen and (min-width: ${breakpoints.xs}) {
     ${H1} {
-      margin-top: 105.5px;
       line-height: inherit;
     }
     ${Break} {
-      margin: ${spacing.xxl} 0;
+      margin: ${spacing.lg} 0;
     }
-    ${H2} {
-      margin-bottom: ${spacing.xxl};
+    ${H3} {
+      margin-bottom: ${spacing.xl};
     }
   }
 `;
 
 const MainSection = styled.section`
   padding: ${spacing.xxl};
-  min-height: 740px;
   height: 667px;
-  height: 100%;
-  height: 100vh;
+  min-height: 740px;
+  @media screen and (min-width: ${breakpoints.lg}) {
+    height: 667px;
+    min-height: 840px;
+  }
+  @media screen and ${device.mobileS} {
+    widht: 100vw;
+    height: 100vh;
+  }
+  ${Break} {
+    background: none;
+  }
+
   scroll-snap-align: start;
 `;
 
@@ -75,7 +85,7 @@ const HowToSection = styled.section`
 const VersionFooter = styled.footer`
   position: absolute;
   right: 20px;
-  top: 90vh;
+  top: 90%;
   text-align: right;
   color: ${palette.lightGray};
 `;
@@ -88,10 +98,10 @@ const ScrollPage = styled(Page)`
 const ScrollButton = styled(ClearButton)`
   position: absolute;
   width: auto;
-  top: 90vh;
-  margin-left: 40vw;
-  width: 10vw;
-  margin-right: 40vw;
+  top: 90%;
+  margin-left: 40%;
+  width: 10%;
+  margin-right: 40%;
   padding: 0;
 `;
 
@@ -126,26 +136,32 @@ const VenueLine = styled.div.attrs(({ venue }) => {
   height: 35px;
   margin:0;
   padding: ${spacing.sm};x
-  align-items: stretch;
+  align-items: baseline;
 
   align-items: flex-start;
   ${H3} {
+    ${font.bold};
     font-size: ${fontSize.sm};
     color: ${palette.lightGray};
-    flex-grow: 1;
+
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    height: ${fontSize.md}
+    height: 100%;
+    line-height: ${fontSize.md};
+    margin-right: ${spacing.sm};
   }
   address {
     color: ${palette.mediumGray};
-    font-size: 12px;
+    font-size: ${fontSize.xs};
     flex-grow: 1;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    height: ${fontSize.sm}
+    text-align: left;
+    vertical-align: middle
+    height: 100%;
+    line-height: ${fontSize.md};
   }
   ${Icon} {
 
@@ -166,6 +182,14 @@ const ListOrg = styled(Button)`
   border: none;
 `;
 
+const FocusHandle = styled.div`
+  margin-top: -100px;
+`;
+const Placeholder = styled.span`
+  color: ${palette.lightGray};
+  margin-left: ${spacing.sm};
+  margin-right: -95%;
+`;
 const NoResults = styled.span.attrs(() => ({
   children: 'no results',
 }))`
@@ -205,13 +229,13 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
     }
 
     return venues.map((v, i) => {
-      return { label: <VenueLine venue={v} />, value: v.id };
+      return { label: <VenueLine venue={v} />, value: v };
     });
   };
   const filterVenues = (option, inputValue) => {
     const { label, value } = option;
 
-    return value.toLocaleLowerCase().includes(inputValue.toLocaleLowerCase());
+    return value.name && value.name.toLocaleLowerCase().includes(inputValue.toLocaleLowerCase());
   };
 
   const select2Styles = {
@@ -247,27 +271,44 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
     }),
   };
 
+  const focusRef = useRef(null);
+  const mainTitleRef = useRef(null);
+  const onToggleMenu = useCallback(
+    (value) => {
+      setSearchOpened(value);
+      setTimeout(() => {
+        const ref = value ? focusRef : mainTitleRef;
+        if (ref && ref.current) {
+          ref.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 100);
+    },
+    [focusRef, mainTitleRef],
+  );
   return (
     <ScrollPage whiteHead imageBack overlayBack>
       <Main>
         <MainSection>
-          <H1>make your voice heard</H1>
+          <H1 ref={mainTitleRef}>make your voice heard</H1>
           <Break />
-          <H2 as="p">let management know how they're doing, without compromise</H2>
+          <H3 as="p">let management know how they're doing, without compromise</H3>
           <Dropdown
             isSearchable
             options={getVenues()}
             filterOption={filterVenues}
             styles={select2Styles}
             menuColor={palette.mediumGray}
-            onMenuOpen={() => setSearchOpened(true)}
-            onMenuClose={() => setSearchOpened(false)}
+            onMenuOpen={() => onToggleMenu(true)}
+            onMenuClose={() => onToggleMenu(false)}
             onChange={(option) => showVenue(option.value)}
             components={{
               DropdownIndicator: () => null,
               IndicatorSeparator: () => searchOpened && <Icon icon="close" color="darkGrey" size={1.2} />,
               Placeholder: () => (
-                <>{!searchOpened && <Icon icon="search" color="darkGrey" size={1.2} />} list your org</>
+                <>
+                  {!searchOpened && <Icon icon="search" color="darkGrey" size={1.2} />}{' '}
+                  <Placeholder>list your org</Placeholder>
+                </>
               ),
               NoOptionsMessage: () => (
                 <>
@@ -281,6 +322,7 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
               ),
             }}
           />
+          <FocusHandle ref={focusRef} />
           <VersionFooter>
             <p>
               v{version}
