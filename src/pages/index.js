@@ -199,14 +199,20 @@ const NoResults = styled.span.attrs(() => ({
 `;
 const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateData }) => {
   const [videoReady, setVideoReady] = useState(false);
+  const [filter, setFilter] = useState(false);
   const onVideoReady = () => {
     setVideoReady(true);
   };
 
   const [searchOpened, setSearchOpened] = useState(false);
-  const showVenue = useCallback((id) => {
-    Router.push(`/houses?id=${id}`, `/houses/${id}`, { shallow: true });
-  }, []);
+  const showVenue = useCallback(
+    (venue) => {
+      console.log('show:', { venue, filter });
+      const query = venue ? venue.name : filter;
+      Router.push(`/houses?q=${query}`, `/houses?q=${query}`, { shallow: true });
+    },
+    [filter],
+  );
 
   const scrollMenu = (id = 'howitworks') => {
     console.log('# scroll menu');
@@ -232,12 +238,15 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
       return { label: <VenueLine venue={v} />, value: v };
     });
   };
-  const filterVenues = (option, inputValue) => {
-    const { label, value } = option;
+  const filterVenues = useCallback(
+    (option, inputValue) => {
+      const { label, value } = option;
 
-    if (inputValue && inputValue.length > 1)
-      return value.name && value.name.toLocaleLowerCase().includes(inputValue.toLocaleLowerCase());
-  };
+      if (inputValue && inputValue.length > 0)
+        return value.name && value.name.toLocaleLowerCase().includes(inputValue.toLocaleLowerCase());
+    },
+    [filter, setFilter],
+  );
 
   const select2Styles = {
     option: (provided, state) => ({
@@ -277,14 +286,19 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
   const onToggleMenu = useCallback(
     (value) => {
       setSearchOpened(value);
+
       setTimeout(() => {
         const ref = value ? focusRef : mainTitleRef;
         if (ref && ref.current) {
           ref.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
+        if (!value) {
+          //on menu close open houses
+          showVenue(false);
+        }
       }, 100);
     },
-    [focusRef, mainTitleRef],
+    [focusRef, mainTitleRef, filter],
   );
   return (
     <ScrollPage whiteHead imageBack>
@@ -297,11 +311,18 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
             isSearchable
             options={getVenues()}
             filterOption={filterVenues}
+            onInputChange={(inputValue) => {
+              console.log('# in:', inputValue, filter);
+              if (inputValue && inputValue.length > 0) setFilter(inputValue);
+            }}
             styles={select2Styles}
             menuColor={palette.mediumGray}
             onMenuOpen={() => onToggleMenu(true)}
             onMenuClose={() => onToggleMenu(false)}
-            onChange={(option) => showVenue(option.value)}
+            onChange={(option, x) => {
+              console.log(option, x);
+              showVenue(option.value);
+            }}
             components={{
               DropdownIndicator: () => null,
               IndicatorSeparator: () => searchOpened && <Icon icon="close" color="darkGrey" size={1.2} />,
@@ -311,16 +332,17 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
                   <Placeholder>find your org</Placeholder>
                 </>
               ),
-              NoOptionsMessage: () => (
-                <>
-                  <NoResults />
-                  <Link href="/list-house" prefetch={false}>
-                    <ListOrg icon="arrow-right" wide>
-                      list your org
-                    </ListOrg>
-                  </Link>
-                </>
-              ),
+              NoOptionsMessage: () =>
+                filter && (
+                  <>
+                    <NoResults />
+                    <Link href="/list-house" prefetch={false}>
+                      <ListOrg icon="arrow-right" wide>
+                        list your org
+                      </ListOrg>
+                    </Link>
+                  </>
+                ),
             }}
           />
           <FocusHandle ref={focusRef} />
