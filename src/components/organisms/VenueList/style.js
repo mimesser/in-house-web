@@ -113,6 +113,7 @@ export const Main = styled.div.attrs(({ imageUrl }) => imageUrl && { style: { ba
     opacity: 0.5;
   }
 
+  min-height: 98px;
   padding: ${spacing.md};
   > * {
     position: relative;

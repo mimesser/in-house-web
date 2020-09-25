@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Link from 'next/link';
@@ -57,7 +57,9 @@ const findVenue = (id, venues) => {
 };
 
 const SearchPage = ({ venues, inDemo, categories }) => {
-  const [filter, setFilter] = useState('');
+  const router = useRouter();
+  console.log(router.query);
+  const [filter, setFilter] = useState(router.query.q);
   const handleSearchChange = useCallback((e) => setFilter(e.currentTarget.value.toLowerCase()), []);
   const clearSearch = useCallback(() => setFilter(''), []);
   const showVenue = useCallback((venue) => {
@@ -100,7 +102,7 @@ const SearchPage = ({ venues, inDemo, categories }) => {
   };
 
   const applyFilter = !!filter;
-  const venuesToShow = applyFilter ? venues.filter((v) => v.name.toLowerCase().includes(filter)) : venues;
+  const venuesToShow = applyFilter ? venues.filter((v) => v.name && v.name.toLowerCase().includes(filter)) : venues;
   const nothingFound = venuesToShow.length === 0;
 
   return (
