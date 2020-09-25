@@ -92,7 +92,7 @@ const PaperPlan = styled(Icon)`
 
 const PageTitle = styled(Title)`
   font-size: ${fontSize.lg};
-  margin: ${spacing.xxxl} ${spacing.xl} ${spacing.sm} ${spacing.xl};
+  margin: 10vh ${spacing.xl} ${spacing.sm} ${spacing.xl};
 `;
 const StepSection = styled.span`
   display: block;

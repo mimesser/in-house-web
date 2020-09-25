@@ -6,6 +6,7 @@ import { appBackground, spacing, breakpoints, font, fontSize, palette } from '..
 const Layout = styled.div`
   background: ${appBackground};
   width: 100%;
+  padding-top: ${spacing.sm};
 `;
 const Links = styled.div`
   margin-top: auto;

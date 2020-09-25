@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { withRouter } from 'next/router';
 import { Page, HowItWorks } from '../components/organisms';
 import { Button, H1, H2, H3, Break, Icon, ClearButton, Dropdown } from '../components/atoms';
-import { spacing, palette, breakpoints, appColors, font, fontSize, device } from '../style';
+import { spacing, palette, breakpoints, appColors, font, fontSize, device, onDesktop } from '../style';
 import { version } from '../../package.json';
 import { Footer } from '../components/organisms/Footer';
 import { createStructuredSelector } from 'reselect';
@@ -27,9 +27,8 @@ const Main = styled.div`
   color: ${palette.offWhite};
 
   padding: 0;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
+  display: block;
+
   max-width: ${breakpoints.sm};
 
   ${Break} {
@@ -59,16 +58,13 @@ const Main = styled.div`
 
 const MainSection = styled.section`
   padding: ${spacing.xxl};
-  height: 667px;
+  height: 100vh;
   min-height: 740px;
-  @media screen and (min-width: ${breakpoints.lg}) {
-    height: 667px;
-    min-height: 840px;
-  }
-  @media screen and ${device.mobileS} {
+  @media screen and ${device.iPhone8} {
     widht: 100vw;
     height: 100vh;
   }
+
   ${Break} {
     background: none;
   }
@@ -85,7 +81,9 @@ const HowToSection = styled.section`
 const VersionFooter = styled.footer`
   position: absolute;
   right: 20px;
-  top: 90%;
+  top: 70vh;
+  ${onDesktop(`top: 85vh`)};
+
   text-align: right;
   color: ${palette.lightGray};
 `;
@@ -98,7 +96,9 @@ const ScrollPage = styled(Page)`
 const ScrollButton = styled(ClearButton)`
   position: absolute;
   width: auto;
-  top: 90%;
+  top: 70vh;
+  ${onDesktop(`top: 85vh`)};
+
   margin-left: 40%;
   width: 10%;
   margin-right: 40%;
@@ -235,7 +235,8 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
   const filterVenues = (option, inputValue) => {
     const { label, value } = option;
 
-    return value.name && value.name.toLocaleLowerCase().includes(inputValue.toLocaleLowerCase());
+    if (inputValue && inputValue.length > 1)
+      return value.name && value.name.toLocaleLowerCase().includes(inputValue.toLocaleLowerCase());
   };
 
   const select2Styles = {
@@ -286,7 +287,7 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
     [focusRef, mainTitleRef],
   );
   return (
-    <ScrollPage whiteHead imageBack overlayBack>
+    <ScrollPage whiteHead imageBack>
       <Main>
         <MainSection>
           <H1 ref={mainTitleRef}>make your voice heard</H1>
@@ -307,7 +308,7 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
               Placeholder: () => (
                 <>
                   {!searchOpened && <Icon icon="search" color="darkGrey" size={1.2} />}{' '}
-                  <Placeholder>list your org</Placeholder>
+                  <Placeholder>find your org</Placeholder>
                 </>
               ),
               NoOptionsMessage: () => (

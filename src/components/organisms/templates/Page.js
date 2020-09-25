@@ -58,43 +58,35 @@ const Overlay = styled.div`
   opacity: 0.7;
 `;
 
-// mobileS: '320px',
-// mobileM: '375px',
-// mobileL: '425px',
-// tablet: '768px',
-// laptop: '1024px',
-// laptopL: '1440px',
-// desktop: '2560px',
-
 const BackgroundImage = styled.div`
   ${cover('fixed')};
-  // background-size: cover;
+  background-repeat: no-repeat;
+  background-size: cover;
   content: '';
   background-position-x: left;
   background-position-y: top;
   background-image: url(static/mobile_xs_750x1334.jpg);
 
-  //
-  @media ${device.tablet} {
-    background-image: url(static/web_sm_1024x768.jpg);
+  @media ${device.iPhoneX} {
+    background-image: url(static/mobile_sm_iphonex1125x2436.jpg);
+  }
+  @media ${device.iPhone8Plus} {
+    background-image: url('static/mobile_med_iphone6,7,8plus_1242x2208.jpg');
+  }
+  @media ${device.iPad} {
+    background-image: url(static/mobile_md_ipad_1536x2408.jpg);
+  }
+  @media ${device.web} {
+    background-image: url(static/web_min_1024x768.jpg);
   }
   @media ${device.laptop} {
     background-image: url(static/web_md_1440x900.jpg);
   }
-  @media ${device.laptopL} {
+  @media ${device.desktop} {
     background-image: url(static/web_lg_1920x1080.jpg);
   }
-  @media ${device.desktop} {
-    background-image: url(static/web_xl_2880x1800.jpg);
-  }
-  @media ${device.mobileS} {
-    background-image: url(static/mobile_sm_1125x2436.jpg);
-  }
-  @media ${device.mobileM} {
-    background-image: url(static/mobile_md_1242x2208.jpg);
-  }
-  @media ${device.mobileL} {
-    background-image: url(static/mobile_lg_1536x2408.jpg);
+  @media ${device.macbook} {
+    background-image: url(static/web_xl_max_retina_2880x1800.jpg);
   }
 `;
 

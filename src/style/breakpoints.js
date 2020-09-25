@@ -8,32 +8,60 @@ export const breakpoints = {
   xl: '1200px',
 };
 
-const size = {
-  mobileS: '562px',
-  mobileM: '621px',
-  mobileL: '768px',
-  tablet: '768px',
-  laptop: '1024px',
-  laptopL: '1440px',
-  desktop: '2560px',
+const mobileHeight = {
+  xs: '667px',
+  sm: '736px',
+  md: '812px',
+  lg: '1024px',
+  xl: '1366px',
 };
 
-const heights = {
-  mobileXS: '667px',
-  mobileSM: '1218px',
-  mobileMD: '1104px',
-  mobileLG: '1204px',
+const mobileWidth = {
+  xs: '320px',
+  sm: '375px',
+  md: '414px',
+  lg: '768px',
+  xl: '1024px',
+};
+const desktopWidth = {
+  sm: '1024px',
+  md: '1440px',
+  lg: '1920px',
 };
 
 export const device = {
-  mobileS: `(min-width: ${size.mobileS}) and (min-height: ${heights.mobileSM})`,
-  mobileM: `(min-width: ${size.mobileM}) and (min-height: ${heights.mobileMD})`,
-  mobileL: `(min-width: ${size.mobileL}) and (min-height: ${heights.mobileLG})`,
-  tablet: `(min-width: ${size.tablet})`,
-  laptop: `(min-width: ${size.laptop})`,
-  laptopL: `(min-width: ${size.laptopL})`,
-  desktop: `(min-width: ${size.desktop})`,
-  desktopL: `(min-width: ${size.desktop})`,
+  iPhone8: `
+  (min-width: ${mobileWidth.sm})
+  and (min-height: ${mobileHeight.xs})
+  and (-webkit-device-pixel-ratio : 2)
+  and (orientation : portrait)
+  `,
+  iPhone8Plus: `
+  (min-width: ${mobileWidth.md})
+  and (min-height: ${mobileHeight.sm})
+  and (-webkit-device-pixel-ratio : 3)
+  and (orientation : portrait)
+  `,
+  iPhoneX: `
+  (min-width: ${mobileWidth.sm})
+  and (min-height: ${mobileHeight.md})
+  and (-webkit-device-pixel-ratio : 3)
+  and (orientation : portrait)
+  `,
+  iPad: `
+  (min-width: ${mobileWidth.lg})
+  and (min-height: ${mobileHeight.sm})
+  and (-webkit-device-pixel-ratio : 2)
+  and (orientation : portrait)
+  `,
+
+  web: `(min-width: ${desktopWidth.sm})`,
+  laptop: `(min-width: ${desktopWidth.md})`,
+  desktop: `(min-width: ${desktopWidth.lg})`,
+  macbook: `
+  (min-width: ${desktopWidth.md})
+  and (-webkit-device-pixel-ratio : 2)
+  `,
 };
 
 export const onDesktop = (style) => css`
