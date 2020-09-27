@@ -292,7 +292,7 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
         if (ref && ref.current) {
           ref.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
-        if (!value) {
+        if (!value && filter && filter.length > 0) {
           //on menu close open houses
           showVenue(false);
         }
@@ -308,6 +308,7 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
           <Break />
           <H3 as="p">let management know how they're doing, without compromise</H3>
           <Dropdown
+            type="search"
             isSearchable
             options={getVenues()}
             filterOption={filterVenues}
