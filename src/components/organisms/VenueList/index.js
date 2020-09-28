@@ -58,7 +58,6 @@ const findVenue = (id, venues) => {
 
 const SearchPage = ({ venues, inDemo, categories }) => {
   const router = useRouter();
-  console.log(router.query);
   const [filter, setFilter] = useState(router.query.q);
   const handleSearchChange = useCallback((e) => setFilter(e.currentTarget.value.toLowerCase()), []);
   const clearSearch = useCallback(() => setFilter(''), []);
