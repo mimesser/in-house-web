@@ -63,7 +63,6 @@ let alreadyInDemo = false;
 let cacheAggregate;
 
 export function* initVenuesPage({ payload: { idToSelect } }) {
-  console.log('# INIT venues');
   const inDemo = idToSelect === DEMO_VENUE.id || idToSelect === DEMO_VENUES_ID;
   if (inDemo) {
     if (idToSelect === DEMO_VENUES_ID) {

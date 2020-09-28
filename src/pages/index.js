@@ -208,7 +208,8 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
   const showVenue = useCallback(
     (venue) => {
       console.log('show:', { venue, filter });
-      const query = venue ? venue.name : filter;
+      const filterValue = filter || '';
+      const query = venue && venue.name ? venue.name : filterValue;
       Router.push(`/houses?q=${query}`, `/houses?q=${query}`, { shallow: true });
     },
     [filter],
@@ -307,45 +308,49 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
           <H1 ref={mainTitleRef}>make your voice heard</H1>
           <Break />
           <H3 as="p">let management know how they're doing, without compromise</H3>
-          <Dropdown
-            type="search"
-            isSearchable
-            options={getVenues()}
-            filterOption={filterVenues}
-            onInputChange={(inputValue) => {
-              console.log('# in:', inputValue, filter);
-              if (inputValue && inputValue.length > 0) setFilter(inputValue);
-            }}
-            styles={select2Styles}
-            menuColor={palette.mediumGray}
-            onMenuOpen={() => onToggleMenu(true)}
-            onMenuClose={() => onToggleMenu(false)}
-            onChange={(option, x) => {
-              console.log(option, x);
-              showVenue(option.value);
-            }}
-            components={{
-              DropdownIndicator: () => null,
-              IndicatorSeparator: () => searchOpened && <Icon icon="close" color="darkGrey" size={1.2} />,
-              Placeholder: () => (
-                <>
-                  {!searchOpened && <Icon icon="search" color="darkGrey" size={1.2} />}{' '}
-                  <Placeholder>find your org</Placeholder>
-                </>
-              ),
-              NoOptionsMessage: () =>
-                filter && (
+
+          <form onSubmit={showVenue}>
+            <Dropdown
+              type="search"
+              aria-label="search"
+              aria-type="search"
+              isSearchable
+              options={getVenues()}
+              filterOption={filterVenues}
+              onInputChange={(inputValue) => {
+                if (inputValue && inputValue.length > 0) setFilter(inputValue);
+              }}
+              styles={select2Styles}
+              menuColor={palette.mediumGray}
+              onMenuOpen={() => onToggleMenu(true)}
+              onMenuClose={() => onToggleMenu(false)}
+              onChange={(option, x) => {
+                console.log(option, x);
+                showVenue(option.value);
+              }}
+              components={{
+                DropdownIndicator: () => null,
+                IndicatorSeparator: () => searchOpened && <Icon icon="close" color="darkGrey" size={1.2} />,
+                Placeholder: () => (
                   <>
-                    <NoResults />
-                    <Link href="/list-house" prefetch={false}>
-                      <ListOrg icon="arrow-right" wide>
-                        list your org
-                      </ListOrg>
-                    </Link>
+                    {!searchOpened && <Icon icon="search" color="darkGrey" size={1.2} />}{' '}
+                    <Placeholder>find your org</Placeholder>
                   </>
                 ),
-            }}
-          />
+                NoOptionsMessage: () =>
+                  filter && (
+                    <>
+                      <NoResults />
+                      <Link href="/list-house" prefetch={false}>
+                        <ListOrg icon="arrow-right" wide>
+                          list your org
+                        </ListOrg>
+                      </Link>
+                    </>
+                  ),
+              }}
+            />
+          </form>
           <FocusHandle ref={focusRef} />
           <VersionFooter>
             <p>
