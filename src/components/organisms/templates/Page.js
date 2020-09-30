@@ -26,7 +26,7 @@ const PageLayout = styled.div`
 
 const paddings = deskPad - 32;
 
-const Container = styled.div`
+export const Container = styled.div`
   flex: 1;
   ${({ noPadd }) => !noPadd && onDesktop(`margin-left: ${paddings}px`)};
   display: flex;

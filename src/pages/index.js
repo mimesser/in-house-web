@@ -5,7 +5,7 @@ import Router from 'next/router';
 import Link from 'next/link';
 import styled from 'styled-components';
 import { withRouter } from 'next/router';
-import { Page, HowItWorks } from '../components/organisms';
+import { Page, HowItWorks, Container } from '../components/organisms';
 import { Button, H1, H2, H3, Break, Icon, ClearButton, Dropdown } from '../components/atoms';
 import { spacing, palette, breakpoints, appColors, font, fontSize, device, onDesktop } from '../style';
 import { version } from '../../package.json';
@@ -91,6 +91,10 @@ const VersionFooter = styled.footer`
 const ScrollPage = styled(Page)`
   scroll-snap-type: y proximity;
   scroll-padding: 50%;
+  width: 100vw;
+  ${Container} {
+    overflow: initial;
+  }
 `;
 
 const ScrollButton = styled(ClearButton)`
