@@ -58,7 +58,7 @@ const Overlay = styled.div`
   opacity: 0.7;
 `;
 
-const BackgroundImage = styled.div`
+export const BackgroundImage = styled.div`
   ${cover('fixed')};
   background-repeat: no-repeat;
   background-size: cover;
