@@ -6,7 +6,7 @@ import { Transition } from 'react-transition-group';
 
 import { Icon, ClearButton } from '../../atoms';
 
-import { spacing, fontSize, font, palette } from '../../../style';
+import { spacing, fontSize, font, palette, breakpoints } from '../../../style';
 
 const CloseButton = styled(ClearButton)`
   margin: ${spacing.xl};
@@ -20,7 +20,7 @@ const CloseIcon = styled(Icon).attrs(() => ({
   }
 `;
 
-const routes = [
+export const menuOptions = [
   { href: '/houses', label: 'see houses' },
   { href: '/list-house', label: 'list workplace' },
   { href: '/about', label: 'about' },
@@ -79,7 +79,7 @@ export const Menu = withRouter(({ isOpen, router, closeMenu }) => (
           <CloseIcon />
         </CloseButton>
         <MenuItems>
-          {routes.map((route) => (
+          {menuOptions.map((route) => (
             <li key={route.href}>
               {route.href === router.asPath ? (
                 <A onClick={closeMenu}>{route.label}</A>

@@ -4,17 +4,22 @@ import Link from 'next/link';
 import Router from 'next/router';
 import { Button, Brand, TransparentLinkStyle, Icon } from '../../atoms';
 import { Modal } from '../Modal';
-import { fontSize, font, palette, spacing, breakpoints, deskPadRem, onDesktop, appColors } from '../../../style';
+import {
+  fontSize,
+  font,
+  palette,
+  spacing,
+  breakpoints,
+  deskPadRem,
+  onDesktop,
+  appColors,
+  themeColors,
+  calcRem,
+} from '../../../style';
 
 import { rgba } from 'polished';
 const OpenLink = styled(Button)`
   ${TransparentLinkStyle};
-`;
-
-const Step = styled.div`
-  color: ${palette.offWhite};
-  display: flex;
-  margin-bottom: ${spacing.xl};
 `;
 
 const Num = styled.div`
@@ -32,13 +37,21 @@ const Num = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: ${fontSize.md};
+  font-size: ${calcRem('28px')};
   ${font.bold};
-  margin-bottom: ${spacing.sm};
+  margin-bottom: 9px;
   position: relative;
+  color: white;
+  mark {
+    text-decoration: underline;
+    background: none;
+    color: currentColor;
+  }
 `;
 
 const Desc = styled.div`
+  color: ${appColors.grey7};
+  font-size: ${calcRem('25px')};
   mark {
     text-decoration: underline;
     background: none;
@@ -46,17 +59,48 @@ const Desc = styled.div`
     ${font.bold};
   }
 `;
+const Step = styled.div`
+  color: ${palette.offWhite};
+  display: flex;
+  margin-bottom: ${spacing.xl};
 
+  padding: 24px;
+
+  @media screen and (max-width: ${breakpoints.md}) {
+    ${Title}:nth-child(2n + 1) {
+      font-size: ${calcRem('14px')};
+    }
+    ${Desc}:nth-child(2n) {
+      font-size: ${calcRem('12px')};
+    }
+  }
+`;
+
+const Wrapper = styled.div`
+  margin-right: 24px;
+`;
 const Steps = styled(({ children, className }) => (
   <div className={className}>
-    {React.Children.map(children, (c, i) => (
-      <Step key={i}>
-        <Num>{i + 1}</Num>
-        <div>{c}</div>
-      </Step>
-    ))}
+    {React.Children.map(children, ({ ...c }, i) => {
+      return (
+        <Step key={i}>
+          <Wrapper>
+            <Icon icon={c.props.icon} size={4} color={themeColors.mediumGray} />
+          </Wrapper>
+          <div>{c}</div>
+        </Step>
+      );
+    })}
   </div>
 ))`
+  @media screen and (min-width: ${breakpoints.md}) {
+    ${Step}:nth-child(2n + 1) {
+      margin-left: -100px;
+    }
+    ${Step}:nth-child(2n) {
+      margin-left: 100px;
+    }
+  }
   margin-top: ${spacing.sm};
   ${onDesktop(`margin-top: auto`)};
   margin-bottom: auto;
@@ -74,10 +118,14 @@ const NotifyLink = styled(Button)`
 const Layout = styled.div`
   height: 100vh;
   width: 100%;
+  ${Steps} {
+    max-width: ${breakpoints.md};
+
+    margin: 0 auto;
+  }
   flex: 1;
   display: flex;
   flex-direction: column;
-
   background: ${appColors.midnight};
 
   margin: 0;
@@ -91,7 +139,9 @@ const PaperPlan = styled(Icon)`
 `;
 
 const PageTitle = styled(Title)`
-  font-size: ${fontSize.lg};
+  width: 100%;
+  text-align: center;
+  font-size: ${calcRem('52px')};
   margin: 10vh ${spacing.xl} ${spacing.sm} ${spacing.xl};
 `;
 const StepSection = styled.span`
@@ -103,38 +153,29 @@ export const HowItWorks = () => {
       <Layout>
         <PageTitle>how it works</PageTitle>
         <Steps>
-          <StepSection>
+          <StepSection icon="marker">
             <Title>list your workplace</Title>
+            <Desc>whithout anyone knowing it was you</Desc>
+          </StepSection>
+          <StepSection icon="winky-circle">
+            <Title>create a team password question</Title>
             <Desc>
-              free & <mark>anonymous</mark>
+              so only them can speak <mark>anonymously</mark>
             </Desc>
           </StepSection>
-          <StepSection>
-            <Title>add a starter “mink”</Title>
-            <Desc>
-              a team security question allowing only insiders to speak — <mark>anonymously</mark>
-            </Desc>
+          <StepSection icon="esg">
+            <Title>rate everything from the inside</Title>
+            <Desc>that affects people, planet and profits</Desc>
           </StepSection>
-          <StepSection>
-            <Title>rate your workplace</Title>
-            <Desc>
-              staying 100% <mark>anonymous</mark> without logins or emails
-            </Desc>
-          </StepSection>
-          <StepSection>
+          <StepSection icon="paper-plane">
             <Title>
-              share with your team
-              <PaperPlan icon="paper-plane" size={1.5} color="text" />
+              share <mark>anonymously</mark>
             </Title>
-            <Desc>
-              yup, <mark>anonymously</mark>
-            </Desc>
+            <Desc>get your team talking</Desc>
           </StepSection>
-          <StepSection>
-            <Title>let leadership hear you</Title>
-            <Desc>
-              safely, <mark>anonymously</mark> and in-consensus — for the first time ever
-            </Desc>
+          <StepSection icon="pulse">
+            <Title>watch what happens</Title>
+            <Desc>when your company can see the truth</Desc>
           </StepSection>
         </Steps>
       </Layout>

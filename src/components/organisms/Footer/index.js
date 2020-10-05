@@ -8,13 +8,26 @@ const Layout = styled.div`
   width: 100%;
   padding-top: ${spacing.sm};
 `;
+
+const Wrapper = styled.div`
+  max-width: ${breakpoints.md};
+  margin: 0 auto;
+  display: flex;
+
+  margin: 0, auto;
+  // align-items: center;
+  // justify-content: center;
+  div {
+    width: 50%;
+  }
+  @media (max-width: ${breakpoints.md}) {
+    display: block;
+    width: 100%;
+  }
+`;
 const Links = styled.div`
   margin-top: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-top: ${spacing.xl};
-  margin-left: ${spacing.sm};
+
   > a {
   }
 
@@ -42,35 +55,47 @@ const A = styled.a`
     color: ${palette.midnight};
   }
 `;
-
+const MobileBreak = styled(Break)`
+  @media screen and (min-width: ${breakpoints.md}) {
+    display: none;
+  }
+`;
+const CopyrightLine = styled(A)`
+  max-width: ${breakpoints.md};
+  margin: 0 auto;
+`;
 export const Footer = () => (
   <Layout>
     <Links>
-      <Link href="/list-house" passHref prefetch={false}>
-        <A>beta-list organisation</A>
-      </Link>
-      <Link href="#howitworks" passHref prefetch={false}>
-        <A>how it works</A>
-      </Link>
-      <Link href="/polls" passHref prefetch={false}>
-        <A>faqs</A>
-      </Link>
-      <Link href="/about" passHref prefetch={false}>
-        <A>about</A>
-      </Link>
-
+      <Wrapper>
+        <div>
+          <Link href="/list-house" passHref prefetch={false}>
+            <A>beta-list organisation</A>
+          </Link>
+          <Link href="#howitworks" passHref prefetch={false}>
+            <A>how it works</A>
+          </Link>
+          <Link href="/polls" passHref prefetch={false}>
+            <A>faqs</A>
+          </Link>
+          <Link href="/about" passHref prefetch={false}>
+            <A>about</A>
+          </Link>
+        </div>
+        <MobileBreak />
+        <div>
+          <Link href="/terms" passHref prefetch={false}>
+            <A>terms of service</A>
+          </Link>
+          <Link href="/feedback" passHref prefetch={false}>
+            <A>contact</A>
+          </Link>
+        </div>
+      </Wrapper>
       <Break />
-
-      <Link href="/terms" passHref prefetch={false}>
-        <A>terms of service</A>
-      </Link>
-      <Link href="/feedback" passHref prefetch={false}>
-        <A>contact</A>
-      </Link>
-      <Break />
-      <A>
+      <CopyrightLine>
         <Copyright></Copyright> | <Patent></Patent>
-      </A>
+      </CopyrightLine>
     </Links>
   </Layout>
 );
