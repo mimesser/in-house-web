@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import Head from 'next/head';
-
+import { useWindowWidth } from '@react-hook/window-size';
 import { HelpToggle, withNoSSR } from '../../atoms';
 import { Header } from '../Header';
 import { Menu } from '../Menu';
@@ -90,26 +90,21 @@ export const BackgroundImage = styled.div`
   }
 `;
 
-const useMatchesQuery = (query) => {
-  const mediaQueryList = window.matchMedia(query);
-  const [result, setResult] = useState(mediaQueryList.matches);
-  useEffect(() => {
-    const handleChange = (ev) => setResult(ev.matches);
-    mediaQueryList.addListener(handleChange);
-
-    return () => mediaQueryList.removeListener(handleChange);
-  }, []);
-
-  return result;
-};
-
 const BackVideo = withNoSSR(() => {
-  const mobile = useMatchesQuery(`(max-width: ${breakpoints.md})`);
-  const resource = `https://in-house.azureedge.net/webstatic/${mobile ? 'bg-mobile-2' : 'bg-desktop-2'}`;
+  const windowWidth = useWindowWidth();
+  const mobile = windowWidth <= 768;
+
+  // TODO: for some reason CDN is struggling with videos.
+  const videoWidths = [375, 768 /* , 1280 */, 1920];
+
+  const videoWidth = videoWidths.find((w) => windowWidth <= w) || videoWidths[videoWidths.length - 1];
+
+  const photoResource = `https://in-house.azureedge.net/webstatic/${mobile ? 'bg-mobile-2' : 'bg-desktop-2'}`;
+  const videoResource = `https://in-house.azureedge.net/webstatic/bg-${videoWidth}`;
 
   return (
-    <Video poster={`${resource}.png`} playsInline autoPlay muted loop>
-      <source src={`${resource}.mp4`} type="video/mp4" />
+    <Video poster={`${photoResource}.png`} playsInline autoPlay muted loop>
+      <source src={`${videoResource}.mp4`} type="video/mp4" />
     </Video>
   );
 });

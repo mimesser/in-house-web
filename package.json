@@ -21,6 +21,7 @@
     "dependencies": {
         "@koa/router": "^9.0.1",
         "@n8tb1t/use-scroll-position": "^1.0.43",
+        "@react-hook/window-size": "^3.0.7",
         "axios": "0.19.2",
         "axios-mock-adapter": "1.18.1",
         "cross-env": "7.0.2",
