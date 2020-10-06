@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { connect } from 'react-redux';
 
-import Router from 'next/router';
+import Router, { withRouter } from 'next/router';
 import Link from 'next/link';
 import styled, { keyframes } from 'styled-components';
-import { withRouter } from 'next/router';
+
+import { createStructuredSelector } from 'reselect';
 import { Page, HowItWorks, Container, BackgroundImage } from '../components/organisms';
-import { Button, H1, H2, H3, Break, Icon, ClearButton, TransparentLinkStyle } from '../components/atoms';
+import { Button, H1, H2, H3, Break, Icon, ClearButton, TransparentLinkStyle, Loader } from '../components/atoms';
 import {
   spacing,
   palette,
@@ -21,11 +22,10 @@ import {
   mobileWidth,
 } from '../style';
 import { version } from '../../package.json';
-import BetaChallange, { BetaLink, BetaDesc } from '../components/organisms/BetaChallange';
+import { BetaLink, BetaDesc } from '../components/organisms/BetaChallange';
 
 import { Footer } from '../components/organisms/Footer';
-import { createStructuredSelector } from 'reselect';
-import { Loader } from '../components/atoms';
+
 import {
   selectInsiderChallengeForm,
   selectVenues,
@@ -497,15 +497,15 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
       return { label: <VenueLine venue={v} />, value: v };
     });
   };
-  const filterVenues = useCallback(
-    (option, inputValue) => {
-      const { label, value } = option;
+  // const filterVenues = useCallback(
+  // (option, inputValue) => {
+  // const { label, value } = option;
 
-      if (inputValue && inputValue.length > 0)
-        return value.name && value.name.toLocaleLowerCase().includes(inputValue.toLocaleLowerCase());
-    },
-    [filter, setFilter],
-  );
+  // if (inputValue && inputValue.length > 0)
+  // return value.name && value.name.toLocaleLowerCase().includes(inputValue.toLocaleLowerCase());
+  // },
+  // [filter, setFilter],
+  // );
 
   const select2Styles = {
     option: (provided, state) => ({
@@ -552,7 +552,7 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
           ref.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
         if (!value && filter && filter.length > 0) {
-          //on menu close open houses
+          // on menu close open houses
           showVenue(false);
         }
       }, 100);
@@ -560,7 +560,7 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
     [focusRef, mainTitleRef, filter],
   );
   return (
-    <ScrollPage whiteHead videoBack overlayBack noPadd>
+    <ScrollPage whiteHead videoBack noPadd>
       <Main>
         <MainSection>
           <ul>
