@@ -2,6 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
 import Router from 'next/router';
+import { rgba } from 'polished';
 import { Button, Brand, TransparentLinkStyle, Icon } from '../../atoms';
 import { Modal } from '../Modal';
 import {
@@ -17,7 +18,6 @@ import {
   calcRem,
 } from '../../../style';
 
-import { rgba } from 'polished';
 const OpenLink = styled(Button)`
   ${TransparentLinkStyle};
 `;
@@ -116,11 +116,8 @@ const NotifyLink = styled(Button)`
 `;
 
 const Layout = styled.div`
-  height: 100vh;
-  width: 100%;
   ${Steps} {
     max-width: ${breakpoints.md};
-
     margin: 0 auto;
   }
   flex: 1;
@@ -142,7 +139,7 @@ const PageTitle = styled(Title)`
   width: 100%;
   text-align: center;
   font-size: ${calcRem('52px')};
-  margin: 10vh ${spacing.xl} ${spacing.sm} ${spacing.xl};
+  // margin: 10vh ${spacing.xl} ${spacing.sm} ${spacing.xl};
 `;
 const StepSection = styled.span`
   display: block;
