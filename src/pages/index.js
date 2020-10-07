@@ -232,19 +232,19 @@ const Bounce = keyframes`
 
 const MainSection = styled.section`
   display: flex;
-  align-items: top;
-  margin: 0;
-  height: calc(100vh - (${spacing.xl} + ${spacing.xl}));
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100vh;
 
   @media screen and ${device.iPhone8} {
     height: 100vh;
   }
 
   ul {
-    margin-top: 137px;
     list-style-type: none;
     color: ${palette.lightGray};
     li {
+      padding: ${spacing.sm} 0;
       animation: ${Bounce} 5s infinite ease-in-out both;
 
       &:first-child {
@@ -320,7 +320,6 @@ const NotificationSection = styled(MainSection)`
   ${BackgroundImage} {
     position: relative;
     height: 100vh;
-    width: 100vw;
     top: -100vh;
   }
 `;
@@ -353,15 +352,7 @@ const ScrollPage = styled(Page)`
 `;
 
 const ScrollButton = styled(ClearButton)`
-  position: absolute;
-  width: auto;
-  top: 70vh;
-  ${onDesktop(`top: 85vh`)};
-
-  margin-left: 40%;
-  width: 10%;
-  margin-right: 40%;
-  padding: 0;
+  align-self: center;
 `;
 
 const CloseIcon = styled(Icon).attrs(() => ({
@@ -564,40 +555,38 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
     <ScrollPage whiteHead videoBack noPadd>
       <Main>
         <MainSection>
-          <div>
-            <ul>
-              <li delay={0.1 * 1}>
-                <H1>it’s time for the team</H1>
-              </li>
-              <li delay={0.1 * 2}>
-                <H1>to be able to speak</H1>
-              </li>
-              <li delay={0.1 * 3}>
-                <H1>and use the power of numbers</H1>
-              </li>
-              <li delay={0.1 * 4}>
-                <H1>to hold leadership accountable</H1>
-              </li>
-              <li delay={0.1 * 5}>
-                <H1>100% anonymously</H1>
-              </li>
-              <li delay={0.1 * 6}>
-                <H1>on the environment</H1>
-              </li>
-              <li delay={0.1 * 7}>
-                <H1>on public policy</H1>
-              </li>
-              <li delay={0.1 * 8}>
-                <H1>and on the dignity of workers</H1>
-              </li>
-              <li delay={0.1 * 9}>
-                <H1>whose world?</H1>
-              </li>
-              <li delay={0.1 * 10}>
-                <H1>our world</H1>
-              </li>
-            </ul>
-          </div>
+          <ul>
+            <li delay={0.1 * 1}>
+              <H1>it’s time for the team</H1>
+            </li>
+            <li delay={0.1 * 2}>
+              <H1>to be able to speak</H1>
+            </li>
+            <li delay={0.1 * 3}>
+              <H1>and use the power of numbers</H1>
+            </li>
+            <li delay={0.1 * 4}>
+              <H1>to hold leadership accountable</H1>
+            </li>
+            <li delay={0.1 * 5}>
+              <H1>100% anonymously</H1>
+            </li>
+            <li delay={0.1 * 6}>
+              <H1>on the environment</H1>
+            </li>
+            <li delay={0.1 * 7}>
+              <H1>on public policy</H1>
+            </li>
+            <li delay={0.1 * 8}>
+              <H1>and on the dignity of workers</H1>
+            </li>
+            <li delay={0.1 * 9}>
+              <H1>whose world?</H1>
+            </li>
+            <li delay={0.1 * 10}>
+              <H1>our world</H1>
+            </li>
+          </ul>
           <ScrollButton onClick={() => scrollMenu('getNotification')}>
             <CloseIcon />
           </ScrollButton>
