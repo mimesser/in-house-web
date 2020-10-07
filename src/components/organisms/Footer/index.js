@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
-import { TransparentLinkStyle, Button, Break, Patent, Copyright } from '../../../components/atoms';
+import { TransparentLinkStyle, Button, Break, Patent, Copyright } from '../../atoms';
 import { appBackground, spacing, breakpoints, font, fontSize, palette } from '../../../style';
+
 const Layout = styled.div`
   background: ${appBackground};
-  width: 100%;
   padding-top: ${spacing.sm};
 `;
 
@@ -94,7 +94,7 @@ export const Footer = () => (
       </Wrapper>
       <Break />
       <CopyrightLine>
-        <Copyright></Copyright> | <Patent></Patent>
+        <Copyright /> | <Patent />
       </CopyrightLine>
     </Links>
   </Layout>
