@@ -43,8 +43,6 @@ const Main = styled.div`
   padding: 0;
   display: block;
 
-  // max-width: ${breakpoints.sm};
-
   ${Break} {
     margin: ${spacing.lg} 0;
   }
@@ -53,14 +51,17 @@ const Main = styled.div`
     font-family: inherit;
   }
   ${H1} {
-    line-height: 1em;
+    line-height: 24px;
     margin-top: ${spacing.md};
     font-size: 24px;
+  }
+  li {
+    margin: 0 0 0px 0;
   }
 
   @media screen and (min-width: ${breakpoints.xs}) {
     ${H1} {
-      line-height: inherit;
+      line-height: 24px;
       font-size: 40px;
     }
     ${Break} {
@@ -231,7 +232,7 @@ const Bounce = keyframes`
 
 const MainSection = styled.section`
   display: flex;
-  align-items: center;
+  align-items: top;
   margin: 0;
   height: calc(100vh - (${spacing.xl} + ${spacing.xl}));
 
@@ -240,7 +241,7 @@ const MainSection = styled.section`
   }
 
   ul {
-    // padding-top: ${spacing.xxxl};
+    margin-top: 137px;
     list-style-type: none;
     color: ${palette.lightGray};
     li {
