@@ -176,6 +176,8 @@ const WhiteSection = styled.section`
     width: 100%;
   }
   @media (max-width: ${breakpoints.sm}) {
+    height: 100vh;
+
     ${Wrapper} {
       display: block;
       width: 100%;
@@ -207,7 +209,8 @@ const CenteredLayout = styled.div`
   flex-direction: column;
   height: 100%;
   position: relative;
-  top: -100%;
+  // top: 100%;
+  z-index: 2;
 
   padding: ${spacing.xxl};
   padding-top: ${spacing.xxxl};
@@ -296,6 +299,7 @@ const MainSection = styled.section`
 `;
 
 const NotificationSection = styled(MainSection)`
+  display: block;
   ${H1} {
     ${font.bold};
     font-size: 56px;
@@ -315,6 +319,8 @@ const NotificationSection = styled(MainSection)`
   ${BackgroundImage} {
     position: relative;
     height: 100vh;
+    width: 100vw;
+    top: -100vh;
   }
 `;
 
@@ -617,9 +623,7 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
           </Wrapper>
         </WhiteSection>
 
-        {/* <NotificationSection id="getNotification">
-          <BackgroundImage />
-
+        <NotificationSection id="getNotification">
           <CenteredLayout>
             <H1 ref={mainTitleRef}>90 00 00 00 </H1>
             <Break />
@@ -641,7 +645,8 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
               </div>
             </Links>
           </CenteredLayout>
-        </NotificationSection> */}
+          <BackgroundImage />
+        </NotificationSection>
 
         <Footer />
       </Main>
