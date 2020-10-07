@@ -43,8 +43,6 @@ const Main = styled.div`
   padding: 0;
   display: block;
 
-  // max-width: ${breakpoints.sm};
-
   ${Break} {
     margin: ${spacing.lg} 0;
   }
@@ -53,14 +51,17 @@ const Main = styled.div`
     font-family: inherit;
   }
   ${H1} {
-    line-height: 1em;
+    line-height: 24px;
     margin-top: ${spacing.md};
     font-size: 24px;
+  }
+  li {
+    margin: 0 0 0px 0;
   }
 
   @media screen and (min-width: ${breakpoints.xs}) {
     ${H1} {
-      line-height: inherit;
+      line-height: 24px;
       font-size: 40px;
     }
     ${Break} {
@@ -176,6 +177,8 @@ const WhiteSection = styled.section`
     width: 100%;
   }
   @media (max-width: ${breakpoints.sm}) {
+    height: 100vh;
+
     ${Wrapper} {
       display: block;
       width: 100%;
@@ -207,7 +210,8 @@ const CenteredLayout = styled.div`
   flex-direction: column;
   height: 100%;
   position: relative;
-  top: -100%;
+  // top: 100%;
+  z-index: 2;
 
   padding: ${spacing.xxl};
   padding-top: ${spacing.xxxl};
@@ -228,7 +232,7 @@ const Bounce = keyframes`
 
 const MainSection = styled.section`
   display: flex;
-  align-items: center;
+  align-items: top;
   margin: 0;
   height: calc(100vh - (${spacing.xl} + ${spacing.xl}));
 
@@ -237,7 +241,7 @@ const MainSection = styled.section`
   }
 
   ul {
-    // padding-top: ${spacing.xxxl};
+    margin-top: 137px;
     list-style-type: none;
     color: ${palette.lightGray};
     li {
@@ -296,6 +300,7 @@ const MainSection = styled.section`
 `;
 
 const NotificationSection = styled(MainSection)`
+  display: block;
   ${H1} {
     ${font.bold};
     font-size: 56px;
@@ -315,6 +320,8 @@ const NotificationSection = styled(MainSection)`
   ${BackgroundImage} {
     position: relative;
     height: 100vh;
+    width: 100vw;
+    top: -100vh;
   }
 `;
 
@@ -584,7 +591,7 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
                 <H1>and on the dignity of workers</H1>
               </li>
               <li delay={0.1 * 9}>
-                <H1>who’s world?</H1>
+                <H1>whose world?</H1>
               </li>
               <li delay={0.1 * 10}>
                 <H1>our world</H1>
@@ -617,9 +624,7 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
           </Wrapper>
         </WhiteSection>
 
-        {/* <NotificationSection id="getNotification">
-          <BackgroundImage />
-
+        <NotificationSection id="getNotification">
           <CenteredLayout>
             <H1 ref={mainTitleRef}>90 00 00 00 </H1>
             <Break />
@@ -641,7 +646,8 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
               </div>
             </Links>
           </CenteredLayout>
-        </NotificationSection> */}
+          <BackgroundImage />
+        </NotificationSection>
 
         <Footer />
       </Main>
