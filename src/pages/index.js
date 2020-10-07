@@ -169,13 +169,10 @@ const socialLinks = [
 const WhiteSection = styled.section`
   background: ${appBackground};
   color: ${palette.mediumGray};
-  width: 100vw;
-  height: 100vh;
-  padding: ${spacing.xxxl} ${spacing.md} ${spacing.xxxl} ${spacing.md};
-  display: block;
+  padding: ${spacing.xl} ${spacing.xxxl};
+
   ${Wrapper} {
     display: flex;
-
     width: 100%;
   }
   @media (max-width: ${breakpoints.sm}) {
@@ -189,7 +186,6 @@ const WhiteSection = styled.section`
     ${font.bold};
     font-size: 52px;
     text-align: center;
-    margin-top: 64px;
   }
   ${H2} {
     ${font.bold};
@@ -200,7 +196,7 @@ const WhiteSection = styled.section`
     ${font.bold};
     font-size: 46px;
     text-align: center;
-    margin-top: 79px;
+    padding: ${spacing.xxxl} 0;
   }
 `;
 
@@ -231,19 +227,17 @@ const Bounce = keyframes`
 `;
 
 const MainSection = styled.section`
-  padding: 0;
+  display: flex;
+  align-items: center;
   margin: 0;
-
-  height: 100vh;
-  min-height: 740px;
+  height: calc(100vh - (${spacing.xl} + ${spacing.xl}));
 
   @media screen and ${device.iPhone8} {
-    width: 100vw;
     height: 100vh;
   }
 
   ul {
-    padding-top: 175px;
+    // padding-top: ${spacing.xxxl};
     list-style-type: none;
     color: ${palette.lightGray};
     li {
@@ -320,13 +314,14 @@ const NotificationSection = styled(MainSection)`
   }
   ${BackgroundImage} {
     position: relative;
-    width: 100vw;
     height: 100vh;
   }
 `;
 
 const HowToSection = styled.section`
-  widht: 100vw;
+  background: ${appColors.midnight};
+  display: flex;
+  align-items: center;
   height: 100vh;
   scroll-snap-align: start;
 `;
@@ -344,7 +339,6 @@ const VersionFooter = styled.footer`
 const ScrollPage = styled(Page)`
   scroll-snap-type: y proximity;
   scroll-padding: 50%;
-  width: 100vw;
   ${Container} {
     overflow: initial;
     margin: 0;
@@ -563,38 +557,40 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
     <ScrollPage whiteHead videoBack noPadd>
       <Main>
         <MainSection>
-          <ul>
-            <li delay={0.1 * 1}>
-              <H1>it’s time for the team</H1>
-            </li>
-            <li delay={0.1 * 2}>
-              <H1>to be able to speak</H1>
-            </li>
-            <li delay={0.1 * 3}>
-              <H1>and use the power of numbers</H1>
-            </li>
-            <li delay={0.1 * 4}>
-              <H1>to hold leadership accountable</H1>
-            </li>
-            <li delay={0.1 * 5}>
-              <H1>100% anonymously</H1>
-            </li>
-            <li delay={0.1 * 6}>
-              <H1>on the environment</H1>
-            </li>
-            <li delay={0.1 * 7}>
-              <H1>on public policy</H1>
-            </li>
-            <li delay={0.1 * 8}>
-              <H1>and on the dignity of workers</H1>
-            </li>
-            <li delay={0.1 * 9}>
-              <H1>who’s world?</H1>
-            </li>
-            <li delay={0.1 * 10}>
-              <H1>our world</H1>
-            </li>
-          </ul>
+          <div>
+            <ul>
+              <li delay={0.1 * 1}>
+                <H1>it’s time for the team</H1>
+              </li>
+              <li delay={0.1 * 2}>
+                <H1>to be able to speak</H1>
+              </li>
+              <li delay={0.1 * 3}>
+                <H1>and use the power of numbers</H1>
+              </li>
+              <li delay={0.1 * 4}>
+                <H1>to hold leadership accountable</H1>
+              </li>
+              <li delay={0.1 * 5}>
+                <H1>100% anonymously</H1>
+              </li>
+              <li delay={0.1 * 6}>
+                <H1>on the environment</H1>
+              </li>
+              <li delay={0.1 * 7}>
+                <H1>on public policy</H1>
+              </li>
+              <li delay={0.1 * 8}>
+                <H1>and on the dignity of workers</H1>
+              </li>
+              <li delay={0.1 * 9}>
+                <H1>who’s world?</H1>
+              </li>
+              <li delay={0.1 * 10}>
+                <H1>our world</H1>
+              </li>
+            </ul>
+          </div>
           <ScrollButton onClick={() => scrollMenu('getNotification')}>
             <CloseIcon />
           </ScrollButton>
@@ -621,7 +617,7 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
           </Wrapper>
         </WhiteSection>
 
-        <NotificationSection id="getNotification">
+        {/* <NotificationSection id="getNotification">
           <BackgroundImage />
 
           <CenteredLayout>
@@ -645,7 +641,8 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
               </div>
             </Links>
           </CenteredLayout>
-        </NotificationSection>
+        </NotificationSection> */}
+
         <Footer />
       </Main>
     </ScrollPage>
