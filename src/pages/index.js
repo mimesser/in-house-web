@@ -589,7 +589,7 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
               <H1>and on the dignity of workers</H1>
             </li>
             <li delay={0.1 * 9}>
-              <H1>who’s world?</H1>
+              <H1>whose world?</H1>
             </li>
             <li delay={0.1 * 10}>
               <H1>our world</H1>
