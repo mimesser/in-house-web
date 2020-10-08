@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { Icon, ClearButton, Brand } from '../../atoms';
 import { spacing, palette, onDesktop, deskPadRem, breakpoints, font, fontSize } from '../../../style';
 import { menuOptions } from '../Menu';
+
 const borderColor = ({ white }) => {
   // TODO: add alpha support to palette functions
   const c = white ? 249 : 51;
@@ -17,13 +18,20 @@ const Layout = styled.div`
   position: relative;
   flex: none; // safari
   color: ${({ white }) => (white ? palette.white : palette.primary)};
-  border-bottom: ${borderColor} solid 1px;
-  ${onDesktop(`border-bottom-color: transparent`)};
+  background-color: rgba(0, 0, 0, 0.2);
 
   > div {
     display: flex;
     align-items: center;
-    padding: ${spacing.xl} ${spacing.xxl};
+    padding: ${spacing.xl};
+
+    @media screen and (min-width: ${breakpoints.sm}) {
+      padding: ${spacing.xl} ${spacing.xxl};
+    }
+
+    @media screen and (min-width: ${breakpoints.xl}) {
+      padding: ${spacing.xl} ${spacing.xxxl};
+    }
 
     ${({ noPadd }) => !noPadd && onDesktop(`padding: ${spacing.xl} ${deskPadRem}`)};
 
@@ -36,6 +44,7 @@ const Layout = styled.div`
     }
   }
 `;
+
 const A = styled.a`
   outline: none;
   text-decoration: none;
@@ -122,7 +131,7 @@ export const Header = withRouter(({ openMenu, white, noPadd, router }) => (
           ))}
         </MenuItems>
         <MenuToggle onClick={openMenu}>
-          <Icon icon="menu" size={1.5} />
+          <Icon icon="menu" size={1} />
         </MenuToggle>
       </Menu>
     </div>

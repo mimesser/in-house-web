@@ -1,69 +1,64 @@
 import React from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
-import { TransparentLinkStyle, Button, Break, Patent, Copyright } from '../../atoms';
-import { appBackground, spacing, breakpoints, font, fontSize, palette } from '../../../style';
+import { Break, Patent, Copyright } from '../../atoms';
+import { appBackground, spacing, breakpoints, fontSize, palette } from '../../../style';
 
 const Layout = styled.div`
   background: ${appBackground};
-  padding-top: ${spacing.sm};
+  padding: ${spacing.xl};
 `;
 
 const Wrapper = styled.div`
-  max-width: ${breakpoints.md};
   margin: 0 auto;
-  display: flex;
+  display: block;
+  width: 100%;
 
-  margin: 0, auto;
-  // align-items: center;
-  // justify-content: center;
-  div {
-    width: 50%;
-  }
-  @media (max-width: ${breakpoints.md}) {
-    display: block;
-    width: 100%;
+  @media screen and (min-width: ${breakpoints.lg}) {
+    width: ${breakpoints.md};
+    display: flex;
+    justify-content: space-between;
   }
 `;
+
 const Links = styled.div`
   margin-top: auto;
 
-  > a {
-  }
-
-  hr {
-    color: black;
-  }
   ${Break} {
-    color: black;
-    width: 90%;
-    margin-left: 5vw;
+    color: ${palette.lightGray};
     height: 1px;
-    opacity: 0.2;
+    width: auto;
   }
 `;
+
 const A = styled.a`
   outline: none;
   text-decoration: none;
   cursor: pointer;
   font-size: ${fontSize.sm};
-  padding: ${spacing.sm} 0 ${spacing.sm} ${spacing.lg};
-  // margin-top: ${spacing.sm};
+  padding: ${spacing.sm} 0;
   display: block;
   color: ${palette.black};
   &:hover {
     color: ${palette.midnight};
   }
 `;
+
 const MobileBreak = styled(Break)`
-  @media screen and (min-width: ${breakpoints.md}) {
+  @media screen and (min-width: ${breakpoints.lg}) {
     display: none;
   }
 `;
+
 const CopyrightLine = styled(A)`
   max-width: ${breakpoints.md};
   margin: 0 auto;
+
+  @media screen and (min-width: ${breakpoints.lg}) {
+    text-align: center;
+  }
 `;
+
 export const Footer = () => (
   <Layout>
     <Links>
