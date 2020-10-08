@@ -37,9 +37,8 @@ const Num = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: ${calcRem('28px')};
+  font-size: ${fontSize.sm};
   ${font.bold};
-  margin-bottom: 9px;
   position: relative;
   color: white;
   mark {
@@ -51,7 +50,7 @@ const Title = styled.div`
 
 const Desc = styled.div`
   color: ${appColors.grey7};
-  font-size: ${calcRem('25px')};
+  font-size: ${fontSize.sm};
   mark {
     text-decoration: underline;
     background: none;
@@ -62,16 +61,23 @@ const Desc = styled.div`
 const Step = styled.div`
   color: ${palette.offWhite};
   display: flex;
-  margin-bottom: ${spacing.xl};
 
-  padding: 24px;
+  &:not(:last-child) {
+    padding-bottom: ${spacing.xxxl};
+  }
 
-  @media screen and (max-width: ${breakpoints.md}) {
+  @media (min-width: ${breakpoints.md}) {
     ${Title}:nth-child(2n + 1) {
-      font-size: ${calcRem('14px')};
+      font-size: ${fontSize.md};
     }
-    ${Desc}:nth-child(2n) {
-      font-size: ${calcRem('12px')};
+    ${Desc} {
+      font-size: ${fontSize.md};
+    }
+  }
+
+  @media (min-width: ${breakpoints.lg}) {
+    &:not(:last-child) {
+      padding-bottom: 64px;
     }
   }
 `;
@@ -79,13 +85,14 @@ const Step = styled.div`
 const Wrapper = styled.div`
   margin-right: 24px;
 `;
+
 const Steps = styled(({ children, className }) => (
   <div className={className}>
     {React.Children.map(children, ({ ...c }, i) => {
       return (
         <Step key={i}>
           <Wrapper>
-            <Icon icon={c.props.icon} size={4} color={themeColors.mediumGray} />
+            <Icon icon={c.props.icon} size={2.5} color={themeColors.mediumGray} />
           </Wrapper>
           <div>{c}</div>
         </Step>
@@ -93,18 +100,19 @@ const Steps = styled(({ children, className }) => (
     })}
   </div>
 ))`
-  @media screen and (min-width: ${breakpoints.md}) {
-    ${Step}:nth-child(2n + 1) {
-      margin-left: -100px;
+  @media (min-width: ${breakpoints.lg}) {
+    ${Step}:nth-child(odd) {
+      margin-left: 50px;
     }
-    ${Step}:nth-child(2n) {
-      margin-left: 100px;
+    ${Step}:nth-child(even) {
+      margin-left: 230px;
     }
   }
-  margin-top: ${spacing.sm};
-  ${onDesktop(`margin-top: auto`)};
-  margin-bottom: auto;
-  padding: ${spacing.xxxl};
+
+  ${Step} > div {
+    display: flex;
+    align-items: center;
+  }
 `;
 
 const NotifyLink = styled(Button)`
@@ -116,17 +124,16 @@ const NotifyLink = styled(Button)`
 `;
 
 const Layout = styled.div`
-  ${Steps} {
-    max-width: ${breakpoints.md};
-    margin: 0 auto;
-  }
-  flex: 1;
   display: flex;
+  flex: 1;
   flex-direction: column;
   background: ${appColors.midnight};
+  justify-content: space-evenly;
 
-  margin: 0;
-  paddding: ${spacing.xl};
+  @media (min-width: ${breakpoints.lg}) {
+    align-items: center;
+    padding: ${spacing.xl} 0;
+  }
 `;
 const PaperPlan = styled(Icon)`
   position: absolute;
@@ -137,13 +144,26 @@ const PaperPlan = styled(Icon)`
 
 const PageTitle = styled(Title)`
   width: 100%;
-  text-align: center;
-  font-size: ${calcRem('52px')};
-  // margin: 10vh ${spacing.xl} ${spacing.sm} ${spacing.xl};
+  font-size: 24px;
+  padding: ${spacing.xxl} 0;
+
+  @media (min-width: ${breakpoints.md}) {
+    display: flex;
+    font-size: 28px;
+  }
+
+  @media (min-width: ${breakpoints.lg}) {
+    font-size: 32px;
+    justify-content: center;
+  }
 `;
-const StepSection = styled.span`
-  display: block;
+
+const StepSection = styled.div`
+  ${Title} {
+    padding-bottom: ${spacing.xs};
+  }
 `;
+
 export const HowItWorks = () => {
   return (
     <>
