@@ -18,7 +18,6 @@ const Layout = styled.div`
   position: relative;
   flex: none; // safari
   color: ${({ white }) => (white ? palette.white : palette.primary)};
-  background-color: rgba(0, 0, 0, 0.2);
 
   > div {
     display: flex;
