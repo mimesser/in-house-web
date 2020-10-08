@@ -92,19 +92,17 @@ export const BackgroundImage = styled.div`
 
 const BackVideo = withNoSSR(() => {
   const windowWidth = useWindowWidth();
-  const mobile = windowWidth <= 768;
 
   // TODO: for some reason CDN is struggling with videos.
-  const videoWidths = [375, 768 /* , 1280 */, 1920];
+  const videoWidths = [375, 768, 1280, 1920];
 
   const videoWidth = videoWidths.find((w) => windowWidth <= w) || videoWidths[videoWidths.length - 1];
 
-  const photoResource = `https://in-house.azureedge.net/webstatic/${mobile ? 'bg-mobile-2' : 'bg-desktop-2'}`;
-  const videoResource = `https://in-house.azureedge.net/webstatic/bg-${videoWidth}`;
+  const resource = `https://in-house.azureedge.net/webstatic/bg-${videoWidth}`;
 
   return (
-    <Video poster={`${photoResource}.png`} playsInline autoPlay muted loop>
-      <source src={`${videoResource}.mp4`} type="video/mp4" />
+    <Video poster={`${resource}.jpg`} playsInline autoPlay muted loop>
+      <source src={`${resource}.mp4`} type="video/mp4" />
     </Video>
   );
 });
