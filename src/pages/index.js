@@ -229,7 +229,6 @@ const MainSection = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  background-color: rgba(0, 0, 0, 1);
 
   ul {
     margin: 0;
