@@ -172,23 +172,19 @@ export const HowItWorks = () => {
         <Steps>
           <StepSection icon="marker">
             <Title>list your workplace</Title>
-            <Desc>whithout anyone knowing it was you</Desc>
+            <Desc>without anyone knowing it was you</Desc>
           </StepSection>
           <StepSection icon="winky-circle">
             <Title>create a team password question</Title>
-            <Desc>
-              so only them can speak <mark>anonymously</mark>
-            </Desc>
+            <Desc>so only your team can speak safely</Desc>
           </StepSection>
           <StepSection icon="esg">
             <Title>rate everything from the inside</Title>
-            <Desc>that affects people, planet and profits</Desc>
+            <Desc>that affect people, planet & profits</Desc>
           </StepSection>
           <StepSection icon="paper-plane">
-            <Title>
-              share <mark>anonymously</mark>
-            </Title>
-            <Desc>get your team talking</Desc>
+            <Title>get your team talking</Title>
+            <Desc>share anonymously so no one knows it's you</Desc>
           </StepSection>
           <StepSection icon="pulse">
             <Title>watch what happens</Title>
