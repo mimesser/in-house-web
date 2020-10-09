@@ -16,7 +16,6 @@ export function* postFeedback({ payload: { subject, message, email, redirectLink
 
   try {
     yield put(setFeedbackLoading());
-    yield put(setFeedbackError(`Before ${message} : ${useremail} _ ${subject}`));
     yield call(api.post, 'email/contactus', {
       subject,
       message: message || 'null',
@@ -31,7 +30,7 @@ export function* postFeedback({ payload: { subject, message, email, redirectLink
       Router.back();
     }
   } catch (e) {
-    yield put(setFeedbackError(`Warning: ${e} -> ${redirectLink} | ${message} : ${useremail}`));
+    yield put(setFeedbackError(`Warning: Error while trying to sending ${message} [${subject}] to: ${email}: ${e}`));
   }
 }
 
