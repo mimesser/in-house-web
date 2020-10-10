@@ -339,7 +339,7 @@ const MainSection = styled.section`
 const NotificationSection = styled.div`
   ${notificationBgCSS}
   min-height: 100vh;
-  padding: 80px ${spacing.lg} ${spacing.xxxl} ${spacing.lg};
+  padding: ${spacing.xxxl} ${spacing.lg};
 
   display: flex;
   flex-direction: column;
@@ -347,46 +347,35 @@ const NotificationSection = styled.div`
 
   ${H1} {
     ${font.bold};
-    font-size: 56px;
-    margin-top: 64px;
+    font-size: 40px;
+    line-height: 1;
     color: ${palette.mediumGray};
   }
-  ${H3} {
-    font-size: 24px;
-    color: ${palette.gray4};
-  }
   ${BetaDesc} {
-    font-size: 18px;
-    color: ${palette.gray4};
+    font-size: 16px;
+    color: ${palette.gray};
+    width: 85%;
   }
   ${BetaLink} {
     margin: ${spacing.xl} 0;
   }
 
   @media (min-width: ${breakpoints.md}) {
-    ${H3} {
-      width: 80%;
-    }
-  }
+    padding: ${spacing.xxxl} ${spacing.xxl};
 
-  @media (min-width: ${breakpoints.md}) {
-    padding: 80px ${spacing.xxl} ${spacing.xxxl} ${spacing.xxl};
-
-    ${H3} {
-      width: 70%;
+    ${BetaDesc} {
+      width: 50%;
     }
   }
 
   @media (min-width: ${breakpoints.lg}) {
-    padding: 80px ${spacing.xxl} ${spacing.xxxl} ${spacing.xxl};
-
-    ${H3} {
-      width: 80%;
-    }
-
     div:nth-child(1) {
       width: ${breakpoints.sm};
       margin: 0 auto;
+    }
+
+    ${BetaDesc} {
+      width: 70%;
     }
   }
 `;
@@ -687,17 +676,14 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
         </WhiteSection>
 
         <NotificationSection id="getNotification">
-          {/* <H1 ref={mainTitleRef}>90 00 00 00 </H1>
-            <Break /> */}
           <div>
-            <H3 as="p">hear when we’re live or request to be part of our beta trial for distressed workers</H3>
-
+            <H1 ref={mainTitleRef}>30 00 00 00</H1>
             <Link href="/feedback">
               <BetaLink icon="arrow-right" wide outline>
                 get notified
               </BetaLink>
             </Link>
-            <BetaDesc>100% confidential</BetaDesc>
+            <BetaDesc>request to be part of our beta trial for distressed workers or get notified when live</BetaDesc>
           </div>
 
           <Links>

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
 import { Break, Patent, Copyright } from '../../atoms';
-import { appBackground, spacing, breakpoints, fontSize, palette } from '../../../style';
+import { appBackground, spacing, breakpoints, fontSize, palette, font } from '../../../style';
 
 const Layout = styled.div`
   background: ${appBackground};
@@ -53,6 +53,7 @@ const MobileBreak = styled(Break)`
 const CopyrightLine = styled(A)`
   max-width: ${breakpoints.md};
   margin: 0 auto;
+  ${font.bold}
 
   @media screen and (min-width: ${breakpoints.lg}) {
     text-align: center;
@@ -65,7 +66,7 @@ export const Footer = () => (
       <Wrapper>
         <div>
           <Link href="/list-house" passHref prefetch={false}>
-            <A>beta-list organisation</A>
+            <A>distressed worker and progressive org?</A>
           </Link>
           <Link href="#howitworks" passHref prefetch={false}>
             <A>how it works</A>
