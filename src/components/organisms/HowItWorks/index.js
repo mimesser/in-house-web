@@ -178,7 +178,7 @@ export const HowItWorks = () => {
             <Title>create a team password question</Title>
             <Desc>so only your team can speak safely</Desc>
           </StepSection>
-          <StepSection icon="esg">
+          <StepSection icon="rate">
             <Title>rate everything from the inside</Title>
             <Desc>that affect people, planet & profits</Desc>
           </StepSection>
@@ -186,7 +186,7 @@ export const HowItWorks = () => {
             <Title>get your team talking</Title>
             <Desc>share anonymously so no one knows it's you</Desc>
           </StepSection>
-          <StepSection icon="pulse">
+          <StepSection icon="seewhathappens">
             <Title>watch what happens</Title>
             <Desc>when your company can see the truth</Desc>
           </StepSection>
