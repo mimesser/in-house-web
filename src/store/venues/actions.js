@@ -239,9 +239,9 @@ export const createPost = (id, title, image, message, venueType) => ({
   payload: { id, title, image, message, venueType },
 });
 
-export const upvotePost = () => ({
+export const upvotePost = (postId) => ({
   type: actionTypes.VOTE_POST,
-  payload: { vote: 1 },
+  payload: { vote: 1, postId },
 });
 
 export const togglePostFlag = () => ({
@@ -257,9 +257,9 @@ export const toggleMinkFlag = () => ({
   type: actionTypes.TOGGLE_MINK_FLAG,
 });
 
-export const downvotePost = () => ({
+export const downvotePost = (postId) => ({
   type: actionTypes.VOTE_POST,
-  payload: { vote: -1 },
+  payload: { vote: -1, postId },
 });
 
 export const showVotePostConfirmation = (value) => ({
