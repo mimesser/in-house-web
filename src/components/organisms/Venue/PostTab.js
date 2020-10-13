@@ -27,7 +27,7 @@ import { VoteButton, Layout } from './openCardStyle';
 
 import { Modal } from '../Modal';
 import { Dialog } from '../Modal/style';
-
+import { debounce } from 'lodash';
 const transition = {
   in: '0.25s',
   out: '0.2s',
@@ -87,7 +87,7 @@ const activeVoteAnimation = css`
 
 const PostCard = styled(Card)`
   ${defaultVoteAnimation}
-  ${({ selected }) => selected && activeVoteAnimation}
+  ${activeVoteAnimation}
   min-height: 190px;
   background: ${({ selected }) => (selected ? appColors.gray5 : appColors.white)};
 `;
@@ -142,14 +142,18 @@ const CellHeader = styled.div`
   height: 16px;
   max-height: 16px;
   margin-bottom: 10px;
+
   ${PokeButton} {
     position: relative;
     margin-top: 0px;
     width: 22px;
-    height: 16px;
-    top: -0px !important;
+    height: auto;
+    top: -10px !important;
     right: 0px !important;
     color: ${appColors.gray4};
+    &:active {
+      color: white;
+    }
   }
   ${Votes} {
     position: relative;
@@ -203,7 +207,7 @@ const CellHeader = styled.div`
 
 const StyledShareButton = styled(PrivateShareButton)`
   width: 22px;
-  height: 9px;
+  height: auto;
 `;
 
 const Footer = styled.div`
@@ -243,8 +247,9 @@ const Post = ({
   upvotePost,
   downvotePost,
 }) => {
-  const upvoted = myVote === 1;
-  const downvoted = myVote === -1;
+  const [currentVote, setCurrentVote] = useState(myVote);
+  const upvoted = currentVote === 1;
+  const downvoted = currentVote === -1;
   const size = upvoted || downvoted ? 1.7 : 2.2;
   const selected = selectedPost && selectedPost.id === id;
   const [showFullImage, setShowFullImage] = useState(false);
@@ -253,6 +258,17 @@ const Post = ({
   const open = useCallback(() => setShowFullImage(true));
   const select = useCallback(() => setSelectedPost(id), [id]);
 
+  const votePost = useCallback(
+    debounce((e, id, vote) => {
+      setCurrentVote(vote);
+      if (vote == 1) {
+        upvotePost(id);
+      } else {
+        downvotePost(id);
+      }
+    }, 500),
+    [],
+  );
   const card = (
     <PostCard onClick={select} selected={selected}>
       <CellHeader color={upvoted || downvoted ? appColors.gray4 : appColors.gray6}>
@@ -271,22 +287,20 @@ const Post = ({
             <VoteWrap>
               <VoteButton
                 onClick={(e) => {
-                  upvotePost();
-                  e.preventDefault();
+                  votePost(e, id, 1);
                 }}
                 selected={upvoted}
-                disabled={!selected}
+                highlight={selected}
               >
                 <SelectedIndicator show={upvoted} />
                 <Icon size={size} icon="arrow-up-circle" />
               </VoteButton>
               <VoteButton
                 onClick={(e) => {
-                  downvotePost();
-                  e.preventDefault();
+                  votePost(e, id, -1);
                 }}
                 selected={downvoted}
-                disabled={!selected}
+                highlight={selected}
               >
                 <SelectedIndicator show={downvoted} />
                 <Icon size={size} icon="arrow-down-circle" />
