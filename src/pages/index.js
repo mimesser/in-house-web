@@ -218,8 +218,17 @@ const Bounce = keyframes`
   0%, 17%, 100% {
     opacity: 0.4;
   }
-  
+
   10%, 12% {
+    opacity: 1;
+  }
+`;
+const LongBounce = keyframes`
+  0%, 25%, 100% {
+    opacity: 0.4;
+  }
+
+  10%, 20% {
     opacity: 1;
   }
 `;
@@ -240,7 +249,7 @@ const MainSection = styled.section`
         ${font.bold};
       }
 
-      animation: ${Bounce} 12s infinite ease-in-out both;
+      animation: ${Bounce} 13.2s infinite ease-in-out both;
 
       &:first-child {
         animation-delay: 1.2s;
@@ -264,13 +273,14 @@ const MainSection = styled.section`
         animation-delay: 8.4s;
       }
       &:nth-child(8) {
+        animation: ${LongBounce} 13.2s infinite ease-in-out both;
         animation-delay: 9.6s;
       }
       &:nth-child(9) {
-        animation-delay: 10.8s;
+        animation-delay: 12s;
       }
       &:nth-child(10) {
-        animation-delay: 12s;
+        animation-delay: 13.2s;
       }
     }
   }
@@ -406,6 +416,7 @@ const VersionFooter = styled.footer`
 const ScrollPage = styled(Page)`
   scroll-snap-type: y proximity;
   scroll-padding: 50%;
+  background-color: ${appColors.midnight};
   ${Container} {
     overflow: initial;
     margin: 0;
@@ -413,6 +424,7 @@ const ScrollPage = styled(Page)`
 `;
 
 const ScrollButton = styled(ClearButton)`
+  margin-top: -30px;
   align-self: center;
 `;
 
@@ -646,7 +658,7 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
               <H1>whose world?</H1>
             </li>
             <li delay={0.1 * 10}>
-              <H1>our world</H1>
+              <H1>our world.</H1>
             </li>
           </ul>
           <ScrollButton onClick={() => scrollMenu('getNotification')}>
