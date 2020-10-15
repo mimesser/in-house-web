@@ -424,7 +424,7 @@ const ScrollPage = styled(Page)`
 `;
 
 const ScrollButton = styled(ClearButton)`
-  margin-top: -30px;
+  margin-top: -110px;
   align-self: center;
 `;
 
@@ -545,7 +545,7 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
       if (element) {
         element.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
-    }, 0);
+    }, 100);
   };
 
   useEffect(() => {
@@ -628,7 +628,7 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
     <ScrollPage whiteHead videoBack noPadd>
       <Main>
         {/* <CurrentSize /> */}
-        <MainSection>
+        <MainSection id="mainSection">
           <ul>
             <li delay={0.1 * 1}>
               <H1>it’s time for the team</H1>
@@ -661,7 +661,7 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
               <H1>our world.</H1>
             </li>
           </ul>
-          <ScrollButton onClick={() => scrollMenu('getNotification')}>
+          <ScrollButton id="scrollButton" onClick={() => scrollMenu('getNotification')}>
             <CloseIcon />
           </ScrollButton>
         </MainSection>
