@@ -689,7 +689,7 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
 
         <NotificationSection id="getNotification">
           <div>
-            <H1 ref={mainTitleRef}>30 00 00 00</H1>
+            <H1 ref={mainTitleRef}>&nbsp;</H1>
             <Link href="/feedback">
               <BetaLink icon="arrow-right" wide outline>
                 get notified
