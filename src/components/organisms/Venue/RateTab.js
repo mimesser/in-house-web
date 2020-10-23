@@ -25,7 +25,7 @@ import PrivateShareButton from './PrivateShareButton';
 import { Dial, RateSlider, PokeButton } from '../../molecules';
 import { Votes } from './Votes';
 import { RateCategory } from '../../molecules/RateCategory';
-
+import { debounce } from 'lodash';
 const RateCard = styled(Card)`
   min-height: 120px;
 `;
@@ -81,13 +81,20 @@ const Tag = ({
     },
     [definitionId],
   );
+
+  const changeRate = useCallback(
+    debounce((value) => {
+      setSelectedTagTargetRate(value);
+    }, 300),
+    [],
+  );
   const card = (
     <CellWrapper onClick={open}>
       <RateSlider
         title={name}
         onChange={(value) => {
           setRateValue(value);
-          setSelectedTagTargetRate(value);
+          changeRate(Math.round(value));
         }}
         onSlideStart={(value) => {
           setSelectedTag(definitionId);
