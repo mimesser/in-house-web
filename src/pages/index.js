@@ -215,11 +215,11 @@ const WhiteSection = styled.section`
 `;
 
 const Bounce = keyframes`
-  0%, 17%, 100% {
+  0%, 7%, 21%, 100% {
     opacity: 0.4;
   }
 
-  10%, 12% {
+  10%, 18% {
     opacity: 1;
   }
 `;
@@ -249,38 +249,37 @@ const MainSection = styled.section`
         ${font.bold};
       }
 
-      animation: ${Bounce} 13.2s infinite ease-in-out both;
+      animation: ${Bounce} 20s infinite ease-in-out both;
 
       &:first-child {
-        animation-delay: 1.2s;
+        animation-delay: 0s;
       }
       &:nth-child(2) {
-        animation-delay: 2.4s;
+        animation-delay: 2s;
       }
       &:nth-child(3) {
-        animation-delay: 3.6s;
+        animation-delay: 4s;
       }
       &:nth-child(4) {
-        animation-delay: 4.8s;
-      }
-      &:nth-child(5) {
         animation-delay: 6s;
       }
+      &:nth-child(5) {
+        animation-delay: 8s;
+      }
       &:nth-child(6) {
-        animation-delay: 7.2s;
+        animation-delay: 10s;
       }
       &:nth-child(7) {
-        animation-delay: 8.4s;
-      }
-      &:nth-child(8) {
-        animation: ${LongBounce} 13.2s infinite ease-in-out both;
-        animation-delay: 9.6s;
-      }
-      &:nth-child(9) {
         animation-delay: 12s;
       }
+      &:nth-child(8) {
+        animation-delay: 14s;
+      }
+      &:nth-child(9) {
+        animation-delay: 16s;
+      }
       &:nth-child(10) {
-        animation-delay: 13.2s;
+        animation-delay: 18s;
       }
     }
   }
@@ -630,34 +629,34 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
         {/* <CurrentSize /> */}
         <MainSection id="mainSection">
           <ul>
-            <li delay={0.1 * 1}>
+            <li>
               <H1>it’s time for the team</H1>
             </li>
-            <li delay={0.1 * 2}>
+            <li>
               <H1>to be able to speak</H1>
             </li>
-            <li delay={0.1 * 3}>
+            <li>
               <H1>and use the power of numbers</H1>
             </li>
-            <li delay={0.1 * 4}>
+            <li>
               <H1>to hold leadership accountable</H1>
             </li>
-            <li delay={0.1 * 5}>
+            <li>
               <H1>100% anonymously</H1>
             </li>
-            <li delay={0.1 * 6}>
+            <li>
               <H1>on the environment</H1>
             </li>
-            <li delay={0.1 * 7}>
+            <li>
               <H1>on public policy</H1>
             </li>
-            <li delay={0.1 * 8}>
+            <li>
               <H1>and on the dignity of workers</H1>
             </li>
-            <li delay={0.1 * 9}>
+            <li>
               <H1>whose world?</H1>
             </li>
-            <li delay={0.1 * 10}>
+            <li>
               <H1>our world.</H1>
             </li>
           </ul>
