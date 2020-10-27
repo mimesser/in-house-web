@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { PokeButton } from '../../molecules';
 import { setPrivateShareItem } from '../../../store/venues';
 
-const Share = ({ id, type, openModal, onOpenSharePopup, color }) => {
+const Share = ({ id, type, openModal, onOpenSharePopup, color, size }) => {
   const handleClick = useCallback(
     (e) => {
       e.stopPropagation();
@@ -15,7 +15,7 @@ const Share = ({ id, type, openModal, onOpenSharePopup, color }) => {
     },
     [id],
   );
-  return <PokeButton onClick={handleClick} color={color} />;
+  return <PokeButton onClick={handleClick} color={color} size={size} />;
 };
 
 const mapDispatch = {
