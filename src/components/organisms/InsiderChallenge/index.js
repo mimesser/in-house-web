@@ -324,38 +324,34 @@ const InsiderChallenge = ({
       canClose={!accessGranted && !showTerms}
       title={`${name} | #1 MINK`}
     >
-      {showTerms ? (
-        <AcceptTerms />
-      ) : (
-        <QuestionForm>
-          {isAnswerCorrect ? (
-            <WinkConfirmation />
-          ) : (
-            <>
-              {blocked && <p>Too many attempts. Please come back later</p>}
-              {!blocked && (
-                <Form
-                  houseId={houseId}
-                  topMink={topMink}
-                  wrongAnswer={wrongAnswer}
-                  answerTopMink={answerTopMink}
-                  inDemo={inDemo}
-                  name={name}
-                  tryAnswerMink={tryAnswerMink}
-                  answerStatus={answerStatus}
-                  setSelectedMink={setSelectedMink}
-                  setChallengeFormData={setChallengeFormData}
-                />
-              )}
-              <HelpTip tip="create or vote for another MINK you think will better verify your team" placement="top">
-                <ChangeButton icon="arrow-right" onClick={() => dismissForm(true)}>
-                  choose better question?
-                </ChangeButton>
-              </HelpTip>
-            </>
-          )}
-        </QuestionForm>
-      )}
+      <QuestionForm>
+        {isAnswerCorrect ? (
+          <WinkConfirmation />
+        ) : (
+          <>
+            {blocked && <p>Too many attempts. Please come back later</p>}
+            {!blocked && (
+              <Form
+                houseId={houseId}
+                topMink={topMink}
+                wrongAnswer={wrongAnswer}
+                answerTopMink={answerTopMink}
+                inDemo={inDemo}
+                name={name}
+                tryAnswerMink={tryAnswerMink}
+                answerStatus={answerStatus}
+                setSelectedMink={setSelectedMink}
+                setChallengeFormData={setChallengeFormData}
+              />
+            )}
+            <HelpTip tip="create or vote for another MINK you think will better verify your team" placement="top">
+              <ChangeButton icon="arrow-right" onClick={() => dismissForm(true)}>
+                choose better question?
+              </ChangeButton>
+            </HelpTip>
+          </>
+        )}
+      </QuestionForm>
     </Modal>
   );
 };
