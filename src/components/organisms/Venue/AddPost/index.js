@@ -3,12 +3,14 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { createPost, selectSelectedVenue } from '../../../../store/venues';
+import { selectAcceptedTerms } from '../../../../store/aggregate';
+import AcceptTerms from '../../InsiderChallenge/AcceptTerms';
 import { Step1 } from './Step1';
 import { Step2 } from './Step2';
 import { Step3 } from './Step3';
 import { Step4 } from './Step4';
 
-const AddPost = ({ venue, createPost, venueType = 'houses' }) => {
+const AddPost = ({ venue, createPost, venueType = 'houses', acceptedTerms }) => {
   const [step, setStep] = useState(1);
   const [title, setTitle] = useState('');
   const [image, setImage] = useState(undefined);
@@ -17,7 +19,9 @@ const AddPost = ({ venue, createPost, venueType = 'houses' }) => {
   const edit = useCallback(() => setStep(1), [setStep]);
   const setNormalizedTitle = useCallback((t) => setTitle(t.toLowerCase()), [setTitle]);
 
-  return (
+  return !acceptedTerms ? (
+    <AcceptTerms house={venue.name} />
+  ) : (
     <>
       {step === 1 && (
         <Step1
@@ -53,6 +57,7 @@ const AddPost = ({ venue, createPost, venueType = 'houses' }) => {
 
 const mapState = createStructuredSelector({
   venue: selectSelectedVenue,
+  acceptedTerms: selectAcceptedTerms,
 });
 const mapDispatch = {
   createPost,
