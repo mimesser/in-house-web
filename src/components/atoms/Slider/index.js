@@ -39,14 +39,16 @@ const GradientWrapper = styled.div`
   height: 8px;
 `;
 
-const GradientFill = styled.div`
-  // pointer-events: none;
+const GradientFill = styled.div.attrs((props) => ({
+  style: {
+    animationDelay: `${props.delay}s`,
+  },
+}))`
   position: relative;
   width: 185px;
   height: 8px;
   background: radial-gradient(38.33% 51071.18% at 50% 50%, #bfbfbf 0%, #e0e0e0 86.98%);
   animation: ${Sliding} 2s ease-in-out infinite;
-  animation-delay: ${(props) => props.delay}s;
 `;
 
 const SliderKnob = styled.div`

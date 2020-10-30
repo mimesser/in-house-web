@@ -15,7 +15,7 @@ const Share = ({ id, type, openModal, onOpenSharePopup, color, size }) => {
     },
     [id],
   );
-  return <PokeButton onClick={handleClick} color={color} size={size} />;
+  return <PokeButton onClick={handleClick} size={size} />;
 };
 
 const mapDispatch = {
