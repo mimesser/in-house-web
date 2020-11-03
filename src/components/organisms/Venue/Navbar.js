@@ -107,7 +107,21 @@ const defaultTabs = [
   },
 ];
 
-const Navbar = ({ id, selected, authorized, anyTabItemSelected, venueType = 'houses', tabs = defaultTabs }) => {
+const liteTabs = [
+  {
+    path: 'post',
+    label: 'post',
+    secured: true,
+  },
+  {
+    path: 'mink',
+    label: 'mink',
+  }
+];
+
+const Navbar = ({ id, selected, authorized, anyTabItemSelected, venueType = 'houses', tabs = defaultTabs, lite }) => {
+  if (lite) tabs = liteTabs;
+  
   return (
     <Nav>
       {tabs.map((t) => (

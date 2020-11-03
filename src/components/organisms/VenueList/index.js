@@ -62,8 +62,13 @@ const SearchPage = ({ venues, inDemo, categories }) => {
   const handleSearchChange = useCallback((e) => setFilter(e.currentTarget.value.toLowerCase()), []);
   const clearSearch = useCallback(() => setFilter(''), []);
   const showVenue = useCallback((venue) => {
-    const { id } = venue;
-    Router.push(`/houses?id=${id}`, `/houses/${id}`, { shallow: true });
+    const { id, name, industry: { lite } } = venue;
+    if (!lite) {
+      const movement = name.replaceAll(" ", "_");
+      Router.push(`/houses?id=${id}`, `/movement/,)${movement}`, { shallow: true });
+    } else {
+      Router.push(`/houses?id=${id}`, `/houses/${id}`, { shallow: true });
+    }
   }, []);
 
   const renderSharePreview = useCallback(

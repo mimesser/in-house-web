@@ -47,7 +47,7 @@ const Claim = styled.span`
 
 const Banner = ({
   venue: {
-    industry: { name: industry } = {},
+    industry: { name: industry, lite } = {},
     name,
     venueInfo: { address, city, state, zipCode, imageUrl },
     votesCount,
@@ -65,11 +65,11 @@ const Banner = ({
       <Card>
         <Main>
           <ItemTitle>{name}</ItemTitle>
-          <ItemText>{address}</ItemText>
-          <ItemText>
+          {!lite && <ItemText>{address}</ItemText>}
+          {!lite && <ItemText>
             {city}, {state}
-          </ItemText>
-          <ItemText>{zipCode}</ItemText>
+          </ItemText>}
+          {!lite && <ItemText>{zipCode}</ItemText>}
         </Main>
       </Card>
     ),
@@ -98,7 +98,7 @@ const Banner = ({
           <H1>{name}</H1>
         </div>
         <Push />
-        <NumberLarge>
+        {!lite && <NumberLarge>
           {ratingParts ? (
             <>
               {ratingParts[0]}
@@ -107,17 +107,17 @@ const Banner = ({
           ) : (
             '—'
           )}
-        </NumberLarge>
+        </NumberLarge>}
       </div>
       <div>
         <Claim> OWNER CLAIMED</Claim>
       </div>
       <div>
-        <Address>
+        {!lite && <Address>
           {address}
           <br />
           {city}, {zipCode}
-        </Address>
+        </Address>}
         <Push />
         <Votes count={votesCount} inverse />
       </div>
