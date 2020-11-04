@@ -14,7 +14,7 @@ import {
   upvoteMink,
 } from '../../../store/venues';
 import { Loader, Button, HelpTip, Break, Card, Icon, NumberLarge, NumberSmall } from '../../atoms';
-import { formatDateTime, formatRating } from '../../../utils/format';
+import { formatDateTime, formatMovementURL, formatRating } from '../../../utils/format';
 import { ItemText, ItemTitle, ItemTime, Main, TabLayout, TabTitle } from './tabStyle';
 import { appBackground, spacing, appColors, palette, calcRem, font, fontSize } from '../../../style';
 import VotePost from './VotePost';
@@ -415,14 +415,13 @@ const findPost = (id, posts) => {
 };
 
 const PostTab = ({
-  venue: { id, posts },
+  venue: { id, posts, name, industry: { lite }},
   loadPosts,
   setSelectedPost,
   selectedPost,
   upvotePost,
   downvotePost,
   togglePostFlag,
-  venueType = 'houses',
 }) => {
   useEffect(() => {
     loadPosts();
@@ -484,7 +483,11 @@ const PostTab = ({
   return (
     <>
       <NewPostSection sticky={hideOnScroll || !scrolled} duration={1} ref={scrollRef}>
-        <Link href={`/${venueType}?id=${id}&tab=post&new`} as={`/${venueType}/${id}/post/new`} passHref>
+        <Link
+          href={`/houses?id=${id}&tab=post&new`}
+          as={lite ? `/movement/${formatMovementURL(name)}/post/new` : `/houses/${id}/post/new`}
+          passHref
+        >
           <NewPostButton icon="plus" wide outline>
             what's in your mind?
           </NewPostButton>

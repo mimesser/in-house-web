@@ -6,6 +6,7 @@ import { Icon, ClearButton, Industry } from '../../../atoms';
 import { FairSpeech } from '../FairSpeech';
 import { BackButton, NextButton } from '../../../molecules';
 import { StepLayout } from './StepLayout';
+import { formatMovementURL } from '../../../../utils/format';
 
 const FlexWrap = styled.div`
   display: flex;
@@ -16,7 +17,7 @@ const Push = styled.span`
   margin-left: auto;
 `;
 
-export const Step3 = ({ venue: { id, name }, edit, setStep }) => (
+export const Step3 = ({ venue: { id, name, industry: { lite }}, edit, setStep }) => (
   <StepLayout
     hideProgress
     head={
@@ -24,7 +25,10 @@ export const Step3 = ({ venue: { id, name }, edit, setStep }) => (
         <FlexWrap>
           <Industry>{name}</Industry>
           <Push />
-          <Link href={`/houses?id=${id}&tab=mink`} as={`/houses/${id}/mink`}>
+          <Link
+            href={`/houses?id=${id}&tab=mink`}
+            as={`/${lite ? 'movement' : 'houses'}/${lite ? formatMovementURL(name) : id}/mink`}
+          >
             <ClearButton>
               <Icon icon="close" />
             </ClearButton>

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { FormGroup, Industry, H1, Patent, Icon, ClearButton } from '../../../atoms';
 import { StepLayout } from './StepLayout';
 import { BackButton, NextButton } from '../../../molecules';
+import { formatMovementURL } from '../../../../utils/format';
 
 const FlexWrap = styled.div`
   display: flex;
@@ -15,14 +16,17 @@ const Push = styled.span`
   margin-left: auto;
 `;
 
-export const Step2 = ({ venue: { id, name }, answer, question, edit, setStep }) => (
+export const Step2 = ({ venue: { id, name, industry: { lite }}, answer, question, edit, setStep }) => (
   <StepLayout
     head={
       <>
         <FlexWrap>
           <Industry>{name}</Industry>
           <Push />
-          <Link href={`/houses?id=${id}&tab=mink`} as={`/houses/${id}/mink`}>
+          <Link
+            href={`/houses?id=${id}&tab=mink`}
+            as={`/${lite ? 'movement' : 'houses'}/${lite ? formatMovementURL(name) : id}/mink`}
+          >
             <ClearButton>
               <Icon icon="close" />
             </ClearButton>

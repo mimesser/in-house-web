@@ -41,7 +41,7 @@ const AddMink = ({ venue, createMink }) => {
           loading={loading}
           post={() => {
             setLoading(true);
-            createMink(venue.id, question, answer);
+            createMink(venue.id, venue.name, question, answer, venue.industry.lite);
           }}
         />
       )}
