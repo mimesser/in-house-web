@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { spacing, palette, font, calcRem } from '../../../style';
 import { selectAnyTabItemSelected, selectIsActiveInsider } from '../../../store/venues';
 import { HelpTip } from '../../atoms';
+import { formatMovementURL } from '../../../utils/format';
 
 const linkTextStyle = ({ active, custom }) => {
   if (active && !custom) {
@@ -60,10 +61,12 @@ const Nav = styled.nav`
   z-index: 3;
 `;
 
-const TabHeader = ({ id, tab: { path, label, secured, help }, active, custom, authorized, venueType = 'houses' }) => {
+const TabHeader = ({ id, name, tab: { path, label, secured, help }, active, custom, authorized, venueType = 'houses', lite }) => {
+  const movementName = formatMovementURL(name);
+  
   if (!authorized && secured) {
     return (
-      <Link href={`/${venueType}/${id}`} passHref>
+      <Link href={`/${lite ? 'movement' : venueType}/${lite ? movementName : id}`} passHref>
         <A>{label}</A>
       </Link>
     );
@@ -71,7 +74,11 @@ const TabHeader = ({ id, tab: { path, label, secured, help }, active, custom, au
 
   const link = (
     <HelpWrap>
-      <Link href={`/${venueType}?id=${id}&tab=${path}`} as={`/${venueType}/${id}/${path}`} passHref>
+      <Link
+        href={`/${venueType}?id=${id}&tab=${path}`}
+        as={`/${lite ? 'movement' : venueType}/${lite ? movementName : id}/${path}`}
+        passHref
+      >
         <A active={active} custom={custom}>
           {label}
         </A>
@@ -119,7 +126,7 @@ const liteTabs = [
   }
 ];
 
-const Navbar = ({ id, selected, authorized, anyTabItemSelected, venueType = 'houses', tabs = defaultTabs, lite }) => {
+const Navbar = ({ id, name, selected, authorized, anyTabItemSelected, venueType, tabs = defaultTabs, lite }) => {
   if (lite) tabs = liteTabs;
   
   return (
@@ -127,12 +134,14 @@ const Navbar = ({ id, selected, authorized, anyTabItemSelected, venueType = 'hou
       {tabs.map((t) => (
         <TabHeader
           id={id}
+          name={name}
           key={t.path}
           tab={t}
           custom={t.custom}
           active={selected === t.path && !anyTabItemSelected}
           authorized={authorized}
           venueType={venueType}
+          lite={lite}
         />
       ))}
     </Nav>
