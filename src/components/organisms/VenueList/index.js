@@ -20,6 +20,7 @@ import { selectInDemo } from '../../../store/demo';
 import { VenueCard } from './VenueCard';
 import { SearchBox, Layout, Results, NoResultsSearchLabel, SelectedItemArea } from './style';
 import { Main, ItemText, ItemTitle } from '../Venue/tabStyle';
+import { formatMovementURL } from '../../../utils/format';
 
 const BetaLink = styled(Button)`
   margin: auto;
@@ -62,8 +63,12 @@ const SearchPage = ({ venues, inDemo, categories }) => {
   const handleSearchChange = useCallback((e) => setFilter(e.currentTarget.value.toLowerCase()), []);
   const clearSearch = useCallback(() => setFilter(''), []);
   const showVenue = useCallback((venue) => {
-    const { id } = venue;
-    Router.push(`/houses?id=${id}`, `/houses/${id}`, { shallow: true });
+    const { id, name, industry: { lite } } = venue;
+    Router.push(
+      `/houses?id=${id}`,
+      `/${lite ? 'movement' : 'houses'}/${lite ? formatMovementURL(name) : id}`,
+      { shallow: true }
+    );
   }, []);
 
   const renderSharePreview = useCallback(

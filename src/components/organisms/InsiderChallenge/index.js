@@ -299,7 +299,7 @@ const Form = ({
 };
 
 const InsiderChallenge = ({
-  venue: { name, topMink, id: houseId, answerMinkStatus: answerStatus },
+  venue: { name, topMink, id: houseId, answerMinkStatus: answerStatus, industry: { lite }},
   challengeFormData,
   dismissForm,
   answerTopMink,
@@ -345,7 +345,7 @@ const InsiderChallenge = ({
               />
             )}
             <HelpTip tip="create or vote for another MINK you think will better verify your team" placement="top">
-              <ChangeButton icon="arrow-right" onClick={() => dismissForm(true)}>
+              <ChangeButton icon="arrow-right" onClick={() => dismissForm(true, name, lite)}>
                 choose better question?
               </ChangeButton>
             </HelpTip>
