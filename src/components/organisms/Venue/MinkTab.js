@@ -20,7 +20,7 @@ import {
 import { palette, spacing, fontSize, font } from '../../../style';
 import { Loader, Button, HelpTip, Patent, Card, Break, Icon, SlidingValue } from '../../atoms';
 import { TabLayout, Main, ItemTitle, ItemTime, TabTitle } from './tabStyle';
-import { formatDateTime, formatRating } from '../../../utils/format';
+import { formatDateTime, formatMovementURL, formatRating } from '../../../utils/format';
 import VoteMink from './VoteMink';
 import { NewMinkElected } from './NewMinkElected';
 import PrivateShare from './PrivateShare';
@@ -436,6 +436,8 @@ const renderMinks = (
   tryAnswerMink,
   answerStatus,
   toggleMinkFlag,
+  movementName,
+  lite
 ) => (
   <>
     {minks.length > 0 && (
@@ -461,7 +463,10 @@ const renderMinks = (
             topMink
           />
         </TopMinkContainer>
-        <Link href={`/houses?id=${houseId}&tab=mink&new`} as={`/houses/${houseId}/mink/new`} passHref>
+        <Link
+          href={`/houses?id=${houseId}&tab=mink&new`}
+          as={lite ? `/movement/${movementName}/mink/new` : `/houses/${houseId}/mink/new`}
+          passHref>
           <Button icon="arrow-right">new</Button>
         </Link>
       </>
@@ -499,7 +504,7 @@ const findMink = (id, minks) => {
 };
 
 const MinkTab = ({
-  venue: { id, minks, addedMinkId },
+  venue: { id, name, industry: { lite }, minks, addedMinkId},
   loadMinks,
   setSelectedMink,
   setAddedMinkId,
@@ -535,6 +540,7 @@ const MinkTab = ({
     [minks],
   );
   const getTitleForShare = useCallback((id) => findMink(id, minks).question, [minks]);
+  const movementName = formatMovementURL(name);
 
   return (
     <TabLayout>
@@ -551,6 +557,8 @@ const MinkTab = ({
           tryAnswerMink,
           answerStatus,
           toggleMinkFlag,
+          movementName,
+          lite
         )
       ) : (
         <Loader big />
