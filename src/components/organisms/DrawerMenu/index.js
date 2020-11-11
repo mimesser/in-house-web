@@ -10,11 +10,8 @@ import { spacing, fontSize, font, palette, calcRem } from '../../../style';
 
 const CloseButton = styled(ClearButton)`
   float: right;
-  // margin: ${spacing.xl};
-  // margin-left: auto;
-  // margin-right: 4px;
-  // min-width: 40px;
-  // width: 40px;
+  margin-top: ${spacing.xl};
+  margin-right: ${spacing.xl};
 `;
 
 const CloseIcon = styled(Icon).attrs(() => ({
@@ -51,7 +48,6 @@ const CustomOverlay = styled(Overlay)`
 `;
 
 const Panel = styled.div`
-  padding: ${spacing.xl};
   position: fixed;
   bottom: 0;
   z-index: 1000;
