@@ -30,10 +30,12 @@ const HelpWrap = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 6.5rem;
+  margin-left: ${spacing.xl};
 `;
 
 const PrivateShareButtonLayout = styled.div`
   margin-left: auto;
+  margin-right: ${spacing.xl};
 `;
 
 const FlexWrap = styled.div`
