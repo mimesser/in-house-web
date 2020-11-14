@@ -8,11 +8,9 @@ import { dismissWelcomeForm, selectSkipWelcome, selectSelectedVenue } from '../.
 import { DrawerMenu } from '../../DrawerMenu';
 import PrivateShare from '../PrivateShare';
 import PrivateShareButton from '../PrivateShareButton';
-import { Main, ItemText, ItemTitle } from '../tabStyle';
-
-const VenueCard = styled(Card)`
-  min-height: 120px;
-`;
+import { selectEsgCategories } from '../../../../store/aggregate';
+import { findCategoryRating } from '../../VenueList';
+import { VenueCard } from '../../VenueList/VenueCard';
 
 const LightMessage = styled.p`
   white-space: normal;
@@ -42,7 +40,7 @@ const FlexWrap = styled.div`
   display: flex;
 `;
 
-export const WelcomePopup = ({ skipWelcome, dismissWelcomeForm, venue }) => {
+export const WelcomePopup = ({ skipWelcome, dismissWelcomeForm, venue, categories }) => {
   const [dontShow, setDontShow] = useState(skipWelcome);
   const handleChange = () => setDontShow(!dontShow);
   const handleOk = () => {
@@ -52,28 +50,15 @@ export const WelcomePopup = ({ skipWelcome, dismissWelcomeForm, venue }) => {
   const [show, setShow] = useState(!skipWelcome);
   const [opened, setOpened] = useState(!skipWelcome);
 
-  const renderVenueSharePreview = useCallback(
-    (id) => {
-      const {
-        name,
-        venueInfo: { address, city, state, zipCode },
-      } = venue;
+  const renderVenueSharePreview = useCallback(() => {
+    const venueCategories =
+      categories &&
+      categories.map((category) => {
+        return { ...category, rating: findCategoryRating(category.id, venue.rateTagCategories) };
+      });
 
-      return (
-        <VenueCard>
-          <Main>
-            <ItemTitle>{name}</ItemTitle>
-            <ItemText>{address}</ItemText>
-            <ItemText>
-              {city}, {state}
-            </ItemText>
-            <ItemText>{zipCode}</ItemText>
-          </Main>
-        </VenueCard>
-      );
-    },
-    [venue],
-  );
+    return <VenueCard venue={venue} categoryRatings={venueCategories} />;
+  }, [venue.id]);
 
   const getVenueTitleForShare = useCallback((id) => venue.name, [venue]);
   return (
@@ -91,7 +76,12 @@ export const WelcomePopup = ({ skipWelcome, dismissWelcomeForm, venue }) => {
               <FlexWrap>
                 <LightMessage>we will alert your leadership after +15% of your team starts talking</LightMessage>
                 <PrivateShareButtonLayout>
-                  <PrivateShareButton id={venue.id} type="venue" onOpenSharePopup={() => handleOk()} circleColor={palette.mediumGray} />
+                  <PrivateShareButton
+                    id={venue.id}
+                    type="venue"
+                    onOpenSharePopup={() => handleOk()}
+                    circleColor={palette.mediumGray}
+                  />
                 </PrivateShareButtonLayout>
               </FlexWrap>
               <GreyMessage>(speak as a team - remain untraceable)</GreyMessage>
@@ -105,6 +95,7 @@ export const WelcomePopup = ({ skipWelcome, dismissWelcomeForm, venue }) => {
 const mapState = createStructuredSelector({
   skipWelcome: selectSkipWelcome,
   venue: selectSelectedVenue,
+  categories: selectEsgCategories,
 });
 
 const mapDispatch = {
