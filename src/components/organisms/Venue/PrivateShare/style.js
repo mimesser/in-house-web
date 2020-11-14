@@ -30,7 +30,7 @@ export const FormLayout = styled.div`
 export const CustomOverlay = styled(Overlay)`
   position: fixed;
   overflow: hidden;
-  widht: 100%;
+  width: 100%;
   height: 100%;
   bottom: 0;
   white-space: nowrap;

@@ -10,9 +10,11 @@ import PrivateShare from '../PrivateShare';
 import { selectInDemo } from '../../../../store/demo';
 import { selectShowHelp } from '../../../../store/help';
 import { Votes } from '../Votes';
-import { Address, ClearButton, H1, Icon, Industry, NumberLarge, Card } from '../../../atoms';
+import { Address, ClearButton, H1, Icon, Industry, NumberLarge } from '../../../atoms';
 import { Header } from './style';
-import { Main, ItemText, ItemTitle } from '../tabStyle';
+import { VenueCard } from '../../VenueList/VenueCard';
+import { findCategoryRating } from '../../VenueList';
+import { selectEsgCategories } from '../../../../store/aggregate';
 
 const LeftSide = styled.div`
   display: flex;
@@ -49,32 +51,29 @@ const Banner = ({
   venue: {
     industry: { name: industry, lite } = {},
     name,
-    venueInfo: { address, city, state, zipCode, imageUrl },
+    venueInfo: { address, city, zipCode, imageUrl },
     votesCount,
     rating,
   },
+  venue,
   inDemo,
   showHelp,
   venueType = 'houses',
+  categories,
 }) => {
+  console.log('venue', venue);
   const ratingParts = typeof rating === 'number' && rating.toFixed(1).split('.');
   const href = inDemo ? `/` : `/${venueType}`;
   const getTitleForShare = useCallback(() => name, []);
-  const renderSharePreview = useCallback(
-    () => (
-      <Card>
-        <Main>
-          <ItemTitle>{name}</ItemTitle>
-          {!lite && <ItemText>{address}</ItemText>}
-          {!lite && <ItemText>
-            {city}, {state}
-          </ItemText>}
-          {!lite && <ItemText>{zipCode}</ItemText>}
-        </Main>
-      </Card>
-    ),
-    [],
-  );
+  const renderSharePreview = useCallback(() => {
+    const venueCategories =
+      categories &&
+      categories.map((category) => {
+        return { ...category, rating: findCategoryRating(category.id, venue.rateTagCategories) };
+      });
+
+    return <VenueCard venue={venue} categoryRatings={venueCategories} />;
+  }, [venue.id]);
 
   return (
     <Header imageUrl={imageUrl} showHelp={showHelp}>
@@ -98,26 +97,30 @@ const Banner = ({
           <H1>{name}</H1>
         </div>
         <Push />
-        {!lite && <NumberLarge>
-          {ratingParts ? (
-            <>
-              {ratingParts[0]}
-              <sup>.{ratingParts[1]}</sup>
-            </>
-          ) : (
-            '—'
-          )}
-        </NumberLarge>}
+        {!lite && (
+          <NumberLarge>
+            {ratingParts ? (
+              <>
+                {ratingParts[0]}
+                <sup>.{ratingParts[1]}</sup>
+              </>
+            ) : (
+              '—'
+            )}
+          </NumberLarge>
+        )}
       </div>
       <div>
         <Claim> OWNER CLAIMED</Claim>
       </div>
       <div>
-        {!lite && <Address>
-          {address}
-          <br />
-          {city}, {zipCode}
-        </Address>}
+        {!lite && (
+          <Address>
+            {address}
+            <br />
+            {city}, {zipCode}
+          </Address>
+        )}
         <Push />
         <Votes count={votesCount} inverse />
       </div>
@@ -129,6 +132,7 @@ const Banner = ({
 const mapState = createStructuredSelector({
   inDemo: selectInDemo,
   showHelp: selectShowHelp,
+  categories: selectEsgCategories,
 });
 
 export default connect(mapState)(Banner);
