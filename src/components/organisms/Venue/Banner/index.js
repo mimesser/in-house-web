@@ -61,7 +61,6 @@ const Banner = ({
   venueType = 'houses',
   categories,
 }) => {
-  console.log('venue', venue);
   const ratingParts = typeof rating === 'number' && rating.toFixed(1).split('.');
   const href = inDemo ? `/` : `/${venueType}`;
   const getTitleForShare = useCallback(() => name, []);
