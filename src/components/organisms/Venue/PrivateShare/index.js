@@ -16,7 +16,7 @@ import { selectInDemo } from '../../../../store/demo';
 import { Modal } from '../../Modal';
 import { Button, H2 } from '../../../atoms';
 import { CounterInput, WinkConfirmation } from '../../../molecules';
-import { SubmitButton, Layout, FormLayout, CustomOverlay } from './style';
+import { SubmitButton, Layout, FormLayout, CustomOverlay, ShareContent } from './style';
 import { DemoWinkConfirmationLayout } from '../demoStyle';
 import { isEmailValid, isPhoneNumberValid } from '../../../../utils/validation';
 
@@ -61,7 +61,9 @@ const PrivateShare = ({
 
   return (
     <Layout>
-      {renderItem(id)}
+      <ShareContent>
+        {renderItem(id)}
+      </ShareContent>
       <FormLayout>
         <H2>send anonymous</H2>
         <CounterInput

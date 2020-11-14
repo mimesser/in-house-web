@@ -1,17 +1,12 @@
 import styled from 'styled-components';
 
-import { Button, Card, FormGroup, Overlay } from '../../../atoms';
+import { Button, FormGroup, Overlay } from '../../../atoms';
 import { palette, spacing } from '../../../../style';
 
 export const Layout = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-
-  ${Card} {
-    background: transparent;
-    margin: 0 ${spacing.xl} ${spacing.xxxl} ${spacing.xl};
-  }
 
   ${FormGroup}:last-of-type {
     margin-bottom: ${spacing.xxxl};
@@ -42,4 +37,8 @@ export const CustomOverlay = styled(Overlay)`
   background-color: ${palette.white};
   opacity: 0.3;
   backdrop-filter: blur(8px);
+`;
+
+export const ShareContent = styled.div`
+  margin: 0 ${spacing.xl} ${spacing.xxxl} ${spacing.xl};
 `;
