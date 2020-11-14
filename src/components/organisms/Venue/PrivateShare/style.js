@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
-import { Button, Card, FormGroup } from '../../../atoms';
-import { spacing } from '../../../../style';
-import { cardStyle } from '../tabStyle';
+import { Button, Card, FormGroup, Overlay } from '../../../atoms';
+import { palette, spacing } from '../../../../style';
 
 export const Layout = styled.div`
   display: flex;
@@ -10,9 +9,8 @@ export const Layout = styled.div`
   flex: 1;
 
   ${Card} {
-    ${cardStyle};
     background: transparent;
-    margin: 0 -${spacing.xxl} ${spacing.xl} -${spacing.xxl};
+    margin: 0 ${spacing.xl} ${spacing.xxxl} ${spacing.xl};
   }
 
   ${FormGroup}:last-of-type {
@@ -24,6 +22,24 @@ export const SubmitButton = styled(Button).attrs({
   type: 'submit',
   wide: true,
   icon: 'arrow-right',
-})`
-  margin-top: auto;
+})``;
+
+export const FormLayout = styled.div`
+  z-index: 1000;
+  background-color: ${palette.primary};
+  height: 100%;
+  padding: ${spacing.xl};
+  color: ${palette.offWhite};
+`;
+
+export const CustomOverlay = styled(Overlay)`
+  position: fixed;
+  overflow: hidden;
+  widht: 100%;
+  height: 100%;
+  bottom: 0;
+  white-space: nowrap;
+  background-color: ${palette.white};
+  opacity: 0.3;
+  backdrop-filter: blur(8px);
 `;

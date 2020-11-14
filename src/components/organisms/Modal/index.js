@@ -17,6 +17,7 @@ export const Modal = ({
   children,
   style,
   className,
+  noPadd,
   ...transitionProps
 }) => {
   useEffect(() => {
@@ -35,8 +36,8 @@ export const Modal = ({
           <ModalWrap {...{ className, style, transition }}>
             <Overlay />
             <Container onClick={canDismiss ? handleClose : undefined}>
-              <Dialog onClick={stopPropagation} inverse={inverse}>
-                <ModalHeader>
+              <Dialog onClick={stopPropagation} inverse={inverse} noPadd={noPadd}>
+                <ModalHeader noPadd={noPadd}>
                   {title}
                   {canClose && <CloseButton onClick={handleClose} />}
                 </ModalHeader>
