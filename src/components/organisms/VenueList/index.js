@@ -73,22 +73,19 @@ const SearchPage = ({ venues, inDemo, categories }) => {
 
   const renderSharePreview = useCallback(
     (id) => {
-      const {
-        name,
-        venueInfo: { address, city, state, zipCode },
-      } = findVenue(id, venues);
+      const venue = findVenue(id, venues);
+      const venueCategories =
+        categories &&
+        categories.map((category, i) => {
+          return { ...category, rating: findCategoryRating(category.id, venue.rateTagCategories) };
+        });
 
       return (
-        <Card>
-          <Main>
-            <ItemTitle>{name}</ItemTitle>
-            <ItemText>{address}</ItemText>
-            <ItemText>
-              {city}, {state}
-            </ItemText>
-            <ItemText>{zipCode}</ItemText>
-          </Main>
-        </Card>
+        <VenueCard
+          key={id}
+          venue={venue}
+          categoryRatings={venueCategories}
+        />
       );
     },
     [venues],
