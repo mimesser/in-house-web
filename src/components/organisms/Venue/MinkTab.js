@@ -220,7 +220,7 @@ const MinkCard = styled(Card)`
   }
   transition: all 0.2s ease-in-out;
 
-  ${({ active }) => active && activeStyle}
+  ${({ active, isShare }) => !isShare && active && activeStyle}
   ${defaultVoteAnimation}
   ${({ topMink }) => (topMink ? activeVoteAnimation(palette.lightGray, 1) : activeVoteAnimation(palette.gray, 0.7))}
   ${({ topMink }) => (topMink ? lowerOpacityOnVote : hideInputOnVote)}
@@ -266,7 +266,9 @@ const RunnersTitle = styled(TabTitle)`
   border-bottom: 1px solid ${palette.lightGray};
 `;
 
-const AnswerStatus = ({ status, previouslyAnsweredCorrectly, active }) => {
+const AnswerStatus = ({ status, previouslyAnsweredCorrectly, active, isShare }) => {
+  if (isShare) return null;
+
   if (status && active) {
     const { loading, isAnswerCorrect } = status;
     if (loading) return null;
@@ -315,6 +317,7 @@ const Mink = ({
   answerStatus,
   isActiveInsider,
   toggleMinkFlag,
+  isShare,
 }) => {
   const selectMink = useCallback(() => setSelectedMink(minkId), [minkId]);
   const deselectMink = useCallback(() => setSelectedMink(undefined), [minkId]);
@@ -349,7 +352,7 @@ const Mink = ({
   }, [isNew, setAddedMinkId]);
 
   const card = (
-    <MinkCard ref={ref} active={active} topMink={topMink}>
+    <MinkCard ref={ref} active={active} topMink={topMink} isShare={isShare}>
       <div>
         <VoteWrap>
           <VoteButton onClick={(e) => voteMink(e, minkId, 1)}>
@@ -402,12 +405,12 @@ const Mink = ({
               status={answerStatus}
               previouslyAnsweredCorrectly={previouslyAnsweredCorrectly}
               active={active}
+              isShare={isShare}
             />
           </InputGroup>
-          <FlagItemWrap>
-            <FlagItem disabled={isActiveInsider} flagged={wasFlaggedByMe} toggleFlag={toggleMinkFlag} />
-            <Push />
-          </FlagItemWrap>
+          {!isShare && (<FlagItemWrap>
+            <FlagItem disabled={isActiveInsider} flagged={wasFlaggedByMe} toggleFlag={toggleMinkFlag}/>
+          </FlagItemWrap>)}
         </Main>
       </div>
     </MinkCard>
@@ -520,21 +523,28 @@ const MinkTab = ({
   }, []);
   const renderSharePreview = useCallback(
     (id) => {
-      const { created, question, voteCount, voteRating, myVote } = findMink(id, minks);
+      const m = findMink(id, minks);
+      const isTopMink = minks[0] === m;
 
-      return (
-        <MinkCard>
-          <div>
-            <Main>
-              <ItemTitle>{question}</ItemTitle>
-              <Break />
-              <div>
-                <Votes count={voteCount} />
-                <ItemTime dateTime={created}>{formatDateTime(created)}</ItemTime>
-              </div>
-            </Main>
-          </div>
-        </MinkCard>
+      return isTopMink ? (
+        <TopMinkContainer>
+          <Mink
+            mink={m}
+            upvoteMink={upvoteMink}
+            downvoteMink={downvoteMink}
+            answerStatus={answerStatus}
+            topMink
+            isShare
+          />
+        </TopMinkContainer>
+      ) : (
+        <Mink
+          mink={m}
+          upvoteMink={upvoteMink}
+          downvoteMink={downvoteMink}
+          answerStatus={answerStatus}
+          isShare
+        />
       );
     },
     [minks],
