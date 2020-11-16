@@ -90,6 +90,10 @@ const PostCard = styled(Card)`
   ${activeVoteAnimation}
   min-height: 190px;
   background: ${({ selected }) => (selected ? appColors.gray5 : appColors.white)};
+
+  ${Main} > div:last-child {
+    display: flex;
+  }
 `;
 
 const StyledModal = styled(Modal)`

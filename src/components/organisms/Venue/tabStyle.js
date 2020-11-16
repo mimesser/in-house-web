@@ -41,10 +41,6 @@ export const Main = styled.div`
   flex-direction: column;
   flex: 1;
   color: ${palette.gray};
-
-  > div:last-child {
-    display: flex;
-  }
 `;
 
 export const cardStyle = css`
