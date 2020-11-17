@@ -90,10 +90,6 @@ const PostCard = styled(Card)`
   ${activeVoteAnimation}
   min-height: 190px;
   background: ${({ selected }) => (selected ? appColors.gray5 : appColors.white)};
-
-  ${Main} > div:last-child {
-    display: flex;
-  }
 `;
 
 const StyledModal = styled(Modal)`
@@ -112,7 +108,7 @@ const PostImage = styled.div.attrs(({ imageUrl }) => imageUrl && { style: { back
   max-width: 200px;
   min-width: 100px;
   margin-top: 10px;
-  margin-right: 70px;
+  margin-right: 50px;
 
   background-repeat: no-repeat;
   background-size: cover;
@@ -128,6 +124,7 @@ const FullImage = styled.div.attrs(({ imageUrl }) => imageUrl && { style: { back
 
 const PostText = styled(ItemText)`
   margin-right: 39px;
+  min-height: 50px;
 `;
 
 const VoteWrap = styled.div`
@@ -215,6 +212,7 @@ const StyledShareButton = styled(PrivateShareButton)`
 `;
 
 const Footer = styled.div`
+  display: flex;
   align-items: flex-end;
 
   ${Icon} {
@@ -261,6 +259,7 @@ const Post = ({
   const close = useCallback(() => setShowFullImage(false));
   const open = useCallback(() => setShowFullImage(true));
   const select = useCallback(() => setSelectedPost(id), [id]);
+  const deselect = useCallback(() => setSelectedPost(undefined), [id]);
 
   const votePost = useCallback(
     debounce((e, id, vote) => {
@@ -274,7 +273,7 @@ const Post = ({
     [],
   );
   const card = (
-    <PostCard onClick={select} selected={selected}>
+    <PostCard onClick={selected ? deselect : select} selected={selected}>
       <CellHeader color={upvoted || downvoted ? appColors.gray4 : appColors.gray6}>
         <ItemTime dateTime={created}>{formatDateTime(created)}</ItemTime>
         {!selected && (
@@ -294,7 +293,6 @@ const Post = ({
                   votePost(e, id, 1);
                 }}
                 selected={upvoted}
-                highlight={selected}
               >
                 <SelectedIndicator show={upvoted} />
                 <Icon size={size} icon="arrow-up-circle" />
@@ -304,7 +302,6 @@ const Post = ({
                   votePost(e, id, -1);
                 }}
                 selected={downvoted}
-                highlight={selected}
               >
                 <SelectedIndicator show={downvoted} />
                 <Icon size={size} icon="arrow-down-circle" />
@@ -318,7 +315,7 @@ const Post = ({
           <PostText>{text}</PostText>
           <Footer>
             {imageUrl && <PostImage imageUrl={imageUrl} alt="post image" onClick={open} />}
-            {selected && <FlagItem flagged={wasFlaggedByMe} toggleFlag={togglePostFlag} />}
+            {!selected && <FlagItem flagged={wasFlaggedByMe} toggleFlag={togglePostFlag} />}
             <p>{errorMessage}</p>
           </Footer>
         </Main>
@@ -433,23 +430,14 @@ const PostTab = ({
 
   const renderSharePreview = useCallback(
     (id) => {
-      const { title, text, voteCount, voteRating, myVote, created } = findPost(id, posts);
+      const p = findPost(id, posts);
 
       return (
-        <PostCard>
-          <div>
-            <Dial size={65} readonly value={myVote && voteRating} />
-            <Main>
-              <ItemTitle>{title}</ItemTitle>
-              <Break />
-              <div>
-                <Votes count={voteCount} />
-                <ItemTime dateTime={created}>{formatDateTime(created)}</ItemTime>
-              </div>
-            </Main>
-          </div>
-          <ItemText>{text}</ItemText>
-        </PostCard>
+        <Post
+          post={p}
+          upvotePost={upvotePost}
+          downvotePost={downvotePost}
+        />
       );
     },
     [posts],
