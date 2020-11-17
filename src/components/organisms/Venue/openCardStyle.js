@@ -26,7 +26,7 @@ export const VoteButton = styled(ClearButton)`
     color: ${palette.lightGray};
   }
   &:hover: ${appColors.offWhite};
-  color: ${({ highlight }) => (highlight ? appColors.offWhite : palette.mediumGray)};
+  // color: ${({ highlight }) => (highlight ? appColors.offWhite : palette.mediumGray)};
 `;
 
 const flagText = ({ flagged }) =>

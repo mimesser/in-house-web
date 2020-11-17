@@ -107,9 +107,7 @@ const ModalWrapper = (props) => {
       canDismiss={false}
       noPadd
     >
-      <CustomOverlay>
-        <div/>
-      </CustomOverlay>
+      <CustomOverlay />
       {!sent && <PrivateShare {...props} venue={venue} id={shareItem.id} />}
       {sent && (inDemo ? <DemoWinkConfirmation onCloseClick={close} /> : <WinkConfirmation />)}
     </Modal>
