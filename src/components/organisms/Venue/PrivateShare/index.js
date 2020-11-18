@@ -55,7 +55,7 @@ const PrivateShare = ({
     [recipientError],
   );
   const send = () => share(type, id, recipient, message || placeholder);
-  const recipientPlaceholder = 'any email or phone #';
+  const recipientPlaceholder = 'text or email/mobile';
   const placeholder = `${venueName} insider? someone thinks you should know about — “${getItemTitle(id)}”`;
   const isValidEmailOrPhone = isEmailValid(recipient) || isPhoneNumberValid(recipient);
 
@@ -69,22 +69,20 @@ const PrivateShare = ({
         <CounterInput
           value={recipient}
           onChange={handleRecipientChange}
-          max={50}
+          max={24}
           placeholder={recipientPlaceholder}
           error={recipientError}
-          subtext="sent via in-house network"
         />
         <CounterInput
           value={message}
           onChange={setMessage}
-          max={60}
+          max={120}
           rows={4}
           placeholder={placeholder}
           multiline
-          subtext="anonymous message"
         />
         <SubmitButton disabled={!isValidEmailOrPhone} loading={sending} onClick={send} inverse>
-          send to co-insider
+          send anonymously
         </SubmitButton>
       </FormLayout>
     </Layout>
