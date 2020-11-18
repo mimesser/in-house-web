@@ -17,7 +17,11 @@ export const SubmitButton = styled(Button).attrs({
   type: 'submit',
   wide: true,
   icon: 'arrow-right',
-})``;
+})`
+  background-color: ${palette.primary};
+  color: ${({ disabled }) => disabled ? palette.darkGray : palette.offWhite};
+  border: 1px solid ${({ disabled }) => disabled ? palette.darkGray : palette.offWhite};
+`;
 
 export const FormLayout = styled.div`
   z-index: 1000;
