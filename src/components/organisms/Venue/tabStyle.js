@@ -47,12 +47,7 @@ export const cardStyle = css`
   position: relative;
   border-bottom: 1px solid ${palette.lightGray};
   padding: ${spacing.xl};
-
-  ${PokeButton} {
-    position: absolute;
-    top: ${spacing.lg};
-    right: ${spacing.xl};
-  }
+  
   ${Dial} {
     margin-right: ${spacing.xl};
   }

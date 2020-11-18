@@ -17,13 +17,12 @@ import { Loader, Button, HelpTip, Break, Card, Icon, NumberLarge, NumberSmall } 
 import { formatDateTime, formatMovementURL, formatRating } from '../../../utils/format';
 import { ItemText, ItemTitle, ItemTime, Main, TabLayout, TabTitle } from './tabStyle';
 import { appBackground, spacing, appColors, palette, calcRem, font, fontSize } from '../../../style';
-import VotePost from './VotePost';
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
 import { Dial, PokeButton } from '../../molecules';
 import { Votes } from '../../molecules/RateSlider';
 import { FlagItem } from './FlagItem';
-import { VoteButton, Layout } from './openCardStyle';
+import { VoteButton, Layout, FlagButton } from './openCardStyle';
 
 import { Modal } from '../Modal';
 import { Dialog } from '../Modal/style';
@@ -35,10 +34,10 @@ const transition = {
 
 const VoteColumn = styled.div`
   display: block;
-
   width: 36px;
   height: 92px;
-  margin-right: ${spacing.lg};
+  margin-right: ${spacing.xl};
+  margin-top: ${spacing.xxl};
 `;
 
 const defaultVoteAnimation = css`
@@ -86,9 +85,9 @@ const activeVoteAnimation = css`
 `;
 
 const PostCard = styled(Card)`
+  user-select: none;
   ${defaultVoteAnimation}
   ${activeVoteAnimation}
-  min-height: 190px;
   background: ${({ selected }) => (selected ? appColors.gray5 : appColors.white)};
 `;
 
@@ -131,60 +130,46 @@ const VoteWrap = styled.div`
   display: block;
   width: 36px;
   height: 100%;
-  ${VoteButton} {
-    margin: 0;
-    padding-bottom: 20px;
-  }
 `;
 
 const CellHeader = styled.div`
-  position: relative;
-  padding: 0 ${spacing.xxxl} ${spacing.lg} 60px;
-  height: 16px;
-  max-height: 16px;
+  height: 18px;
   margin-bottom: 10px;
+  display: flex;
+
+  ${ItemTime} {
+    margin-top: ${spacing.xs};
+  }
 
   ${PokeButton} {
-    position: relative;
-    margin-top: 0px;
-    width: 22px;
-    height: auto;
-    top: -10px !important;
-    right: 0px !important;
+    margin-left: ${spacing.lg};
+    margin-top: ${spacing.sm};
     color: ${appColors.gray4};
     &:active {
       color: white;
     }
   }
   ${Votes} {
-    position: relative;
-    width: 80px;
-    margin-right: 10px;
-    margin-left: auto;
     font-size: 13px;
-    top: 16px;
-    text-align: right;
-    align-items: right;
-    display: flex;
-    justify-content: flex-end;
-
-    height: 16px;
-    vertical-align: bottom;
+    position: static;
+    line-height: 1;
+    width: auto;
 
     color: ${({ color }) => color};
     ${Icon} {
-      position: relative;
       width: 13px;
       height: 13px;
-      top: -2px;
     }
   }
+  ${NumberSmall} {
+    margin-top: ${spacing.sm};
+  }
   ${NumberLarge} {
-    position: relative;
-    top: -2px;
     font-size: 18px;
     font-weight: bold;
-
+    margin-left: ${spacing.sm};
+    margin-top: ${spacing.xxs};
+    color: ${palette.darkGray};
     height: 18px;
     vertical-align: bottom;
 
@@ -192,23 +177,6 @@ const CellHeader = styled.div`
       vertical-align: bottom;
     }
   }
-  ${NumberSmall} {
-    position: relative;
-    height: 16px;
-    vertical-align: bottom;
-    align-self: flex-end;
-    span {
-      position: relative;
-      vertical-align: baseline;
-      top: -4x;
-      align-self: flex-end;
-    }
-  }
-`;
-
-const StyledShareButton = styled(PrivateShareButton)`
-  width: 22px;
-  height: auto;
 `;
 
 const Footer = styled.div`
@@ -222,23 +190,25 @@ const Footer = styled.div`
 `;
 
 const SelectedIndicator = styled(({ show, count, ...rest }) => <Icon {...rest} icon="radio-marked" size={0.3} />)`
-  display: block;
-  justify-content: center;
   color: ${appColors.black};
   visibility: ${({ show }) => (show ? 'visible' : 'hidden')};
+  margin-right: 5px;
+  height: 100%;
 
   svg {
     padding: 0 0px 3px 0;
   }
-  left: -10px;
-  margin-right: -5px;
-  padding: 0 !important;
-  position: relative;
-  display: block;
-  height: 100%;
-
-  left: ${(props) => `${props.percentage}%`};
 `;
+
+const ShareWrap = styled.div`
+  margin-left: auto;
+  display: inline-flex;
+
+  ${FlagButton} {
+    display: none;
+  }
+`;
+
 const Post = ({
   post: { id, created, title, text, voteCount, voteRating, myVote, imageUrl, wasFlaggedByMe },
   setSelectedPost,
@@ -248,6 +218,7 @@ const Post = ({
   togglePostFlag,
   upvotePost,
   downvotePost,
+  isShare,
 }) => {
   const [currentVote, setCurrentVote] = useState(myVote);
   const upvoted = currentVote === 1;
@@ -274,16 +245,6 @@ const Post = ({
   );
   const card = (
     <PostCard onClick={selected ? deselect : select} selected={selected}>
-      <CellHeader color={upvoted || downvoted ? appColors.gray4 : appColors.gray6}>
-        <ItemTime dateTime={created}>{formatDateTime(created)}</ItemTime>
-        {!selected && (
-          <>
-            <Votes count={voteCount} userRate={upvoted || downvoted} />
-            {(upvoted || downvoted) && <NumberLarge>{formatRating(voteRating)}</NumberLarge>}
-            <StyledShareButton id={id} type="post" color={appColors.gray6} />
-          </>
-        )}
-      </CellHeader>
       <div>
         <VoteColumn>
           <HelpTip placement="top" tip="agree or disagree">
@@ -311,11 +272,21 @@ const Post = ({
         </VoteColumn>
 
         <Main>
+          <CellHeader color={upvoted || downvoted ? appColors.gray4 : appColors.gray6}>
+            <ItemTime dateTime={created}>{formatDateTime(created)}</ItemTime>
+            {!selected && (
+              <ShareWrap>
+                <Votes count={voteCount} userRate={upvoted || downvoted} />
+                {(upvoted || downvoted) && <NumberLarge>{formatRating(voteRating)}</NumberLarge>}
+                <PrivateShareButton id={id} type="post" color={appColors.gray6} />
+              </ShareWrap>
+            )}
+          </CellHeader>
           <ItemTitle>{title}</ItemTitle>
           <PostText>{text}</PostText>
           <Footer>
             {imageUrl && <PostImage imageUrl={imageUrl} alt="post image" onClick={open} />}
-            {!selected && <FlagItem flagged={wasFlaggedByMe} toggleFlag={togglePostFlag} />}
+            {!isShare && !selected && <FlagItem flagged={wasFlaggedByMe} toggleFlag={togglePostFlag} />}
             <p>{errorMessage}</p>
           </Footer>
         </Main>
@@ -382,6 +353,11 @@ const NewPostSection = styled.div`
   animation-fill-mode: forwards;
 `;
 
+const SharePreviewWrap = styled.div`
+  border: 2px solid ${palette.gray};
+  padding: ${spacing.md} ${spacing.sm};
+`;
+
 const renderSection = (title, posts, setSelectedPost, selectedPost, upvotePost, downvotePost, togglePostFlag) => {
   return (
     posts.length > 0 && (
@@ -433,11 +409,14 @@ const PostTab = ({
       const p = findPost(id, posts);
 
       return (
-        <Post
-          post={p}
-          upvotePost={upvotePost}
-          downvotePost={downvotePost}
-        />
+        <SharePreviewWrap>
+          <Post
+            post={p}
+            upvotePost={upvotePost}
+            downvotePost={downvotePost}
+            isShare
+          />
+        </SharePreviewWrap>
       );
     },
     [posts],

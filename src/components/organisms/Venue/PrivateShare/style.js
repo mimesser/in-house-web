@@ -40,5 +40,5 @@ export const CustomOverlay = styled(Overlay)`
 `;
 
 export const ShareContent = styled.div`
-  margin: 0 ${spacing.xl} ${spacing.xxxl} ${spacing.xl};
+  margin: 0 ${spacing.xl} ${spacing.xl} ${spacing.xl};
 `;
