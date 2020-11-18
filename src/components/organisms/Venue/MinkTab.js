@@ -56,7 +56,7 @@ const VoteWrap = styled.div`
 const VoteRating = styled.span`
   visibility: ${({ hideRate, topMink }) => (hideRate && !topMink ? 'hidden' : 'visible')};
   font-size: ${fontSize.md};
-  color: ${palette.primary};
+  color: ${palette.darkGray};
   ${font.bold};
 `;
 
@@ -80,13 +80,13 @@ const RatingWrap = styled.span`
 const ShareWrap = styled.div`
   display: inline-flex;
   align-items: center;
-  color: ${palette.darkGray};
+  color: ${palette.gray};
 
   & > *:not(:first-child) {
     margin-left: ${spacing.xs};
   }
   & > *:last-child {
-    margin-left: ${spacing.xl};
+    margin-left: ${spacing.lg};
   }
 
   ${VoteRating} {
@@ -168,7 +168,7 @@ const lowerOpacityOnVote = css`
 `;
 
 const InsiderText = styled.span`
-  font-size: ${fontSize.xs};
+  font-size: ${fontSize.sm};
 `;
 
 const Push = styled.span`
@@ -207,7 +207,7 @@ const MinkCard = styled(Card)`
     padding-left: ${spacing.xs};
   }
   ${PokeButton} {
-    color: ${palette.darkGray};
+    color: ${palette.gray};
     // to be removed if implemented
     // in all tabs
     position: static !important;
@@ -380,7 +380,7 @@ const Mink = ({
                   </VoteRating>
                 </RatingWrap>
               ) : (
-                <InsiderText>Insider(s)</InsiderText>
+                <InsiderText>insiders</InsiderText>
               )}
               <PrivateShareButton id={minkId} type="mink" />
             </ShareWrap>
