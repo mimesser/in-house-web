@@ -57,39 +57,37 @@ const findVenue = (id, venues) => {
   return venue;
 };
 
+export const findCategoryRating = (id, categoryRatings) => {
+  const cat = categoryRatings && categoryRatings.find((c) => c.id === id);
+  return cat && cat.rating;
+};
+
 const SearchPage = ({ venues, inDemo, categories }) => {
   const router = useRouter();
   const [filter, setFilter] = useState(router.query.q);
   const handleSearchChange = useCallback((e) => setFilter(e.currentTarget.value.toLowerCase()), []);
   const clearSearch = useCallback(() => setFilter(''), []);
   const showVenue = useCallback((venue) => {
-    const { id, name, industry: { lite } } = venue;
-    Router.push(
-      `/houses?id=${id}`,
-      `/${lite ? 'movement' : 'houses'}/${lite ? formatMovementURL(name) : id}`,
-      { shallow: true }
-    );
+    const {
+      id,
+      name,
+      industry: { lite },
+    } = venue;
+    Router.push(`/houses?id=${id}`, `/${lite ? 'movement' : 'houses'}/${lite ? formatMovementURL(name) : id}`, {
+      shallow: true,
+    });
   }, []);
 
   const renderSharePreview = useCallback(
     (id) => {
-      const {
-        name,
-        venueInfo: { address, city, state, zipCode },
-      } = findVenue(id, venues);
+      const venue = findVenue(id, venues);
+      const venueCategories =
+        categories &&
+        categories.map((category) => {
+          return { ...category, rating: findCategoryRating(category.id, venue.rateTagCategories) };
+        });
 
-      return (
-        <Card>
-          <Main>
-            <ItemTitle>{name}</ItemTitle>
-            <ItemText>{address}</ItemText>
-            <ItemText>
-              {city}, {state}
-            </ItemText>
-            <ItemText>{zipCode}</ItemText>
-          </Main>
-        </Card>
-      );
+      return <VenueCard venue={venue} categoryRatings={venueCategories} />;
     },
     [venues],
   );
@@ -100,10 +98,6 @@ const SearchPage = ({ venues, inDemo, categories }) => {
   if (!venues) {
     return <Loader big />;
   }
-  const findCategoryRating = (id, categoryRatings) => {
-    const cat = categoryRatings && categoryRatings.find((c) => c.id === id);
-    return cat && cat.rating;
-  };
 
   const applyFilter = !!filter;
   const venuesToShow = applyFilter ? venues.filter((v) => v.name && v.name.toLowerCase().includes(filter)) : venues;

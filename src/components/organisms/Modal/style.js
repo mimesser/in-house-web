@@ -27,6 +27,7 @@ export const CloseButton = styled(ClearButton).attrs({
   children: <Icon icon="close" />,
 })`
   margin-left: auto;
+  z-index: 1000;
 `;
 
 export const ModalHeader = styled.header`
@@ -34,6 +35,7 @@ export const ModalHeader = styled.header`
   align-items: center;
   text-transform: uppercase;
   ${onDesktop(`margin-left: ${deskPadRem}`)};
+  padding: ${({ noPadd }) => noPadd ? spacing.xl : 0};
 `;
 
 export const MODAL_Z_INDEX = 999;
@@ -93,7 +95,7 @@ export const Dialog = styled.div`
   // max-height: ${calcRem('700px')};
 
   ${colors};
-  padding: ${spacing.xxl};
+  padding: ${({ noPadd }) => noPadd ? 0 : spacing.xxl};
 `;
 
 export const handleChildren = css`
