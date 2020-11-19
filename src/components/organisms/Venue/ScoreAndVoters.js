@@ -56,7 +56,6 @@ export const ScoreAndVoters = styled(
   display: block;
   position: relative;
   width: ${calcRem('104px')};
-  margin: 16px;
 
   ${Votes} {
     display: block;

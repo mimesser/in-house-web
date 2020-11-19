@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { createStructuredSelector } from 'reselect';
 import isNil from 'lodash/isNil';
 
-import { Loader, HelpTip, Card, Break } from '../../atoms';
+import { Loader, HelpTip } from '../../atoms';
 import {
   setSelectedTag,
   loadRates,
@@ -26,9 +26,6 @@ import { Dial, RateSlider, PokeButton } from '../../molecules';
 import { Votes } from './Votes';
 import { RateCategory } from '../../molecules/RateCategory';
 import { debounce } from 'lodash';
-const RateCard = styled(Card)`
-  min-height: 120px;
-`;
 
 const getTeamRateIfRated = (userRate, voteRating) => (isNil(userRate) ? undefined : voteRating);
 
@@ -154,24 +151,13 @@ const RateTab = ({
 
   const renderSharePreview = useCallback(
     (id) => {
-      const { name, voteCount, userRate, voteRating } = findTag(id, tags);
+      const t = findTag(id, tags);
 
       return (
-        <RateCard>
-          <div>
-            <Dial size={65} readonly value={getTeamRateIfRated(userRate, voteRating)} />
-            <Main>
-              <ItemTitle>{name}</ItemTitle>
-              <Break />
-              <div>
-                <Votes count={voteCount} />
-              </div>
-            </Main>
-          </div>
-        </RateCard>
+        <Tag {...t} category={selectedCategory} />
       );
     },
-    [tags],
+    [tags, selectedCategory],
   );
   const getTitleForShare = useCallback((id) => findTag(id, tags).name, [tags]);
 

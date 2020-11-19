@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { spacing, palette, calcRem } from '../../../../style';
+import { spacing, palette, calcRem, breakpoints } from '../../../../style';
 import { IconInput } from '../../../molecules';
 
 export const Status = styled.span`
@@ -10,16 +10,19 @@ export const Status = styled.span`
 `;
 
 export const InputGroup = styled.div`
-  position: relative;
   ${IconInput} {
     flex: 1;
-    max-width: calc(100% - ${calcRem('60px')});
 
     // status icon and loader
     + * {
       margin: auto;
     }
+
+    @media screen and (min-width: ${breakpoints.md}) {
+      max-width: calc(100% - ${calcRem('60px')});
+    }
   }
+
   > div:first-child {
     display: flex;
   }
