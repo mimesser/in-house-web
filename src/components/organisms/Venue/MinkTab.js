@@ -266,6 +266,17 @@ const RunnersTitle = styled(TabTitle)`
   border-bottom: 1px solid ${palette.lightGray};
 `;
 
+const SharePreviewWrap = styled.div`
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  padding: ${spacing.md};
+`;
+
+const TopMinkSharePreviewWrap = styled.div`
+  ${TopMinkContainer} {
+    padding: ${spacing.md};
+  }
+`;
+
 const AnswerStatus = ({ status, previouslyAnsweredCorrectly, active, isShare }) => {
   if (isShare) return null;
 
@@ -527,24 +538,28 @@ const MinkTab = ({
       const isTopMink = minks[0] === m;
 
       return isTopMink ? (
-        <TopMinkContainer>
+        <TopMinkSharePreviewWrap>
+          <TopMinkContainer>
+            <Mink
+              mink={m}
+              upvoteMink={upvoteMink}
+              downvoteMink={downvoteMink}
+              answerStatus={answerStatus}
+              topMink
+              isShare
+            />
+          </TopMinkContainer>
+        </TopMinkSharePreviewWrap>
+      ) : (
+        <SharePreviewWrap>
           <Mink
             mink={m}
             upvoteMink={upvoteMink}
             downvoteMink={downvoteMink}
             answerStatus={answerStatus}
-            topMink
             isShare
           />
-        </TopMinkContainer>
-      ) : (
-        <Mink
-          mink={m}
-          upvoteMink={upvoteMink}
-          downvoteMink={downvoteMink}
-          answerStatus={answerStatus}
-          isShare
-        />
+        </SharePreviewWrap>
       );
     },
     [minks],
