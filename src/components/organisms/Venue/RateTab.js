@@ -18,12 +18,11 @@ import {
   selectCategoryRatings,
 } from '../../../store/venues';
 import { selectEsgCategories } from '../../../store/aggregate';
-import { TabLayout, Main, ItemTitle } from './tabStyle';
+import { TabLayout } from './tabStyle';
 import { appColors } from '../../../style';
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
-import { Dial, RateSlider, PokeButton } from '../../molecules';
-import { Votes } from './Votes';
+import { RateSlider, PokeButton } from '../../molecules';
 import { RateCategory } from '../../molecules/RateCategory';
 import { debounce } from 'lodash';
 
@@ -55,6 +54,14 @@ const StyledLoader = styled(Loader)`
 
   margin: auto;
   margin-top: -50px;
+`;
+
+const SharePreviewWrap = styled.div`
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+
+  ${CellWrapper} > div:first-child {
+    border-bottom: 0;
+  }
 `;
 
 const Tag = ({
@@ -154,7 +161,9 @@ const RateTab = ({
       const t = findTag(id, tags);
 
       return (
-        <Tag {...t} category={selectedCategory} />
+        <SharePreviewWrap>
+          <Tag {...t} category={selectedCategory} />
+        </SharePreviewWrap>
       );
     },
     [tags, selectedCategory],

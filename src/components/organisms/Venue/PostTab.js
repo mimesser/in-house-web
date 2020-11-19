@@ -354,7 +354,7 @@ const NewPostSection = styled.div`
 `;
 
 const SharePreviewWrap = styled.div`
-  border: 2px solid ${palette.gray};
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
   padding: ${spacing.md} ${spacing.sm};
 `;
 
