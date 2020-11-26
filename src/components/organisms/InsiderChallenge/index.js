@@ -13,12 +13,10 @@ import {
   tryAnswerMink,
   setSelectedMink,
   selectAnswerMinkStatus,
-  setChallengeFormData,
 } from '../../../store/venues';
 import { Answer, SubmitButton, ChangeButton, QuestionForm, InputHelp, AnswerInput, Try } from './style';
 import { Modal } from '../Modal';
 import { normalizeAnswer } from '../Venue/normalizeAnswer';
-import AcceptTerms from './AcceptTerms';
 import { selectInDemo, getDefaultTopMink } from '../../../store/demo';
 import { useOutsideClick, useTimeout } from '../../../utils';
 import { palette, spacing, breakpoints, fontSize, font } from '../../../style';
@@ -121,6 +119,11 @@ const Subtitle = styled.div`
   color: ${palette.gray};
 `;
 
+const StatusIcon = ({ clickEvent }) =>
+  <span onClick={clickEvent}>
+    <Icon icon="close" />
+  </span>;
+
 const TopMinkToolTip = () => {
   const [open, setOpen] = useState(false);
   const tooltipRef = useRef(null);
@@ -147,11 +150,14 @@ const Form = ({
   tryAnswerMink,
   answerStatus,
   setSelectedMink,
-  setChallengeFormData,
 }) => {
   const [answer, setAnswer] = useState('');
   const [showError, setShowError] = useState(false);
   const answerRef = useRef(null);
+  const clearAnswer = useCallback(() => {
+    setAnswer('');
+    answerRef.current.focus();
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -167,7 +173,7 @@ const Form = ({
     setShowError(false);
   };
 
-  const highlightError = wrongAnswer && showError;
+  const highlightError = answer && wrongAnswer && showError;
 
   const getTitleForShare = useCallback(() => name, []);
   const renderSharePreview = useCallback(() => {
@@ -285,7 +291,7 @@ const Form = ({
           value={answer}
           onChange={handleChange}
           ref={answerRef}
-          icon={highlightError ? 'close' : undefined}
+          icon={highlightError ? <StatusIcon clickEvent={clearAnswer} /> : undefined}
         />
         <InputHelp>{highlightError ? 'wrong answer!' : 'one word / no spaces'}</InputHelp>
         <SubmitButton disabled={!answer.length}>
@@ -306,7 +312,6 @@ const InsiderChallenge = ({
   inDemo,
   tryAnswerMink,
   setSelectedMink,
-  setChallengeFormData,
 }) => {
   if (!challengeFormData || !topMink) {
     return null;
@@ -341,7 +346,6 @@ const InsiderChallenge = ({
                 tryAnswerMink={tryAnswerMink}
                 answerStatus={answerStatus}
                 setSelectedMink={setSelectedMink}
-                setChallengeFormData={setChallengeFormData}
               />
             )}
             <HelpTip tip="create or vote for another MINK you think will better verify your team" placement="top">
@@ -368,7 +372,6 @@ const mapDispatch = {
   dismissForm: dismissChallengeForm,
   tryAnswerMink,
   setSelectedMink,
-  setChallengeFormData,
 };
 
 export default connect(mapState, mapDispatch)(InsiderChallenge);
