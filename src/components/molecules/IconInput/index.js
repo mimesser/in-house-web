@@ -26,8 +26,8 @@ const Wrap = styled.div`
 
 export const IconInput = styled(
   withForwardedRef(({ className, icon, forwardedRef, ...inputProps }) => (
-    <Wrap className={className} ref={forwardedRef}>
-      <Input {...inputProps} />
+    <Wrap className={className}>
+      <Input {...inputProps} ref={forwardedRef} />
       {typeof icon === 'string' ? <Icon icon={icon} /> : icon}
     </Wrap>
   )),
