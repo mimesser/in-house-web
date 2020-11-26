@@ -18,7 +18,7 @@ import {
   toggleMinkFlag,
 } from '../../../store/venues';
 import { palette, spacing, fontSize, font } from '../../../style';
-import { Loader, Button, HelpTip, Patent, Card, Break, Icon, SlidingValue } from '../../atoms';
+import { Loader, Button, HelpTip, Patent, Card, Icon, SlidingValue, Input } from '../../atoms';
 import { TabLayout, Main, ItemTitle, ItemTime, TabTitle } from './tabStyle';
 import { formatDateTime, formatMovementURL, formatRating } from '../../../utils/format';
 import VoteMink from './VoteMink';
@@ -258,6 +258,9 @@ const TopMinkContainer = styled.div`
     ${PokeButton} {
       color: ${palette.white};
     }
+    ${Input} {
+      color: ${palette.primary};
+    }
   }
 `;
 
@@ -305,13 +308,26 @@ const renderInputIcon = (status, previouslyAnsweredCorrectly, active) => {
   return null;
 };
 
-const renderStatusIcon = (answerStatus) => {
-  if (!answerStatus) return null;
+const StatusIcon = ({ answerStatus, answer, whiteLoader, clickEvent }) => {
+  if (!answerStatus && !answer) return null;
+
+  if (!answerStatus && answer) return (
+    <span onClick={clickEvent}>
+      <Icon size={1.5} icon='close' />
+    </span>
+  );
 
   const { loading, isAnswerCorrect } = answerStatus;
-  if (loading) return <Loader />;
+  if (loading) {
+    if (whiteLoader) return <Loader white />;
+    return <Loader />;
+  }
 
-  return <Icon size={1.5} icon={isAnswerCorrect ? 'check' : 'close'} />;
+  return (
+    <span onClick={clickEvent}>
+      <Icon size={1.5} icon={isAnswerCorrect ? 'check' : 'close'} />
+    </span>
+  );
 };
 
 const Mink = ({
@@ -333,6 +349,7 @@ const Mink = ({
   const selectMink = useCallback(() => setSelectedMink(minkId), [minkId]);
   const deselectMink = useCallback(() => setSelectedMink(undefined), [minkId]);
   const ref = useRef(null);
+  const answerRef = useRef(null);
   const [vote, setVote] = useState(myVote);
   const upvoted = vote === 1;
   const downvoted = vote === -1;
@@ -343,6 +360,7 @@ const Mink = ({
   const tryAnswer = useCallback((e) => {
     const value = normalizeAnswer(e.currentTarget.value);
     setAnswer(value);
+    if (!value) return; 
     tryAnswerMink(houseId, minkId, value);
   }, []);
   const voteMink = useCallback(
@@ -354,6 +372,11 @@ const Mink = ({
     }, 500),
     [],
   );
+  const clearAnswer = useCallback((e) => {
+    e.stopPropagation();
+    setAnswer('');
+    answerRef.current.focus();
+  }, []);
 
   useEffect(() => {
     if (isNew) {
@@ -409,8 +432,16 @@ const Mink = ({
                 icon={renderInputIcon(answerStatus, previouslyAnsweredCorrectly, active)}
                 onFocus={selectMink}
                 onClick={(e) => e.stopPropagation()}
+                ref={answerRef}
               />
-              {active && renderStatusIcon(answerStatus)}
+              {active && !previouslyAnsweredCorrectly && (
+                <StatusIcon
+                  answerStatus={answerStatus}
+                  answer={answer}
+                  whiteLoader={topMink}
+                  clickEvent={clearAnswer}
+                />
+              )}
             </div>
             <AnswerStatus
               status={answerStatus}
@@ -419,9 +450,15 @@ const Mink = ({
               isShare={isShare}
             />
           </InputGroup>
-          {!isShare && (<FlagItemWrap>
-            <FlagItem disabled={isActiveInsider} flagged={wasFlaggedByMe} toggleFlag={toggleMinkFlag}/>
-          </FlagItemWrap>)}
+          {!isShare && (
+            <FlagItemWrap>
+              <FlagItem
+                disabled={isActiveInsider}
+                flagged={wasFlaggedByMe}
+                toggleFlag={toggleMinkFlag}
+              />
+            </FlagItemWrap>
+          )}
         </Main>
       </div>
     </MinkCard>
