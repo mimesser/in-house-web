@@ -5,12 +5,14 @@ export function getClientPosition(e) {
     const finger = touches[0];
     return {
       x: finger.clientX,
-      y: finger.clientY,
+      // y: finger.clientY,
     };
   }
 
+  console.log("getClientPosition");
+
   return {
     x: e.clientX,
-    y: e.clientY,
+    // y: e.clientY,
   };
 }

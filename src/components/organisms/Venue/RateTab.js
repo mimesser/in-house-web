@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { memo, useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { createStructuredSelector } from 'reselect';
@@ -64,7 +64,7 @@ const SharePreviewWrap = styled.div`
   }
 `;
 
-const Tag = ({
+const Tag = memo(({
   name,
   definitionId,
   userRate,
@@ -77,6 +77,7 @@ const Tag = ({
   rateTag,
   rateInProgress,
   category,
+  selectedTag,
 }) => {
   const [rateValue, setRateValue] = useState(userRate);
   const open = useCallback(
@@ -111,6 +112,7 @@ const Tag = ({
         voteCount={voteCount}
         expanded={expanded}
         fillColor={category && appColors[category.color]}
+        selectedTag={selectedTag}
       >
         {expanded && rateInProgress === definitionId ? <StyledLoader black /> : null}
       </RateSlider>
@@ -123,7 +125,7 @@ const Tag = ({
   );
 
   return withHelp ? <HelpTip tip="see how everyone feels at a glance">{card}</HelpTip> : card;
-};
+});
 
 const findTag = (id, tags) => {
   const tag = tags.find((t) => t.definitionId === id);
@@ -203,6 +205,7 @@ const RateTab = ({
               rateInProgress={rateInProgress}
               expanded={selectedTag && selectedTag.definitionId === t.definitionId}
               category={selectedCategory}
+              selectedTag={selectedTag}
             />
           ))
       ) : (
