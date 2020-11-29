@@ -173,6 +173,7 @@ const BaseRateSlider = ({
   onChange,
   onSlideStart,
   onSlideEnd,
+  selectedTag,
   ...sliderProps
 }) => {
   const { readonly: decimal, size, padd, fillColor = palette.darkGray } = sliderProps;
@@ -238,6 +239,7 @@ const BaseRateSlider = ({
             fillColor={fillColor}
             x={(isExpanded && (userValue || 0.0)) || (!isExpanded && value)}
             disabled={readonly}
+            selectedTag={selectedTag}
           >
             {userValue && !isExpanded && <Indicator percentage={userValue * 10} />}
           </Slider>
