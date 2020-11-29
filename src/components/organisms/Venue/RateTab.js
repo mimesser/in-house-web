@@ -44,6 +44,8 @@ const ShareLayout = styled.div`
 
 const CellWrapper = styled.div`
   overflow: hidden;
+  opacity: ${({ selectedTag, isSelected }) => (isSelected || !selectedTag) ? '1' : '0.4'};
+  transition: opacity 0.8s;
 `;
 
 const StyledLoader = styled(Loader)`
@@ -93,8 +95,11 @@ const Tag = memo(({
     }, 300),
     [],
   );
+
+  const isSelected = selectedTag && selectedTag.definitionId === definitionId; 
+
   const card = (
-    <CellWrapper onClick={open}>
+    <CellWrapper onClick={open} selectedTag={selectedTag} isSelected={isSelected}>
       <RateSlider
         title={name}
         onChange={(value) => {
