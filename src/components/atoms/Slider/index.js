@@ -1,7 +1,7 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 
-import { theme, palette } from '../../../style';
+import { theme } from '../../../style';
 // import { Container, SliderLabel } from './style';
 import { getClientPosition } from './utils';
 
@@ -49,6 +49,7 @@ const GradientFill = styled.div.attrs((props) => ({
   height: 8px;
   background: radial-gradient(38.33% 51071.18% at 50% 50%, #bfbfbf 0%, #e0e0e0 86.98%);
   animation: ${Sliding} 2s ease-in-out infinite;
+  animation: ${({ selectedTag }) => selectedTag && 'none'};
 `;
 
 const SliderKnob = styled.div`
@@ -85,6 +86,7 @@ const BaseSlider = ({
   onSlideStart,
   onSlideEnd,
   onClick,
+  selectedTag,
   ...props
 }) => {
   const container = useRef(null);
@@ -104,7 +106,7 @@ const BaseSlider = ({
   function change(newValue) {
     if (!onChange) return;
 
-    const { width, height } = container.current.getBoundingClientRect();
+    const { width } = container.current.getBoundingClientRect();
 
     const target = clamp(newValue, 0, width);
     const dx = (target / width) * (max - min);
@@ -123,16 +125,16 @@ const BaseSlider = ({
 
     change(clientPos.x - rect.left);
 
-    const dom = handle.current;
+    // const dom = handle.current;
 
     start.current = {
       x: clientPos.x,
-      y: clientPos.y,
+      // y: clientPos.y,
     };
 
     offset.current = {
       x: clientPos.x,
-      y: clientPos.y,
+      // y: clientPos.y,
     };
 
     document.addEventListener('mousemove', handleDrag);
@@ -148,15 +150,15 @@ const BaseSlider = ({
   function getPos(e) {
     const clientPos = getClientPosition(e);
     const left = clientPos.x + start.current.x - offset.current.x;
-    const top = clientPos.y + start.current - offset.current.y;
+    // const top = clientPos.y + start.current - offset.current.y;
 
-    return { left, top };
+    return { left };
   }
 
   function handleDrag(e) {
     if (disabled) return;
 
-    const { left, top } = getPos(e);
+    const { left } = getPos(e);
     change(left);
   }
 
@@ -212,7 +214,7 @@ const BaseSlider = ({
         <SliderFilled percentage={percentage} fillColor={fillColor} />
       ) : (
         <GradientWrapper>
-          <GradientFill delay={Math.random()} />
+          <GradientFill delay={Math.random()} selectedTag={selectedTag} />
         </GradientWrapper>
       )}
       <SliderKnob
