@@ -1,5 +1,5 @@
 export function getClientPosition(e) {
-  const touches = e.touches;
+  const { touches } = e;
 
   if (touches && touches.length) {
     const finger = touches[0];
@@ -8,8 +8,6 @@ export function getClientPosition(e) {
       // y: finger.clientY,
     };
   }
-
-  console.log("getClientPosition");
 
   return {
     x: e.clientX,
