@@ -81,25 +81,29 @@ const Tag = memo(({
   category,
   selectedTag,
 }) => {
-  const [rateValue, setRateValue] = useState(userRate);
-  const open = useCallback(
-    (e) => {
-      setSelectedTag(definitionId);
-    },
-    [definitionId],
-  );
+  useEffect(() => {
+    document.body.style.overflow = selectedTag && !rateInProgress ? 'hidden' : 'auto';
+  }, [rateInProgress, selectedTag]);
 
+  const [rateValue, setRateValue] = useState(userRate);
+  const inProgress = rateInProgress === definitionId;
+  const isSelected = selectedTag && selectedTag.definitionId === definitionId; 
+  const open = useCallback(
+    () => setSelectedTag(definitionId),
+    [definitionId]
+  );
   const changeRate = useCallback(
     debounce((value) => {
       setSelectedTagTargetRate(value);
     }, 300),
     [],
   );
-
-  const isSelected = selectedTag && selectedTag.definitionId === definitionId; 
-
   const card = (
-    <CellWrapper onClick={open} selectedTag={selectedTag} isSelected={isSelected}>
+    <CellWrapper
+      onClick={rateInProgress && selectedTag ? undefined : open}
+      selectedTag={selectedTag}
+      isSelected={isSelected}
+    >
       <RateSlider
         title={name}
         onChange={(value) => {
@@ -117,9 +121,10 @@ const Tag = memo(({
         voteCount={voteCount}
         expanded={expanded}
         fillColor={category && appColors[category.color]}
-        selectedTag={selectedTag}
+        stopAnimations={selectedTag}
+        stopRating={inProgress}
       >
-        {expanded && rateInProgress === definitionId ? <StyledLoader black /> : null}
+        {expanded && inProgress ? <StyledLoader black /> : null}
       </RateSlider>
       {!expanded && (
         <ShareLayout>
