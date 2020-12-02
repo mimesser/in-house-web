@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 
 import { theme } from '../../../style';
@@ -49,7 +49,7 @@ const GradientFill = styled.div.attrs((props) => ({
   height: 8px;
   background: radial-gradient(38.33% 51071.18% at 50% 50%, #bfbfbf 0%, #e0e0e0 86.98%);
   animation: ${Sliding} 2s ease-in-out infinite;
-  animation: ${({ selectedTag }) => selectedTag && 'none'};
+  animation: ${({ stopAnimations }) => stopAnimations && 'none'};
 `;
 
 const SliderKnob = styled.div`
@@ -86,7 +86,8 @@ const BaseSlider = ({
   onSlideStart,
   onSlideEnd,
   onClick,
-  selectedTag,
+  stopAnimations,
+  stopRating,
   ...props
 }) => {
   const container = useRef(null);
@@ -118,7 +119,7 @@ const BaseSlider = ({
   }
 
   function handleMouseDown(e) {
-    if (disabled) return;
+    if (disabled || stopRating) return;
 
     const clientPos = getClientPosition(e);
     const rect = container.current.getBoundingClientRect();
@@ -214,7 +215,7 @@ const BaseSlider = ({
         <SliderFilled percentage={percentage} fillColor={fillColor} />
       ) : (
         <GradientWrapper>
-          <GradientFill delay={Math.random()} selectedTag={selectedTag} />
+          <GradientFill delay={Math.random()} stopAnimations={stopAnimations} />
         </GradientWrapper>
       )}
       <SliderKnob
