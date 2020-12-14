@@ -173,8 +173,8 @@ const BaseRateSlider = ({
   onChange,
   onSlideStart,
   onSlideEnd,
-  stopAnimations,
-  stopRating,
+  selectedTag,
+  inProgress,
   ...sliderProps
 }) => {
   const { readonly: decimal, size, padd, fillColor = palette.darkGray } = sliderProps;
@@ -204,16 +204,8 @@ const BaseRateSlider = ({
   }
   return (
     <>
-      <Wrapper
-        onClick={() => {
-          setExpanded(!isExpanded);
-        }}
-      >
+      <Wrapper>
         <Title
-          onClick={(e) => {
-            preventDefault(e);
-            setExpanded(!isExpanded);
-          }}
           onTouchStart={preventDefault}
           onMouseDown={preventDefault}
         >
@@ -240,8 +232,8 @@ const BaseRateSlider = ({
             fillColor={fillColor}
             x={(isExpanded && (userValue || 0.0)) || (!isExpanded && value)}
             disabled={readonly}
-            stopAnimations={stopAnimations}
-            stopRating={stopRating}
+            selectedTag={selectedTag}
+            inProgress={inProgress}
           >
             {userValue && !isExpanded && <Indicator percentage={userValue * 10} />}
           </Slider>
