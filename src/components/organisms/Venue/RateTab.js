@@ -44,8 +44,9 @@ const ShareLayout = styled.div`
 
 const CellWrapper = styled.div`
   overflow: hidden;
-  opacity: ${({ selectedTag, isSelected }) => (isSelected || !selectedTag) ? '1' : '0.4'};
-  transition: opacity 0.8s;
+  transition: opacity 0.8s, blur 0.8s;
+  opacity: ${({ selectedTag, isSelected }) => isSelected || !selectedTag ? '1' : '0.5'};
+  // filter: ${({ selectedTag, isSelected }) => selectedTag && !isSelected ? 'blur(1px)' : 'none'};
 `;
 
 const StyledLoader = styled(Loader)`
@@ -81,10 +82,6 @@ const Tag = memo(({
   category,
   selectedTag,
 }) => {
-  useEffect(() => {
-    document.body.style.overflow = selectedTag && !rateInProgress ? 'hidden' : 'auto';
-  }, [rateInProgress, selectedTag]);
-
   const [rateValue, setRateValue] = useState(userRate);
   const inProgress = rateInProgress === definitionId;
   const isSelected = selectedTag && selectedTag.definitionId === definitionId; 
@@ -110,19 +107,15 @@ const Tag = memo(({
           setRateValue(value);
           changeRate(Math.round(value));
         }}
-        onSlideStart={(value) => {
-          setSelectedTag(definitionId);
-        }}
-        onSlideEnd={(value) => {
-          rateTag(definitionId);
-        }}
+        onSlideStart={() => setSelectedTag(definitionId)}
+        onSlideEnd={() => rateTag(definitionId)}
         value={getTeamRateIfRated(userRate, voteRating)}
         userRate={userRate}
         voteCount={voteCount}
         expanded={expanded}
         fillColor={category && appColors[category.color]}
-        stopAnimations={selectedTag}
-        stopRating={inProgress}
+        selectedTag={selectedTag}
+        inProgress={inProgress}
       >
         {expanded && inProgress ? <StyledLoader black /> : null}
       </RateSlider>
@@ -202,6 +195,7 @@ const RateTab = ({
       {tags ? (
         rateTags
           // .filter((t) => (selectedCategory && selectedCategory.id === t.rateTagCategoryId) || !selectedCategory)
+          // .filter(t => selectedTag ? t.definitionId === selectedTag.definitionId : t)
           .map((t, i) => (
             <Tag
               {...t}
