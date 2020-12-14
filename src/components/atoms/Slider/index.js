@@ -49,7 +49,7 @@ const GradientFill = styled.div.attrs((props) => ({
   height: 8px;
   background: radial-gradient(38.33% 51071.18% at 50% 50%, #bfbfbf 0%, #e0e0e0 86.98%);
   animation: ${Sliding} 2s ease-in-out infinite;
-  animation: ${({ stopAnimations }) => stopAnimations && 'none'};
+  animation: ${({ selectedTag }) => selectedTag && 'none'};
 `;
 
 const SliderKnob = styled.div`
@@ -86,8 +86,8 @@ const BaseSlider = ({
   onSlideStart,
   onSlideEnd,
   onClick,
-  stopAnimations,
-  stopRating,
+  selectedTag,
+  inProgress,
   ...props
 }) => {
   const container = useRef(null);
@@ -119,7 +119,7 @@ const BaseSlider = ({
   }
 
   function handleMouseDown(e) {
-    if (disabled || stopRating) return;
+    if (disabled || inProgress) return;
 
     const clientPos = getClientPosition(e);
     const rect = container.current.getBoundingClientRect();
@@ -207,25 +207,23 @@ const BaseSlider = ({
       {...props}
       disabled
       ref={container}
-      onClick={handleClick}
-      onTouchStart={handleMouseDown}
-      onMouseDown={handleMouseDown}
+      onClick={selectedTag ? handleClick : undefined}
+      onTouchStart={selectedTag ? handleMouseDown : undefined}
+      onMouseDown={selectedTag ? handleMouseDown : undefined}
     >
       {value ? (
         <SliderFilled percentage={percentage} fillColor={fillColor} />
       ) : (
         <GradientWrapper>
-          <GradientFill delay={Math.random()} stopAnimations={stopAnimations} />
+          <GradientFill delay={Math.random()} selectedTag={selectedTag} />
         </GradientWrapper>
       )}
       <SliderKnob
         percentage={percentage}
         ref={handle}
-        onTouchStart={handleMouseDown}
-        onMouseDown={handleMouseDown}
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
+        onTouchStart={selectedTag ? handleMouseDown : undefined}
+        onMouseDown={selectedTag ? handleMouseDown : undefined}
+        onClick={(e) => e.stopPropagation()}
       />
       {props.children}
     </SliderContainer>
