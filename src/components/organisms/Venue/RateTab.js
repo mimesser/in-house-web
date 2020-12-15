@@ -82,7 +82,7 @@ const Tag = memo(({
   category,
   selectedTag,
 }) => {
-  const [rateValue, setRateValue] = useState(userRate);
+  // const [rateValue, setRateValue] = useState(userRate);
   const inProgress = rateInProgress === definitionId;
   const isSelected = selectedTag && selectedTag.definitionId === definitionId; 
   const open = useCallback(
@@ -90,8 +90,9 @@ const Tag = memo(({
     [definitionId]
   );
   const changeRate = useCallback(
-    debounce((value) => {
-      setSelectedTagTargetRate(value);
+    debounce(value => {
+      // setRateValue(value);
+      setSelectedTagTargetRate(Math.round(value));
     }, 300),
     [],
   );
@@ -103,10 +104,7 @@ const Tag = memo(({
     >
       <RateSlider
         title={name}
-        onChange={(value) => {
-          setRateValue(value);
-          changeRate(Math.round(value));
-        }}
+        onChange={value => changeRate(value)}
         onSlideStart={() => setSelectedTag(definitionId)}
         onSlideEnd={() => rateTag(definitionId)}
         value={getTeamRateIfRated(userRate, voteRating)}
