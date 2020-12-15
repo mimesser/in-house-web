@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 
 import { theme } from '../../../style';
@@ -59,7 +59,7 @@ const SliderKnob = styled.div`
   width: 60px;
   height: 100%;
   transform: translate(-50%, 0%);
-  left: ${(props) => props.percentage};
+  // left: ${(props) => props.percentage};
   z-index: 99;
 `;
 
@@ -92,8 +92,8 @@ const BaseSlider = ({
 }) => {
   const container = useRef(null);
   const handle = useRef(null);
-  const start = useRef({});
-  const offset = useRef({});
+  const startX = useRef(null);
+  const offsetX = useRef(null);
   const [value, setValue] = useState(x);
 
   function getPosition() {
@@ -114,7 +114,7 @@ const BaseSlider = ({
 
     const x = (dx !== 0 ? parseInt(dx / step, 10) * step : 0) + min;
 
-    setValue(x);
+    // setValue(x);
     onChange(x);
   }
 
@@ -128,15 +128,17 @@ const BaseSlider = ({
 
     // const dom = handle.current;
 
-    start.current = {
-      x: clientPos.x,
-      // y: clientPos.y,
-    };
+    startX.current = clientPos.x;
+    offsetX.current = clientPos.x;
+    // start.current = {
+    //   x: clientPos.x,
+    //   // y: clientPos.y,
+    // };
 
-    offset.current = {
-      x: clientPos.x,
-      // y: clientPos.y,
-    };
+    // offset.current = {
+    //   x: clientPos.x,
+    //   // y: clientPos.y,
+    // };
 
     document.addEventListener('mousemove', handleDrag);
     document.addEventListener('mouseup', handleDragEnd);
@@ -150,13 +152,14 @@ const BaseSlider = ({
 
   function getPos(e) {
     const clientPos = getClientPosition(e);
-    const left = clientPos.x + start.current.x - offset.current.x;
+    const left = clientPos.x + startX.current - offsetX.current;
     // const top = clientPos.y + start.current - offset.current.y;
 
     return { left };
   }
 
   function handleDrag(e) {
+    e.preventDefault();
     if (disabled) return;
 
     const { left } = getPos(e);
@@ -168,10 +171,7 @@ const BaseSlider = ({
 
     document.removeEventListener('mousemove', handleDrag);
     document.removeEventListener('mouseup', handleDragEnd);
-
-    document.removeEventListener('touchmove', handleDrag, {
-      passive: false,
-    });
+    document.removeEventListener('touchmove', handleDrag, { passive: false });
     document.removeEventListener('touchend', handleDragEnd);
     document.removeEventListener('touchcancel', handleDragEnd);
 
@@ -219,7 +219,7 @@ const BaseSlider = ({
         </GradientWrapper>
       )}
       <SliderKnob
-        percentage={percentage}
+        // percentage={percentage}
         ref={handle}
         onTouchStart={selectedTag ? handleMouseDown : undefined}
         onMouseDown={selectedTag ? handleMouseDown : undefined}
