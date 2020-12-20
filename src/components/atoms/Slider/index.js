@@ -70,7 +70,7 @@ const SliderFilled = styled.div`
   background-color: ${({ fillColor }) => fillColor};
   user-select: 'none';
   box-sizing: 'border-box';
-  width: ${(props) => props.percentage};
+  // width: ${(props) => props.percentage};
   top: 0;
   z-index: auto;
 `;
@@ -105,7 +105,7 @@ const BaseSlider = ({
   }
 
   function change(newValue) {
-    if (!onChange) return;
+    if (!onChange || inProgress) return;
 
     const { width } = container.current.getBoundingClientRect();
 
@@ -159,7 +159,7 @@ const BaseSlider = ({
   }
 
   function handleDrag(e) {
-    e.preventDefault();
+    if (e.cancelable) e.preventDefault();
     if (disabled) return;
 
     const { left } = getPos(e);
@@ -200,7 +200,10 @@ const BaseSlider = ({
     setValue(x);
   }
 
-  const percentage = `${pos.left}%`;
+  // const percentage = `${pos.left}%`;
+  const setWidth = {
+    width: `${pos.left}%`
+  };
 
   return (
     <SliderContainer
@@ -212,19 +215,23 @@ const BaseSlider = ({
       onMouseDown={selectedTag ? handleMouseDown : undefined}
     >
       {value ? (
-        <SliderFilled percentage={percentage} fillColor={fillColor} />
+        <SliderFilled
+          // percentage={percentage}
+          fillColor={fillColor}
+          style={setWidth}
+        />
       ) : (
         <GradientWrapper>
           <GradientFill delay={Math.random()} selectedTag={selectedTag} />
         </GradientWrapper>
       )}
-      <SliderKnob
+      {/* <SliderKnob
         // percentage={percentage}
         ref={handle}
-        onTouchStart={selectedTag ? handleMouseDown : undefined}
-        onMouseDown={selectedTag ? handleMouseDown : undefined}
+        // onTouchStart={selectedTag ? handleMouseDown : undefined}
+        // onMouseDown={selectedTag ? handleMouseDown : undefined}
         onClick={(e) => e.stopPropagation()}
-      />
+      /> */}
       {props.children}
     </SliderContainer>
   );

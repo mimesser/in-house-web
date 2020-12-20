@@ -2,7 +2,6 @@ import React, { memo, useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { createStructuredSelector } from 'reselect';
-import isNil from 'lodash/isNil';
 
 import { Loader, HelpTip } from '../../atoms';
 import {
@@ -24,7 +23,7 @@ import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
 import { RateSlider, PokeButton } from '../../molecules';
 import { RateCategory } from '../../molecules/RateCategory';
-import { debounce } from 'lodash';
+import { debounce, isNil } from 'lodash';
 
 const getTeamRateIfRated = (userRate, voteRating) => (isNil(userRate) ? undefined : voteRating);
 
