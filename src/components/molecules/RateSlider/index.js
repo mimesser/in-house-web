@@ -146,6 +146,7 @@ export const Indicator = styled(({ count, iconSize = 0.75, ...rest }) => (
   display: block;
   width: 20px;
   height: 100%;
+  top: 5px;
 
   left: ${(props) => `${props.percentage}%`};
 `;
