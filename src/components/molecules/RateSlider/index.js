@@ -4,6 +4,8 @@ import isNumber from 'lodash/isNumber';
 
 import { CircleSlider, NumberLarge, NumberSmall, Icon, Slider, SlidingValue } from '../../atoms';
 import { fontSize, font, palette, theme } from '../../../style';
+import { useRef } from 'react';
+import { getClientPosition } from '../../atoms/Slider/utils';
 
 const FONT_RATIO = 3.6;
 
@@ -182,6 +184,13 @@ const BaseRateSlider = ({
   const [value, setValue] = useState(initialValue);
   const [userValue, setUserValue] = useState(userRate);
   const [isExpanded, setExpanded] = useState(expanded);
+  const wrapperRef = useRef();
+  const handleClick = (e) => {
+    const rect = wrapperRef.current.getBoundingClientRect();
+    const clientPos = getClientPosition(e);
+    const rate = ((clientPos.x/rect.width)*10).toFixed(1);
+    setUserValue(rate);
+  };
 
   useEffect(() => {
     setValue(initialValue);
@@ -205,7 +214,7 @@ const BaseRateSlider = ({
   }
   return (
     <>
-      <Wrapper>
+      <Wrapper ref={wrapperRef} onClick={handleClick}>
         <Title
           onTouchStart={preventDefault}
           onMouseDown={preventDefault}
