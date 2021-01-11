@@ -68,8 +68,8 @@ class MyDocument extends Document {
           <script src={`https://www.googleoptimize.com/optimize.js?id=${process.env.G_OPTIMIZE_KEY}`} />
 
           {process.env.HOTJAR_SITE_ID && (
-            // eslint-disable-next-line react/no-danger
             <script
+              // eslint-disable-next-line react/no-danger
               dangerouslySetInnerHTML={{
                 __html: `
               (function(h,o,t,j,a,r){
