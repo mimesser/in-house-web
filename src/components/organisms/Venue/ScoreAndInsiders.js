@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { CircleSlider } from '../../atoms';
 import { Dial } from '../../molecules';
-import { Votes } from './Votes';
+import { IconBadge } from './IconBadge';
 import { spacing, calcRem, fontSize, appColors } from '../../../style';
 
 // TODO: move to venue list styles
@@ -30,12 +30,12 @@ const DialWrapper = styled.div`
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 `;
-export const ScoreAndVoters = styled(
-  ({ voteRating, voteCount, sliderSize, className, categories, categoryRatings }) => (
+export const ScoreAndInsiders = styled(
+  ({ voteRating, insidersCount, sliderSize, className, categories, categoryRatings }) => (
     <div className={className}>
       <DialWrapper>
         <Dial size={sliderSize} readonly value={voteRating} />
-        <Votes count={voteCount} iconSize={0.5} />
+        <IconBadge count={insidersCount} iconSize={0.5} />
 
         <PieWrapper>
           {categoryRatings &&
@@ -57,7 +57,7 @@ export const ScoreAndVoters = styled(
   position: relative;
   width: ${calcRem('104px')};
 
-  ${Votes} {
+  ${IconBadge} {
     display: block;
     position: relative;
     justify-content: center;

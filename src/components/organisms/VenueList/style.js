@@ -5,8 +5,8 @@ import { Card, Address, Button, Break, TransparentLinkStyle } from '../../atoms'
 import { IconInput, PokeButton } from '../../molecules';
 
 // TODO: move to molecules?
-import { ScoreAndVoters } from '../Venue/ScoreAndVoters';
-import { Votes } from '../Venue/Votes';
+import { ScoreAndInsiders } from '../Venue/ScoreAndInsiders';
+import { IconBadge } from '../Venue/IconBadge';
 
 export const Layout = styled.div`
   display: flex;
@@ -69,12 +69,12 @@ export const VenueContainer = styled(Card)`
   display: flex;
   flex-direction: row;
 
-  ${ScoreAndVoters} {
+  ${ScoreAndInsiders} {
     flex-shrink: 0;
     min-width: initial;
     margin: ${spacing.lg};
 
-    ${Votes} {
+    ${IconBadge} {
       margin-top: ${spacing.xs};
     }
   }
