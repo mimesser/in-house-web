@@ -3,7 +3,7 @@ import { rgba } from 'polished';
 
 import { cover, palette, spacing, fontSize } from '../../../../style';
 import { H1, Industry, Address, NumberLarge } from '../../../atoms';
-import { Votes } from '../Votes';
+import { IconBadge } from '../IconBadge';
 
 export const Header = styled.header`
   position: relative;
@@ -40,7 +40,7 @@ export const Header = styled.header`
     align-self: center;
   }
 
-  ${Votes} {
+  ${IconBadge} {
     align-self: flex-end;
     line-height: 1;
     margin-bottom: ${spacing.xxs};

@@ -3,7 +3,6 @@ import styled, { css } from 'styled-components';
 import { calcRem, spacing, fontSize, palette, font } from '../../../style';
 import { Card, Button, Break } from '../../atoms';
 import { PokeButton, Dial } from '../../molecules';
-import { Votes } from './Votes';
 
 export const TabTitle = styled.div`
   padding: ${spacing.xl} ${spacing.xxl};
