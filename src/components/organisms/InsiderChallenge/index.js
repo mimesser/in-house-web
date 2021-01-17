@@ -24,12 +24,12 @@ import PrivateShareButton from '../Venue/PrivateShareButton';
 import PrivateShare from '../Venue/PrivateShare';
 import { ItemTitle, ItemTime } from '../Venue/tabStyle';
 import { formatDateTime, formatRating } from '../../../utils/format';
-import { Votes } from '../Venue/Votes';
+import { IconBadge } from '../Venue/IconBadge';
 
 const InlineFlex = styled.div`
   display: flex;
 
-  ${Votes} span:last-child {
+  ${IconBadge} span:last-child {
     line-height: 1;
   }
 `;
@@ -240,7 +240,7 @@ const Form = ({
             <ItemTime>{formatDateTime(topMink.created)}</ItemTime>
             <Push />
             <InlineFlex>
-              <Votes count={topMink.voteCount} inverse iconSize={0.6} />
+              <IconBadge count={topMink.voteCount} inverse iconSize={0.6} />
               {topMink.voteCount ? (
                 <span>
                   <PaddedSpan left="md">/</PaddedSpan>

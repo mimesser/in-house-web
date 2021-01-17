@@ -26,7 +26,7 @@ import { NewMinkElected } from './NewMinkElected';
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
 import { PokeButton, IconInput } from '../../molecules';
-import { Votes } from './Votes';
+import { IconBadge } from './IconBadge';
 import { VoteButton } from './openCardStyle';
 import { Status, InputGroup } from './VoteMink/style';
 import { FlagItem } from './FlagItem';
@@ -196,7 +196,7 @@ const MinkCard = styled(Card)`
   ${ShareWrap}, ${FlagItemWrap} {
     visibility: ${({ active, topMink }) => (active && !topMink ? 'hidden' : 'visible')};
   }
-  ${Votes} > span:last-of-type {
+  ${IconBadge} > span:last-of-type {
     position: static;
   }
   ${ItemTime} {
@@ -403,7 +403,7 @@ const Mink = ({
             <ItemTime dateTime={created}>{formatDateTime(created)}</ItemTime>
             <Push />
             <ShareWrap>
-              <Votes count={voteCount} inverse={topMink} iconSize={1} />
+              <IconBadge count={voteCount} inverse={topMink} iconSize={1} />
               {myVote ? (
                 <RatingWrap>
                   /
