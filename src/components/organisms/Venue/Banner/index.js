@@ -9,7 +9,7 @@ import PrivateShare from '../PrivateShare';
 
 import { selectInDemo } from '../../../../store/demo';
 import { selectShowHelp } from '../../../../store/help';
-import { Votes } from '../Votes';
+import { IconBadge } from '../IconBadge';
 import { Address, ClearButton, H1, Icon, Industry, NumberLarge } from '../../../atoms';
 import { Header } from './style';
 import { VenueCard } from '../../VenueList/VenueCard';
@@ -52,7 +52,7 @@ const Banner = ({
     industry: { name: industry, lite } = {},
     name,
     venueInfo: { address, city, zipCode, imageUrl },
-    votesCount,
+    insidersCount,
     rating,
   },
   venue,
@@ -121,7 +121,7 @@ const Banner = ({
           </Address>
         )}
         <Push />
-        <Votes count={votesCount} inverse />
+        <IconBadge count={insidersCount} inverse />
       </div>
       <PrivateShare type="venue" renderItem={renderSharePreview} getItemTitle={getTitleForShare} />
     </Header>
