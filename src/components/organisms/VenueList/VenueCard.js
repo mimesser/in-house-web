@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { spacing, palette, calcRem, fontSize } from '../../../style';
 import { Address, HelpTip, HouseNameLarge, Break } from '../../atoms';
 import { PokeButton } from '../../molecules';
-import { ScoreAndVoters } from '../Venue/ScoreAndVoters';
+import { ScoreAndInsiders } from '../Venue/ScoreAndInsiders';
 import { VenueContainer, Main, Industry } from './style';
 
 import PrivateShareButton from '../Venue/PrivateShareButton';
@@ -53,7 +53,7 @@ const PrivateShareButtonLayout = styled.div`
 
 export const VenueCard = ({ venue = {}, showVenue, withHelp, categoryRatings }) => {
   const handleClick = useCallback(() => showVenue(venue), [venue]);
-  const { votesCount, industry, name, rating, venueInfo: { imageUrl, address, city, state, zipCode } = {} } = venue;
+  const { insidersCount, industry, name, rating, venueInfo: { imageUrl, address, city, state, zipCode } = {} } = venue;
 
   const addressBlock = venue.isPoll ? (
     <>
@@ -76,8 +76,8 @@ export const VenueCard = ({ venue = {}, showVenue, withHelp, categoryRatings }) 
     <Wrapper>
       <VenueContainer onClick={handleClick}>
         <div>
-          <ScoreAndVoters
-            voteCount={votesCount}
+          <ScoreAndInsiders
+            insidersCount={insidersCount}
             voteRating={rating}
             sliderSize={72}
             categoryRatings={categoryRatings}
