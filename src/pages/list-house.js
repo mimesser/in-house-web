@@ -14,29 +14,47 @@ const Paper = styled(Page)`
 const ActionButton = styled(Button)`
   margin-left: auto;
 `;
-const Underline = styled.span`
-  text-decoration:underline;
+const Bold = styled.span`
+  font-weight: bold;
 `;
 const HorizontalBreak = styled(Break)`
-  margin-top:0;
-  margin-bottom:3.5em;
+  margin-top: 0;
+  margin-bottom: 3.5em;
 `;
-const Description = styled.p``
+const Description = styled.p`
+  ul {
+    list-style-type: none;
+
+    li:not(:last-child) {
+      padding-bottom: 5px;
+    }
+  }
+`;
+
 function BetaList() {
   return (
     <>
       <Paper defaultHeader={false} title="In-House - List your House | Speak as a Team | Remain Untraceable">
         <Main>
-          <H1>essential?</H1>
+          <H1>essential worker?</H1>
           <HorizontalBreak />
-          <Description>until we scale, the platform is only available to essential or otherwise distressed workers as well as <Underline>hero organizations</Underline> who embrace holistic change</Description>
+          <Description>
+            during our beta trial, we will only be accepting requests from:
+            <ul>
+              <li>a) essential workers</li>
+              <li>b) those experiencing abuse or mistreatment</li>
+              <li>
+                c) <Bold>hero organizations</Bold> open to holistic change
+              </li>
+            </ul>
+          </Description>
         </Main>
         <Commands>
           <Link href="/houses" passHref>
             <BackButton secondary>cancel</BackButton>
           </Link>
           <Link href="/feedback?subjectIndex=2&redirect=/houses">
-            <ActionButton icon="arrow-right">be a hero</ActionButton>
+            <ActionButton icon="arrow-right">list your workplace</ActionButton>
           </Link>
         </Commands>
       </Paper>
