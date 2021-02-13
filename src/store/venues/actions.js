@@ -205,9 +205,9 @@ export const setSelectedTagTargetRate = (selectedTagTargetRate) => {
   };
 };
 
-export const rateTag = (newTagId) => ({
+export const rateTag = (targetRate) => ({
   type: actionTypes.RATE_TAG,
-  payload: { newTagId },
+  payload: { targetRate },
 });
 
 export const showRateTagConfirmation = (value) => ({

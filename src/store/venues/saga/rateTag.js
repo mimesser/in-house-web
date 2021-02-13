@@ -5,18 +5,16 @@ import {
   selectIsActiveInsider,
   selectSelectedTag,
   selectSelectedVenue,
-  selectSelectedTagTargetValue,
 } from '../selectors';
-import { showRateTagConfirmation, setSelectedTag, updateVenueRate, setRateInProgress } from '../actions';
+import { setSelectedTag, updateVenueRate, setRateInProgress } from '../actions';
 import { handleForbiddenResponse } from './handleForbiddenResponse';
 import { showInsiderChallenge } from './showInsiderChallenge';
 import { reloadVenueRateTags } from './loadVenueRateTags';
-import { CONFIRMATION_INTERVAL } from './consts';
+import { CONFIRMATION_INTERVAL_SHORT as CONFIRMATION_INTERVAL } from './consts';
 
-export function* rateTag({ payload: { newTagId } }) {
+export function* rateTag({ payload: { targetRate } }) {
   const tag = yield select(selectSelectedTag);
-  const targetRate = yield select(selectSelectedTagTargetValue);
-  if (targetRate && tag && (!tag.userRate || (tag.userRate && Math.abs(tag.userRate - targetRate) > 0.1))) {
+  if (targetRate && tag) {
     yield put(setRateInProgress(tag.definitionId));
     const { id: venueId } = yield select(selectSelectedVenue);
     const isActiveInsider = yield select(selectIsActiveInsider);
@@ -32,7 +30,7 @@ export function* rateTag({ payload: { newTagId } }) {
 
     // TODO remove round to int
     const {
-      data: { venueRateTag, venue },
+      data: { venue },
     } = yield call(api.post, `venues/${venueId}/rateTag/${tag.definitionId}/rate`, { rate: targetRate });
 
     try {
