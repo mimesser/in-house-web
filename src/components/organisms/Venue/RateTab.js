@@ -86,7 +86,7 @@ const Tag = memo(({
   const isSelected = selectedTag && selectedTag.definitionId === definitionId; 
   const open = useCallback(
     () => setSelectedTag(definitionId),
-    [definitionId]
+    []
   );
   const changeRate = useCallback(
     debounce(value => {
@@ -97,7 +97,8 @@ const Tag = memo(({
   );
   const card = (
     <CellWrapper
-      onClick={rateInProgress && selectedTag ? undefined : open}
+      onMouseDown={rateInProgress && selectedTag ? undefined : open}
+      onTouchStart={rateInProgress && selectedTag ? undefined : open}
       selectedTag={selectedTag}
       isSelected={isSelected}
     >
@@ -105,7 +106,7 @@ const Tag = memo(({
         title={name}
         onChange={value => changeRate(value)}
         onSlideStart={() => setSelectedTag(definitionId)}
-        onSlideEnd={() => rateTag(definitionId)}
+        onSlideEnd={rateTag}
         value={getTeamRateIfRated(userRate, voteRating)}
         userRate={userRate}
         voteCount={voteCount}
@@ -113,11 +114,15 @@ const Tag = memo(({
         fillColor={category && appColors[category.color]}
         selectedTag={selectedTag}
         inProgress={inProgress}
+        rateInProgress={rateInProgress}
       >
         {expanded && inProgress ? <StyledLoader black /> : null}
       </RateSlider>
       {!expanded && (
-        <ShareLayout>
+        <ShareLayout
+          onMouseDown={(e) => e.stopPropagation()}
+          onTouchStart={(e) => e.stopPropagation()}
+        >
           <PrivateShareButton id={definitionId} type="rate" />
         </ShareLayout>
       )}

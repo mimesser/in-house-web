@@ -37,7 +37,7 @@ export default function* venuesSaga() {
     takeLeading(actionTypes.CREATE_MINK, withErrorReporter(createMink)),
     takeLatest(actionTypes.SET_SELECTED_MINK, withErrorReporter(watchMinkAnswerAttempts)),
     takeLeading(actionTypes.VOTE_MINK, withErrorReporter(voteMink)),
-    takeLeading(actionTypes.RATE_TAG, withErrorReporter(rateTag)),
+    takeLatest(actionTypes.RATE_TAG, withErrorReporter(rateTag)),
     takeLatest(actionTypes.LOAD_POSTS, withErrorReporter(loadVenuePosts)),
     takeLatest(actionTypes.LOAD_RATES, withErrorReporter(loadVenueRateTags)),
     takeLeading(actionTypes.CREATE_POST, withErrorReporter(createPost)),
