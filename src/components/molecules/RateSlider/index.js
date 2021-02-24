@@ -6,6 +6,7 @@ import { CircleSlider, NumberLarge, NumberSmall, Icon, Slider, SlidingValue } fr
 import { fontSize, font, palette, theme } from '../../../style';
 import { useRef } from 'react';
 import { getClientPosition } from '../../atoms/Slider/utils';
+import { RateCategory } from '../RateCategory';
 
 const FONT_RATIO = 3.6;
 
@@ -188,6 +189,7 @@ const BaseRateSlider = ({
   selectedTag,
   inProgress,
   rateInProgress,
+  targetRate,
   ...sliderProps
 }) => {
   const { readonly: decimal, size, padd, fillColor = palette.darkGray } = sliderProps;
@@ -198,7 +200,9 @@ const BaseRateSlider = ({
   const changeRate = (e) => {
     const rect = selectedRef.current.getBoundingClientRect();
     const clientPos = getClientPosition(e);
+    if (clientPos.x < 0 || clientPos.x > rect.width) return;
     const rate = ((clientPos.x/rect.width)*10).toFixed(1);
+    
     setUserValue(rate);
     onChange(rate);
   };
@@ -207,29 +211,20 @@ const BaseRateSlider = ({
     setValue(initialValue);
   }, [initialValue]);
 
-  function preventDefault(e) {
-    if (e.cancelable) {
-      e.preventDefault();
-    }
-  }
-
-  function handleChange(userRate) {
-    setUserValue(userRate);
-    if (onChange) {
-      onChange(userRate);
-    }
-  }
+  useEffect(() => {
+    setUserValue(targetRate);
+  }, [targetRate]);
 
   return (
     <>
       <Wrapper
         ref={selectedRef}
-        onMouseDown={!rateInProgress ? (e) => changeRate(e) : undefined}
+        // onMouseDown={!rateInProgress ? (e) => changeRate(e) : undefined}
         onMouseMove={expanded && !inProgress ? (e) => changeRate(e) : undefined}
         onMouseUp={expanded && !inProgress ? (e) => changeRate(e) : undefined}
         onClick={expanded && !inProgress ? () => onSlideEnd(userValue) : undefined}
 
-        onTouchStart={!rateInProgress ? (e) => changeRate(e) : undefined}
+        // onTouchStart={!rateInProgress ? (e) => changeRate(e) : undefined}
         onTouchMove={expanded && !inProgress ? (e) => changeRate(e) : undefined}
         onTouchEnd={expanded && !inProgress ? () => onSlideEnd(userValue) : undefined}
       >

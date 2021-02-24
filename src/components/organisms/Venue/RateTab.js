@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useState } from 'react';
+import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { createStructuredSelector } from 'reselect';
@@ -24,6 +24,7 @@ import PrivateShareButton from './PrivateShareButton';
 import { RateSlider, PokeButton } from '../../molecules';
 import { RateCategory } from '../../molecules/RateCategory';
 import { debounce, isNil } from 'lodash';
+import { getClientPosition } from '../../atoms/Slider/utils';
 
 const getTeamRateIfRated = (userRate, voteRating) => (isNil(userRate) ? undefined : voteRating);
 
@@ -34,7 +35,7 @@ const ShareLayout = styled.div`
   right: 30px;
   width: 32px;
   height: 97px;
-  z-index: 9;
+  z-index: 2;
   color: #d0d0d0;
   ${PokeButton} {
     color: #d0d0d0;
@@ -81,26 +82,48 @@ const Tag = memo(({
   category,
   selectedTag,
 }) => {
-  // const [rateValue, setRateValue] = useState(userRate);
+  const [rateValue, setRateValue] = useState(userRate);
   const inProgress = rateInProgress === definitionId;
   const isSelected = selectedTag && selectedTag.definitionId === definitionId; 
-  const open = useCallback(
-    () => setSelectedTag(definitionId),
-    []
-  );
+  const isScrolling = useRef(false);
+  const selectedRef = useRef();
+  const open = useCallback((e) => {
+    const rate = getRate(e);
+    changeRate(rate);
+    setSelectedTag(definitionId);
+  }, []);
+  const handleTouchStart = useCallback((e) => {
+    e.persist();
+    document.addEventListener('scroll', () => { isScrolling.current = true });
+        
+    setTimeout(() => {
+      if (!isScrolling.current) open(e);
+      
+      document.removeEventListener('scroll', () => { isScrolling.current = true });
+      isScrolling.current = false;
+    }, 200);
+  }, []);
+  const getRate = useCallback((e) => {
+    const rect = selectedRef.current.getBoundingClientRect();
+    const clientPos = getClientPosition(e);
+    const rate = ((clientPos.x/rect.width)*10).toFixed(1);
+
+    return rate;
+  }, []);
   const changeRate = useCallback(
     debounce(value => {
-      // setRateValue(value);
+      setRateValue(value);
       setSelectedTagTargetRate(Math.round(value));
-    }, 300),
-    [],
+    }, 200), []
   );
   const card = (
     <CellWrapper
       onMouseDown={rateInProgress && selectedTag ? undefined : open}
-      onTouchStart={rateInProgress && selectedTag ? undefined : open}
+      onTouchStart={rateInProgress && selectedTag ? undefined : handleTouchStart}
+      onContextMenu={(e) => e.preventDefault()}
       selectedTag={selectedTag}
       isSelected={isSelected}
+      ref={selectedRef}
     >
       <RateSlider
         title={name}
@@ -115,6 +138,7 @@ const Tag = memo(({
         selectedTag={selectedTag}
         inProgress={inProgress}
         rateInProgress={rateInProgress}
+        targetRate={rateValue}
       >
         {expanded && inProgress ? <StyledLoader black /> : null}
       </RateSlider>
