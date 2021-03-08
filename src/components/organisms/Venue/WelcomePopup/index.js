@@ -51,7 +51,7 @@ export const WelcomePopup = ({ skipWelcome, dismissWelcomeForm, venue, categorie
   const [opened, setOpened] = useState(null);
 
   useEffect(() => {
-    setTimeout(() => setOpened(!skipWelcome), 4000);
+    setTimeout(() => setOpened(!skipWelcome), 2000);
   }, []);
 
   const renderVenueSharePreview = useCallback(() => {
