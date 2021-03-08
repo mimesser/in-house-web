@@ -32,9 +32,9 @@ const Links = styled.div`
 `;
 
 const About = () => (
-  <Page whiteHead overlayBack imageBack>
+  <Page whiteHead imageBack noPadd>
     <Main>
-      <H1>Org 2.0</H1>
+      <H1>org 2.0</H1>
       <Break />
       <H2 as="p">
         we are employees, employers, management and advisors. we have seen the wars, the conspiracy theories, the

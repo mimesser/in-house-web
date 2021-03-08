@@ -20,4 +20,7 @@ export const Brand = styled(({ className }) => (
 ))`
   word-spacing: ${spacing.xs};
   text-transform: none;
+  word-break: keep-all;
+  width: 140px;
+  min-width: 140px;
 `;

@@ -16,7 +16,6 @@ export function* postFeedback({ payload: { subject, message, email, redirectLink
 
   try {
     yield put(setFeedbackLoading());
-    yield put(setFeedbackError(`Sending ${message} [${subject}] to: ${email}`));
     yield call(api.post, 'email/contactus', {
       subject,
       message: message || 'null',
