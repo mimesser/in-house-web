@@ -24,7 +24,7 @@ const CloseIcon = styled(Icon).attrs(() => ({
   }
 `;
 
-const duration = 300;
+const duration = 700;
 
 const MENU_HEIGHT = calcRem('322px');
 const sidebarTransitionStyles = {
@@ -89,8 +89,10 @@ export const DrawerMenu = withRouter(({ isOpen, router, closeMenu, ...props }) =
     trackMouse: true,
   });
   return (
+    /* eslint-disable react/jsx-props-no-spreading */
     <Transition in={isOpen} timeout={duration} {...handlers}>
       {(state) => (
+        /* eslint-disable react/jsx-props-no-spreading */
         <div {...handlers}>
           {
             // eslint-disable-next-line react/jsx-props-no-spreading
