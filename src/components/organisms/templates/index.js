@@ -1,1 +1,1 @@
-export { Page, Container } from './Page';
+export { Page, Container, BackgroundImage } from './Page';

@@ -1,41 +1,42 @@
 import React from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
-import { TransparentLinkStyle, Button, Break, Patent, Copyright } from '../../../components/atoms';
-import { appBackground, spacing, breakpoints, font, fontSize, palette } from '../../../style';
+import { Break, Patent, Copyright } from '../../atoms';
+import { appBackground, spacing, breakpoints, fontSize, palette, font } from '../../../style';
+
 const Layout = styled.div`
   background: ${appBackground};
-  width: 100%;
-  padding-top: ${spacing.sm};
+  padding: ${spacing.xl};
 `;
+
+const Wrapper = styled.div`
+  margin: 0 auto;
+  display: block;
+  width: 100%;
+
+  @media screen and (min-width: ${breakpoints.lg}) {
+    width: ${breakpoints.md};
+    display: flex;
+    justify-content: space-between;
+  }
+`;
+
 const Links = styled.div`
   margin-top: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-top: ${spacing.xl};
-  margin-left: ${spacing.sm};
-  > a {
-  }
 
-  hr {
-    color: black;
-  }
   ${Break} {
-    color: black;
-    width: 90%;
-    margin-left: 5vw;
+    color: ${palette.lightGray};
     height: 1px;
-    opacity: 0.2;
+    width: auto;
   }
 `;
+
 const A = styled.a`
   outline: none;
   text-decoration: none;
   cursor: pointer;
   font-size: ${fontSize.sm};
-  padding: ${spacing.sm} 0 ${spacing.sm} ${spacing.lg};
-  // margin-top: ${spacing.sm};
+  padding: ${spacing.sm} 0;
   display: block;
   color: ${palette.black};
   &:hover {
@@ -43,34 +44,54 @@ const A = styled.a`
   }
 `;
 
+const MobileBreak = styled(Break)`
+  @media screen and (min-width: ${breakpoints.lg}) {
+    display: none;
+  }
+`;
+
+const CopyrightLine = styled(A)`
+  max-width: ${breakpoints.md};
+  margin: 0 auto;
+  ${font.bold}
+
+  @media screen and (min-width: ${breakpoints.lg}) {
+    text-align: center;
+  }
+`;
+
 export const Footer = () => (
   <Layout>
     <Links>
-      <Link href="/list-house" passHref prefetch={false}>
-        <A>beta-list organisation</A>
-      </Link>
-      <Link href="#howitworks" passHref prefetch={false}>
-        <A>how it works</A>
-      </Link>
-      <Link href="/polls" passHref prefetch={false}>
-        <A>faqs</A>
-      </Link>
-      <Link href="/about" passHref prefetch={false}>
-        <A>about</A>
-      </Link>
-
+      <Wrapper>
+        <div>
+          <Link href="/list-house" passHref prefetch={false}>
+            <A>distressed worker and progressive org?</A>
+          </Link>
+          <Link href="#howitworks" passHref prefetch={false}>
+            <A>how it works</A>
+          </Link>
+          <Link href="/polls" passHref prefetch={false}>
+            <A>faqs</A>
+          </Link>
+          <Link href="/about" passHref prefetch={false}>
+            <A>about</A>
+          </Link>
+        </div>
+        <MobileBreak />
+        <div>
+          <Link href="/terms" passHref prefetch={false}>
+            <A>terms of service</A>
+          </Link>
+          <Link href="/feedback" passHref prefetch={false}>
+            <A>contact</A>
+          </Link>
+        </div>
+      </Wrapper>
       <Break />
-
-      <Link href="/terms" passHref prefetch={false}>
-        <A>terms of service</A>
-      </Link>
-      <Link href="/feedback" passHref prefetch={false}>
-        <A>contact</A>
-      </Link>
-      <Break />
-      <A>
-        <Copyright></Copyright> | <Patent></Patent>
-      </A>
+      <CopyrightLine>
+        <Copyright /> | <Patent />
+      </CopyrightLine>
     </Links>
   </Layout>
 );
