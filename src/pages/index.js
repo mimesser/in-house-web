@@ -8,7 +8,7 @@ import styled, { keyframes, css } from 'styled-components';
 import { createStructuredSelector } from 'reselect';
 import { Page, HowItWorks, Container } from '../components/organisms';
 import { Button, H1, H2, H3, Break, Icon, ClearButton, TransparentLinkStyle, Loader } from '../components/atoms';
-import { CountDown } from '../components/atoms/CountDown/CountDown';
+import { CountDown } from '../components/atoms/CountDown';
 import {
   spacing,
   palette,
