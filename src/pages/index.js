@@ -8,6 +8,7 @@ import styled, { keyframes, css } from 'styled-components';
 import { createStructuredSelector } from 'reselect';
 import { Page, HowItWorks, Container } from '../components/organisms';
 import { Button, H1, H2, H3, Break, Icon, ClearButton, TransparentLinkStyle, Loader } from '../components/atoms';
+import { CountDown } from '../components/atoms/CountDown/CountDown';
 import {
   spacing,
   palette,
@@ -688,7 +689,8 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
 
         <NotificationSection id="getNotification">
           <div>
-            <H1 ref={mainTitleRef}>&nbsp;</H1>
+            <CountDown timeTillDate="06 01 2021, 0:00 am" timeFormat="MM DD YYYY, h:mm a" />
+            {/* <H1 ref={mainTitleRef}>&nbsp;</H1> */}
             <Link href="/feedback">
               <BetaLink icon="arrow-right" wide outline>
                 get notified
