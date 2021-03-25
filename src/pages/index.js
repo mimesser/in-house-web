@@ -689,7 +689,7 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
 
         <NotificationSection id="getNotification">
           <div>
-            <CountDown timeTillDate="06 01 2021, 0:00 am" timeFormat="MM DD YYYY, h:mm a" />
+            <CountDown timeTillDate="09 01 2021, 0:00 am" timeFormat="MM DD YYYY, h:mm a" />
             {/* <H1 ref={mainTitleRef}>&nbsp;</H1> */}
             <Link href="/feedback">
               <BetaLink icon="arrow-right" wide outline>
