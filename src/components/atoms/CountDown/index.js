@@ -48,7 +48,7 @@ export const CountDown = (props) => {
       const hours = countdown.format('HH');
       const minutes = countdown.format('mm');
       const seconds = countdown.format('ss');
-
+      console.log(countdown);
       setDays(days);
       setHours(hours);
       setMinutes(minutes);
