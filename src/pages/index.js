@@ -7,7 +7,7 @@ import styled, { keyframes, css } from 'styled-components';
 import { createStructuredSelector } from 'reselect';
 import { Page, HowItWorks, Container } from '../components/organisms';
 import { CountDown } from '../components/atoms/CountDown';
-import { H1, H2, H3, Icon, ClearButton, TransparentLinkStyle, Loader, Dropdown } from '../components/atoms';
+import { H1, H2, H3, Icon, ClearButton, TransparentLinkStyle, Dropdown } from '../components/atoms';
 import { spacing, palette, breakpoints, appColors, font, device, appBackground } from '../style';
 import { BetaLink, BetaDesc } from '../components/organisms/BetaChallange';
 
@@ -312,10 +312,6 @@ const MainSection = styled.section`
       font-size: 32px;
     }
 
-    ${Dropdown} {
-      width: 680px;
-    }
-
     ul {
       padding: 0 ${spacing.xxl};
 
@@ -494,19 +490,15 @@ const Landing = ({ venues, loading, initVenuesPage, loadAggregateData }) => {
               <H1>of insiders only.</H1>
             </li>
             <li>
-              {venues ? (
-                <Dropdown
-                  value={venues && venues.find((v) => v.label === selectedValue)}
-                  options={venues}
-                  onInputChange={(e) => setSearchValue(e)}
-                  onChange={(e) => e && setSelectedValue(e.name)}
-                  onFocus={() => setOrgFocus(true)}
-                  onBlur={() => setOrgFocus(false)}
-                  searchValue={searchValue}
-                />
-              ) : (
-                <Loader big white />
-              )}
+              <Dropdown
+                value={venues && venues.find((v) => v.label === selectedValue)}
+                options={venues}
+                onInputChange={(e) => setSearchValue(e)}
+                onChange={(e) => e && setSelectedValue(e.name)}
+                onFocus={() => setOrgFocus(true)}
+                onBlur={() => setOrgFocus(false)}
+                searchValue={searchValue}
+              />
             </li>
           </ul>
           {!orgFocus && (
