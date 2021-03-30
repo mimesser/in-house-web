@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import Select from 'react-select';
 import Link from 'next/link';
 
-import { appColors } from '../../../style';
+import { appColors, breakpoints } from '../../../style';
 import { Icon } from '..';
 import { withNoSSR } from '../NoSSR';
 
@@ -68,6 +68,7 @@ const NoOptionsDiv = styled.div`
       }
 
       ${Link} > div:hover {
+        cursor: default;
         background-color: ${appColors.gray2};
       }
     }
@@ -78,8 +79,15 @@ const NoOptionsDiv = styled.div`
 const CustomSelect = styled(withNoSSR(Select)).attrs(() => ({
   classNamePrefix: 'react-select',
 }))`
+  opacity: ${({ options }) => (options ? 1 : 0)};
+  transition: opacity 1s;
+
   .react-select__input input {
     text-transform: lowercase;
+  }
+
+  @media (min-width: ${breakpoints.md}) {
+    width: 680px;
   }
 `;
 
@@ -95,7 +103,11 @@ const filterVenues = (option, selectedValue) => {
 const formatOptionLabel = (option) => (
   <OptionLabel>
     <div>
-      {option.name}&nbsp;<small>{option.venueInfo.address}</small>
+      {option.name}&nbsp;
+      <small>
+        {option.venueInfo.address}
+        {option.venueInfo.city && `, ${option.venueInfo.city}`}
+      </small>
     </div>
     <div>
       <Icon icon="winky-circle" size={1.2} />
@@ -118,8 +130,9 @@ const noOptionsMessage = () => (
 );
 
 /* eslint-disable react/jsx-props-no-spreading */
-export const Dropdown = ({ searchValue, ...props }) => (
+export const Dropdown = ({ options, searchValue, ...props }) => (
   <CustomSelect
+    options={options}
     components={{
       DropdownIndicator: () => null,
       Placeholder: () => (
