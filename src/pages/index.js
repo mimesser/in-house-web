@@ -1,40 +1,19 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-
-import Router, { withRouter } from 'next/router';
+import Router from 'next/router';
 import Link from 'next/link';
 import styled, { keyframes, css } from 'styled-components';
 
 import { createStructuredSelector } from 'reselect';
 import { Page, HowItWorks, Container } from '../components/organisms';
-import { Button, H1, H2, H3, Break, Icon, ClearButton, TransparentLinkStyle, Loader } from '../components/atoms';
 import { CountDown } from '../components/atoms/CountDown';
-import {
-  spacing,
-  palette,
-  breakpoints,
-  appColors,
-  font,
-  fontSize,
-  device,
-  onDesktop,
-  appBackground,
-  mobileHeight,
-  mobileWidth,
-} from '../style';
-import { version } from '../../package.json';
+import { H1, H2, H3, Icon, ClearButton, TransparentLinkStyle, Loader, Dropdown } from '../components/atoms';
+import { spacing, palette, breakpoints, appColors, font, device, appBackground } from '../style';
 import { BetaLink, BetaDesc } from '../components/organisms/BetaChallange';
 
 import { Footer } from '../components/organisms/Footer';
 
-import {
-  selectInsiderChallengeForm,
-  selectVenues,
-  selectPolls,
-  selectSelectedPoll,
-  initVenuesPage,
-  selectLoadingVenues,
-} from '../store/venues';
+import { selectVenues, initVenuesPage, selectLoadingVenues } from '../store/venues';
 import { selectEsgCategories, loadAggregateData } from '../store/aggregate';
 
 const CurrentSize = styled.div`
@@ -250,7 +229,9 @@ const MainSection = styled.section`
         ${font.bold};
       }
 
-      animation: ${Bounce} 20s infinite ease-in-out both;
+      animation: ${Bounce} 26s infinite ease-in-out both;
+      ${({ orgFocus }) => orgFocus && 'animation: none;'}
+      transition: transform 1s;
 
       &:first-child {
         animation-delay: 0s;
@@ -281,6 +262,19 @@ const MainSection = styled.section`
       }
       &:nth-child(10) {
         animation-delay: 18s;
+      }
+      &:nth-child(11) {
+        animation-delay: 20s;
+      }
+      &:last-child {
+        animation-delay: 22s;
+        ${({ orgFocus }) => orgFocus && 'transform: translateY(-50vh);'}
+      }
+      &:last-child:focus {
+        font-size: 50px;
+      }
+      &:not(:last-child) {
+        ${({ orgFocus }) => orgFocus && 'transform: translateY(-50vh) scaleY(0);'}
       }
     }
   }
@@ -316,6 +310,10 @@ const MainSection = styled.section`
   @media (min-width: ${breakpoints.md}) {
     ${H1} {
       font-size: 32px;
+    }
+
+    ${Dropdown} {
+      width: 680px;
     }
 
     ul {
@@ -403,16 +401,6 @@ const HowToSection = styled.section`
   }
 `;
 
-const VersionFooter = styled.footer`
-  position: absolute;
-  right: 20px;
-  top: 70vh;
-  ${onDesktop(`top: 85vh`)};
-
-  text-align: right;
-  color: ${palette.lightGray};
-`;
-
 const ScrollPage = styled(Page)`
   scroll-snap-type: y proximity;
   scroll-padding: 50%;
@@ -438,112 +426,12 @@ const CloseIcon = styled(Icon).attrs(() => ({
   }
 `;
 
-const VenueLine = styled.div.attrs(({ venue }) => {
-  const { votesCount, industry, name, rating, venueInfo: { imageUrl, address, city, state, zipCode } = {} } = venue;
-  return {
-    children: (
-      <>
-        <H3>{name}</H3>
-        <address>{address}</address>
-
-        <Icon icon="winky-circle" color="darkGrey" size={1.2} />
-      </>
-    ),
-  };
-})`
-  display: flex;
-  justify-content: space-between
-  background-color: ${palette.text};
-  background: ${palette.text};
-  width: 100%;
-  height: 35px;
-  margin:0;
-  padding: ${spacing.sm};x
-  align-items: baseline;
-
-  align-items: flex-start;
-  ${H3} {
-    ${font.bold};
-    font-size: ${fontSize.sm};
-    color: ${palette.lightGray};
-
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    height: 100%;
-    line-height: ${fontSize.md};
-    margin-right: ${spacing.sm};
-  }
-  address {
-    color: ${palette.mediumGray};
-    font-size: ${fontSize.xs};
-    flex-grow: 1;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    text-align: left;
-    vertical-align: middle
-    height: 100%;
-    line-height: ${fontSize.md};
-  }
-  ${Icon} {
-
-    min-width: 30px;
-    right: 0;
-    float: right;
-    margin-left: auto;
-    align-items: flex-end;
-  }
-`;
-
-const ListOrg = styled(Button)`
-  ${font.primary};
-  background: ${palette.gray4};
-
-  margin-top: ${spacing.xs};
-  min-height: ${spacing.md};
-  border: none;
-`;
-
-const FocusHandle = styled.div`
-  margin-top: -100px;
-`;
-const Placeholder = styled.span`
-  color: ${palette.lightGray};
-  margin-left: ${spacing.sm};
-  margin-right: -95%;
-`;
-const NoResults = styled.span.attrs(() => ({
-  children: 'no results',
-}))`
-  color: ${appColors.gray4};
-  margin: ${spacing.sm};
-  padding-top: ${spacing.md};
-`;
-const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateData }) => {
-  const [videoReady, setVideoReady] = useState(false);
-  const [filter, setFilter] = useState(false);
-  const onVideoReady = () => {
-    setVideoReady(true);
-  };
-
-  const [searchOpened, setSearchOpened] = useState(false);
-  const showVenue = useCallback(
-    (venue) => {
-      console.log('show:', { venue, filter });
-      const filterValue = filter || '';
-      const query = venue && venue.name ? venue.name : filterValue;
-      Router.push(`/houses?q=${query}`, `/houses?q=${query}`, { shallow: true });
-    },
-    [filter],
-  );
-
+const Landing = ({ venues, loading, initVenuesPage, loadAggregateData }) => {
   const scrollMenu = (id = 'howitworks') => {
-    console.log('# scroll menu');
     setTimeout(() => {
       const element = document.getElementById(id);
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        element.scrollIntoView({ behavior: 'smooth', block: 'end' });
       }
     }, 100);
   };
@@ -553,117 +441,79 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
     initVenuesPage();
   }, [loading]);
 
-  const getVenues = () => {
-    if (loading) {
-      return [{ label: <Loader big />, value: 'loading' }];
-    }
+  const [orgFocus, setOrgFocus] = useState(false);
 
-    return venues.map((v, i) => {
-      return { label: <VenueLine venue={v} />, value: v };
-    });
-  };
-  // const filterVenues = useCallback(
-  // (option, inputValue) => {
-  // const { label, value } = option;
+  useEffect(() => {
+    if (orgFocus) scrollMenu('mainSection');
+  }, [orgFocus]);
 
-  // if (inputValue && inputValue.length > 0)
-  // return value.name && value.name.toLocaleLowerCase().includes(inputValue.toLocaleLowerCase());
-  // },
-  // [filter, setFilter],
-  // );
+  const [selectedValue, setSelectedValue] = useState('');
+  const [searchValue, setSearchValue] = useState('');
 
-  const select2Styles = {
-    option: (provided, state) => ({
-      ...provided,
-      bockground: palette.mediumGray,
-      margin: '2px',
-      padding: '0px',
-    }),
-    control: (styles) => ({
-      ...styles,
-      ...{
-        margin: '0px',
-        padding: '0px',
-      },
-    }),
-    container: (styles) => ({
-      ...styles,
+  useEffect(() => {
+    if (selectedValue) Router.push(`/houses?q=${selectedValue}`, `/houses?q=${selectedValue}`, { shallow: true });
+  }, [selectedValue]);
 
-      margin: '0px',
-      padding: '0px',
-    }),
-    menuList: (styles) => ({
-      ...styles,
-      margin: '0px',
-      padding: '0px',
-    }),
-    valueContainer: (styles) => ({
-      ...styles,
-      margin: '0px',
-      padding: '0px',
-      paddingLeft: '10px',
-    }),
-  };
-
-  const focusRef = useRef(null);
-  const mainTitleRef = useRef(null);
-  const onToggleMenu = useCallback(
-    (value) => {
-      setSearchOpened(value);
-
-      setTimeout(() => {
-        const ref = value ? focusRef : mainTitleRef;
-        if (ref && ref.current) {
-          ref.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-        if (!value && filter && filter.length > 0) {
-          // on menu close open houses
-          showVenue(false);
-        }
-      }, 100);
-    },
-    [focusRef, mainTitleRef, filter],
-  );
   return (
     <ScrollPage whiteHead videoBack noPadd>
       <Main>
         {/* <CurrentSize /> */}
-        <MainSection id="mainSection">
+        <MainSection id="mainSection" orgFocus={orgFocus}>
           <ul>
             <li>
-              <H1>it’s time for the team</H1>
+              <H1>it's time for the team</H1>
             </li>
             <li>
               <H1>to be able to speak</H1>
             </li>
             <li>
-              <H1>and use the power of numbers</H1>
+              <H1>honestly with leadership</H1>
             </li>
             <li>
-              <H1>to hold leadership accountable</H1>
+              <H1>without fear of reprisal</H1>
             </li>
             <li>
-              <H1>100% anonymously</H1>
+              <H1>about the impact of decisions</H1>
             </li>
             <li>
-              <H1>on the environment</H1>
+              <H1>on people</H1>
             </li>
             <li>
-              <H1>on public policy</H1>
+              <H1>the planet</H1>
             </li>
             <li>
-              <H1>and on the dignity of workers</H1>
+              <H1>and profits</H1>
             </li>
             <li>
-              <H1>whose world?</H1>
+              <H1>through a 100%</H1>
             </li>
             <li>
-              <H1>our world.</H1>
+              <H1>anonymous consensus</H1>
+            </li>
+            <li>
+              <H1>of insiders only.</H1>
+            </li>
+            <li>
+              {venues ? (
+                <Dropdown
+                  value={venues && venues.find((v) => v.label === selectedValue)}
+                  options={venues}
+                  onInputChange={(e) => setSearchValue(e)}
+                  onChange={(e) => e && setSelectedValue(e.name)}
+                  onFocus={() => setOrgFocus(true)}
+                  onBlur={() => setOrgFocus(false)}
+                  searchValue={searchValue}
+                />
+              ) : (
+                <Loader big white />
+              )}
             </li>
           </ul>
-          <ScrollButton id="scrollButton" onClick={() => scrollMenu('getNotification')}>
-            <CloseIcon />
-          </ScrollButton>
+          {!orgFocus && (
+            <ScrollButton id="scrollButton" onClick={() => scrollMenu('getNotification')}>
+              <CloseIcon />
+            </ScrollButton>
+          )}
         </MainSection>
 
         <HowToSection id="howitworks">
@@ -723,4 +573,5 @@ const mapDispatch = {
   initVenuesPage,
   loadAggregateData,
 };
+
 export default connect(mapStateToProps, mapDispatch)(Landing);
