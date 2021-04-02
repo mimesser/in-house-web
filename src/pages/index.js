@@ -268,13 +268,13 @@ const MainSection = styled.section`
       }
       &:last-child {
         animation-delay: 22s;
-        ${({ orgFocus }) => orgFocus && 'transform: translateY(-50vh);'}
+        ${({ orgFocus }) => orgFocus && 'transform: translateY(-60vh);'}
       }
       &:last-child:focus {
         font-size: 50px;
       }
       &:not(:last-child) {
-        ${({ orgFocus }) => orgFocus && 'transform: translateY(-50vh) scaleY(0);'}
+        ${({ orgFocus }) => orgFocus && 'transform: translateY(-60vh) scaleY(0);'}
       }
     }
   }
@@ -408,7 +408,7 @@ const ScrollPage = styled(Page)`
 `;
 
 const ScrollButton = styled(ClearButton)`
-  margin-top: -110px;
+  padding: 40px;
   align-self: center;
 `;
 
@@ -429,7 +429,7 @@ const Landing = ({ venues, loading, initVenuesPage, loadAggregateData }) => {
       if (element) {
         element.scrollIntoView({ behavior: 'smooth', block: 'end' });
       }
-    }, 100);
+    }, 300);
   };
 
   useEffect(() => {
@@ -440,7 +440,7 @@ const Landing = ({ venues, loading, initVenuesPage, loadAggregateData }) => {
   const [orgFocus, setOrgFocus] = useState(false);
 
   useEffect(() => {
-    if (orgFocus) scrollMenu('mainSection');
+    if (orgFocus) scrollMenu('header');
   }, [orgFocus]);
 
   const [selectedValue, setSelectedValue] = useState('');
@@ -454,7 +454,7 @@ const Landing = ({ venues, loading, initVenuesPage, loadAggregateData }) => {
     <ScrollPage whiteHead videoBack noPadd>
       <Main>
         {/* <CurrentSize /> */}
-        <MainSection id="mainSection" orgFocus={orgFocus}>
+        <MainSection orgFocus={orgFocus}>
           <ul>
             <li>
               <H1>it's time for the team</H1>
