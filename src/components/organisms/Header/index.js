@@ -112,7 +112,7 @@ const IconLink = ({ icon, href }) => (
 );
 
 export const Header = withRouter(({ openMenu, white, noPadd, router }) => (
-  <Layout white={white} noPadd={noPadd}>
+  <Layout white={white} noPadd={noPadd} id="header">
     <div>
       <Brand />
       <Menu>

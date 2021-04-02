@@ -29,6 +29,10 @@ const customStyles = {
     padding: 0,
     background: appColors.gray4,
   }),
+  input: (styles) => ({
+    ...styles,
+    fontSize: '16px',
+  }),
 };
 
 const OptionLabel = styled.span`
