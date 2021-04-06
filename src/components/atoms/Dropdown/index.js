@@ -104,13 +104,13 @@ const filterVenues = (option, selectedValue) => {
   return null;
 };
 
-const formatOptionLabel = (option) => (
+const formatOptionLabel = ({ name, venueInfo }) => (
   <OptionLabel>
     <div>
-      {option.name}&nbsp;
+      {name}&nbsp;
       <small>
-        {option.venueInfo.address}
-        {option.venueInfo.city && `, ${option.venueInfo.city}`}
+        {venueInfo?.address}
+        {venueInfo && `, ${venueInfo.city}`}
       </small>
     </div>
     <div>
