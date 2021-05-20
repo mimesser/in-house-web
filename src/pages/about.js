@@ -32,9 +32,9 @@ const Links = styled.div`
 `;
 
 const About = () => (
-  <Page whiteHead overlayBack imageBack>
+  <Page whiteHead imageBack noPadd>
     <Main>
-      <H1>Org 2.0</H1>
+      <H1>org 2.0</H1>
       <Break />
       <H2 as="p">
         we are employees, employers, management and advisors. we have seen the wars, the conspiracy theories, the
@@ -43,6 +43,7 @@ const About = () => (
         can hear each other will stop finding reasons to fear each other so we have no agenda beyond offering you this
         tool. we use it ourselves, we have learned to listen, and it works. we believe it is time for a new day … for
         everyone.
+        
       </H2>
     </Main>
   </Page>

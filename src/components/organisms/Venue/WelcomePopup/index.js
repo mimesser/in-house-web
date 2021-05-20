@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -48,7 +48,11 @@ export const WelcomePopup = ({ skipWelcome, dismissWelcomeForm, venue, categorie
     dismissWelcomeForm();
   };
   const [show, setShow] = useState(!skipWelcome);
-  const [opened, setOpened] = useState(!skipWelcome);
+  const [opened, setOpened] = useState(null);
+
+  useEffect(() => {
+    setOpened(!skipWelcome);
+  }, []);
 
   const renderVenueSharePreview = useCallback(() => {
     const venueCategories =

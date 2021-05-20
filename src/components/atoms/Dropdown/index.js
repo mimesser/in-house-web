@@ -1,84 +1,161 @@
 import styled from 'styled-components';
 import Select from 'react-select';
+import Link from 'next/link';
 
-import { palette, spacing } from '../../../style';
-import { baseFormControlStyle, fontStyle, placeholder } from '../Input';
+import { appColors, breakpoints } from '../../../style';
+import { Icon } from '..';
 import { withNoSSR } from '../NoSSR';
 
-// TODO: resolve SSR problems
-export const Dropdown = styled(withNoSSR(Select)).attrs(() => ({
-  classNamePrefix: 'react-select',
-}))`
-  .react-select__control {
-    ${baseFormControlStyle};
-    padding: calc(${spacing.xxs} - 1px);
+const customStyles = {
+  option: (styles, { isFocused }) => ({
+    ...styles,
+    background: isFocused ? appColors.gray2 : appColors.midnight,
+    color: appColors.offWhite,
+  }),
+  control: (styles) => ({
+    ...styles,
+    outline: 'none',
+    boxShadow: 'none',
+    color: appColors.midnight,
+    border: `1px solid ${appColors.midnight}`,
+  }),
+  menuList: (styles) => ({
+    ...styles,
+    padding: 0,
+  }),
+  noOptionsMessage: (styles) => ({
+    ...styles,
+    margin: 0,
+    padding: 0,
+    background: appColors.gray4,
+  }),
+  input: (styles) => ({
+    ...styles,
+    fontSize: '16px',
+  }),
+};
 
-    &.react-select__control--menu-is-open,
-    &.react-select__control--is-focused {
-      outline: none;
-      box-shadow: none;
-      color: ${palette.primary};
-      border: 1px solid ${palette.primary};
-    }
-    &.react-select__control--is-disabled {
-      background-color: transparent;
-      color: ${palette.lightGray};
-      border-color: ${palette.lightGray};
-    }
-    :hover {
-      box-shadow: none;
-      border: 1px solid ${palette.primary};
-    }
+const OptionLabel = styled.span`
+  display: flex;
+  justify-content: space-between;
 
-    .react-select__single-value {
-      color: inherit;
-    }
+  ${Icon} {
+    color: ${appColors.gray3};
   }
 
-  .react-select__placeholder {
-    ${placeholder};
+  small {
+    font-size: 11px;
+    color: ${appColors.gray4};
   }
+`;
 
-  .react-select__indicator-separator {
-    display: none;
-  }
+const NoOptionsDiv = styled.div`
+  display: flex;
+  flex-direction: column;
 
-  .react-select__menu {
-    box-shadow: none;
-    border: 1px solid ${palette.gray};
+  & > div {
+    &:first-child {
+      background-color: ${appColors.gray4};
+      color: ${appColors.midnight};
+      padding: 8px 10px;
+      align-self: flex-start;
+    }
 
-    .react-select__menu-list {
-      ::-webkit-scrollbar {
-        -webkit-appearance: none;
-        width: 7px;
+    &:last-child {
+      background-color: ${appColors.midnight};
+
+      ${Link} > div {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 10px;
+        color: ${appColors.offWhite};
       }
-      
-      ::-webkit-scrollbar-thumb {
-        border-radius: 4px;
-        background-color: rgba(0, 0, 0, .5);
-        box-shadow: 0 0 1px rgba(255, 255, 255, .5);
-      }
-      padding: 0;
-      ${fontStyle};
 
-      .react-select__option {
-        &.react-select__option--is-selected {
-          color: ${palette.primary};
-          background-color: ${palette.lightGray};
-        }
-        &.react-select__option--is-focused {
-          background-color: ${palette.gray};
-        }
+      ${Link} > div:hover {
+        cursor: default;
+        background-color: ${appColors.gray2};
       }
     }
   }
 `;
 
-Dropdown.defaultProps = {
-  placeholder: '',
-  isSearchable: false,
-  theme: selectOriginalTheme => ({
-    ...selectOriginalTheme,
-    borderRadius: 0,
-  }),
+// TODO: resolve SSR problems
+const CustomSelect = styled(withNoSSR(Select)).attrs(() => ({
+  classNamePrefix: 'react-select',
+}))`
+  opacity: ${({ options }) => (options ? 1 : 0)};
+  transition: opacity 1s;
+
+  .react-select__input input {
+    text-transform: lowercase;
+  }
+
+  @media (min-width: ${breakpoints.md}) {
+    width: 680px;
+  }
+`;
+
+const filterVenues = (option, selectedValue) => {
+  const { label } = option;
+
+  if (selectedValue && selectedValue.length)
+    return label && label.toLocaleLowerCase().includes(selectedValue.toLocaleLowerCase());
+
+  return null;
 };
+
+const formatOptionLabel = ({ name, venueInfo }) => (
+  <OptionLabel>
+    <div>
+      {name}&nbsp;
+      <small>
+        {venueInfo?.address}
+        {venueInfo && `, ${venueInfo.city}`}
+      </small>
+    </div>
+    <div>
+      <Icon icon="winky-circle" size={1.2} />
+    </div>
+  </OptionLabel>
+);
+
+const noOptionsMessage = () => (
+  <NoOptionsDiv>
+    <div>no results</div>
+    <div>
+      <Link href="/list-house">
+        <div>
+          <span>list your org</span>
+          <Icon icon="arrow-right" />
+        </div>
+      </Link>
+    </div>
+  </NoOptionsDiv>
+);
+
+/* eslint-disable react/jsx-props-no-spreading */
+export const Dropdown = ({ options, searchValue, ...props }) => (
+  <CustomSelect
+    options={options}
+    components={{
+      DropdownIndicator: () => null,
+      Placeholder: () => (
+        <>
+          <Icon icon="search" />
+          &nbsp;find your org
+        </>
+      ),
+    }}
+    getOptionLabel={({ name }) => name}
+    getOptionValue={({ id }) => id}
+    filterOption={filterVenues}
+    formatOptionLabel={formatOptionLabel}
+    noOptionsMessage={searchValue ? noOptionsMessage : () => null}
+    openMenuOnFocus={false}
+    openMenuOnClick={false}
+    isSearchable
+    isClearable
+    styles={customStyles}
+    {...props}
+  />
+);
