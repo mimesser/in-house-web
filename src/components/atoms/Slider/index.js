@@ -1,4 +1,5 @@
-import React, { useRef, useState } from 'react';
+import { xorBy } from 'lodash';
+import React, { useRef, useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 
 import { theme } from '../../../style';
@@ -52,16 +53,16 @@ const GradientFill = styled.div.attrs((props) => ({
   animation: ${({ selectedTag }) => selectedTag && 'none'};
 `;
 
-const SliderKnob = styled.div`
-  // background-color: blue;
-  position: relative;
-  display: block;
-  width: 60px;
-  height: 100%;
-  transform: translate(-50%, 0%);
-  // left: ${(props) => props.percentage};
-  z-index: 99;
-`;
+// const SliderKnob = styled.div`
+//   // background-color: blue;
+//   position: relative;
+//   display: block;
+//   width: 60px;
+//   height: 100%;
+//   transform: translate(-50%, 0%);
+//   // left: ${(props) => props.percentage};
+//   z-index: 99;
+// `;
 
 const SliderFilled = styled.div`
   height: 100%;
@@ -76,145 +77,147 @@ const SliderFilled = styled.div`
 `;
 
 const BaseSlider = ({
-  disabled,
+  // disabled,
   x,
-  min,
-  max,
-  step,
-  onChange,
+  // min,
+  // max,
+  // step,
+  // onChange,
   fillColor,
-  onSlideStart,
-  onSlideEnd,
-  onClick,
+  // onSlideStart,
+  // onSlideEnd,
+  // onClick,
   selectedTag,
-  inProgress,
+  // inProgress,
   ...props
 }) => {
-  const container = useRef(null);
-  const handle = useRef(null);
-  const startX = useRef(null);
-  const offsetX = useRef(null);
-  const [value, setValue] = useState(x);
+  // const container = useRef(null);
+  // const handle = useRef(null);
+  // const startX = useRef(null);
+  // const offsetX = useRef(null);
+  // const [value, setValue] = useState(x);
 
-  function getPosition() {
-    const pos = ((value - min) / (max - min)) * 100;
-    const left = clamp(pos, 1, 99);
-    const top = 100;
+  // function getPosition() {
+  //   const pos = ((value - min) / (max - min)) * 100;
+  //   const left = clamp(pos, 1, 99);
+  //   const top = 100;
 
-    return { top, left };
-  }
+  //   return { top, left };
+  // }
 
-  function change(newValue) {
-    if (!onChange || inProgress) return;
+  // function change(newValue) {
+  //   if (!onChange || inProgress) return;
 
-    const { width } = container.current.getBoundingClientRect();
+  //   const { width } = container.current.getBoundingClientRect();
 
-    const target = clamp(newValue, 0, width);
-    const dx = (target / width) * (max - min);
+  //   const target = clamp(newValue, 0, width);
+  //   const dx = (target / width) * (max - min);
 
-    const x = (dx !== 0 ? parseInt(dx / step, 10) * step : 0) + min;
+  //   const x = (dx !== 0 ? parseInt(dx / step, 10) * step : 0) + min;
 
-    // setValue(x);
-    onChange(x);
-  }
+  //   // setValue(x);
+  //   onChange(x);
+  // }
 
-  function handleMouseDown(e) {
-    if (disabled || inProgress) return;
+  // function handleMouseDown(e) {
+  //   console.log("handleMouseDown");
+  //   if (disabled || inProgress) return;
 
-    const clientPos = getClientPosition(e);
-    const rect = container.current.getBoundingClientRect();
+  //   const clientPos = getClientPosition(e);
+  //   const rect = container.current.getBoundingClientRect();
 
-    change(clientPos.x - rect.left);
+  //   change(clientPos.x - rect.left);
 
-    // const dom = handle.current;
+  //   // const dom = handle.current;
 
-    startX.current = clientPos.x;
-    offsetX.current = clientPos.x;
-    // start.current = {
-    //   x: clientPos.x,
-    //   // y: clientPos.y,
-    // };
+  //   startX.current = clientPos.x;
+  //   offsetX.current = clientPos.x;
+  //   // start.current = {
+  //   //   x: clientPos.x,
+  //   //   // y: clientPos.y,
+  //   // };
 
-    // offset.current = {
-    //   x: clientPos.x,
-    //   // y: clientPos.y,
-    // };
+  //   // offset.current = {
+  //   //   x: clientPos.x,
+  //   //   // y: clientPos.y,
+  //   // };
 
-    document.addEventListener('mousemove', handleDrag);
-    document.addEventListener('mouseup', handleDragEnd);
-    document.addEventListener('touchmove', handleDrag, { passive: false });
-    document.addEventListener('touchend', handleDragEnd);
-    document.addEventListener('touchcancel', handleDragEnd);
-    if (onSlideStart) {
-      onSlideStart();
-    }
-  }
+  //   document.addEventListener('mousemove', handleDrag);
+  //   document.addEventListener('mouseup', handleDragEnd);
+  //   document.addEventListener('touchmove', handleDrag, { passive: false });
+  //   document.addEventListener('touchend', handleDragEnd);
+  //   document.addEventListener('touchcancel', handleDragEnd);
+  //   if (onSlideStart) {
+  //     onSlideStart();
+  //   }
+  // }
 
-  function getPos(e) {
-    const clientPos = getClientPosition(e);
-    const left = clientPos.x + startX.current - offsetX.current;
-    // const top = clientPos.y + start.current - offset.current.y;
+  // function getPos(e) {
+  //   const clientPos = getClientPosition(e);
+  //   const left = clientPos.x + startX.current - offsetX.current;
+  //   // const top = clientPos.y + start.current - offset.current.y;
 
-    return { left };
-  }
+  //   return { left };
+  // }
 
-  function handleDrag(e) {
-    if (e.cancelable) e.preventDefault();
-    if (disabled) return;
+  // function handleDrag(e) {
+  //   if (e.cancelable) e.preventDefault();
+  //   if (disabled) return;
 
-    const { left } = getPos(e);
-    change(left);
-  }
+  //   const { left } = getPos(e);
+  //   change(left);
+  // }
 
-  function handleDragEnd(e) {
-    if (disabled) return;
+  // function handleDragEnd(e) {
+  //   if (disabled) return;
 
-    document.removeEventListener('mousemove', handleDrag);
-    document.removeEventListener('mouseup', handleDragEnd);
-    document.removeEventListener('touchmove', handleDrag, { passive: false });
-    document.removeEventListener('touchend', handleDragEnd);
-    document.removeEventListener('touchcancel', handleDragEnd);
+  //   document.removeEventListener('mousemove', handleDrag);
+  //   document.removeEventListener('mouseup', handleDragEnd);
+  //   document.removeEventListener('touchmove', handleDrag, { passive: false });
+  //   document.removeEventListener('touchend', handleDragEnd);
+  //   document.removeEventListener('touchcancel', handleDragEnd);
 
-    if (onSlideEnd) {
-      onSlideEnd();
-    }
-  }
+  //   if (onSlideEnd) {
+  //     onSlideEnd();
+  //   }
+  // }
 
-  function handleClick(e) {
-    if (disabled) return;
+  // function handleClick(e) {
+  //   if (disabled) return;
 
-    e.stopPropagation();
-    e.nativeEvent.stopImmediatePropagation();
+  //   e.stopPropagation();
+  //   e.nativeEvent.stopImmediatePropagation();
 
-    const clientPos = getClientPosition(e);
-    const rect = container.current.getBoundingClientRect();
+  //   const clientPos = getClientPosition(e);
+  //   const rect = container.current.getBoundingClientRect();
 
-    change(clientPos.x - rect.left);
+  //   change(clientPos.x - rect.left);
 
-    if (onClick) onClick(e);
-  }
+  //   if (onClick) onClick(e);
+  // }
 
-  const pos = getPosition();
+  // const pos = getPosition();
 
-  if (value !== x) {
-    setValue(x);
-  }
+  // if (value !== x) {
+  //   setValue(x);
+  // }
 
   // const percentage = `${pos.left}%`;
   const setWidth = {
-    width: `${pos.left}%`
+    width: `${x * 10}%`
   };
 
   return (
     <SliderContainer
-      {...props}
+      // {...props}
       disabled
-      ref={container}
-      onClick={selectedTag ? handleClick : undefined}
-      onTouchStart={selectedTag ? handleMouseDown : undefined}
-      onMouseDown={selectedTag ? handleMouseDown : undefined}
+      // ref={container}
+      // onClick={selectedTag ? handleClick : undefined}
+      // onTouchStart={selectedTag ? handleMouseDown : undefined}
+      // onMouseDown={handleMouseDown}
+      // onTouchStart={selectedTag ? handleMouseDown : undefined}
     >
-      {value ? (
+      {x ? (
         <SliderFilled
           // percentage={percentage}
           fillColor={fillColor}

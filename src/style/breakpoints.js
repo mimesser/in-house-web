@@ -8,7 +8,7 @@ export const breakpoints = {
   xl: '1200px',
 };
 
-const mobileHeight = {
+export const mobileHeight = {
   xs: '667px',
   sm: '736px',
   md: '812px',
@@ -16,7 +16,7 @@ const mobileHeight = {
   xl: '1366px',
 };
 
-const mobileWidth = {
+export const mobileWidth = {
   xs: '320px',
   sm: '375px',
   md: '414px',

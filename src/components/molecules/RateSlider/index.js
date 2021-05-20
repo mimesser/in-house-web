@@ -6,6 +6,7 @@ import { CircleSlider, NumberLarge, NumberSmall, Icon, Slider, SlidingValue } fr
 import { fontSize, font, palette, theme } from '../../../style';
 import { useRef } from 'react';
 import { getClientPosition } from '../../atoms/Slider/utils';
+import { RateCategory } from '../RateCategory';
 
 const FONT_RATIO = 3.6;
 
@@ -45,6 +46,15 @@ const Wrapper = styled.div`
   width: 100%;
   height: 97px;
   border-bottom: 1px solid #e0e0e0;
+
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+   -khtml-user-select: none; /* Konqueror HTML */
+     -moz-user-select: none; /* Old versions of Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+          user-select: none; /* Non-prefixed version, currently
+                                supported by Chrome, Edge, Opera and Firefox */
+
 `;
 
 export const Votes = styled(({ count, iconSize = 1, userRate, ...rest }) => (
@@ -178,74 +188,75 @@ const BaseRateSlider = ({
   onSlideEnd,
   selectedTag,
   inProgress,
+  rateInProgress,
+  targetRate,
   ...sliderProps
 }) => {
   const { readonly: decimal, size, padd, fillColor = palette.darkGray } = sliderProps;
   const [value, setValue] = useState(initialValue);
   const [userValue, setUserValue] = useState(userRate);
-  const [isExpanded, setExpanded] = useState(expanded);
-  const wrapperRef = useRef();
-  const handleClick = (e) => {
-    const rect = wrapperRef.current.getBoundingClientRect();
+  const selectedRef = useRef();
+  const currentValue = `${Math.floor((expanded ? userValue / 10 : value) * 10)}`;
+  const changeRate = (e) => {
+    const rect = selectedRef.current.getBoundingClientRect();
     const clientPos = getClientPosition(e);
+    if (clientPos.x < 0 || clientPos.x > rect.width) return;
     const rate = ((clientPos.x/rect.width)*10).toFixed(1);
+    
     setUserValue(rate);
+    onChange(rate);
   };
 
   useEffect(() => {
     setValue(initialValue);
   }, [initialValue]);
 
-  if (expanded !== isExpanded) {
-    setExpanded(expanded);
-  }
+  useEffect(() => {
+    setUserValue(targetRate);
+  }, [targetRate]);
 
-  function preventDefault(e) {
-    if (e.cancelable) {
-      e.preventDefault();
-    }
-  }
-
-  function handleChange(userRate) {
-    setUserValue(userRate);
-    if (onChange) {
-      onChange(userRate);
-    }
-  }
   return (
     <>
-      <Wrapper ref={wrapperRef} onClick={handleClick}>
-        <Title
-          onTouchStart={preventDefault}
-          onMouseDown={preventDefault}
-        >
-          {title}
-        </Title>
-        <Votes count={voteCount} userRate={userRate} expanded={isExpanded} />
-        <SlidingWrapper expanded={isExpanded}>
-          {(isExpanded || (userValue && value)) && (
+      <Wrapper
+        ref={selectedRef}
+        // onMouseDown={!rateInProgress ? (e) => changeRate(e) : undefined}
+        onMouseMove={expanded && !inProgress ? (e) => changeRate(e) : undefined}
+        onMouseUp={expanded && !inProgress ? (e) => changeRate(e) : undefined}
+        onClick={expanded && !inProgress ? () => onSlideEnd(userValue) : undefined}
+
+        // onTouchStart={!rateInProgress ? (e) => changeRate(e) : undefined}
+        onTouchMove={expanded && !inProgress ? (e) => changeRate(e) : undefined}
+        onTouchEnd={expanded && !inProgress ? () => onSlideEnd(userValue) : undefined}
+      >
+        <Title>{title}</Title>
+        <Votes count={voteCount} userRate={userRate} expanded={expanded} />
+        <SlidingWrapper expanded={expanded}>
+          {(expanded || (userValue && value)) && (
             <SlidingValue
-              fontSize={isExpanded ? fontSize.lg : fontSize.md}
-              value={`${Math.floor((isExpanded ? userValue / 10 : value) * 10)}`}
-              minLength={isExpanded ? 1 : 2}
+              fontSize={expanded ? fontSize.lg : fontSize.md}
+              value={currentValue}
+              minLength={expanded ? 1 : 2}
             >
-              {!isExpanded && <Dot size={isExpanded ? 140 : 80} padd={padd} color={valueColor} />}
+              {!expanded && <Dot size={expanded ? 140 : 80} padd={padd} color={valueColor} />}
             </SlidingValue>
           )}
         </SlidingWrapper>
         {/* {isExpanded && <TouchHelper />} */}
-        <SliderWrapper expanded={isExpanded} duration={0.3}>
+        <SliderWrapper
+          expanded={expanded}
+          duration={0.3}
+        >
           <Slider
-            onChange={handleChange}
-            onSlideStart={onSlideStart}
-            onSlideEnd={onSlideEnd}
+            // onChange={handleChange}
+            // onSlideStart={onSlideStart}
+            // onSlideEnd={onSlideEnd}
             fillColor={fillColor}
-            x={(isExpanded && (userValue || 0.0)) || (!isExpanded && value)}
-            disabled={readonly}
+            x={(expanded && (userValue || 0.0)) || (!expanded && value)}
+            // disabled={readonly}
             selectedTag={selectedTag}
-            inProgress={inProgress}
+            // inProgress={inProgress}
           >
-            {userValue && !isExpanded && <Indicator percentage={userValue * 10} />}
+            {userValue && !expanded && <Indicator percentage={userValue * 10} />}
           </Slider>
         </SliderWrapper>
       </Wrapper>
