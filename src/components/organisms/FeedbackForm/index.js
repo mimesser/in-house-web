@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { useRouter } from 'next/router';
 
 import { H1, H2, Input, Dropdown } from '../../atoms';
-import { WinkConfirmation, CounterInput } from '../../molecules';
-import { FormGroup, Container, SubmitButton } from './style';
+import { WinkConfirmation, CounterInput, Commands } from '../../molecules';
+import { FormGroup, Container, SubmitButton, BackButton, LeftArrowIcon } from './style';
 import { postFeedback, clearFeedback } from '../../../store/feedback';
 
 const subjectOptions = [
@@ -33,6 +34,7 @@ function FeedbackForm(props) {
   const getHandler = (setter) => (event) => setter(event.target.value);
   const handleSubjectChange = (value) => setSubject(value);
   const handleEmailChange = getHandler(setEmail);
+  const router = useRouter();
 
   const submit = () => {
     props.postFeedback({ email, subject: subject.value, message, redirectLink });
@@ -84,9 +86,15 @@ function FeedbackForm(props) {
         />
       </FormGroup>
       {props.error && <FormGroup>{props.error}</FormGroup>}
-      <SubmitButton disabled={!valid} onClick={submit} icon="arrow-right" loading={props.loading}>
-        send
-      </SubmitButton>
+      <Commands style={{ padding: '0px !important' }}>
+        <BackButton inverse onClick={() => router.back()}>
+          <LeftArrowIcon icon="arrow-left" />
+          back
+        </BackButton>
+        <SubmitButton disabled={!valid} onClick={submit} icon="arrow-right" loading={props.loading}>
+          send
+        </SubmitButton>
+      </Commands>
     </Container>
   );
 }
