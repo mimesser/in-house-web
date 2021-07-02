@@ -37,7 +37,7 @@
         "polished": "3.6.4",
         "raw-loader": "^4.0.1",
         "react": "16.13.1",
-        "react-countdown-circle-timer": "^2.5.1",
+        "react-countdown-circle-timer": "^2.5.3",
         "react-dom": "16.13.1",
         "react-ga": "^2.7.0",
         "react-helmet": "^6.0.0",
