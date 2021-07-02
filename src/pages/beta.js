@@ -7,7 +7,8 @@ import styled from 'styled-components';
 
 import { createStructuredSelector } from 'reselect';
 import { Page, HowItWorks, Container } from '../components/organisms';
-import { Button, H1, H2, H3, Break, Icon, ClearButton, Dropdown, Loader } from '../components/atoms';
+import { Button, H1, H2, H3, Break, Icon, ClearButton, Loader } from '../components/atoms';
+import { Dropdown } from '../components/atoms/Dropdown';
 import { spacing, palette, breakpoints, appColors, font, fontSize, device, onDesktop } from '../style';
 import { version } from '../../package.json';
 import { Footer } from '../components/organisms/Footer';

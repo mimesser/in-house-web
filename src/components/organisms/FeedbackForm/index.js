@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { useRouter } from 'next/router';
 
-import { H1, H2, Input, Dropdown } from '../../atoms';
+import { H1, H2, Input } from '../../atoms';
+import { CustomSelect as Dropdown } from '../../atoms/Dropdown';
 import { WinkConfirmation, CounterInput, Commands } from '../../molecules';
 import { FormGroup, Container, SubmitButton, BackButton, LeftArrowIcon } from './style';
 import { postFeedback, clearFeedback } from '../../../store/feedback';
