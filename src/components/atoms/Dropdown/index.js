@@ -80,7 +80,7 @@ const NoOptionsDiv = styled.div`
 `;
 
 // TODO: resolve SSR problems
-const CustomSelect = styled(withNoSSR(Select)).attrs(() => ({
+export const CustomSelect = styled(withNoSSR(Select)).attrs(() => ({
   classNamePrefix: 'react-select',
 }))`
   opacity: ${({ options }) => (options ? 1 : 0)};

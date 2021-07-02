@@ -2,7 +2,6 @@ export { Button, ClearButton, TransparentLinkStyle } from './Button';
 export { Card } from './Card';
 export { Icon } from './Icon';
 export { Input, Textarea } from './Input';
-export { Dropdown } from './Dropdown';
 export { Checkbox } from './Checkbox';
 export { Loader } from './Loader';
 export { FormGroup } from './FormGroup';

@@ -7,7 +7,8 @@ import styled, { keyframes, css } from 'styled-components';
 import { createStructuredSelector } from 'reselect';
 import { Page, HowItWorks, Container } from '../components/organisms';
 import { CountDown } from '../components/atoms/CountDown';
-import { H1, H2, H3, Icon, ClearButton, TransparentLinkStyle, Dropdown } from '../components/atoms';
+import { H1, H2, H3, Icon, ClearButton, TransparentLinkStyle } from '../components/atoms';
+import { Dropdown } from '../components/atoms/Dropdown';
 import { spacing, palette, breakpoints, appColors, font, device, appBackground } from '../style';
 import { BetaLink, BetaDesc } from '../components/organisms/BetaChallange';
 
