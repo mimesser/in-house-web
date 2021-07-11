@@ -60,13 +60,31 @@ const CopyrightLine = styled(A)`
   }
 `;
 
+const DisplayOnMobile = styled.span`
+  display: block;
+
+  @media screen and (min-width: ${breakpoints.lg}) {
+    display: none;
+  }
+`;
+const HideOnMobile = styled.span`
+  display: none;
+
+  @media screen and (min-width: ${breakpoints.lg}) {
+    display: block;
+  }
+`;
+
 export const Footer = () => (
   <Layout>
     <Links>
       <Wrapper>
         <div>
           <Link href="/list-house" passHref prefetch={false}>
-            <A>distressed worker and progressive org?</A>
+            <A>distressed worker?</A>
+          </Link>
+          <Link href="/list-house" passHref prefetch={false}>
+            <A>progressive leadership?</A>
           </Link>
           <Link href="#howitworks" passHref prefetch={false}>
             <A>how it works</A>
@@ -74,12 +92,19 @@ export const Footer = () => (
           <Link href="/polls" passHref prefetch={false}>
             <A>faqs</A>
           </Link>
-          <Link href="/about" passHref prefetch={false}>
-            <A>about</A>
-          </Link>
+          <DisplayOnMobile>
+            <Link href="/about" passHref prefetch={false}>
+              <A>about</A>
+            </Link>
+          </DisplayOnMobile>
         </div>
         <MobileBreak />
         <div>
+          <HideOnMobile>
+            <Link href="/about" passHref prefetch={false}>
+              <A>about</A>
+            </Link>
+          </HideOnMobile>
           <Link href="/terms" passHref prefetch={false}>
             <A>terms of service</A>
           </Link>

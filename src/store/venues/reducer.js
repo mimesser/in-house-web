@@ -59,6 +59,9 @@ export function reducer(state = initialState, action) {
     case actionTypes.SET_VENUE_RATES: {
       return setSelectedVenueProp(state, action, 'rates');
     }
+    case actionTypes.SET_VENUE_RATES_ALL: {
+      return setVenuesProp(state, action, 'rates');
+    }
     case actionTypes.SET_VENUE_MINKS: {
       return setSelectedVenueProp(state, action, 'minks');
     }

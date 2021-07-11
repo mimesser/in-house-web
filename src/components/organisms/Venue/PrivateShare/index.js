@@ -16,7 +16,7 @@ import { selectInDemo } from '../../../../store/demo';
 import { Modal } from '../../Modal';
 import { Button, H2 } from '../../../atoms';
 import { CounterInput, WinkConfirmation } from '../../../molecules';
-import { SubmitButton, Layout } from './style';
+import { SubmitButton, Layout, FormLayout, CustomOverlay, ShareContent } from './style';
 import { DemoWinkConfirmationLayout } from '../demoStyle';
 import { isEmailValid, isPhoneNumberValid } from '../../../../utils/validation';
 
@@ -55,34 +55,36 @@ const PrivateShare = ({
     [recipientError],
   );
   const send = () => share(type, id, recipient, message || placeholder);
-  const recipientPlaceholder = 'any email or phone #';
+  const recipientPlaceholder = 'text or email/mobile';
   const placeholder = `${venueName} insider? someone thinks you should know about — “${getItemTitle(id)}”`;
   const isValidEmailOrPhone = isEmailValid(recipient) || isPhoneNumberValid(recipient);
 
   return (
     <Layout>
-      {renderItem(id)}
-      <H2>send anonymous</H2>
-      <CounterInput
-        value={recipient}
-        onChange={handleRecipientChange}
-        max={50}
-        placeholder={recipientPlaceholder}
-        error={recipientError}
-        subtext="sent via in-house network"
-      />
-      <CounterInput
-        value={message}
-        onChange={setMessage}
-        max={60}
-        rows={4}
-        placeholder={placeholder}
-        multiline
-        subtext="anonymous message"
-      />
-      <SubmitButton disabled={!isValidEmailOrPhone} loading={sending} onClick={send}>
-        send to co-insider
-      </SubmitButton>
+      <ShareContent>
+        {renderItem(id)}
+      </ShareContent>
+      <FormLayout>
+        <H2>send anonymous</H2>
+        <CounterInput
+          value={recipient}
+          onChange={handleRecipientChange}
+          max={24}
+          placeholder={recipientPlaceholder}
+          error={recipientError}
+        />
+        <CounterInput
+          value={message}
+          onChange={setMessage}
+          max={120}
+          rows={4}
+          placeholder={placeholder}
+          multiline
+        />
+        <SubmitButton disabled={!isValidEmailOrPhone} loading={sending} onClick={send} inverse>
+          send anonymously
+        </SubmitButton>
+      </FormLayout>
     </Layout>
   );
 };
@@ -101,8 +103,9 @@ const ModalWrapper = (props) => {
       canClose={!sending && !sent}
       inverse={sent}
       canDismiss={false}
-      title={venue && venue.name}
+      noPadd
     >
+      <CustomOverlay />
       {!sent && <PrivateShare {...props} venue={venue} id={shareItem.id} />}
       {sent && (inDemo ? <DemoWinkConfirmation onCloseClick={close} /> : <WinkConfirmation />)}
     </Modal>

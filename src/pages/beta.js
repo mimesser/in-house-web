@@ -1,17 +1,18 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { connect } from 'react-redux';
 
-import Router from 'next/router';
+import Router, { withRouter } from 'next/router';
 import Link from 'next/link';
 import styled from 'styled-components';
-import { withRouter } from 'next/router';
+
+import { createStructuredSelector } from 'reselect';
 import { Page, HowItWorks, Container } from '../components/organisms';
-import { Button, H1, H2, H3, Break, Icon, ClearButton, Dropdown } from '../components/atoms';
+import { Button, H1, H2, H3, Break, Icon, ClearButton, Loader } from '../components/atoms';
+import { Dropdown } from '../components/atoms/Dropdown';
 import { spacing, palette, breakpoints, appColors, font, fontSize, device, onDesktop } from '../style';
 import { version } from '../../package.json';
 import { Footer } from '../components/organisms/Footer';
-import { createStructuredSelector } from 'reselect';
-import { Loader } from '../components/atoms';
+
 import {
   selectInsiderChallengeForm,
   selectVenues,
@@ -249,6 +250,8 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
 
       if (inputValue && inputValue.length > 0)
         return value.name && value.name.toLocaleLowerCase().includes(inputValue.toLocaleLowerCase());
+
+      return undefined;
     },
     [filter, setFilter],
   );
@@ -298,7 +301,7 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
           ref.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
         if (!value && filter && filter.length > 0) {
-          //on menu close open houses
+          // on menu close open houses
           showVenue(false);
         }
       }, 100);
@@ -317,6 +320,7 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
             <Dropdown
               type="search"
               aria-label="search"
+              // eslint-disable-next-line jsx-a11y/aria-props
               aria-type="search"
               isSearchable
               options={getVenues()}
