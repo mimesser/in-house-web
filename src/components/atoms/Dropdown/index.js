@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Select from 'react-select';
 import Link from 'next/link';
@@ -134,28 +135,42 @@ const noOptionsMessage = () => (
 );
 
 /* eslint-disable react/jsx-props-no-spreading */
-export const Dropdown = ({ options, searchValue, ...props }) => (
-  <CustomSelect
-    options={options}
-    components={{
-      DropdownIndicator: () => null,
-      Placeholder: () => (
-        <>
-          <Icon icon="search" />
-          &nbsp;find your org
-        </>
-      ),
-    }}
-    getOptionLabel={({ name }) => name}
-    getOptionValue={({ id }) => id}
-    filterOption={filterVenues}
-    formatOptionLabel={formatOptionLabel}
-    noOptionsMessage={searchValue ? noOptionsMessage : () => null}
-    openMenuOnFocus={false}
-    openMenuOnClick={false}
-    isSearchable
-    isClearable
-    styles={customStyles}
-    {...props}
-  />
-);
+export const Dropdown = ({ options, searchValue, placeholder, onFocus, onBlur, ...props }) => {
+  const [placeholderText, setPlaceholderText] = useState(placeholder || 'find your org');
+  return (
+    <CustomSelect
+      options={options}
+      components={{
+        DropdownIndicator: () => null,
+        Placeholder: () =>
+          placeholderText ? (
+            <>
+              <Icon icon="search" />
+              {placeholderText}
+            </>
+          ) : null,
+      }}
+      onFocus={(e) => {
+        setPlaceholderText(null);
+        if (onFocus) {
+          onFocus(e);
+        }
+      }}
+      onBlur={(e) => {
+        setPlaceholderText(placeholder || 'find your org');
+        if (onBlur) {
+          onBlur(e);
+        }
+      }}
+      getOptionLabel={({ name }) => name}
+      getOptionValue={({ id }) => id}
+      filterOption={filterVenues}
+      formatOptionLabel={formatOptionLabel}
+      noOptionsMessage={searchValue ? noOptionsMessage : () => null}
+      isSearchable
+      isClearable
+      styles={customStyles}
+      {...props}
+    />
+  );
+};
