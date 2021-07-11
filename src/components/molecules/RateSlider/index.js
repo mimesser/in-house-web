@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
 import isNumber from 'lodash/isNumber';
 
 import { CircleSlider, NumberLarge, NumberSmall, Icon, Slider, SlidingValue } from '../../atoms';
 import { fontSize, font, palette, theme } from '../../../style';
-import { useRef } from 'react';
 import { getClientPosition } from '../../atoms/Slider/utils';
 import { RateCategory } from '../RateCategory';
 
@@ -49,12 +48,11 @@ const Wrapper = styled.div`
 
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
-   -khtml-user-select: none; /* Konqueror HTML */
-     -moz-user-select: none; /* Old versions of Firefox */
-      -ms-user-select: none; /* Internet Explorer/Edge */
-          user-select: none; /* Non-prefixed version, currently
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
                                 supported by Chrome, Edge, Opera and Firefox */
-
 `;
 
 export const Votes = styled(({ count, iconSize = 1, userRate, ...rest }) => (
@@ -201,8 +199,8 @@ const BaseRateSlider = ({
     const rect = selectedRef.current.getBoundingClientRect();
     const clientPos = getClientPosition(e);
     if (clientPos.x < 0 || clientPos.x > rect.width) return;
-    const rate = ((clientPos.x/rect.width)*10).toFixed(1);
-    
+    const rate = ((clientPos.x / rect.width) * 10).toFixed(1);
+
     setUserValue(rate);
     onChange(rate);
   };
@@ -223,7 +221,6 @@ const BaseRateSlider = ({
         onMouseMove={expanded && !inProgress ? (e) => changeRate(e) : undefined}
         onMouseUp={expanded && !inProgress ? (e) => changeRate(e) : undefined}
         onClick={expanded && !inProgress ? () => onSlideEnd(userValue) : undefined}
-
         // onTouchStart={!rateInProgress ? (e) => changeRate(e) : undefined}
         onTouchMove={expanded && !inProgress ? (e) => changeRate(e) : undefined}
         onTouchEnd={expanded && !inProgress ? () => onSlideEnd(userValue) : undefined}
@@ -242,10 +239,7 @@ const BaseRateSlider = ({
           )}
         </SlidingWrapper>
         {/* {isExpanded && <TouchHelper />} */}
-        <SliderWrapper
-          expanded={expanded}
-          duration={0.3}
-        >
+        <SliderWrapper expanded={expanded} duration={0.15}>
           <Slider
             // onChange={handleChange}
             // onSlideStart={onSlideStart}

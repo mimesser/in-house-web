@@ -1,8 +1,8 @@
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Select from 'react-select';
 import Link from 'next/link';
 
-import { useState } from 'react';
 import { appColors, breakpoints } from '../../../style';
 import { Icon } from '..';
 import { withNoSSR } from '../NoSSR';
@@ -81,7 +81,7 @@ const NoOptionsDiv = styled.div`
 `;
 
 // TODO: resolve SSR problems
-const CustomSelect = styled(withNoSSR(Select)).attrs(() => ({
+export const CustomSelect = styled(withNoSSR(Select)).attrs(() => ({
   classNamePrefix: 'react-select',
 }))`
   opacity: ${({ options }) => (options ? 1 : 0)};
