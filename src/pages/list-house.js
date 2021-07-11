@@ -21,7 +21,7 @@ const HorizontalBreak = styled(Break)`
   margin-top: 0;
   margin-bottom: 3.5em;
 `;
-const Description = styled.p`
+const Description = styled.div`
   ul {
     list-style-type: none;
 

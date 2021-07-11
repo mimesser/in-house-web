@@ -22,6 +22,7 @@
     "react/sort-comp": "off",
     "react/jsx-filename-extension": "off",
     "react/jsx-one-expression-per-line": "off",
+    "react/jsx-props-no-spreading": "off",
     "react/jsx-indent-props": ["warn", 2],
     "indent": [
       "warn",
