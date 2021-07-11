@@ -5,8 +5,9 @@ import api from '../../../api';
 import { setAddedMinkId } from '../actions';
 import { reloadVenueMinks } from './loadVenueMinks';
 import { reloadInsiderVenueIds } from './reloadInsiderVenueIds';
+import { formatMovementURL } from '../../../utils/format';
 
-export function* createMink({ payload: { id, question, answer } }) {
+export function* createMink({ payload: { id, name, question, answer, lite } }) {
   const { data: created } = yield call(api.post, `/venues/${id}/mink`, { question, answer });
 
   // order and top mink can change
@@ -18,5 +19,9 @@ export function* createMink({ payload: { id, question, answer } }) {
     yield put(setAddedMinkId(created.id));
   }
 
-  Router.push(`/houses?id=${id}&tab=mink`, `/houses/${id}/mink`, { shallow: true });
+  Router.push(
+    `/${'houses'}?id=${id}&tab=mink`,
+    `/${lite ? 'movement' : 'houses'}/${lite ? formatMovementURL(name) : id}/mink`,
+    { shallow: true }
+  );
 }

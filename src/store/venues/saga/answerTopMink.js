@@ -50,9 +50,8 @@ export function* answerTopMink({ payload: { answer } }) {
       }
 
       yield delay(CONFIRMATION_DELAY);
-      const acceptedTerms = yield select(selectAcceptedTerms);
-      yield put(setChallengeFormData(acceptedTerms ? undefined : { showTerms: true }));
       yield put(setMyCorrectAnswer(venue.topMink.id, answer));
+      yield put(setChallengeFormData(undefined));
 
       return;
     }

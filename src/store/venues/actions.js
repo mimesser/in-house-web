@@ -13,6 +13,7 @@ export const actionTypes = {
   DISMISS_CHALLENGE_FORM: 'DISMISS_CHALLENGE_FORM',
   LOAD_RATES: 'LOAD_RATES',
   SET_VENUE_RATES: 'SET_VENUE_RATES',
+  SET_VENUE_RATES_ALL: 'SET_ALL_VENUES_RATETAGS',
   LOAD_MINKS: 'LOAD_MINKS',
   SET_VENUE_MINKS: 'SET_VENUE_MINKS',
   CREATE_MINK: 'CREATE_MINK',
@@ -106,9 +107,9 @@ export const setChallengeFormData = (payload) => ({
   payload,
 });
 
-export const dismissChallengeForm = (showMinks) => ({
+export const dismissChallengeForm = (showMinks, name, lite) => ({
   type: actionTypes.DISMISS_CHALLENGE_FORM,
-  payload: { showMinks },
+  payload: { showMinks, name, lite },
 });
 
 export const dismissPollChallengeForm = (showContactForm) => ({
@@ -134,9 +135,9 @@ export const setVenueMinks = (minks) => ({
   payload: { minks },
 });
 
-export const createMink = (id, question, answer) => ({
+export const createMink = (id, name, question, answer, lite) => ({
   type: actionTypes.CREATE_MINK,
-  payload: { id, question, answer },
+  payload: { id, name, question, answer, lite },
 });
 
 export const setAddedMinkId = (addedMinkId) => ({
@@ -205,9 +206,9 @@ export const setSelectedTagTargetRate = (selectedTagTargetRate) => {
   };
 };
 
-export const rateTag = (newTagId) => ({
+export const rateTag = (targetRate, doReloadVenueRateTags = true) => ({
   type: actionTypes.RATE_TAG,
-  payload: { newTagId },
+  payload: { targetRate, doReloadVenueRateTags },
 });
 
 export const showRateTagConfirmation = (value) => ({
@@ -234,14 +235,14 @@ export const setVenuePosts = (posts) => ({
   payload: { posts },
 });
 
-export const createPost = (id, title, image, message, venueType) => ({
+export const createPost = (id, name, title, image, message, venueType, lite) => ({
   type: actionTypes.CREATE_POST,
-  payload: { id, title, image, message, venueType },
+  payload: { id, name, title, image, message, venueType, lite },
 });
 
-export const upvotePost = () => ({
+export const upvotePost = (postId) => ({
   type: actionTypes.VOTE_POST,
-  payload: { vote: 1 },
+  payload: { vote: 1, postId },
 });
 
 export const togglePostFlag = () => ({
@@ -257,9 +258,9 @@ export const toggleMinkFlag = () => ({
   type: actionTypes.TOGGLE_MINK_FLAG,
 });
 
-export const downvotePost = () => ({
+export const downvotePost = (postId) => ({
   type: actionTypes.VOTE_POST,
-  payload: { vote: -1 },
+  payload: { vote: -1, postId },
 });
 
 export const showVotePostConfirmation = (value) => ({

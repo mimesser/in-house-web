@@ -7,16 +7,17 @@ import Terms from '../Terms';
 import { H1, Checkbox, HelpTip, ClearButton, Button } from '../../atoms';
 import { spacing, appBackground, calcRem, palette } from '../../../style';
 import { acceptTerms } from '../../../store/aggregate';
+import { selectSelectedVenue } from '../../../store/venues';
 
 const Layout = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding-top: ${spacing.xxl};
+  padding: ${spacing.xxl};
 
   > ${Button} {
     margin-top: auto;
-    align-self: flex-start;
+    align-self: flex-end;
   }
 `;
 
@@ -31,7 +32,12 @@ const HelpWrap = styled.div`
   margin-top: ${spacing.xxxl};
 `;
 
-const AcceptTerms = ({ acceptTerms }) => {
+const Header = styled.div`
+  padding-bottom: ${spacing.xxl};
+  text-transform: uppercase;
+`;
+
+const AcceptTerms = ({ acceptTerms, house }) => {
   const [accepted, setAccepted] = useState(false);
   const [termsModal, showTermsModal] = useState(false);
   const handleChange = () => setAccepted(!accepted);
@@ -39,6 +45,7 @@ const AcceptTerms = ({ acceptTerms }) => {
   return (
     <Layout>
       {termsModal && <Terms close={() => showTermsModal(false)} modal />}
+      <Header>{house}</Header>
       <H1>haters beware</H1>
       <HelpTip tip="don’t be a jerk">
         <HelpWrap>
@@ -58,6 +65,7 @@ const AcceptTerms = ({ acceptTerms }) => {
 };
 
 const mapDispatch = {
+  venue: selectSelectedVenue,
   acceptTerms,
 };
 export default connect(undefined, mapDispatch)(AcceptTerms);

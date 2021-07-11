@@ -5,6 +5,7 @@ import { BackButton, NextButton, CounterInput, FilePicker } from '../../../molec
 import { StepLayout } from './StepLayout';
 import { Icon } from '../../../atoms';
 import { font, palette, spacing, cover } from '../../../../style';
+import { formatMovementURL } from '../../../../utils/format';
 const MAX_TITLE_LENGTH = 45;
 const MAX_MESSAGE_LENGTH = 250;
 
@@ -21,7 +22,8 @@ const IconWrapper = styled.div`
   }
 `;
 
-export const Step1 = ({ venue: { id }, title, setTitle, message, setMessage, setStep, image, setImage }) => {
+export const Step1 = ({ venue: { id, name }, title, setTitle, message, setMessage, setStep, image, setImage, lite }) => {
+  const movementName = formatMovementURL(name);
   const handleFileChange = useCallback(
     (file) => {
       setImage(file);
@@ -56,7 +58,10 @@ export const Step1 = ({ venue: { id }, title, setTitle, message, setMessage, set
       }
       commands={
         <>
-          <Link href={`/houses?id=${id}&tab=post`} as={`/houses/${id}/post`}>
+          <Link
+            href={`/houses?id=${id}&tab=post`}
+            as={`/${lite ? 'movement' : 'houses'}/${lite ? movementName : id}/post`}
+          >
             <BackButton>cancel</BackButton>
           </Link>
           <NextButton onClick={() => setStep(2)} disabled={!message.trim() || !title.trim()} />

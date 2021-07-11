@@ -24,9 +24,12 @@ const tabMap = {
 const knownTabs = Object.keys(tabMap);
 
 const Venue = ({ venue, router, challengeForm: challengeFormOpen }) => {
+  if (!venue) return null;
+  
+  const lite = venue.industry.lite;
   const venueType = venue && venue.isPoll ? 'polls' : 'houses';
   const {
-    query: { tab = 'rate' },
+    query: { tab = lite ? 'post' : 'rate' },
     asPath,
   } = router;
 
@@ -53,7 +56,7 @@ const Venue = ({ venue, router, challengeForm: challengeFormOpen }) => {
     <>
       <>
         <Banner venue={venue} />
-        <Navbar id={venue.id} selected={tab} venueType={venueType} />
+        <Navbar id={venue.id} name={venue.name} selected={tab} venueType={venueType} lite={lite} />
         <Tab venue={venue} venueType={venueType} />
       </>
       <InsiderQuestionChallenge />

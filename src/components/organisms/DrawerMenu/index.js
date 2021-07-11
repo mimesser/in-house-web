@@ -10,15 +10,12 @@ import { spacing, fontSize, font, palette, calcRem } from '../../../style';
 
 const CloseButton = styled(ClearButton)`
   float: right;
-  margin: ${spacing.xl};
-  margin-left: auto;
-  margin-right: 4px;
-  min-width: 40px;
-  width: 40px;
+  margin-top: ${spacing.xl};
+  margin-right: ${spacing.xl};
 `;
 
 const CloseIcon = styled(Icon).attrs(() => ({
-  icon: 'angle-down',
+  icon: 'close',
 }))`
   width: 24px;
   height: 24px;
@@ -27,7 +24,7 @@ const CloseIcon = styled(Icon).attrs(() => ({
   }
 `;
 
-const duration = 300;
+const duration = 700;
 
 const MENU_HEIGHT = calcRem('322px');
 const sidebarTransitionStyles = {
@@ -92,8 +89,10 @@ export const DrawerMenu = withRouter(({ isOpen, router, closeMenu, ...props }) =
     trackMouse: true,
   });
   return (
+    /* eslint-disable react/jsx-props-no-spreading */
     <Transition in={isOpen} timeout={duration} {...handlers}>
       {(state) => (
+        /* eslint-disable react/jsx-props-no-spreading */
         <div {...handlers}>
           {
             // eslint-disable-next-line react/jsx-props-no-spreading

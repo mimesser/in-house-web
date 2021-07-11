@@ -83,10 +83,11 @@ export const SlidingValue = ({
       .map((char, idx) => {
         const currChar = currChars[idx];
         const charIdx = characterSet.indexOf(currChar);
+        const crement = finalChars > currChars || finalChars.length >= 2 ? charIdx + 1 : charIdx - 1;
         const nextChar =
           currChar === char || (charIdx === 0 && !characterSet.includes(char))
             ? currChar
-            : characterSet[(charIdx + 1) % characterSet.length];
+            : characterSet[crement % characterSet.length];
         return nextChar;
       })
       .join('');

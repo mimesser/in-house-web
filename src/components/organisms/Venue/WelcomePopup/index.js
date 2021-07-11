@@ -1,60 +1,46 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { Button, HelpTip, H3, H1, H2, Checkbox, ClearButton, Card } from '../../../atoms';
-import { PokeButton } from '../../../molecules';
-import { spacing, appBackground, calcRem, palette } from '../../../../style';
-import { Modal } from '../../Modal';
+import { HelpTip, Card } from '../../../atoms';
+import { spacing, palette } from '../../../../style';
 import { dismissWelcomeForm, selectSkipWelcome, selectSelectedVenue } from '../../../../store/venues';
 import { DrawerMenu } from '../../DrawerMenu';
-import { Container } from '../../Modal/style';
 import PrivateShare from '../PrivateShare';
 import PrivateShareButton from '../PrivateShareButton';
-import { Main, ItemText, ItemTitle } from '../tabStyle';
-
-const VenueCard = styled(Card)`
-  min-height: 120px;
-`;
+import { selectEsgCategories } from '../../../../store/aggregate';
+import { findCategoryRating } from '../../VenueList';
+import { VenueCard } from '../../VenueList/VenueCard';
 
 const LightMessage = styled.p`
   white-space: normal;
-  margin-left: ${spacing.xl};
-  margin-right: ${spacing.xl};
-  margin-top: 0px;
+  margin: ${spacing.xs} ${spacing.xl} ${spacing.xxxl} 0;
   color: ${palette.lightGray};
   font-size: 16px;
 `;
 
 const GreyMessage = styled(LightMessage)`
-  margin-top: 0px;
   color: ${palette.mediumGray};
+  margin: 0;
 `;
 
-const Heading = styled(H2)`
-  position: relative;
-  margin-top: 131px;
-  font-size: 18px;
-  margin-left: ${spacing.xl};
-  color: ${palette.lightGray};
-`;
 const HelpWrap = styled.div`
-  margin-top: ${spacing.xl};
+  display: flex;
+  flex-direction: column;
+  margin-top: 6.5rem;
+  margin-left: ${spacing.xl};
 `;
 
 const PrivateShareButtonLayout = styled.div`
-  position: relative;
-
+  margin-left: auto;
   margin-right: ${spacing.xl};
-  > ${PokeButton} {
-    color: ${palette.lightGray};
-    position: absolute;
-    top: -32px;
-    right: -${spacing.sm};
-  }
 `;
 
-export const WelcomePopup = ({ skipWelcome, dismissWelcomeForm, venue }) => {
+const FlexWrap = styled.div`
+  display: flex;
+`;
+
+export const WelcomePopup = ({ skipWelcome, dismissWelcomeForm, venue, categories }) => {
   const [dontShow, setDontShow] = useState(skipWelcome);
   const handleChange = () => setDontShow(!dontShow);
   const handleOk = () => {
@@ -62,30 +48,21 @@ export const WelcomePopup = ({ skipWelcome, dismissWelcomeForm, venue }) => {
     dismissWelcomeForm();
   };
   const [show, setShow] = useState(!skipWelcome);
-  const [opened, setOpened] = useState(!skipWelcome);
+  const [opened, setOpened] = useState(null);
 
-  const renderVenueSharePreview = useCallback(
-    (id) => {
-      const {
-        name,
-        venueInfo: { address, city, state, zipCode },
-      } = venue;
+  useEffect(() => {
+    setOpened(!skipWelcome);
+  }, []);
 
-      return (
-        <VenueCard>
-          <Main>
-            <ItemTitle>{name}</ItemTitle>
-            <ItemText>{address}</ItemText>
-            <ItemText>
-              {city}, {state}
-            </ItemText>
-            <ItemText>{zipCode}</ItemText>
-          </Main>
-        </VenueCard>
-      );
-    },
-    [venue],
-  );
+  const renderVenueSharePreview = useCallback(() => {
+    const venueCategories =
+      categories &&
+      categories.map((category) => {
+        return { ...category, rating: findCategoryRating(category.id, venue.rateTagCategories) };
+      });
+
+    return <VenueCard venue={venue} categoryRatings={venueCategories} />;
+  }, [venue.id]);
 
   const getVenueTitleForShare = useCallback((id) => venue.name, [venue]);
   return (
@@ -98,15 +75,19 @@ export const WelcomePopup = ({ skipWelcome, dismissWelcomeForm, venue }) => {
       />
       {show && (
         <DrawerMenu isOpen={opened} closeMenu={() => handleOk()}>
-          <Heading>
-            launch this house
-            <PrivateShareButtonLayout>
-              <PrivateShareButton id={venue.id} type="venue" onOpenSharePopup={() => handleOk()} />
-            </PrivateShareButtonLayout>
-          </Heading>
           <HelpTip tip="don’t be a jerk">
             <HelpWrap>
-              <LightMessage>your boss will be notified when 15% of this team begins speaking</LightMessage>
+              <FlexWrap>
+                <LightMessage>we will alert your leadership after +15% of your team starts talking</LightMessage>
+                <PrivateShareButtonLayout>
+                  <PrivateShareButton
+                    id={venue.id}
+                    type="venue"
+                    onOpenSharePopup={() => handleOk()}
+                    circleColor={palette.mediumGray}
+                  />
+                </PrivateShareButtonLayout>
+              </FlexWrap>
               <GreyMessage>(speak as a team - remain untraceable)</GreyMessage>
             </HelpWrap>
           </HelpTip>
@@ -118,6 +99,7 @@ export const WelcomePopup = ({ skipWelcome, dismissWelcomeForm, venue }) => {
 const mapState = createStructuredSelector({
   skipWelcome: selectSkipWelcome,
   venue: selectSelectedVenue,
+  categories: selectEsgCategories,
 });
 
 const mapDispatch = {

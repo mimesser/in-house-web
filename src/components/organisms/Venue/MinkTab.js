@@ -18,15 +18,15 @@ import {
   toggleMinkFlag,
 } from '../../../store/venues';
 import { palette, spacing, fontSize, font } from '../../../style';
-import { Loader, Button, HelpTip, Patent, Card, Break, Icon, SlidingValue } from '../../atoms';
+import { Loader, Button, HelpTip, Patent, Card, Icon, SlidingValue, Input } from '../../atoms';
 import { TabLayout, Main, ItemTitle, ItemTime, TabTitle } from './tabStyle';
-import { formatDateTime, formatRating } from '../../../utils/format';
+import { formatDateTime, formatMovementURL, formatRating } from '../../../utils/format';
 import VoteMink from './VoteMink';
 import { NewMinkElected } from './NewMinkElected';
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
 import { PokeButton, IconInput } from '../../molecules';
-import { Votes } from './Votes';
+import { IconBadge } from './IconBadge';
 import { VoteButton } from './openCardStyle';
 import { Status, InputGroup } from './VoteMink/style';
 import { FlagItem } from './FlagItem';
@@ -56,7 +56,7 @@ const VoteWrap = styled.div`
 const VoteRating = styled.span`
   visibility: ${({ hideRate, topMink }) => (hideRate && !topMink ? 'hidden' : 'visible')};
   font-size: ${fontSize.md};
-  color: ${palette.primary};
+  color: ${palette.darkGray};
   ${font.bold};
 `;
 
@@ -80,13 +80,13 @@ const RatingWrap = styled.span`
 const ShareWrap = styled.div`
   display: inline-flex;
   align-items: center;
-  color: ${palette.darkGray};
+  color: ${palette.gray};
 
   & > *:not(:first-child) {
     margin-left: ${spacing.xs};
   }
   & > *:last-child {
-    margin-left: ${spacing.xl};
+    margin-left: ${spacing.lg};
   }
 
   ${VoteRating} {
@@ -168,7 +168,7 @@ const lowerOpacityOnVote = css`
 `;
 
 const InsiderText = styled.span`
-  font-size: ${fontSize.xs};
+  font-size: ${fontSize.sm};
 `;
 
 const Push = styled.span`
@@ -196,7 +196,7 @@ const MinkCard = styled(Card)`
   ${ShareWrap}, ${FlagItemWrap} {
     visibility: ${({ active, topMink }) => (active && !topMink ? 'hidden' : 'visible')};
   }
-  ${Votes} > span:last-of-type {
+  ${IconBadge} > span:last-of-type {
     position: static;
   }
   ${ItemTime} {
@@ -207,7 +207,7 @@ const MinkCard = styled(Card)`
     padding-left: ${spacing.xs};
   }
   ${PokeButton} {
-    color: ${palette.darkGray};
+    color: ${palette.gray};
     // to be removed if implemented
     // in all tabs
     position: static !important;
@@ -220,7 +220,7 @@ const MinkCard = styled(Card)`
   }
   transition: all 0.2s ease-in-out;
 
-  ${({ active }) => active && activeStyle}
+  ${({ active, isShare }) => !isShare && active && activeStyle}
   ${defaultVoteAnimation}
   ${({ topMink }) => (topMink ? activeVoteAnimation(palette.lightGray, 1) : activeVoteAnimation(palette.gray, 0.7))}
   ${({ topMink }) => (topMink ? lowerOpacityOnVote : hideInputOnVote)}
@@ -258,6 +258,9 @@ const TopMinkContainer = styled.div`
     ${PokeButton} {
       color: ${palette.white};
     }
+    ${Input} {
+      color: ${palette.primary};
+    }
   }
 `;
 
@@ -266,7 +269,20 @@ const RunnersTitle = styled(TabTitle)`
   border-bottom: 1px solid ${palette.lightGray};
 `;
 
-const AnswerStatus = ({ status, previouslyAnsweredCorrectly, active }) => {
+const SharePreviewWrap = styled.div`
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  padding: ${spacing.md};
+`;
+
+const TopMinkSharePreviewWrap = styled.div`
+  ${TopMinkContainer} {
+    padding: ${spacing.md};
+  }
+`;
+
+const AnswerStatus = ({ status, previouslyAnsweredCorrectly, active, isShare }) => {
+  if (isShare) return null;
+
   if (status && active) {
     const { loading, isAnswerCorrect } = status;
     if (loading) return null;
@@ -292,13 +308,26 @@ const renderInputIcon = (status, previouslyAnsweredCorrectly, active) => {
   return null;
 };
 
-const renderStatusIcon = (answerStatus) => {
-  if (!answerStatus) return null;
+const StatusIcon = ({ answerStatus, answer, whiteLoader, clickEvent }) => {
+  if (!answerStatus && !answer) return null;
+
+  if (!answerStatus && answer) return (
+    <span onClick={clickEvent}>
+      <Icon size={1.5} icon='close' />
+    </span>
+  );
 
   const { loading, isAnswerCorrect } = answerStatus;
-  if (loading) return <Loader />;
+  if (loading) {
+    if (whiteLoader) return <Loader white />;
+    return <Loader />;
+  }
 
-  return <Icon size={1.5} icon={isAnswerCorrect ? 'check' : 'close'} />;
+  return (
+    <span onClick={clickEvent}>
+      <Icon size={1.5} icon={isAnswerCorrect ? 'check' : 'close'} />
+    </span>
+  );
 };
 
 const Mink = ({
@@ -315,10 +344,12 @@ const Mink = ({
   answerStatus,
   isActiveInsider,
   toggleMinkFlag,
+  isShare,
 }) => {
   const selectMink = useCallback(() => setSelectedMink(minkId), [minkId]);
   const deselectMink = useCallback(() => setSelectedMink(undefined), [minkId]);
   const ref = useRef(null);
+  const answerRef = useRef(null);
   const [vote, setVote] = useState(myVote);
   const upvoted = vote === 1;
   const downvoted = vote === -1;
@@ -329,6 +360,7 @@ const Mink = ({
   const tryAnswer = useCallback((e) => {
     const value = normalizeAnswer(e.currentTarget.value);
     setAnswer(value);
+    if (!value) return; 
     tryAnswerMink(houseId, minkId, value);
   }, []);
   const voteMink = useCallback(
@@ -340,6 +372,11 @@ const Mink = ({
     }, 500),
     [],
   );
+  const clearAnswer = useCallback((e) => {
+    e.stopPropagation();
+    setAnswer('');
+    answerRef.current.focus();
+  }, []);
 
   useEffect(() => {
     if (isNew) {
@@ -349,7 +386,7 @@ const Mink = ({
   }, [isNew, setAddedMinkId]);
 
   const card = (
-    <MinkCard ref={ref} active={active} topMink={topMink}>
+    <MinkCard ref={ref} active={active} topMink={topMink} isShare={isShare}>
       <div>
         <VoteWrap>
           <VoteButton onClick={(e) => voteMink(e, minkId, 1)}>
@@ -366,7 +403,7 @@ const Mink = ({
             <ItemTime dateTime={created}>{formatDateTime(created)}</ItemTime>
             <Push />
             <ShareWrap>
-              <Votes count={voteCount} inverse={topMink} iconSize={1} />
+              <IconBadge count={voteCount} inverse={topMink} iconSize={1} />
               {myVote ? (
                 <RatingWrap>
                   /
@@ -377,7 +414,7 @@ const Mink = ({
                   </VoteRating>
                 </RatingWrap>
               ) : (
-                <InsiderText>Insider(s)</InsiderText>
+                <InsiderText>insiders</InsiderText>
               )}
               <PrivateShareButton id={minkId} type="mink" />
             </ShareWrap>
@@ -395,19 +432,33 @@ const Mink = ({
                 icon={renderInputIcon(answerStatus, previouslyAnsweredCorrectly, active)}
                 onFocus={selectMink}
                 onClick={(e) => e.stopPropagation()}
+                ref={answerRef}
               />
-              {active && renderStatusIcon(answerStatus)}
+              {active && !previouslyAnsweredCorrectly && (
+                <StatusIcon
+                  answerStatus={answerStatus}
+                  answer={answer}
+                  whiteLoader={topMink}
+                  clickEvent={clearAnswer}
+                />
+              )}
             </div>
             <AnswerStatus
               status={answerStatus}
               previouslyAnsweredCorrectly={previouslyAnsweredCorrectly}
               active={active}
+              isShare={isShare}
             />
           </InputGroup>
-          <FlagItemWrap>
-            <FlagItem disabled={isActiveInsider} flagged={wasFlaggedByMe} toggleFlag={toggleMinkFlag} />
-            <Push />
-          </FlagItemWrap>
+          {!isShare && (
+            <FlagItemWrap>
+              <FlagItem
+                disabled={isActiveInsider}
+                flagged={wasFlaggedByMe}
+                toggleFlag={toggleMinkFlag}
+              />
+            </FlagItemWrap>
+          )}
         </Main>
       </div>
     </MinkCard>
@@ -436,6 +487,8 @@ const renderMinks = (
   tryAnswerMink,
   answerStatus,
   toggleMinkFlag,
+  movementName,
+  lite
 ) => (
   <>
     {minks.length > 0 && (
@@ -461,7 +514,10 @@ const renderMinks = (
             topMink
           />
         </TopMinkContainer>
-        <Link href={`/houses?id=${houseId}&tab=mink&new`} as={`/houses/${houseId}/mink/new`} passHref>
+        <Link
+          href={`/houses?id=${houseId}&tab=mink&new`}
+          as={lite ? `/movement/${movementName}/mink/new` : `/houses/${houseId}/mink/new`}
+          passHref>
           <Button icon="arrow-right">new</Button>
         </Link>
       </>
@@ -499,7 +555,7 @@ const findMink = (id, minks) => {
 };
 
 const MinkTab = ({
-  venue: { id, minks, addedMinkId },
+  venue: { id, name, industry: { lite }, minks, addedMinkId},
   loadMinks,
   setSelectedMink,
   setAddedMinkId,
@@ -515,26 +571,38 @@ const MinkTab = ({
   }, []);
   const renderSharePreview = useCallback(
     (id) => {
-      const { created, question, voteCount, voteRating, myVote } = findMink(id, minks);
+      const m = findMink(id, minks);
+      const isTopMink = minks[0] === m;
 
-      return (
-        <MinkCard>
-          <div>
-            <Main>
-              <ItemTitle>{question}</ItemTitle>
-              <Break />
-              <div>
-                <Votes count={voteCount} />
-                <ItemTime dateTime={created}>{formatDateTime(created)}</ItemTime>
-              </div>
-            </Main>
-          </div>
-        </MinkCard>
+      return isTopMink ? (
+        <TopMinkSharePreviewWrap>
+          <TopMinkContainer>
+            <Mink
+              mink={m}
+              upvoteMink={upvoteMink}
+              downvoteMink={downvoteMink}
+              answerStatus={answerStatus}
+              topMink
+              isShare
+            />
+          </TopMinkContainer>
+        </TopMinkSharePreviewWrap>
+      ) : (
+        <SharePreviewWrap>
+          <Mink
+            mink={m}
+            upvoteMink={upvoteMink}
+            downvoteMink={downvoteMink}
+            answerStatus={answerStatus}
+            isShare
+          />
+        </SharePreviewWrap>
       );
     },
     [minks],
   );
   const getTitleForShare = useCallback((id) => findMink(id, minks).question, [minks]);
+  const movementName = formatMovementURL(name);
 
   return (
     <TabLayout>
@@ -551,6 +619,8 @@ const MinkTab = ({
           tryAnswerMink,
           answerStatus,
           toggleMinkFlag,
+          movementName,
+          lite
         )
       ) : (
         <Loader big />

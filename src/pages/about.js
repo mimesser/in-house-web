@@ -43,6 +43,7 @@ const About = () => (
         can hear each other will stop finding reasons to fear each other so we have no agenda beyond offering you this
         tool. we use it ourselves, we have learned to listen, and it works. we believe it is time for a new day … for
         everyone.
+        
       </H2>
     </Main>
   </Page>

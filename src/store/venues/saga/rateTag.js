@@ -1,22 +1,16 @@
 import { call, select, put, delay, fork } from 'redux-saga/effects';
 
 import api, { isForbidden } from '../../../api';
-import {
-  selectIsActiveInsider,
-  selectSelectedTag,
-  selectSelectedVenue,
-  selectSelectedTagTargetValue,
-} from '../selectors';
-import { showRateTagConfirmation, setSelectedTag, updateVenueRate, setRateInProgress } from '../actions';
+import { selectIsActiveInsider, selectSelectedTag, selectSelectedVenue } from '../selectors';
+import { setSelectedTag, updateVenueRate, setRateInProgress } from '../actions';
 import { handleForbiddenResponse } from './handleForbiddenResponse';
 import { showInsiderChallenge } from './showInsiderChallenge';
 import { reloadVenueRateTags } from './loadVenueRateTags';
-import { CONFIRMATION_INTERVAL } from './consts';
+import { CONFIRMATION_INTERVAL_ULTRA_SHORT as CONFIRMATION_INTERVAL } from './consts';
 
-export function* rateTag({ payload: { newTagId } }) {
+export function* rateTag({ payload: { targetRate, doReloadVenueRateTags = true } }) {
   const tag = yield select(selectSelectedTag);
-  const targetRate = yield select(selectSelectedTagTargetValue);
-  if (targetRate && tag && (!tag.userRate || (tag.userRate && Math.abs(tag.userRate - targetRate) > 0.1))) {
+  if (targetRate && tag) {
     yield put(setRateInProgress(tag.definitionId));
     const { id: venueId } = yield select(selectSelectedVenue);
     const isActiveInsider = yield select(selectIsActiveInsider);
@@ -32,17 +26,19 @@ export function* rateTag({ payload: { newTagId } }) {
 
     // TODO remove round to int
     const {
-      data: { venueRateTag, venue },
+      data: { venue },
     } = yield call(api.post, `venues/${venueId}/rateTag/${tag.definitionId}/rate`, { rate: targetRate });
 
     try {
       const confirmationRemainingTime = CONFIRMATION_INTERVAL - (Date.now() - startApiCall);
-      if (confirmationRemainingTime > 0) {
-        yield delay(confirmationRemainingTime);
-      }
       yield put(updateVenueRate(venue));
-      yield fork(reloadVenueRateTags, venueId);
-      yield delay(CONFIRMATION_INTERVAL);
+      if (doReloadVenueRateTags) {
+        if (confirmationRemainingTime > 0) {
+          yield delay(confirmationRemainingTime);
+        }
+        yield fork(reloadVenueRateTags, venueId);
+        yield delay(CONFIRMATION_INTERVAL);
+      }
     } catch (e) {
       if (isForbidden(e)) {
         yield handleForbiddenResponse(venueId);

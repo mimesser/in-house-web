@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-import { appBackground, fontSize, font, palette, spacing, calcRem } from '../../../style';
+import { appBackground, fontSize, font, palette, spacing, calcRem, appColors } from '../../../style';
 import { ClearButton, H1, Break } from '../../atoms';
 import { Dial } from '../../molecules';
 
@@ -25,6 +25,8 @@ export const VoteButton = styled(ClearButton)`
   &[disabled] {
     color: ${palette.lightGray};
   }
+  &:hover: ${appColors.offWhite};
+  // color: ${({ highlight }) => (highlight ? appColors.offWhite : palette.mediumGray)};
 `;
 
 const flagText = ({ flagged }) =>
