@@ -1,9 +1,10 @@
 import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 
 import { PokeButton } from '../../molecules';
 import { setPrivateShareItem } from '../../../store/venues';
-import styled from 'styled-components';
+import { palette } from '../../../style';
 
 const Circle = styled.span`
   ${PokeButton} {
@@ -26,12 +27,14 @@ const Share = ({ id, type, openModal, onOpenSharePopup, size, circleColor }) => 
   );
 
   if (circleColor) {
-    return <Circle color={circleColor}>
-      <PokeButton onClick={handleClick} size={size} />
-    </Circle>;
-  } else {
-    return <PokeButton onClick={handleClick} size={size} />;
+    return (
+      <Circle color={circleColor(palette)}>
+        <PokeButton onClick={handleClick} size={size} />
+      </Circle>
+    );
   }
+
+  return <PokeButton onClick={handleClick} size={size} />;
 };
 
 const mapDispatch = {
