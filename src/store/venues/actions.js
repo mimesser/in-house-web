@@ -13,6 +13,7 @@ export const actionTypes = {
   DISMISS_CHALLENGE_FORM: 'DISMISS_CHALLENGE_FORM',
   LOAD_RATES: 'LOAD_RATES',
   SET_VENUE_RATES: 'SET_VENUE_RATES',
+  SET_VENUE_RATES_ALL: 'SET_ALL_VENUES_RATETAGS',
   LOAD_MINKS: 'LOAD_MINKS',
   SET_VENUE_MINKS: 'SET_VENUE_MINKS',
   CREATE_MINK: 'CREATE_MINK',
@@ -205,9 +206,9 @@ export const setSelectedTagTargetRate = (selectedTagTargetRate) => {
   };
 };
 
-export const rateTag = (targetRate) => ({
+export const rateTag = (targetRate, doReloadVenueRateTags = true) => ({
   type: actionTypes.RATE_TAG,
-  payload: { targetRate },
+  payload: { targetRate, doReloadVenueRateTags },
 });
 
 export const showRateTagConfirmation = (value) => ({
