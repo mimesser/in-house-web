@@ -80,10 +80,11 @@ const BaseButton = styled.button`
 `;
 
 export const Button = styled(
-  withForwardedRef(({ icon, loading, children, forwardedRef, inverse, ...props }) => (
+  withForwardedRef(({ icon, iconBefore, loading, children, forwardedRef, inverse, ...props }) => (
     <BaseButton as={props.href && 'a'} {...props} ref={forwardedRef} inverse={inverse}>
+      {icon && iconBefore && <Icon icon={icon} />}
       {loading ? <Loader small white /> : children}
-      {icon && <Icon icon={icon} />}
+      {icon && !iconBefore && <Icon icon={icon} />}
     </BaseButton>
   )),
 )``;
