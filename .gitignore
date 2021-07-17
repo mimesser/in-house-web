@@ -7,4 +7,5 @@ coverage/
 yarn-error.log
 yarn.lock
 build/
+tags
 .DS_Store
