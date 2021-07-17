@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import styled, { keyframes, css } from 'styled-components';
+import styled, { css } from 'styled-components';
 import Link from 'next/link';
 import { debounce } from 'lodash';
 
@@ -21,7 +21,6 @@ import { palette, spacing, fontSize, font } from '../../../style';
 import { Loader, Button, HelpTip, Patent, Card, Icon, SlidingValue, Input } from '../../atoms';
 import { TabLayout, Main, ItemTitle, ItemTime, TabTitle } from './tabStyle';
 import { formatDateTime, formatMovementURL, formatRating } from '../../../utils/format';
-import VoteMink from './VoteMink';
 import { NewMinkElected } from './NewMinkElected';
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
@@ -131,7 +130,7 @@ const activeVoteAnimation = (color, opacity) => css`
     svg {
       transition: transform ${transition.in} ease-out;
       transform: scale(3);
-      
+
       circle {
         transition: ${transition.in} ease-out;
         fill: ${color};
@@ -355,8 +354,6 @@ const Mink = ({
   const upvoted = vote === 1;
   const downvoted = vote === -1;
   const active = selectedMink && selectedMink.id === minkId;
-  // const size = upvoted || downvoted ? 1.7 : 2.2;
-  // Previously implimented to adjust mink vote icon size dependant on what the user voted
   const size = 2.2;
   const [answer, setAnswer] = useState(myCorrectAnswer || '');
   const previouslyAnsweredCorrectly = !!myCorrectAnswer;
@@ -625,8 +622,6 @@ const MinkTab = ({
       ) : (
         <Loader big />
       )}
-      {/* uncomment this for old implementation */}
-      {/* <VoteMink /> */}
       <NewMinkElected />
       <PrivateShare type="mink" renderItem={renderSharePreview} getItemTitle={getTitleForShare} />
     </TabLayout>
