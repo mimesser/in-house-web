@@ -2,48 +2,38 @@ import React from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
-import { Page, HowItWorks } from '../components/organisms';
-import { H1, H2, Break, Button, Icon } from '../components/atoms';
-import { palette, spacing, breakpoints } from '../style';
+import { Page } from '../components/organisms';
+import { H1, H2, Break, ClearButton, Icon } from '../components/atoms';
+import { fontSize, palette, spacing, breakpoints } from '../style';
 
 const Main = styled.div`
   position: relative;
-  color: ${palette.offWhite};
-
-  padding: ${spacing.xxl};
   display: flex;
   flex-direction: column;
   flex: 1;
   max-width: ${breakpoints.sm};
+  color: ${palette.offWhite};
+  padding: ${spacing.xxl};
 
-  // ${H1} {
-  //   margin-top: ${spacing.xl};
-  // }
-  // ${Break} {
-  //   margin: ${spacing.xxl} 0;
-  // }
   ${H2} {
+    flex-grow: 1;
     margin-bottom: ${spacing.xxl};
     font-family: inherit;
   }
 `;
 
-const Links = styled.div`
-  margin: auto 0;
-`;
-
-const BackButton = styled(Button).attrs({
-  type: 'submit',
+const BackButton = styled(ClearButton).attrs({
+  type: 'button',
 })`
-  margin: auto 50% ${spacing.md} 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
+  justify-self: flex-end;
+  margin-right: auto;
+  padding-right: ${spacing.xl};
+  font-size: ${fontSize.md};
 
-const LeftArrowIcon = styled(Icon).attrs({})`
-  margin-right: 2rem;
-  margin-left: auto !important;
+  ${Icon} {
+    margin-right: ${spacing.xxl};
+    margin-left: ${spacing.xl} !important;
+  }
 `;
 
 export default function About() {
@@ -63,7 +53,7 @@ export default function About() {
           for everyone.
         </H2>
         <BackButton onClick={() => router.back()}>
-          <LeftArrowIcon icon="arrow-left" />
+          <Icon icon="arrow-left" />
           back
         </BackButton>
       </Main>
