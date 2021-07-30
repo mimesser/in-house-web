@@ -365,11 +365,11 @@ const Mink = ({
   }, []);
   const voteMink = useCallback(
     debounce((e, id, value) => {
-      e.stopPropagation();
+      // e.stopPropagation();
       setVote(value);
       if (value === 1) upvoteMink(id);
       if (value === -1) downvoteMink(id);
-    }, 500),
+    }, 100),
     [],
   );
   const clearAnswer = useCallback((e) => {
