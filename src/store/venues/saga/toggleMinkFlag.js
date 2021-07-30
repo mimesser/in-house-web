@@ -15,9 +15,10 @@ export function* toggleMinkFlag() {
     `venues/${venue.id}/minks/${mink.id}/${mink.wasFlaggedByMe ? 'unflag' : 'flag'}`,
   );
 
+  console.log(response);
   if (response.wasDeleted) {
     yield put(setSelectedMink(undefined));
-    yield put(setVenueMinks(venue.minks.filter(p => p.id !== mink.id)));
+    yield put(setVenueMinks(venue.minks.filter((p) => p.id !== mink.id)));
 
     const topMinkId = yield select(selectSelectedVenueTopMinkId);
     if (topMinkId === mink.id) {
@@ -31,8 +32,9 @@ export function* toggleMinkFlag() {
       wasFlaggedByMe: response.wasFlaggedByMe,
     };
     const updatedMinks = venue.minks.slice();
-    const index = updatedMinks.findIndex(p => p.id === mink.id);
+    const index = updatedMinks.findIndex((p) => p.id === mink.id);
     updatedMinks[index] = updatedMink;
+    yield put(setSelectedMink(undefined));
     yield put(setVenueMinks(updatedMinks));
   }
 }
