@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import styled, { keyframes, css } from 'styled-components';
+import styled, { css } from 'styled-components';
 import Link from 'next/link';
 import { debounce } from 'lodash';
 
@@ -21,7 +21,6 @@ import { palette, spacing, fontSize, font } from '../../../style';
 import { Loader, Button, HelpTip, Patent, Card, Icon, SlidingValue, Input } from '../../atoms';
 import { TabLayout, Main, ItemTitle, ItemTime, TabTitle } from './tabStyle';
 import { formatDateTime, formatMovementURL, formatRating } from '../../../utils/format';
-import VoteMink from './VoteMink';
 import { NewMinkElected } from './NewMinkElected';
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
@@ -131,7 +130,7 @@ const activeVoteAnimation = (color, opacity) => css`
     svg {
       transition: transform ${transition.in} ease-out;
       transform: scale(3);
-      
+
       circle {
         transition: ${transition.in} ease-out;
         fill: ${color};
@@ -270,7 +269,7 @@ const RunnersTitle = styled(TabTitle)`
 `;
 
 const SharePreviewWrap = styled.div`
-  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   padding: ${spacing.md};
 `;
 
@@ -311,11 +310,12 @@ const renderInputIcon = (status, previouslyAnsweredCorrectly, active) => {
 const StatusIcon = ({ answerStatus, answer, whiteLoader, clickEvent }) => {
   if (!answerStatus && !answer) return null;
 
-  if (!answerStatus && answer) return (
-    <span onClick={clickEvent}>
-      <Icon size={1.5} icon='close' />
-    </span>
-  );
+  if (!answerStatus && answer)
+    return (
+      <span onClick={clickEvent}>
+        <Icon size={1.5} icon="close" />
+      </span>
+    );
 
   const { loading, isAnswerCorrect } = answerStatus;
   if (loading) {
@@ -354,22 +354,22 @@ const Mink = ({
   const upvoted = vote === 1;
   const downvoted = vote === -1;
   const active = selectedMink && selectedMink.id === minkId;
-  const size = upvoted || downvoted ? 1.7 : 2.2;
+  const size = 2.2;
   const [answer, setAnswer] = useState(myCorrectAnswer || '');
   const previouslyAnsweredCorrectly = !!myCorrectAnswer;
   const tryAnswer = useCallback((e) => {
     const value = normalizeAnswer(e.currentTarget.value);
     setAnswer(value);
-    if (!value) return; 
+    if (!value) return;
     tryAnswerMink(houseId, minkId, value);
   }, []);
   const voteMink = useCallback(
     debounce((e, id, value) => {
-      e.stopPropagation();
+      // e.stopPropagation();
       setVote(value);
       if (value === 1) upvoteMink(id);
       if (value === -1) downvoteMink(id);
-    }, 500),
+    }, 100),
     [],
   );
   const clearAnswer = useCallback((e) => {
@@ -452,11 +452,7 @@ const Mink = ({
           </InputGroup>
           {!isShare && (
             <FlagItemWrap>
-              <FlagItem
-                disabled={isActiveInsider}
-                flagged={wasFlaggedByMe}
-                toggleFlag={toggleMinkFlag}
-              />
+              <FlagItem disabled={isActiveInsider} flagged={wasFlaggedByMe} toggleFlag={toggleMinkFlag} />
             </FlagItemWrap>
           )}
         </Main>
@@ -488,7 +484,7 @@ const renderMinks = (
   answerStatus,
   toggleMinkFlag,
   movementName,
-  lite
+  lite,
 ) => (
   <>
     {minks.length > 0 && (
@@ -517,7 +513,8 @@ const renderMinks = (
         <Link
           href={`/houses?id=${houseId}&tab=mink&new`}
           as={lite ? `/movement/${movementName}/mink/new` : `/houses/${houseId}/mink/new`}
-          passHref>
+          passHref
+        >
           <Button icon="arrow-right">new</Button>
         </Link>
       </>
@@ -555,7 +552,13 @@ const findMink = (id, minks) => {
 };
 
 const MinkTab = ({
-  venue: { id, name, industry: { lite }, minks, addedMinkId},
+  venue: {
+    id,
+    name,
+    industry: { lite },
+    minks,
+    addedMinkId,
+  },
   loadMinks,
   setSelectedMink,
   setAddedMinkId,
@@ -589,13 +592,7 @@ const MinkTab = ({
         </TopMinkSharePreviewWrap>
       ) : (
         <SharePreviewWrap>
-          <Mink
-            mink={m}
-            upvoteMink={upvoteMink}
-            downvoteMink={downvoteMink}
-            answerStatus={answerStatus}
-            isShare
-          />
+          <Mink mink={m} upvoteMink={upvoteMink} downvoteMink={downvoteMink} answerStatus={answerStatus} isShare />
         </SharePreviewWrap>
       );
     },
@@ -620,13 +617,11 @@ const MinkTab = ({
           answerStatus,
           toggleMinkFlag,
           movementName,
-          lite
+          lite,
         )
       ) : (
         <Loader big />
       )}
-      {/* uncomment this for old implementation */}
-      {/* <VoteMink /> */}
       <NewMinkElected />
       <PrivateShare type="mink" renderItem={renderSharePreview} getItemTitle={getTitleForShare} />
     </TabLayout>
