@@ -14,7 +14,7 @@
         "server:watch": "nodemon server/index.js",
         "start:dev": "npm run next:dev",
         "start:prod": "npm run clean && npm run build && npm run server:watch",
-        "start": "npm run start:build",
+        "start": "npm run start:prod",
         "storybook": "start-storybook -p 9001 -c config/storybook",
         "test:watch": "npm test -- --watch",
         "test": "jest --env=jsdom --no-cache --colors test"
