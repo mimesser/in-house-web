@@ -43,6 +43,7 @@ const PrivateShare = ({
   share,
   setError,
 }) => {
+  const [tempPlaceholder, setTempPlaceholder] = useState('');
   const [recipient, setRecipient] = useState('');
   const [message, setMessage] = useState('');
   const handleRecipientChange = useCallback(
@@ -54,6 +55,15 @@ const PrivateShare = ({
     },
     [recipientError],
   );
+
+  function handleFocus(event) {
+    setTempPlaceholder(event.target.placeholder);
+    event.target.placeholder = '';
+  }
+  function handleFocusOut(event) {
+    event.target.placeholder = tempPlaceholder;
+  }
+
   const send = () => share(type, id, recipient, message || placeholder);
   const recipientPlaceholder = 'text or email/mobile';
   const placeholder = `${venueName} insider? someone thinks you should know about — “${getItemTitle(id)}”`;
@@ -61,14 +71,14 @@ const PrivateShare = ({
 
   return (
     <Layout>
-      <ShareContent>
-        {renderItem(id)}
-      </ShareContent>
+      <ShareContent>{renderItem(id)}</ShareContent>
       <FormLayout>
         <H2>send anonymous</H2>
         <CounterInput
           value={recipient}
           onChange={handleRecipientChange}
+          onFocus={handleFocus}
+          onBlur={handleFocusOut}
           max={24}
           placeholder={recipientPlaceholder}
           error={recipientError}
@@ -76,6 +86,8 @@ const PrivateShare = ({
         <CounterInput
           value={message}
           onChange={setMessage}
+          onFocus={handleFocus}
+          onBlur={handleFocusOut}
           max={120}
           rows={4}
           placeholder={placeholder}
@@ -98,13 +110,7 @@ const ModalWrapper = (props) => {
   }
 
   return (
-    <Modal
-      closeModal={close}
-      canClose={!sending && !sent}
-      inverse={sent}
-      canDismiss={false}
-      noPadd
-    >
+    <Modal closeModal={close} canClose={!sending && !sent} inverse={sent} canDismiss={false} noPadd>
       <CustomOverlay />
       {!sent && <PrivateShare {...props} venue={venue} id={shareItem.id} />}
       {sent && (inDemo ? <DemoWinkConfirmation onCloseClick={close} /> : <WinkConfirmation />)}
