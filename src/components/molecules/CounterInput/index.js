@@ -4,7 +4,7 @@ import { CharLimit, Status, SubText, Error } from './style';
 import { Textarea, Input, FormGroup } from '../../atoms';
 
 export const CounterInput = ({ value, onChange, max, multiline, subtext, marginless, error, ...inputProps }) => {
-  const [tempPlaceholder, setTempPlaceholder] = useState('');
+  const [tempPlaceholder, setTempPlaceholder] = useState(inputProps.placeholder);
 
   const handleChange = useCallback(
     (e) => {
@@ -14,12 +14,11 @@ export const CounterInput = ({ value, onChange, max, multiline, subtext, marginl
     [onChange],
   );
 
-  function handleFocus(event) {
-    setTempPlaceholder(event.target.placeholder);
-    event.target.placeholder = '';
+  function handleFocus() {
+    setTempPlaceholder('');
   }
-  function handleBlur(event) {
-    event.target.placeholder = tempPlaceholder;
+  function handleBlur() {
+    setTempPlaceholder(inputProps.placeholder);
   }
 
   const Control = multiline ? Textarea : Input;
@@ -34,6 +33,7 @@ export const CounterInput = ({ value, onChange, max, multiline, subtext, marginl
         error={error}
         onFocus={handleFocus}
         onBlur={handleBlur}
+        placeholder={tempPlaceholder}
       />
       <Status>
         {!error && subtext && <SubText inverse>{subtext}</SubText>}
