@@ -43,7 +43,6 @@ const PrivateShare = ({
   share,
   setError,
 }) => {
-  const [tempPlaceholder, setTempPlaceholder] = useState('');
   const [recipient, setRecipient] = useState('');
   const [message, setMessage] = useState('');
   const handleRecipientChange = useCallback(
@@ -55,14 +54,6 @@ const PrivateShare = ({
     },
     [recipientError],
   );
-
-  function handleFocus(event) {
-    setTempPlaceholder(event.target.placeholder);
-    event.target.placeholder = '';
-  }
-  function handleFocusOut(event) {
-    event.target.placeholder = tempPlaceholder;
-  }
 
   const send = () => share(type, id, recipient, message || placeholder);
   const recipientPlaceholder = 'text or email/mobile';
@@ -77,22 +68,11 @@ const PrivateShare = ({
         <CounterInput
           value={recipient}
           onChange={handleRecipientChange}
-          onFocus={handleFocus}
-          onBlur={handleFocusOut}
           max={24}
           placeholder={recipientPlaceholder}
           error={recipientError}
         />
-        <CounterInput
-          value={message}
-          onChange={setMessage}
-          onFocus={handleFocus}
-          onBlur={handleFocusOut}
-          max={120}
-          rows={4}
-          placeholder={placeholder}
-          multiline
-        />
+        <CounterInput value={message} onChange={setMessage} max={120} rows={4} placeholder={placeholder} multiline />
         <SubmitButton disabled={!isValidEmailOrPhone} loading={sending} onClick={send} inverse>
           send anonymously
         </SubmitButton>
