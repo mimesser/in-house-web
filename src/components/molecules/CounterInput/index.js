@@ -3,8 +3,18 @@ import React, { useCallback, useState } from 'react';
 import { CharLimit, Status, SubText, Error } from './style';
 import { Textarea, Input, FormGroup } from '../../atoms';
 
-export const CounterInput = ({ value, onChange, max, multiline, subtext, marginless, error, ...inputProps }) => {
-  const [tempPlaceholder, setTempPlaceholder] = useState(inputProps.placeholder);
+export const CounterInput = ({
+  value,
+  onChange,
+  max,
+  multiline,
+  subtext,
+  marginless,
+  error,
+  placeholder,
+  ...inputProps
+}) => {
+  const [tempPlaceholder, setTempPlaceholder] = useState(placeholder);
 
   const handleChange = useCallback(
     (e) => {
@@ -18,7 +28,7 @@ export const CounterInput = ({ value, onChange, max, multiline, subtext, marginl
     setTempPlaceholder('');
   }
   function handleBlur() {
-    setTempPlaceholder(inputProps.placeholder);
+    setTempPlaceholder(placeholder);
   }
 
   const Control = multiline ? Textarea : Input;
