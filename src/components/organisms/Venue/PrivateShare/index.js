@@ -54,6 +54,7 @@ const PrivateShare = ({
     },
     [recipientError],
   );
+
   const send = () => share(type, id, recipient, message || placeholder);
   const recipientPlaceholder = 'text or email/mobile';
   const placeholder = `${venueName} insider? someone thinks you should know about — “${getItemTitle(id)}”`;
@@ -61,9 +62,7 @@ const PrivateShare = ({
 
   return (
     <Layout>
-      <ShareContent>
-        {renderItem(id)}
-      </ShareContent>
+      <ShareContent>{renderItem(id)}</ShareContent>
       <FormLayout>
         <H2>send anonymous</H2>
         <CounterInput
@@ -73,14 +72,7 @@ const PrivateShare = ({
           placeholder={recipientPlaceholder}
           error={recipientError}
         />
-        <CounterInput
-          value={message}
-          onChange={setMessage}
-          max={120}
-          rows={4}
-          placeholder={placeholder}
-          multiline
-        />
+        <CounterInput value={message} onChange={setMessage} max={120} rows={4} placeholder={placeholder} multiline />
         <SubmitButton disabled={!isValidEmailOrPhone} loading={sending} onClick={send} inverse>
           send anonymously
         </SubmitButton>
@@ -98,13 +90,7 @@ const ModalWrapper = (props) => {
   }
 
   return (
-    <Modal
-      closeModal={close}
-      canClose={!sending && !sent}
-      inverse={sent}
-      canDismiss={false}
-      noPadd
-    >
+    <Modal closeModal={close} canClose={!sending && !sent} inverse={sent} canDismiss={false} noPadd>
       <CustomOverlay />
       {!sent && <PrivateShare {...props} venue={venue} id={shareItem.id} />}
       {sent && (inDemo ? <DemoWinkConfirmation onCloseClick={close} /> : <WinkConfirmation />)}

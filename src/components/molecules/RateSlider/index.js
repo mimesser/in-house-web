@@ -26,7 +26,7 @@ const Dot = styled(({ size, padd, ...rest }) => <NumberLarge {...rest}>.</Number
 const Title = styled.div`
   position: relative;
   margin-left: 24px;
-  top: 2.2em;
+  top: 2em;
   color: ${({ color }) => color};
   ${font.bold};
   font-size: ${fontSize.md};
