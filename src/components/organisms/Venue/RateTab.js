@@ -2,7 +2,7 @@ import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { createStructuredSelector } from 'reselect';
-import { debounce, isNil, isFunction } from 'lodash';
+import { debounce, isNil } from 'lodash';
 
 import { Loader, HelpTip } from '../../atoms';
 import {
@@ -48,7 +48,6 @@ const CellWrapper = styled.div`
   overflow: hidden;
   transition: opacity 0.8s, blur 0.8s;
   opacity: ${({ selectedTag, isSelected }) => (isSelected || !selectedTag ? '1' : '0.5')};
-  // filter: ${({ selectedTag, isSelected }) => (selectedTag && !isSelected ? 'blur(1px)' : 'none')};
 `;
 
 const StyledLoader = styled(Loader)`
@@ -86,7 +85,7 @@ const Tag = memo(
     selectedTag,
   }) => {
     const [rateValue, setRateValue] = useState(userRate);
-    const inProgress = rateInProgress === definitionId;
+    const inProgress = false;
     const isSelected = selectedTag && selectedTag.definitionId === definitionId;
     const isScrolling = useRef(false);
     const selectedRef = useRef();
@@ -139,6 +138,7 @@ const Tag = memo(
           onSlideStart={() => setSelectedTag(definitionId)}
           onSlideEnd={rateTag}
           value={getTeamRateIfRated(userRate, voteRating)}
+          initialRating={voteRating}
           userRate={userRate}
           voteCount={voteCount}
           expanded={expanded}
@@ -292,25 +292,22 @@ const RateTab = ({
           ))
         : null}
       {rateTags ? (
-        tags
-          // .filter((t) => (selectedCategory && selectedCategory.id === t.rateTagCategoryId) || !selectedCategory)
-          // .filter(t => selectedTag ? t.definitionId === selectedTag.definitionId : t)
-          .map((t, i) => (
-            <Tag
-              {...t}
-              key={t.definitionId}
-              definitionId={t.definitionId}
-              setSelectedTag={setSelectedTag}
-              setSelectedTagTargetRate={setSelectedTagTargetRate}
-              rateTag={rateAndLocallyUpdateStore}
-              userRate={t.userRate ? t.userRate : null}
-              withHelp={i === 0}
-              rateInProgress={rateInProgress}
-              expanded={selectedTag && selectedTag.definitionId === t.definitionId}
-              category={selectedCategory}
-              selectedTag={selectedTag}
-            />
-          ))
+        tags.map((t, i) => (
+          <Tag
+            {...t}
+            key={t.definitionId}
+            definitionId={t.definitionId}
+            setSelectedTag={setSelectedTag}
+            setSelectedTagTargetRate={setSelectedTagTargetRate}
+            rateTag={rateAndLocallyUpdateStore}
+            userRate={t.userRate ? t.userRate : null}
+            withHelp={i === 0}
+            rateInProgress={rateInProgress}
+            expanded={selectedTag && selectedTag.definitionId === t.definitionId}
+            category={selectedCategory}
+            selectedTag={selectedTag}
+          />
+        ))
       ) : (
         <Loader big />
       )}
