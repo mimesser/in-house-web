@@ -1,10 +1,7 @@
 import React from 'react';
-import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
-import axios from 'axios';
-import App, { Container } from 'next/app';
-import withRedux from 'next-redux-wrapper';
-import withReduxSaga from 'next-redux-saga';
+import App from 'next/app';
+import Head from 'next/head';
 import { END } from 'redux-saga';
 import { Helmet } from 'react-helmet';
 import Head from 'next/head';
@@ -12,10 +9,7 @@ import { useRouter } from 'next/router';
 import { wrapper } from '../store';
 import { theme } from '../style';
 import { GlobalStyle } from '../components/GlobalStyle';
-import { loadAggregateData } from '../store/aggregate';
 import { initGA, logPageView } from '../utils/analytics';
-
-const LAST_RELOAD_KEY = 'in-house/lastReload';
 
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
@@ -40,14 +34,43 @@ class MyApp extends App {
   }
 
   render() {
-    const { Component, pageProps, store } = this.props;
+    const { Component, pageProps } = this.props;
 
     return (
       <ThemeProvider theme={theme}>
         <>
-          <Helmet>
-            <link rel="canonical" href="'//hello.myfonts.net/count/3af918'" />
-          </Helmet>
+          <Head>
+            {/* <title>In-House | Speak as a Team | Remain Untraceable</title> */}
+            {/* <meta name="title" content="In-House | Speak as a Team | Remain Untraceable" /> */}
+            <meta
+              name="description"
+              content="Challenge favoritism and politics. Promote the best ideas and people. Are you an Insider?"
+            />
+
+            <meta property="og:type" content="website" />
+            <meta property="og:url" content="https://in-house.com/" />
+            {/* <meta property="og:title" content="In-House | Speak as a Team | Remain Untraceable" /> */}
+            <meta
+              property="og:description"
+              content="Challenge favoritism and politics. Promote the best ideas and people. Are you an Insider?"
+            />
+            <meta property="og:image" content="https://in-house.azureedge.net/webstatic/in-house-meta.png" />
+
+            <meta property="twitter:card" content="summary_large_image" />
+            <meta property="twitter:url" content="https://in-house.com/" />
+            {/* <meta property="twitter:title" content="In-House | Speak as a Team | Remain Untraceable" /> */}
+            <meta
+              property="twitter:description"
+              content="Challenge favoritism and politics. Promote the best ideas and people. Are you an Insider?"
+            />
+            <meta property="twitter:image" content="https://in-house.azureedge.net/webstatic/in-house-meta.png" />
+
+            <meta name="theme-color" content="#333333" />
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+            />
+          </Head>
 
           <GlobalStyle />
           {/* eslint-disable-next-line react/jsx-props-no-spreading */}
