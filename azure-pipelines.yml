@@ -1,0 +1,83 @@
+
+trigger:
+- develop
+- staging
+- prod
+
+resources:
+- repo: self
+
+variables:
+  # Container registry service connection established during pipeline creation
+  dockerRegistryServiceConnection: 'eb196ebe-a40e-40fc-9115-b7a70dff0e37'
+  imageRepository: 'frontend'
+  containerRegistry: 'ihtest.azurecr.io'
+  dockerfilePath: 'Dockerfile'
+  tag: '$(Build.SourceBranchName)'
+
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
+
+stages:
+- stage: Build
+  displayName: Build and push stage
+  jobs:
+  - job: Build_and_Push
+    displayName: Build and Push
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: Docker@2
+      displayName: Build for develop
+      condition: eq(variables['Build.SourceBranchName'], 'develop')
+      env:
+        MAP_DEV_GOPTIMIZEKEY: $(DEV_G_OPTIMIZE_KEY)
+        MAP_DEV_GAKEY: $(DEV_GA_KEY)
+        MAP_DEV_HOTJARSITEID: $(DEV_HOTJAR_SITE_ID)
+      inputs:
+        command: build
+        arguments: '--build-arg APIURL=$(DEV_API_URL) --build-arg GOPTIMIZEKEY=$(MAP_DEV_GOPTIMIZEKEY) --build-arg GAKEY=$(MAP_DEV_GAKEY) --build-arg HOTJARSITEID=$(MAP_DEV_HOTJARSITEID)'
+        containerRegistry: $(dockerRegistryServiceConnection)
+        repository: $(imageRepository)
+        Dockerfile: $(dockerfilePath)
+        tags: |
+          $(tag)
+    - task: Docker@2
+      displayName: Build for staging
+      condition: eq(variables['Build.SourceBranchName'], 'staging')
+      env:
+        MAP_STAGING_GOPTIMIZEKEY: $(STAGING_G_OPTIMIZE_KEY)
+        MAP_STAGING_GAKEY: $(STAGING_GA_KEY)
+        MAP_STAGING_HOTJARSITEID: $(STAGING_HOTJAR_SITE_ID)
+      inputs:
+        command: build
+        arguments: '--build-arg APIURL=$(STAGING_API_URL) --build-arg GOPTIMIZEKEY=$(MAP_STAGING_GOPTIMIZEKEY) --build-arg GAKEY=$(MAP_STAGING_GAKEY) --build-arg HOTJARSITEID=$(MAP_STAGING_HOTJARSITEID)'
+        containerRegistry: $(dockerRegistryServiceConnection)
+        repository: $(imageRepository)
+        Dockerfile: $(dockerfilePath)
+        tags: |
+          $(tag)
+    - task: Docker@2
+      displayName: Build for prod
+      condition: eq(variables['Build.SourceBranchName'], 'prod')
+      env:
+        MAP_PROD_GOPTIMIZEKEY: $(PROD_G_OPTIMIZE_KEY)
+        MAP_PROD_GAKEY: $(PROD_GA_KEY)
+        MAP_PROD_HOTJARSITEID: $(PROD_HOTJAR_SITE_ID)
+      inputs:
+        command: build
+        arguments: '--build-arg APIURL=$(PROD_API_URL) --build-arg GOPTIMIZEKEY=$(MAP_PROD_GOPTIMIZEKEY) --build-arg GAKEY=$(MAP_PROD_GAKEY) --build-arg HOTJARSITEID=$(MAP_PROD_HOTJARSITEID)'
+        containerRegistry: $(dockerRegistryServiceConnection)
+        repository: $(imageRepository)
+        Dockerfile: $(dockerfilePath)
+        tags: |
+          $(tag)
+    - task: Docker@2
+      displayName: Push
+      condition: 
+      inputs:
+        command: push
+        containerRegistry: $(dockerRegistryServiceConnection)
+        repository: $(imageRepository)
+        tags: |
+          $(tag)
