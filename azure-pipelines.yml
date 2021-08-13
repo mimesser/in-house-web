@@ -30,13 +30,9 @@ stages:
     - task: Docker@2
       displayName: Build for develop
       condition: eq(variables['Build.SourceBranchName'], 'develop')
-      env:
-        MAP_DEV_GOPTIMIZEKEY: $(DEV_G_OPTIMIZE_KEY)
-        MAP_DEV_GAKEY: $(DEV_GA_KEY)
-        MAP_DEV_HOTJARSITEID: $(DEV_HOTJAR_SITE_ID)
       inputs:
         command: build
-        arguments: '--build-arg APIURL=$(DEV_API_URL) --build-arg GOPTIMIZEKEY=$(MAP_DEV_GOPTIMIZEKEY) --build-arg GAKEY=$(MAP_DEV_GAKEY) --build-arg HOTJARSITEID=$(MAP_DEV_HOTJARSITEID)'
+        arguments: '--build-arg APIURL=$(DEV_API_URL) --build-arg GOPTIMIZEKEY=$(DEV_G_OPTIMIZE_KEY) --build-arg GAKEY=$(DEV_GA_KEY) --build-arg HOTJARSITEID=$(DEV_HOTJAR_SITE_ID)'
         containerRegistry: $(dockerRegistryServiceConnection)
         repository: $(imageRepository)
         Dockerfile: $(dockerfilePath)
@@ -45,13 +41,9 @@ stages:
     - task: Docker@2
       displayName: Build for staging
       condition: eq(variables['Build.SourceBranchName'], 'staging')
-      env:
-        MAP_STAGING_GOPTIMIZEKEY: $(STAGING_G_OPTIMIZE_KEY)
-        MAP_STAGING_GAKEY: $(STAGING_GA_KEY)
-        MAP_STAGING_HOTJARSITEID: $(STAGING_HOTJAR_SITE_ID)
       inputs:
         command: build
-        arguments: '--build-arg APIURL=$(STAGING_API_URL) --build-arg GOPTIMIZEKEY=$(MAP_STAGING_GOPTIMIZEKEY) --build-arg GAKEY=$(MAP_STAGING_GAKEY) --build-arg HOTJARSITEID=$(MAP_STAGING_HOTJARSITEID)'
+        arguments: '--build-arg APIURL=$(STAGING_API_URL) --build-arg GOPTIMIZEKEY=$(STAGING_G_OPTIMIZE_KEY) --build-arg GAKEY=$(STAGING_GA_KEY) --build-arg HOTJARSITEID=$(STAGING_HOTJAR_SITE_ID)'
         containerRegistry: $(dockerRegistryServiceConnection)
         repository: $(imageRepository)
         Dockerfile: $(dockerfilePath)
@@ -60,13 +52,9 @@ stages:
     - task: Docker@2
       displayName: Build for prod
       condition: eq(variables['Build.SourceBranchName'], 'prod')
-      env:
-        MAP_PROD_GOPTIMIZEKEY: $(PROD_G_OPTIMIZE_KEY)
-        MAP_PROD_GAKEY: $(PROD_GA_KEY)
-        MAP_PROD_HOTJARSITEID: $(PROD_HOTJAR_SITE_ID)
       inputs:
         command: build
-        arguments: '--build-arg APIURL=$(PROD_API_URL) --build-arg GOPTIMIZEKEY=$(MAP_PROD_GOPTIMIZEKEY) --build-arg GAKEY=$(MAP_PROD_GAKEY) --build-arg HOTJARSITEID=$(MAP_PROD_HOTJARSITEID)'
+        arguments: '--build-arg APIURL=$(PROD_API_URL) --build-arg GOPTIMIZEKEY=$(PROD_G_OPTIMIZE_KEY) --build-arg GAKEY=$(PROD_GA_KEY) --build-arg HOTJARSITEID=$(PROD_HOTJAR_SITE_ID)'
         containerRegistry: $(dockerRegistryServiceConnection)
         repository: $(imageRepository)
         Dockerfile: $(dockerfilePath)
@@ -74,7 +62,6 @@ stages:
           $(tag)
     - task: Docker@2
       displayName: Push
-      condition: 
       inputs:
         command: push
         containerRegistry: $(dockerRegistryServiceConnection)
