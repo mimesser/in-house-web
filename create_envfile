@@ -1,0 +1,6 @@
+#!/bin/sh
+
+echo "API_URL=$API_URL" >>.env \
+&& echo "G_OPTIMIZE_KEY=$G_OPTIMIZE_KEY" >>.env \
+&& echo "GA_KEY=$GA_KEY" >>.env \
+&& echo "HOTJAR_SITE_ID=$HOTJAR_SITE_ID" >>.env
