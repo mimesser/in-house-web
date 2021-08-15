@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Link from 'next/link';
 import { useScrollPosition } from '@n8tb1t/use-scroll-position';
+import { debounce } from 'lodash';
 import {
   loadPosts,
   selectSelectedPost,
@@ -26,7 +27,7 @@ import { VoteButton, Layout, FlagButton } from './openCardStyle';
 
 import { Modal } from '../Modal';
 import { Dialog } from '../Modal/style';
-import { debounce } from 'lodash';
+
 const transition = {
   in: '0.25s',
   out: '0.2s',
@@ -226,23 +227,32 @@ const Post = ({
   const size = upvoted || downvoted ? 1.7 : 2.2;
   const selected = selectedPost && selectedPost.id === id;
   const [showFullImage, setShowFullImage] = useState(false);
+  const [optimisticVoteRating, setOptimisticVoteRating] = useState(voteRating);
 
   const close = useCallback(() => setShowFullImage(false));
   const open = useCallback(() => setShowFullImage(true));
   const select = useCallback(() => setSelectedPost(id), [id]);
   const deselect = useCallback(() => setSelectedPost(undefined), [id]);
 
-  const votePost = useCallback(
-    debounce((e, id, vote) => {
-      setCurrentVote(vote);
-      if (vote == 1) {
-        upvotePost(id);
-      } else {
-        downvotePost(id);
-      }
-    }, 500),
-    [],
-  );
+  const votePost = useCallback((e, id, vote) => {
+    setCurrentVote(vote);
+    if (vote === 1) {
+      const curAverage = downvoted
+        ? (voteRating * voteCount + 10) / voteCount
+        : (voteRating * voteCount + 10) / (voteCount + 1);
+
+      setOptimisticVoteRating(curAverage);
+      upvotePost(id);
+    } else {
+      const curAverage = upvoted
+        ? (voteRating * voteCount - 10) / voteCount
+        : (voteRating * voteCount) / (voteCount + 1);
+
+      setOptimisticVoteRating(curAverage);
+      downvotePost(id);
+    }
+  }, []);
+
   const card = (
     <PostCard onClick={selected ? deselect : select} selected={selected}>
       <div>
@@ -274,13 +284,11 @@ const Post = ({
         <Main>
           <CellHeader color={upvoted || downvoted ? appColors.gray4 : appColors.gray6}>
             <ItemTime dateTime={created}>{formatDateTime(created)}</ItemTime>
-            {!selected && (
-              <ShareWrap>
-                <Votes count={voteCount} userRate={upvoted || downvoted} />
-                {(upvoted || downvoted) && <NumberLarge>{formatRating(voteRating)}</NumberLarge>}
-                <PrivateShareButton id={id} type="post" color={appColors.gray6} />
-              </ShareWrap>
-            )}
+            <ShareWrap>
+              {!selected && <Votes count={voteCount} userRate={upvoted || downvoted} />}
+              {(upvoted || downvoted) && <NumberLarge>{formatRating(optimisticVoteRating)}</NumberLarge>}
+              {!selected && <PrivateShareButton id={id} type="post" color={appColors.gray6} />}
+            </ShareWrap>
           </CellHeader>
           <ItemTitle>{title}</ItemTitle>
           <PostText>{text}</PostText>
@@ -354,7 +362,7 @@ const NewPostSection = styled.div`
 `;
 
 const SharePreviewWrap = styled.div`
-  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   padding: ${spacing.md} ${spacing.sm};
 `;
 
@@ -392,7 +400,12 @@ const findPost = (id, posts) => {
 };
 
 const PostTab = ({
-  venue: { id, posts, name, industry: { lite }},
+  venue: {
+    id,
+    posts,
+    name,
+    industry: { lite },
+  },
   loadPosts,
   setSelectedPost,
   selectedPost,
@@ -410,12 +423,7 @@ const PostTab = ({
 
       return (
         <SharePreviewWrap>
-          <Post
-            post={p}
-            upvotePost={upvotePost}
-            downvotePost={downvotePost}
-            isShare
-          />
+          <Post post={p} upvotePost={upvotePost} downvotePost={downvotePost} isShare />
         </SharePreviewWrap>
       );
     },
