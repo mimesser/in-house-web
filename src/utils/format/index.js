@@ -1,9 +1,9 @@
 import moment from 'moment';
 
-export const formatDate = (date) => moment(date).format('MM/DD/YYYY');
+export const formatDate = (date) => moment.utc(date).local().format('MM/DD/YYYY');
 
-export const formatDateTime = (date) => moment(date).format('MM.DD.YYYY / LT');
+export const formatDateTime = (date) => moment.utc(date).local().format('MM/DD/YYYY / LT');
 
 export const formatRating = (rating) => Number.parseFloat(rating).toFixed(1);
 
-export const formatMovementURL = (name) => `,)${name.replaceAll(" ", "_")}`;
+export const formatMovementURL = (name) => `,)${name.replaceAll(' ', '_')}`;
