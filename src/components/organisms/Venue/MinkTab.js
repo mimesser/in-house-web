@@ -351,6 +351,7 @@ const Mink = ({
   const ref = useRef(null);
   const answerRef = useRef(null);
   const [vote, setVote] = useState(myVote);
+  const [optimisticVoteRating, setOptimisticVoteRating] = useState(voteRating);
   const upvoted = vote === 1;
   const downvoted = vote === -1;
   const active = selectedMink && selectedMink.id === minkId;
@@ -363,15 +364,25 @@ const Mink = ({
     if (!value) return;
     tryAnswerMink(houseId, minkId, value);
   }, []);
-  const voteMink = useCallback(
-    debounce((e, id, value) => {
-      // e.stopPropagation();
-      setVote(value);
-      if (value === 1) upvoteMink(id);
-      if (value === -1) downvoteMink(id);
-    }, 100),
-    [],
-  );
+  const voteMink = useCallback((e, id, value) => {
+    setVote(value);
+    if (+value === 1) {
+      const curAverage = downvoted
+        ? (voteRating * voteCount + 10) / voteCount
+        : (voteRating * voteCount + 10) / (voteCount + 1);
+
+      setOptimisticVoteRating(curAverage);
+      upvoteMink(id);
+    } else {
+      const curAverage = upvoted
+        ? (voteRating * voteCount - 10) / voteCount
+        : (voteRating * voteCount) / (voteCount + 1);
+
+      setOptimisticVoteRating(curAverage);
+      downvoteMink(id);
+    }
+  }, []);
+
   const clearAnswer = useCallback((e) => {
     e.stopPropagation();
     setAnswer('');
@@ -387,7 +398,7 @@ const Mink = ({
 
   const card = (
     <MinkCard ref={ref} active={active} topMink={topMink} isShare={isShare}>
-      <div>
+      <div onClick={active ? deselectMink : selectMink}>
         <VoteWrap>
           <VoteButton onClick={(e) => voteMink(e, minkId, 1)}>
             <Dot hide={!upvoted} />
@@ -398,7 +409,7 @@ const Mink = ({
             <Icon size={size} icon="arrow-down-circle" />
           </VoteButton>
         </VoteWrap>
-        <Main onClick={active ? deselectMink : selectMink}>
+        <Main>
           <TopWrap>
             <ItemTime dateTime={created}>{formatDateTime(created)}</ItemTime>
             <Push />
@@ -407,9 +418,13 @@ const Mink = ({
               {myVote ? (
                 <RatingWrap>
                   /
-                  <VoteRating hideRate={active} topMink={topMink}>
-                    <SlidingValue fontSize={fontSize.md} value={`${formatRating(voteRating) * 10}`} inverse={topMink}>
-                      <Dot hide={active} topMink={topMink} />
+                  <VoteRating hideRate={false} topMink={topMink}>
+                    <SlidingValue
+                      fontSize={fontSize.md}
+                      value={`${formatRating(optimisticVoteRating) * 10}`}
+                      inverse={topMink}
+                    >
+                      <Dot hide={false} topMink={topMink} />
                     </SlidingValue>
                   </VoteRating>
                 </RatingWrap>
