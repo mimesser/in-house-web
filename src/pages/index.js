@@ -157,6 +157,10 @@ const socialLinks = [
     icon: 'linkedin',
     href: 'https://www.linkedin.com/company/in-house6',
   },
+  {
+    icon: 'instagram',
+    href: 'https://www.instagram.com/iH.movement/',
+  },
 ];
 
 const WhiteSection = styled.section`
