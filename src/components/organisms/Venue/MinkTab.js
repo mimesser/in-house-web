@@ -475,7 +475,12 @@ const Mink = ({
           </InputGroup>
           {!isShare && (
             <FlagItemWrap>
-              <FlagItem disabled={isActiveInsider} flagged={wasFlaggedByMe} toggleFlag={toggleMinkFlag} />
+              <FlagItem
+                disabled={isActiveInsider}
+                flagged={wasFlaggedByMe}
+                toggleFlag={toggleMinkFlag}
+                color={palette.gray2}
+              />
             </FlagItemWrap>
           )}
         </Main>
