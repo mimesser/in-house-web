@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
-import isNumber from 'lodash/isNumber';
-import debounce from 'lodash.debounce';
+import { isNil } from 'lodash';
 
 import { NumberLarge, NumberSmall, Icon, Slider, SlidingValue } from '../../atoms';
 import { fontSize, font, palette, theme } from '../../../style';
 import { getClientPosition } from '../../atoms/Slider/utils';
+import { formatRating } from '../../../utils/format';
 
 const FONT_RATIO = 3.6;
 
@@ -13,6 +13,11 @@ const SuperScriptDecimalSpan = styled.span`
   vertical-align: super;
   font-size: 0.5em;
   margin-left: -2px;
+`;
+
+const NumberMedium = styled(NumberSmall)`
+  word-break: keep-all;
+  font-weight: bold;
 `;
 
 const Dot = styled(({ size, padd, ...rest }) => <NumberLarge {...rest}>.</NumberLarge>)`
@@ -58,7 +63,7 @@ const Wrapper = styled.div`
 export const Votes = styled(({ count, iconSize = 1, userRate, ...rest }) => (
   <NumberSmall {...rest}>
     <Icon icon="users" size={iconSize} /> <span className="count">{count || 0}</span>{' '}
-    {userRate ? <span className="divide">{'   /'}</span> : <span className="divide">{' insiders'}</span>}
+    {!isNil(userRate) ? <span className="divide">{'   /'}</span> : <span className="divide">{' insiders'}</span>}
   </NumberSmall>
 ))`
   position: relative;
@@ -180,22 +185,10 @@ export const Indicator = styled(({ count, iconSize = 0.75, ...rest }) => (
   left: ${(props) => `${props.percentage}%`};
 `;
 
-const renderValue = (value, decimal) => {
-  if (!isNumber(value)) {
-    return null;
-  }
-
-  if (decimal) {
-    return value.toFixed(1);
-  }
-
-  return value;
-};
-
 const BaseRateSlider = ({
   value: initialValue = null,
-  initialRating,
   voteCount,
+  voteRating,
   valueColor,
   title = 'rate & appreciation',
   userRate = null,
@@ -210,58 +203,23 @@ const BaseRateSlider = ({
   targetRate,
   ...sliderProps
 }) => {
-  const { readonly: decimal, size, padd, fillColor = palette.darkGray } = sliderProps;
+  const { padd, fillColor = palette.darkGray } = sliderProps;
   const [value, setValue] = useState(initialValue);
-  const [hiddenValue, setHiddenValue] = useState(initialRating);
-  const [totalVoteCount, setVoteCount] = useState(voteCount);
   const [userValue, setUserValue] = useState(userRate);
-  const [tempRate, setTempRate] = useState(null);
-  const [tempClientPos, setTempClientPos] = useState(0);
-  const [preAverage, setPreAverage] = useState(null);
   const selectedRef = useRef();
-  const currentValue = `${Math.floor((expanded ? userValue / 10 : value) * 10)}`;
+  const currentValue = `${Math.floor((expanded ? userValue / 10 : value) * 10.99)}`;
+
   const changeRate = (e) => {
     const clientPos = getClientPosition(e);
+    const rect = selectedRef.current.getBoundingClientRect();
 
-    if (clientPos.x - tempClientPos > 10 || clientPos.x - tempClientPos < -10) {
-      console.log(clientPos.x - tempClientPos > 10);
-      console.log(clientPos.x - tempClientPos);
-      console.log(clientPos.x - tempClientPos);
-      console.log(clientPos.x - tempClientPos < -10);
-      setTempClientPos(clientPos.x);
-      const rect = selectedRef.current.getBoundingClientRect();
-      if (clientPos.x < 0 || clientPos.x > rect.width) return;
-      const rate = ((clientPos.x / rect.width) * 10).toFixed(1);
+    if (clientPos.x < 0 || clientPos.x > rect.width) return;
 
-      const rateAsNumber = Number(rate).toFixed(1);
+    const rate = Math.floor((clientPos.x / rect.width) * 10.99);
 
-      if (rateAsNumber !== tempRate) {
-        if (rateAsNumber % 1 === 0) {
-          const newAverage = calculateMeanRating(totalVoteCount, Number(hiddenValue) || 5, Number(rate), userRate);
-          setPreAverage(newAverage);
-          onChange(rate);
-          console.log(rate);
-        }
-        setTempRate(rateAsNumber);
-        setUserValue(rate);
-      }
-    }
+    setUserValue(rate);
+    onChange(rate);
   };
-
-  function calculateMeanRating(nValues, average, newValue, oldValue) {
-    let trueAverage = average;
-    if (oldValue !== null) {
-      let valueA = average * nValues;
-      valueA -= oldValue;
-      const valueB = nValues - 1;
-      trueAverage = valueA / valueB;
-    }
-    const valueA = newValue - trueAverage;
-    const valueB = nValues + 1;
-    const valueC = valueA / valueB;
-    const newAverage = trueAverage + valueC;
-    return newAverage;
-  }
 
   useEffect(() => {
     setValue(initialValue);
@@ -284,45 +242,37 @@ const BaseRateSlider = ({
         <Votes count={voteCount} userRate={userRate} expanded={expanded} />
 
         <SlidingValueWrapper expanded={expanded}>
-          {(expanded || (userValue && value)) && (
+          {(expanded || (!isNil(userValue) && !isNil(value))) && (
             <>
-              <SlidingValue
-                fontSize={expanded ? fontSize.lg : fontSize.md}
-                value={
-                  // eslint-disable-next-line no-nested-ternary
-                  expanded && tempRate
-                    ? `${Math.floor(Number(tempRate).toFixed(0))}`
-                    : preAverage
-                    ? `${Math.floor(preAverage.toFixed()) * 10}`
-                    : currentValue
-                }
-                minLength={expanded ? 1 : 2}
-              >
-                {!expanded && <Dot size={expanded ? 140 : 80} padd={padd} color={valueColor} />}
-              </SlidingValue>
-              {expanded ? (
+              {!expanded ? (
+                <SlidingValue fontSize={fontSize.md} value={`${formatRating(voteRating) * 10}`} minLength={2}>
+                  <Dot size={80} padd={padd} color={valueColor} />
+                </SlidingValue>
+              ) : (
+                <NumberMedium>{userValue}</NumberMedium>
+              )}
+              {expanded && (
                 <>
                   <h1>/</h1>
-
-                  <SlidingValue
-                    fontSize={expanded ? fontSize.lg : fontSize.md}
-                    value={preAverage > 0.5 ? `${preAverage.toFixed(1) * 10}` : currentValue}
-                    minLength={2}
-                  >
-                    <Dot size={expanded ? 140 : 80} padd={padd} color={valueColor} />
-                  </SlidingValue>
+                  <NumberMedium>
+                    {formatRating(
+                      isNil(userRate)
+                        ? Number((voteRating * voteCount + (+userValue || 0)) / ((voteCount || 0) + 1)).toFixed(1)
+                        : Number((voteRating * voteCount - userRate + (+userValue || 0)) / (voteCount || 1)).toFixed(1),
+                    )}
+                  </NumberMedium>
                 </>
-              ) : null}
+              )}
             </>
           )}
         </SlidingValueWrapper>
-        <SliderWrapper expanded={expanded} duration={0.0015}>
+        <SliderWrapper expanded={expanded} duration={0.15}>
           <Slider
             fillColor={fillColor}
             x={(expanded && (userValue || 0.0)) || (!expanded && value)}
             selectedTag={selectedTag}
           >
-            {userValue && !expanded && <Indicator percentage={userValue * 10} />}
+            {!isNil(userValue) && !expanded && <Indicator percentage={userValue * 10} />}
           </Slider>
         </SliderWrapper>
       </Wrapper>
