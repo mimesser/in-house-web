@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { createStructuredSelector } from 'reselect';
 import { debounce, isNil } from 'lodash';
-
-import { Loader, HelpTip } from '../../atoms';
+import Link from 'next/link';
+import { Loader, HelpTip, Button } from '../../atoms';
 import {
   setSelectedTag,
   loadRates,
@@ -66,6 +66,14 @@ const SharePreviewWrap = styled.div`
   ${CellWrapper} > div:first-child {
     border-bottom: 0;
   }
+`;
+const NewRateButton = styled(Button)`
+  margin: 0 !important;
+  width: 100%;
+  border: solid 2px white;
+  position: sticky;
+  z-index: 100;
+  top: 46px;
 `;
 
 const Tag = memo(
@@ -291,6 +299,14 @@ const RateTab = ({
             />
           ))
         : null}
+      <Link
+        href="/feedback"
+        // href={`/houses?id=${houseId}&tab=mink&new`}
+        // as={lite ? `/movement/${movementName}/mink/new` : `/houses/${houseId}/mink/new`}
+        passHref
+      >
+        <NewRateButton icon="arrow-right">new Rate</NewRateButton>
+      </Link>
       {rateTags ? (
         tags.map((t, i) => (
           <Tag
