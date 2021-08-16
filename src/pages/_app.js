@@ -4,6 +4,7 @@ import App from 'next/app';
 import Head from 'next/head';
 import { END } from 'redux-saga';
 import { Helmet } from 'react-helmet';
+import { useRouter } from 'next/router';
 import { wrapper } from '../store';
 import { theme } from '../style';
 import { GlobalStyle } from '../components/GlobalStyle';
@@ -24,6 +25,10 @@ class MyApp extends App {
 
   componentDidMount() {
     initGA();
+    logPageView();
+  }
+
+  componentDidUpdate() {
     logPageView();
   }
 

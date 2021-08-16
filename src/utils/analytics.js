@@ -3,7 +3,11 @@ import ReactGA from 'react-ga';
 export const initGA = () => {
   if (!window.GA_INITIALIZED) {
     if (process.env.GA_KEY) {
-      ReactGA.initialize(process.env.GA_KEY);
+      ReactGA.initialize(process.env.GA_KEY, {
+        gaOptions: {
+          siteSpeedSampleRate: 100,
+        },
+      });
     } else {
       console.log('GA key not specified');
     }
