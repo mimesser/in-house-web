@@ -429,9 +429,33 @@ const CloseIcon = styled(Icon).attrs(() => ({
 const Landing = ({ venues, loading, initVenuesPage, loadAggregateData }) => {
   const scrollMenu = (id = 'howitworks') => {
     setTimeout(() => {
-      const element = document.getElementById(id);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      const duration = 1600;
+      const target = document.getElementById(id);
+
+      if (target) {
+        const { top: diff } = target.getBoundingClientRect();
+        const startPos = window.pageYOffset;
+
+        let startTime = null;
+        let requestId;
+
+        const loop = (currentTime) => {
+          if (!startTime) {
+            startTime = currentTime;
+          }
+
+          const time = currentTime - startTime;
+
+          const percent = Math.min(time / duration, 1);
+          window.scrollTo(0, startPos + diff * percent);
+
+          if (time < duration) {
+            requestId = window.requestAnimationFrame(loop);
+          } else {
+            window.cancelAnimationFrame(requestId);
+          }
+        };
+        requestId = window.requestAnimationFrame(loop);
       }
     }, 300);
   };
