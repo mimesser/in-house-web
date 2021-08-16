@@ -2,7 +2,7 @@ import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { createStructuredSelector } from 'reselect';
-import { debounce, isNil, isFunction } from 'lodash';
+import { debounce, isNil } from 'lodash';
 
 import { Loader, HelpTip } from '../../atoms';
 import {
@@ -48,7 +48,6 @@ const CellWrapper = styled.div`
   overflow: hidden;
   transition: opacity 0.8s, blur 0.8s;
   opacity: ${({ selectedTag, isSelected }) => (isSelected || !selectedTag ? '1' : '0.5')};
-  // filter: ${({ selectedTag, isSelected }) => (selectedTag && !isSelected ? 'blur(1px)' : 'none')};
 `;
 
 const StyledLoader = styled(Loader)`
@@ -147,6 +146,7 @@ const Tag = memo(
           inProgress={inProgress}
           rateInProgress={rateInProgress}
           targetRate={rateValue}
+          voteRating={voteRating}
         >
           {expanded && inProgress ? <StyledLoader black /> : null}
         </RateSlider>
@@ -200,7 +200,7 @@ const RateTab = ({
 
   const renderSharePreview = useCallback(
     (id) => {
-      const t = findTag(id, tags);
+      const t = findTag(id, rateTags);
 
       return (
         <SharePreviewWrap>
@@ -208,9 +208,9 @@ const RateTab = ({
         </SharePreviewWrap>
       );
     },
-    [tags, selectedCategory],
+    [rateTags, selectedCategory],
   );
-  const getTitleForShare = useCallback((id) => findTag(id, tags).name, [tags]);
+  const getTitleForShare = useCallback((id) => findTag(id, rateTags).name, [rateTags]);
 
   const rateAndLocallyUpdateStore = (userValue) => {
     rateTag(+userValue, false);
@@ -278,7 +278,7 @@ const RateTab = ({
   return (
     <TabLayout>
       {categories
-        ? categories.map((category, i) => (
+        ? categories.map((category) => (
             <RateCategory
               key={category.id}
               category={category}
@@ -292,25 +292,22 @@ const RateTab = ({
           ))
         : null}
       {rateTags ? (
-        tags
-          // .filter((t) => (selectedCategory && selectedCategory.id === t.rateTagCategoryId) || !selectedCategory)
-          // .filter(t => selectedTag ? t.definitionId === selectedTag.definitionId : t)
-          .map((t, i) => (
-            <Tag
-              {...t}
-              key={t.definitionId}
-              definitionId={t.definitionId}
-              setSelectedTag={setSelectedTag}
-              setSelectedTagTargetRate={setSelectedTagTargetRate}
-              rateTag={rateAndLocallyUpdateStore}
-              userRate={t.userRate ? t.userRate : null}
-              withHelp={i === 0}
-              rateInProgress={rateInProgress}
-              expanded={selectedTag && selectedTag.definitionId === t.definitionId}
-              category={selectedCategory}
-              selectedTag={selectedTag}
-            />
-          ))
+        tags.map((t, i) => (
+          <Tag
+            {...t}
+            key={t.definitionId}
+            definitionId={t.definitionId}
+            setSelectedTag={setSelectedTag}
+            setSelectedTagTargetRate={setSelectedTagTargetRate}
+            rateTag={rateAndLocallyUpdateStore}
+            userRate={!isNil(t.userRate) ? t.userRate : null}
+            withHelp={i === 0}
+            rateInProgress={rateInProgress}
+            expanded={selectedTag && selectedTag.definitionId === t.definitionId}
+            category={selectedCategory}
+            selectedTag={selectedTag}
+          />
+        ))
       ) : (
         <Loader big />
       )}

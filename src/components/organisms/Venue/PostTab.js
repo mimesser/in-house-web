@@ -12,7 +12,6 @@ import {
   upvotePost,
   downvotePost,
   togglePostFlag,
-  upvoteMink,
 } from '../../../store/venues';
 import { Loader, Button, HelpTip, Break, Card, Icon, NumberLarge, NumberSmall } from '../../atoms';
 import { formatDateTime, formatMovementURL, formatRating } from '../../../utils/format';
@@ -236,6 +235,7 @@ const Post = ({
 
   const votePost = useCallback((e, id, vote) => {
     setCurrentVote(vote);
+
     if (vote === 1) {
       const curAverage = downvoted
         ? (voteRating * voteCount + 10) / voteCount
