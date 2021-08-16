@@ -437,7 +437,7 @@ const Mink = ({
                   </VoteRating>
                 </RatingWrap>
               ) : (
-                <InsiderText>insiders</InsiderText>
+                <InsiderText>votes</InsiderText>
               )}
               <PrivateShareButton id={minkId} type="mink" />
             </ShareWrap>
@@ -475,7 +475,12 @@ const Mink = ({
           </InputGroup>
           {!isShare && (
             <FlagItemWrap>
-              <FlagItem disabled={isActiveInsider} flagged={wasFlaggedByMe} toggleFlag={toggleMinkFlag} />
+              <FlagItem
+                disabled={isActiveInsider}
+                flagged={wasFlaggedByMe}
+                toggleFlag={toggleMinkFlag}
+                color={palette.gray2}
+              />
             </FlagItemWrap>
           )}
         </Main>
