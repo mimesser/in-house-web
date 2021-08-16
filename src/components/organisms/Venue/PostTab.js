@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Link from 'next/link';
 import { useScrollPosition } from '@n8tb1t/use-scroll-position';
+import { debounce } from 'lodash';
 import {
   loadPosts,
   selectSelectedPost,
@@ -11,7 +12,6 @@ import {
   upvotePost,
   downvotePost,
   togglePostFlag,
-  upvoteMink,
 } from '../../../store/venues';
 import { Loader, Button, HelpTip, Break, Card, Icon, NumberLarge, NumberSmall } from '../../atoms';
 import { formatDateTime, formatMovementURL, formatRating } from '../../../utils/format';
@@ -26,7 +26,7 @@ import { VoteButton, Layout, FlagButton } from './openCardStyle';
 
 import { Modal } from '../Modal';
 import { Dialog } from '../Modal/style';
-import { debounce } from 'lodash';
+
 const transition = {
   in: '0.25s',
   out: '0.2s',
@@ -235,7 +235,7 @@ const Post = ({
   const votePost = useCallback(
     debounce((e, id, vote) => {
       setCurrentVote(vote);
-      if (vote == 1) {
+      if (+vote === 1) {
         upvotePost(id);
       } else {
         downvotePost(id);
@@ -354,7 +354,7 @@ const NewPostSection = styled.div`
 `;
 
 const SharePreviewWrap = styled.div`
-  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   padding: ${spacing.md} ${spacing.sm};
 `;
 
@@ -392,7 +392,12 @@ const findPost = (id, posts) => {
 };
 
 const PostTab = ({
-  venue: { id, posts, name, industry: { lite }},
+  venue: {
+    id,
+    posts,
+    name,
+    industry: { lite },
+  },
   loadPosts,
   setSelectedPost,
   selectedPost,
@@ -410,12 +415,7 @@ const PostTab = ({
 
       return (
         <SharePreviewWrap>
-          <Post
-            post={p}
-            upvotePost={upvotePost}
-            downvotePost={downvotePost}
-            isShare
-          />
+          <Post post={p} upvotePost={upvotePost} downvotePost={downvotePost} isShare />
         </SharePreviewWrap>
       );
     },

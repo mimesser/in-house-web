@@ -4,7 +4,6 @@ import App from 'next/app';
 import Head from 'next/head';
 import { END } from 'redux-saga';
 import { Helmet } from 'react-helmet';
-import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { wrapper } from '../store';
 import { theme } from '../style';

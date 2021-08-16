@@ -85,7 +85,7 @@ const Tag = memo(
     selectedTag,
   }) => {
     const [rateValue, setRateValue] = useState(userRate);
-    const inProgress = false;
+    const inProgress = rateInProgress === definitionId;
     const isSelected = selectedTag && selectedTag.definitionId === definitionId;
     const isScrolling = useRef(false);
     const selectedRef = useRef();
@@ -138,7 +138,6 @@ const Tag = memo(
           onSlideStart={() => setSelectedTag(definitionId)}
           onSlideEnd={rateTag}
           value={getTeamRateIfRated(userRate, voteRating)}
-          initialRating={voteRating}
           userRate={userRate}
           voteCount={voteCount}
           expanded={expanded}
@@ -147,6 +146,7 @@ const Tag = memo(
           inProgress={inProgress}
           rateInProgress={rateInProgress}
           targetRate={rateValue}
+          voteRating={voteRating}
         >
           {expanded && inProgress ? <StyledLoader black /> : null}
         </RateSlider>
@@ -200,7 +200,7 @@ const RateTab = ({
 
   const renderSharePreview = useCallback(
     (id) => {
-      const t = findTag(id, tags);
+      const t = findTag(id, rateTags);
 
       return (
         <SharePreviewWrap>
@@ -208,9 +208,9 @@ const RateTab = ({
         </SharePreviewWrap>
       );
     },
-    [tags, selectedCategory],
+    [rateTags, selectedCategory],
   );
-  const getTitleForShare = useCallback((id) => findTag(id, tags).name, [tags]);
+  const getTitleForShare = useCallback((id) => findTag(id, rateTags).name, [rateTags]);
 
   const rateAndLocallyUpdateStore = (userValue) => {
     rateTag(+userValue, false);
@@ -278,7 +278,7 @@ const RateTab = ({
   return (
     <TabLayout>
       {categories
-        ? categories.map((category, i) => (
+        ? categories.map((category) => (
             <RateCategory
               key={category.id}
               category={category}
@@ -300,7 +300,7 @@ const RateTab = ({
             setSelectedTag={setSelectedTag}
             setSelectedTagTargetRate={setSelectedTagTargetRate}
             rateTag={rateAndLocallyUpdateStore}
-            userRate={t.userRate ? t.userRate : null}
+            userRate={!isNil(t.userRate) ? t.userRate : null}
             withHelp={i === 0}
             rateInProgress={rateInProgress}
             expanded={selectedTag && selectedTag.definitionId === t.definitionId}

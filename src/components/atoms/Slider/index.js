@@ -49,6 +49,7 @@ const GradientFill = styled.div.attrs((props) => ({
 `;
 
 const SliderFilled = styled.div`
+  width: 100%;
   height: 100%;
   padding: 0;
   position: absolute;
@@ -59,18 +60,11 @@ const SliderFilled = styled.div`
   z-index: auto;
   transform-origin: left;
   -webkit-transform-origin-x: left;
+  transition: transform 0.2s ease-in-out;
 `;
 
-const BaseSlider = ({
-  x,
-
-  fillColor,
-
-  selectedTag,
-  ...props
-}) => {
+const BaseSlider = ({ x, fillColor, selectedTag, ...props }) => {
   const setWidth = {
-    width: `${100}%`,
     transform: `scaleX(${x / 10})`,
   };
 
