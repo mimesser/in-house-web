@@ -437,7 +437,7 @@ const Mink = ({
                   </VoteRating>
                 </RatingWrap>
               ) : (
-                <InsiderText>insiders</InsiderText>
+                <InsiderText>votes</InsiderText>
               )}
               <PrivateShareButton id={minkId} type="mink" />
             </ShareWrap>
