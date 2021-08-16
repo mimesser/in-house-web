@@ -13,13 +13,13 @@ import {
   downvotePost,
   togglePostFlag,
 } from '../../../store/venues';
-import { Loader, Button, HelpTip, Break, Card, Icon, NumberLarge, NumberSmall } from '../../atoms';
+import { Loader, Button, HelpTip, Card, Icon, NumberLarge, NumberSmall } from '../../atoms';
 import { formatDateTime, formatMovementURL, formatRating } from '../../../utils/format';
-import { ItemText, ItemTitle, ItemTime, Main, TabLayout, TabTitle } from './tabStyle';
-import { appBackground, spacing, appColors, palette, calcRem, font, fontSize } from '../../../style';
+import { ItemText, ItemTitle, ItemTime, Main, TabLayout } from './tabStyle';
+import { spacing, appColors, palette } from '../../../style';
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
-import { Dial, PokeButton } from '../../molecules';
+import { PokeButton } from '../../molecules';
 import { Votes } from '../../molecules/RateSlider';
 import { FlagItem } from './FlagItem';
 import { VoteButton, Layout, FlagButton } from './openCardStyle';
@@ -236,7 +236,7 @@ const Post = ({
   const votePost = useCallback((e, id, vote) => {
     setCurrentVote(vote);
 
-    if (vote === 1) {
+    if (+vote === 1) {
       const curAverage = downvoted
         ? (voteRating * voteCount + 10) / voteCount
         : (voteRating * voteCount + 10) / (voteCount + 1);
@@ -317,16 +317,6 @@ const Post = ({
   );
 };
 
-export const NewPostButton = styled(Button)`
-  width: 100%;
-  min-height: ${calcRem('38px')};
-  border: 1px solid ${appColors.gray5};
-  ${font.light};
-  font-size: ${fontSize.sm};
-  color: ${appColors.gray4};
-  padding: ${spacing.sm};
-`;
-
 const SlideIn = keyframes`
   0% {
     transform: translateY(-70%);
@@ -349,21 +339,18 @@ const SlideOut = keyframes`
   }
 `;
 
-const NewPostSection = styled.div`
-  position: -webkit-sticky; /* Safari */
-  position: sticky;
-  flex-shrink: 0; // safari
-  top: 46px;
-  padding: ${spacing.sm} ${spacing.md} ${spacing.sm} ${spacing.md};
-  background-color: ${appColors.offWhite};
-  z-index: 1;
-  animation: ${({ sticky }) => (sticky ? SlideIn : SlideOut)} linear ${({ duration }) => `${duration}s`};
-  animation-fill-mode: forwards;
-`;
-
 const SharePreviewWrap = styled.div`
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   padding: ${spacing.md} ${spacing.sm};
+`;
+
+const NewPostButton = styled(Button)`
+  margin: 0 !important;
+  width: 100%;
+  border: solid 2px white;
+  position: sticky;
+  z-index: 100;
+  top: 46px;
 `;
 
 const renderSection = (title, posts, setSelectedPost, selectedPost, upvotePost, downvotePost, togglePostFlag) => {
@@ -461,17 +448,13 @@ const PostTab = ({
   );
   return (
     <>
-      <NewPostSection sticky={hideOnScroll || !scrolled} duration={1} ref={scrollRef}>
-        <Link
-          href={`/houses?id=${id}&tab=post&new`}
-          as={lite ? `/movement/${formatMovementURL(name)}/post/new` : `/houses/${id}/post/new`}
-          passHref
-        >
-          <NewPostButton icon="plus" wide outline>
-            what's in your mind?
-          </NewPostButton>
-        </Link>
-      </NewPostSection>
+      <Link
+        href={`/houses?id=${id}&tab=post&new`}
+        as={lite ? `/movement/${formatMovementURL(name)}/post/new` : `/houses/${id}/post/new`}
+        passHref
+      >
+        <NewPostButton icon="arrow-right">new post</NewPostButton>
+      </Link>
 
       <TabLayout onScroll={handleScroll}>
         {posts ? (

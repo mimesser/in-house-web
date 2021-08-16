@@ -264,7 +264,6 @@ const TopMinkContainer = styled.div`
 `;
 
 const RunnersTitle = styled(TabTitle)`
-  padding-top: 0;
   border-bottom: 1px solid ${palette.lightGray};
 `;
 
@@ -277,6 +276,15 @@ const TopMinkSharePreviewWrap = styled.div`
   ${TopMinkContainer} {
     padding: ${spacing.md};
   }
+`;
+
+const NewMinkButton = styled(Button)`
+  margin: 0 !important;
+  width: 100%;
+  border: solid 2px white;
+  position: sticky;
+  z-index: 100;
+  top: 46px;
 `;
 
 const AnswerStatus = ({ status, previouslyAnsweredCorrectly, active, isShare }) => {
@@ -530,7 +538,7 @@ const renderMinks = (
           as={lite ? `/movement/${movementName}/mink/new` : `/houses/${houseId}/mink/new`}
           passHref
         >
-          <Button icon="arrow-right">new</Button>
+          <NewMinkButton icon="arrow-right">new mink</NewMinkButton>
         </Link>
       </>
     )}
