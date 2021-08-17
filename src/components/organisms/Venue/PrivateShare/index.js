@@ -56,7 +56,7 @@ const PrivateShare = ({
   );
 
   const send = () => share(type, id, recipient, message || placeholder);
-  const recipientPlaceholder = 'text or email/mobile';
+  const recipientPlaceholder = 'email/mobile';
   const placeholder = `${venueName} insider? someone thinks you should know about — “${getItemTitle(id)}”`;
   const isValidEmailOrPhone = isEmailValid(recipient) || isPhoneNumberValid(recipient);
 
