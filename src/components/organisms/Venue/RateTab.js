@@ -300,7 +300,7 @@ const RateTab = ({
           ))
         : null}
       <Link
-        href="/feedback"
+        href="/feedback?subjectIndex=2"
         // href={`/houses?id=${houseId}&tab=mink&new`}
         // as={lite ? `/movement/${movementName}/mink/new` : `/houses/${houseId}/mink/new`}
         passHref
