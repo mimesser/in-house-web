@@ -559,7 +559,7 @@ const Landing = ({ venues, loading, initVenuesPage, loadAggregateData }) => {
 
         <NotificationSection id="getNotification">
           <div>
-            <Link href="/feedback">
+            <Link href="/feedback?subjectIndex=1">
               <BetaLink icon="arrow-right" wide outline>
                 get notified
               </BetaLink>
