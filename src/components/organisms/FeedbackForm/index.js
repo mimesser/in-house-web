@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useRouter } from 'next/router';
 
@@ -8,6 +8,7 @@ import { FormGroup, Container, Commands, Dropdown, SubmitButton, BackButton, Lef
 import { postFeedback, clearFeedback } from '../../../store/feedback';
 
 const subjectOptions = [
+  '-- select subject --',
   'get notified when live',
   'request new industry poll',
   'list your warehouse',

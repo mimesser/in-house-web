@@ -4,8 +4,9 @@ import { Page, FeedbackForm } from '../components/organisms';
 
 function Feedback(props) {
   const {
-    query: { subjectIndex, redirect },
+    query: { subjectIndex = 0, redirect = '/' },
   } = props.router;
+
   return (
     <Page>
       <FeedbackForm subjectIndex={subjectIndex} redirectLink={redirect} />
