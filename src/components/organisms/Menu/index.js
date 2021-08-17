@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { withRouter } from 'next/router';
 import Link from 'next/link';
 import styled from 'styled-components';
@@ -36,11 +36,25 @@ const sidebarTransitionStyles = {
   exiting: { width: MENU_WIDTH },
   exited: { width: 0 },
 };
+const BlurFilter = styled.div`
+${({ isOpen }) => (isOpen ? '' : 'display : none')};
+position: fixed;
+top: 0;
+right: 0;
+z-index: 995;
+height: 100%;
+width: 100%;
+overflow: hidden;
+-webkit-backdrop-filter: blur(1px);
+backdrop-filter: blur(1px);
+
+}
+`;
 
 const Panel = styled.div`
-  position: absolute;
+  position: fixed;
   right: 0;
-  z-index: 1;
+  z-index: 999;
   height: 100%;
   transition: width ${duration}ms;
   box-shadow: rgba(0, 0, 0, 0.15) -2px 2px 4px;
@@ -71,27 +85,38 @@ const A = styled.a`
   }
 `;
 
-export const Menu = withRouter(({ isOpen, router, closeMenu }) => (
-  <Transition in={isOpen} timeout={duration}>
-    {(state) => (
-      <Panel state={state}>
-        <CloseButton onClick={closeMenu}>
-          <CloseIcon />
-        </CloseButton>
-        <MenuItems>
-          {menuOptions.map((route) => (
-            <li key={route.href}>
-              {route.href === router.asPath ? (
-                <A onClick={closeMenu}>{route.label}</A>
-              ) : (
-                <Link href={route.href} passHref>
-                  <A onClick={closeMenu}>{route.label}</A>
-                </Link>
-              )}
-            </li>
-          ))}
-        </MenuItems>
-      </Panel>
-    )}
-  </Transition>
-));
+export const Menu = withRouter(({ isOpen, router, closeMenu }) => {
+  useEffect(() => {
+    if (isOpen) {
+      closeMenu();
+    }
+  }, [router.asPath]);
+
+  return (
+    <>
+      <Transition in={isOpen} timeout={duration}>
+        {(state) => (
+          <Panel state={state}>
+            <CloseButton onClick={closeMenu}>
+              <CloseIcon />
+            </CloseButton>
+            <MenuItems>
+              {menuOptions.map((route) => (
+                <li key={route.href}>
+                  {route.href === router.asPath ? (
+                    <A onClick={closeMenu}>{route.label}</A>
+                  ) : (
+                    <Link href={route.href} passHref>
+                      <A onClick={closeMenu}>{route.label}</A>
+                    </Link>
+                  )}
+                </li>
+              ))}
+            </MenuItems>
+          </Panel>
+        )}
+      </Transition>
+      <BlurFilter isOpen={isOpen} onClick={closeMenu} />
+    </>
+  );
+});
