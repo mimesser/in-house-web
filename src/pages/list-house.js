@@ -66,7 +66,7 @@ const BetaList = () => {
           <Link href="/houses" passHref>
             <BackButton secondary>cancel</BackButton>
           </Link>
-          <Link href="/feedback?subjectIndex=2&redirect=/houses">
+          <Link href="/feedback?subjectIndex=0&redirect=/houses">
             <ActionButton icon="arrow-right">list your workplace</ActionButton>
           </Link>
         </Commands>
