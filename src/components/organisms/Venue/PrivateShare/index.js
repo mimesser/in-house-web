@@ -68,7 +68,7 @@ const PrivateShare = ({
         <CounterInput
           value={recipient}
           onChange={handleRecipientChange}
-          max={24}
+          max={50}
           placeholder={recipientPlaceholder}
           error={recipientError}
         />
