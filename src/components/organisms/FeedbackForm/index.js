@@ -6,6 +6,7 @@ import { H1, H2, Input } from '../../atoms';
 import { WinkConfirmation, CounterInput } from '../../molecules';
 import { FormGroup, Container, Commands, Dropdown, SubmitButton, BackButton, LeftArrowIcon } from './style';
 import { postFeedback, clearFeedback } from '../../../store/feedback';
+import { isEmailValid } from '../../../utils/index';
 
 const subjectOptions = [
   '-- select subject --',
@@ -32,6 +33,7 @@ function FeedbackForm(props) {
   const [subject, setSubject] = useState(subjectOptions[subjectId]);
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
+  const [valid, setValidity] = useState(false);
   const getHandler = (setter) => (event) => setter(event.target.value);
   const handleSubjectChange = (value) => setSubject(value);
   const handleEmailChange = getHandler(setEmail);
@@ -47,7 +49,10 @@ function FeedbackForm(props) {
     setMessage('');
   };
 
-  const valid = !!subject && (!!message || !!email);
+  useEffect(
+    () => setValidity(subject.value !== subjectOptions[0].value && !!message && (!email || isEmailValid(email))),
+    [subject, email, message],
+  );
 
   /**
    * TODO: after submission, the form should clear.
