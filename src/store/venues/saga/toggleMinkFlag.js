@@ -15,7 +15,6 @@ export function* toggleMinkFlag() {
     `venues/${venue.id}/minks/${mink.id}/${mink.wasFlaggedByMe ? 'unflag' : 'flag'}`,
   );
 
-  console.log(response);
   if (response.wasDeleted) {
     yield put(setSelectedMink(undefined));
     yield put(setVenueMinks(venue.minks.filter((p) => p.id !== mink.id)));
