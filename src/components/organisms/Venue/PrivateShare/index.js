@@ -56,7 +56,7 @@ const PrivateShare = ({
   );
 
   const send = () => share(type, id, recipient, message || placeholder);
-  const recipientPlaceholder = 'text or email/mobile';
+  const recipientPlaceholder = 'email/mobile';
   const placeholder = `${venueName} insider? someone thinks you should know about — “${getItemTitle(id)}”`;
   const isValidEmailOrPhone = isEmailValid(recipient) || isPhoneNumberValid(recipient);
 
@@ -68,7 +68,7 @@ const PrivateShare = ({
         <CounterInput
           value={recipient}
           onChange={handleRecipientChange}
-          max={24}
+          max={50}
           placeholder={recipientPlaceholder}
           error={recipientError}
         />
