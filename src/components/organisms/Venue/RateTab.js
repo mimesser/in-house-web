@@ -2,7 +2,7 @@ import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { createStructuredSelector } from 'reselect';
-import { debounce, isNil, isFunction } from 'lodash';
+import { debounce, isNil } from 'lodash';
 import Link from 'next/link';
 import { Loader, HelpTip, Button } from '../../atoms';
 import {
@@ -44,11 +44,19 @@ const ShareLayout = styled.div`
   }
 `;
 
+/* eslint-disable indent */
 const CellWrapper = styled.div`
   overflow: hidden;
-  transition: opacity 0.8s, blur 0.8s;
-  opacity: ${({ selectedTag, isSelected }) => (isSelected || !selectedTag ? '1' : '0.5')};
+  transition: ${({ animateInDelay }) => `opacity 0.8s ease-in ${animateInDelay}s, blur 0.8s`};
+  opacity: ${({ selectedTag, isSelected, visible }) => {
+    if (visible) {
+      return isSelected || !selectedTag ? '1' : '0.5';
+    }
+
+    return '0';
+  }};
 `;
+/* eslint-enable indent */
 
 const StyledLoader = styled(Loader)`
   position: relative;
@@ -91,8 +99,10 @@ const Tag = memo(
     rateInProgress,
     category,
     selectedTag,
+    listIndex,
   }) => {
     const [rateValue, setRateValue] = useState(userRate);
+    const [visible, setVisible] = useState(false);
     const inProgress = rateInProgress === definitionId;
     const isSelected = selectedTag && selectedTag.definitionId === definitionId;
     const isScrolling = useRef(false);
@@ -131,6 +141,12 @@ const Tag = memo(
       }, 200),
       [],
     );
+    useEffect(() => {
+      setTimeout(() => setVisible(true), 250);
+
+      return setVisible(false);
+    }, []);
+
     const card = (
       <CellWrapper
         onMouseDown={rateInProgress && selectedTag ? undefined : open}
@@ -139,6 +155,8 @@ const Tag = memo(
         selectedTag={selectedTag}
         isSelected={isSelected}
         ref={selectedRef}
+        animateInDelay={listIndex * 0.1}
+        visible={visible}
       >
         <RateSlider
           title={name}
@@ -184,7 +202,6 @@ const findCategoryRating = (id, categoryRatings) => {
 };
 
 const RateTab = ({
-  venue,
   rateTags,
   filteredTags,
   setVenueRates,
@@ -200,6 +217,7 @@ const RateTab = ({
   categoryRatings,
 }) => {
   const [cancelSortRateTagsId, setCancelSortRateTagsId] = useState(null);
+  const [tags, setTags] = useState(rateTags);
 
   useEffect(() => {
     setSelectedTag(undefined);
@@ -281,7 +299,7 @@ const RateTab = ({
     setCancelSortRateTagsId(throttleId);
   };
 
-  const tags = filteredTags || rateTags;
+  useEffect(() => (filteredTags ? setTags(filteredTags) : setTags(rateTags)), [rateTags, filteredTags]);
 
   return (
     <TabLayout>
@@ -293,25 +311,24 @@ const RateTab = ({
               value={findCategoryRating(category.id, categoryRatings)}
               expanded={selectedCategory && selectedCategory.id === category.id}
               onClick={() => {
-                setSelectedCategory(category);
+                if (selectedCategory && selectedCategory.id === category.id) {
+                  setSelectedCategory(null);
+                } else {
+                  setSelectedCategory(category);
+                }
                 setSelectedTag(null);
               }}
             />
           ))
         : null}
-      <Link
-        href="/feedback?subjectIndex=2"
-        // href={`/houses?id=${houseId}&tab=mink&new`}
-        // as={lite ? `/movement/${movementName}/mink/new` : `/houses/${houseId}/mink/new`}
-        passHref
-      >
+      <Link href="/feedback" passHref>
         <NewRateButton icon="arrow-right">new Rate</NewRateButton>
       </Link>
       {rateTags ? (
         tags.map((t, i) => (
           <Tag
             {...t}
-            key={t.definitionId}
+            key={`${t.definitionId}-${selectedCategory || 'all'}`}
             definitionId={t.definitionId}
             setSelectedTag={setSelectedTag}
             setSelectedTagTargetRate={setSelectedTagTargetRate}
@@ -322,6 +339,7 @@ const RateTab = ({
             expanded={selectedTag && selectedTag.definitionId === t.definitionId}
             category={selectedCategory}
             selectedTag={selectedTag}
+            listIndex={i}
           />
         ))
       ) : (
