@@ -1,9 +1,14 @@
 import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
-import { connect } from 'react-redux';
+import Link from 'next/link';
 import styled from 'styled-components';
+
+import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { debounce, isNil } from 'lodash';
-import Link from 'next/link';
+
+import PrivateShare from './PrivateShare';
+import PrivateShareButton from './PrivateShareButton';
+
 import { Loader, HelpTip, Button } from '../../atoms';
 import {
   setSelectedTag,
@@ -22,8 +27,6 @@ import {
 import { selectEsgCategories } from '../../../store/aggregate';
 import { TabLayout } from './tabStyle';
 import { appColors } from '../../../style';
-import PrivateShare from './PrivateShare';
-import PrivateShareButton from './PrivateShareButton';
 import { RateSlider, PokeButton } from '../../molecules';
 import { RateCategory } from '../../molecules/RateCategory';
 import { getClientPosition } from '../../atoms/Slider/utils';
