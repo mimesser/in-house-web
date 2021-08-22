@@ -26,7 +26,7 @@ import {
 } from '../../../store/venues';
 import { selectEsgCategories } from '../../../store/aggregate';
 import { TabLayout } from './tabStyle';
-import { appColors } from '../../../style';
+import { appColors, themeColors } from '../../../style';
 import { RateSlider, PokeButton } from '../../molecules';
 import { RateCategory } from '../../molecules/RateCategory';
 import { getClientPosition } from '../../atoms/Slider/utils';
@@ -48,9 +48,12 @@ const ShareLayout = styled.div`
 `;
 
 /* eslint-disable indent */
-const CellWrapper = styled.div`
+const CellWrapper = styled.div.attrs(({ animateInDelay }) => ({
+  style: {
+    transition: `opacity 0.8s ease-in ${animateInDelay}s, blur 0.8s`,
+  },
+}))`
   overflow: hidden;
-  transition: ${({ animateInDelay }) => `opacity 0.8s ease-in ${animateInDelay}s, blur 0.8s`};
   opacity: ${({ selectedTag, isSelected, visible }) => {
     if (visible) {
       return isSelected || !selectedTag ? '1' : '0.5';
@@ -110,6 +113,9 @@ const Tag = memo(
     const isSelected = selectedTag && selectedTag.definitionId === definitionId;
     const isScrolling = useRef(false);
     const selectedRef = useRef();
+    const handleScroll = () => {
+      isScrolling.current = true;
+    };
     const open = useCallback((e) => {
       const rate = getRate(e);
       changeRate(rate);
@@ -117,16 +123,12 @@ const Tag = memo(
     }, []);
     const handleTouchStart = useCallback((e) => {
       e.persist();
-      document.addEventListener('scroll', () => {
-        isScrolling.current = true;
-      });
-
+      document.addEventListener('scroll', handleScroll);
       setTimeout(() => {
-        if (!isScrolling.current) open(e);
-
-        document.removeEventListener('scroll', () => {
-          isScrolling.current = true;
-        });
+        if (!isScrolling.current) {
+          open(e);
+        }
+        document.removeEventListener('scroll', handleScroll);
         isScrolling.current = false;
       }, 200);
     }, []);
@@ -145,10 +147,20 @@ const Tag = memo(
       [],
     );
     useEffect(() => {
-      setTimeout(() => setVisible(true), 250);
+      let visibilityTimeoutId = setTimeout(() => {
+        visibilityTimeoutId = null;
 
-      return setVisible(false);
+        setVisible(true);
+      }, 250);
+
+      return () => {
+        setVisible(false);
+        if (visibilityTimeoutId) {
+          clearTimeout(visibilityTimeoutId);
+        }
+      };
     }, []);
+    useEffect(() => () => document.removeEventListener('scroll', handleScroll), []);
 
     const card = (
       <CellWrapper
@@ -170,7 +182,7 @@ const Tag = memo(
           userRate={userRate}
           voteCount={voteCount}
           expanded={expanded}
-          fillColor={category && appColors[category.color]}
+          fillColor={category ? appColors[category.color] : themeColors.darkGray}
           selectedTag={selectedTag}
           inProgress={inProgress}
           rateInProgress={rateInProgress}
@@ -241,68 +253,79 @@ const RateTab = ({
   );
   const getTitleForShare = useCallback((id) => findTag(id, rateTags).name, [rateTags]);
 
-  const rateAndLocallyUpdateStore = (userValue) => {
-    rateTag(+userValue, false);
+  const rateAndLocallyUpdateStore = useCallback(
+    (userValue) => {
+      rateTag(+userValue, false);
 
-    const _tags = rateTags.map((tag) => {
-      if (tag.definitionId !== selectedTag.definitionId) {
-        return { ...tag };
-      }
+      const _tags = rateTags.map((tag) => {
+        if (tag.definitionId !== selectedTag.definitionId) {
+          return { ...tag };
+        }
 
-      return {
-        ...tag,
-        voteCount: tag.userRate ? tag.voteCount : tag.voteCount + 1,
-        userRate: +userValue,
-        voteRating: tag.userRate
-          ? (tag.voteRating * tag.voteCount - tag.userRate + +userValue) / tag.voteCount
-          : (tag.voteRating * tag.voteCount + +userValue) / (tag.voteCount + 1),
+        return {
+          ...tag,
+          voteCount: tag.userRate ? tag.voteCount : tag.voteCount + 1,
+          userRate: +userValue,
+          voteRating: tag.userRate
+            ? (tag.voteRating * tag.voteCount - tag.userRate + +userValue) / tag.voteCount
+            : (tag.voteRating * tag.voteCount + +userValue) / (tag.voteCount + 1),
+        };
+      });
+
+      setVenueRates(_tags);
+
+      const setSortedVenueRates = (__tags) => {
+        const tagsSorted = __tags.sort(
+          ({ voteCount: a1, userRate: a2, voteRating: a3 }, { voteCount: b1, userRate: b2, voteRating: b3 }) => {
+            if (a1 < b1) {
+              return 1;
+            }
+
+            if (a1 > b1) {
+              return -1;
+            }
+
+            if (a2 < b2) {
+              return 1;
+            }
+
+            if (a2 > b2) {
+              return -1;
+            }
+
+            if (a3 < b3) {
+              return 1;
+            }
+
+            if (a3 > b3) {
+              return -1;
+            }
+
+            return 0;
+          },
+        );
+
+        setVenueRates(tagsSorted);
       };
-    });
 
-    setVenueRates(_tags);
+      if (cancelSortRateTagsId) {
+        clearTimeout(cancelSortRateTagsId);
+      }
+      const throttleId = setTimeout(() => setSortedVenueRates(_tags), 3000);
+      setCancelSortRateTagsId(throttleId);
+    },
+    [cancelSortRateTagsId, rateTags, selectedTag],
+  );
 
-    const setSortedVenueRates = (__tags) => {
-      const tagsSorted = __tags.sort(
-        ({ voteCount: a1, userRate: a2, voteRating: a3 }, { voteCount: b1, userRate: b2, voteRating: b3 }) => {
-          if (a1 < b1) {
-            return 1;
-          }
-
-          if (a1 > b1) {
-            return -1;
-          }
-
-          if (a2 < b2) {
-            return 1;
-          }
-
-          if (a2 > b2) {
-            return -1;
-          }
-
-          if (a3 < b3) {
-            return 1;
-          }
-
-          if (a3 > b3) {
-            return -1;
-          }
-
-          return 0;
-        },
-      );
-
-      setVenueRates(tagsSorted);
-    };
-
-    if (cancelSortRateTagsId) {
-      clearTimeout(cancelSortRateTagsId);
+  useEffect(() => {
+    if (filteredTags) {
+      setTags(filteredTags);
+    } else {
+      setTags(rateTags);
     }
-    const throttleId = setTimeout(setSortedVenueRates.bind(null, _tags), 3000);
-    setCancelSortRateTagsId(throttleId);
-  };
 
-  useEffect(() => (filteredTags ? setTags(filteredTags) : setTags(rateTags)), [rateTags, filteredTags]);
+    return () => setTags(null);
+  }, [rateTags, filteredTags]);
 
   return (
     <TabLayout>
@@ -327,11 +350,11 @@ const RateTab = ({
       <Link href="/feedback" passHref>
         <NewRateButton icon="arrow-right">new Rate</NewRateButton>
       </Link>
-      {rateTags ? (
+      {tags ? (
         tags.map((t, i) => (
           <Tag
             {...t}
-            key={`${t.definitionId}-${selectedCategory || 'all'}`}
+            key={`${t.definitionId}-${selectedCategory?.name || 'all'}`}
             definitionId={t.definitionId}
             setSelectedTag={setSelectedTag}
             setSelectedTagTargetRate={setSelectedTagTargetRate}

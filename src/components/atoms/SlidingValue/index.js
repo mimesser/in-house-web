@@ -101,13 +101,28 @@ export const SlidingValue = ({
     }, step);
   };
 
-  useEffect(updateValue, []);
+  useEffect(() => {
+    updateValue();
+
+    return () => {
+      if (updateTimer.current) {
+        clearTimeout(updateTimer.current);
+      }
+    };
+  }, []);
   useEffect(() => {
     if (updateTimer.current) {
       clearTimeout(updateTimer.current);
       updateTimer.current = null;
     }
+
     updateValue();
+
+    return () => {
+      if (updateTimer.current) {
+        clearTimeout(updateTimer.current);
+      }
+    };
   }, [value, characterSet, step]);
 
   let prevChars;
