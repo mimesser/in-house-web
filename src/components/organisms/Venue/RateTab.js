@@ -26,7 +26,7 @@ import {
 } from '../../../store/venues';
 import { selectEsgCategories } from '../../../store/aggregate';
 import { TabLayout } from './tabStyle';
-import { appColors } from '../../../style';
+import { appColors, themeColors } from '../../../style';
 import { RateSlider, PokeButton } from '../../molecules';
 import { RateCategory } from '../../molecules/RateCategory';
 import { getClientPosition } from '../../atoms/Slider/utils';
@@ -48,9 +48,12 @@ const ShareLayout = styled.div`
 `;
 
 /* eslint-disable indent */
-const CellWrapper = styled.div`
+const CellWrapper = styled.div.attrs(({ animateInDelay }) => ({
+  style: {
+    transition: `opacity 0.8s ease-in ${animateInDelay}s, blur 0.8s`,
+  },
+}))`
   overflow: hidden;
-  transition: ${({ animateInDelay }) => `opacity 0.8s ease-in ${animateInDelay}s, blur 0.8s`};
   opacity: ${({ selectedTag, isSelected, visible }) => {
     if (visible) {
       return isSelected || !selectedTag ? '1' : '0.5';
@@ -179,7 +182,7 @@ const Tag = memo(
           userRate={userRate}
           voteCount={voteCount}
           expanded={expanded}
-          fillColor={category && appColors[category.color]}
+          fillColor={category ? appColors[category.color] : themeColors.darkGray}
           selectedTag={selectedTag}
           inProgress={inProgress}
           rateInProgress={rateInProgress}
