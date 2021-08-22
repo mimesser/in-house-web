@@ -54,7 +54,7 @@ const A = styled.a`
   margin: 0;
   display: block;
   &:hover {
-    color: ${palette.white};
+    color: ${({ white }) => (white ? palette.white : palette.primary)};
   }
 `;
 
@@ -120,10 +120,10 @@ export const Header = withRouter(({ openMenu, white, noPadd, router }) => (
           {menuOptions.map((route) => (
             <li key={route.href}>
               {route.href === router.asPath ? (
-                <A>{route.label}</A>
+                <A white={white}>{route.label}</A>
               ) : (
                 <Link href={route.href} passHref>
-                  <A>{route.label}</A>
+                  <A white={white}>{route.label}</A>
                 </Link>
               )}
             </li>

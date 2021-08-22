@@ -4,7 +4,7 @@ export const theme = {
   colors: themeColors,
 };
 
-export const fromTheme = (key) => (({ theme: { colors } }) => colors[key]).bind(undefined, { theme });
+export const fromTheme = (key) => (({ theme: { colors } }) => colors[key])({ theme });
 
 /**
  * Extracts theme color.
