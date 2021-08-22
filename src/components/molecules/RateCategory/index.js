@@ -64,6 +64,7 @@ const Wrapper = styled.div`
     ${({ duration }) => `${duration}s`};
   animation-fill-mode: forwards;
   background: ${({ expanded }) => (expanded === true ? theme.colors.black : palette.mediumGrey)};
+  cursor: pointer;
 `;
 const Dot = styled(({ size, padd, ...rest }) => <NumberLarge {...rest}>.</NumberLarge>)`
   position: relative;
