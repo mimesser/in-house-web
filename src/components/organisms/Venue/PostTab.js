@@ -183,11 +183,6 @@ const CellHeader = styled.div`
 const Footer = styled.div`
   display: flex;
   align-items: flex-end;
-
-  ${Icon} {
-    -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
-  }
 `;
 
 const SelectedIndicator = styled(({ show, count, ...rest }) => <Icon {...rest} icon="radio-marked" size={0.3} />)`
