@@ -1,7 +1,8 @@
 FROM node:alpine as base_prod
 ENV NEXT_TELEMETRY_DISABLED 1
 ADD https://github.com/just-containers/s6-overlay/releases/download/v2.2.0.3/s6-overlay-amd64-installer /tmp/
-RUN addgroup -g 1001 -S nodejs \
+RUN apk --purge del apk-tools \
+    && addgroup -g 1001 -S nodejs \
     && adduser -S -G nodejs nextjs -u 1001 \
     && chmod +x /tmp/s6-overlay-amd64-installer \
     && /tmp/s6-overlay-amd64-installer /
