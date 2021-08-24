@@ -24,6 +24,7 @@ export const VoteButton = styled(ClearButton)`
   margin-bottom: ${spacing.md};
   &[disabled] {
     color: ${palette.lightGray};
+    cursor: not-allowed;
   }
   &:hover: ${appColors.offWhite};
   // color: ${({ highlight }) => (highlight ? appColors.offWhite : palette.mediumGray)};

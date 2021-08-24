@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import styled, { css } from 'styled-components';
 import Link from 'next/link';
-import { debounce } from 'lodash';
+import { isNil } from 'lodash';
 
 import {
   loadMinks,
@@ -191,6 +191,7 @@ const activeStyle = css`
 
 const MinkCard = styled(Card)`
   user-select: none;
+  cursor: default;
 
   ${ShareWrap}, ${FlagItemWrap} {
     visibility: ${({ active, topMink }) => (active && !topMink ? 'hidden' : 'visible')};
@@ -356,40 +357,49 @@ const Mink = ({
 }) => {
   const selectMink = useCallback(() => setSelectedMink(minkId), [minkId]);
   const deselectMink = useCallback(() => setSelectedMink(undefined), [minkId]);
+  const toggleFlag = useCallback(() => {
+    selectMink();
+    toggleMinkFlag();
+  }, [minkId]);
   const ref = useRef(null);
   const answerRef = useRef(null);
-  const [vote, setVote] = useState(myVote);
   const [optimisticVoteRating, setOptimisticVoteRating] = useState(voteRating);
-  const upvoted = vote === 1;
-  const downvoted = vote === -1;
-  const active = selectedMink && selectedMink.id === minkId;
+  const [active, setActive] = useState(selectedMink && selectedMink.id === minkId);
   const size = 2.2;
   const [answer, setAnswer] = useState(myCorrectAnswer || '');
-  const previouslyAnsweredCorrectly = !!myCorrectAnswer;
+  const [previouslyAnsweredCorrectly, setPreviouslyAnsweredCorrectly] = useState(!!myCorrectAnswer);
+
   const tryAnswer = useCallback((e) => {
     const value = normalizeAnswer(e.currentTarget.value);
     setAnswer(value);
     if (!value) return;
     tryAnswerMink(houseId, minkId, value);
   }, []);
-  const voteMink = useCallback((e, id, value) => {
-    setVote(value);
-    if (+value === 1) {
-      const curAverage = downvoted
-        ? (voteRating * voteCount + 10) / voteCount
-        : (voteRating * voteCount + 10) / (voteCount + 1);
 
-      setOptimisticVoteRating(curAverage);
-      upvoteMink(id);
-    } else {
-      const curAverage = upvoted
-        ? (voteRating * voteCount - 10) / voteCount
-        : (voteRating * voteCount) / (voteCount + 1);
+  const voteMink = useCallback(
+    (e, id, value) => {
+      if (+myVote === value) {
+        return;
+      }
 
-      setOptimisticVoteRating(curAverage);
-      downvoteMink(id);
-    }
-  }, []);
+      selectMink();
+
+      if (+value === 1) {
+        const curAverage =
+          +myVote === -1 ? (voteRating * voteCount + 10) / voteCount : (voteRating * voteCount + 10) / (voteCount + 1);
+
+        setOptimisticVoteRating(curAverage);
+        upvoteMink(id);
+      } else {
+        const curAverage =
+          +myVote === 1 ? (voteRating * voteCount - 10) / voteCount : (voteRating * voteCount) / (voteCount + 1);
+
+        setOptimisticVoteRating(curAverage);
+        downvoteMink(id);
+      }
+    },
+    [voteRating, voteCount, myVote],
+  );
 
   const clearAnswer = useCallback((e) => {
     e.stopPropagation();
@@ -404,16 +414,28 @@ const Mink = ({
     }
   }, [isNew, setAddedMinkId]);
 
+  useEffect(() => {
+    if (!isNil(selectedMink?.id)) {
+      setActive(selectedMink.id === minkId);
+    } else {
+      setActive(false);
+    }
+  }, [selectedMink, minkId]);
+
+  useEffect(() => {
+    setPreviouslyAnsweredCorrectly(!!myCorrectAnswer);
+  }, [myCorrectAnswer]);
+
   const card = (
     <MinkCard ref={ref} active={active} topMink={topMink} isShare={isShare}>
-      <div onClick={active ? deselectMink : selectMink}>
+      <div>
         <VoteWrap>
-          <VoteButton onClick={(e) => voteMink(e, minkId, 1)}>
-            <Dot hide={!upvoted} />
+          <VoteButton onClick={(e) => voteMink(e, minkId, 1)} disabled={myVote === 1 || active}>
+            <Dot hide={myVote !== 1} />
             <Icon size={size} icon="arrow-up-circle" />
           </VoteButton>
-          <VoteButton onClick={(e) => voteMink(e, minkId, -1)}>
-            <Dot hide={!downvoted} />
+          <VoteButton onClick={(e) => voteMink(e, minkId, -1)} disabled={myVote === -1 || active}>
+            <Dot hide={myVote !== -1} />
             <Icon size={size} icon="arrow-down-circle" />
           </VoteButton>
         </VoteWrap>
@@ -453,7 +475,8 @@ const Mink = ({
                 onChange={tryAnswer}
                 readOnly={previouslyAnsweredCorrectly}
                 icon={renderInputIcon(answerStatus, previouslyAnsweredCorrectly, active)}
-                onFocus={selectMink}
+                onFocus={!previouslyAnsweredCorrectly ? selectMink : undefined}
+                onBlur={deselectMink}
                 onClick={(e) => e.stopPropagation()}
                 ref={answerRef}
               />
@@ -478,7 +501,7 @@ const Mink = ({
               <FlagItem
                 disabled={isActiveInsider}
                 flagged={wasFlaggedByMe}
-                toggleFlag={toggleMinkFlag}
+                toggleFlag={toggleFlag}
                 color={palette.gray2}
               />
             </FlagItemWrap>
