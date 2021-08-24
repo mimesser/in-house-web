@@ -37,6 +37,7 @@ RUN ./create_envfile \
 FROM base_prod as final
 ENV NODE_ENV production
 EXPOSE 3000
+COPY --from=builder --chown=nextjs:nodejs /app/.env ./
 COPY --from=builder --chown=nextjs:nodejs /app/build/ ./
 COPY --from=deps --chown=nextjs:nodejs /app/node_modules ./node_modules
 USER nextjs
