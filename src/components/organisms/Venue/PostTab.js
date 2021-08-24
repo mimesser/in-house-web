@@ -60,7 +60,7 @@ const defaultVoteAnimation = css`
 `;
 
 const activeVoteAnimation = css`
-  ${VoteColumn} ${VoteButton}:active {
+  ${VoteColumn} ${VoteButton}:active:not([disabled]) {
     span:last-child > svg {
       transition: transform ${transition.in} ease-out;
       transform: scale(3);
@@ -86,6 +86,7 @@ const activeVoteAnimation = css`
 
 const PostCard = styled(Card)`
   user-select: none;
+  cursor: default;
   ${defaultVoteAnimation}
   ${activeVoteAnimation}
   background: ${({ selected }) => (selected ? appColors.gray5 : appColors.white)};
@@ -182,11 +183,6 @@ const CellHeader = styled.div`
 const Footer = styled.div`
   display: flex;
   align-items: flex-end;
-
-  ${Icon} {
-    -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
-  }
 `;
 
 const SelectedIndicator = styled(({ show, count, ...rest }) => <Icon {...rest} icon="radio-marked" size={0.3} />)`
@@ -254,25 +250,35 @@ const Post = ({
   }, []);
 
   const card = (
-    <PostCard onClick={selected ? deselect : select} selected={selected}>
+    <PostCard selected={selected}>
       <div>
         <VoteColumn>
           <HelpTip placement="top" tip="agree or disagree">
             <VoteWrap>
               <VoteButton
                 onClick={(e) => {
+                  select();
                   votePost(e, id, 1);
                 }}
                 selected={upvoted}
+                disabled={upvoted || selected}
               >
                 <SelectedIndicator show={upvoted} />
                 <Icon size={size} icon="arrow-up-circle" />
               </VoteButton>
               <VoteButton
                 onClick={(e) => {
+                  if (downvoted) {
+                    e.stopPropagation();
+
+                    return;
+                  }
+
+                  select();
                   votePost(e, id, -1);
                 }}
                 selected={downvoted}
+                disabled={downvoted || selected}
               >
                 <SelectedIndicator show={downvoted} />
                 <Icon size={size} icon="arrow-down-circle" />
