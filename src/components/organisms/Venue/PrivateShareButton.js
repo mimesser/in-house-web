@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 import { PokeButton } from '../../molecules';
 import { setPrivateShareItem } from '../../../store/venues';
-import { palette } from '../../../style';
 
 const Circle = styled.span`
   ${PokeButton} {
@@ -28,7 +27,7 @@ const Share = ({ id, type, openModal, onOpenSharePopup, size, circleColor }) => 
 
   if (circleColor) {
     return (
-      <Circle color={circleColor(palette)}>
+      <Circle color={circleColor}>
         <PokeButton onClick={handleClick} size={size} />
       </Circle>
     );
