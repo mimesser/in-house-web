@@ -72,4 +72,4 @@ stages:
       displayName: Scan for vulnerabilities
       inputs:
         script: |
-          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock --ignore-unfixed $(containerRegistry)/$(imageRepository):$(tag)
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy --ignore-unfixed $(containerRegistry)/$(imageRepository):$(tag)
