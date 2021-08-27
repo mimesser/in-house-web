@@ -248,6 +248,10 @@ const Post = ({
       downvotePost(id);
     }
   }, []);
+  const toggleFlag = useCallback(() => {
+    select();
+    togglePostFlag();
+  }, [id]);
 
   const card = (
     <PostCard selected={selected}>
@@ -300,7 +304,7 @@ const Post = ({
           <PostText>{text}</PostText>
           <Footer>
             {imageUrl && <PostImage imageUrl={imageUrl} alt="post image" onClick={open} />}
-            {!isShare && !selected && <FlagItem flagged={wasFlaggedByMe} toggleFlag={togglePostFlag} />}
+            {!isShare && !selected && <FlagItem flagged={wasFlaggedByMe} toggleFlag={toggleFlag} />}
             <p>{errorMessage}</p>
           </Footer>
         </Main>
