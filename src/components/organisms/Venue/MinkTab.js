@@ -21,7 +21,7 @@ import { palette, spacing, fontSize, font } from '../../../style';
 import { Loader, Button, HelpTip, Patent, Card, Icon, SlidingValue, Input } from '../../atoms';
 import { TabLayout, Main, ItemTitle, ItemTime, TabTitle } from './tabStyle';
 import { formatDateTime, formatMovementURL, formatRating } from '../../../utils/format';
-import { NewMinkElected } from './NewMinkElected';
+import NewMinkElected from './NewMinkElected';
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
 import { PokeButton, IconInput } from '../../molecules';
