@@ -15,6 +15,7 @@ import {
   tryAnswerMink,
   selectAnswerMinkStatus,
   selectIsActiveInsider,
+  selectSelectedVenueTopMinkId,
   toggleMinkFlag,
 } from '../../../store/venues';
 import { palette, spacing, fontSize, font } from '../../../style';
@@ -619,10 +620,18 @@ const MinkTab = ({
   tryAnswerMink,
   answerStatus,
   toggleMinkFlag,
+  topMinkId,
 }) => {
+  const ref = useRef(null);
+
   useEffect(() => {
     loadMinks();
   }, []);
+
+  useEffect(() => {
+    ref.current.scrollIntoView();
+  }, [topMinkId]);
+
   const renderSharePreview = useCallback(
     (id) => {
       const m = findMink(id, minks);
@@ -653,7 +662,7 @@ const MinkTab = ({
   const movementName = formatMovementURL(name);
 
   return (
-    <TabLayout>
+    <TabLayout ref={ref}>
       {minks ? (
         renderMinks(
           minks,
@@ -683,6 +692,7 @@ const mapsState = createStructuredSelector({
   selectedMink: selectSelectedMink,
   answerStatus: selectAnswerMinkStatus,
   isActiveInsider: selectIsActiveInsider,
+  topMinkId: selectSelectedVenueTopMinkId,
 });
 
 const mapDispatch = {
