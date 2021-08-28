@@ -13,7 +13,7 @@ const Message = styled(H1)`
   margin-top: ${spacing.xxxl};
 `;
 
-export const NewMinkElected = ({ open }) => {
+const NewMinkElected = ({ open }) => {
   return open ? (
     <Modal canClose={false} canDismiss={false} inverse>
       <Message>new #1 MINK elected!</Message>
