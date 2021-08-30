@@ -5,6 +5,8 @@ import Head from 'next/head';
 import { END } from 'redux-saga';
 import { Helmet } from 'react-helmet';
 import { useRouter } from 'next/router';
+import { hotjar } from 'react-hotjar';
+
 import { wrapper } from '../store';
 import { theme } from '../style';
 import { GlobalStyle } from '../components/GlobalStyle';
@@ -24,6 +26,7 @@ class MyApp extends App {
   }
 
   componentDidMount() {
+    hotjar.initialize(process.env.HOTJAR_SITE_ID, 6);
     initGA();
     logPageView();
   }
