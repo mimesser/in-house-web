@@ -37,7 +37,7 @@ class MyDocument extends Document {
           <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
 
           <script src={`https://www.googleoptimize.com/optimize.js?id=${process.env.G_OPTIMIZE_KEY}`} />
-          <script>HotjarScript(process.env.HOTJAR_SITE_ID);</script>
+          <script>{HotjarScript(process.env.HOTJAR_SITE_ID)}</script>
         </Head>
         <body>
           <Main />
