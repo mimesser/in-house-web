@@ -61,9 +61,18 @@ const Nav = styled.nav`
   z-index: 3;
 `;
 
-const TabHeader = ({ id, name, tab: { path, label, secured, help }, active, custom, authorized, venueType = 'houses', lite }) => {
+const TabHeader = ({
+  id,
+  name,
+  tab: { path, label, secured, help },
+  active,
+  custom,
+  authorized,
+  venueType = 'houses',
+  lite,
+}) => {
   const movementName = formatMovementURL(name);
-  
+
   if (!authorized && secured) {
     return (
       <Link href={`/${lite ? 'movement' : venueType}/${lite ? movementName : id}`} passHref>
@@ -123,12 +132,12 @@ const liteTabs = [
   {
     path: 'mink',
     label: 'mink',
-  }
+  },
 ];
 
 const Navbar = ({ id, name, selected, authorized, anyTabItemSelected, venueType, tabs = defaultTabs, lite }) => {
   if (lite) tabs = liteTabs;
-  
+
   return (
     <Nav>
       {tabs.map((t) => (
@@ -138,7 +147,7 @@ const Navbar = ({ id, name, selected, authorized, anyTabItemSelected, venueType,
           key={t.path}
           tab={t}
           custom={t.custom}
-          active={selected === t.path && !anyTabItemSelected}
+          active={selected === t.path}
           authorized={authorized}
           venueType={venueType}
           lite={lite}
