@@ -4,6 +4,7 @@ coverage/
 .idea/
 .bin/
 .env
+.eslintcache
 yarn-error.log
 yarn.lock
 build/
