@@ -135,7 +135,7 @@ const liteTabs = [
   },
 ];
 
-const Navbar = ({ id, name, selected, authorized, anyTabItemSelected, venueType, tabs = defaultTabs, lite }) => {
+const Navbar = ({ id, name, selected, authorized, venueType, tabs = defaultTabs, lite }) => {
   if (lite) tabs = liteTabs;
 
   return (
