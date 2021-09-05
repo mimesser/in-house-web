@@ -472,6 +472,7 @@ const Mink = ({
                 placeholder="one word / no spaces"
                 autocomplete="off"
                 spellcheck="false"
+                maxLength={25}
                 value={answer}
                 onChange={tryAnswer}
                 readOnly={previouslyAnsweredCorrectly}

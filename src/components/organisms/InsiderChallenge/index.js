@@ -119,10 +119,11 @@ const Subtitle = styled.div`
   color: ${palette.gray};
 `;
 
-const StatusIcon = ({ clickEvent }) =>
+const StatusIcon = ({ clickEvent }) => (
   <span onClick={clickEvent}>
     <Icon icon="close" />
-  </span>;
+  </span>
+);
 
 const TopMinkToolTip = () => {
   const [open, setOpen] = useState(false);
@@ -257,6 +258,7 @@ const Form = ({
               placeholder="one word / no spaces"
               autocomplete="off"
               spellcheck="false"
+              maxLength={25}
               value={answer}
               onChange={tryAnswer}
               readOnly={answeredCorrectly}
@@ -288,6 +290,7 @@ const Form = ({
         <AnswerInput
           autocomplete="off"
           spellcheck="false"
+          maxLength={25}
           value={answer}
           onChange={handleChange}
           ref={answerRef}
@@ -305,7 +308,13 @@ const Form = ({
 };
 
 const InsiderChallenge = ({
-  venue: { name, topMink, id: houseId, answerMinkStatus: answerStatus, industry: { lite }},
+  venue: {
+    name,
+    topMink,
+    id: houseId,
+    answerMinkStatus: answerStatus,
+    industry: { lite },
+  },
   challengeFormData,
   dismissForm,
   answerTopMink,
