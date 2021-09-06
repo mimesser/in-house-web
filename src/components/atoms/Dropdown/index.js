@@ -61,22 +61,19 @@ const NoOptionsDiv = styled.div`
       padding: 8px 10px;
       align-self: flex-start;
     }
+  }
+`;
 
-    &:last-child {
-      background-color: ${appColors.midnight};
-
-      ${Link} > div {
-        display: flex;
-        justify-content: space-between;
-        padding: 8px 10px;
-        color: ${appColors.offWhite};
-      }
-
-      ${Link} > div:hover {
-        cursor: default;
-        background-color: ${appColors.gray2};
-      }
-    }
+const LinkFullWidth = styled.div`
+  background-color: ${appColors.midnight};
+  cursor: pointer;
+  display: flex;
+  padding: 8px 10px;
+  color: ${appColors.offWhite};
+  justify-content: space-between;
+  align-items: center;
+  &:hover {
+    background-color: ${appColors.gray2};
   }
 `;
 
@@ -125,10 +122,10 @@ const noOptionsMessage = () => (
     <div>no results</div>
     <div>
       <Link href="/list-house">
-        <div>
+        <LinkFullWidth>
           <span>list your org</span>
           <Icon icon="arrow-right" />
-        </div>
+        </LinkFullWidth>
       </Link>
     </div>
   </NoOptionsDiv>
