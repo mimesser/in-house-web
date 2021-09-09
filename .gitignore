@@ -11,3 +11,6 @@ build/
 tags
 .DS_Store
 ~*
+
+# Sentry
+.sentryclirc
