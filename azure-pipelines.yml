@@ -9,9 +9,9 @@ resources:
 
 variables:
   # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: 'eb196ebe-a40e-40fc-9115-b7a70dff0e37'
+  dockerRegistryServiceConnection: '6a2d4758-82fc-4596-a4d5-95d61d37f09d'
   imageRepository: 'frontend'
-  containerRegistry: 'ihtest.azurecr.io'
+  containerRegistry: 'inhousecr.azurecr.io'
   dockerfilePath: 'Dockerfile'
   tag: '$(Build.SourceBranchName)'
 
