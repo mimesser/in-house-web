@@ -8,6 +8,7 @@ const moduleExports = {
   env: {
     SENTRY_DSN: process.env.SENTRY_DSN,
     SENTRY_ENVIRONMENT: process.env.SENTRY_ENVIRONMENT,
+    SENTRY_RELEASE: process.env.SENTRY_RELEASE,
     API_URL: process.env.API_URL,
     PORT: process.env.PORT,
     GA_KEY: process.env.GA_KEY,

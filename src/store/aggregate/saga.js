@@ -1,5 +1,6 @@
 import { all, put, takeLatest, select, take, call, delay, fork } from 'redux-saga/effects';
 import Router from 'next/router';
+import * as Sentry from '@sentry/nextjs';
 
 import api, { isUnauthorized, setAuthorization, clearAuthorization } from '../../api';
 
@@ -19,6 +20,7 @@ function* loadAggregateDataSaga({ meta: { isServer, pathname } }) {
       clearAuthorization();
       response = yield call(api.get, 'aggregate');
     } else {
+      Sentry.captureException(e);
       throw e;
     }
   }
@@ -46,7 +48,7 @@ export function* checkBetaAuth({ payload: { password } }) {
     yield put(checkBetaAuthSuccess());
     yield performBetaAuthRedirect();
   } catch (error) {
-    console.log(error);
+    Sentry.captureException(error);
     yield put(checkBetaAuthFailure());
   }
 }
