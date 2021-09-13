@@ -5,7 +5,7 @@ import { waitTillReady } from '../../aggregate/saga';
 import api, { setAuthorization } from '../../../api';
 import { loadVenuesDataSuccess, setSelectedVenue, loadPollsDataSuccess } from '../actions';
 import { selectVenues, selectPolls } from '../selectors';
-import { selectIndustriesMap, selectAggregate, loadAggregateDataSuccess, loadAggregateData } from '../../aggregate';
+import { selectIndustriesMap, selectAggregate, loadAggregateData, loadAggregateDataSuccess } from '../../aggregate';
 
 import { turnDemoOn, turnDemoOff } from '../../demo';
 import { DEMO_VENUE, DEMO_VENUES_ID } from '../../demo/data';
@@ -30,7 +30,7 @@ function* fetchVenueList() {
     return venues;
   }
 
-  yield waitTillReady();
+  yield put(loadAggregateData(false));
   return yield reloadVenues();
 }
 
@@ -41,7 +41,7 @@ function* fetchPollsList() {
     return polls;
   }
 
-  yield waitTillReady();
+  yield put(loadAggregateData(false));
   return yield reloadPolls();
 }
 
@@ -59,14 +59,13 @@ export function* reloadPolls() {
   return normalized;
 }
 
-let alreadyInDemo = false;
+const alreadyInDemo = false;
 let cacheAggregate;
 
 export function* initVenuesPage({ payload: { idToSelect } }) {
-  const inDemo = idToSelect === DEMO_VENUE.id || idToSelect === DEMO_VENUES_ID;
+  const inDemo = typeof idToSelect !== 'undefined' && (idToSelect === DEMO_VENUE.id || idToSelect === DEMO_VENUES_ID);
   if (inDemo) {
     if (idToSelect === DEMO_VENUES_ID) {
-      alreadyInDemo = true;
       yield waitTillReady();
       cacheAggregate = yield select(selectAggregate);
 
@@ -80,31 +79,20 @@ export function* initVenuesPage({ payload: { idToSelect } }) {
       yield put(turnDemoOn());
     }
   } else {
-    // yield loadAggregateData();
-
-    if (cacheAggregate) {
-      yield call(loadAggregateDataSuccess(cacheAggregate));
-      setAuthorization(cacheAggregate.userId);
-    }
-
-    yield put(turnDemoOff());
+    yield put(loadAggregateData(false));
+    yield waitTillReady();
   }
 
   const venues = yield fetchVenueList();
-  if (!idToSelect) {
-    return;
-  }
 
-  let venueToSelect;
-  if (inDemo) {
-    venueToSelect = DEMO_VENUE;
-  } else {
-    venueToSelect = venues.find((v) => v.id === idToSelect);
-  }
-  if (venueToSelect) {
-    yield put(setSelectedVenue(venueToSelect));
-  } else {
-    Router.push('/houses', '/houses', { shallow: true });
+  if (idToSelect) {
+    const venueToSelect = venues.find((v) => v.id === idToSelect);
+
+    if (venueToSelect) {
+      yield put(setSelectedVenue(venueToSelect));
+    } else {
+      Router.push('/houses', '/houses', { shallow: true });
+    }
   }
 }
 
