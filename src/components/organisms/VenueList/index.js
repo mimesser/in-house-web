@@ -8,13 +8,7 @@ import styled from 'styled-components';
 import { spacing } from '../../../style';
 import { Loader, ClearButton, Icon, Button, Card, H1, Portal } from '../../atoms';
 import PrivateShare from '../Venue/PrivateShare';
-import {
-  selectInsiderChallengeForm,
-  selectSelectedVenue,
-  selectVenues,
-  selectPolls,
-  selectSelectedPoll,
-} from '../../../store/venues';
+import { setSelectedVenue, selectVenues, selectPolls } from '../../../store/venues';
 import { selectEsgCategories } from '../../../store/aggregate';
 import { selectInDemo } from '../../../store/demo';
 import { VenueCard } from './VenueCard';
@@ -62,21 +56,28 @@ export const findCategoryRating = (id, categoryRatings) => {
   return cat && cat.rating;
 };
 
-const SearchPage = ({ venues, inDemo, categories }) => {
+const SearchPage = ({ setSelectedVenue, venues, inDemo, categories }) => {
   const router = useRouter();
   const [filter, setFilter] = useState(router.query.q);
   const handleSearchChange = useCallback((e) => setFilter(e.currentTarget.value.toLowerCase()), []);
   const clearSearch = useCallback(() => setFilter(''), []);
-  const showVenue = useCallback((venue) => {
-    const {
-      id,
-      name,
-      industry: { lite },
-    } = venue;
-    Router.push(`/houses?id=${id}`, `/${lite ? 'movement' : 'houses'}/${lite ? formatMovementURL(name) : id}`, {
-      shallow: true,
-    });
-  }, []);
+  const showVenue = useCallback(
+    (venue) => {
+      const {
+        id,
+        name,
+        industry: { lite },
+      } = venue;
+
+      setSelectedVenue(venue);
+      Router.push(
+        `/houses?id=${id}&tab=${lite ? 'post' : 'rate'}&time=${Date.now()}`,
+        `/${lite ? 'movement' : 'houses'}/${lite ? formatMovementURL(name) : id}/${lite ? 'post' : 'rate'}`,
+        { shallow: true },
+      );
+    },
+    [setSelectedVenue],
+  );
 
   const renderSharePreview = useCallback(
     (id) => {
@@ -161,9 +162,11 @@ const SearchPage = ({ venues, inDemo, categories }) => {
 const mapStateToProps = createStructuredSelector({
   venues: selectVenues,
   inDemo: selectInDemo,
-  venue: selectSelectedVenue,
-  challengeForm: selectInsiderChallengeForm,
   categories: selectEsgCategories,
 });
 
-export const VenueList = connect(mapStateToProps)(SearchPage);
+const mapDispatchToProps = {
+  setSelectedVenue,
+};
+
+export const VenueList = connect(mapStateToProps, mapDispatchToProps)(SearchPage);
