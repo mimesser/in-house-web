@@ -48,6 +48,7 @@ export const actionTypes = {
   CLEAR_VENUES_DATA: 'CLEAR_VENUES_DATA',
   CREATE_VENUE: 'CREATE_VENUE',
   SET_LOADING: 'SET_LOADING',
+  SET_VENUE_LOADING: 'SET_VENUE_LOADING',
 };
 
 export const clearVenuesData = () => ({
@@ -102,9 +103,9 @@ export const answerTopMink = (answer) => ({
   payload: { answer },
 });
 
-export const setChallengeFormData = (payload) => ({
+export const setChallengeFormData = (insiderChallengeForm) => ({
   type: actionTypes.SET_CHALLENGE_FORM_DATA,
-  payload,
+  payload: { insiderChallengeForm },
 });
 
 export const dismissChallengeForm = (showMinks, name, lite) => ({
@@ -311,5 +312,10 @@ export const createVenue = (venue) => ({
 
 export const setLoading = (loading) => ({
   type: actionTypes.SET_LOADING,
+  payload: { loading },
+});
+
+export const setVenueLoading = (loading) => ({
+  type: actionTypes.SET_VENUE_LOADING,
   payload: { loading },
 });
