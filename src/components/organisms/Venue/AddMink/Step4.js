@@ -17,7 +17,17 @@ const Push = styled.span`
   margin-left: auto;
 `;
 
-export const Step4 = ({ venue: { id, name, industry: { lite }}, setStep, edit, loading, post }) => (
+export const Step4 = ({
+  venue: {
+    id,
+    name,
+    industry: { lite },
+  },
+  setStep,
+  edit,
+  loading,
+  post,
+}) => (
   <StepLayout
     hideProgress
     head={
@@ -26,7 +36,7 @@ export const Step4 = ({ venue: { id, name, industry: { lite }}, setStep, edit, l
           <Industry>{name}</Industry>
           <Push />
           <Link
-            href={`/houses?id=${id}&tab=mink`}
+            href={`/houses?id=${id}&tab=mink&time=${Date.now()}`}
             as={`/${lite ? 'movement' : 'houses'}/${lite ? formatMovementURL(name) : id}/mink`}
           >
             <ClearButton>
