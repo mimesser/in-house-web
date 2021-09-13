@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { withRouter } from 'next/router';
 
 import InsiderQuestionChallenge from '../InsiderChallenge';
 import WelcomePopup from './WelcomePopup';
-import { selectInsiderChallengeForm, selectSelectedVenue } from '../../../store/venues';
+import { selectInsiderChallengeForm, selectIsActiveInsider, selectSelectedVenue } from '../../../store/venues';
 import { Loader } from '../../atoms';
 import Banner from './Banner';
 import Navbar from './Navbar';
@@ -21,45 +21,31 @@ const tabMap = {
   mink: MinkTab,
 };
 
-const knownTabs = Object.keys(tabMap);
-
-const Venue = ({ venue, router, challengeForm: challengeFormOpen }) => {
-  if (!venue) return null;
-  
-  const lite = venue.industry.lite;
-  const venueType = venue && venue.isPoll ? 'polls' : 'houses';
-  const {
-    query: { tab = lite ? 'post' : 'rate' },
-    asPath,
-  } = router;
-
-  useEffect(() => {
-    if (!knownTabs.includes(tab)) {
-      router.replace(`/${venueType}`);
-    }
-  }, []);
-
+const Venue = ({ loading, venue, router, authorized, challengeFormData }) => {
   if (!venue) {
     return <Loader big />;
   }
-
-  if (asPath.endsWith('mink/new') && venue && !venue.isPoll) {
+  if (router.asPath.endsWith('mink/new') && venue && !venue.isPoll) {
     return <AddMink />;
   }
-
-  if (asPath.endsWith('post/new')) {
+  if (router.asPath.endsWith('post/new')) {
     return <AddPost />;
   }
 
-  const Tab = tabMap[tab] || RateTab;
+  const lite = venue.industry?.lite || false;
+  const venueType = venue.isPoll ? 'polls' : 'houses';
+  const { tab = lite ? 'post' : 'rate' } = router.query;
+  const Tab = tabMap[tab] || (lite ? PostTab : RateTab);
+  const showLoading = loading || (!authorized && tab !== 'mink');
+
   return (
     <>
       <>
         <Banner venue={venue} />
         <Navbar id={venue.id} name={venue.name} selected={tab} venueType={venueType} lite={lite} />
-        <Tab venue={venue} venueType={venueType} />
+        <Tab loading={showLoading} venue={venue} venueType={venueType} />
       </>
-      <InsiderQuestionChallenge />
+      {!authorized && challengeFormData && <InsiderQuestionChallenge />}
       {venue && venue.showWelcome && <WelcomePopup />}
     </>
   );
@@ -67,7 +53,8 @@ const Venue = ({ venue, router, challengeForm: challengeFormOpen }) => {
 
 const mapStateToProps = createStructuredSelector({
   venue: selectSelectedVenue,
-  challengeForm: selectInsiderChallengeForm,
+  authorized: selectIsActiveInsider,
+  challengeFormData: selectInsiderChallengeForm,
 });
 
 export default withRouter(connect(mapStateToProps)(Venue));
