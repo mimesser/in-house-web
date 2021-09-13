@@ -8,7 +8,7 @@ import { selectAggregate } from '../../aggregate';
 export function* dismissWelcomeForm() {
   const { userId } = yield select(selectAggregate);
   const { id } = yield select(selectSelectedVenue);
-  const storageKey = `user/${userId}/${id}/skipWelcomeCout`;
+  const storageKey = `user/${userId}/${id}/skipWelcomeCount`;
   const count = localStorageAccessor.get(storageKey, 0);
 
   try {
