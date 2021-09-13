@@ -4,15 +4,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Link from 'next/link';
 import { useScrollPosition } from '@n8tb1t/use-scroll-position';
-import { debounce } from 'lodash';
-import {
-  loadPosts,
-  selectSelectedPost,
-  setSelectedPost,
-  upvotePost,
-  downvotePost,
-  togglePostFlag,
-} from '../../../store/venues';
+import { selectSelectedPost, setSelectedPost, upvotePost, downvotePost, togglePostFlag } from '../../../store/venues';
 import { Loader, Button, HelpTip, Card, Icon, NumberLarge, NumberSmall } from '../../atoms';
 import { formatDateTime, formatMovementURL, formatRating } from '../../../utils/format';
 import { ItemText, ItemTitle, ItemTime, Main, TabLayout } from './tabStyle';
@@ -217,26 +209,30 @@ const Post = ({
   isShare,
 }) => {
   const [currentVote, setCurrentVote] = useState(myVote);
-  const upvoted = currentVote === 1;
-  const downvoted = currentVote === -1;
-  const size = upvoted || downvoted ? 1.7 : 2.2;
-  const selected = selectedPost && selectedPost.id === id;
+  const [upvoted, setUpvoted] = useState(myVote === 1);
+  const [downvoted, setDownvoted] = useState(myVote === -1);
+  const [size, setSize] = useState(upvoted || downvoted ? 1.7 : 2.2);
+  const [selected, setSelected] = useState(selectedPost && selectedPost.id === id);
   const [showFullImage, setShowFullImage] = useState(false);
   const [optimisticVoteRating, setOptimisticVoteRating] = useState(voteRating);
 
   const close = useCallback(() => setShowFullImage(false));
   const open = useCallback(() => setShowFullImage(true));
   const select = useCallback(() => setSelectedPost(id), [id]);
-  const deselect = useCallback(() => setSelectedPost(undefined), [id]);
-
+  const deselect = useCallback(setSelectedPost, [setSelectedPost]);
+  const updateCurrentVote = useCallback((v) => {
+    setCurrentVote(v);
+    setUpvoted(v === 1);
+    setDownvoted(v === -1);
+    setSize(upvoted || downvoted ? 1.7 : 2.2);
+  }, []);
   const votePost = useCallback((e, id, vote) => {
-    setCurrentVote(vote);
-
     if (+vote === 1) {
       const curAverage = downvoted
         ? (voteRating * voteCount + 10) / voteCount
         : (voteRating * voteCount + 10) / (voteCount + 1);
 
+      updateCurrentVote(+vote);
       setOptimisticVoteRating(curAverage);
       upvotePost(id);
     } else {
@@ -244,6 +240,7 @@ const Post = ({
         ? (voteRating * voteCount - 10) / voteCount
         : (voteRating * voteCount) / (voteCount + 1);
 
+      updateCurrentVote(+vote);
       setOptimisticVoteRating(curAverage);
       downvotePost(id);
     }
@@ -253,6 +250,9 @@ const Post = ({
     togglePostFlag();
   }, [id]);
 
+  useEffect(() => setSelected(selectedPost?.id === id), [selectedPost, id]);
+  useEffect(() => deselect, []);
+
   const card = (
     <PostCard selected={selected}>
       <div>
@@ -261,6 +261,11 @@ const Post = ({
             <VoteWrap>
               <VoteButton
                 onClick={(e) => {
+                  if (upvoted) {
+                    e.stopPropagation();
+
+                    return;
+                  }
                   select();
                   votePost(e, id, 1);
                 }}
@@ -364,24 +369,22 @@ const NewPostButton = styled(Button)`
 `;
 
 const renderSection = (title, posts, setSelectedPost, selectedPost, upvotePost, downvotePost, togglePostFlag) => {
-  return (
-    posts.length > 0 && (
-      <>
-        {posts.map((p, i) => (
-          <Post
-            post={p}
-            key={p.id}
-            setSelectedPost={setSelectedPost}
-            selectedPost={selectedPost}
-            withHelp={i === 0}
-            upvotePost={upvotePost}
-            downvotePost={downvotePost}
-            togglePostFlag={togglePostFlag}
-          />
-        ))}
-      </>
-    )
-  );
+  return posts.length > 0 ? (
+    <>
+      {posts.map((p, i) => (
+        <Post
+          post={p}
+          key={p.id}
+          setSelectedPost={setSelectedPost}
+          selectedPost={selectedPost}
+          withHelp={i === 0}
+          upvotePost={upvotePost}
+          downvotePost={downvotePost}
+          togglePostFlag={togglePostFlag}
+        />
+      ))}
+    </>
+  ) : null;
 };
 
 const renderPosts = (posts, setSelectedPost, selectedPost, upvotePost, downvotePost, togglePostFlag) => (
@@ -403,17 +406,13 @@ const PostTab = ({
     name,
     industry: { lite },
   },
-  loadPosts,
+  loading,
   setSelectedPost,
   selectedPost,
   upvotePost,
   downvotePost,
   togglePostFlag,
 }) => {
-  useEffect(() => {
-    loadPosts();
-  }, []);
-
   const renderSharePreview = useCallback(
     (id) => {
       const p = findPost(id, posts);
@@ -467,7 +466,7 @@ const PostTab = ({
       </Link>
 
       <TabLayout onScroll={handleScroll}>
-        {posts ? (
+        {posts && !loading ? (
           renderPosts(posts, setSelectedPost, selectedPost, upvotePost, downvotePost, togglePostFlag)
         ) : (
           <Loader big />
@@ -484,7 +483,6 @@ const mapState = createStructuredSelector({
 });
 
 const mapDispatch = {
-  loadPosts,
   setSelectedPost,
   togglePostFlag,
   upvotePost,
