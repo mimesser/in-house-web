@@ -136,7 +136,7 @@ const noOptionsMessage = () => (
 
 /* eslint-disable react/jsx-props-no-spreading */
 export const Dropdown = ({ options, searchValue, placeholder, onFocus, onBlur, ...props }) => {
-  const [placeholderText, setPlaceholderText] = useState(placeholder || 'find your org');
+  const [placeholderText, setPlaceholderText] = useState(placeholder || ' find your org');
   return (
     <CustomSelect
       options={options}
