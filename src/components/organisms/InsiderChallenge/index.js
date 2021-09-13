@@ -119,10 +119,11 @@ const Subtitle = styled.div`
   color: ${palette.gray};
 `;
 
-const StatusIcon = ({ clickEvent }) =>
+const StatusIcon = ({ clickEvent }) => (
   <span onClick={clickEvent}>
     <Icon icon="close" />
-  </span>;
+  </span>
+);
 
 const TopMinkToolTip = () => {
   const [open, setOpen] = useState(false);
@@ -305,28 +306,30 @@ const Form = ({
 };
 
 const InsiderChallenge = ({
-  venue: { name, topMink, id: houseId, answerMinkStatus: answerStatus, industry: { lite }},
-  challengeFormData,
+  venue: {
+    name,
+    topMink,
+    id: houseId,
+    answerMinkStatus: answerStatus,
+    industry: { lite },
+  },
+  challengeFormData: { blocked, isAnswerCorrect, showTerms },
   dismissForm,
   answerTopMink,
   inDemo,
   tryAnswerMink,
   setSelectedMink,
 }) => {
-  if (!challengeFormData || !topMink) {
+  if (!topMink) {
     return null;
   }
-
-  const { blocked, isAnswerCorrect, showTerms } = challengeFormData;
-  const wrongAnswer = isAnswerCorrect === false;
-  const accessGranted = isAnswerCorrect;
 
   return (
     <Modal
       inverse={!showTerms}
       closeModal={dismissForm}
-      canDismiss={!accessGranted && !showTerms}
-      canClose={!accessGranted && !showTerms}
+      canDismiss={!showTerms}
+      canClose={!showTerms}
       title={`${name} | #1 MINK`}
     >
       <QuestionForm>
@@ -339,7 +342,7 @@ const InsiderChallenge = ({
               <Form
                 houseId={houseId}
                 topMink={topMink}
-                wrongAnswer={wrongAnswer}
+                wrongAnswer={isAnswerCorrect === false}
                 answerTopMink={answerTopMink}
                 inDemo={inDemo}
                 name={name}
