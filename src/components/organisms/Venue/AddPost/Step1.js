@@ -6,6 +6,7 @@ import { StepLayout } from './StepLayout';
 import { Icon } from '../../../atoms';
 import { font, palette, spacing, cover } from '../../../../style';
 import { formatMovementURL } from '../../../../utils/format';
+
 const MAX_TITLE_LENGTH = 45;
 const MAX_MESSAGE_LENGTH = 250;
 
@@ -22,7 +23,17 @@ const IconWrapper = styled.div`
   }
 `;
 
-export const Step1 = ({ venue: { id, name }, title, setTitle, message, setMessage, setStep, image, setImage, lite }) => {
+export const Step1 = ({
+  venue: { id, name },
+  title,
+  setTitle,
+  message,
+  setMessage,
+  setStep,
+  image,
+  setImage,
+  lite,
+}) => {
   const movementName = formatMovementURL(name);
   const handleFileChange = useCallback(
     (file) => {
@@ -59,7 +70,7 @@ export const Step1 = ({ venue: { id, name }, title, setTitle, message, setMessag
       commands={
         <>
           <Link
-            href={`/houses?id=${id}&tab=post`}
+            href={`/houses?id=${id}&tab=post&time=${Date.now()}`}
             as={`/${lite ? 'movement' : 'houses'}/${lite ? movementName : id}/post`}
           >
             <BackButton>cancel</BackButton>

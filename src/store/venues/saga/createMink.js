@@ -20,8 +20,8 @@ export function* createMink({ payload: { id, name, question, answer, lite } }) {
   }
 
   Router.push(
-    `/${'houses'}?id=${id}&tab=mink`,
+    `/${'houses'}?id=${id}&tab=mink&time=${Date.now()}`,
     `/${lite ? 'movement' : 'houses'}/${lite ? formatMovementURL(name) : id}/mink`,
-    { shallow: true }
+    { shallow: true },
   );
 }

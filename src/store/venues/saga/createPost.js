@@ -31,9 +31,9 @@ export function* createPost({ payload: { id, name, title, image, message: text, 
     const movementName = yield formatMovementURL(name);
 
     Router.push(
-      `/${venueType}?id=${id}&tab=post`,
+      `/${venueType}?id=${id}&tab=post&time={Date.now()}`,
       `/${lite ? 'movement' : venueType}/${lite ? movementName : id}/post`,
-      { shallow: true }
+      { shallow: true },
     );
   } catch (e) {
     if (isForbidden(e)) {

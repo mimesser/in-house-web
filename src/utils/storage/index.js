@@ -2,13 +2,20 @@ import isNil from 'lodash/isNil';
 
 export const localStorageAccessor = {
   get(key, defaultValue) {
+    let value;
+
     try {
-      const value = localStorage.getItem(key);
-      return isNil(value) ? defaultValue : JSON.parse(value);
+      value = localStorage.getItem(key);
     } catch (error) {
-      // ignore corrupted items
+      this.remove(key);
+
       return defaultValue;
+    } finally {
+      if (!isNil(value)) console.log(JSON.parse(value));
+      value = isNil(value) ? defaultValue : JSON.parse(value);
     }
+
+    return value;
   },
   set(key, value) {
     if (isNil(value)) {

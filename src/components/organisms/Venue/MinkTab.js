@@ -357,7 +357,7 @@ const Mink = ({
   isShare,
 }) => {
   const selectMink = useCallback(() => setSelectedMink(minkId), [minkId]);
-  const deselectMink = useCallback(() => setSelectedMink(undefined), [minkId]);
+  const deselectMink = useCallback(setSelectedMink, [setSelectedMink]);
   const toggleFlag = useCallback(() => {
     selectMink();
     toggleMinkFlag();
@@ -424,8 +424,11 @@ const Mink = ({
   }, [selectedMink, minkId]);
 
   useEffect(() => {
+    setAnswer(myCorrectAnswer || '');
     setPreviouslyAnsweredCorrectly(!!myCorrectAnswer);
   }, [myCorrectAnswer]);
+
+  useEffect(() => deselectMink, []);
 
   const card = (
     <MinkCard ref={ref} active={active} topMink={topMink} isShare={isShare}>
@@ -541,37 +544,35 @@ const renderMinks = (
 ) => (
   <>
     {minks.length > 0 && (
-      <>
-        <TopMinkContainer>
-          <TabTitle>
-            Top MINK
-            <Push />
-            <Patent />
-          </TabTitle>
-          <Subtitle>the top mink at any time verifies insiders</Subtitle>
-          <hr />
-          <Mink
-            houseId={houseId}
-            mink={minks[0]}
-            setSelectedMink={setSelectedMink}
-            selectedMink={selectedMink}
-            upvoteMink={upvoteMink}
-            downvoteMink={downvoteMink}
-            tryAnswerMink={tryAnswerMink}
-            answerStatus={answerStatus}
-            toggleMinkFlag={toggleMinkFlag}
-            topMink
-          />
-        </TopMinkContainer>
-        <Link
-          href={`/houses?id=${houseId}&tab=mink&new`}
-          as={lite ? `/movement/${movementName}/mink/new` : `/houses/${houseId}/mink/new`}
-          passHref
-        >
-          <NewMinkButton icon="arrow-right">new mink</NewMinkButton>
-        </Link>
-      </>
+      <TopMinkContainer>
+        <TabTitle>
+          Top MINK
+          <Push />
+          <Patent />
+        </TabTitle>
+        <Subtitle>the top mink at any time verifies insiders</Subtitle>
+        <hr />
+        <Mink
+          houseId={houseId}
+          mink={minks[0]}
+          setSelectedMink={setSelectedMink}
+          selectedMink={selectedMink}
+          upvoteMink={upvoteMink}
+          downvoteMink={downvoteMink}
+          tryAnswerMink={tryAnswerMink}
+          answerStatus={answerStatus}
+          toggleMinkFlag={toggleMinkFlag}
+          topMink
+        />
+      </TopMinkContainer>
     )}
+    <Link
+      href={`/houses?id=${houseId}&tab=mink&new`}
+      as={lite ? `/movement/${movementName}/mink/new` : `/houses/${houseId}/mink/new`}
+      passHref
+    >
+      <NewMinkButton icon="arrow-right">new mink</NewMinkButton>
+    </Link>
     {minks.length > 1 && (
       <>
         <RunnersTitle>Runners up</RunnersTitle>
@@ -612,7 +613,7 @@ const MinkTab = ({
     minks,
     addedMinkId,
   },
-  loadMinks,
+  loading,
   setSelectedMink,
   setAddedMinkId,
   selectedMink,
@@ -624,13 +625,17 @@ const MinkTab = ({
   topMinkId,
 }) => {
   const ref = useRef(null);
-
+  const [initialTopMink, setInitialTopMink] = useState(true);
   useEffect(() => {
-    loadMinks();
-  }, []);
+    if (!topMinkId) {
+      return;
+    }
 
-  useEffect(() => {
-    ref.current.scrollIntoView();
+    if (!initialTopMink) {
+      ref.current.scrollIntoView();
+    } else {
+      setInitialTopMink(false);
+    }
   }, [topMinkId]);
 
   const renderSharePreview = useCallback(
@@ -664,7 +669,7 @@ const MinkTab = ({
 
   return (
     <TabLayout ref={ref}>
-      {minks ? (
+      {minks && !loading ? (
         renderMinks(
           minks,
           setSelectedMink,
