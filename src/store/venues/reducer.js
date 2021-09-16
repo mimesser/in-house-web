@@ -40,14 +40,13 @@ export function reducer(state = initialState, action) {
       const {
         payload: { venue: selectedVenue },
       } = action;
-      return { ...state, selectedVenue, insiderChallengeForm: undefined };
+      return { ...state, selectedVenue };
     }
     case actionTypes.SET_CHALLENGE_FORM_DATA: {
-      const { payload } = action;
-      return { ...state, insiderChallengeForm: payload };
+      return setSelectedVenueProp(state, action, 'insiderChallengeForm');
     }
     case actionTypes.DISMISS_WELCOME_FORM: {
-      return { ...state, selectedVenue: { ...state.selectedVenue } };
+      return { ...state, selectedVenue: { ...state.selectedVenue, showWelcome: undefined } };
     }
     case actionTypes.SHOW_WELCOME_FORM: {
       const { showWelcome } = action.payload;
@@ -178,6 +177,9 @@ export function reducer(state = initialState, action) {
         ...state,
         loading,
       };
+    }
+    case actionTypes.SET_VENUE_LOADING: {
+      return setSelectedVenueProp(state, action, 'loading');
     }
 
     default:
