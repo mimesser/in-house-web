@@ -1,9 +1,9 @@
 import React, { useEffect, useCallback, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import styled, { keyframes, css } from 'styled-components';
+import styled, { css } from 'styled-components';
 import Link from 'next/link';
-import { debounce } from 'lodash';
+import { isNil } from 'lodash';
 
 import {
   loadMinks,
@@ -15,14 +15,14 @@ import {
   tryAnswerMink,
   selectAnswerMinkStatus,
   selectIsActiveInsider,
+  selectSelectedVenueTopMinkId,
   toggleMinkFlag,
 } from '../../../store/venues';
 import { palette, spacing, fontSize, font } from '../../../style';
 import { Loader, Button, HelpTip, Patent, Card, Icon, SlidingValue, Input } from '../../atoms';
 import { TabLayout, Main, ItemTitle, ItemTime, TabTitle } from './tabStyle';
 import { formatDateTime, formatMovementURL, formatRating } from '../../../utils/format';
-import VoteMink from './VoteMink';
-import { NewMinkElected } from './NewMinkElected';
+import NewMinkElected from './NewMinkElected';
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
 import { PokeButton, IconInput } from '../../molecules';
@@ -131,7 +131,7 @@ const activeVoteAnimation = (color, opacity) => css`
     svg {
       transition: transform ${transition.in} ease-out;
       transform: scale(3);
-      
+
       circle {
         transition: ${transition.in} ease-out;
         fill: ${color};
@@ -192,6 +192,7 @@ const activeStyle = css`
 
 const MinkCard = styled(Card)`
   user-select: none;
+  cursor: default;
 
   ${ShareWrap}, ${FlagItemWrap} {
     visibility: ${({ active, topMink }) => (active && !topMink ? 'hidden' : 'visible')};
@@ -265,12 +266,11 @@ const TopMinkContainer = styled.div`
 `;
 
 const RunnersTitle = styled(TabTitle)`
-  padding-top: 0;
   border-bottom: 1px solid ${palette.lightGray};
 `;
 
 const SharePreviewWrap = styled.div`
-  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   padding: ${spacing.md};
 `;
 
@@ -278,6 +278,15 @@ const TopMinkSharePreviewWrap = styled.div`
   ${TopMinkContainer} {
     padding: ${spacing.md};
   }
+`;
+
+const NewMinkButton = styled(Button)`
+  margin: 0 !important;
+  width: 100%;
+  border: solid 2px white;
+  position: sticky;
+  z-index: 100;
+  top: 46px;
 `;
 
 const AnswerStatus = ({ status, previouslyAnsweredCorrectly, active, isShare }) => {
@@ -311,11 +320,12 @@ const renderInputIcon = (status, previouslyAnsweredCorrectly, active) => {
 const StatusIcon = ({ answerStatus, answer, whiteLoader, clickEvent }) => {
   if (!answerStatus && !answer) return null;
 
-  if (!answerStatus && answer) return (
-    <span onClick={clickEvent}>
-      <Icon size={1.5} icon='close' />
-    </span>
-  );
+  if (!answerStatus && answer)
+    return (
+      <span onClick={clickEvent}>
+        <Icon size={1.5} icon="close" />
+      </span>
+    );
 
   const { loading, isAnswerCorrect } = answerStatus;
   if (loading) {
@@ -347,31 +357,51 @@ const Mink = ({
   isShare,
 }) => {
   const selectMink = useCallback(() => setSelectedMink(minkId), [minkId]);
-  const deselectMink = useCallback(() => setSelectedMink(undefined), [minkId]);
+  const deselectMink = useCallback(setSelectedMink, [setSelectedMink]);
+  const toggleFlag = useCallback(() => {
+    selectMink();
+    toggleMinkFlag();
+  }, [minkId]);
   const ref = useRef(null);
   const answerRef = useRef(null);
-  const [vote, setVote] = useState(myVote);
-  const upvoted = vote === 1;
-  const downvoted = vote === -1;
-  const active = selectedMink && selectedMink.id === minkId;
-  const size = upvoted || downvoted ? 1.7 : 2.2;
+  const [optimisticVoteRating, setOptimisticVoteRating] = useState(voteRating);
+  const [active, setActive] = useState(selectedMink && selectedMink.id === minkId);
+  const size = 2.2;
   const [answer, setAnswer] = useState(myCorrectAnswer || '');
-  const previouslyAnsweredCorrectly = !!myCorrectAnswer;
+  const [previouslyAnsweredCorrectly, setPreviouslyAnsweredCorrectly] = useState(!!myCorrectAnswer);
+
   const tryAnswer = useCallback((e) => {
     const value = normalizeAnswer(e.currentTarget.value);
     setAnswer(value);
-    if (!value) return; 
+    if (!value) return;
     tryAnswerMink(houseId, minkId, value);
   }, []);
+
   const voteMink = useCallback(
-    debounce((e, id, value) => {
-      e.stopPropagation();
-      setVote(value);
-      if (value === 1) upvoteMink(id);
-      if (value === -1) downvoteMink(id);
-    }, 500),
-    [],
+    (e, id, value) => {
+      if (+myVote === value) {
+        return;
+      }
+
+      selectMink();
+
+      if (+value === 1) {
+        const curAverage =
+          +myVote === -1 ? (voteRating * voteCount + 10) / voteCount : (voteRating * voteCount + 10) / (voteCount + 1);
+
+        setOptimisticVoteRating(curAverage);
+        upvoteMink(id);
+      } else {
+        const curAverage =
+          +myVote === 1 ? (voteRating * voteCount - 10) / voteCount : (voteRating * voteCount) / (voteCount + 1);
+
+        setOptimisticVoteRating(curAverage);
+        downvoteMink(id);
+      }
+    },
+    [voteRating, voteCount, myVote],
   );
+
   const clearAnswer = useCallback((e) => {
     e.stopPropagation();
     setAnswer('');
@@ -385,20 +415,35 @@ const Mink = ({
     }
   }, [isNew, setAddedMinkId]);
 
+  useEffect(() => {
+    if (!isNil(selectedMink?.id)) {
+      setActive(selectedMink.id === minkId);
+    } else {
+      setActive(false);
+    }
+  }, [selectedMink, minkId]);
+
+  useEffect(() => {
+    setAnswer(myCorrectAnswer || '');
+    setPreviouslyAnsweredCorrectly(!!myCorrectAnswer);
+  }, [myCorrectAnswer]);
+
+  useEffect(() => deselectMink, []);
+
   const card = (
     <MinkCard ref={ref} active={active} topMink={topMink} isShare={isShare}>
       <div>
         <VoteWrap>
-          <VoteButton onClick={(e) => voteMink(e, minkId, 1)}>
-            <Dot hide={!upvoted} />
+          <VoteButton onClick={(e) => voteMink(e, minkId, 1)} disabled={myVote === 1 || active}>
+            <Dot hide={myVote !== 1} />
             <Icon size={size} icon="arrow-up-circle" />
           </VoteButton>
-          <VoteButton onClick={(e) => voteMink(e, minkId, -1)}>
-            <Dot hide={!downvoted} />
+          <VoteButton onClick={(e) => voteMink(e, minkId, -1)} disabled={myVote === -1 || active}>
+            <Dot hide={myVote !== -1} />
             <Icon size={size} icon="arrow-down-circle" />
           </VoteButton>
         </VoteWrap>
-        <Main onClick={active ? deselectMink : selectMink}>
+        <Main>
           <TopWrap>
             <ItemTime dateTime={created}>{formatDateTime(created)}</ItemTime>
             <Push />
@@ -407,14 +452,18 @@ const Mink = ({
               {myVote ? (
                 <RatingWrap>
                   /
-                  <VoteRating hideRate={active} topMink={topMink}>
-                    <SlidingValue fontSize={fontSize.md} value={`${formatRating(voteRating) * 10}`} inverse={topMink}>
-                      <Dot hide={active} topMink={topMink} />
+                  <VoteRating hideRate={false} topMink={topMink}>
+                    <SlidingValue
+                      fontSize={fontSize.md}
+                      value={`${formatRating(optimisticVoteRating) * 10}`}
+                      inverse={topMink}
+                    >
+                      <Dot hide={false} topMink={topMink} />
                     </SlidingValue>
                   </VoteRating>
                 </RatingWrap>
               ) : (
-                <InsiderText>insiders</InsiderText>
+                <InsiderText>votes</InsiderText>
               )}
               <PrivateShareButton id={minkId} type="mink" />
             </ShareWrap>
@@ -426,11 +475,13 @@ const Mink = ({
                 placeholder="one word / no spaces"
                 autocomplete="off"
                 spellcheck="false"
+                maxLength={25}
                 value={answer}
                 onChange={tryAnswer}
                 readOnly={previouslyAnsweredCorrectly}
                 icon={renderInputIcon(answerStatus, previouslyAnsweredCorrectly, active)}
-                onFocus={selectMink}
+                onFocus={!previouslyAnsweredCorrectly ? selectMink : undefined}
+                onBlur={deselectMink}
                 onClick={(e) => e.stopPropagation()}
                 ref={answerRef}
               />
@@ -455,7 +506,8 @@ const Mink = ({
               <FlagItem
                 disabled={isActiveInsider}
                 flagged={wasFlaggedByMe}
-                toggleFlag={toggleMinkFlag}
+                toggleFlag={toggleFlag}
+                color={palette.gray2}
               />
             </FlagItemWrap>
           )}
@@ -488,40 +540,39 @@ const renderMinks = (
   answerStatus,
   toggleMinkFlag,
   movementName,
-  lite
+  lite,
 ) => (
   <>
     {minks.length > 0 && (
-      <>
-        <TopMinkContainer>
-          <TabTitle>
-            Top MINK
-            <Push />
-            <Patent />
-          </TabTitle>
-          <Subtitle>the top mink at any time verifies insiders</Subtitle>
-          <hr />
-          <Mink
-            houseId={houseId}
-            mink={minks[0]}
-            setSelectedMink={setSelectedMink}
-            selectedMink={selectedMink}
-            upvoteMink={upvoteMink}
-            downvoteMink={downvoteMink}
-            tryAnswerMink={tryAnswerMink}
-            answerStatus={answerStatus}
-            toggleMinkFlag={toggleMinkFlag}
-            topMink
-          />
-        </TopMinkContainer>
-        <Link
-          href={`/houses?id=${houseId}&tab=mink&new`}
-          as={lite ? `/movement/${movementName}/mink/new` : `/houses/${houseId}/mink/new`}
-          passHref>
-          <Button icon="arrow-right">new</Button>
-        </Link>
-      </>
+      <TopMinkContainer>
+        <TabTitle>
+          Top MINK
+          <Push />
+          <Patent />
+        </TabTitle>
+        <Subtitle>the top mink at any time verifies insiders</Subtitle>
+        <hr />
+        <Mink
+          houseId={houseId}
+          mink={minks[0]}
+          setSelectedMink={setSelectedMink}
+          selectedMink={selectedMink}
+          upvoteMink={upvoteMink}
+          downvoteMink={downvoteMink}
+          tryAnswerMink={tryAnswerMink}
+          answerStatus={answerStatus}
+          toggleMinkFlag={toggleMinkFlag}
+          topMink
+        />
+      </TopMinkContainer>
     )}
+    <Link
+      href={`/houses?id=${houseId}&tab=mink&new`}
+      as={lite ? `/movement/${movementName}/mink/new` : `/houses/${houseId}/mink/new`}
+      passHref
+    >
+      <NewMinkButton icon="arrow-right">new mink</NewMinkButton>
+    </Link>
     {minks.length > 1 && (
       <>
         <RunnersTitle>Runners up</RunnersTitle>
@@ -555,8 +606,14 @@ const findMink = (id, minks) => {
 };
 
 const MinkTab = ({
-  venue: { id, name, industry: { lite }, minks, addedMinkId},
-  loadMinks,
+  venue: {
+    id,
+    name,
+    industry: { lite },
+    minks,
+    addedMinkId,
+  },
+  loading,
   setSelectedMink,
   setAddedMinkId,
   selectedMink,
@@ -565,10 +622,22 @@ const MinkTab = ({
   tryAnswerMink,
   answerStatus,
   toggleMinkFlag,
+  topMinkId,
 }) => {
+  const ref = useRef(null);
+  const [initialTopMink, setInitialTopMink] = useState(true);
   useEffect(() => {
-    loadMinks();
-  }, []);
+    if (!topMinkId) {
+      return;
+    }
+
+    if (!initialTopMink) {
+      ref.current.scrollIntoView();
+    } else {
+      setInitialTopMink(false);
+    }
+  }, [topMinkId]);
+
   const renderSharePreview = useCallback(
     (id) => {
       const m = findMink(id, minks);
@@ -589,13 +658,7 @@ const MinkTab = ({
         </TopMinkSharePreviewWrap>
       ) : (
         <SharePreviewWrap>
-          <Mink
-            mink={m}
-            upvoteMink={upvoteMink}
-            downvoteMink={downvoteMink}
-            answerStatus={answerStatus}
-            isShare
-          />
+          <Mink mink={m} upvoteMink={upvoteMink} downvoteMink={downvoteMink} answerStatus={answerStatus} isShare />
         </SharePreviewWrap>
       );
     },
@@ -605,8 +668,8 @@ const MinkTab = ({
   const movementName = formatMovementURL(name);
 
   return (
-    <TabLayout>
-      {minks ? (
+    <TabLayout ref={ref}>
+      {minks && !loading ? (
         renderMinks(
           minks,
           setSelectedMink,
@@ -620,13 +683,11 @@ const MinkTab = ({
           answerStatus,
           toggleMinkFlag,
           movementName,
-          lite
+          lite,
         )
       ) : (
         <Loader big />
       )}
-      {/* uncomment this for old implementation */}
-      {/* <VoteMink /> */}
       <NewMinkElected />
       <PrivateShare type="mink" renderItem={renderSharePreview} getItemTitle={getTitleForShare} />
     </TabLayout>
@@ -637,6 +698,7 @@ const mapsState = createStructuredSelector({
   selectedMink: selectSelectedMink,
   answerStatus: selectAnswerMinkStatus,
   isActiveInsider: selectIsActiveInsider,
+  topMinkId: selectSelectedVenueTopMinkId,
 });
 
 const mapDispatch = {

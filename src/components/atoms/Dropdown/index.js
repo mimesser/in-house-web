@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Select from 'react-select';
 import Link from 'next/link';
@@ -53,25 +54,23 @@ const NoOptionsDiv = styled.div`
   display: flex;
   flex-direction: column;
 
-  & > div {
-    &:first-child {
-      background-color: ${appColors.gray4};
-      color: ${appColors.midnight};
+  & > div:first-child {
+    background-color: ${appColors.gray4};
+    color: ${appColors.midnight};
+    padding: 8px 10px;
+    align-self: flex-start;
+  }
+
+  & > div:last-child {
+    background-color: ${appColors.midnight};
+
+    & > div {
+      display: flex;
+      justify-content: space-between;
       padding: 8px 10px;
-      align-self: flex-start;
-    }
+      color: ${appColors.offWhite};
 
-    &:last-child {
-      background-color: ${appColors.midnight};
-
-      ${Link} > div {
-        display: flex;
-        justify-content: space-between;
-        padding: 8px 10px;
-        color: ${appColors.offWhite};
-      }
-
-      ${Link} > div:hover {
+      &:hover {
         cursor: default;
         background-color: ${appColors.gray2};
       }
@@ -80,7 +79,7 @@ const NoOptionsDiv = styled.div`
 `;
 
 // TODO: resolve SSR problems
-const CustomSelect = styled(withNoSSR(Select)).attrs(() => ({
+export const CustomSelect = styled(withNoSSR(Select)).attrs(() => ({
   classNamePrefix: 'react-select',
 }))`
   opacity: ${({ options }) => (options ? 1 : 0)};
@@ -134,28 +133,42 @@ const noOptionsMessage = () => (
 );
 
 /* eslint-disable react/jsx-props-no-spreading */
-export const Dropdown = ({ options, searchValue, ...props }) => (
-  <CustomSelect
-    options={options}
-    components={{
-      DropdownIndicator: () => null,
-      Placeholder: () => (
-        <>
-          <Icon icon="search" />
-          &nbsp;find your org
-        </>
-      ),
-    }}
-    getOptionLabel={({ name }) => name}
-    getOptionValue={({ id }) => id}
-    filterOption={filterVenues}
-    formatOptionLabel={formatOptionLabel}
-    noOptionsMessage={searchValue ? noOptionsMessage : () => null}
-    openMenuOnFocus={false}
-    openMenuOnClick={false}
-    isSearchable
-    isClearable
-    styles={customStyles}
-    {...props}
-  />
-);
+export const Dropdown = ({ options, searchValue, placeholder, onFocus, onBlur, ...props }) => {
+  const [placeholderText, setPlaceholderText] = useState(placeholder || ' find your org');
+  return (
+    <CustomSelect
+      options={options}
+      components={{
+        DropdownIndicator: () => null,
+        Placeholder: () =>
+          placeholderText ? (
+            <>
+              <Icon icon="search" />
+              {placeholderText}
+            </>
+          ) : null,
+      }}
+      onFocus={(e) => {
+        setPlaceholderText(null);
+        if (onFocus) {
+          onFocus(e);
+        }
+      }}
+      onBlur={(e) => {
+        setPlaceholderText(placeholder || 'find your org');
+        if (onBlur) {
+          onBlur(e);
+        }
+      }}
+      getOptionLabel={({ name }) => name}
+      getOptionValue={({ id }) => id}
+      filterOption={filterVenues}
+      formatOptionLabel={formatOptionLabel}
+      noOptionsMessage={searchValue ? noOptionsMessage : () => null}
+      isSearchable
+      isClearable
+      styles={customStyles}
+      {...props}
+    />
+  );
+};

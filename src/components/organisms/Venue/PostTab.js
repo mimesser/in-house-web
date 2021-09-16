@@ -4,29 +4,21 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Link from 'next/link';
 import { useScrollPosition } from '@n8tb1t/use-scroll-position';
-import {
-  loadPosts,
-  selectSelectedPost,
-  setSelectedPost,
-  upvotePost,
-  downvotePost,
-  togglePostFlag,
-  upvoteMink,
-} from '../../../store/venues';
-import { Loader, Button, HelpTip, Break, Card, Icon, NumberLarge, NumberSmall } from '../../atoms';
+import { selectSelectedPost, setSelectedPost, upvotePost, downvotePost, togglePostFlag } from '../../../store/venues';
+import { Loader, Button, HelpTip, Card, Icon, NumberLarge, NumberSmall } from '../../atoms';
 import { formatDateTime, formatMovementURL, formatRating } from '../../../utils/format';
-import { ItemText, ItemTitle, ItemTime, Main, TabLayout, TabTitle } from './tabStyle';
-import { appBackground, spacing, appColors, palette, calcRem, font, fontSize } from '../../../style';
+import { ItemText, ItemTitle, ItemTime, Main, TabLayout } from './tabStyle';
+import { spacing, appColors, palette } from '../../../style';
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
-import { Dial, PokeButton } from '../../molecules';
+import { PokeButton } from '../../molecules';
 import { Votes } from '../../molecules/RateSlider';
 import { FlagItem } from './FlagItem';
 import { VoteButton, Layout, FlagButton } from './openCardStyle';
 
 import { Modal } from '../Modal';
 import { Dialog } from '../Modal/style';
-import { debounce } from 'lodash';
+
 const transition = {
   in: '0.25s',
   out: '0.2s',
@@ -60,7 +52,7 @@ const defaultVoteAnimation = css`
 `;
 
 const activeVoteAnimation = css`
-  ${VoteColumn} ${VoteButton}:active {
+  ${VoteColumn} ${VoteButton}:active:not([disabled]) {
     span:last-child > svg {
       transition: transform ${transition.in} ease-out;
       transform: scale(3);
@@ -86,6 +78,7 @@ const activeVoteAnimation = css`
 
 const PostCard = styled(Card)`
   user-select: none;
+  cursor: default;
   ${defaultVoteAnimation}
   ${activeVoteAnimation}
   background: ${({ selected }) => (selected ? appColors.gray5 : appColors.white)};
@@ -182,11 +175,6 @@ const CellHeader = styled.div`
 const Footer = styled.div`
   display: flex;
   align-items: flex-end;
-
-  ${Icon} {
-    -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
-  }
 `;
 
 const SelectedIndicator = styled(({ show, count, ...rest }) => <Icon {...rest} icon="radio-marked" size={0.3} />)`
@@ -221,48 +209,85 @@ const Post = ({
   isShare,
 }) => {
   const [currentVote, setCurrentVote] = useState(myVote);
-  const upvoted = currentVote === 1;
-  const downvoted = currentVote === -1;
-  const size = upvoted || downvoted ? 1.7 : 2.2;
-  const selected = selectedPost && selectedPost.id === id;
+  const [upvoted, setUpvoted] = useState(myVote === 1);
+  const [downvoted, setDownvoted] = useState(myVote === -1);
+  const [size, setSize] = useState(upvoted || downvoted ? 1.7 : 2.2);
+  const [selected, setSelected] = useState(selectedPost && selectedPost.id === id);
   const [showFullImage, setShowFullImage] = useState(false);
+  const [optimisticVoteRating, setOptimisticVoteRating] = useState(voteRating);
 
   const close = useCallback(() => setShowFullImage(false));
   const open = useCallback(() => setShowFullImage(true));
   const select = useCallback(() => setSelectedPost(id), [id]);
-  const deselect = useCallback(() => setSelectedPost(undefined), [id]);
+  const deselect = useCallback(setSelectedPost, [setSelectedPost]);
+  const updateCurrentVote = useCallback((v) => {
+    setCurrentVote(v);
+    setUpvoted(v === 1);
+    setDownvoted(v === -1);
+    setSize(upvoted || downvoted ? 1.7 : 2.2);
+  }, []);
+  const votePost = useCallback((e, id, vote) => {
+    if (+vote === 1) {
+      const curAverage = downvoted
+        ? (voteRating * voteCount + 10) / voteCount
+        : (voteRating * voteCount + 10) / (voteCount + 1);
 
-  const votePost = useCallback(
-    debounce((e, id, vote) => {
-      setCurrentVote(vote);
-      if (vote == 1) {
-        upvotePost(id);
-      } else {
-        downvotePost(id);
-      }
-    }, 500),
-    [],
-  );
+      updateCurrentVote(+vote);
+      setOptimisticVoteRating(curAverage);
+      upvotePost(id);
+    } else {
+      const curAverage = upvoted
+        ? (voteRating * voteCount - 10) / voteCount
+        : (voteRating * voteCount) / (voteCount + 1);
+
+      updateCurrentVote(+vote);
+      setOptimisticVoteRating(curAverage);
+      downvotePost(id);
+    }
+  }, []);
+  const toggleFlag = useCallback(() => {
+    select();
+    togglePostFlag();
+  }, [id]);
+
+  useEffect(() => setSelected(selectedPost?.id === id), [selectedPost, id]);
+  useEffect(() => deselect, []);
+
   const card = (
-    <PostCard onClick={selected ? deselect : select} selected={selected}>
+    <PostCard selected={selected}>
       <div>
         <VoteColumn>
           <HelpTip placement="top" tip="agree or disagree">
             <VoteWrap>
               <VoteButton
                 onClick={(e) => {
+                  if (upvoted) {
+                    e.stopPropagation();
+
+                    return;
+                  }
+                  select();
                   votePost(e, id, 1);
                 }}
                 selected={upvoted}
+                disabled={upvoted || selected}
               >
                 <SelectedIndicator show={upvoted} />
                 <Icon size={size} icon="arrow-up-circle" />
               </VoteButton>
               <VoteButton
                 onClick={(e) => {
+                  if (downvoted) {
+                    e.stopPropagation();
+
+                    return;
+                  }
+
+                  select();
                   votePost(e, id, -1);
                 }}
                 selected={downvoted}
+                disabled={downvoted || selected}
               >
                 <SelectedIndicator show={downvoted} />
                 <Icon size={size} icon="arrow-down-circle" />
@@ -274,19 +299,17 @@ const Post = ({
         <Main>
           <CellHeader color={upvoted || downvoted ? appColors.gray4 : appColors.gray6}>
             <ItemTime dateTime={created}>{formatDateTime(created)}</ItemTime>
-            {!selected && (
-              <ShareWrap>
-                <Votes count={voteCount} userRate={upvoted || downvoted} />
-                {(upvoted || downvoted) && <NumberLarge>{formatRating(voteRating)}</NumberLarge>}
-                <PrivateShareButton id={id} type="post" color={appColors.gray6} />
-              </ShareWrap>
-            )}
+            <ShareWrap>
+              {!selected && <Votes count={voteCount} userRate={upvoted || downvoted} />}
+              {(upvoted || downvoted) && <NumberLarge>{formatRating(optimisticVoteRating)}</NumberLarge>}
+              {!selected && <PrivateShareButton id={id} type="post" color={appColors.gray6} />}
+            </ShareWrap>
           </CellHeader>
           <ItemTitle>{title}</ItemTitle>
           <PostText>{text}</PostText>
           <Footer>
             {imageUrl && <PostImage imageUrl={imageUrl} alt="post image" onClick={open} />}
-            {!isShare && !selected && <FlagItem flagged={wasFlaggedByMe} toggleFlag={togglePostFlag} />}
+            {!isShare && !selected && <FlagItem flagged={wasFlaggedByMe} toggleFlag={toggleFlag} />}
             <p>{errorMessage}</p>
           </Footer>
         </Main>
@@ -308,16 +331,6 @@ const Post = ({
     card
   );
 };
-
-export const NewPostButton = styled(Button)`
-  width: 100%;
-  min-height: ${calcRem('38px')};
-  border: 1px solid ${appColors.gray5};
-  ${font.light};
-  font-size: ${fontSize.sm};
-  color: ${appColors.gray4};
-  padding: ${spacing.sm};
-`;
 
 const SlideIn = keyframes`
   0% {
@@ -341,42 +354,37 @@ const SlideOut = keyframes`
   }
 `;
 
-const NewPostSection = styled.div`
-  position: -webkit-sticky; /* Safari */
-  position: sticky;
-  flex-shrink: 0; // safari
-  top: 46px;
-  padding: ${spacing.sm} ${spacing.md} ${spacing.sm} ${spacing.md};
-  background-color: ${appColors.offWhite};
-  z-index: 1;
-  animation: ${({ sticky }) => (sticky ? SlideIn : SlideOut)} linear ${({ duration }) => `${duration}s`};
-  animation-fill-mode: forwards;
-`;
-
 const SharePreviewWrap = styled.div`
-  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   padding: ${spacing.md} ${spacing.sm};
 `;
 
+const NewPostButton = styled(Button)`
+  margin: 0 !important;
+  width: 100%;
+  border: solid 2px white;
+  position: sticky;
+  z-index: 100;
+  top: 46px;
+`;
+
 const renderSection = (title, posts, setSelectedPost, selectedPost, upvotePost, downvotePost, togglePostFlag) => {
-  return (
-    posts.length > 0 && (
-      <>
-        {posts.map((p, i) => (
-          <Post
-            post={p}
-            key={p.id}
-            setSelectedPost={setSelectedPost}
-            selectedPost={selectedPost}
-            withHelp={i === 0}
-            upvotePost={upvotePost}
-            downvotePost={downvotePost}
-            togglePostFlag={togglePostFlag}
-          />
-        ))}
-      </>
-    )
-  );
+  return posts.length > 0 ? (
+    <>
+      {posts.map((p, i) => (
+        <Post
+          post={p}
+          key={p.id}
+          setSelectedPost={setSelectedPost}
+          selectedPost={selectedPost}
+          withHelp={i === 0}
+          upvotePost={upvotePost}
+          downvotePost={downvotePost}
+          togglePostFlag={togglePostFlag}
+        />
+      ))}
+    </>
+  ) : null;
 };
 
 const renderPosts = (posts, setSelectedPost, selectedPost, upvotePost, downvotePost, togglePostFlag) => (
@@ -392,30 +400,26 @@ const findPost = (id, posts) => {
 };
 
 const PostTab = ({
-  venue: { id, posts, name, industry: { lite }},
-  loadPosts,
+  venue: {
+    id,
+    posts,
+    name,
+    industry: { lite },
+  },
+  loading,
   setSelectedPost,
   selectedPost,
   upvotePost,
   downvotePost,
   togglePostFlag,
 }) => {
-  useEffect(() => {
-    loadPosts();
-  }, []);
-
   const renderSharePreview = useCallback(
     (id) => {
       const p = findPost(id, posts);
 
       return (
         <SharePreviewWrap>
-          <Post
-            post={p}
-            upvotePost={upvotePost}
-            downvotePost={downvotePost}
-            isShare
-          />
+          <Post post={p} upvotePost={upvotePost} downvotePost={downvotePost} isShare />
         </SharePreviewWrap>
       );
     },
@@ -453,20 +457,16 @@ const PostTab = ({
   );
   return (
     <>
-      <NewPostSection sticky={hideOnScroll || !scrolled} duration={1} ref={scrollRef}>
-        <Link
-          href={`/houses?id=${id}&tab=post&new`}
-          as={lite ? `/movement/${formatMovementURL(name)}/post/new` : `/houses/${id}/post/new`}
-          passHref
-        >
-          <NewPostButton icon="plus" wide outline>
-            what's in your mind?
-          </NewPostButton>
-        </Link>
-      </NewPostSection>
+      <Link
+        href={`/houses?id=${id}&tab=post&new`}
+        as={lite ? `/movement/${formatMovementURL(name)}/post/new` : `/houses/${id}/post/new`}
+        passHref
+      >
+        <NewPostButton icon="arrow-right">new post</NewPostButton>
+      </Link>
 
       <TabLayout onScroll={handleScroll}>
-        {posts ? (
+        {posts && !loading ? (
           renderPosts(posts, setSelectedPost, selectedPost, upvotePost, downvotePost, togglePostFlag)
         ) : (
           <Loader big />
@@ -483,7 +483,6 @@ const mapState = createStructuredSelector({
 });
 
 const mapDispatch = {
-  loadPosts,
   setSelectedPost,
   togglePostFlag,
   upvotePost,

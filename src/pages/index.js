@@ -6,15 +6,14 @@ import styled, { keyframes, css } from 'styled-components';
 
 import { createStructuredSelector } from 'reselect';
 import { Page, HowItWorks, Container } from '../components/organisms';
-import { CountDown } from '../components/atoms/CountDown';
-import { H1, H2, H3, Icon, ClearButton, TransparentLinkStyle, Dropdown } from '../components/atoms';
+import { H1, H2, H3, Icon, ClearButton, TransparentLinkStyle } from '../components/atoms';
+import { Dropdown } from '../components/atoms/Dropdown';
 import { spacing, palette, breakpoints, appColors, font, device, appBackground } from '../style';
 import { BetaLink, BetaDesc } from '../components/organisms/BetaChallange';
 
 import { Footer } from '../components/organisms/Footer';
 
-import { selectVenues, initVenuesPage, selectLoadingVenues } from '../store/venues';
-import { selectEsgCategories, loadAggregateData } from '../store/aggregate';
+import { initVenuesPage, selectVenues } from '../store/venues';
 
 const CurrentSize = styled.div`
   position: fixed;
@@ -156,6 +155,10 @@ const socialLinks = [
   {
     icon: 'linkedin',
     href: 'https://www.linkedin.com/company/in-house6',
+  },
+  {
+    icon: 'instagram',
+    href: 'https://www.instagram.com/iH.movement/',
   },
 ];
 
@@ -422,20 +425,43 @@ const CloseIcon = styled(Icon).attrs(() => ({
   }
 `;
 
-const Landing = ({ venues, loading, initVenuesPage, loadAggregateData }) => {
+const Landing = ({ venues, initVenuesPage }) => {
   const scrollMenu = (id = 'howitworks') => {
     setTimeout(() => {
-      const element = document.getElementById(id);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      const duration = 1600;
+      const target = document.getElementById(id);
+
+      if (target) {
+        const { top: diff } = target.getBoundingClientRect();
+        const startPos = window.pageYOffset;
+
+        let startTime = null;
+        let requestId;
+
+        const loop = (currentTime) => {
+          if (!startTime) {
+            startTime = currentTime;
+          }
+
+          const time = currentTime - startTime;
+
+          const percent = Math.min(time / duration, 1);
+          window.scrollTo(0, startPos + diff * percent);
+
+          if (time < duration) {
+            requestId = window.requestAnimationFrame(loop);
+          } else {
+            window.cancelAnimationFrame(requestId);
+          }
+        };
+        requestId = window.requestAnimationFrame(loop);
       }
     }, 300);
   };
 
   useEffect(() => {
-    loadAggregateData();
     initVenuesPage();
-  }, [loading]);
+  }, []);
 
   const [orgFocus, setOrgFocus] = useState(false);
 
@@ -492,7 +518,7 @@ const Landing = ({ venues, loading, initVenuesPage, loadAggregateData }) => {
             <li>
               <Dropdown
                 value={venues && venues.find((v) => v.label === selectedValue)}
-                options={venues}
+                options={venues || []}
                 onInputChange={(e) => setSearchValue(e)}
                 onChange={(e) => e && setSelectedValue(e.name)}
                 onFocus={() => setOrgFocus(true)}
@@ -531,9 +557,7 @@ const Landing = ({ venues, loading, initVenuesPage, loadAggregateData }) => {
 
         <NotificationSection id="getNotification">
           <div>
-            <CountDown timeTillDate="2021/06/01" />
-            {/* <H1 ref={mainTitleRef}>&nbsp;</H1> */}
-            <Link href="/feedback">
+            <Link href="/feedback?subjectIndex=1">
               <BetaLink icon="arrow-right" wide outline>
                 get notified
               </BetaLink>
@@ -557,13 +581,10 @@ const Landing = ({ venues, loading, initVenuesPage, loadAggregateData }) => {
 
 const mapStateToProps = createStructuredSelector({
   venues: selectVenues,
-  categories: selectEsgCategories,
-  loading: selectLoadingVenues,
 });
 
-const mapDispatch = {
+const mapDispatchToProps = {
   initVenuesPage,
-  loadAggregateData,
 };
 
-export default connect(mapStateToProps, mapDispatch)(Landing);
+export default connect(mapStateToProps, mapDispatchToProps)(Landing);

@@ -122,6 +122,7 @@ const Form = ({ topMink, wrongAnswer, answerTopMink, inDemo }) => {
         <AnswerInput
           autocomplete="off"
           spellcheck="false"
+          maxLength={25}
           value={answer}
           onChange={handleChange}
           type="password"

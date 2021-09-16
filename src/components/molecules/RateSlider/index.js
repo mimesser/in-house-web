@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
-import isNumber from 'lodash/isNumber';
+import { isNil } from 'lodash';
 
-import { CircleSlider, NumberLarge, NumberSmall, Icon, Slider, SlidingValue } from '../../atoms';
+import { NumberLarge, NumberSmall, Icon, Slider, SlidingValue } from '../../atoms';
 import { fontSize, font, palette, theme } from '../../../style';
-import { useRef } from 'react';
 import { getClientPosition } from '../../atoms/Slider/utils';
-import { RateCategory } from '../RateCategory';
+import { formatRating } from '../../../utils/format';
 
 const FONT_RATIO = 3.6;
 
@@ -14,6 +13,11 @@ const SuperScriptDecimalSpan = styled.span`
   vertical-align: super;
   font-size: 0.5em;
   margin-left: -2px;
+`;
+
+const NumberMedium = styled(NumberSmall)`
+  word-break: keep-all;
+  font-weight: bold;
 `;
 
 const Dot = styled(({ size, padd, ...rest }) => <NumberLarge {...rest}>.</NumberLarge>)`
@@ -27,7 +31,7 @@ const Dot = styled(({ size, padd, ...rest }) => <NumberLarge {...rest}>.</Number
 const Title = styled.div`
   position: relative;
   margin-left: 24px;
-  top: 2.2em;
+  top: 2em;
   color: ${({ color }) => color};
   ${font.bold};
   font-size: ${fontSize.md};
@@ -49,18 +53,17 @@ const Wrapper = styled.div`
 
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
-   -khtml-user-select: none; /* Konqueror HTML */
-     -moz-user-select: none; /* Old versions of Firefox */
-      -ms-user-select: none; /* Internet Explorer/Edge */
-          user-select: none; /* Non-prefixed version, currently
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
                                 supported by Chrome, Edge, Opera and Firefox */
-
 `;
 
 export const Votes = styled(({ count, iconSize = 1, userRate, ...rest }) => (
   <NumberSmall {...rest}>
     <Icon icon="users" size={iconSize} /> <span className="count">{count || 0}</span>{' '}
-    {userRate ? <span className="divide">{'   /'}</span> : <span className="divide">{' insiders'}</span>}
+    {!isNil(userRate) ? <span className="divide">{'   /'}</span> : <span className="divide">rates</span>}
   </NumberSmall>
 ))`
   position: relative;
@@ -84,6 +87,23 @@ export const Votes = styled(({ count, iconSize = 1, userRate, ...rest }) => (
   visibility: ${({ expanded }) => (expanded === true ? 'hidden' : 'visible')};
 `;
 
+const SlidingValueWrapper = styled.div`
+  width: 70px;
+  height: 54px;
+  pointer-events: none;
+  margin-top: ${({ expanded }) => (expanded === true ? '-16px' : '4px')};
+  margin-left: auto;
+  z-index: 11;
+  padding-top: 4px;
+  flex-direction: row;
+  align-content: center;
+  justify-content: space-around;
+  align-items: baseline;
+   ${({ expanded }) => (expanded === true ? 'display: flex; margin-right:50px;' : '')}
+
+}
+`;
+
 const SlidingWrapper = styled.div`
   width: 70px;
   height: 54px;
@@ -92,6 +112,8 @@ const SlidingWrapper = styled.div`
   margin-left: auto;
   z-index: 11;
   padding-top: 4px;
+
+}
 `;
 
 const Expand = keyframes`
@@ -163,21 +185,10 @@ export const Indicator = styled(({ count, iconSize = 0.75, ...rest }) => (
   left: ${(props) => `${props.percentage}%`};
 `;
 
-const renderValue = (value, decimal) => {
-  if (!isNumber(value)) {
-    return null;
-  }
-
-  if (decimal) {
-    return value.toFixed(1);
-  }
-
-  return value;
-};
-
 const BaseRateSlider = ({
   value: initialValue = null,
-  voteCount = 0,
+  voteCount,
+  voteRating,
   valueColor,
   title = 'rate & appreciation',
   userRate = null,
@@ -192,17 +203,20 @@ const BaseRateSlider = ({
   targetRate,
   ...sliderProps
 }) => {
-  const { readonly: decimal, size, padd, fillColor = palette.darkGray } = sliderProps;
+  const { padd, fillColor = palette.darkGray } = sliderProps;
   const [value, setValue] = useState(initialValue);
   const [userValue, setUserValue] = useState(userRate);
   const selectedRef = useRef();
-  const currentValue = `${Math.floor((expanded ? userValue / 10 : value) * 10)}`;
+  const currentValue = `${Math.floor((expanded ? userValue / 10 : value) * 10.99)}`;
+
   const changeRate = (e) => {
-    const rect = selectedRef.current.getBoundingClientRect();
     const clientPos = getClientPosition(e);
+    const rect = selectedRef.current.getBoundingClientRect();
+
     if (clientPos.x < 0 || clientPos.x > rect.width) return;
-    const rate = ((clientPos.x/rect.width)*10).toFixed(1);
-    
+
+    const rate = Math.floor((clientPos.x / rect.width) * 10.99);
+
     setUserValue(rate);
     onChange(rate);
   };
@@ -219,44 +233,46 @@ const BaseRateSlider = ({
     <>
       <Wrapper
         ref={selectedRef}
-        // onMouseDown={!rateInProgress ? (e) => changeRate(e) : undefined}
         onMouseMove={expanded && !inProgress ? (e) => changeRate(e) : undefined}
-        onMouseUp={expanded && !inProgress ? (e) => changeRate(e) : undefined}
         onClick={expanded && !inProgress ? () => onSlideEnd(userValue) : undefined}
-
-        // onTouchStart={!rateInProgress ? (e) => changeRate(e) : undefined}
         onTouchMove={expanded && !inProgress ? (e) => changeRate(e) : undefined}
         onTouchEnd={expanded && !inProgress ? () => onSlideEnd(userValue) : undefined}
       >
         <Title>{title}</Title>
         <Votes count={voteCount} userRate={userRate} expanded={expanded} />
-        <SlidingWrapper expanded={expanded}>
-          {(expanded || (userValue && value)) && (
-            <SlidingValue
-              fontSize={expanded ? fontSize.lg : fontSize.md}
-              value={currentValue}
-              minLength={expanded ? 1 : 2}
-            >
-              {!expanded && <Dot size={expanded ? 140 : 80} padd={padd} color={valueColor} />}
-            </SlidingValue>
+
+        <SlidingValueWrapper expanded={expanded}>
+          {(expanded || (!isNil(userValue) && !isNil(value))) && (
+            <>
+              {!expanded ? (
+                <SlidingValue fontSize={fontSize.md} value={`${formatRating(voteRating) * 10}`} minLength={2}>
+                  <Dot size={80} padd={padd} color={valueColor} />
+                </SlidingValue>
+              ) : (
+                <NumberMedium>{userValue}</NumberMedium>
+              )}
+              {expanded && (
+                <>
+                  <h1>/</h1>
+                  <NumberMedium>
+                    {formatRating(
+                      isNil(userRate)
+                        ? Number((voteRating * voteCount + (+userValue || 0)) / ((voteCount || 0) + 1)).toFixed(1)
+                        : Number((voteRating * voteCount - userRate + (+userValue || 0)) / (voteCount || 1)).toFixed(1),
+                    )}
+                  </NumberMedium>
+                </>
+              )}
+            </>
           )}
-        </SlidingWrapper>
-        {/* {isExpanded && <TouchHelper />} */}
-        <SliderWrapper
-          expanded={expanded}
-          duration={0.3}
-        >
+        </SlidingValueWrapper>
+        <SliderWrapper expanded={expanded} duration={0.15}>
           <Slider
-            // onChange={handleChange}
-            // onSlideStart={onSlideStart}
-            // onSlideEnd={onSlideEnd}
             fillColor={fillColor}
             x={(expanded && (userValue || 0.0)) || (!expanded && value)}
-            // disabled={readonly}
             selectedTag={selectedTag}
-            // inProgress={inProgress}
           >
-            {userValue && !expanded && <Indicator percentage={userValue * 10} />}
+            {!isNil(userValue) && !expanded && <Indicator percentage={userValue * 10} />}
           </Slider>
         </SliderWrapper>
       </Wrapper>
