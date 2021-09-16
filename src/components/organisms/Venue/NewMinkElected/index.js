@@ -10,10 +10,12 @@ import { Modal } from '../../Modal';
 import { H1 } from '../../../atoms';
 
 const Message = styled(H1)`
+  z-index: 1;
   margin-top: ${spacing.xxxl};
+  text-align: center;
 `;
 
-export const NewMinkElected = ({ open }) => {
+const NewMinkElected = ({ open }) => {
   return open ? (
     <Modal canClose={false} canDismiss={false} inverse>
       <Message>new #1 MINK elected!</Message>

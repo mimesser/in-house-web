@@ -20,7 +20,7 @@ export const selectLoadingVenues = createSelector(selectVenues, (list) => !list)
 export const selectSelectedVenue = createSelector(selectVenueState, ({ selectedVenue }) => selectedVenue);
 
 export const selectInsiderChallengeForm = createSelector(
-  selectVenueState,
+  selectSelectedVenue,
   ({ insiderChallengeForm }) => insiderChallengeForm,
 );
 
@@ -40,7 +40,10 @@ export const selectSelectedVenueMinks = createSelector(
   (selectedVenue) => selectedVenue && selectedVenue.minks,
 );
 
-export const selectSelectedVenueTopMinkId = createSelector(selectSelectedVenueMinks, (minks) => minks && minks[0].id);
+export const selectSelectedVenueTopMinkId = createSelector(
+  selectSelectedVenueMinks,
+  (minks) => minks?.length && minks[0].id,
+);
 
 export const selectSelectedMink = createSelector(
   selectSelectedVenue,

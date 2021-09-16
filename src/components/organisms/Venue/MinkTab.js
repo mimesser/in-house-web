@@ -15,13 +15,14 @@ import {
   tryAnswerMink,
   selectAnswerMinkStatus,
   selectIsActiveInsider,
+  selectSelectedVenueTopMinkId,
   toggleMinkFlag,
 } from '../../../store/venues';
 import { palette, spacing, fontSize, font } from '../../../style';
 import { Loader, Button, HelpTip, Patent, Card, Icon, SlidingValue, Input } from '../../atoms';
 import { TabLayout, Main, ItemTitle, ItemTime, TabTitle } from './tabStyle';
 import { formatDateTime, formatMovementURL, formatRating } from '../../../utils/format';
-import { NewMinkElected } from './NewMinkElected';
+import NewMinkElected from './NewMinkElected';
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
 import { PokeButton, IconInput } from '../../molecules';
@@ -356,7 +357,7 @@ const Mink = ({
   isShare,
 }) => {
   const selectMink = useCallback(() => setSelectedMink(minkId), [minkId]);
-  const deselectMink = useCallback(() => setSelectedMink(undefined), [minkId]);
+  const deselectMink = useCallback(setSelectedMink, [setSelectedMink]);
   const toggleFlag = useCallback(() => {
     selectMink();
     toggleMinkFlag();
@@ -423,8 +424,11 @@ const Mink = ({
   }, [selectedMink, minkId]);
 
   useEffect(() => {
+    setAnswer(myCorrectAnswer || '');
     setPreviouslyAnsweredCorrectly(!!myCorrectAnswer);
   }, [myCorrectAnswer]);
+
+  useEffect(() => deselectMink, []);
 
   const card = (
     <MinkCard ref={ref} active={active} topMink={topMink} isShare={isShare}>
@@ -471,6 +475,7 @@ const Mink = ({
                 placeholder="one word / no spaces"
                 autocomplete="off"
                 spellcheck="false"
+                maxLength={25}
                 value={answer}
                 onChange={tryAnswer}
                 readOnly={previouslyAnsweredCorrectly}
@@ -539,37 +544,35 @@ const renderMinks = (
 ) => (
   <>
     {minks.length > 0 && (
-      <>
-        <TopMinkContainer>
-          <TabTitle>
-            Top MINK
-            <Push />
-            <Patent />
-          </TabTitle>
-          <Subtitle>the top mink at any time verifies insiders</Subtitle>
-          <hr />
-          <Mink
-            houseId={houseId}
-            mink={minks[0]}
-            setSelectedMink={setSelectedMink}
-            selectedMink={selectedMink}
-            upvoteMink={upvoteMink}
-            downvoteMink={downvoteMink}
-            tryAnswerMink={tryAnswerMink}
-            answerStatus={answerStatus}
-            toggleMinkFlag={toggleMinkFlag}
-            topMink
-          />
-        </TopMinkContainer>
-        <Link
-          href={`/houses?id=${houseId}&tab=mink&new`}
-          as={lite ? `/movement/${movementName}/mink/new` : `/houses/${houseId}/mink/new`}
-          passHref
-        >
-          <NewMinkButton icon="arrow-right">new mink</NewMinkButton>
-        </Link>
-      </>
+      <TopMinkContainer>
+        <TabTitle>
+          Top MINK
+          <Push />
+          <Patent />
+        </TabTitle>
+        <Subtitle>the top mink at any time verifies insiders</Subtitle>
+        <hr />
+        <Mink
+          houseId={houseId}
+          mink={minks[0]}
+          setSelectedMink={setSelectedMink}
+          selectedMink={selectedMink}
+          upvoteMink={upvoteMink}
+          downvoteMink={downvoteMink}
+          tryAnswerMink={tryAnswerMink}
+          answerStatus={answerStatus}
+          toggleMinkFlag={toggleMinkFlag}
+          topMink
+        />
+      </TopMinkContainer>
     )}
+    <Link
+      href={`/houses?id=${houseId}&tab=mink&new`}
+      as={lite ? `/movement/${movementName}/mink/new` : `/houses/${houseId}/mink/new`}
+      passHref
+    >
+      <NewMinkButton icon="arrow-right">new mink</NewMinkButton>
+    </Link>
     {minks.length > 1 && (
       <>
         <RunnersTitle>Runners up</RunnersTitle>
@@ -610,7 +613,7 @@ const MinkTab = ({
     minks,
     addedMinkId,
   },
-  loadMinks,
+  loading,
   setSelectedMink,
   setAddedMinkId,
   selectedMink,
@@ -619,10 +622,22 @@ const MinkTab = ({
   tryAnswerMink,
   answerStatus,
   toggleMinkFlag,
+  topMinkId,
 }) => {
+  const ref = useRef(null);
+  const [initialTopMink, setInitialTopMink] = useState(true);
   useEffect(() => {
-    loadMinks();
-  }, []);
+    if (!topMinkId) {
+      return;
+    }
+
+    if (!initialTopMink) {
+      ref.current.scrollIntoView();
+    } else {
+      setInitialTopMink(false);
+    }
+  }, [topMinkId]);
+
   const renderSharePreview = useCallback(
     (id) => {
       const m = findMink(id, minks);
@@ -653,8 +668,8 @@ const MinkTab = ({
   const movementName = formatMovementURL(name);
 
   return (
-    <TabLayout>
-      {minks ? (
+    <TabLayout ref={ref}>
+      {minks && !loading ? (
         renderMinks(
           minks,
           setSelectedMink,
@@ -683,6 +698,7 @@ const mapsState = createStructuredSelector({
   selectedMink: selectSelectedMink,
   answerStatus: selectAnswerMinkStatus,
   isActiveInsider: selectIsActiveInsider,
+  topMinkId: selectSelectedVenueTopMinkId,
 });
 
 const mapDispatch = {

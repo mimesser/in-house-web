@@ -54,25 +54,23 @@ const NoOptionsDiv = styled.div`
   display: flex;
   flex-direction: column;
 
-  & > div {
-    &:first-child {
-      background-color: ${appColors.gray4};
-      color: ${appColors.midnight};
+  & > div:first-child {
+    background-color: ${appColors.gray4};
+    color: ${appColors.midnight};
+    padding: 8px 10px;
+    align-self: flex-start;
+  }
+
+  & > div:last-child {
+    background-color: ${appColors.midnight};
+
+    & > div {
+      display: flex;
+      justify-content: space-between;
       padding: 8px 10px;
-      align-self: flex-start;
-    }
+      color: ${appColors.offWhite};
 
-    &:last-child {
-      background-color: ${appColors.midnight};
-
-      ${Link} > div {
-        display: flex;
-        justify-content: space-between;
-        padding: 8px 10px;
-        color: ${appColors.offWhite};
-      }
-
-      ${Link} > div:hover {
+      &:hover {
         cursor: default;
         background-color: ${appColors.gray2};
       }
@@ -136,7 +134,7 @@ const noOptionsMessage = () => (
 
 /* eslint-disable react/jsx-props-no-spreading */
 export const Dropdown = ({ options, searchValue, placeholder, onFocus, onBlur, ...props }) => {
-  const [placeholderText, setPlaceholderText] = useState(placeholder || 'find your org');
+  const [placeholderText, setPlaceholderText] = useState(placeholder || ' find your org');
   return (
     <CustomSelect
       options={options}
