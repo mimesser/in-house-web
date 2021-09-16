@@ -315,27 +315,23 @@ const InsiderChallenge = ({
     answerMinkStatus: answerStatus,
     industry: { lite },
   },
-  challengeFormData,
+  challengeFormData: { blocked, isAnswerCorrect, showTerms },
   dismissForm,
   answerTopMink,
   inDemo,
   tryAnswerMink,
   setSelectedMink,
 }) => {
-  if (!challengeFormData || !topMink) {
+  if (!topMink) {
     return null;
   }
-
-  const { blocked, isAnswerCorrect, showTerms } = challengeFormData;
-  const wrongAnswer = isAnswerCorrect === false;
-  const accessGranted = isAnswerCorrect;
 
   return (
     <Modal
       inverse={!showTerms}
       closeModal={dismissForm}
-      canDismiss={!accessGranted && !showTerms}
-      canClose={!accessGranted && !showTerms}
+      canDismiss={!showTerms}
+      canClose={!showTerms}
       title={`${name} | #1 MINK`}
     >
       <QuestionForm>
@@ -348,7 +344,7 @@ const InsiderChallenge = ({
               <Form
                 houseId={houseId}
                 topMink={topMink}
-                wrongAnswer={wrongAnswer}
+                wrongAnswer={isAnswerCorrect === false}
                 answerTopMink={answerTopMink}
                 inDemo={inDemo}
                 name={name}

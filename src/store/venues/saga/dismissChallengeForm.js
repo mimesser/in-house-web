@@ -10,15 +10,17 @@ import { formatMovementURL } from '../../../utils/format';
 export function* dismissChallengeForm({ payload: { showMinks, name, lite } }) {
   const { id } = yield select(selectSelectedVenue);
   const inDemo = yield select(selectInDemo);
+
+  yield put(setChallengeFormData());
+
   if (showMinks) {
     Router.push(
-      `/houses?id=${id}&tab=mink`,
+      `/houses?id=${id}&tab=mink&time=${Date.now()}`,
       `/${lite ? 'movement' : 'houses'}/${lite ? formatMovementURL(name) : id}/mink`,
-      { shallow: true }
+      { shallow: true },
     );
   } else {
     const redirectUrl = inDemo ? `/houses/${DEMO_VENUES_ID}` : '/houses';
     Router.push(redirectUrl, redirectUrl, { shallow: true });
   }
-  yield put(setChallengeFormData(undefined));
 }

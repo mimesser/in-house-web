@@ -12,7 +12,6 @@ import PrivateShareButton from './PrivateShareButton';
 import { Loader, HelpTip, Button } from '../../atoms';
 import {
   setSelectedTag,
-  loadRates,
   selectSelectedTag,
   setSelectedTagTargetRate,
   setVenueRates,
@@ -223,21 +222,16 @@ const RateTab = ({
   setSelectedCategory,
   setSelectedTag,
   setSelectedTagTargetRate,
-  loadRates,
   selectedTag,
   rateTag,
   rateInProgress,
   categories,
   selectedCategory,
   categoryRatings,
+  loading,
 }) => {
   const [cancelSortRateTagsId, setCancelSortRateTagsId] = useState(null);
   const [tags, setTags] = useState(rateTags);
-
-  useEffect(() => {
-    setSelectedTag(undefined);
-    loadRates();
-  }, []);
 
   const renderSharePreview = useCallback(
     (id) => {
@@ -350,7 +344,7 @@ const RateTab = ({
       <Link href="/feedback" passHref>
         <NewRateButton icon="arrow-right">new Rate</NewRateButton>
       </Link>
-      {tags ? (
+      {tags && !loading ? (
         tags.map((t, i) => (
           <Tag
             {...t}
@@ -391,7 +385,6 @@ const mapDispatch = {
   setSelectedTag,
   setSelectedTagTargetRate,
   setVenueRates,
-  loadRates,
   rateTag,
 };
 

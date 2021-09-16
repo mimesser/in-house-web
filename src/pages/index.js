@@ -13,8 +13,7 @@ import { BetaLink, BetaDesc } from '../components/organisms/BetaChallange';
 
 import { Footer } from '../components/organisms/Footer';
 
-import { selectVenues, initVenuesPage, selectLoadingVenues } from '../store/venues';
-import { selectEsgCategories, loadAggregateData } from '../store/aggregate';
+import { initVenuesPage, selectVenues } from '../store/venues';
 
 const CurrentSize = styled.div`
   position: fixed;
@@ -426,7 +425,7 @@ const CloseIcon = styled(Icon).attrs(() => ({
   }
 `;
 
-const Landing = ({ venues, loading, initVenuesPage, loadAggregateData }) => {
+const Landing = ({ venues, initVenuesPage }) => {
   const scrollMenu = (id = 'howitworks') => {
     setTimeout(() => {
       const duration = 1600;
@@ -461,9 +460,8 @@ const Landing = ({ venues, loading, initVenuesPage, loadAggregateData }) => {
   };
 
   useEffect(() => {
-    loadAggregateData();
     initVenuesPage();
-  }, [loading]);
+  }, []);
 
   const [orgFocus, setOrgFocus] = useState(false);
 
@@ -520,7 +518,7 @@ const Landing = ({ venues, loading, initVenuesPage, loadAggregateData }) => {
             <li>
               <Dropdown
                 value={venues && venues.find((v) => v.label === selectedValue)}
-                options={venues}
+                options={venues || []}
                 onInputChange={(e) => setSearchValue(e)}
                 onChange={(e) => e && setSelectedValue(e.name)}
                 onFocus={() => setOrgFocus(true)}
@@ -583,13 +581,10 @@ const Landing = ({ venues, loading, initVenuesPage, loadAggregateData }) => {
 
 const mapStateToProps = createStructuredSelector({
   venues: selectVenues,
-  categories: selectEsgCategories,
-  loading: selectLoadingVenues,
 });
 
-const mapDispatch = {
+const mapDispatchToProps = {
   initVenuesPage,
-  loadAggregateData,
 };
 
-export default connect(mapStateToProps, mapDispatch)(Landing);
+export default connect(mapStateToProps, mapDispatchToProps)(Landing);

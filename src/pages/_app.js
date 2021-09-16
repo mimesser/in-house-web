@@ -13,17 +13,17 @@ import { GlobalStyle } from '../components/GlobalStyle';
 import { initGA, logPageView } from '../utils/analytics';
 
 class MyApp extends App {
-  static async getInitialProps({ Component, ctx }) {
-    const pageProps = {
-      ...(Component.getInitialProps ? await Component.getInitialProps(ctx) : {}),
-    };
+  // static async getInitialProps({ Component, ctx }) {
+  //   const pageProps = {
+  //     ...(Component.getInitialProps ? await Component.getInitialProps(ctx) : {}),
+  //   };
 
-    if (ctx.req) {
-      ctx.store.dispatch(END);
-      await ctx.store.sagaTask.toPromise();
-    }
-    return { ...pageProps, store: ctx.store };
-  }
+  //   if (ctx.req) {
+  //     ctx.store.dispatch(END);
+  //     await ctx.store.sagaTask.toPromise();
+  //   }
+  //   return { ...pageProps, store: ctx.store };
+  // }
 
   componentDidMount() {
     hotjar.initialize(process.env.HOTJAR_SITE_ID, 6);
@@ -32,6 +32,7 @@ class MyApp extends App {
   }
 
   componentDidUpdate() {
+    console.info('log pageview');
     logPageView();
   }
 

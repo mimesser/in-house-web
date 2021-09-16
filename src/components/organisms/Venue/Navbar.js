@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled, { css } from 'styled-components';
 import { createStructuredSelector } from 'reselect';
@@ -34,6 +34,7 @@ const linkTextStyle = ({ active, custom }) => {
 const A = styled.a`
   flex: 1;
   text-align: center;
+  cursor: pointer;
   padding: ${spacing.md};
   color: ${palette.gray};
   ${font.bold};
@@ -61,12 +62,28 @@ const Nav = styled.nav`
   z-index: 3;
 `;
 
-const TabHeader = ({ id, name, tab: { path, label, secured, help }, active, custom, authorized, venueType = 'houses', lite }) => {
+const TabHeader = ({
+  id,
+  name,
+  tab: { path, label, secured, help },
+  active,
+  custom,
+  authorized,
+  venueType = 'houses',
+  lite,
+}) => {
   const movementName = formatMovementURL(name);
-  
+  const [time, setTime] = useState(Date.now());
+
+  useEffect(() => {
+    const tickIntervalId = setInterval(() => setTime(Date.now()), 1000);
+
+    return () => clearInterval(tickIntervalId);
+  }, []);
+
   if (!authorized && secured) {
     return (
-      <Link href={`/${lite ? 'movement' : venueType}/${lite ? movementName : id}`} passHref>
+      <Link href={`/${lite ? 'movement' : venueType}/${lite ? movementName : ''}`} passHref>
         <A>{label}</A>
       </Link>
     );
@@ -75,9 +92,8 @@ const TabHeader = ({ id, name, tab: { path, label, secured, help }, active, cust
   const link = (
     <HelpWrap>
       <Link
-        href={`/${venueType}?id=${id}&tab=${path}`}
+        href={`/${venueType}?id=${id}&tab=${path}&time=${time}`}
         as={`/${lite ? 'movement' : venueType}/${lite ? movementName : id}/${path}`}
-        passHref
       >
         <A active={active} custom={custom}>
           {label}
@@ -123,12 +139,12 @@ const liteTabs = [
   {
     path: 'mink',
     label: 'mink',
-  }
+  },
 ];
 
-const Navbar = ({ id, name, selected, authorized, anyTabItemSelected, venueType, tabs = defaultTabs, lite }) => {
+const Navbar = ({ id, name, selected, authorized, venueType, tabs = defaultTabs, lite }) => {
   if (lite) tabs = liteTabs;
-  
+
   return (
     <Nav>
       {tabs.map((t) => (
@@ -138,7 +154,7 @@ const Navbar = ({ id, name, selected, authorized, anyTabItemSelected, venueType,
           key={t.path}
           tab={t}
           custom={t.custom}
-          active={selected === t.path && !anyTabItemSelected}
+          active={selected === t.path}
           authorized={authorized}
           venueType={venueType}
           lite={lite}
