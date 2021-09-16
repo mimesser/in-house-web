@@ -21,6 +21,7 @@ function* loadAggregateDataSaga({ meta: { isServer, pathname } }) {
       response = yield call(api.get, 'aggregate');
     } else {
       Sentry.captureException(e);
+
       throw e;
     }
   }
