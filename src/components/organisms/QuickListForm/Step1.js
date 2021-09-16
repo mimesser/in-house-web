@@ -1,14 +1,15 @@
 import React, { useCallback } from 'react';
 import Link from 'next/link';
 
-import { Dropdown, FormGroup } from '../../atoms';
+import { FormGroup } from '../../atoms';
+import { Dropdown } from '../../atoms/Dropdown'; // @HINT: probably want the CustomSelect here instead
 import { StepLayout } from './StepLayout';
 import { CounterInput, NextButton, BackButton } from '../../molecules';
 
 const getOptionLabel = ({ name }) => name.toLowerCase();
 
 export const Step1 = ({ setStep, industries, industry, setIndustry, industryDesc, setIndustryDesc }) => {
-  const handleIndustryChange = useCallback(i => setIndustry(i), [setIndustry]);
+  const handleIndustryChange = useCallback((i) => setIndustry(i), [setIndustry]);
 
   return (
     <StepLayout

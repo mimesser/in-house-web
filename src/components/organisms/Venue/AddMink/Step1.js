@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Link from 'next/link';
 
 import { H1, Patent, Industry, Icon, ClearButton } from '../../../atoms';
-import { CounterInput, BackButton, NextButton, Cl } from '../../../molecules';
+import { CounterInput, BackButton, NextButton } from '../../../molecules';
 import { palette } from '../../../../style';
 import { StepLayout } from './StepLayout';
 import { formatMovementURL } from '../../../../utils/format';
@@ -39,7 +39,18 @@ const Push = styled.span`
   margin-left: auto;
 `;
 
-export const Step1 = ({ venue: { id, name, industry: { lite }}, answer, setAnswer, question, setQuestion, setStep }) => {
+export const Step1 = ({
+  venue: {
+    id,
+    name,
+    industry: { lite },
+  },
+  answer,
+  setAnswer,
+  question,
+  setQuestion,
+  setStep,
+}) => {
   const movementName = formatMovementURL(name);
 
   return (
@@ -50,7 +61,7 @@ export const Step1 = ({ venue: { id, name, industry: { lite }}, answer, setAnswe
             <Industry>{name}</Industry>
             <Push />
             <Link
-              href={`/houses?id=${id}&tab=mink`} 
+              href={`/houses?id=${id}&tab=mink&time=${Date.now()}`}
               as={`/${lite ? 'movement' : 'houses'}/${lite ? movementName : id}/mink`}
             >
               <ClearButton>
@@ -86,7 +97,7 @@ export const Step1 = ({ venue: { id, name, industry: { lite }}, answer, setAnswe
       commands={
         <>
           <Link
-            href={`/houses?id=${id}&tab=mink`}
+            href={`/houses?id=${id}&tab=mink&time=${Date.now()}`}
             as={`/${lite ? 'movement' : 'houses'}/${lite ? movementName : id}/mink`}
           >
             <BackButton>cancel</BackButton>
@@ -97,5 +108,5 @@ export const Step1 = ({ venue: { id, name, industry: { lite }}, answer, setAnswe
       step={1}
       inverse
     />
-  )
+  );
 };

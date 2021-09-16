@@ -2,16 +2,29 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { withRouter } from 'next/router';
-import { END } from 'redux-saga';
 import { Venue, VenueList, Page } from '../components/organisms';
 
 import { Loader } from '../components/atoms';
-import { initVenuesPage, selectLoadingVenues, selectSelectedVenue } from '../store/venues';
+import {
+  loadRates,
+  loadPosts,
+  loadMinks,
+  initVenuesPage,
+  selectLoadingVenues,
+  selectSelectedVenue,
+} from '../store/venues';
 import { DEMO_VENUES_ID } from '../store/demo/data';
-import BetaChallange from '../components/organisms/BetaChallange';
 import { selectAuthorizedBetaUser, loadAggregateData } from '../store/aggregate';
 
 class Houses extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      initializing: true,
+    };
+  }
+
   get houseId() {
     return this.props.router.query.id;
   }
@@ -25,21 +38,53 @@ class Houses extends Component {
     return asPath.endsWith('mink/new') || asPath.endsWith('post/new');
   }
 
-  static async getInitialProps({ store }) {
-    if (!store.getState().isAuthorizedBetaUser) {
-      store.dispatch(loadAggregateData());
-    }
-    // await store.sagaTask.toPromise();
-  }
-
   componentDidMount() {
-    this.props.loadAggregateData();
-    this.props.initVenuesPage(this.houseId);
+    const { initVenuesPage, router } = this.props;
+
+    initVenuesPage(this.houseId);
+
+    if (this.houseId) {
+      switch (router.query?.tab) {
+        case 'rate':
+          loadRates();
+          break;
+        case 'post':
+          loadPosts();
+          break;
+        case 'mink':
+          loadMinks();
+          break;
+        default:
+      }
+    }
+
+    this.setState({ initializing: false });
   }
 
   componentDidUpdate(prevProps) {
-    if (this.houseId !== prevProps.router.query.id) {
-      this.props.initVenuesPage(this.houseId);
+    const { router, initVenuesPage, loadRates, loadPosts, loadMinks } = this.props;
+
+    if ((this.houseId && !prevProps.router.query?.id) || !this.houseId) {
+      initVenuesPage(this.houseId);
+    }
+    if (
+      this.houseId &&
+      ((typeof prevProps.router.query?.time !== 'undefined' && router.query?.time !== prevProps.router.query?.time) ||
+        !prevProps.router.query?.id) &&
+      (router.asPath.endsWith('rate') || router.asPath.endsWith('post') || router.asPath.endsWith('mink'))
+    ) {
+      switch (router.query?.tab) {
+        case 'rate':
+          loadRates();
+          break;
+        case 'post':
+          loadPosts();
+          break;
+        case 'mink':
+          loadMinks();
+          break;
+        default:
+      }
     }
   }
 
@@ -50,20 +95,21 @@ class Houses extends Component {
   render() {
     // TODO split and render separately?
     let View = this.houseId && !this.inDemoVenues ? Venue : VenueList;
-    if (!this.props.isAuthorizedBetaUser) {
-      View = () => <BetaChallange showPopup onClose={this.onClose} />;
-    }
+    // if (!this.props.isAuthorizedBetaUser) {
+    //   View = () => <BetaChallange showPopup onClose={this.onClose} />;
+    // }
     const defaultHeader = !this.houseId || this.inDemoVenues;
     const title = this.props.selectedVenue
       ? `In-House - ${this.props.selectedVenue.name} | Speak as a Team | Remain Untraceable`
       : undefined;
 
-    if (this.props.loading) {
+    if (this.state.initializing || this.props.loading) {
       View = () => <Loader big />;
     }
+
     return (
       <Page title={title} defaultHeader={defaultHeader} noPadd>
-        <View />
+        <View loading={this.props.selectedVenue?.loading} />
       </Page>
     );
   }
@@ -78,6 +124,9 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatch = {
   initVenuesPage,
   loadAggregateData,
+  loadRates,
+  loadPosts,
+  loadMinks,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatch)(Houses));

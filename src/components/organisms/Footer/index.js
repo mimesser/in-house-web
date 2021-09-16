@@ -90,6 +90,9 @@ export const Footer = () => (
             <A>how it works</A>
           </Link>
           <Link href="/polls" passHref prefetch={false}>
+            <A>polls</A>
+          </Link>
+          <Link href="/faqs" passHref prefetch={false}>
             <A>faqs</A>
           </Link>
           <DisplayOnMobile>

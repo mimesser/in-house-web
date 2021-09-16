@@ -1,16 +1,28 @@
 import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
+
 import { Page } from '../components/organisms';
 import { BackButton } from '../components/molecules';
 import { Main, Commands } from '../components/molecules/Wizard';
-import { Break, H1, Button } from '../components/atoms';
+import { Break, H1, Button, Icon, ClearButton } from '../components/atoms';
+import { spacing } from '../style';
 
 const Paper = styled(Page)`
   margin-right: auto;
   max-width: 750px;
   padding-top: 97px;
 `;
+const CloseButton = styled(ClearButton)`
+  position: absolute;
+  padding: ${spacing.xl};
+  right: ${spacing.none};
+  top: ${spacing.none};
+  /* for a circular clickable area */
+  border-radius: 50%;
+`;
+
 const ActionButton = styled(Button)`
   margin-left: auto;
 `;
@@ -21,7 +33,7 @@ const HorizontalBreak = styled(Break)`
   margin-top: 0;
   margin-bottom: 3.5em;
 `;
-const Description = styled.p`
+const Description = styled.div`
   ul {
     list-style-type: none;
 
@@ -31,7 +43,8 @@ const Description = styled.p`
   }
 `;
 
-function BetaList() {
+const BetaList = () => {
+  const router = useRouter();
   return (
     <>
       <Paper defaultHeader={false} title="In-House - List your House | Speak as a Team | Remain Untraceable">
@@ -53,12 +66,15 @@ function BetaList() {
           <Link href="/houses" passHref>
             <BackButton secondary>cancel</BackButton>
           </Link>
-          <Link href="/feedback?subjectIndex=2&redirect=/houses">
+          <Link href="/feedback?subjectIndex=0&redirect=/houses">
             <ActionButton icon="arrow-right">list your workplace</ActionButton>
           </Link>
         </Commands>
       </Paper>
+      <CloseButton onClick={() => router.back()}>
+        <Icon icon="close" />
+      </CloseButton>
     </>
   );
-}
+};
 export default BetaList;

@@ -20,7 +20,7 @@ export const selectLoadingVenues = createSelector(selectVenues, (list) => !list)
 export const selectSelectedVenue = createSelector(selectVenueState, ({ selectedVenue }) => selectedVenue);
 
 export const selectInsiderChallengeForm = createSelector(
-  selectVenueState,
+  selectSelectedVenue,
   ({ insiderChallengeForm }) => insiderChallengeForm,
 );
 
@@ -35,12 +35,15 @@ export const selectIsActiveInsider = createSelector(
   (insiderVenueIds, selectedVenue) => insiderVenueIds && selectedVenue && insiderVenueIds.includes(selectedVenue.id),
 );
 
-const selectSelectedVenueMinks = createSelector(
+export const selectSelectedVenueMinks = createSelector(
   selectSelectedVenue,
   (selectedVenue) => selectedVenue && selectedVenue.minks,
 );
 
-export const selectSelectedVenueTopMinkId = createSelector(selectSelectedVenueMinks, (minks) => minks && minks[0].id);
+export const selectSelectedVenueTopMinkId = createSelector(
+  selectSelectedVenueMinks,
+  (minks) => minks?.length && minks[0].id,
+);
 
 export const selectSelectedMink = createSelector(
   selectSelectedVenue,
@@ -66,6 +69,11 @@ export const selectNewMinkElected = createSelector(
 export const selectSelectedRateInProgeress = createSelector(
   selectSelectedVenue,
   (selectedVenue) => selectedVenue && selectedVenue.rateInProgress,
+);
+
+export const selectAllVenueTags = createSelector(
+  selectSelectedVenue,
+  (selectedVenue) => selectedVenue && selectedVenue.rates,
 );
 
 export const selectSelectedTag = createSelector(

@@ -13,6 +13,7 @@ export function* togglePostFlag() {
       api.put,
       `venues/${venue.id}/feedback/${post.id}/${post.wasFlaggedByMe ? 'unflag' : 'flag'}`,
     );
+
     if (response.wasDeleted) {
       yield put(setSelectedPost(undefined));
       yield put(setVenuePosts(venue.posts.filter((p) => p.id !== post.id)));

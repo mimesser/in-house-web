@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { useRouter } from 'next/router';
 
-import { H1, H2, Input, Dropdown } from '../../atoms';
+import { H1, H2, Input } from '../../atoms';
 import { WinkConfirmation, CounterInput } from '../../molecules';
-import { FormGroup, Container, SubmitButton } from './style';
+import { FormGroup, Container, Commands, Dropdown, SubmitButton, BackButton, LeftArrowIcon } from './style';
 import { postFeedback, clearFeedback } from '../../../store/feedback';
+import { isEmailValid } from '../../../utils/index';
 
 const subjectOptions = [
+  '-- select subject --',
   'get notified when live',
   'request new industry poll',
   'list your warehouse',
@@ -30,9 +33,11 @@ function FeedbackForm(props) {
   const [subject, setSubject] = useState(subjectOptions[subjectId]);
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
+  const [valid, setValidity] = useState(false);
   const getHandler = (setter) => (event) => setter(event.target.value);
   const handleSubjectChange = (value) => setSubject(value);
   const handleEmailChange = getHandler(setEmail);
+  const router = useRouter();
 
   const submit = () => {
     props.postFeedback({ email, subject: subject.value, message, redirectLink });
@@ -44,7 +49,10 @@ function FeedbackForm(props) {
     setMessage('');
   };
 
-  const valid = !!subject && (!!message || !!email);
+  useEffect(
+    () => setValidity(subject.value !== subjectOptions[0].value && !!message && (!email || isEmailValid(email))),
+    [subject, email, message],
+  );
 
   /**
    * TODO: after submission, the form should clear.
@@ -84,9 +92,15 @@ function FeedbackForm(props) {
         />
       </FormGroup>
       {props.error && <FormGroup>{props.error}</FormGroup>}
-      <SubmitButton disabled={!valid} onClick={submit} icon="arrow-right" loading={props.loading}>
-        send
-      </SubmitButton>
+      <Commands>
+        <BackButton inverse onClick={() => router.back()}>
+          <LeftArrowIcon icon="arrow-left" />
+          back
+        </BackButton>
+        <SubmitButton disabled={!valid} onClick={submit} icon="arrow-right" loading={props.loading}>
+          send
+        </SubmitButton>
+      </Commands>
     </Container>
   );
 }

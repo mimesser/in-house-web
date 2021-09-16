@@ -26,8 +26,8 @@ import { toggleMinkFlag } from './toggleMinkFlag';
 
 export default function* venuesSaga() {
   yield all([
-    takeLatest(actionTypes.INIT_POLLS_PAGE, withErrorReporter(initPollsPage)),
-    takeLatest(actionTypes.INIT_VENUES_PAGE, withErrorReporter(initVenuesPage)),
+    takeLeading(actionTypes.INIT_POLLS_PAGE, withErrorReporter(initPollsPage)),
+    takeLeading(actionTypes.INIT_VENUES_PAGE, withErrorReporter(initVenuesPage)),
     takeLatest(actionTypes.SET_SELECTED_VENUE, withErrorReporter(setSelectedVenue)),
     takeLeading(actionTypes.ANSWER_TOP_MINK, withErrorReporter(answerTopMink)),
     takeLatest(actionTypes.LOAD_MINKS, withErrorReporter(loadVenueMinks)),
@@ -38,8 +38,8 @@ export default function* venuesSaga() {
     takeLatest(actionTypes.SET_SELECTED_MINK, withErrorReporter(watchMinkAnswerAttempts)),
     takeLeading(actionTypes.VOTE_MINK, withErrorReporter(voteMink)),
     takeLatest(actionTypes.RATE_TAG, withErrorReporter(rateTag)),
-    takeLatest(actionTypes.LOAD_POSTS, withErrorReporter(loadVenuePosts)),
-    takeLatest(actionTypes.LOAD_RATES, withErrorReporter(loadVenueRateTags)),
+    takeLeading(actionTypes.LOAD_POSTS, withErrorReporter(loadVenuePosts)),
+    takeLeading(actionTypes.LOAD_RATES, withErrorReporter(loadVenueRateTags)),
     takeLeading(actionTypes.CREATE_POST, withErrorReporter(createPost)),
     takeLeading(actionTypes.VOTE_POST, withErrorReporter(votePost)),
     takeLeading(actionTypes.PRIVATE_SHARE, withErrorReporter(privateShare)),

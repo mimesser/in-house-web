@@ -27,7 +27,7 @@ const CharacterComponent = ({ background, characterWidth, prevValue, step, textC
     <Panel position="bottom" background={background} textColor={textColor} value={prevValue} />
     {prevValue !== value && (
       <FlipPanel
-        direction="out"
+        direction={prevValue > value ? 'out' : 'in'}
         duration={step / 1000}
         position="top"
         background={background}
@@ -37,7 +37,7 @@ const CharacterComponent = ({ background, characterWidth, prevValue, step, textC
     )}
     {prevValue !== value && (
       <FlipPanel
-        direction="in"
+        direction={prevValue < value ? 'out' : 'in'}
         duration={step / 1000}
         position="bottom"
         background={background}
