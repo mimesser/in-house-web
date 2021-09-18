@@ -12,6 +12,3 @@ tags
 .DS_Store
 ~*
 .vscode/
-
-# Sentry
-.sentryclirc
