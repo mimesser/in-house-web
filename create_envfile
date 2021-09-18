@@ -5,4 +5,5 @@ echo "API_URL=$API_URL" >>.env \
 && echo "GA_KEY=$GA_KEY" >>.env \
 && echo "HOTJAR_SITE_ID=$HOTJAR_SITE_ID" >>.env \
 && echo "SENTRY_ENVIRONMENT=$SENTRY_ENVIRONMENT" >>.env \
-&& echo "SENTRY_DSN=$SENTRY_DSN" >>.env
+&& echo "SENTRY_DSN=$SENTRY_DSN" >>.env \
+&& echo "NPM_PACKAGE_VERSION=$(jq -r .version package.json)" >>.env
