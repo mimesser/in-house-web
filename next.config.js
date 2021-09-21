@@ -10,5 +10,6 @@ module.exports = {
     GA_KEY: process.env.GA_KEY,
     G_OPTIMIZE_KEY: process.env.G_OPTIMIZE_KEY,
     HOTJAR_SITE_ID: process.env.HOTJAR_SITE_ID,
+    SENTRY_ENVIRONMENT: process.env.SENTRY_ENVIRONMENT,
   },
 };
