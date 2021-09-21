@@ -6,7 +6,7 @@ import { END } from 'redux-saga';
 import { Helmet } from 'react-helmet';
 import { useRouter } from 'next/router';
 import { hotjar } from 'react-hotjar';
-
+import { VersionFlag } from '../components/atoms';
 import { wrapper } from '../store';
 import { theme } from '../style';
 import { GlobalStyle } from '../components/GlobalStyle';
@@ -61,7 +61,7 @@ class MyApp extends App {
               content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
             />
           </Head>
-
+          <VersionFlag />
           <GlobalStyle />
           {/* eslint-disable-next-line react/jsx-props-no-spreading */}
           <Component {...pageProps} />
