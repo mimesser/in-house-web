@@ -63,7 +63,11 @@ const Wrapper = styled.div`
 export const Votes = styled(({ count, iconSize = 1, userRate, ...rest }) => (
   <NumberSmall {...rest}>
     <Icon icon="users" size={iconSize} /> <span className="count">{count || 0}</span>{' '}
-    {!isNil(userRate) ? <span className="divide">{'   /'}</span> : <span className="divide">rates</span>}
+    {userRate ? (
+      <span className="divide">{'   /'}</span>
+    ) : (
+      <span className="divide">{+count === 1 ? 'rating' : 'ratings'}</span>
+    )}
   </NumberSmall>
 ))`
   position: relative;
