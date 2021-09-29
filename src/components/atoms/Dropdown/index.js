@@ -85,6 +85,10 @@ export const CustomSelect = styled(withNoSSR(Select)).attrs(() => ({
   opacity: ${({ options }) => (options ? 1 : 0)};
   transition: opacity 1s;
 
+  .react-select__value-container {
+    display: flex !important;
+  }
+
   .react-select__input input {
     text-transform: lowercase;
   }
