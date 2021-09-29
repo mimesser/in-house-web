@@ -1,9 +1,8 @@
-import React, { useEffect, useCallback, useState, useRef } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Link from 'next/link';
-import { useScrollPosition } from '@n8tb1t/use-scroll-position';
 import { selectSelectedPost, setSelectedPost, upvotePost, downvotePost, togglePostFlag } from '../../../store/venues';
 import { Loader, Button, HelpTip, Card, Icon, NumberLarge, NumberSmall } from '../../atoms';
 import { formatDateTime, formatMovementURL, formatRating } from '../../../utils/format';
@@ -427,34 +426,6 @@ const PostTab = ({
   );
   const getTitleForShare = useCallback((id) => findPost(id, posts).title, [posts]);
 
-  const handleScroll = useCallback((e) => {
-    console.log('# handle scroll', window.document.scrollTop, e);
-  });
-
-  const [scrolled, setScrolled] = useState(false);
-  const [hideOnScroll, setHideOnScroll] = useState(true);
-
-  const scrollRef = useRef();
-  useScrollPosition(
-    ({ prevPos, currPos }) => {
-      const isShow = currPos.y > prevPos.y;
-      if (isShow !== hideOnScroll) setHideOnScroll(isShow);
-    },
-    [hideOnScroll],
-    false,
-    false,
-    300,
-  );
-  useScrollPosition(
-    ({ currPos }) => {
-      const scrolledEnough = currPos.y < 60;
-      if (scrolledEnough !== scrolled) setScrolled(scrolledEnough);
-    },
-    [scrolled],
-    scrollRef,
-    false,
-    300,
-  );
   return (
     <>
       <Link
@@ -465,7 +436,7 @@ const PostTab = ({
         <NewPostButton icon="arrow-right">new post</NewPostButton>
       </Link>
 
-      <TabLayout onScroll={handleScroll}>
+      <TabLayout>
         {posts && !loading ? (
           renderPosts(posts, setSelectedPost, selectedPost, upvotePost, downvotePost, togglePostFlag)
         ) : (
