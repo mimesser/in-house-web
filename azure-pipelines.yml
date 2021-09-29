@@ -32,7 +32,7 @@ stages:
       condition: eq(variables['Build.SourceBranchName'], 'develop')
       inputs:
         command: build
-        arguments: '--no-cache --build-arg APIURL=$(DEV_API_URL) --build-arg GOPTIMIZEKEY=$(DEV_G_OPTIMIZE_KEY) --build-arg GAKEY=$(DEV_GA_KEY) --build-arg HOTJARSITEID=$(DEV_HOTJAR_SITE_ID) --build-arg SENTRYENV=development --build-arg SENTRYDSN=$(SENTRYDSN)'
+        arguments: '--build-arg TCREATEENVFILE="d" --build-arg NODEENV="development" --build-arg SENTRYCLIRCTOKEN=$(SENTRYCLIRC_TOKEN) --build-arg APIURL=$(DEV_API_URL) --build-arg GOPTIMIZEKEY=$(DEV_G_OPTIMIZE_KEY) --build-arg GAKEY=$(DEV_GA_KEY) --build-arg HOTJARSITEID=$(DEV_HOTJAR_SITE_ID) --build-arg SENTRYDSN=$(SENTRYDSN)'
         containerRegistry: $(dockerRegistryServiceConnection)
         repository: $(imageRepository)
         Dockerfile: $(dockerfilePath)
@@ -43,7 +43,7 @@ stages:
       condition: eq(variables['Build.SourceBranchName'], 'staging')
       inputs:
         command: build
-        arguments: '--build-arg APIURL=$(STAGING_API_URL) --build-arg GOPTIMIZEKEY=$(STAGING_G_OPTIMIZE_KEY) --build-arg GAKEY=$(STAGING_GA_KEY) --build-arg HOTJARSITEID=$(STAGING_HOTJAR_SITE_ID) --build-arg SENTRYENV=staging --build-arg SENTRYDSN=$(SENTRYDSN)'
+        arguments: '--build-arg TCREATEENVFILE="s" --build-arg NODEENV="production" --build-arg SENTRYCLIRCTOKEN=$(SENTRYCLIRC_TOKEN) --build-arg APIURL=$(STAGING_API_URL) --build-arg GOPTIMIZEKEY=$(STAGING_G_OPTIMIZE_KEY) --build-arg GAKEY=$(STAGING_GA_KEY) --build-arg HOTJARSITEID=$(STAGING_HOTJAR_SITE_ID) --build-arg SENTRYDSN=$(SENTRYDSN)'
         containerRegistry: $(dockerRegistryServiceConnection)
         repository: $(imageRepository)
         Dockerfile: $(dockerfilePath)
@@ -54,7 +54,7 @@ stages:
       condition: eq(variables['Build.SourceBranchName'], 'prod')
       inputs:
         command: build
-        arguments: '--build-arg APIURL=$(PROD_API_URL) --build-arg GOPTIMIZEKEY=$(PROD_G_OPTIMIZE_KEY) --build-arg GAKEY=$(PROD_GA_KEY) --build-arg HOTJARSITEID=$(PROD_HOTJAR_SITE_ID) --build-arg SENTRYENV=staging --build-arg SENTRYDSN=$(SENTRYDSN)'
+        arguments: '--build-arg TCREATEENVFILE="p" --build-arg NODEENV="production" --build-arg SENTRYCLIRCTOKEN=$(SENTRYCLIRC_TOKEN) --build-arg APIURL=$(PROD_API_URL) --build-arg GOPTIMIZEKEY=$(PROD_G_OPTIMIZE_KEY) --build-arg GAKEY=$(PROD_GA_KEY) --build-arg HOTJARSITEID=$(PROD_HOTJAR_SITE_ID) --build-arg SENTRYDSN=$(SENTRYDSN)'
         containerRegistry: $(dockerRegistryServiceConnection)
         repository: $(imageRepository)
         Dockerfile: $(dockerfilePath)
