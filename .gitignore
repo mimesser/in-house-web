@@ -3,7 +3,8 @@ coverage/
 .next/
 .idea/
 .bin/
-.env
+.env*.local
+.env.*.local
 .eslintcache
 yarn-error.log
 yarn.lock
