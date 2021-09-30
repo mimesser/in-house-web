@@ -33,7 +33,9 @@ class MyApp extends App {
         <ThemeProvider theme={theme}>
           {/* eslint-disable-next-line react/jsx-props-no-spreading */}
           <Component {...pageProps} />
-          {['development', 'staging'].indexOf(process.env.NEXT_PUBLIC_ENVIRONMENT) !== -1 && <VersionFlag />}
+          {['development', 'staging'].indexOf(process.env.NEXT_PUBLIC_ENVIRONMENT.toLowerCase()) !== -1 && (
+            <VersionFlag />
+          )}
         </ThemeProvider>
       </>
     );
