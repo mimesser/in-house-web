@@ -1,23 +1,23 @@
-import React from 'react';
 import styled from 'styled-components';
 
-export const VersionFlag = () => {
-  const VersionFlag = styled.div`
-    position: fixed;
-    background-color: #000;
-    color: #f9f9f9;
-    bottom: 0;
-    right: 0;
-    text-size-adjust: 100%;
-    line-height: 1.2;
-    font-size: 0.875rem;
-    word-spacing: 0.25rem;
-    font-family: HelveticaLTWXX-Bold, Helvetica, Sans-Serif;
-    padding: 5px;
-    opacity: 0.8;
-    z-index: 99999999;
-    border-radius: 3px;
-    box-shadow: 0 11px 40px 0 rgb(0 0 0 / 25%), 0 2px 10px 0 rgb(0 0 0 / 12%);
-  `;
-  return <VersionFlag>{`${process.env.SENTRY_ENVIRONMENT}`}</VersionFlag>;
-};
+import { fontSize, font, lineHeight, appColors, spacing, palette } from '../../../style';
+
+export const GlobalInfoTab = styled.div`
+  display: inline;
+  position: fixed;
+  z-index: 1000;
+  bottom: 0;
+  left: ${spacing.lg};
+  padding: ${spacing.md};
+  border: 2px solid ${appColors.midnight};
+  border-top-left-radius: 25%;
+  border-top-right-radius: 25%;
+  background-color: ${appColors.offWhite};
+  color: ${appColors.red};
+  ${font.bold}
+  line-height: ${lineHeight.md};
+  font-size: ${fontSize.lg};
+`;
+
+export const VersionFlag = () => <GlobalInfoTab>{`${process.env.NEXT_PUBLIC_NPM_PACKAGE_VERSION}`}</GlobalInfoTab>;
+export default VersionFlag;
