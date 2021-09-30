@@ -15,7 +15,7 @@ const Message = styled(H1)`
   text-align: center;
 `;
 
-const NewMinkElected = ({ open }) => {
+export const NewMinkElected = ({ open }) => {
   return open ? (
     <Modal canClose={false} canDismiss={false} inverse>
       <Message>new #1 MINK elected!</Message>
