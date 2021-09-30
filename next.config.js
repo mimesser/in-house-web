@@ -9,6 +9,6 @@ const moduleExports = {};
 //   urlPrefix, include, ignore
 // For all available options, see:
 // https://github.com/getsentry/sentry-webpack-plugin#options.
-const SentryWebpackPluginOptions = {};
+const SentryWebpackPluginOptions = { silent: true };
 
 module.exports = withSentryConfig(moduleExports, SentryWebpackPluginOptions);
