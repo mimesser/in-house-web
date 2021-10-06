@@ -91,9 +91,8 @@
     },
     "lint-staged": {
         "**/*.{js,jsx}": [
-            "eslint --fix --quiet",
-            "prettier --write",
-            "git add"
+            "eslint --fix",
+            "prettier --write"
         ]
     },
     "browserslist": [
