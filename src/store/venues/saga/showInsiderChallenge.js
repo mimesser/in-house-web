@@ -14,3 +14,7 @@ export function* showInsiderChallenge(venueId) {
   const { data } = yield call(api.get, `venues/${venueId}/topmink`);
   yield put(setVenueTopMink(data));
 }
+
+export function* triggerInsiderChallenge({ payload: { venueId } }) {
+  yield showInsiderChallenge(venueId);
+}
