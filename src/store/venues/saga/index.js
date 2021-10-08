@@ -23,6 +23,7 @@ import { acceptTerms } from './acceptTerms';
 import { createVenue } from './createVenue';
 import { togglePostFlag } from './togglePostFlag';
 import { toggleMinkFlag } from './toggleMinkFlag';
+import { triggerInsiderChallenge as showInsiderChallenge } from './showInsiderChallenge';
 
 export default function* venuesSaga() {
   yield all([
@@ -32,8 +33,12 @@ export default function* venuesSaga() {
     takeLeading(actionTypes.ANSWER_TOP_MINK, withErrorReporter(answerTopMink)),
     takeLatest(actionTypes.LOAD_MINKS, withErrorReporter(loadVenueMinks)),
     takeLatest(actionTypes.DISMISS_WELCOME_FORM, withErrorReporter(dismissWelcomeForm)),
+    takeLatest(actionTypes.SHOW_CHALLENGE_FORM, withErrorReporter(showInsiderChallenge)),
     takeLatest(actionTypes.DISMISS_CHALLENGE_FORM, withErrorReporter(dismissChallengeForm)),
-    takeLatest(actionTypes.DISMISS_POLL_CHALLENGE_FORM, withErrorReporter(dismissPollChallengeForm)),
+    takeLatest(
+      actionTypes.DISMISS_POLL_CHALLENGE_FORM,
+      withErrorReporter(dismissPollChallengeForm),
+    ),
     takeLeading(actionTypes.CREATE_MINK, withErrorReporter(createMink)),
     takeLatest(actionTypes.SET_SELECTED_MINK, withErrorReporter(watchMinkAnswerAttempts)),
     takeLeading(actionTypes.VOTE_MINK, withErrorReporter(voteMink)),
