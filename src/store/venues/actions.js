@@ -9,6 +9,7 @@ export const actionTypes = {
   SHOW_WELCOME_FORM: 'SHOW_WELCOME_FORM',
   DISMISS_WELCOME_FORM: 'DISMISS_WELCOME_FORM',
   ANSWER_TOP_MINK: 'ANSWER_TOP_MINK',
+  SHOW_CHALLENGE_FORM: 'SHOW_CHALLENGE_FORM',
   SET_CHALLENGE_FORM_DATA: 'SET_CHALLENGE_FORM_DATA',
   DISMISS_CHALLENGE_FORM: 'DISMISS_CHALLENGE_FORM',
   LOAD_RATES: 'LOAD_RATES',
@@ -101,6 +102,11 @@ export const setVenueTopMink = (topMink) => ({
 export const answerTopMink = (answer) => ({
   type: actionTypes.ANSWER_TOP_MINK,
   payload: { answer },
+});
+
+export const showInsiderChallenge = (venueId) => ({
+  type: actionTypes.SHOW_CHALLENGE_FORM,
+  payload: { venueId },
 });
 
 export const setChallengeFormData = (insiderChallengeForm) => ({
