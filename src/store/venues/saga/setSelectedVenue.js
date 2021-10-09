@@ -32,11 +32,13 @@ function* showInsiderConfirmation() {
   yield put(setChallengeFormData(acceptedTerms ? undefined : { showTerms: true }));
 }
 
-const parseOpenItemRequest = venueId => {
+const parseOpenItemRequest = (venueId) => {
   const { itemId, tab, token } = Router.query;
   const parsedItemId = +itemId;
   if (itemId) {
-    Router.replace(`/houses?id=${venueId}&tab=${tab}`, `/houses/${venueId}/${tab}`, { shallow: true });
+    Router.replace(`/houses?id=${venueId}&tab=${tab}`, `/houses/${venueId}/${tab}`, {
+      shallow: true,
+    });
   }
   if (!isFinite(parsedItemId)) {
     return undefined;

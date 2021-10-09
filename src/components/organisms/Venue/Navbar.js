@@ -1,11 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 import styled, { css } from 'styled-components';
 import { createStructuredSelector } from 'reselect';
 import Link from 'next/link';
 
+import {
+  showInsiderChallenge,
+  selectAnyTabItemSelected,
+  selectIsActiveInsider,
+} from '../../../store/venues';
+
 import { spacing, palette, font, calcRem } from '../../../style';
-import { selectAnyTabItemSelected, selectIsActiveInsider } from '../../../store/venues';
+
 import { HelpTip } from '../../atoms';
 import { formatMovementURL } from '../../../utils/format';
 
@@ -71,6 +77,7 @@ const TabHeader = ({
   authorized,
   venueType = 'houses',
   lite,
+  showChallenge,
 }) => {
   const movementName = formatMovementURL(name);
   const [time, setTime] = useState(Date.now());
@@ -81,11 +88,17 @@ const TabHeader = ({
     return () => clearInterval(tickIntervalId);
   }, []);
 
+  const retriggerChallenge = (e) => {
+    showChallenge(id);
+  };
+
   if (!authorized && secured) {
     return (
-      <Link href={`/${lite ? 'movement' : venueType}/${lite ? movementName : ''}`} passHref>
-        <A>{label}</A>
-      </Link>
+      <HelpWrap onClick={retriggerChallenge}>
+        <A active={active} custom={custom}>
+          {label}
+        </A>
+      </HelpWrap>
     );
   }
 
@@ -142,7 +155,16 @@ const liteTabs = [
   },
 ];
 
-const Navbar = ({ id, name, selected, authorized, venueType, tabs = defaultTabs, lite }) => {
+const Navbar = ({
+  id,
+  name,
+  selected,
+  authorized,
+  venueType,
+  tabs = defaultTabs,
+  lite,
+  showChallenge,
+}) => {
   if (lite) tabs = liteTabs;
 
   return (
@@ -158,6 +180,7 @@ const Navbar = ({ id, name, selected, authorized, venueType, tabs = defaultTabs,
           authorized={authorized}
           venueType={venueType}
           lite={lite}
+          showChallenge={showChallenge}
         />
       ))}
     </Nav>
@@ -169,4 +192,8 @@ const mapState = createStructuredSelector({
   anyTabItemSelected: selectAnyTabItemSelected,
 });
 
-export default connect(mapState)(Navbar);
+const mapDispatch = {
+  showChallenge: showInsiderChallenge,
+};
+
+export default connect(mapState, mapDispatch)(Navbar);
