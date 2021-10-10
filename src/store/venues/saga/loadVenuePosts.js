@@ -16,9 +16,9 @@ export function* reloadVenuePosts(id) {
   } catch (e) {
     if (isForbidden(e)) {
       yield handleForbiddenResponse(id);
-    } else {
-      throw e;
     }
+
+    throw e;
   }
 }
 

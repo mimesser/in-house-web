@@ -1,12 +1,14 @@
 import React from 'react';
 
 import { Modal } from '../Modal';
-import content from './content';
+import Content from './content';
 
-export default function Terms({ modal, close }) {
-  if (modal) {
-    return <Modal closeModal={close}>{content}</Modal>;
-  }
-
-  return content;
-}
+export const Terms = ({ modal, close }) =>
+  modal ? (
+    <Modal closeModal={close}>
+      <Content />
+    </Modal>
+  ) : (
+    <Content />
+  );
+export default Terms;

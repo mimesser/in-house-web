@@ -1,10 +1,19 @@
-import React, { useEffect, useCallback, useState, useRef } from 'react';
+import React, { useEffect, useCallback, useState, useMemo } from 'react';
 import styled, { css, keyframes } from 'styled-components';
+import Link from 'next/link';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import Link from 'next/link';
-import { useScrollPosition } from '@n8tb1t/use-scroll-position';
-import { selectSelectedPost, setSelectedPost, upvotePost, downvotePost, togglePostFlag } from '../../../store/venues';
+import { debounce, noop } from 'lodash';
+
+import {
+  selectSelectedPost,
+  selectPostFlagError,
+  setSelectedPost,
+  setVenuePosts,
+  upvotePost,
+  downvotePost,
+  togglePostFlag,
+} from '../../../store/venues';
 import { Loader, Button, HelpTip, Card, Icon, NumberLarge, NumberSmall } from '../../atoms';
 import { formatDateTime, formatMovementURL, formatRating } from '../../../utils/format';
 import { ItemText, ItemTitle, ItemTime, Main, TabLayout } from './tabStyle';
@@ -95,7 +104,9 @@ const StyledModal = styled(Modal)`
   }
 `;
 
-const PostImage = styled.div.attrs(({ imageUrl }) => imageUrl && { style: { backgroundImage: `url(${imageUrl})` } })`
+const PostImage = styled.div.attrs(
+  ({ imageUrl }) => imageUrl && { style: { backgroundImage: `url(${imageUrl})` } },
+)`
   min-height: 100px;
   max-width: 200px;
   min-width: 100px;
@@ -106,7 +117,9 @@ const PostImage = styled.div.attrs(({ imageUrl }) => imageUrl && { style: { back
   background-size: cover;
   background-position: center;
 `;
-const FullImage = styled.div.attrs(({ imageUrl }) => imageUrl && { style: { backgroundImage: `url(${imageUrl})` } })`
+const FullImage = styled.div.attrs(
+  ({ imageUrl }) => imageUrl && { style: { backgroundImage: `url(${imageUrl})` } },
+)`
   width: 100%;
   height: 100%;
   background-repeat: no-repeat;
@@ -177,7 +190,14 @@ const Footer = styled.div`
   align-items: flex-end;
 `;
 
-const SelectedIndicator = styled(({ show, count, ...rest }) => <Icon {...rest} icon="radio-marked" size={0.3} />)`
+const P = styled.p`
+  display: inline-block;
+  position: relative;
+`;
+
+const SelectedIndicator = styled(({ show, count, ...rest }) => (
+  <Icon {...rest} icon="radio-marked" size={0.3} />
+))`
   color: ${appColors.black};
   visibility: ${({ show }) => (show ? 'visible' : 'hidden')};
   margin-right: 5px;
@@ -207,6 +227,7 @@ const Post = ({
   upvotePost,
   downvotePost,
   isShare,
+  update,
 }) => {
   const [currentVote, setCurrentVote] = useState(myVote);
   const [upvoted, setUpvoted] = useState(myVote === 1);
@@ -215,40 +236,59 @@ const Post = ({
   const [selected, setSelected] = useState(selectedPost && selectedPost.id === id);
   const [showFullImage, setShowFullImage] = useState(false);
   const [optimisticVoteRating, setOptimisticVoteRating] = useState(voteRating);
+  const [votesCount, setVotesCount] = useState(voteCount);
 
-  const close = useCallback(() => setShowFullImage(false));
-  const open = useCallback(() => setShowFullImage(true));
-  const select = useCallback(() => setSelectedPost(id), [id]);
-  const deselect = useCallback(setSelectedPost, [setSelectedPost]);
-  const updateCurrentVote = useCallback((v) => {
+  const close = () => setShowFullImage(false);
+  const open = () => setShowFullImage(true);
+  const select = () => setSelectedPost(id);
+  const deselect = () => setSelectedPost(undefined);
+  const updateCurrentVote = (v) => {
     setCurrentVote(v);
     setUpvoted(v === 1);
     setDownvoted(v === -1);
     setSize(upvoted || downvoted ? 1.7 : 2.2);
-  }, []);
-  const votePost = useCallback((e, id, vote) => {
+  };
+  const votePost = (e, id, vote) => {
+    let curAverage;
+    const changes = {
+      myVote: +vote,
+      voteCount: +votesCount,
+      voteRating: +optimisticVoteRating,
+    };
+    const wasVotedByMeBefore = upvoted || downvoted;
+
     if (+vote === 1) {
-      const curAverage = downvoted
-        ? (voteRating * voteCount + 10) / voteCount
-        : (voteRating * voteCount + 10) / (voteCount + 1);
+      curAverage = downvoted
+        ? (optimisticVoteRating * votesCount + 10) / votesCount
+        : (optimisticVoteRating * votesCount + 10) / (votesCount + 1);
 
       updateCurrentVote(+vote);
       setOptimisticVoteRating(curAverage);
       upvotePost(id);
     } else {
-      const curAverage = upvoted
-        ? (voteRating * voteCount - 10) / voteCount
-        : (voteRating * voteCount) / (voteCount + 1);
+      curAverage = upvoted
+        ? (optimisticVoteRating * votesCount - 10) / votesCount
+        : (optimisticVoteRating * votesCount) / (votesCount + 1);
 
       updateCurrentVote(+vote);
       setOptimisticVoteRating(curAverage);
       downvotePost(id);
     }
-  }, []);
-  const toggleFlag = useCallback(() => {
+
+    changes.voteRating = +curAverage;
+
+    if (!wasVotedByMeBefore) {
+      changes.voteCount = votesCount + 1;
+      setVotesCount(votesCount + 1);
+    }
+
+    const debounced = debounce(() => update(id, changes), 3000, { trailing: true });
+    debounced();
+  };
+  const toggleFlag = () => {
     select();
     togglePostFlag();
-  }, [id]);
+  };
 
   useEffect(() => setSelected(selectedPost?.id === id), [selectedPost, id]);
   useEffect(() => deselect, []);
@@ -300,8 +340,10 @@ const Post = ({
           <CellHeader color={upvoted || downvoted ? appColors.gray4 : appColors.gray6}>
             <ItemTime dateTime={created}>{formatDateTime(created)}</ItemTime>
             <ShareWrap>
-              {!selected && <Votes count={voteCount} userRate={upvoted || downvoted} />}
-              {(upvoted || downvoted) && <NumberLarge>{formatRating(optimisticVoteRating)}</NumberLarge>}
+              {!selected && <Votes count={votesCount} userRate={upvoted || downvoted} />}
+              {(upvoted || downvoted) && (
+                <NumberLarge>{formatRating(optimisticVoteRating)}</NumberLarge>
+              )}
               {!selected && <PrivateShareButton id={id} type="post" color={appColors.gray6} />}
             </ShareWrap>
           </CellHeader>
@@ -310,7 +352,7 @@ const Post = ({
           <Footer>
             {imageUrl && <PostImage imageUrl={imageUrl} alt="post image" onClick={open} />}
             {!isShare && !selected && <FlagItem flagged={wasFlaggedByMe} toggleFlag={toggleFlag} />}
-            <p>{errorMessage}</p>
+            {selected && <P>{errorMessage}</P>}
           </Footer>
         </Main>
       </div>
@@ -368,29 +410,6 @@ const NewPostButton = styled(Button)`
   top: 46px;
 `;
 
-const renderSection = (title, posts, setSelectedPost, selectedPost, upvotePost, downvotePost, togglePostFlag) => {
-  return posts.length > 0 ? (
-    <>
-      {posts.map((p, i) => (
-        <Post
-          post={p}
-          key={p.id}
-          setSelectedPost={setSelectedPost}
-          selectedPost={selectedPost}
-          withHelp={i === 0}
-          upvotePost={upvotePost}
-          downvotePost={downvotePost}
-          togglePostFlag={togglePostFlag}
-        />
-      ))}
-    </>
-  ) : null;
-};
-
-const renderPosts = (posts, setSelectedPost, selectedPost, upvotePost, downvotePost, togglePostFlag) => (
-  <>{renderSection('Chatter', posts, setSelectedPost, selectedPost, upvotePost, downvotePost, togglePostFlag)}</>
-);
-
 const findPost = (id, posts) => {
   const post = posts.find((t) => t.id === id);
   if (!post) {
@@ -408,11 +427,37 @@ const PostTab = ({
   },
   loading,
   setSelectedPost,
+  setVenuePosts,
   selectedPost,
+  selectedPostErrorMessage,
   upvotePost,
   downvotePost,
   togglePostFlag,
 }) => {
+  const [currentTime, setCurrentTime] = useState(Date.now().toString());
+  const [initialPostsRendering, setInitialPostsRendering] = useState(true);
+
+  useEffect(() => setInitialPostsRendering(true), [loading]);
+  useEffect(() => {
+    if (posts) {
+      if (initialPostsRendering) {
+        setVenuePosts(
+          [...posts].sort((a, b) => {
+            if (+a.voteCount > +b.voteCount) return -1;
+            if (+a.voteCount < +b.voteCount) return 1;
+            if (+a.myVote) {
+              if (!b.myVote || +a.voteRating > +b.voteRating) return -1;
+              if (+a.voteRating < +b.voteRating) return 1;
+            } else if (b.myVote) return 1;
+
+            return new Date(b.created).getTime() - new Date(a.created).getTime();
+          }),
+        );
+        setInitialPostsRendering(false);
+      }
+    }
+  }, [posts]);
+
   const renderSharePreview = useCallback(
     (id) => {
       const p = findPost(id, posts);
@@ -426,35 +471,23 @@ const PostTab = ({
     [posts],
   );
   const getTitleForShare = useCallback((id) => findPost(id, posts).title, [posts]);
+  const updatePostAndSortPosts = (id, changes) => {
+    const sortedPosts = [...posts]
+      .filter((p) => p.id !== id)
+      .concat({ ...findPost(id, posts), ...changes })
+      .sort((a, b) => {
+        if (+a.voteCount > +b.voteCount) return -1;
+        if (+a.voteCount < +b.voteCount) return 1;
+        if (+a.myVote) {
+          if (!b.myVote || +a.voteRating > +b.voteRating) return -1;
+          if (+a.voteRating < +b.voteRating) return 1;
+        } else if (b.myVote) return 1;
 
-  const handleScroll = useCallback((e) => {
-    console.log('# handle scroll', window.document.scrollTop, e);
-  });
+        return new Date(b.created).getTime() - new Date(a.created).getTime();
+      });
+    setVenuePosts(sortedPosts);
+  };
 
-  const [scrolled, setScrolled] = useState(false);
-  const [hideOnScroll, setHideOnScroll] = useState(true);
-
-  const scrollRef = useRef();
-  useScrollPosition(
-    ({ prevPos, currPos }) => {
-      const isShow = currPos.y > prevPos.y;
-      if (isShow !== hideOnScroll) setHideOnScroll(isShow);
-    },
-    [hideOnScroll],
-    false,
-    false,
-    300,
-  );
-  useScrollPosition(
-    ({ currPos }) => {
-      const scrolledEnough = currPos.y < 60;
-      if (scrolledEnough !== scrolled) setScrolled(scrolledEnough);
-    },
-    [scrolled],
-    scrollRef,
-    false,
-    300,
-  );
   return (
     <>
       <Link
@@ -465,13 +498,27 @@ const PostTab = ({
         <NewPostButton icon="arrow-right">new post</NewPostButton>
       </Link>
 
-      <TabLayout onScroll={handleScroll}>
+      <TabLayout>
         {posts && !loading ? (
-          renderPosts(posts, setSelectedPost, selectedPost, upvotePost, downvotePost, togglePostFlag)
+          <>
+            {posts.map((p, i) => (
+              <Post
+                post={p}
+                key={p.id}
+                setSelectedPost={setSelectedPost}
+                selectedPost={selectedPost}
+                errorMessage={selectedPostErrorMessage}
+                withHelp={i === 0}
+                upvotePost={upvotePost}
+                downvotePost={downvotePost}
+                togglePostFlag={togglePostFlag}
+                update={updatePostAndSortPosts}
+              />
+            ))}
+          </>
         ) : (
           <Loader big />
         )}
-
         <PrivateShare type="post" renderItem={renderSharePreview} getItemTitle={getTitleForShare} />
       </TabLayout>
     </>
@@ -480,10 +527,12 @@ const PostTab = ({
 
 const mapState = createStructuredSelector({
   selectedPost: selectSelectedPost,
+  selectedPostErrorMessage: selectPostFlagError,
 });
 
 const mapDispatch = {
   setSelectedPost,
+  setVenuePosts,
   togglePostFlag,
   upvotePost,
   downvotePost,
