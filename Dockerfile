@@ -43,6 +43,7 @@ COPY --from=deps /app/node_modules ./node_modules
 RUN apk add jq
 RUN ./create_envfile $T_CREATE_ENV_FILE \
     && npm install -g copyfiles \
+    && mkdir build \
     && npm run build:ci
 
 FROM base_prod as final
@@ -50,7 +51,7 @@ ARG NODEENV
 ENV NODE_ENV=$NODEENV
 EXPOSE 3000
 COPY --from=builder --chown=nextjs:nodejs /app/.env ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/ ./
+COPY --from=builder --chown=nextjs:nodejs /app/build/ ./
 COPY --from=deps --chown=nextjs:nodejs /app/node_modules ./node_modules
 USER nextjs
 CMD ["node", "server/index.js"]
