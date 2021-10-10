@@ -63,7 +63,11 @@ const Wrapper = styled.div`
 export const Votes = styled(({ count, iconSize = 1, userRate, ...rest }) => (
   <NumberSmall {...rest}>
     <Icon icon="users" size={iconSize} /> <span className="count">{count || 0}</span>{' '}
-    {!isNil(userRate) ? <span className="divide">{'   /'}</span> : <span className="divide">rates</span>}
+    {userRate ? (
+      <span className="divide">{'   /'}</span>
+    ) : (
+      <span className="divide">{+count === 1 ? 'rating' : 'ratings'}</span>
+    )}
   </NumberSmall>
 ))`
   position: relative;
@@ -99,7 +103,7 @@ const SlidingValueWrapper = styled.div`
   align-content: center;
   justify-content: space-around;
   align-items: baseline;
-   ${({ expanded }) => (expanded === true ? 'display: flex; margin-right:50px;' : '')}
+   ${({ expanded }) => (expanded === true ? 'display: flex; margin-right:24px;' : '')}
 
 }
 `;
@@ -161,8 +165,10 @@ const SliderWrapper = styled.div`
   margin-top: 0px;
   margin-bottom: 0px;
   top: ${({ expanded }) => (expanded === true ? '0' : '-20')}px;
-  animation: ${({ expanded }) => (expanded === true ? Expand : Colapse)} ease-in-out ${({ duration }) => `${duration}s`};
-  background: ${({ expanded }) => (expanded === true ? theme.colors.darkGray : palette.transparent)};
+  animation: ${({ expanded }) => (expanded === true ? Expand : Colapse)} ease-in-out
+    ${({ duration }) => `${duration}s`};
+  background: ${({ expanded }) =>
+    expanded === true ? theme.colors.darkGray : palette.transparent};
   animation-fill-mode: forwards;
 `;
 
@@ -245,23 +251,15 @@ const BaseRateSlider = ({
           {(expanded || (!isNil(userValue) && !isNil(value))) && (
             <>
               {!expanded ? (
-                <SlidingValue fontSize={fontSize.md} value={`${formatRating(voteRating) * 10}`} minLength={2}>
+                <SlidingValue
+                  fontSize={fontSize.md}
+                  value={`${formatRating(voteRating) * 10}`}
+                  minLength={2}
+                >
                   <Dot size={80} padd={padd} color={valueColor} />
                 </SlidingValue>
               ) : (
                 <NumberMedium>{userValue}</NumberMedium>
-              )}
-              {expanded && (
-                <>
-                  <h1>/</h1>
-                  <NumberMedium>
-                    {formatRating(
-                      isNil(userRate)
-                        ? Number((voteRating * voteCount + (+userValue || 0)) / ((voteCount || 0) + 1)).toFixed(1)
-                        : Number((voteRating * voteCount - userRate + (+userValue || 0)) / (voteCount || 1)).toFixed(1),
-                    )}
-                  </NumberMedium>
-                </>
               )}
             </>
           )}

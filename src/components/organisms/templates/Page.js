@@ -1,7 +1,7 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useRef, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import Head from 'next/head';
-import { useWindowWidth } from '@react-hook/window-size';
+import { useDebouncedValue, useWindowSize } from 'rooks';
 import { HelpToggle, withNoSSR } from '../../atoms';
 import { Header } from '../Header';
 import { Menu } from '../Menu';
@@ -53,7 +53,11 @@ const Video = styled.video`
 const Overlay = styled.div`
   ${cover('fixed')};
   content: '';
-  background-image: linear-gradient(150.98deg, rgba(0, 178, 255, 0.2) 0%, rgba(255, 230, 0, 0.17) 99.68%),
+  background-image: linear-gradient(
+      150.98deg,
+      rgba(0, 178, 255, 0.2) 0%,
+      rgba(255, 230, 0, 0.17) 99.68%
+    ),
     linear-gradient(150.46deg, #000000 0%, rgba(0, 0, 0, 0.35) 99.41%, rgba(0, 0, 0, 0.37) 99.42%);
   opacity: 0.7;
 `;
@@ -90,20 +94,39 @@ export const BackgroundImage = styled.div`
   }
 `;
 
-const BackVideo = withNoSSR(() => {
-  const windowWidth = useWindowWidth();
+const WINDOW_RESIZE_UPDATE_DELAY = 1000;
 
+const BackVideo = withNoSSR(() => {
   // TODO: for some reason CDN is struggling with videos.
   const videoWidths = [375, 768, 1280, 1920];
+  const resourcePrefix = 'https://in-house.azureedge.net/webstatic/bg-';
+  const [resource, setResource] = useState(null);
 
-  const videoWidth = videoWidths.find((w) => windowWidth <= w) || videoWidths[videoWidths.length - 1];
+  const { innerWidth } = useWindowSize();
+  const [windowWidth, _] = useDebouncedValue(innerWidth, WINDOW_RESIZE_UPDATE_DELAY);
 
-  const resource = `https://in-house.azureedge.net/webstatic/bg-${videoWidth}`;
+  const getResourceSuffix = useCallback(
+    () => videoWidths.find((w) => innerWidth <= w) || videoWidths[videoWidths.length - 1],
+    [innerWidth],
+  );
+  useEffect(() => {
+    const videoWidth = getResourceSuffix();
+    setResource(`${resourcePrefix}${videoWidth}`);
+  }, [windowWidth]);
+
+  useEffect(() => {
+    if (resource) return;
+
+    const videoWidth = getResourceSuffix();
+    setResource(`${resourcePrefix}${videoWidth}`);
+  }, [innerWidth]);
 
   return (
-    <Video poster={`${resource}.jpg`} playsInline autoPlay muted loop>
-      <source src={`${resource}.mp4`} type="video/mp4" />
-    </Video>
+    resource && (
+      <Video poster={`${resource}.jpg`} playsInline autoPlay muted loop>
+        <source src={`${resource}.mp4`} type="video/mp4" />
+      </Video>
+    )
   );
 });
 

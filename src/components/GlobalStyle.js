@@ -2,15 +2,24 @@ import React from 'react';
 import { createGlobalStyle, css } from 'styled-components';
 import { normalize } from 'polished';
 
-import { breakpoints, BASE_FONT_SIZE, appFontSize, font, appLineHeight, appBackground, palette } from '../style';
+import {
+  breakpoints,
+  BASE_FONT_SIZE,
+  appFontSize,
+  font,
+  appLineHeight,
+  appBackground,
+  palette,
+} from '../style';
 
+/* @import url('//hello.myfonts.net/count/3af918'); */
 const fontFamilies = css`
-  /* @import url('//hello.myfonts.net/count/3af918'); */
   @font-face {
     font-family: 'HelveticaLTWXX-Light';
     font-display: swap;
     src: url('https://in-house.azureedge.net/webstatic/fonts/3AF918_0_0.eot');
-    src: url('https://in-house.azureedge.net/webstatic/fonts/3AF918_0_0.eot?#iefix') format('embedded-opentype'),
+    src: url('https://in-house.azureedge.net/webstatic/fonts/3AF918_0_0.eot?#iefix')
+        format('embedded-opentype'),
       url('https://in-house.azureedge.net/webstatic/fonts/3AF918_0_0.woff2') format('woff2'),
       url('https://in-house.azureedge.net/webstatic/fonts/3AF918_0_0.woff') format('woff'),
       url('https://in-house.azureedge.net/webstatic/fonts/3AF918_0_0.ttf') format('truetype');
@@ -20,7 +29,8 @@ const fontFamilies = css`
     font-family: 'HelveticaLTWXX-Roman';
     font-display: swap;
     src: url('https://in-house.azureedge.net/webstatic/fonts/3AF918_1_0.eot');
-    src: url('https://in-house.azureedge.net/webstatic/fonts/3AF918_1_0.eot?#iefix') format('embedded-opentype'),
+    src: url('https://in-house.azureedge.net/webstatic/fonts/3AF918_1_0.eot?#iefix')
+        format('embedded-opentype'),
       url('https://in-house.azureedge.net/webstatic/fonts/3AF918_1_0.woff2') format('woff2'),
       url('https://in-house.azureedge.net/webstatic/fonts/3AF918_1_0.woff') format('woff'),
       url('https://in-house.azureedge.net/webstatic/fonts/3AF918_1_0.ttf') format('truetype');
@@ -30,7 +40,8 @@ const fontFamilies = css`
     font-family: 'HelveticaLTWXX-Bold';
     font-display: swap;
     src: url('https://in-house.azureedge.net/webstatic/fonts/3AF918_2_0.eot');
-    src: url('https://in-house.azureedge.net/webstatic/fonts/3AF918_2_0.eot?#iefix') format('embedded-opentype'),
+    src: url('https://in-house.azureedge.net/webstatic/fonts/3AF918_2_0.eot?#iefix')
+        format('embedded-opentype'),
       url('https://in-house.azureedge.net/webstatic/fonts/3AF918_2_0.woff2') format('woff2'),
       url('https://in-house.azureedge.net/webstatic/fonts/3AF918_2_0.woff') format('woff'),
       url('https://in-house.azureedge.net/webstatic/fonts/3AF918_2_0.ttf') format('truetype');

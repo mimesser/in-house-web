@@ -10,28 +10,34 @@ import { CONFIRMATION_INTERVAL_ULTRA_SHORT as CONFIRMATION_INTERVAL } from './co
 
 export function* rateTag({ payload: { targetRate, doReloadVenueRateTags = true } }) {
   const tag = yield select(selectSelectedTag);
+
   if (targetRate && tag) {
-    yield put(setRateInProgress(tag.definitionId));
     const { id: venueId } = yield select(selectSelectedVenue);
     const isActiveInsider = yield select(selectIsActiveInsider);
+    const startApiCall = Date.now();
 
     if (!isActiveInsider) {
       // this possible when private share link sent
       yield showInsiderChallenge(venueId);
       yield setSelectedTag({ ...tag });
+
       return;
     }
 
-    const startApiCall = Date.now();
+    yield put(setRateInProgress(tag.definitionId));
 
     // TODO remove round to int
     const {
       data: { venue },
-    } = yield call(api.post, `venues/${venueId}/rateTag/${tag.definitionId}/rate`, { rate: targetRate });
+    } = yield call(api.post, `venues/${venueId}/rateTag/${tag.definitionId}/rate`, {
+      rate: targetRate,
+    });
 
     try {
       const confirmationRemainingTime = CONFIRMATION_INTERVAL - (Date.now() - startApiCall);
+
       yield put(updateVenueRate(venue));
+
       if (doReloadVenueRateTags) {
         if (confirmationRemainingTime > 0) {
           yield delay(confirmationRemainingTime);
@@ -42,8 +48,8 @@ export function* rateTag({ payload: { targetRate, doReloadVenueRateTags = true }
     } catch (e) {
       if (isForbidden(e)) {
         yield handleForbiddenResponse(venueId);
-        return;
       }
+
       throw e;
     } finally {
       yield put(setSelectedTag(undefined));
