@@ -50,7 +50,7 @@ ARG NODEENV
 ENV NODE_ENV=$NODEENV
 EXPOSE 3000
 COPY --from=builder --chown=nextjs:nodejs /app/.env ./
-COPY --from=builder --chown=nextjs:nodejs /app/build/ ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/ ./
 COPY --from=deps --chown=nextjs:nodejs /app/node_modules ./node_modules
 USER nextjs
 CMD ["node", "server/index.js"]
