@@ -24,7 +24,8 @@ while [ "$#" -gt 0 ]; do
     shift
 done
 
-echo "NEXT_PUBLIC_ENVIRONMENT=$U_ENV" >>.env.local \
+echo "NODE_ENV=$NODE_ENV" >>.env.local \
+&& echo "NEXT_PUBLIC_ENVIRONMENT=$U_ENV" >>.env.local \
 && echo "NEXT_PUBLIC_API_URL=$API_URL" >>.env.local \
 && echo "NEXT_PUBLIC_G_OPTIMIZE_KEY=$G_OPTIMIZE_KEY" >>.env.local \
 && echo "NEXT_PUBLIC_GA_KEY=$GA_KEY" >>.env.local \
