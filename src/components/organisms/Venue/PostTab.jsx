@@ -240,58 +240,62 @@ const Post = ({
 
   const close = () => setShowFullImage(false);
   const open = () => setShowFullImage(true);
-  const select = () => setSelectedPost(id);
-  const deselect = () => setSelectedPost(undefined);
   const updateCurrentVote = (v) => {
     setCurrentVote(v);
     setUpvoted(v === 1);
     setDownvoted(v === -1);
     setSize(upvoted || downvoted ? 1.7 : 2.2);
   };
-  const votePost = (e, id, vote) => {
-    let curAverage;
-    const changes = {
-      myVote: +vote,
-      voteCount: +votesCount,
-      voteRating: +optimisticVoteRating,
-    };
-    const wasVotedByMeBefore = upvoted || downvoted;
 
-    if (+vote === 1) {
-      curAverage = downvoted
-        ? (optimisticVoteRating * votesCount + 10) / votesCount
-        : (optimisticVoteRating * votesCount + 10) / (votesCount + 1);
+  const select = useCallback(() => setSelectedPost(id), [setSelectedPost, id]);
+  const deselect = useCallback(() => setSelectedPost(undefined), [setSelectedPost]);
+  const votePost = useCallback(
+    (e, id, vote) => {
+      let curAverage;
+      const changes = {
+        myVote: +vote,
+        voteCount: +votesCount,
+        voteRating: +optimisticVoteRating,
+      };
+      const wasVotedByMeBefore = upvoted || downvoted;
 
-      updateCurrentVote(+vote);
-      setOptimisticVoteRating(curAverage);
-      upvotePost(id);
-    } else {
-      curAverage = upvoted
-        ? (optimisticVoteRating * votesCount - 10) / votesCount
-        : (optimisticVoteRating * votesCount) / (votesCount + 1);
+      if (+vote === 1) {
+        curAverage = downvoted
+          ? (optimisticVoteRating * votesCount + 10) / votesCount
+          : (optimisticVoteRating * votesCount + 10) / (votesCount + 1);
 
-      updateCurrentVote(+vote);
-      setOptimisticVoteRating(curAverage);
-      downvotePost(id);
-    }
+        updateCurrentVote(+vote);
+        setOptimisticVoteRating(curAverage);
+        upvotePost(id);
+      } else {
+        curAverage = upvoted
+          ? (optimisticVoteRating * votesCount - 10) / votesCount
+          : (optimisticVoteRating * votesCount) / (votesCount + 1);
 
-    changes.voteRating = +curAverage;
+        updateCurrentVote(+vote);
+        setOptimisticVoteRating(curAverage);
+        downvotePost(id);
+      }
 
-    if (!wasVotedByMeBefore) {
-      changes.voteCount = votesCount + 1;
-      setVotesCount(votesCount + 1);
-    }
+      changes.voteRating = +curAverage;
 
-    const debounced = debounce(() => update(id, changes), 3000, { trailing: true });
-    debounced();
-  };
+      if (!wasVotedByMeBefore) {
+        changes.voteCount = votesCount + 1;
+        setVotesCount(votesCount + 1);
+      }
+
+      const debounced = debounce(() => update(id, changes), 3000, { trailing: true });
+      debounced();
+    },
+    [upvotePost, downvotePost, update],
+  );
   const toggleFlag = () => {
     select();
     togglePostFlag();
   };
 
   useEffect(() => setSelected(selectedPost?.id === id), [selectedPost, id]);
-  useEffect(() => deselect, []);
+  useEffect(() => deselect, [setSelectedPost]);
 
   const card = (
     <PostCard selected={selected}>
