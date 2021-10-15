@@ -252,8 +252,9 @@ export const upvotePost = (postId) => ({
   payload: { vote: 1, postId },
 });
 
-export const togglePostFlag = () => ({
+export const togglePostFlag = ({ wasVotedByMe }) => ({
   type: actionTypes.TOGGLE_POST_FLAG,
+  payload: { wasVotedByMe },
 });
 
 export const toggleFlagError = (errorMessage) => ({
