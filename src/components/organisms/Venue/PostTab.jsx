@@ -291,7 +291,7 @@ const Post = ({
   );
   const toggleFlag = () => {
     select();
-    togglePostFlag();
+    togglePostFlag({ wasVotedByMe: upvoted || downvoted });
   };
 
   useEffect(() => setSelected(selectedPost?.id === id), [selectedPost, id]);
