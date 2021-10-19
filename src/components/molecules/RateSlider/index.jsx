@@ -5,7 +5,7 @@ import { isNil } from 'lodash';
 import { NumberLarge, NumberSmall, Icon, Slider, SlidingValue } from '../../atoms';
 import { fontSize, font, palette, theme } from '../../../style';
 import { getClientPosition } from '../../atoms/Slider/utils';
-import { formatRating } from '../../../utils/format';
+import { formatRating, pluralFormatRatings } from '../../../utils/format';
 
 const FONT_RATIO = 3.6;
 
@@ -60,13 +60,13 @@ const Wrapper = styled.div`
                                 supported by Chrome, Edge, Opera and Firefox */
 `;
 
-export const Votes = styled(({ count, iconSize = 1, userRate, ...rest }) => (
+export const Votes = styled(({ count, iconSize = 1, userRate, pluralFormat,...rest }) => (
   <NumberSmall {...rest}>
     <Icon icon="users" size={iconSize} /> <span className="count">{count || 0}</span>{' '}
     {userRate ? (
       <span className="divide">{'   /'}</span>
     ) : (
-      <span className="divide">{+count === 1 ? 'rating' : 'ratings'}</span>
+      <span className="divide">{pluralFormat(count)}</span>
     )}
   </NumberSmall>
 ))`
@@ -90,7 +90,9 @@ export const Votes = styled(({ count, iconSize = 1, userRate, ...rest }) => (
   }
   visibility: ${({ expanded }) => (expanded === true ? 'hidden' : 'visible')};
 `;
-
+Votes.defaultProps = () => {
+  pluralFormat:pluralFormatRatings
+}
 const SlidingValueWrapper = styled.div`
   width: 70px;
   height: 54px;
@@ -245,7 +247,7 @@ const BaseRateSlider = ({
         onTouchEnd={expanded && !inProgress ? () => onSlideEnd(userValue) : undefined}
       >
         <Title>{title}</Title>
-        <Votes count={voteCount} userRate={userRate} expanded={expanded} />
+        <Votes count={voteCount} userRate={userRate} expanded={expanded} pluralFormat={pluralFormatRatings}/>
 
         <SlidingValueWrapper expanded={expanded}>
           {(expanded || (!isNil(userValue) && !isNil(value))) && (
