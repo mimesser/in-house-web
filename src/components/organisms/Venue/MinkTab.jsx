@@ -15,6 +15,7 @@ import {
   tryAnswerMink,
   selectAnswerMinkStatus,
   selectIsActiveInsider,
+  selectPostFlagError,
   selectSelectedVenueTopMinkId,
   toggleMinkFlag,
 } from '../../../store/venues';
@@ -371,18 +372,19 @@ const Mink = ({
   answerStatus,
   isActiveInsider,
   toggleMinkFlag,
+  flagErrorMessage,
   isShare,
 }) => {
-  const selectMink = useCallback(() => setSelectedMink(minkId), [minkId]);
-  const deselectMink = useCallback(setSelectedMink, [setSelectedMink]);
+  const selectMink = useCallback(() => setSelectedMink(minkId), [setSelectedMink, minkId]);
+  const deselectMink = useCallback(() => setSelectedMink(undefined), [setSelectedMink]);
   const toggleFlag = useCallback(() => {
     selectMink();
-    toggleMinkFlag();
-  }, [minkId]);
+    toggleMinkFlag({ wasVotedByMe: +myVote === 1 || +myVote === -1 });
+  }, [minkId, selectMink, myVote]);
   const ref = useRef(null);
   const answerRef = useRef(null);
   const [optimisticVoteRating, setOptimisticVoteRating] = useState(voteRating);
-  const [active, setActive] = useState(selectedMink && selectedMink.id === minkId);
+  const [active, setActive] = useState(selectedMink?.id === minkId);
   const size = 2.2;
   const [answer, setAnswer] = useState(myCorrectAnswer || '');
   const [previouslyAnsweredCorrectly, setPreviouslyAnsweredCorrectly] = useState(!!myCorrectAnswer);
@@ -396,7 +398,7 @@ const Mink = ({
 
   const voteMink = useCallback(
     (e, id, value) => {
-      if (+myVote === value) {
+      if (+myVote === +value) {
         return;
       }
 
@@ -437,11 +439,7 @@ const Mink = ({
   }, [isNew, setAddedMinkId]);
 
   useEffect(() => {
-    if (!isNil(selectedMink?.id)) {
-      setActive(selectedMink.id === minkId);
-    } else {
-      setActive(false);
-    }
+    setActive(selectedMink?.id === minkId);
   }, [selectedMink, minkId]);
 
   useEffect(() => {
@@ -449,7 +447,7 @@ const Mink = ({
     setPreviouslyAnsweredCorrectly(!!myCorrectAnswer);
   }, [myCorrectAnswer]);
 
-  useEffect(() => deselectMink, []);
+  useEffect(() => deselectMink, [setSelectedMink]);
 
   const card = (
     <MinkCard ref={ref} active={active} topMink={topMink} isShare={isShare}>
@@ -515,12 +513,16 @@ const Mink = ({
                 />
               )}
             </div>
-            <AnswerStatus
-              status={answerStatus}
-              previouslyAnsweredCorrectly={previouslyAnsweredCorrectly}
-              active={active}
-              isShare={isShare}
-            />
+            {active && flagErrorMessage?.length ? (
+              <Status>{flagErrorMessage}</Status>
+            ) : (
+              <AnswerStatus
+                status={answerStatus}
+                previouslyAnsweredCorrectly={previouslyAnsweredCorrectly}
+                active={active}
+                isShare={isShare}
+              />
+            )}
           </InputGroup>
           {!isShare && (
             <FlagItemWrap>
@@ -539,7 +541,10 @@ const Mink = ({
   return topMink ? (
     <HelpTip
       placement="top"
-      tip="your team votes to select the TOP MINK, which all teammates must answer to get in your house"
+      tip={
+        'your team votes to select the TOP MINK, ' +
+        'which all teammates must answer to get in your house'
+      }
     >
       {card}
     </HelpTip>
@@ -559,6 +564,7 @@ const renderMinks = (
   downvoteMink,
   tryAnswerMink,
   answerStatus,
+  flagErrorMessage,
   toggleMinkFlag,
   movementName,
   lite,
@@ -583,6 +589,7 @@ const renderMinks = (
           tryAnswerMink={tryAnswerMink}
           answerStatus={answerStatus}
           toggleMinkFlag={toggleMinkFlag}
+          flagErrorMessage={flagErrorMessage}
           topMink
         />
       </TopMinkContainer>
@@ -611,6 +618,7 @@ const renderMinks = (
             tryAnswerMink={tryAnswerMink}
             answerStatus={answerStatus}
             toggleMinkFlag={toggleMinkFlag}
+            flagErrorMessage={flagErrorMessage}
           />
         ))}
       </>
@@ -642,6 +650,7 @@ const MinkTab = ({
   downvoteMink,
   tryAnswerMink,
   answerStatus,
+  flagErrorMessage,
   toggleMinkFlag,
   topMinkId,
 }) => {
@@ -708,6 +717,7 @@ const MinkTab = ({
           downvoteMink,
           tryAnswerMink,
           answerStatus,
+          flagErrorMessage,
           toggleMinkFlag,
           movementName,
           lite,
@@ -724,6 +734,7 @@ const MinkTab = ({
 const mapsState = createStructuredSelector({
   selectedMink: selectSelectedMink,
   answerStatus: selectAnswerMinkStatus,
+  flagErrorMessage: selectPostFlagError,
   isActiveInsider: selectIsActiveInsider,
   topMinkId: selectSelectedVenueTopMinkId,
 });
