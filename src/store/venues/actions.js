@@ -262,8 +262,9 @@ export const toggleFlagError = (errorMessage) => ({
   payload: { message: errorMessage },
 });
 
-export const toggleMinkFlag = () => ({
+export const toggleMinkFlag = ({ wasVotedByMe }) => ({
   type: actionTypes.TOGGLE_MINK_FLAG,
+  payload: { wasVotedByMe },
 });
 
 export const downvotePost = (postId) => ({

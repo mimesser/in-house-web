@@ -251,6 +251,10 @@ const Post = ({
   const deselect = useCallback(() => setSelectedPost(undefined), [setSelectedPost]);
   const votePost = useCallback(
     (e, id, vote) => {
+      if (+currentVote === +vote) {
+        return;
+      }
+
       let curAverage;
       const changes = {
         myVote: +vote,

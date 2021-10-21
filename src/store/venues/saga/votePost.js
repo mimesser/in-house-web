@@ -35,7 +35,14 @@ export function* votePost({ payload: { vote, postId } }) {
     throw e;
   } finally {
     yield put(showVotePostConfirmation(undefined));
-    yield put(toggleFlagError(undefined));
     yield put(setSelectedPost(undefined));
   }
+}
+
+export function* downvotePost(postId) {
+  yield* votePost({ payload: { vote: -1, postId } });
+}
+
+export function* upvotePost(postId) {
+  yield* votePost({ payload: { vote: 1, postId } });
 }

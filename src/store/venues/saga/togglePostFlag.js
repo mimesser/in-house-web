@@ -2,7 +2,8 @@ import { call, select, put, putResolve, delay, fork } from 'redux-saga/effects';
 
 import api from '../../../api';
 import { selectSelectedVenue, selectSelectedPost } from '../selectors';
-import { setVenuePosts, setSelectedPost, toggleFlagError, downvotePost } from '../actions';
+import { setVenuePosts, setSelectedPost, toggleFlagError } from '../actions';
+import { downvotePost } from './votePost';
 
 const CONFIRMATION_DELAY = 1500;
 
@@ -19,7 +20,8 @@ export function* togglePostFlag({ payload: { wasVotedByMe } }) {
 
   try {
     if (!wasVotedByMe && !post.wasFlaggedByMe) {
-      yield putResolve(downvotePost(post.id));
+      yield call(downvotePost, post.id);
+      yield putResolve(setSelectedPost(post.id));
     }
 
     const { data: response } = yield call(
