@@ -21,7 +21,12 @@ import {
 import { palette, spacing, fontSize, font } from '../../../style';
 import { Loader, Button, HelpTip, Patent, Card, Icon, SlidingValue, Input } from '../../atoms';
 import { TabLayout, Main, ItemTitle, ItemTime, TabTitle } from './tabStyle';
-import { formatDateTime, formatMovementURL, formatRating } from '../../../utils/format';
+import {
+  formatDateTime,
+  formatMovementURL,
+  formatRating,
+  pluralFormatVote,
+} from '../../../utils/format';
 import NewMinkElected from './NewMinkElected';
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
@@ -485,7 +490,7 @@ const Mink = ({
                   </VoteRating>
                 </RatingWrap>
               ) : (
-                <InsiderText>votes</InsiderText>
+                <InsiderText>{pluralFormatVote(voteCount)}</InsiderText>
               )}
               <PrivateShareButton id={minkId} type="mink" />
             </ShareWrap>
