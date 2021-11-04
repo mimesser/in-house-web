@@ -15,21 +15,11 @@ import {
 } from './style';
 import { postFeedback, clearFeedback } from '../../../store/feedback';
 import { isEmailValid } from '../../../utils/index';
+import { feedbackPageOptions } from '../../../constants';
 
 const subjectOptions = [
   '-- select subject --',
-  'get notified when live',
-  'request new industry poll',
-  'list your warehouse',
-  'list your hospital',
-  'list your supermarket',
-  'list something else',
-  'join our team / movement',
-  'strategic partnership',
-  'technical difficulty',
-  'criticism / hate',
-  'general feedback',
-  'other',
+  ...feedbackPageOptions
 ].map((value) => ({
   label: value,
   value,
