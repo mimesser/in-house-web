@@ -66,9 +66,10 @@ const BetaList = () => {
           </Description>
         </Main>
         <Commands>
-          <Link href="/houses" passHref>
-            <BackButton secondary>cancel</BackButton>
-          </Link>
+          <BackButton onClick={() => router.back()} secondary>
+            cancel
+          </BackButton>
+
           <Link href="/feedback?subjectIndex=0&redirect=/houses">
             <ActionButton icon="arrow-right">list your workplace</ActionButton>
           </Link>
