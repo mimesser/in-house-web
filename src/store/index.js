@@ -1,7 +1,7 @@
 import { applyMiddleware, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 
-import { createWrapper, HYDRATE } from 'next-redux-wrapper';
+import { createWrapper } from 'next-redux-wrapper';
 import * as Sentry from '@sentry/nextjs';
 
 import rootReducer from './reducer';
@@ -16,12 +16,9 @@ const bindMiddleware = (middleware) => {
   return applyMiddleware(...middleware);
 };
 
+// @HINT this is the storybook variant
 export function configureStore(initialState = {}) {
-  const sagaMiddleware = createSagaMiddleware({
-    onError: (error, { sagaStack }) => {
-      Sentry.captureException(error, sagaStack);
-    },
-  });
+  const sagaMiddleware = createSagaMiddleware();
   const middlewares = [sagaMiddleware, demoMiddleware];
   const store = createStore(rootReducer, initialState, bindMiddleware(middlewares));
 
@@ -31,7 +28,11 @@ export function configureStore(initialState = {}) {
 }
 
 export const makeStore = (context, initialState = {}) => {
-  const sagaMiddleware = createSagaMiddleware();
+  const sagaMiddleware = createSagaMiddleware({
+    onError: (error, { sagaStack }) => {
+      Sentry.captureException(error, sagaStack);
+    },
+  });
 
   const store = createStore(rootReducer, initialState, bindMiddleware([sagaMiddleware]));
 
