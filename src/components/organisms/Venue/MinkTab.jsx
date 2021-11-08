@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import styled, { css } from 'styled-components';
 import Link from 'next/link';
-import { isNil } from 'lodash';
-
+import { useDebounce, useFreshRef } from 'rooks';
 import {
   loadMinks,
   setSelectedMink,
+  setVenueMinks,
   setAddedMinkId,
   selectSelectedMink,
+  selectVoteMinkConfirmation,
   upvoteMink,
   downvoteMink,
   tryAnswerMink,
@@ -32,6 +33,9 @@ import { VoteButton } from './openCardStyle';
 import { Status, InputGroup } from './VoteMink/style';
 import { FlagItem } from './FlagItem';
 import { normalizeAnswer } from './normalizeAnswer';
+import { RateConfirmation } from './RateConfirmation';
+
+import { Modal } from '../Modal';
 
 const Dot = styled.span`
   &:before {
@@ -374,55 +378,42 @@ const Mink = ({
   toggleMinkFlag,
   flagErrorMessage,
   isShare,
+  update,
 }) => {
-  const selectMink = useCallback(() => setSelectedMink(minkId), [setSelectedMink, minkId]);
-  const deselectMink = useCallback(() => setSelectedMink(undefined), [setSelectedMink]);
-  const toggleFlag = useCallback(() => {
-    selectMink();
-    toggleMinkFlag({ wasVotedByMe: +myVote === 1 || +myVote === -1 });
-  }, [minkId, selectMink, myVote]);
-  const ref = useRef(null);
-  const answerRef = useRef(null);
-  const [optimisticVoteRating, setOptimisticVoteRating] = useState(voteRating);
-  const [active, setActive] = useState(selectedMink?.id === minkId);
   const size = 2.2;
+  const upvoted = myVote === 1;
+  const downvoted = myVote === -1;
+  const active = selectedMink?.id === minkId;
   const [answer, setAnswer] = useState(myCorrectAnswer || '');
   const [previouslyAnsweredCorrectly, setPreviouslyAnsweredCorrectly] = useState(!!myCorrectAnswer);
+  const selectMink = useCallback(() => setSelectedMink(minkId), [setSelectedMink, minkId]);
+  const deselectMink = useCallback(() => setSelectedMink(undefined), [setSelectedMink]);
+  const toggleFlag = () => {
+    selectMink();
+    toggleMinkFlag({ wasVotedByMe: +myVote === 1 || +myVote === -1 });
+  };
+  const ref = useRef(null);
+  const answerRef = useRef(null);
 
-  const tryAnswer = useCallback((e) => {
-    const value = normalizeAnswer(e.currentTarget.value);
-    setAnswer(value);
-    if (!value) return;
-    tryAnswerMink(houseId, minkId, value);
-  }, []);
+  const tryAnswer = useCallback(
+    (e) => {
+      const value = normalizeAnswer(e?.currentTarget?.value);
+      setAnswer(value);
+      tryAnswerMink(houseId, minkId, value);
+    },
+    [setAnswer, tryAnswerMink, minkId],
+  );
+
+  const debouncedUpdateMinks = useDebounce(update.current, 3000, { trailing: true });
 
   const voteMink = useCallback(
-    (e, id, value) => {
-      if (+myVote === +value) {
-        return;
-      }
+    (vote, skipConfirmation = false) => {
+      if (+vote === 1) upvoteMink(minkId);
+      else if (+vote === -1) downvoteMink(minkId, !!skipConfirmation);
 
-      selectMink();
-
-      if (+value === 1) {
-        const curAverage =
-          +myVote === -1
-            ? (voteRating * voteCount + 10) / voteCount
-            : (voteRating * voteCount + 10) / (voteCount + 1);
-
-        setOptimisticVoteRating(curAverage);
-        upvoteMink(id);
-      } else {
-        const curAverage =
-          +myVote === 1
-            ? (voteRating * voteCount - 10) / voteCount
-            : (voteRating * voteCount) / (voteCount + 1);
-
-        setOptimisticVoteRating(curAverage);
-        downvoteMink(id);
-      }
+      debouncedUpdateMinks();
     },
-    [voteRating, voteCount, myVote],
+    [minkId, upvoteMink, downvoteMink, debouncedUpdateMinks],
   );
 
   const clearAnswer = useCallback((e) => {
@@ -439,10 +430,6 @@ const Mink = ({
   }, [isNew, setAddedMinkId]);
 
   useEffect(() => {
-    setActive(selectedMink?.id === minkId);
-  }, [selectedMink, minkId]);
-
-  useEffect(() => {
     setAnswer(myCorrectAnswer || '');
     setPreviouslyAnsweredCorrectly(!!myCorrectAnswer);
   }, [myCorrectAnswer]);
@@ -453,11 +440,37 @@ const Mink = ({
     <MinkCard ref={ref} active={active} topMink={topMink} isShare={isShare}>
       <div>
         <VoteWrap>
-          <VoteButton onClick={(e) => voteMink(e, minkId, 1)} disabled={myVote === 1 || active}>
+          <VoteButton
+            onClick={(e) => {
+              if (upvoted) {
+                e.stopPropagation();
+
+                return;
+              }
+
+              selectMink();
+              voteMink(1);
+            }}
+            selected={upvoted}
+            disabled={myVote === 1 || active}
+          >
             <Dot hide={myVote !== 1} />
             <Icon size={size} icon="arrow-up-circle" />
           </VoteButton>
-          <VoteButton onClick={(e) => voteMink(e, minkId, -1)} disabled={myVote === -1 || active}>
+          <VoteButton
+            onClick={(e) => {
+              if (downvoted) {
+                e.stopPropagation();
+
+                return;
+              }
+
+              selectMink();
+              voteMink(-1);
+            }}
+            selected={downvoted}
+            disabled={myVote === -1 || active}
+          >
             <Dot hide={myVote !== -1} />
             <Icon size={size} icon="arrow-down-circle" />
           </VoteButton>
@@ -474,7 +487,7 @@ const Mink = ({
                   <VoteRating hideRate={false} topMink={topMink}>
                     <SlidingValue
                       fontSize={fontSize.md}
-                      value={`${formatRating(optimisticVoteRating) * 10}`}
+                      value={`${formatRating(voteRating) * 10}`}
                       inverse={topMink}
                     >
                       <Dot hide={false} topMink={topMink} />
@@ -553,91 +566,10 @@ const Mink = ({
   );
 };
 
-const renderMinks = (
-  minks,
-  setSelectedMink,
-  addedMinkId,
-  setAddedMinkId,
-  selectedMink,
-  houseId,
-  upvoteMink,
-  downvoteMink,
-  tryAnswerMink,
-  answerStatus,
-  flagErrorMessage,
-  toggleMinkFlag,
-  movementName,
-  lite,
-) => (
-  <>
-    {minks.length > 0 && (
-      <TopMinkContainer>
-        <TabTitle>
-          Top MINK
-          <Push />
-          <Patent />
-        </TabTitle>
-        <Subtitle>the top mink at any time verifies insiders</Subtitle>
-        <hr />
-        <Mink
-          houseId={houseId}
-          mink={minks[0]}
-          setSelectedMink={setSelectedMink}
-          selectedMink={selectedMink}
-          upvoteMink={upvoteMink}
-          downvoteMink={downvoteMink}
-          tryAnswerMink={tryAnswerMink}
-          answerStatus={answerStatus}
-          toggleMinkFlag={toggleMinkFlag}
-          flagErrorMessage={flagErrorMessage}
-          topMink
-        />
-      </TopMinkContainer>
-    )}
-    <Link
-      href={`/houses?id=${houseId}&tab=mink&new`}
-      as={lite ? `/movement/${movementName}/mink/new` : `/houses/${houseId}/mink/new`}
-      passHref
-    >
-      <NewMinkButton icon="arrow-right">new mink</NewMinkButton>
-    </Link>
-    {minks.length > 1 && (
-      <>
-        <RunnersTitle>Runners up</RunnersTitle>
-        {minks.slice(1).map((m) => (
-          <Mink
-            houseId={houseId}
-            mink={m}
-            key={m.id}
-            setSelectedMink={setSelectedMink}
-            selectedMink={selectedMink}
-            isNew={m.id === addedMinkId}
-            setAddedMinkId={setAddedMinkId}
-            upvoteMink={upvoteMink}
-            downvoteMink={downvoteMink}
-            tryAnswerMink={tryAnswerMink}
-            answerStatus={answerStatus}
-            toggleMinkFlag={toggleMinkFlag}
-            flagErrorMessage={flagErrorMessage}
-          />
-        ))}
-      </>
-    )}
-  </>
-);
-
-const findMink = (id, minks) => {
-  const mink = minks.find((t) => t.id === id);
-  if (!mink) {
-    throw new Error(`Can't find mink ${id}`);
-  }
-  return mink;
-};
-
 const MinkTab = ({
   venue: {
-    id,
-    name,
+    id: houseId,
+    name: venueName,
     industry: { lite },
     minks,
     addedMinkId,
@@ -653,9 +585,13 @@ const MinkTab = ({
   flagErrorMessage,
   toggleMinkFlag,
   topMinkId,
+  voteConfirmation,
 }) => {
   const ref = useRef(null);
   const [initialTopMink, setInitialTopMink] = useState(true);
+  const [initialMinksRendering, setInitialMinksRendering] = useState(true);
+
+  useEffect(() => setInitialMinksRendering(true), [loading]);
   useEffect(() => {
     if (!topMinkId) {
       return;
@@ -670,14 +606,14 @@ const MinkTab = ({
 
   const renderSharePreview = useCallback(
     (id) => {
-      const m = findMink(id, minks);
-      const isTopMink = minks[0] === m;
+      const previewMink = minks.find((m) => m.id === id);
+      const isTopMink = minks.find((m) => m.isTopMink)?.id === id;
 
       return isTopMink ? (
         <TopMinkSharePreviewWrap>
           <TopMinkContainer>
             <Mink
-              mink={m}
+              mink={previewMink}
               upvoteMink={upvoteMink}
               downvoteMink={downvoteMink}
               answerStatus={answerStatus}
@@ -689,7 +625,7 @@ const MinkTab = ({
       ) : (
         <SharePreviewWrap>
           <Mink
-            mink={m}
+            mink={previewMink}
             upvoteMink={upvoteMink}
             downvoteMink={downvoteMink}
             answerStatus={answerStatus}
@@ -700,32 +636,101 @@ const MinkTab = ({
     },
     [minks],
   );
-  const getTitleForShare = useCallback((id) => findMink(id, minks).question, [minks]);
-  const movementName = formatMovementURL(name);
+  const getTitleForShare = (id) => minks.find((m) => m.id === id)?.question;
+  const movementName = formatMovementURL(venueName);
+
+  const updateMinks = useFreshRef(() => {
+    const sortedMinks = minks.sort((a, b) => {
+      if (+a.voteCount > 9 && +b.voteCount < 10) return -1;
+      if (+a.voteCount < 10 && +b.voteCount > 9) return 1;
+      if (+a.voteRating > +b.voteRating) return -1;
+      if (+a.voteRating < +b.voteRating) return 1;
+
+      return new Date(b.created).getTime() - new Date(a.created).getTime();
+    });
+    setVenueMinks(sortedMinks);
+  }, [minks, setVenueMinks]);
+
+  useEffect(() => {
+    if (minks && initialMinksRendering) {
+      updateMinks.current();
+
+      setInitialMinksRendering(false);
+    }
+  }, [minks]);
 
   return (
     <TabLayout ref={ref}>
-      {minks && !loading ? (
-        renderMinks(
-          minks,
-          setSelectedMink,
-          addedMinkId,
-          setAddedMinkId,
-          selectedMink,
-          id,
-          upvoteMink,
-          downvoteMink,
-          tryAnswerMink,
-          answerStatus,
-          flagErrorMessage,
-          toggleMinkFlag,
-          movementName,
-          lite,
-        )
-      ) : (
+      {!minks?.length || loading ? (
         <Loader big />
+      ) : (
+        <>
+          {minks.find((m) => m.isTopMink) && (
+            <TopMinkContainer>
+              <TabTitle>
+                Top MINK
+                <Push />
+                <Patent />
+              </TabTitle>
+              <Subtitle>the top mink at any time verifies insiders</Subtitle>
+              <hr />
+              <Mink
+                houseId={houseId}
+                mink={minks.find((m) => m.isTopMink)}
+                setSelectedMink={setSelectedMink}
+                selectedMink={selectedMink}
+                upvoteMink={upvoteMink}
+                downvoteMink={downvoteMink}
+                tryAnswerMink={tryAnswerMink}
+                answerStatus={answerStatus}
+                toggleMinkFlag={toggleMinkFlag}
+                flagErrorMessage={flagErrorMessage}
+                topMink
+                update={updateMinks}
+              />
+            </TopMinkContainer>
+          )}
+          <Link
+            href={`/houses?id=${houseId}&tab=mink&new`}
+            as={lite ? `/movement/${movementName}/mink/new` : `/houses/${houseId}/mink/new`}
+            passHref
+          >
+            <NewMinkButton icon="arrow-right">new mink</NewMinkButton>
+          </Link>
+          {minks.length > 1 && (
+            <>
+              <RunnersTitle>Runners up</RunnersTitle>
+              {minks
+                .filter((m) => !m.isTopMink || m.id !== minks.find((_m) => _m.isTopMink)?.id)
+                .map((m) => (
+                  <Mink
+                    houseId={houseId}
+                    mink={m}
+                    key={m.id}
+                    setSelectedMink={setSelectedMink}
+                    selectedMink={selectedMink}
+                    isNew={m.id === addedMinkId}
+                    setAddedMinkId={setAddedMinkId}
+                    upvoteMink={upvoteMink}
+                    downvoteMink={downvoteMink}
+                    tryAnswerMink={tryAnswerMink}
+                    answerStatus={answerStatus}
+                    toggleMinkFlag={toggleMinkFlag}
+                    flagErrorMessage={flagErrorMessage}
+                    update={updateMinks}
+                  />
+                ))}
+            </>
+          )}
+        </>
       )}
       <NewMinkElected />
+      {voteConfirmation && (
+        <Modal title={venueName} inverse>
+          <RateConfirmation title={selectedMink.question} {...voteConfirmation} />
+        </Modal>
+      )}
+
       <PrivateShare type="mink" renderItem={renderSharePreview} getItemTitle={getTitleForShare} />
     </TabLayout>
   );
@@ -737,11 +742,13 @@ const mapsState = createStructuredSelector({
   flagErrorMessage: selectPostFlagError,
   isActiveInsider: selectIsActiveInsider,
   topMinkId: selectSelectedVenueTopMinkId,
+  voteConfirmation: selectVoteMinkConfirmation,
 });
 
 const mapDispatch = {
   loadMinks,
   setSelectedMink,
+  setVenueMinks,
   setAddedMinkId,
   upvoteMink,
   downvoteMink,
