@@ -36,7 +36,7 @@ storiesOf('Button', module).add('Button', () => (
       with, icon <Icon icon="arrow-right" />
     </Button>
     <Button wide icon="arrow-right">
-      wide, with icon as a prop />
+      wide, with icon as a prop
     </Button>
   </Container>
 ));
