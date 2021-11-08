@@ -1,16 +1,34 @@
-import { ThemeProvider } from 'styled-components';
 import App from 'next/app';
 import Head from 'next/head';
-import { Helmet } from 'react-helmet';
-import { useRouter } from 'next/router';
+import { END } from 'redux-saga';
+import { ThemeProvider } from 'styled-components';
 import { hotjar } from 'react-hotjar';
-import { VersionFlag } from '../components/atoms';
+
 import { wrapper } from '../store';
 import { theme } from '../style';
 import { GlobalStyle } from '../components/GlobalStyle';
 import { initGA, logPageView } from '../utils/analytics';
+import { VersionFlag } from '../components/atoms';
 
 class MyApp extends App {
+  static async getInitialProps({ Component, ctx, store }) {
+    // 1. Wait for all page actions to dispatch
+    const pageProps = {
+      ...(Component.getInitialProps ? await Component.getInitialProps(ctx) : {}),
+    };
+
+    // 2. Stop the saga if on server
+    if (ctx.isServer) {
+      store.dispatch(END);
+      await store.sagaTask.toPromise();
+    }
+
+    // 3. Return props
+    return {
+      pageProps,
+    };
+  }
+
   componentDidMount() {
     hotjar.initialize(process.env.NEXT_PUBLIC_HOTJAR_SITE_ID, 6);
     initGA();
