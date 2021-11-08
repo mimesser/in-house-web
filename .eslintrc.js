@@ -16,6 +16,7 @@ module.exports = {
   },
   plugins: ['babel', 'react', 'prettier'],
   rules: {
+    'consistent-return': 'off',
     'linebreak-style': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
