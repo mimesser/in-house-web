@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { withRouter } from 'next/router';
-import { Venue, VenueList, Page } from '../components/organisms';
 
-import { Loader } from '../components/atoms';
 import {
   loadRates,
   loadPosts,
@@ -13,8 +11,11 @@ import {
   selectLoadingVenues,
   selectSelectedVenue,
 } from '../store/venues';
-import { DEMO_VENUES_ID } from '../store/demo/data';
 import { selectAuthorizedBetaUser, loadAggregateData } from '../store/aggregate';
+import { DEMO_VENUES_ID } from '../store/demo/data';
+
+import { Loader } from '../components/atoms';
+import { Venue, VenueList, Page } from '../components/organisms';
 
 class Houses extends Component {
   constructor(props) {
@@ -96,7 +97,7 @@ class Houses extends Component {
   };
 
   render() {
-    // TODO split and render separately?
+    // @TODO split and render separately?
     let View = this.houseId && !this.inDemoVenues ? Venue : VenueList;
     // if (!this.props.isAuthorizedBetaUser) {
     //   View = () => <BetaChallange showPopup onClose={this.onClose} />;
