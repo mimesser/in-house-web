@@ -10,10 +10,10 @@ Sentry.init({
   dsn: SENTRY_DSN || 'https://e712c44468354a0d9e81701b28d9c2c2@o993132.ingest.sentry.io/5951040',
   // Adjust this value in production, or use tracesSampler for greater control
   tracesSampleRate: 1.0,
-  environment: process.env.SENTRY_ENVIRONMENT || 'development',
-  release: `in-house@${process.env.SENTRY_RELEASE}`,
+  environment: process.env.NEXT_PUBLIC_SENTRY_ENVIRONMENT || 'development',
+  release: `in-house@${process.env.NEXT_PUBLIC_NPM_PACKAGE_VERSION}`,
   maxBreadcrumbs: 50,
-  debug: process.env.NODE_ENV !== 'production',
+  debug: process.env.NEXT_PUBLIC_ENVIRONMENT !== 'production',
   denyUrls: [
     // Keep this list to an absolute minimum!
     // It's better to use Sentry's built-in integration for error reporting
