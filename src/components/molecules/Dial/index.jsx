@@ -4,7 +4,7 @@ import isNumber from 'lodash/isNumber';
 
 import { CircleSlider, NumberLarge, NumberSmall, Icon } from '../../atoms';
 import { fontSize, font, palette } from '../../../style';
-import { pluralFormatRatings } from '../../../utils/format';
+import { pluralFormatVote } from '../../../utils/format';
 
 const FONT_RATIO = 3.6;
 
@@ -57,7 +57,7 @@ const BaseSlider = ({ value: initialValue, voteCount, valueColor, ...sliderProps
     <CircleSlider {...sliderProps} onChanging={setValue} initialValue={initialValue}>
       <Value size={size} padd={padd} color={valueColor}>
         {renderValue(value, decimal)}
-        {voteCount && <Votes pluralFormat={pluralFormatRatings} count={voteCount} />}
+        {voteCount && <Votes pluralFormat={pluralFormatVote} count={voteCount} />}
       </Value>
     </CircleSlider>
   );
