@@ -60,7 +60,7 @@ const Wrapper = styled.div`
                                 supported by Chrome, Edge, Opera and Firefox */
 `;
 
-export const Votes = styled(({ count, iconSize = 1, userRate, pluralFormat,...rest }) => (
+export const Votes = styled(({ count, iconSize = 1, userRate, pluralFormat, ...rest }) => (
   <NumberSmall {...rest}>
     <Icon icon="users" size={iconSize} /> <span className="count">{count || 0}</span>{' '}
     {userRate ? (
@@ -90,9 +90,9 @@ export const Votes = styled(({ count, iconSize = 1, userRate, pluralFormat,...re
   }
   visibility: ${({ expanded }) => (expanded === true ? 'hidden' : 'visible')};
 `;
-Votes.defaultProps = () => {
-  pluralFormat:pluralFormatRatings
-}
+Votes.defaultProps = () => ({
+  pluralFormat: pluralFormatRatings,
+});
 const SlidingValueWrapper = styled.div`
   width: 70px;
   height: 54px;
@@ -247,7 +247,12 @@ const BaseRateSlider = ({
         onTouchEnd={expanded && !inProgress ? () => onSlideEnd(userValue) : undefined}
       >
         <Title>{title}</Title>
-        <Votes count={voteCount} userRate={userRate} expanded={expanded} pluralFormat={pluralFormatRatings}/>
+        <Votes
+          count={voteCount}
+          userRate={userRate}
+          expanded={expanded}
+          pluralFormat={pluralFormatRatings}
+        />
 
         <SlidingValueWrapper expanded={expanded}>
           {(expanded || (!isNil(userValue) && !isNil(value))) && (
