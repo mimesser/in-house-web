@@ -7,7 +7,7 @@ import { clearVenuesData } from '../venues';
 
 let mockAdapter;
 
-const demoMiddleware = store => next => action => {
+const demoMiddleware = (store) => (next) => (action) => {
   if (action.type === actionTypes.TURN_DEMO_ON) {
     mockAdapter = new MockAdapter(api, { delayResponse: RESPONSE_DELAY });
     configureMockAdapterRoutes(mockAdapter, store);

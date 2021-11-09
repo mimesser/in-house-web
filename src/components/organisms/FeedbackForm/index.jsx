@@ -17,10 +17,7 @@ import { postFeedback, clearFeedback } from '../../../store/feedback';
 import { isEmailValid } from '../../../utils/index';
 import { feedbackPageOptions } from '../../../constants';
 
-const subjectOptions = [
-  '-- select subject --',
-  ...feedbackPageOptions
-].map((value) => ({
+const subjectOptions = ['-- select subject --', ...feedbackPageOptions].map((value) => ({
   label: value,
   value,
 }));

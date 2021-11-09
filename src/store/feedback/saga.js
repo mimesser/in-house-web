@@ -3,7 +3,13 @@ import Router from 'next/router';
 
 import api from '../../api';
 import { isEmailValid } from '../../utils/validation';
-import { setFeedbackError, setFeedbackLoading, setFeedbackSuccess, actionTypes, clearFeedback } from './actions';
+import {
+  setFeedbackError,
+  setFeedbackLoading,
+  setFeedbackSuccess,
+  actionTypes,
+  clearFeedback,
+} from './actions';
 
 const CONFIRMATION_DELAY = 2000;
 
@@ -30,7 +36,11 @@ export function* postFeedback({ payload: { subject, message, email, redirectLink
       Router.back();
     }
   } catch (e) {
-    yield put(setFeedbackError(`Warning: Error while trying to sending ${message} [${subject}] to: ${email}: ${e}`));
+    yield put(
+      setFeedbackError(
+        `Warning: Error while trying to sending ${message} [${subject}] to: ${email}: ${e}`,
+      ),
+    );
   }
 }
 

@@ -16,7 +16,12 @@ import {
   togglePostFlag,
 } from '../../../store/venues';
 import { Loader, Button, HelpTip, Card, Icon, NumberLarge, NumberSmall } from '../../atoms';
-import { formatDateTime, formatMovementURL, formatRating, pluralFormatVote } from '../../../utils/format';
+import {
+  formatDateTime,
+  formatMovementURL,
+  formatRating,
+  pluralFormatVote,
+} from '../../../utils/format';
 import { ItemText, ItemTitle, ItemTime, Main, TabLayout } from './tabStyle';
 import { spacing, appColors, palette } from '../../../style';
 import PrivateShare from './PrivateShare';
@@ -310,10 +315,14 @@ const Post = ({
           <CellHeader color={upvoted || downvoted ? appColors.gray4 : appColors.gray6}>
             <ItemTime dateTime={created}>{formatDateTime(created)}</ItemTime>
             <ShareWrap>
-              {!selected && <Votes pluralFormat={pluralFormatVote} count={votesCount} userRate={upvoted || downvoted} />}
-              {(upvoted || downvoted) && (
-                <NumberLarge>{formatRating(optimisticVoteRating)}</NumberLarge>
+              {!selected && (
+                <Votes
+                  pluralFormat={pluralFormatVote}
+                  count={voteCount}
+                  userRate={upvoted || downvoted}
+                />
               )}
+              {(upvoted || downvoted) && <NumberLarge>{formatRating(voteRating)}</NumberLarge>}
               {!selected && <PrivateShareButton id={id} type="post" color={appColors.gray6} />}
             </ShareWrap>
           </CellHeader>

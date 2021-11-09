@@ -1,5 +1,5 @@
-import { actionTypes } from './actions';
 import { HYDRATE } from 'next-redux-wrapper';
+import { actionTypes } from './actions';
 /**
  * TODO: wrongAnswer should not be stored on the global aggregate object.
  * Added undefined state to show: true=failed, false=success, undefined=unknown/loading
