@@ -489,7 +489,7 @@ const Mink = ({
               {myVote ? (
                 <RatingWrap>
                   /
-                  {/* TODO: Check if pluraFormat is needed for this and if it should have the same behaviour as PostTab and RateTab */}
+                  {/* @TODO: Check if pluralFormat is needed for this and if it should have the same behaviour as PostTab and RateTab */}
                   <VoteRating hideRate={false} topMink={topMink}>
                     <SlidingValue
                       fontSize={fontSize.md}
