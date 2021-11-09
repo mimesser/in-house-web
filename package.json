@@ -7,13 +7,14 @@
         "build:ci": "cross-env npm run clean && npm run build && copyfiles -a \"src/.next/**/*\" \"src/static/**/*\" \"src/public/**/*\" server/*.* package.json package-lock.json next.config.js build",
         "build": "cross-env next build",
         "clean": "cross-env rimraf ./build",
+        "clean-sentry-config": "node .sentryclirc.resetter.js",
         "coverage": "npm test -- --coverage",
         "lint": "eslint --ext .js src server/index.js",
         "lint-fix": "eslint --fix --ext .js src && eslint --fix server/index.js && prettier --config .prettierrc.js --write src",
         "next:dev": "next dev",
         "postcoverage": "open-cli coverage/lcov-report/index.html",
         "server:watch": "nodemon server/index.js",
-        "start:dev": "npm run lint-fix && npm run start:prod",
+        "start:dev": "npm run lint-fix && node .sentryclirc.enhancer.js && npm run start:prod",
         "start:prod": "npm run clean && npm run build && npm run server:watch",
         "start": "npm run start:prod",
         "storybook": "start-storybook -p 9001 -c config/storybook",
@@ -49,7 +50,7 @@
         "react-ga": "^3.3.0",
         "react-helmet": "^6.0.0",
         "react-hotjar": "^3.0.1",
-        "react-popper-tooltip": "^4.3.0",
+        "react-popper-tooltip": "^3.1.1",
         "react-redux": "^7.2.5",
         "react-select": "^5.0.0",
         "react-sticky": "^6.0.3",
@@ -91,7 +92,7 @@
     },
     "husky": {
         "hooks": {
-            "pre-commit": "lint-staged"
+            "pre-commit": "npm run clean-sentry-config && lint-staged"
         }
     },
     "lint-staged": {
