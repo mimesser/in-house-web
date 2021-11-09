@@ -1,4 +1,4 @@
-import { call, select, put, delay, all } from 'redux-saga/effects';
+import { call, select, put, putResolve, delay, all } from 'redux-saga/effects';
 import api, { isForbidden } from '../../../api';
 import { handleForbiddenResponse } from './handleForbiddenResponse';
 import {
@@ -40,7 +40,7 @@ export function* voteMink({ payload: { vote, minkId, skipConfirmation = false } 
           }),
         );
         yield delay(CONFIRMATION_INTERVAL);
-        yield put(showVoteMinkConfirmation(undefined));
+        yield putResolve(showVoteMinkConfirmation(undefined));
       }
 
       yield put(setVenueMinks(updatedMinks));

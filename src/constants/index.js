@@ -6,4 +6,4 @@ export const feedbackPageOptions = [
   'notify me when live',
   'user feedback',
   'general question',
-]
+];

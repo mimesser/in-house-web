@@ -4,7 +4,12 @@ import * as Sentry from '@sentry/nextjs';
 
 import api, { isUnauthorized, setAuthorization, clearAuthorization } from '../../api';
 
-import { actionTypes, loadAggregateDataSuccess, checkBetaAuthFailure, checkBetaAuthSuccess } from './actions';
+import {
+  actionTypes,
+  loadAggregateDataSuccess,
+  checkBetaAuthFailure,
+  checkBetaAuthSuccess,
+} from './actions';
 import { selectReady } from './selectors';
 import { withErrorReporter } from '../error/saga';
 
@@ -30,7 +35,10 @@ export function* loadAggregateData({ meta: { isServer, pathname } }) {
     if (!isServer) setAuthorization(data.userId);
     // TODO: currently only landing pages should be shown
     // const pathNotChanged = pathname === Router.router.pathname;
-    // if (isServer && pathNotChanged && REDIRECT_FORMER_INSIDER_FROM.includes(pathname) && data.isFormerInsider) {
+    // if (isServer &
+    //  & pathNotChanged &
+    //  & REDIRECT_FORMER_INSIDER_FROM.includes(pathname) &
+    //  & data.isFormerInsider) {
     //   yield delay(REDIRECT_DELAY);
     //   Router.push('/houses');
     // }

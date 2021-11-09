@@ -5,5 +5,5 @@ import { DEMO_VENUE_ID } from './data';
 
 export const selectInDemo = createSelector(
   selectSelectedVenue,
-  selectedVenue => selectedVenue && selectedVenue.id === DEMO_VENUE_ID,
+  (selectedVenue) => selectedVenue && selectedVenue.id === DEMO_VENUE_ID,
 );

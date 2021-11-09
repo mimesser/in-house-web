@@ -26,14 +26,8 @@ export const reducer = (state = initialState, action) => {
   }
 };
 
-const selectHelp = state => state.help;
+const selectHelp = (state) => state.help;
 
-export const selectShowHelp = createSelector(
-  selectHelp,
-  ({ showHelp }) => showHelp,
-);
+export const selectShowHelp = createSelector(selectHelp, ({ showHelp }) => showHelp);
 
-export const selectHasTips = createSelector(
-  selectHelp,
-  ({ tipCounter }) => tipCounter > 0,
-);
+export const selectHasTips = createSelector(selectHelp, ({ tipCounter }) => tipCounter > 0);

@@ -5,7 +5,12 @@ import { waitTillReady } from '../../aggregate/saga';
 import api, { setAuthorization } from '../../../api';
 import { loadVenuesDataSuccess, setSelectedVenue, loadPollsDataSuccess } from '../actions';
 import { selectVenues, selectPolls } from '../selectors';
-import { selectIndustriesMap, selectAggregate, loadAggregateData, loadAggregateDataSuccess } from '../../aggregate';
+import {
+  selectIndustriesMap,
+  selectAggregate,
+  loadAggregateData,
+  loadAggregateDataSuccess,
+} from '../../aggregate';
 
 import { turnDemoOn, turnDemoOff } from '../../demo';
 import { DEMO_VENUE, DEMO_VENUES_ID } from '../../demo/data';
@@ -63,7 +68,9 @@ const alreadyInDemo = false;
 let cacheAggregate;
 
 export function* initVenuesPage({ payload: { idToSelect } }) {
-  const inDemo = typeof idToSelect !== 'undefined' && (idToSelect === DEMO_VENUE.id || idToSelect === DEMO_VENUES_ID);
+  const inDemo =
+    typeof idToSelect !== 'undefined' &&
+    (idToSelect === DEMO_VENUE.id || idToSelect === DEMO_VENUES_ID);
   if (inDemo) {
     if (idToSelect === DEMO_VENUES_ID) {
       yield waitTillReady();
