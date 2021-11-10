@@ -6,12 +6,12 @@ export const actionTypes = {
   CLEAR_FEEDBACK: 'CLEAR_FEEDBACK',
 };
 
-export const postFeedback = payload => ({
+export const postFeedback = (payload) => ({
   type: actionTypes.POST_FEEDBACK,
   payload,
 });
 
-export const setFeedbackError = error => ({
+export const setFeedbackError = (error) => ({
   type: actionTypes.SET_FEEDBACK_ERROR,
   payload: { error },
 });

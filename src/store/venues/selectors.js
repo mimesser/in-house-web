@@ -9,7 +9,10 @@ export const selectPolls = createSelector(selectVenueState, ({ polls }) => polls
 
 export const selectLoadingPolls = createSelector(selectPolls, (polls) => !polls);
 
-export const selectSelectedPoll = createSelector(selectVenueState, ({ selectedPoll }) => selectedPoll);
+export const selectSelectedPoll = createSelector(
+  selectVenueState,
+  ({ selectedPoll }) => selectedPoll,
+);
 
 export const selectLoading = createSelector(selectVenueState, ({ loading }) => loading);
 
@@ -17,11 +20,14 @@ export const selectVenues = createSelector(selectVenueState, ({ list }) => list)
 
 export const selectLoadingVenues = createSelector(selectVenues, (list) => !list);
 
-export const selectSelectedVenue = createSelector(selectVenueState, ({ selectedVenue }) => selectedVenue);
+export const selectSelectedVenue = createSelector(
+  selectVenueState,
+  ({ selectedVenue }) => selectedVenue,
+);
 
 export const selectInsiderChallengeForm = createSelector(
   selectSelectedVenue,
-  ({ insiderChallengeForm }) => insiderChallengeForm,
+  (selectedVenue) => selectedVenue?.insiderChallengeForm,
 );
 
 export const selectSkipWelcome = createSelector(
@@ -32,12 +38,13 @@ export const selectSkipWelcome = createSelector(
 export const selectIsActiveInsider = createSelector(
   selectInsiderVenueIds,
   selectSelectedVenue,
-  (insiderVenueIds, selectedVenue) => insiderVenueIds && selectedVenue && insiderVenueIds.includes(selectedVenue.id),
+  (insiderVenueIds, selectedVenue) =>
+    insiderVenueIds && selectedVenue && insiderVenueIds.includes(selectedVenue.id),
 );
 
 export const selectSelectedVenueMinks = createSelector(
   selectSelectedVenue,
-  (selectedVenue) => selectedVenue && selectedVenue.minks,
+  (selectedVenue) => selectedVenue?.minks || [],
 );
 
 export const selectSelectedVenueTopMinkId = createSelector(
@@ -48,7 +55,9 @@ export const selectSelectedVenueTopMinkId = createSelector(
 export const selectSelectedMink = createSelector(
   selectSelectedVenue,
   (selectedVenue) =>
-    selectedVenue && selectedVenue.minks && selectedVenue.minks.find((m) => m.id === selectedVenue.selectedMinkId),
+    selectedVenue &&
+    selectedVenue.minks &&
+    selectedVenue.minks.find((m) => m.id === selectedVenue.selectedMinkId),
 );
 
 export const selectVoteMinkConfirmation = createSelector(
@@ -101,7 +110,8 @@ export const selectFilteredTags = createSelector(
     selectedVenue.rates &&
     selectedVenue.rates.filter(
       (t) =>
-        (selectedVenue.selectedCategory && t.rateTagCategoryId === selectedVenue.selectedCategory.id) ||
+        (selectedVenue.selectedCategory &&
+          t.rateTagCategoryId === selectedVenue.selectedCategory.id) ||
         !selectedVenue.selectedCategory,
     ),
 );
@@ -119,7 +129,9 @@ export const selectRateTagConfirmation = createSelector(
 export const selectSelectedPost = createSelector(
   selectSelectedVenue,
   (selectedVenue) =>
-    selectedVenue && selectedVenue.posts && selectedVenue.posts.find((m) => m.id === selectedVenue.selectedPostId),
+    selectedVenue &&
+    selectedVenue.posts &&
+    selectedVenue.posts.find((m) => m.id === selectedVenue.selectedPostId),
 );
 
 export const selectAnyTabItemSelected = createSelector(
@@ -138,7 +150,10 @@ export const selectPostFlagError = createSelector(
   (selectedVenue) => selectedVenue && selectedVenue.message,
 );
 
-export const selectPrivateShareItem = createSelector(selectVenueState, ({ privateShareItem }) => privateShareItem);
+export const selectPrivateShareItem = createSelector(
+  selectVenueState,
+  ({ privateShareItem }) => privateShareItem,
+);
 
 export const selectPrivateShareRecipientError = createSelector(
   selectVenueState,
