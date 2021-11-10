@@ -2,13 +2,20 @@
 
 ## Global dependencies and tools
 Node.js and npm https://nodejs.org/en/
-  
+You might want to use *nvm* for managing node/npm versions: 
+Installing using curl: `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash`
+Installing using wget: `wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash`
+
+## Ensure you're using a compatible node/npm version
+`nvm use`
+
 ## Install dependencies
 `npm install`
 
-## Create a .env file in the root project folder and add the following line:
+## Create a .env.local file in the root project folder and add the following lines:
 `
-API_URL=https://ih-dev-api.azurewebsites.net/api
+ENV=localdevelopment
+SENTRY_TOKEN=PLEASE_ASK_FOR_THE_TOKEN
 `
 
 ## Building project 
@@ -16,13 +23,12 @@ API_URL=https://ih-dev-api.azurewebsites.net/api
 
 ## Running locally
 Start local web server in dev mode (with hot reloading) pointing to the staging back-end in dev environment   
-`npm run next:dev`   
+`npm run start:dev`   
 
-## Running tests
-Our test framework is Jest https://jestjs.io/  
-Run tests once: `npm run test`  
-Run tests in watch mode: `npm run test:watch`  
-Get coverage: `npm run coverage`  
+## Work In Progress
+
+## Testing
+...
 
 ## Storybook
 Useful for rapid components development/showcase but not only https://storybook.js.org/  
