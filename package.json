@@ -7,7 +7,7 @@
         "build:ci": "cross-env npm run clean && npm run build && copyfiles -a \"src/.next/**/*\" \"src/static/**/*\" \"src/public/**/*\" server/*.* package.json package-lock.json next.config.js build",
         "build": "cross-env next build",
         "clean": "cross-env rimraf ./build",
-        "clean-sentry-config": "node .sentryclirc.resetter.js",
+        "clean-sentry-config": "node .sentryclirc.resetter.js && git add .sentryclirc",
         "coverage": "npm test -- --coverage",
         "lint": "eslint --ext .js src server/index.js",
         "lint-fix": "eslint --fix --ext .js src && eslint --fix server/index.js && prettier --config .prettierrc.js --write src",
