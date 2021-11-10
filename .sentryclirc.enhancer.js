@@ -15,7 +15,7 @@ try {
 
     if (!env) {
       console.log('Cannot find ENV variable with "localdevelopment"-value in .env.local');
-      return 2;
+      return 1;
     }
 
     try {
@@ -27,12 +27,12 @@ try {
     } catch (err) {
       console.log("Whoopsie, couldn't attach sentry token to .sentryclirc!");
       console.log(err);
-      return 3;
+      return 1;
     }
   });
 } catch (err) {
   console.log(
     "Couldn't read .env.local ... does it exist? You'll need it with the valid SENTRY_TOKEN entry",
   );
-  return 4;
+  return 1;
 }
