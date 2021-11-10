@@ -11,7 +11,6 @@ export const localStorageAccessor = {
 
       return defaultValue;
     } finally {
-      if (!isNil(value)) console.log(JSON.parse(value));
       value = isNil(value) ? defaultValue : JSON.parse(value);
     }
 
