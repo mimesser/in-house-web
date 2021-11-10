@@ -6,7 +6,7 @@ export const fontFamily = {
   bold: 'HelveticaLTWXX-Bold',
 };
 
-const useFamily = f => `
+const useFamily = (f) => `
   font-family: ${f}, Helvetica, Sans-Serif;
   font-weight: 300;
 `;

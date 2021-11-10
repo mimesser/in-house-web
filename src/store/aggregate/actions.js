@@ -23,11 +23,20 @@ export function loadAggregateDataSuccess(data) {
 }
 
 export const addInsiderVenue = (id) => ({ type: actionTypes.ADD_INSIDER_VENUE, payload: { id } });
-export const clearInsiderVenue = (id) => ({ type: actionTypes.CLEAR_INSIDER_VENUE, payload: { id } });
+export const clearInsiderVenue = (id) => ({
+  type: actionTypes.CLEAR_INSIDER_VENUE,
+  payload: { id },
+});
 export const acceptTerms = () => ({ type: actionTypes.ACCEPT_TERMS });
 export const termsAccepted = () => ({ type: actionTypes.TERMS_ACCEPTED });
 
-export const checkBetaAuth = (password) => ({ type: actionTypes.BETA_AUTHORIZE, payload: { password } });
+export const checkBetaAuth = (password) => ({
+  type: actionTypes.BETA_AUTHORIZE,
+  payload: { password },
+});
 export const checkBetaAuthSuccess = () => ({ type: actionTypes.BETA_AUTHORIZE_SUCCESS });
 export const performBetaAuthRedirect = () => ({ type: actionTypes.BETA_AUTHORIZE_REDIRECT });
-export const checkBetaAuthFailure = (password) => ({ type: actionTypes.BETA_AUTHORIZE_FAILURE, payload: { password } });
+export const checkBetaAuthFailure = (password) => ({
+  type: actionTypes.BETA_AUTHORIZE_FAILURE,
+  payload: { password },
+});

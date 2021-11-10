@@ -5,7 +5,10 @@ const Router = require('@koa/router');
 const slow = require('koa-slow');
 
 const port = process.env.PORT || 3000;
-const app = nextApp({ dir: './src', dev: process.env.NODE_ENV === 'locale' });
+const app = nextApp({
+  dir: '.',
+  dev: (process.env.NODE_ENV || 'production').toLowerCase() === 'development',
+});
 const handle = app.getRequestHandler();
 
 app

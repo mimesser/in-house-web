@@ -252,8 +252,9 @@ export const upvotePost = (postId) => ({
   payload: { vote: 1, postId },
 });
 
-export const togglePostFlag = () => ({
+export const togglePostFlag = ({ wasVotedByMe }) => ({
   type: actionTypes.TOGGLE_POST_FLAG,
+  payload: { wasVotedByMe },
 });
 
 export const toggleFlagError = (errorMessage) => ({
@@ -261,8 +262,9 @@ export const toggleFlagError = (errorMessage) => ({
   payload: { message: errorMessage },
 });
 
-export const toggleMinkFlag = () => ({
+export const toggleMinkFlag = ({ wasVotedByMe }) => ({
   type: actionTypes.TOGGLE_MINK_FLAG,
+  payload: { wasVotedByMe },
 });
 
 export const downvotePost = (postId) => ({

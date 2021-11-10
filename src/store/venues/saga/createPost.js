@@ -7,7 +7,9 @@ import { handleForbiddenResponse } from './handleForbiddenResponse';
 import { upvotePost } from '..';
 import { formatMovementURL } from '../../../utils/format';
 
-export function* createPost({ payload: { id, name, title, image, message: text, venueType = 'houses', lite } }) {
+export function* createPost({
+  payload: { id, name, title, image, message: text, venueType = 'houses', lite },
+}) {
   try {
     let imageUrl;
     if (image) {
@@ -19,7 +21,11 @@ export function* createPost({ payload: { id, name, title, image, message: text, 
       imageUrl = response.url;
     }
 
-    const { data: post } = yield call(api.post, `/venues/${id}/feedback`, { title, text, imageUrl });
+    const { data: post } = yield call(api.post, `/venues/${id}/feedback`, {
+      title,
+      text,
+      imageUrl,
+    });
     try {
       yield call(api.post, `venues/${id}/feedback/${post.id}/vote`, { vote: 1 });
     } catch (e) {
