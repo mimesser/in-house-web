@@ -66,7 +66,8 @@ export default [
     created,
     venueId: VENUE_ID,
     title: 'maggie is the best!',
-    text: 'when someone works this hard with such great positivity and energy, why aren’t they considered for ceo?',
+    text:
+      'when someone works this hard with such great positivity and energy, why aren’t they considered for ceo?',
     voteCount: 18,
     voteRating: 8.9,
     myVote: null,

@@ -12,15 +12,24 @@ export const selectIndustriesMap = createSelector(
   (industries) => industries && keyBy(industries, (i) => i.id),
 );
 
-export const selectInsiderVenueIds = createSelector(selectAggregate, ({ insiderVenueIds }) => insiderVenueIds);
+export const selectInsiderVenueIds = createSelector(
+  selectAggregate,
+  ({ insiderVenueIds }) => insiderVenueIds,
+);
 
-export const selectAcceptedTerms = createSelector(selectAggregate, ({ isTermsAccepted }) => isTermsAccepted);
+export const selectAcceptedTerms = createSelector(
+  selectAggregate,
+  ({ isTermsAccepted }) => isTermsAccepted,
+);
 
 export const selectAuthorizedBetaUser = createSelector(
   selectAggregate,
   ({ isAuthorizedBetaUser }) => isAuthorizedBetaUser || false,
 );
-export const selectBetaWrongAnswer = createSelector(selectAggregate, ({ wrongAnswer }) => wrongAnswer);
+export const selectBetaWrongAnswer = createSelector(
+  selectAggregate,
+  ({ wrongAnswer }) => wrongAnswer,
+);
 
 export const selectEsgCategories = createSelector(selectAggregate, ({ rateTagGroups }) => {
   const item = rateTagGroups && rateTagGroups.filter((object) => object.name === 'E.S.G');
