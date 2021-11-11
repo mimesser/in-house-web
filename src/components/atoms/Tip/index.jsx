@@ -1,19 +1,12 @@
 import React, { memo } from 'react';
 import styled from 'styled-components';
-import TooltipTrigger from 'react-popper-tooltip';
-
+import { usePopperTooltip } from 'react-popper-tooltip';
+import 'react-popper-tooltip/dist/styles.css';
 import { palette } from '../../../style';
 
-const Trigger = (children, triggerElementProps) => ({ triggerRef, getTriggerProps }) => {
-  if (triggerElementProps && triggerElementProps.style) {
-    triggerElementProps.style = { ...triggerElementProps.style, ...children.props.style };
-  }
-
+const Trigger = (children, setTriggerRef) => {
   return React.cloneElement(children, {
-    ...triggerElementProps,
-    ...getTriggerProps({
-      ref: triggerRef,
-    }),
+    ref: setTriggerRef,
   });
 };
 
@@ -29,14 +22,14 @@ const Content = styled.div`
   border-radius: 2px;
   display: flex;
   flex-direction: column;
-  margin: 1rem;
+  /* margin: 1rem; */
 `;
 
 const Arrow = styled.div`
   width: 0;
   height: 0;
-  position: absolute;
-
+  position:absolute;
+ 
   &[data-placement^='bottom'] {
     border-left: 1rem solid transparent;
     border-right: 1rem solid transparent;
@@ -70,29 +63,38 @@ const Arrow = styled.div`
   // }
 `;
 
-const Tooltip = (tooltip, hideArrow) => ({
+const Tooltip = ({
+  placement,
+  tooltip,
+  hideArrow,
   arrowRef,
-  tooltipRef,
   getArrowProps,
   getTooltipProps,
-  placement,
-}) => (
-  <Container
-    {...getTooltipProps({
-      ref: tooltipRef,
-    })}
-  >
-    {!hideArrow && (
-      <Arrow
-        {...getArrowProps({
-          'data-placement': placement,
-          ref: arrowRef,
-        })}
-      />
-    )}
-    <Content>{tooltip}</Content>
-  </Container>
-);
+  setTooltipRef,
+  visible,
+}) => {
+  return (
+    <>
+      {visible && (
+        <div
+          ref={setTooltipRef}
+          {...getTooltipProps({
+            className: 'tooltip-container',
+          })}
+        >
+          <div>{tooltip}</div>
+
+          <div
+            {...getArrowProps({
+              ref: arrowRef,
+              className: 'tooltip-arrow',
+            })}
+          />
+        </div>
+      )}
+    </>
+  );
+};
 
 // TODO: remove ToolTip component
 // TODO: reconsider this lib after evaluation
@@ -108,8 +110,28 @@ export const setBoundariesElement = (element) => {
   modifiers.preventOverflow.boundariesElement = element;
 };
 
-export const Tip = memo(({ tooltip, children, hideArrow, triggerElementProps, ...props }) => (
-  <TooltipTrigger {...props} tooltip={Tooltip(tooltip, hideArrow)} modifiers={modifiers}>
-    {Trigger(children, triggerElementProps)}
-  </TooltipTrigger>
-));
+export const Tip = memo(
+  ({ tooltip, children, hideArrow, placement, triggerElementProps, ...props }) => {
+    const {
+      getArrowProps,
+      getTooltipProps,
+      setTooltipRef,
+      setTriggerRef,
+      visible,
+    } = usePopperTooltip({ placement });
+    return (
+      <>
+        {Trigger(children, setTriggerRef)}
+        <Tooltip
+          {...props}
+          getArrowProps={getArrowProps}
+          getTooltipProps={getTooltipProps}
+          setTooltipRef={setTooltipRef}
+          visible={visible}
+          tooltip={tooltip}
+          hideArrow={hideArrow}
+        />
+      </>
+    );
+  },
+);
