@@ -70,6 +70,8 @@ class Houses extends Component {
     }
     if (
       this.houseId &&
+      (prevProps.selectedVenue === undefined ||
+      router.query.tab !== prevProps.router.query.tab )||
       ((typeof prevProps.router.query?.time !== 'undefined' &&
         router.query?.time !== prevProps.router.query?.time) ||
         !prevProps.router.query?.id) &&
