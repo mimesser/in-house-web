@@ -244,13 +244,13 @@ const Post = ({
   const [selected, setSelected] = useState(selectedPost && selectedPost.id === id);
   const [showFullImage, setShowFullImage] = useState(false);
 
-  const debouncedUpdatePosts = useDebounce(update, 3000, { trailing: true });
+  const debouncedUpdatePosts = useDebounce(()=>update, 3000, { trailing: true });
 
   const close = () => setShowFullImage(false);
   const open = () => setShowFullImage(true);
 
   const select = useCallback(() => setSelectedPost(id), [setSelectedPost, id]);
-  const deselect = useCallback(() => setSelectedPost(undefined), [setSelectedPost]);
+  const deselect = useCallback(() => setSelectedPost, [setSelectedPost]);
   const votePost = useCallback(
     (vote, skipConfirmation) => {
       if (+vote === 1) upvotePost(id);
