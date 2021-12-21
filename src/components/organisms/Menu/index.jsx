@@ -23,7 +23,9 @@ const CloseIcon = styled(Icon).attrs(() => ({
 export const menuOptions = [
   { href: '/houses', label: 'see workplaces' },
   { href: '/list-house', label: 'list workplace' },
-  { href: '/about', label: 'about' },
+  { href: '/about', label: 'about us' },
+  { href: '/terms', label: 'join us' },
+  { href: '/faqs', label: 'faq' },
   { href: '/feedback', label: 'contact us' },
 ];
 
