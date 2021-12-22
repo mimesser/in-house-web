@@ -30,7 +30,7 @@
         "@koa/router": "^9.0.1",
         "@next/eslint-plugin-next": "^11.1.2",
         "@sentry/nextjs": "^6.14.1",
-        "axios": "0.19.2",
+        "axios": "^0.24.0",
         "axios-mock-adapter": "1.18.1",
         "babel-plugin-styled-components": "^1.13.2",
         "copyfiles": "^2.4.1",
