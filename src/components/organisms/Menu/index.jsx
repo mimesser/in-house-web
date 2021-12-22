@@ -6,15 +6,21 @@ import { Transition } from 'react-transition-group';
 
 import { Icon, ClearButton } from '../../atoms';
 
-import { spacing, fontSize, font, palette, breakpoints } from '../../../style';
+import { spacing, fontSize, font, palette, breakpoints, themeColors } from '../../../style';
 
-const CloseButton = styled(ClearButton)`
-  margin: ${spacing.xl};
+const CloseButtonWrapper = styled.div`
+  display: flex;
+  justify-content: end;
+  padding: 16px;
 `;
+const CloseButton = styled(ClearButton)``;
 
 const CloseIcon = styled(Icon).attrs(() => ({
   icon: 'close',
+  color: '#BCBCBC',
 }))`
+  width: 24px;
+  height: 24px;
   :hover {
     color: ${palette.white};
   }
@@ -59,8 +65,7 @@ const Panel = styled.div`
   z-index: 999;
   height: 100%;
   transition: width ${duration}ms;
-  box-shadow: rgba(0, 0, 0, 0.15) -2px 2px 4px;
-  background-color: ${palette.black};
+  background-color: ${themeColors.primary};
   white-space: nowrap;
   overflow: hidden;
   ${({ state }) => sidebarTransitionStyles[state]};
@@ -78,9 +83,8 @@ const A = styled.a`
   text-decoration: none;
   cursor: pointer;
   ${font.bold};
-  font-size: ${fontSize.md};
-  padding: ${spacing.sm} 0 ${spacing.sm} ${spacing.xxxl};
-  margin-top: ${spacing.xxl};
+  font-size: ${fontSize.sm};
+  padding: ${spacing.xl} 0 0 ${spacing.xl};
   display: block;
   &:hover {
     color: ${palette.white};
@@ -99,9 +103,12 @@ export const Menu = withRouter(({ isOpen, router, closeMenu }) => {
       <Transition in={isOpen} timeout={duration}>
         {(state) => (
           <Panel state={state}>
-            <CloseButton onClick={closeMenu}>
-              <CloseIcon />
-            </CloseButton>
+            <CloseButtonWrapper>
+              <CloseButton onClick={closeMenu}>
+                <CloseIcon />
+              </CloseButton>
+            </CloseButtonWrapper>
+
             <MenuItems>
               {menuOptions.map((route) => (
                 <li key={route.href}>
