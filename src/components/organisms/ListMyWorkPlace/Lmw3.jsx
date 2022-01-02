@@ -1,7 +1,9 @@
 import styled from "styled-components"
+import Router from 'next/router';
+
 import { Button } from "../../atoms/Button"
 import { H1 } from "../../atoms"
-import { fontSize, lineHeight } from '../../../style';
+import { fontSize, lineHeight, breakpoints } from '../../../style';
 
 const Wrapper = styled.div`
   background: #333333;
@@ -25,6 +27,9 @@ const CloseButton = styled(Button)`
 const GotItButton = styled(Button)`
   background: #434343;
   justify-content: space-between;
+  @media (min-width: ${breakpoints.md}) {
+    width:250px;
+  }
 `
 const TextBox = styled.div`
   margin-top:-180px;
@@ -41,7 +46,7 @@ const P = styled.p`
 export const Lmw3 = () => {
   return(
     <Wrapper>
-      <CloseButton onClick={() => ({})} icon="close" />
+      <CloseButton onClick={() => Router.push('/')} icon="close" />
       <TextBox>
         <StyledH1>thank you</StyledH1>
         <P>
@@ -49,7 +54,7 @@ export const Lmw3 = () => {
           we will be able to list your workplace during our beta trial
         </P>
       </TextBox>
-      <GotItButton onClick={() => ({})} wide icon="arrow-right">got it</GotItButton>
+      <GotItButton onClick={() => Router.push('/')} wide icon="arrow-right">got it</GotItButton>
     </Wrapper>
   )
 }
