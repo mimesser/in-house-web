@@ -4,6 +4,13 @@ import api from '../../../api';
 import { setVenueMinks, setVenueLoading } from '../actions';
 import { selectSelectedVenue } from '../selectors';
 
+/**
+ * @description
+ * This Redux Saga function helps to reload venue minks.
+ * @param {string} id is the id of the Venue.
+ * @returns {array} Minks
+ */
+
 export function* reloadVenueMinks(id) {
   // TODO: handle pagination, store total count
   const {
@@ -13,6 +20,11 @@ export function* reloadVenueMinks(id) {
 
   return minks;
 }
+
+/**
+ * @description
+ * This Redux Saga function helps to load venue minks.
+ */
 
 export function* loadVenueMinks() {
   const selectedVenue = yield select(selectSelectedVenue);
