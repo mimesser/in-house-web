@@ -10,6 +10,13 @@ import { loadVenueRateTags } from './loadVenueRateTags';
 const MAX_ATTEMPTS = 5;
 const CONFIRMATION_DELAY = 1000;
 
+/**
+ * @description
+ * This Redux Saga function helps to do post request in order to  answer the mink question.
+ * @param { string } answer Answer is the word that is answer for the mink question.
+ * @returns Nothing
+ */
+
 export function* answerMink({ payload: { answer } }) {
   if (!answer) {
     return;

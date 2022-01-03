@@ -7,6 +7,23 @@ import { reloadInsiderVenueIds } from './reloadInsiderVenueIds';
 import { reloadVenues } from './initVenuesPage';
 import { setLoading } from '../actions';
 
+/**
+ * @description
+ * This Redux Saga function helps to create new venue.
+ * @param {string} name  is the name of the Venue.
+ * @param {string} industry  is the industry of the new venue.
+ * @param {string} industryDesc  is the industry Description of the new venue.
+ * @param {string} country  is the country of the new venue.
+ * @param {string} city  is the city of the new venue.
+ * @param {string} address  is the address of the new venue.
+ * @param {string} zip  is the zip code of the new venue.
+ * @param {string} question  is the question  of the new venue.
+ * @param {string} answer  is the answer  of the new venue.
+ * @param {file} image  is the image file  of new venue.
+ *
+ * @returns Nothing
+ */
+
 export function* createVenue({
   payload: {
     venue: {

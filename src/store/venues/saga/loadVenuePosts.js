@@ -5,6 +5,12 @@ import { setVenuePosts, setVenueLoading } from '../actions';
 import { selectIsActiveInsider, selectSelectedVenue } from '../selectors';
 import { handleForbiddenResponse } from './handleForbiddenResponse';
 
+/**
+ * @description
+ * This Redux Saga function helps to reload venue posts.
+ * @param {string} id is the id of the Venue.
+ */
+
 export function* reloadVenuePosts(id) {
   try {
     // TODO: paging?
@@ -21,6 +27,11 @@ export function* reloadVenuePosts(id) {
     throw e;
   }
 }
+
+/**
+ * @description
+ * This Redux Saga function helps to load venue posts.
+ */
 
 export function* loadVenuePosts() {
   const selectedVenue = yield select(selectSelectedVenue);

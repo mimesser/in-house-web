@@ -7,6 +7,20 @@ import { handleForbiddenResponse } from './handleForbiddenResponse';
 import { upvotePost } from '..';
 import { formatMovementURL } from '../../../utils/format';
 
+/**
+ * @description
+ * This Redux Saga function helps to create new post.
+ * @param {string} id  is the id of Venue.
+ * @param {string} name  is the name of Venue.
+ * @param {string} title  is the title of the new post.
+ * @param {file} image  is the image of the new post.
+ * @param {string} message  is the message of the new post.
+ * @param {string} venueType  is the type of the venue.
+ * @param {boolean} lite  is the boolean value of Venue.
+ *
+ * @returns Nothing
+ */
+
 export function* createPost({
   payload: { id, name, title, image, message: text, venueType = 'houses', lite },
 }) {
