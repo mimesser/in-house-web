@@ -2,22 +2,39 @@ import React from 'react';
 import styled from 'styled-components';
 import { storiesOf } from '@storybook/react';
 
-import { Tip } from '.';
+import { Tip } from './index';
 
-const Container = styled.div``;
+const Container = styled.div`
+  padding-top: ${(props) => props.paddingTop};
+  padding-left: ${(props) => props.paddingLeft};
+`;
 
-storiesOf('Tip', module).add('Button', () => (
-  <Container>
-    <Tip tooltip="asdasdasda!" placement="bottom">
-      <span>asdasdasda</span>
-    </Tip>
-    <Tip tooltip="Hello, World!">
-      <button>foo</button>
-    </Tip>
-    <div>
-      <Tip tooltip="Yoo!">
-        <div>dasdasda</div>
+storiesOf('Tip', module)
+  .add('Top tooltip', () => (
+    <Container paddingTop="50px">
+      <Tip tooltip="asdasdasda!" placement="top-start">
+        <button>Top tooltip</button>
       </Tip>
-    </div>
-  </Container>
-));
+    </Container>
+  ))
+  .add('Bottom tooltip', () => (
+    <Container>
+      <Tip tooltip="asdasdasda!" placement="bottom">
+        <button>Bottom tooltip</button>
+      </Tip>
+    </Container>
+  ))
+  .add('Right tooltip', () => (
+    <Container>
+      <Tip tooltip="asdasdasda!" placement="right">
+        <button>Right tooltip</button>
+      </Tip>
+    </Container>
+  ))
+  .add('Left tooltip', () => (
+    <Container paddingLeft="100px">
+      <Tip tooltip="asdasdasda!" placement="left">
+        <button>Left tooltip</button>
+      </Tip>
+    </Container>
+  ));

@@ -7,7 +7,7 @@ import { configureStore } from '../../src/store';
 import { theme } from '../../src/style';
 import { GlobalStyle } from '../../src/components/GlobalStyle';
 const store = configureStore();
-const req = require.context('../../src/', true, /stories\.js$/);
+const req = require.context('../../src/', true, /stories\.jsx$/);
 
 function loadStories() {
   req.keys().forEach((filename) => req(filename));
