@@ -6,12 +6,14 @@ import { Textarea, Input, FormGroup } from '../../atoms';
 export const CounterInput = ({
   value,
   onChange,
+  onChangeEvent,
   max,
   multiline,
   subtext,
   marginless,
   error,
   placeholder,
+  parentClassName,
   ...inputProps
 }) => {
   const [tempPlaceholder, setTempPlaceholder] = useState(placeholder);
@@ -19,9 +21,10 @@ export const CounterInput = ({
   const handleChange = useCallback(
     (e) => {
       const { value } = e.currentTarget;
-      onChange(value.substring(0, max));
+      if (onChange) onChange(value.substring(0, max));
+      if (onChangeEvent) onChangeEvent(e);
     },
-    [onChange],
+    [onChange, onChangeEvent],
   );
 
   function handleFocus() {
@@ -35,7 +38,7 @@ export const CounterInput = ({
   const characters = value.length;
 
   return (
-    <FormGroup marginless={marginless}>
+    <FormGroup marginless={marginless} className={parentClassName}>
       <Control
         {...inputProps}
         onChange={handleChange}
