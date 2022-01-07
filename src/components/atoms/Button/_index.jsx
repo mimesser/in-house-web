@@ -33,6 +33,7 @@ const btnTheme = {
 
 const ButtonBase = styled.button`
   min-width: 89px;
+  position: relative;
   padding: ${calcRem(12)} ${calcRem(6)};
   font-size: ${calcRem(16)};
   font-weight: 700;
@@ -41,8 +42,8 @@ const ButtonBase = styled.button`
   transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
   border: none;
   background-color: ${({ variant, disable }) => {
-  return btnTheme[variant][`bg${disable ? 'Disabled' : ''}`];
-}};
+    return btnTheme[variant][`bg${disable ? 'Disabled' : ''}`];
+  }};
   color: ${({ variant, disable }) => btnTheme[variant][`text${disable ? 'Disabled' : ''}`]};
   display: inline-flex;
   justify-content: ${({ noSuffix, prefix }) => (noSuffix && !prefix ? 'center' : 'space-between')};
@@ -51,18 +52,36 @@ const ButtonBase = styled.button`
 
   .btn-children {
     margin: 0 4px;
-    &--prefix {
+    visibility: ${({ loading }) => (loading ? 'hidden' : undefined)};
+    &--prefix, &--suffix {
       position: relative;
-      top: 3px;
       font-weight: 700;
       font-size: ${calcRem(16)};
+      visibility: ${({ loading }) => (loading ? 'hidden' : undefined)};
+    }
+
+    &--prefix {
+      top: 3px;
       margin-right: 11px;
     }
+
+    &--suffix {
+      top: -1px;
+      margin-left: 11px;
+    }
+  }
+
+  .loader-container {
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    visibility: ${({ loading }) => (!loading ? 'hidden' : undefined)};
   }
 
   .loader span {
     background-color: ${({ variant, disable }) =>
-  btnTheme[variant][`text${disable ? 'Disabled' : ''}`]};
+      btnTheme[variant][`text${disable ? 'Disabled' : ''}`]};
   }
 
   &:hover {
@@ -106,7 +125,7 @@ const ButtonBase = styled.button`
     `}
 
   ${({ noBorder, variant, disable }) =>
-          noBorder &&
+    noBorder &&
     css`
       border: none;
       background: none;
@@ -139,19 +158,26 @@ const Button = React.forwardRef(
         aria-disabled={disabled}
         variant={variant}
         onClick={disabled || loading ? undefined : onClick}
+        loading={loading}
         ref={ref}
       >
-        {loading ? (
-          <Loader className="loader" small />
-        ) : (
-          <>
-            <div className="btn-children">
-              {props.prefix && <span className="btn-children--prefix">{props.prefix}</span>}
-              {text || children}
-            </div>
-            {!props.noSuffix && (props.suffix ?? <Icon icon="arrow-right" />)}
-          </>
+        {loading && (
+          <div className="loader-container">
+            <Loader className="loader" small />
+          </div>
         )}
+        <>
+          <div className="btn-children">
+            {props.prefix && <span className="btn-children--prefix">{props.prefix}</span>}
+            {text || children}
+          </div>
+          {!props.noSuffix &&
+            (props.suffix ? (
+              <span className="btn-children--suffix">{props.suffix}</span>
+            ) : (
+              <Icon icon="arrow-right" className="btn-children--suffix" />
+            ))}
+        </>
       </ButtonBase>
     );
   },
@@ -193,11 +219,11 @@ const IconButtonStyling = styled.button`
   margin: 0;
   cursor: pointer;
   color: ${({ variant }) => {
-  if (variant) {
-    return variant === 'dark' ? appColors.midnight : appColors.gray200;
-  }
-  return 'inherit';
-}};
+    if (variant) {
+      return variant === 'dark' ? appColors.midnight : appColors.gray200;
+    }
+    return 'inherit';
+  }};
 
   &:hover {
     color: ${appColors.gray300};
@@ -205,11 +231,11 @@ const IconButtonStyling = styled.button`
 
     &:active {
       color: ${({ variant }) => {
-  if (variant) {
-    return variant === 'dark' ? appColors.secondaryBlack : appColors.white;
-  }
-  return 'inherit';
-}}
+        if (variant) {
+          return variant === 'dark' ? appColors.secondaryBlack : appColors.white;
+        }
+        return 'inherit';
+      }}
 
 `;
 
