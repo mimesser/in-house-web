@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-
-import { spacing, font, fontSize, palette } from '../../../style';
+import PropTypes from 'prop-types';
+import {spacing, font, fontSize, palette, appColors} from '../../../style';
 
 const strikeThrough = ({ strike }) =>
   strike &&
@@ -10,7 +10,12 @@ const strikeThrough = ({ strike }) =>
   `;
 
 const borderWidth = ({ error }) => (error ? 3 : 1);
-const borderColor = ({ error }) => (error ? palette.primary : palette.gray);
+const borderColor = ({ error, variant }) => {
+  if (variant === 'light') {
+    return error ? appColors.gray100 : appColors.gray400;
+  }
+  return error ? appColors.gray600 : appColors.gray400;
+};
 
 export const placeholder = css`
   color: ${palette.gray};
@@ -25,8 +30,9 @@ export const baseFormControlStyle = css`
   margin: 0;
   box-sizing: border-box;
   ${fontStyle};
+  background: ${({variant}) => variant === "light" ? "none" : "white"};
   border: ${borderWidth}px solid ${borderColor};
-  color: ${palette.primary};
+  color:  ${({variant}) => variant === "light" ? appColors.gray300 : appColors.gray500};
   transition: color 0.3s, border-color 0.3s;
   ${strikeThrough};
   ::placeholder {
@@ -35,13 +41,14 @@ export const baseFormControlStyle = css`
   :hover:not(:disabled),
   :active:not(:disabled),
   :focus:not(:disabled) {
-    color: ${palette.primary};
-    border-color: ${palette.primary};
+    color:  ${({variant}) => variant === "light" ? appColors.gray300 : appColors.gray500};
+    border-color:  ${({variant}) => variant === "light" ? appColors.gray300 : appColors.gray500};
     outline: none;
   }
+
   :disabled {
-    color: ${palette.lightGray};
-    border-color: ${palette.lightGray};
+    color: ${appColors.gray200};
+    border-color: ${appColors.gray200};
   }
 `;
 
@@ -60,3 +67,11 @@ export const Textarea = styled.textarea`
 export const Input = styled.input`
   ${baseInputStyle}
 `;
+
+Input.propTypes = {
+  variant: PropTypes.oneOf(['light', 'dark']),
+};
+
+Textarea.propTypes = {
+  variant: PropTypes.oneOf(['light', 'dark']),
+};
