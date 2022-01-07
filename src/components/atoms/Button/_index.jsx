@@ -33,9 +33,10 @@ const btnTheme = {
 
 const ButtonBase = styled.button`
   min-width: 89px;
-  padding: ${calcRem(12)} ${calcRem(4)};
+  padding: ${calcRem(12)} ${calcRem(6)};
   font-size: ${calcRem(16)};
   font-weight: 700;
+  font-size: ${calcRem(16)};
   cursor: ${({ disable }) => (disable ? 'not-allowed' : 'pointer')};
   transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
   border: none;
@@ -51,6 +52,10 @@ const ButtonBase = styled.button`
   .btn-children {
     margin: 0 4px;
     &--prefix {
+      position: relative;
+      top: 3px;
+      font-weight: 700;
+      font-size: ${calcRem(16)};
       margin-right: 11px;
     }
   }
@@ -69,8 +74,8 @@ const ButtonBase = styled.button`
     color: ${({ variant, disable }) => !disable && btnTheme[variant].textActive};
   }
 
-  ${({ outline, variant, disable, dashed }) =>
-    outline &&
+  ${({ outlined, variant, disable, dashed }) =>
+    outlined &&
     css`
       background: none;
       border: 1px
@@ -125,30 +130,32 @@ const ButtonBase = styled.button`
     `}
 `;
 
-const Button = ({ text, children, variant = 'dark', disabled, loading, onClick, ...props }) => {
-  console.log(disabled, loading);
-  return (
-    <ButtonBase
-      {...props}
-      disable={disabled}
-      aria-disabled={disabled}
-      variant={variant}
-      onClick={disabled || loading ? undefined : onClick}
-    >
-      {loading ? (
-        <Loader className="loader" small />
-      ) : (
-        <>
-          <div className="btn-children">
-            {props.prefix && <span className="btn-children--prefix">{props.prefix}</span>}
-            {text || children}
-          </div>
-          {!props.noSuffix && (props.suffix ?? <Icon icon="arrow-right" />)}
-        </>
-      )}
-    </ButtonBase>
-  );
-};
+const Button = React.forwardRef(
+  ({ text, children, variant = 'dark', disabled, loading, onClick, ...props }, ref) => {
+    return (
+      <ButtonBase
+        {...props}
+        disable={disabled}
+        aria-disabled={disabled}
+        variant={variant}
+        onClick={disabled || loading ? undefined : onClick}
+        ref={ref}
+      >
+        {loading ? (
+          <Loader className="loader" small />
+        ) : (
+          <>
+            <div className="btn-children">
+              {props.prefix && <span className="btn-children--prefix">{props.prefix}</span>}
+              {text || children}
+            </div>
+            {!props.noSuffix && (props.suffix ?? <Icon icon="arrow-right" />)}
+          </>
+        )}
+      </ButtonBase>
+    );
+  },
+);
 
 const CTABtnStyling = styled(Button)`
   color: #d9d9d9;
@@ -175,6 +182,43 @@ export const CTAButton = (props) => (
   />
 );
 
+export const BackButton = (props) => (
+  <Button {...props} noBorder prefix={<Icon icon="arrow-left" />} noSuffix />
+);
+
+const IconButtonStyling = styled.button`
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  color: ${({ variant }) => {
+  if (variant) {
+    return variant === 'dark' ? appColors.midnight : appColors.gray200;
+  }
+  return 'inherit';
+}};
+
+  &:hover {
+    color: ${appColors.gray300};
+  }
+
+    &:active {
+      color: ${({ variant }) => {
+  if (variant) {
+    return variant === 'dark' ? appColors.secondaryBlack : appColors.white;
+  }
+  return 'inherit';
+}}
+
+`;
+
+export const IconButton = ({ icon, variant, containerProps, ...props }) => (
+  <IconButtonStyling {...containerProps} variant={variant}>
+    <Icon icon={icon} {...props} />
+  </IconButtonStyling>
+);
+
 Button.propTypes = {
   text: PropTypes.string,
   variant: PropTypes.oneOf(['dark', 'light']),
@@ -184,6 +228,13 @@ Button.propTypes = {
   wide: PropTypes.bool,
   noSuffix: PropTypes.bool,
   dashed: PropTypes.bool,
+};
+
+IconButton.propTypes = {
+  variant: PropTypes.oneOf(['dark', 'light']),
+  icon: PropTypes.oneOf(['arrow-right', 'arrow-left', 'x', 'search']),
+  size: PropTypes.number,
+  color: PropTypes.string,
 };
 
 export default Button;
