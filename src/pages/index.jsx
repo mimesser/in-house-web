@@ -55,28 +55,28 @@ const notificationBgCSS = css`
   background-size: cover;
   background-position-x: left;
   background-position-y: top;
-  background-image: url(static/mobile_xs_750x1334.jpg);
+  background-image: url(static/mobile_xs_750x1334.webp);
 
   @media ${device.iPhoneX} {
-    background-image: url(static/mobile_sm_iphonex1125x2436.jpg);
+    background-image: url(static/mobile_sm_iphonex1125x2436.webp);
   }
   @media ${device.iPhone8Plus} {
-    background-image: url('static/mobile_med_iphone6,7,8plus_1242x2208.jpg');
+    background-image: url('static/mobile_med_iphone6,7,8plus_1242x2208.webp');
   }
   @media ${device.iPad} {
-    background-image: url(static/mobile_md_ipad_1536x2408.jpg);
+    background-image: url(static/mobile_md_ipad_1536x2408.webp);
   }
   @media ${device.web} {
-    background-image: url(static/web_min_1024x768.jpg);
+    background-image: url(static/web_min_1024x768.webp);
   }
   @media ${device.laptop} {
-    background-image: url(static/web_md_1440x900.jpg);
+    background-image: url(static/web_md_1440x900.webp);
   }
   @media ${device.desktop} {
-    background-image: url(static/web_lg_1920x1080.jpg);
+    background-image: url(static/web_lg_1920x1080.webp);
   }
   @media ${device.macbook} {
-    background-image: url(static/web_xl_max_retina_2880x1800.jpg);
+    background-image: url(static/web_xl_max_retina_2880x1800.webp);
   }
 `;
 
