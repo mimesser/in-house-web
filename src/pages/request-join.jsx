@@ -2,9 +2,10 @@ import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
-import { Button, H1, Icon } from '../components/atoms';
+import { H1, Icon } from '../components/atoms';
 import { Page } from '../components/organisms';
 import { appColors, calcRem } from '../style';
+import Button from "../components/atoms/Button/_index";
 
 const PageStyling = styled(Page)`
   padding: 12px;
@@ -55,17 +56,11 @@ const RequestJoin = () => {
       <H1 className="heading">the in-house beta trial</H1>
       <div className="btn-actions">
         <Link href="/list-workspace">
-          <Button icon="arrow-right" wide inverse>
-            need this at my job right now
-          </Button>
+          <Button variant="light" text="need this at my job right now" />
         </Link>
-        <Button icon="arrow-right" wide inverse>
-          join/support the movement
-        </Button>
+        <Button variant="light" text="join/support the movement" />
       </div>
-      <Button outline className="btn-bottom" icon="arrow-right" wide>
-        notify me when full live
-      </Button>
+      <Button outlined className="btn-bottom" variant="light" text="notify me when full live"/>
     </PageStyling>
   );
 };

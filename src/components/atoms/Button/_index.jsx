@@ -10,6 +10,7 @@ const btnTheme = {
     text: appColors.midnight,
     textActive: appColors.secondaryBlack,
     textOutline: appColors.gray200,
+    textOutlineDisabled: appColors.gray500,
     bg: appColors.gray200,
     bgActive: appColors.white,
     textDisabled: appColors.gray400,
@@ -48,7 +49,7 @@ const ButtonBase = styled.button`
   display: inline-flex;
   justify-content: ${({ noSuffix, prefix }) => (noSuffix && !prefix ? 'center' : 'space-between')};
   align-items: center;
-  width: ${({ wide }) => wide && '100%'};
+  width: 100%;
 
   .btn-children {
     margin: 0 4px;

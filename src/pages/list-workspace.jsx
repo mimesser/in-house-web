@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { Page } from '../components/organisms';
 import { appColors, calcRem } from '../style';
-import { Button, H1, Icon, Input } from '../components/atoms';
-import { CounterInput } from '../components/molecules';
+import {H1, Icon, Input, Textarea} from '../components/atoms';
 import { postFeedback } from '../store/feedback';
 import { isEmailValid } from '../utils';
+import Button from '../components/atoms/Button/_index';
 
 const PageStyling = styled(Page)`
   padding: 12px;
@@ -104,7 +104,7 @@ const ListWorkspace = () => {
       title="In-House - List your House | Speak as a Team | Remain Untraceable"
     >
       <IconStyling>
-        <Icon size={2} icon="x" onClick={() => router.push("/")} />
+        <Icon size={2} icon="x" onClick={() => router.push('/')} />
       </IconStyling>
       <H1 className="heading">{!hasListed ? 'list my workplace' : 'thank you'}</H1>
       <p>
@@ -118,18 +118,18 @@ const ListWorkspace = () => {
       <div className="list-workspace__form">
         {!hasListed ? (
           <form>
-            <CounterInput
-              parentClassName="list-workspace__text-body"
-              className="list-workspace__text-area"
-              multiline
+            <Textarea
+              variant="light"
+              className="list-workspace__text-body list-workspace__text-area"
               name="description"
               value={formState.description}
-              onChangeEvent={handleInputChange}
+              onChange={handleInputChange}
               max={500}
               placeholder="describe why you need this right now"
               rows={4}
             />
             <Input
+              variant="light"
               name="email"
               className="list-workspace__input"
               value={formState.email}
@@ -142,17 +142,14 @@ const ListWorkspace = () => {
           <div />
         )}
         <Button
-          type="button"
-          outline
+          outlined
+          variant="light"
           className="btn-bottom"
-          icon="arrow-right"
           onClick={handleSubmit}
-          wide
           loading={feedbackState?.loading}
           disabled={!hasListed && (!isEmailValid(formState.email) || !formState.description)}
-        >
-          {!hasListed ? 'send my request' : 'got it'}
-        </Button>
+          text={!hasListed ? 'send my request' : 'got it'}
+        />
       </div>
     </PageStyling>
   );

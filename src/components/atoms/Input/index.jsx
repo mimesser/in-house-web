@@ -18,7 +18,7 @@ const borderColor = ({ error, variant }) => {
 };
 
 export const placeholder = css`
-  color: ${palette.gray};
+  color: ${appColors.gray400};
 `;
 
 export const fontStyle = css`
