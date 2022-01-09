@@ -9,6 +9,16 @@ const Layout = styled.div`
   color: ${({variant}) => (variant === 'light' ? appColors.gray500 : appColors.gray300)};
   padding: ${calcRem(24)} ${calcRem(12)} ${calcRem(20)} ${calcRem(12)};
   border-top: 0.5px solid ${({variant}) => variant === "light" ? appColors.gray600 : appColors.gray100};
+
+  > a {
+    &:hover {
+      color: ${({variant}) => (variant === 'light' ? appColors.gray600 : appColors.gray200)};
+    }
+
+    &:active {
+      color: ${({variant}) => (variant === 'light' ? appColors.secondaryBlack : appColors.white)};
+    }
+  }
 `;
 
 const Break = styled.div`
@@ -27,14 +37,6 @@ const A = styled.a`
   display: block;
   color: inherit;
   transition: color 0.5s;
-
-  &:hover {
-    color: ${({variant}) => (variant === 'light' ? appColors.gray600 : appColors.gray200)};
-  }
-
-  &:active {
-    color: ${({variant}) => (variant === 'light' ? appColors.secondaryBlack : appColors.white)};
-  }
 `;
 
 const CopyrightLine = styled.div`
