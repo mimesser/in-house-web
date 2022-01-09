@@ -14,7 +14,6 @@ import {
   font,
   fontSize,
 } from '../../../style';
-import { menuOptions } from '../Menu';
 
 const borderColor = ({ white }) => {
   // TODO: add alpha support to palette functions
@@ -111,6 +110,14 @@ const Menu = styled.span`
     // display: none;
   }
 `;
+
+export const menuOptions = [
+  { href: '/houses', label: 'see workplaces' },
+  { href: '/list-house', label: 'list workplace' },
+  { href: '/about', label: 'about' },
+  { href: '/feedback', label: 'contact us' },
+];
+
 const IconLink = ({ icon, href }) => (
   <Link href={href}>
     <a>

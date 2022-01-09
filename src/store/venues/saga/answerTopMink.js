@@ -25,6 +25,13 @@ const getLoadDataSaga = () => {
   return undefined;
 };
 
+/**
+ * @description
+ * This Redux Saga function helps to do post request in order to  answer top  mink question.
+ * @param { string } answer Answer is the word that is answer for the mink question.
+ * @returns Nothing
+ */
+
 export function* answerTopMink({ payload: { answer } }) {
   if (!answer) {
     return;

@@ -63,16 +63,21 @@ class Houses extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { router, initVenuesPage, loadRates, loadPosts, loadMinks } = this.props;
+    const { router, initVenuesPage, loadRates, loadPosts, loadMinks, selectedVenue } = this.props;
 
     if ((this.houseId && !prevProps.router.query?.id) || !this.houseId) {
       initVenuesPage(this.houseId);
     }
+    
+    const isSelectedVenueLoading = selectedVenue?.loading === undefined
+    const isTabChanged = router.query.tab !== prevProps.router.query.tab
+    
     if (
-      this.houseId &&
-      ((typeof prevProps.router.query?.time !== 'undefined' &&
+      this.houseId && 
+      (isSelectedVenueLoading || isTabChanged) || 
+      ((typeof prevProps.router.query?.time === 'undefined' &&
         router.query?.time !== prevProps.router.query?.time) ||
-        !prevProps.router.query?.id) &&
+        !prevProps.router.query?.id)  && 
       (router.asPath.endsWith('rate') ||
         router.asPath.endsWith('post') ||
         router.asPath.endsWith('mink'))
