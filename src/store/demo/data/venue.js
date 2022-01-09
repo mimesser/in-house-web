@@ -24,7 +24,7 @@ export default {
     country: 'United States',
     hours: null,
     googleId: null,
-    imageUrl: '../../../static/demo_house.jpg',
+    imageUrl: '../../../static/demo_house.webp',
   },
   created,
   minks: orderBy(minks, ['voteRating'], ['desc']),

@@ -19,6 +19,17 @@ import { reloadInsiderVenueIds } from './reloadInsiderVenueIds';
 import { CONFIRMATION_INTERVAL } from './consts';
 import { watchMinkAnswerAttempts } from './watchMinkAnswerAttempts';
 
+/**
+ *
+ * @description
+ * This Redux-Saga function helps to Vote and DownVote the minks.
+ * @param {number} vote  Vote is number which would be 1 or -1. 1 means upvote and -1 means downvote the mink.
+ * @param {string} minkId   minkId is the id of the mink that the user is going to upvote or downvote.
+ * @param {boolean} skipConfirmation skipConfirmation is for checking the voteRating and voteCount. If the skipConfirmation is false vote Rating and voteCount is uptodate but if not
+ * it will update the voteRating and voteCount. The default value is false for skipConfirmation
+ * @returns { object} { venue, mink, topMink}
+ */
+
 export function* voteMink({ payload: { vote, minkId, skipConfirmation = false } }) {
   const selectedVenue = yield select(selectSelectedVenue);
   const topMinkId = yield select(selectSelectedVenueTopMinkId);
@@ -69,9 +80,29 @@ export function* voteMink({ payload: { vote, minkId, skipConfirmation = false } 
   }
 }
 
+/**
+ *
+ * @description
+ * This Redux-Saga function helps to DownVote the minks.
+ * @param {string} minkId   minkId is the id of the mink that the user is going to upvote or downvote.
+ * @param {boolean} skipConfirmation skipConfirmation is for checking the voteRating and voteCount. If the skipConfirmation is false vote Rating and voteCount is uptodate but if not
+ * it will update the voteRating and voteCount. The default value is false for skipConfirmation
+ * @returns { object} { venue, mink, topMink}
+ */
+
 export function* downvoteMink(minkId, skipConfirmation = false) {
   return yield* voteMink({ payload: { vote: -1, minkId, skipConfirmation } });
 }
+
+/**
+ *
+ * @description
+ * This Redux-Saga function helps to UpVote the minks.
+ * @param {string} minkId   minkId is the id of the mink that the user is going to upvote or downvote.
+ * @param {boolean} skipConfirmation skipConfirmation is for checking the voteRating and voteCount. If the skipConfirmation is false vote Rating and voteCount is uptodate but if not
+ * it will update the voteRating and voteCount. The default value is false for skipConfirmation
+ * @returns { object} { venue, mink, topMink}
+ */
 
 export function* upvoteMink(minkId, skipConfirmation = false) {
   return yield* voteMink({ payload: { vote: 1, minkId, skipConfirmation } });

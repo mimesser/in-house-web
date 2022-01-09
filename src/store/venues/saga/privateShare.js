@@ -20,6 +20,15 @@ export const TABS_MAB = {
   [VENUE_TABS.mink]: 'minks',
 };
 
+/**
+ * @description
+ * This Redux Saga function helps to share the url of the venue.
+ * @param {string} venueId is the id of the Venue.
+ * @param {string} type is the type of the Venue.
+ * @param {string} id is the id of the mink,feedback or ratetags.
+ * @returns {string} the API url endpoint for the share option.
+ */
+
 const shareUrl = (venueId, type, id) => {
   if (type === 'venue') {
     return `/Venues/${venueId}/share`;
@@ -28,7 +37,24 @@ const shareUrl = (venueId, type, id) => {
   return `/venues/${venueId}/${TABS_MAB[type]}/${id}/share`;
 };
 
+/**
+ * @description
+ * This Redux Saga function helps to remove the extraspaces from the phone number.
+ * @param {string} n is the phone number.
+ * @returns {string} trimmed and cleaned phone number.
+ */
+
 const cleanPhoneNumber = (n) => n.replace(/[()\s-.+]/g, '');
+
+/**
+ * @description
+ * This Redux Saga function helps to share message with other user via  email or phone number. .
+ * @param {string} type is the type of house.
+ * @param {string} id is the id of house.
+ * @param {string} recipient is the person who recieves the message.
+ * @param {string} message is the message of  user.
+ * @returns Nothing
+ */
 
 export function* privateShare({ payload: { type, id, recipient, message } }) {
   const viaEmail = recipient.indexOf('@') !== -1;

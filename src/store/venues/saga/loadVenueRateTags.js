@@ -8,11 +8,22 @@ import { selectIsActiveInsider, selectSelectedVenue } from '../selectors';
 import { localStorageAccessor } from '../../../utils/storage';
 
 const SHOW_WELCOME_DELAY = 5000;
+/**
+ * @description
+ * This Redux Saga function helps to show delayed welcome popup modal.
+ * @param {number} ms is the id of the Venue.
+ */
 
 export function* showDelayedWelcome(ms) {
   yield delay(ms);
   put(showWelcomeForm());
 }
+
+/**
+ * @description
+ * This Redux Saga function helps to reload venue rate tags.
+ * @param {string} id is the id of the Venue.
+ */
 
 export function* reloadVenueRateTags(id) {
   try {
@@ -34,6 +45,11 @@ export function* reloadVenueRateTags(id) {
     }
   }
 }
+
+/**
+ * @description
+ * This Redux Saga function helps to load venue rate tags.
+ */
 
 export function* loadVenueRateTags() {
   const selectedVenue = yield select(selectSelectedVenue);
