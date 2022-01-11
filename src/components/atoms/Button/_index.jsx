@@ -48,16 +48,16 @@ const ButtonBase = styled.button`
   display: inline-flex;
   justify-content: ${({ noSuffix, prefix }) => (noSuffix && !prefix ? 'center' : 'space-between')};
   align-items: center;
-  width: ${({ wide }) => wide && '100%'};
+  width: 100%;
 
   .btn-children {
     margin: 0 4px;
-    visibility: ${({ loading }) => (loading ? 'hidden' : undefined)};
+    visibility: ${({ loading }) => (loading && 'hidden')};
     &--prefix, &--suffix {
       position: relative;
       font-weight: 700;
       font-size: ${calcRem(16)};
-      visibility: ${({ loading }) => (loading ? 'hidden' : undefined)};
+      visibility: ${({ loading }) => (loading && 'hidden')};
     }
 
     &--prefix {
@@ -76,7 +76,7 @@ const ButtonBase = styled.button`
     margin: auto;
     left: 0;
     right: 0;
-    visibility: ${({ loading }) => (!loading ? 'hidden' : undefined)};
+    visibility: ${({ loading }) => (!loading && 'hidden')};
   }
 
   .loader span {
