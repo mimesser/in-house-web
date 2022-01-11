@@ -1,4 +1,4 @@
-import { constColors, themeColors } from './colors';
+import { constColors, themeColors, esgColors } from './colors';
 
 export const theme = {
   colors: themeColors,
@@ -11,10 +11,10 @@ export const fromTheme = (key) => (({ theme: { colors } }) => colors[key])({ the
  * Usage `${palette.secondaryDark}`
  * Additionally supports const colors (white, black, transparent) - `${palette.transparent}`
  */
-export const palette = Object.keys(themeColors).reduce(
+	export const palette = Object.keys(themeColors).reduce(
   (p, key) => {
     p[key] = fromTheme(key);
     return p;
   },
-  { ...constColors },
+  { ...constColors, ...esgColors },
 );
