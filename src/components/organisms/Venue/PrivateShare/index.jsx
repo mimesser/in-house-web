@@ -19,6 +19,7 @@ import { CounterInput, WinkConfirmation } from '../../../molecules';
 import { SubmitButton, Layout, FormLayout, CustomOverlay, ShareContent } from './style';
 import { DemoWinkConfirmationLayout } from '../demoStyle';
 import { isEmailValid, isPhoneNumberValid } from '../../../../utils/validation';
+import venue from '../../../../store/demo/data/venue';
 
 const DemoWinkConfirmation = ({ onCloseClick }) => (
   <DemoWinkConfirmationLayout>
@@ -34,7 +35,7 @@ const DemoWinkConfirmation = ({ onCloseClick }) => (
 );
 
 const PrivateShare = ({
-  venue: { name: venueName, id },
+  venue: { name: venueName },
   type,
   getItemTitle,
   renderItem,
@@ -42,6 +43,7 @@ const PrivateShare = ({
   sending,
   share,
   setError,
+  id,
 }) => {
   const [recipient, setRecipient] = useState('');
   const [message, setMessage] = useState('');
