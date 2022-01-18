@@ -106,7 +106,7 @@ const TabHeader = ({
     <HelpWrap>
       <Link
         href={`/${venueType}?id=${id}&tab=${path}&time=${time}`}
-        /* as={`/${lite ? 'movement' : venueType}/${lite ? movementName : id}/${path}`} */
+        as={`/${lite ? 'movement' : venueType}/${lite ? movementName : id}/${path}`}
       >
         <A active={active} custom={custom}>
           {label}
