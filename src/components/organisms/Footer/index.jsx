@@ -87,7 +87,7 @@ export const Footer = ({ variant = 'light' }) => (
       <A>contact</A>
     </Link>
     <Break variant={variant} />
-    <CopyrightLine>
+    <CopyrightLine href="/">
       <Copyright /> | <Patent />
     </CopyrightLine>
   </Layout>
