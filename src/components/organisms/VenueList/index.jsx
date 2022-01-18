@@ -3,7 +3,6 @@ import Router, { useRouter } from 'next/router';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Link from 'next/link';
-
 import styled from 'styled-components';
 import { spacing } from '../../../style';
 import { Loader, ClearButton, Icon, Button, Card, H1, Portal } from '../../atoms';
@@ -72,10 +71,10 @@ const SearchPage = ({ setSelectedVenue, venues, inDemo, categories }) => {
       setSelectedVenue(venue);
       Router.push(
         `/houses?id=${id}&tab=${lite ? 'post' : 'rate'}&time=${Date.now()}`,
-        `/${lite ? 'movement' : 'houses'}/${lite ? formatMovementURL(name) : id}/${
-          lite ? 'post' : 'rate'
-        }`,
-        { shallow: true },
+        // `/${lite ? 'movement' : 'houses'}/${lite ? formatMovementURL(name) : id}/${
+        //   lite ? 'post' : 'rate'
+        // }`,
+        // { shallow: true },
       );
     },
     [setSelectedVenue],
