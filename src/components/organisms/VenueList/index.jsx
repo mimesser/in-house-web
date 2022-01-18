@@ -70,11 +70,11 @@ const SearchPage = ({ setSelectedVenue, venues, inDemo, categories }) => {
 
       setSelectedVenue(venue);
       Router.push(
-        `/houses?id=${id}&tab=${lite ? 'post' : 'rate'}&time=${Date.now()}`,
-        // `/${lite ? 'movement' : 'houses'}/${lite ? formatMovementURL(name) : id}/${
-        //   lite ? 'post' : 'rate'
-        // }`,
-        // { shallow: true },
+        `/houses?id=${id}&tab=${lite ? 'post' : 'rate'}}`,
+        `/${lite ? 'movement' : 'houses'}/${lite ? formatMovementURL(name) : id}/${
+          lite ? 'post' : 'rate'
+        }`,
+        { shallow: true },
       );
     },
     [setSelectedVenue],
