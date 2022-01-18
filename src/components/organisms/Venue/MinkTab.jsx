@@ -392,7 +392,7 @@ const Mink = ({
   const [answer, setAnswer] = useState(myCorrectAnswer || '');
   const [previouslyAnsweredCorrectly, setPreviouslyAnsweredCorrectly] = useState(!!myCorrectAnswer);
   const selectMink = useCallback(() => setSelectedMink(minkId), [setSelectedMink, minkId]);
-  const deselectMink = useCallback(() => setSelectedMink(undefined), [setSelectedMink]);
+  const deselectMink = useCallback(() => setSelectedMink, [setSelectedMink]);
   const toggleFlag = () => {
     selectMink();
     toggleMinkFlag({ wasVotedByMe: +myVote === 1 || +myVote === -1 });
@@ -409,7 +409,7 @@ const Mink = ({
     [setAnswer, tryAnswerMink, minkId],
   );
 
-  const debouncedUpdateMinks = useDebounce(update.current, 3000, { trailing: true });
+  const debouncedUpdateMinks = useDebounce(()=>update?.current, 3000, { trailing: true });
 
   const voteMink = useCallback(
     (vote, skipConfirmation = false) => {

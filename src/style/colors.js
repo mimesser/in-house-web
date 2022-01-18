@@ -19,6 +19,15 @@ export const appColors = {
   green: '#43821E',
   red: '#943838',
   blue: '#2F528D',
+
+  gray100: '#F4F4F2',
+  gray200: '#DFDFDF',
+  gray300: '#BCBCBC',
+  gray400: '#88898E',
+  gray500: '#585859',
+  gray600: '#333333',
+
+  secondaryBlack: '#111111'
 };
 
 export const themeColors = {

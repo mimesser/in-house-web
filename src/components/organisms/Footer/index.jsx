@@ -1,33 +1,48 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Link from 'next/link';
-import { Break, Patent, Copyright } from '../../atoms';
-import { appBackground, spacing, breakpoints, fontSize, palette, font } from '../../../style';
+import { Copyright, Patent } from '../../atoms';
+import { appColors, calcRem, fontSize } from '../../../style';
 
 const Layout = styled.div`
-  background: ${appBackground};
-  padding: ${spacing.xl};
-`;
+  background-color: ${({ variant }) => (variant === 'light' ? appColors.white : appColors.gray600)};
+  color: ${({ variant }) => (variant === 'light' ? appColors.gray500 : appColors.gray300)};
+  padding: ${calcRem(24)} ${calcRem(12)} ${calcRem(20)} ${calcRem(12)};
+  border-top: 0.5px solid
+    ${({ variant }) => (variant === 'light' ? appColors.gray600 : appColors.gray100)};
 
-const Wrapper = styled.div`
-  margin: 0 auto;
-  display: block;
-  width: 100%;
+  > a {
+    &:hover {
+      color: ${({ variant }) => (variant === 'light' ? appColors.gray600 : appColors.gray200)};
+    }
 
-  @media screen and (min-width: ${breakpoints.lg}) {
-    width: ${breakpoints.md};
-    display: flex;
-    justify-content: space-between;
+    &:active {
+      color: ${({ variant }) => (variant === 'light' ? appColors.secondaryBlack : appColors.white)};
+    }
+  }
+
+  @media all and (min-width: ${calcRem(900)}) {
+    display: grid;
+    column-gap: 20px;
+    grid-template-areas:
+      'a b'
+      'a b'
+      'a b'
+      'a b'
+      'copyright copyright';
   }
 `;
 
-const Links = styled.div`
-  margin-top: auto;
+const Break = styled.div`
+  width: 100%;
+  background: ${({ variant }) => (variant === 'light' ? appColors.gray600 : appColors.gray100)};
+  height: 1px;
+  margin-bottom: ${calcRem(12)};
+  opacity: 0.2;
 
-  ${Break} {
-    color: ${palette.lightGray};
-    height: 1px;
-    width: auto;
+  @media all and (min-width: ${calcRem(900)}) {
+    display: none;
   }
 `;
 
@@ -35,91 +50,49 @@ const A = styled.a`
   outline: none;
   text-decoration: none;
   cursor: pointer;
-  font-size: ${fontSize.sm};
-  padding: ${spacing.sm} 0;
+  font-size: ${calcRem(12)};
+  margin-bottom: ${calcRem(12)};
   display: block;
-  color: ${palette.black};
-  &:hover {
-    color: ${palette.midnight};
-  }
+  color: inherit;
+  transition: color 0.5s;
 `;
 
-const MobileBreak = styled(Break)`
-  @media screen and (min-width: ${breakpoints.lg}) {
-    display: none;
-  }
+const CopyrightLine = styled.div`
+  grid-area: copyright;
+  color: ${appColors.gray400};
 `;
 
-const CopyrightLine = styled(A)`
-  max-width: ${breakpoints.md};
-  margin: 0 auto;
-  ${font.bold}
-
-  @media screen and (min-width: ${breakpoints.lg}) {
-    text-align: center;
-  }
-`;
-
-const DisplayOnMobile = styled.span`
-  display: block;
-
-  @media screen and (min-width: ${breakpoints.lg}) {
-    display: none;
-  }
-`;
-const HideOnMobile = styled.span`
-  display: none;
-
-  @media screen and (min-width: ${breakpoints.lg}) {
-    display: block;
-  }
-`;
-
-export const Footer = () => (
-  <Layout>
-    <Links>
-      <Wrapper>
-        <div>
-          <Link href="/list-house" passHref prefetch={false}>
-            <A>distressed worker?</A>
-          </Link>
-          <Link href="/list-house" passHref prefetch={false}>
-            <A>progressive leadership?</A>
-          </Link>
-          <Link href="#howitworks" passHref prefetch={false}>
-            <A>how it works</A>
-          </Link>
-          <Link href="/polls" passHref prefetch={false}>
-            <A>polls</A>
-          </Link>
-          <Link href="/faqs" passHref prefetch={false}>
-            <A>faqs</A>
-          </Link>
-          <DisplayOnMobile>
-            <Link href="/about" passHref prefetch={false}>
-              <A>about</A>
-            </Link>
-          </DisplayOnMobile>
-        </div>
-        <MobileBreak />
-        <div>
-          <HideOnMobile>
-            <Link href="/about" passHref prefetch={false}>
-              <A>about</A>
-            </Link>
-          </HideOnMobile>
-          <Link href="/terms" passHref prefetch={false}>
-            <A>terms of service</A>
-          </Link>
-          <Link href="/feedback" passHref prefetch={false}>
-            <A>contact</A>
-          </Link>
-        </div>
-      </Wrapper>
-      <Break />
-      <CopyrightLine>
-        <Copyright /> | <Patent />
-      </CopyrightLine>
-    </Links>
+export const Footer = ({ variant = 'light' }) => (
+  <Layout variant={variant}>
+    <Link href="/list-house" passHref prefetch={false}>
+      <A>distressed worker?</A>
+    </Link>
+    <Link href="/list-house" passHref prefetch={false}>
+      <A>progressive leadership?</A>
+    </Link>
+    <Link href="#howitworks" passHref prefetch={false}>
+      <A>how it works</A>
+    </Link>
+    <Link href="/faqs" passHref prefetch={false}>
+      <A>faqs</A>
+    </Link>
+    <Link href="/about" passHref prefetch={false}>
+      <A>about</A>
+    </Link>
+    <Break variant={variant} />
+    <Link href="/faqs" passHref prefetch={false}>
+      <A>terms of service</A>
+    </Link>
+    <Link href="/about" passHref prefetch={false}>
+      <A>contact</A>
+    </Link>
+    <Break variant={variant} />
+    <CopyrightLine>
+      <Copyright /> | <Patent />
+    </CopyrightLine>
   </Layout>
 );
+
+Footer.propTypes = {
+  variant: PropTypes.oneOf(['light', 'dark']),
+};
