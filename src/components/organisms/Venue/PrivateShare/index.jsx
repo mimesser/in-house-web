@@ -34,9 +34,8 @@ const DemoWinkConfirmation = ({ onCloseClick }) => (
 );
 
 const PrivateShare = ({
-  venue: { name: venueName },
+  venue: { name: venueName, id },
   type,
-  id,
   getItemTitle,
   renderItem,
   recipientError,
