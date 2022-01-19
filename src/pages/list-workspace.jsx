@@ -4,15 +4,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { Page } from '../components/organisms';
 import { appColors, calcRem } from '../style';
-import {H1, Icon, Input, Textarea} from '../components/atoms';
+import { Icon, Input, Textarea } from '../components/atoms';
 import { postFeedback } from '../store/feedback';
 import { isEmailValid } from '../utils';
 import Button from '../components/atoms/Button/_index';
+import Text from '../components/atoms/text/_index';
 
 const PageStyling = styled(Page)`
   padding: 12px;
-  background-color: ${appColors.midnight};
+  background-color: ${appColors.gray600};
   color: white;
+  font-family: 'Helvetica', sans-serif;
 
   p {
     margin: 0;
@@ -32,7 +34,7 @@ const PageStyling = styled(Page)`
 
   .list-workspace {
     &__text-body {
-      margin-top: ${calcRem('18px')};
+      margin-top: ${calcRem('16px')};
       margin-bottom: ${calcRem('30px')};
 
       > div {
@@ -41,8 +43,7 @@ const PageStyling = styled(Page)`
     }
 
     &__text-area {
-      padding: 12px 8px;
-      background: none;
+      //background: none;
       min-height: 113px;
     }
 
@@ -57,7 +58,8 @@ const PageStyling = styled(Page)`
       height: 100%;
 
       > button {
-        margin-bottom: ${calcRem(36 - 12)};
+        margin-top: ${calcRem(20)};
+        margin-bottom: ${calcRem(40)};
       }
     }
   }
@@ -106,15 +108,24 @@ const ListWorkspace = () => {
       <IconStyling>
         <Icon size={2} icon="x" onClick={() => router.push('/')} />
       </IconStyling>
-      <H1 className="heading">{!hasListed ? 'list my workplace' : 'thank you'}</H1>
-      <p>
+      <Text.Heading
+        weight="bold"
+        color="white"
+        size={32}
+        variant="light"
+        level={1}
+        className="heading"
+      >
+        {!hasListed ? 'list my workplace' : 'thank you'}
+      </Text.Heading>
+      <Text variant="light" color="gray300" size={14}>
         {!hasListed
           ? `we are only able to list a small number of organizations
             during our beta trial so please send us your confidential reason
             for why you need this and we’ll prioritize those most in need.`
           : `we will reach out to you as soon as we can to confirm
             whether we will be able to list your workplace during our beta trial`}
-      </p>
+      </Text>
       <div className="list-workspace__form">
         {!hasListed ? (
           <form>
