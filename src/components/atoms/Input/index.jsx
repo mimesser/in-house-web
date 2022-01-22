@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import {spacing, font, fontSize, palette, appColors} from '../../../style';
+import { appColors, calcRem } from '../../../style';
 
 const strikeThrough = ({ strike }) =>
   strike &&
@@ -18,21 +18,18 @@ const borderColor = ({ error, variant }) => {
 };
 
 export const placeholder = css`
-  color: ${palette.gray};
-`;
-
-export const fontStyle = css`
-  font-size: ${fontSize.md};
-  ${font.primary};
+  color: ${appColors.gray400};
+  font-size: ${calcRem(14)};
 `;
 
 export const baseFormControlStyle = css`
   margin: 0;
   box-sizing: border-box;
-  ${fontStyle};
-  background: ${({variant}) => variant === "light" ? "none" : "white"};
+  font-size: ${calcRem(14)};
+  font-family: 'Helvetica', sans-serif;
+  background: ${({ variant }) => (variant === 'light' ? 'none' : 'white')};
   border: ${borderWidth}px solid ${borderColor};
-  color:  ${({variant}) => variant === "light" ? appColors.gray300 : appColors.gray500};
+  color: ${({ variant }) => (variant === 'light' ? appColors.gray300 : appColors.gray500)};
   transition: color 0.3s, border-color 0.3s;
   ${strikeThrough};
   ::placeholder {
@@ -41,8 +38,8 @@ export const baseFormControlStyle = css`
   :hover:not(:disabled),
   :active:not(:disabled),
   :focus:not(:disabled) {
-    color:  ${({variant}) => variant === "light" ? appColors.gray300 : appColors.gray500};
-    border-color:  ${({variant}) => variant === "light" ? appColors.gray300 : appColors.gray500};
+    color: ${({ variant }) => (variant === 'light' ? appColors.gray300 : appColors.gray500)};
+    border-color: ${({ variant }) => (variant === 'light' ? appColors.gray300 : appColors.gray500)};
     outline: none;
   }
 
@@ -55,7 +52,7 @@ export const baseFormControlStyle = css`
 export const baseInputStyle = css`
   display: block;
   width: 100%;
-  padding: ${spacing.sm} ${spacing.md};
+  padding: ${calcRem(11)} ${calcRem(8)};
   ${baseFormControlStyle};
 `;
 

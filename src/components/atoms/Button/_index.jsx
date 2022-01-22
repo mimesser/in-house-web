@@ -10,6 +10,7 @@ const btnTheme = {
     text: appColors.midnight,
     textActive: appColors.secondaryBlack,
     textOutline: appColors.gray200,
+    textOutlineDisabled: appColors.gray500,
     bg: appColors.gray200,
     bgActive: appColors.white,
     textDisabled: appColors.gray400,

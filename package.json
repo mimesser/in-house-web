@@ -4,7 +4,6 @@
     "main": "server/index.js",
     "version": "1.0.0-alpha+111021.0937",
     "scripts": {
-        "build:ci": "cross-env npm run clean && npm run build && copyfiles -a \"src/.next/**/*\" \"src/static/**/*\" \"src/public/**/*\" server/*.* package.json package-lock.json next.config.js build",
         "build": "cross-env next build",
         "clean": "cross-env rimraf ./build",
         "clean-sentry-config": "node .sentryclirc.resetter.js && git add .sentryclirc",
