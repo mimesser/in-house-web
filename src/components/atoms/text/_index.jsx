@@ -4,6 +4,10 @@ import styled from 'styled-components';
 import { appColors, calcRem } from '../../../style';
 
 const getFontWeight = (weight) => {
+  if(typeof weight === "number"){
+    const w = {700: "bold", 500: "med", 400: "reg", 300: "lighter"}
+    return w[weight] || 'inherit'
+  }
   switch (weight) {
     case 'light':
       return 300;
