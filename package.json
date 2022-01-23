@@ -20,7 +20,8 @@
         "storybook": "start-storybook -p 9001 -c config/storybook",
         "test:watch": "npm test -- --watch",
         "test": "jest --env=jsdom --no-cache --colors test",
-        "docs": "jsdoc -c config/jsdoc/jsdoc.json"
+        "docs": "jsdoc -c config/jsdoc/jsdoc.json",
+        "analyze": "source-map-explorer 'build/static/js/*.js'"
     },
     "engines": {
         "node": ">=16.0.0",
@@ -66,6 +67,7 @@
         "reselect": "4.0.0",
         "rimraf": "3.0.2",
         "rooks": "^5.7.1",
+        "source-map-explorer": "^2.5.2",
         "styled-components": "5.3.0"
     },
     "devDependencies": {
