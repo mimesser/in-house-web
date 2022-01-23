@@ -53,6 +53,9 @@ const ButtonBase = styled.button`
   .btn-children {
     margin: 0 4px;
     visibility: ${({ loading }) => (loading && 'hidden')};
+    display: flex;
+    align-items: center;
+
     &--prefix, &--suffix {
       position: relative;
       font-weight: 700;
@@ -209,7 +212,7 @@ export const CTAButton = (props) => (
 );
 
 export const BackButton = (props) => (
-  <Button {...props} noBorder prefix={<Icon icon="arrow-left" />} noSuffix />
+  <Button {...props} noBorder prefix={<Icon icon="arrow-left" color="inherit" />} noSuffix />
 );
 
 const IconButtonStyling = styled.button`
