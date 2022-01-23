@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { appColors, calcRem } from '../../../style';
 
 const getFontWeight = (weight) => {
-  if(typeof weight === "number"){
-    const w = {700: "bold", 500: "med", 400: "reg", 300: "lighter"}
-    return w[weight] || 'inherit'
+  if (typeof weight === 'number') {
+    const w = { 700: 'bold', 500: 'med', 400: 'reg', 300: 'lighter' };
+    return w[weight] || 'inherit';
   }
   switch (weight) {
     case 'light':
@@ -52,6 +52,18 @@ const getVariant = (variant, color) => {
         appColors.gray600;
 };
 
+const textTruncate = (level) => {
+  const _level = typeof level === 'boolean' || typeof level !== 'number' ? 1 : level;
+  return `
+  display: block;
+  display: -webkit-box;
+  -webkit-line-clamp: ${_level};
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  `;
+};
+
 const TextStyling = styled.p`
   color: ${({ color, variant }) => getVariant(variant, color)};
   text-transform: ${({ transform }) => transform};
@@ -59,6 +71,11 @@ const TextStyling = styled.p`
   font-weight: ${({ weight }) => getFontWeight(weight)};
   font-family: ${({ family }) => getFontFamily(family)};
   margin: 0;
+  ${({ truncate }) =>
+  truncate &&
+    css`
+      ${textTruncate(truncate)}
+    `}
 `;
 
 const Text = ({ children, text, ...props }) => {
@@ -71,31 +88,25 @@ const TextHeading = ({ level = 1, children, text, ...props }) => {
 
 Text.Heading = TextHeading;
 
-const size = PropTypes.oneOf([10, 12, 14, 16, 18, 20, 22, 24, 26, 32, 36, 38, 40, 72, 80, 96]);
-const weight = PropTypes.oneOf(['light', 'reg', 'med', 'bold']);
-const family = PropTypes.oneOf(['helvetica', 'roboto']);
-const variant = PropTypes.oneOf(['light', 'dark']);
-// // flexible typechecking with any color
-// const color = PropTypes.oneOfType([PropTypes.string, PropTypes.oneOf(Object.keys(appColors))]);
-const color = PropTypes.oneOf(Object.keys(appColors)); // colors are tied to our palette
+const baseProps = {
+  text: PropTypes.string,
+  truncate: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
+  variant: PropTypes.oneOf(['light', 'dark']),
+  family: PropTypes.oneOf(['helvetica', 'roboto']),
+  weight: PropTypes.oneOf(['light', 'reg', 'med', 'bold']),
+  size: PropTypes.oneOf([10, 12, 14, 16, 18, 20, 22, 24, 26, 32, 36, 38, 40, 72, 80, 96]),
+  // // flexible typechecking with any color
+  // const color = PropTypes.oneOfType([PropTypes.string, PropTypes.oneOf(Object.keys(appColors))]);
+  color: PropTypes.oneOf(Object.keys(appColors)), // colors are tied to our palette
+};
 
 Text.propTypes = {
-  text: PropTypes.string,
-  color,
-  size,
-  variant,
-  weight,
-  family,
+  ...baseProps,
 };
 
 TextHeading.propTypes = {
-  text: PropTypes.string,
-  color,
-  variant,
   level: PropTypes.oneOf([1, 2, 3, 4, 5, 6]),
-  size,
-  weight,
-  family,
+  ...baseProps,
 };
 
 export default Text;
