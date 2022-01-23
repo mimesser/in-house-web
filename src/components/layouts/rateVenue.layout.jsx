@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Text from '../atoms/text/_index';
 import { appColors } from '../../style';
+import { Icon } from '../atoms';
+import { BackButton, IconButton } from '../atoms/Button/_index';
 
 const RateVenueLayout = ({ tabs }) => {
   const [activeTab, setActiveTab] = useState('rate');
@@ -10,23 +12,34 @@ const RateVenueLayout = ({ tabs }) => {
     setActiveTab(e.target.id);
   };
 
+  const goBack = () => {};
+  const message = () => {};
+
+  if (!tabs || typeof tabs !== 'object')
+    throw new Error('tab component is missing { rate: Component, ... }');
+
   return (
     <HousesLayoutStyling>
       <div className="rate-revenue__hero">
         <div className="rate-revenue--header">
-          <span>go back</span>
-          <span>send</span>
+          <BackButton style={{ color: appColors.gray300 }} onClick={goBack}>
+            <Icon icon="ih" color="inherit" size={1} />
+          </BackButton>
+          <IconButton icon="paper-plane" color={appColors.gray400} size={2} onClick={message} />
         </div>
         <section className="rate-revenue--content">
-          <Text.Heading transform="uppercase" color="gray300" size={12}>
-            industry
-          </Text.Heading>
+          <Text.Heading transform="uppercase" color="gray300" size={12} text="industry" />
           <div className="rate-revenue--content__name-rating">
-            <Text.Heading level={2} color="white" weight={700} size={32} transform="capitalize">
-              house name
-            </Text.Heading>
+            <Text.Heading
+              level={2}
+              color="white"
+              weight={700}
+              size={32}
+              transform="capitalize"
+              text="house name"
+            />
             <div>
-              <Text weight={300} size={80} family="roboto">
+              <Text variant="light" weight={300} color="gray100" size={80} family="roboto">
                 8<sup style={{ fontWeight: 300, fontSize: 40 }}>.4</sup>
               </Text>
             </div>
@@ -38,11 +51,19 @@ const RateVenueLayout = ({ tabs }) => {
                 title="150 55th st, brooklyn new york, 11200 USA"
                 size={12}
                 color="gray300"
-              >
-                150 55th st, brooklyn new york, 11200 USA
-              </Text>
+                text="150 55th st, brooklyn new york, 11200 USA"
+              />
             </address>
-            <div>insiders</div>
+            <Text
+              weight={300}
+              variant="light"
+              color="gray100"
+              size={14}
+              style={{ display: 'flex' }}
+              family="roboto"
+            >
+              <Icon size={1} icon="users2" /><span style={{ marginLeft: 7 }}>340</span>
+            </Text>
           </div>
         </section>
         <div className="rate-revenue__tabs" onClick={handleClick}>
@@ -52,9 +73,7 @@ const RateVenueLayout = ({ tabs }) => {
               id={el}
               className={`tab-content ${activeTab === el ? 'tab-content--active' : ''}`.trim()}
             >
-              <Text size={14} weight={700} transform="lowercase">
-                {el}
-              </Text>
+              <Text size={14} weight={700} transform="lowercase" text={el} />
             </div>
           ))}
         </div>
@@ -76,8 +95,14 @@ const HousesLayoutStyling = styled.div`
 
   .rate-revenue {
     &__hero {
-      padding: 25px 12px;
-      background: linear-gradient(black, transparent, black), url(static/demo_house.webp);
+      padding: 25px 12px 0;
+      background-image: linear-gradient(transparent, transparent, transparent, #00000063 100%),
+        url(static/org_card_header.png);
+      width: 100%;
+      height: auto;
+      background-repeat: no-repeat !important;
+      background-size: cover !important;
+      background-position: center !important;
     }
 
     &--header {
