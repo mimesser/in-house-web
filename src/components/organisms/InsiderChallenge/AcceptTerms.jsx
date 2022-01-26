@@ -1,9 +1,10 @@
 /* eslint-disable react/jsx-no-target-blank */
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
 import { connect } from 'react-redux';
 import Terms from '../Terms';
-
+import { BackButton, Commands, LeftArrowIcon } from '../FeedbackForm/style';
 import { H1, Checkbox, HelpTip, ClearButton, Button } from '../../atoms';
 import { spacing, appBackground, calcRem, palette } from '../../../style';
 import { acceptTerms } from '../../../store/aggregate';
@@ -37,10 +38,16 @@ const Header = styled.div`
   text-transform: uppercase;
 `;
 
+const TermBottom = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+`;
 const AcceptTerms = ({ acceptTerms, house }) => {
   const [accepted, setAccepted] = useState(false);
   const [termsModal, showTermsModal] = useState(false);
   const handleChange = () => setAccepted(!accepted);
+  const router = useRouter();
 
   return (
     <Layout>
@@ -58,9 +65,18 @@ const AcceptTerms = ({ acceptTerms, house }) => {
         </HelpWrap>
       </HelpTip>
       <TermsLink onClick={() => showTermsModal(true)}>review terms of service</TermsLink>
-      <Button disabled={!accepted} icon="arrow-right" onClick={acceptTerms}>
-        continue
-      </Button>
+      <Commands>
+        <TermBottom>
+          <BackButton onClick={() => router.back()} inverse>
+            <LeftArrowIcon icon="arrow-left" />
+            back
+          </BackButton>
+
+          <Button disabled={!accepted} icon="arrow-right" onClick={acceptTerms}>
+            continue
+          </Button>
+        </TermBottom>
+      </Commands>
     </Layout>
   );
 };
