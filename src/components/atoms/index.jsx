@@ -19,3 +19,4 @@ export { Brand } from './Brand';
 export { Slider } from './Slider';
 export { VersionFlag } from './VersionFlag';
 export { default as SlidingValue } from './SlidingValue';
+export { RateSlider } from './RateSlider';
