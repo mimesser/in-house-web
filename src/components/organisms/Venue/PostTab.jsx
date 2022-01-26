@@ -244,7 +244,7 @@ const Post = ({
   const [selected, setSelected] = useState(selectedPost && selectedPost.id === id);
   const [showFullImage, setShowFullImage] = useState(false);
 
-  const debouncedUpdatePosts = useDebounce(()=>update, 3000, { trailing: true });
+  const debouncedUpdatePosts = useDebounce(() => update, 3000, { trailing: true });
 
   const close = () => setShowFullImage(false);
   const open = () => setShowFullImage(true);

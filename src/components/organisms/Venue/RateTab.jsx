@@ -239,7 +239,6 @@ const RateTab = ({
   const renderSharePreview = useCallback(
     (id) => {
       const t = findTag(id, rateTags);
-
       return (
         <SharePreviewWrap>
           <Tag {...t} category={selectedCategory} />
