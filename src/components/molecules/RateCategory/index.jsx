@@ -1,19 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import styled, { keyframes } from 'styled-components';
-import isNumber from 'lodash/isNumber';
+import React, { useState } from "react";
+import styled, { keyframes } from "styled-components";
 
-import { CircleSlider, NumberLarge, NumberSmall, Icon, Slider, SlidingValue } from '../../atoms';
-import { fontSize, font, palette, theme, appColors } from '../../../style';
+import { NumberLarge, Icon, SlidingValue } from "../../atoms";
+import { fontSize, font, theme, appColors } from "../../../style";
 
-const FONT_RATIO = 3.6;
+const getColor = (selectedTag, id, active) => {
+  if (
+    !selectedTag.rateTagCategoryId ||
+    selectedTag.rateTagCategoryId === id ||
+    active
+  ) {
+    return appColors.grey400;
+  }
+  return appColors.grey400;
+};
 
 const Title = styled.div`
   position: absolute;
-  display: flex;
   margin-left: 42px;
   top: 35%;
-
   height: 100%;
+  color: ${({ selectedTag, id, active }) => getColor(selectedTag, id, active)};
   ${font.bold};
   pointer-events: none;
   user-select: none; /* supported by Chrome and Opera */
@@ -26,29 +33,28 @@ const Title = styled.div`
 const Expand = keyframes`
   0% {
     height: 35px;
-    background-color: ${palette.lightGrey};
-    color:  ${palette.black};
+    background-color: ${appColors.lightGrey};
+    color:  ${appColors.black};
   }
   100% {
     height: 72px;
-    background-color: ${palette.black};
-    color:  ${palette.white};
+    background-color: ${appColors.black};
+    color:  ${appColors.white};
 
     font-size: 18px;
   }
 `;
 
-const Colapse = keyframes`
+const Collapse = keyframes`
   0% {
-
     height: 72px;
-    background-color: ${palette.black};
-    color:  ${palette.white};
+    background-color: ${appColors.black};
+    color:  ${appColors.white};
   }
   100% {
     height: 35px;
-    background-color: ${palette.lightGrey};
-    color:  ${palette.black};
+    background-color: ${appColors.lightGrey};
+    color:  ${appColors.black};
     font-size: 14px;
   }
 `;
@@ -56,22 +62,29 @@ const Colapse = keyframes`
 const Wrapper = styled.div`
   margin-top: 2px;
   position: relative;
-  background-color: #e0e0e0;
+  background-color: ${({ selectedTag, id }) =>
+    selectedTag.rateTagCategoryId === id
+      ? appColors.grey500
+      : `${appColors.grey600}`};
   width: 100%;
-  height: 35px;
-  border-bottom: 1px solid #e0e0e0;
-  animation: ${({ expanded, ...props }) => (expanded === true ? Expand : Colapse)} ease-in-out
-    ${({ duration }) => `${duration}s`};
+  margin-bottom: 3px;
+  animation: ${({ expanded, ...props }) =>
+      expanded === true ? Expand : Collapse}
+    ease-in-out ${({ duration }) => `${duration}s`};
   animation-fill-mode: forwards;
-  background: ${({ expanded }) => (expanded === true ? theme.colors.black : palette.mediumGrey)};
+  background: ${({ expanded }) =>
+    expanded === true ? theme.colors.black : appColors.mediumGrey};
   cursor: pointer;
 `;
-const Dot = styled(({ size, padd, ...rest }) => <NumberLarge {...rest}>.</NumberLarge>)`
+
+const Dot = styled(({ size, padd, ...rest }) => (
+  <NumberLarge {...rest}>.</NumberLarge>
+))`
   position: relative;
   top: -0.2em;
   transform: translate(50%, -0%);
   ${font.light};
-  color: ${({ expanded }) => (expanded === true ? palette.white : palette.black)};
+  color: ${({ selectedTag, id }) => getColor(selectedTag, id)};
   margin-left: ${({ expanded }) => (expanded === true ? -1 : -0.9)}em;
 
   font-size: ${({ expanded }) => (expanded === true ? 32 : 24)}px;
@@ -81,15 +94,17 @@ const SlidingWrapper = styled.div`
   width: 70px;
   height: 54px;
   pointer-events: none;
-  margin-top: ${({ expanded }) => (expanded === true ? '-52px' : '-32px')};
+  margin-top: ${({ expanded }) => (expanded === true ? "-52px" : "-32px")};
   margin-left: auto;
   z-index: 11;
   padding-top: 4px;
 `;
 
-export const Indicator = styled(({ count, iconSize = 0.75, color, ...rest }) => (
-  <Icon {...rest} icon="dot" size={iconSize} color={color} />
-))`
+export const Indicator = styled(
+  ({ count, iconSize = 0.75, color, ...rest }) => (
+    <Icon {...rest} icon="dot" size={iconSize} color={color} />
+  )
+)`
   display: flex;
   justify-content: center;
   color: ${({ color }) => color};
@@ -107,26 +122,15 @@ export const Indicator = styled(({ count, iconSize = 0.75, color, ...rest }) => 
   left: ${(props) => `${props.percentage}%`};
 `;
 
-const renderValue = (value, decimal) => {
-  if (!isNumber(value)) {
-    return null;
-  }
-
-  if (decimal) {
-    return value.toFixed(1);
-  }
-
-  return value;
-};
-
 const BaseRateCategory = ({
   valueColor,
-  category: { name = 'rate & appreciation', color, id } = {},
+  category: { name = "rate & appreciation", color, id } = {},
   readonly,
   expanded,
   value,
   onClick,
-
+  selectedTag = { selectedTag },
+  active,
   ...sliderProps
 }) => {
   const { readonly: decimal, size, padd } = sliderProps;
@@ -143,12 +147,6 @@ const BaseRateCategory = ({
     }
   }
 
-  function handleChange(userRate) {
-    setUserValue(userRate);
-    if (onChange) {
-      onChange(userRate);
-    }
-  }
   return (
     <>
       <Wrapper
@@ -160,9 +158,14 @@ const BaseRateCategory = ({
             onClick();
           }
         }}
+        selectedTag={selectedTag}
+        id={id}
       >
         <Title
           expanded={isExpanded}
+          selectedTag={selectedTag}
+          id={id}
+          active={active}
           onClick={(e) => {
             preventDefault(e);
             setExpanded(!isExpanded);
@@ -173,14 +176,23 @@ const BaseRateCategory = ({
         >
           {name}
         </Title>
-        <Indicator color={appColors[color]} iconSize={isExpanded ? 1.5 : 0.75} />
+        <Indicator
+          color={appColors[color]}
+          iconSize={isExpanded ? 1.5 : 0.75}
+        />
         <SlidingWrapper expanded={isExpanded}>
           <SlidingValue
             value={`${Math.floor(value * 10)}`}
             fontSize={isExpanded ? fontSize.md : fontSize.sm}
-            textColor={isExpanded ? palette.white : palette.black}
+            textColor={getColor(selectedTag, id)}
           >
-            <Dot size={isExpanded ? 50 : 25} padd={padd} expanded={isExpanded} />
+            <Dot
+              size={isExpanded ? 50 : 25}
+              padd={padd}
+              expanded={isExpanded}
+              selectedTag={selectedTag}
+              id={id}
+            />
           </SlidingValue>
         </SlidingWrapper>
       </Wrapper>
