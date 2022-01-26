@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled, { keyframes } from "styled-components";
 
 import { NumberLarge, Icon, SlidingValue } from "../../atoms";
-import { fontSize, font, palette, theme, appColors } from "../../../style";
+import { fontSize, font, theme, appColors } from "../../../style";
 
 const getColor = (selectedTag, id, active) => {
   if (
@@ -10,9 +10,9 @@ const getColor = (selectedTag, id, active) => {
     selectedTag.rateTagCategoryId === id ||
     active
   ) {
-    return palette.grey400;
+    return appColors.grey400;
   }
-  return palette.grey400;
+  return appColors.grey400;
 };
 
 const Title = styled.div`
@@ -33,13 +33,13 @@ const Title = styled.div`
 const Expand = keyframes`
   0% {
     height: 35px;
-    background-color: ${palette.lightGrey};
-    color:  ${palette.black};
+    background-color: ${appColors.lightGrey};
+    color:  ${appColors.black};
   }
   100% {
     height: 72px;
-    background-color: ${palette.black};
-    color:  ${palette.white};
+    background-color: ${appColors.black};
+    color:  ${appColors.white};
 
     font-size: 18px;
   }
@@ -48,13 +48,13 @@ const Expand = keyframes`
 const Collapse = keyframes`
   0% {
     height: 72px;
-    background-color: ${palette.black};
-    color:  ${palette.white};
+    background-color: ${appColors.black};
+    color:  ${appColors.white};
   }
   100% {
     height: 35px;
-    background-color: ${palette.lightGrey};
-    color:  ${palette.black};
+    background-color: ${appColors.lightGrey};
+    color:  ${appColors.black};
     font-size: 14px;
   }
 `;
@@ -64,8 +64,8 @@ const Wrapper = styled.div`
   position: relative;
   background-color: ${({ selectedTag, id }) =>
     selectedTag.rateTagCategoryId === id
-      ? palette.grey500
-      : `${palette.grey600}`};
+      ? appColors.grey500
+      : `${appColors.grey600}`};
   width: 100%;
   margin-bottom: 3px;
   animation: ${({ expanded, ...props }) =>
@@ -73,7 +73,7 @@ const Wrapper = styled.div`
     ease-in-out ${({ duration }) => `${duration}s`};
   animation-fill-mode: forwards;
   background: ${({ expanded }) =>
-    expanded === true ? theme.colors.black : palette.mediumGrey};
+    expanded === true ? theme.colors.black : appColors.mediumGrey};
   cursor: pointer;
 `;
 

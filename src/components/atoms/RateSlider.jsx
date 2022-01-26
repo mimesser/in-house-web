@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import styled, { css } from "styled-components";
-import { palette } from "../../style";
+import { appColors } from "../../style";
 
 const getEsgType = (rateTagCategoryId) => {
   switch (rateTagCategoryId) {
@@ -17,18 +17,18 @@ const getEsgType = (rateTagCategoryId) => {
 
 const options = {
   environment: {
-    rating: palette.greenDark,
-    rated: palette.greenFaded,
+    rating: appColors.greenDark,
+    rated: appColors.greenFaded,
     default: "#F0F1F3",
   },
   social: {
-    rating: palette.wineDark,
-    rated: palette.wineFaded,
+    rating: appColors.wineDark,
+    rated: appColors.wineFaded,
     default: "#F0F1F3",
   },
   governance: {
-    rating: palette.blueDark,
-    rated: palette.blueFaded,
+    rating: appColors.blueDark,
+    rated: appColors.blueFaded,
     default: "#F0F1F3",
   },
 };
@@ -38,7 +38,7 @@ export const Indicator = styled(({ count, iconSize = 0.75, ...rest }) => (
 ))`
   display: flex;
   justify-content: center;
-  color: ${palette.black};
+  color: ${appColors.black};
   svg {
     padding: 0 3px 0 0;
   }
@@ -153,7 +153,7 @@ const baseStyling = css`
     };
 
     if (!userRated && !active) {
-      return `${palette.grey200}`;
+      return `${appColors.grey200}`;
     } else if (!active && userRated) {
       return getTrackColour("rated");
     } else {
@@ -194,7 +194,7 @@ const InputTrack = styled.input`
     -webkit-appearance: none;
 
     border: ${({ active }) =>
-      active ? `1px solid ${palette.grey600}` : "1px solid #BCBCBC"};
+      active ? `1px solid ${appColors.grey600}` : "1px solid #BCBCBC"};
     height: ${({ active }) => (active ? "27px" : "22px")};
     width: ${({ active }) => (active ? "27px" : "22px")};
 
@@ -211,7 +211,7 @@ const InputTrack = styled.input`
     box-shadow: 1px 2px 3px rgba(162, 157, 157, 0.6);
     border-radius: 50%;
     background: ${({ active }) =>
-      active ? `${palette.white}` : `${palette.grey100}`};
+      active ? `${appColors.white}` : `${appColors.grey100}`};
     cursor: pointer;
     margin-top: ${({ active }) =>
       active
@@ -222,7 +222,7 @@ const InputTrack = styled.input`
   /* All the same stuff for Firefox */
   &::-moz-range-thumb {
     border: ${({ active }) =>
-      active ? `1px solid ${palette.grey600}` : "1px solid #BCBCBC"};
+      active ? `1px solid ${appColors.grey600}` : "1px solid #BCBCBC"};
     height: ${({ active }) => (active ? "27px" : "22px")};
     width: ${({ active }) => (active ? "27px" : "22px")};
 
@@ -239,14 +239,14 @@ const InputTrack = styled.input`
     box-shadow: 1px 2px 3px rgba(162, 157, 157, 0.6);
     border-radius: 50%;
     background: ${({ active }) =>
-      active ? `${palette.white}` : `${palette.grey100}`};
+      active ? `${appColors.white}` : `${appColors.grey100}`};
     cursor: pointer;
   }
 
   /* All the same stuff for IE */
   &::-ms-thumb {
     border: ${({ active }) =>
-      active ? `1px solid ${palette.grey600}` : "1px solid #BCBCBC"};
+      active ? `1px solid ${appColors.grey600}` : "1px solid #BCBCBC"};
     height: ${({ active }) => (active ? "27px" : "22px")};
     width: ${({ active }) => (active ? "27px" : "22px")};
 
@@ -263,7 +263,7 @@ const InputTrack = styled.input`
     box-shadow: 1px 2px 3px rgba(162, 157, 157, 0.6);
     border-radius: 50%;
     background: ${({ active }) =>
-      active ? `${palette.white}` : `${palette.grey100}`};
+      active ? `${appColors.white}` : `${appColors.grey100}`};
     cursor: pointer;
   }
 
