@@ -1,15 +1,16 @@
-import React, { useState, useRef } from "react";
-import styled, { css } from "styled-components";
-import { appColors } from "../../style";
+import React, { useState, useRef } from 'react';
+import styled, { css } from 'styled-components';
+import { appColors } from '../../style';
+import Icon from '../atoms/Icon';
 
 const getEsgType = (rateTagCategoryId) => {
   switch (rateTagCategoryId) {
-    case "7cbf2716-87ad-42dc-4ed1-08d9ab04f553":
-      return "environment";
-    case "6b3de25b-6e0c-495f-4ed2-08d9ab04f553":
-      return "social";
-    case "6d48dd8c-abcf-4c69-4ed3-08d9ab04f553":
-      return "governance";
+    case '7cbf2716-87ad-42dc-4ed1-08d9ab04f553':
+      return 'environment';
+    case '6b3de25b-6e0c-495f-4ed2-08d9ab04f553':
+      return 'social';
+    case '6d48dd8c-abcf-4c69-4ed3-08d9ab04f553':
+      return 'governance';
     default:
       return null;
   }
@@ -19,17 +20,17 @@ const options = {
   environment: {
     rating: appColors.greenDark,
     rated: appColors.greenFaded,
-    default: "#F0F1F3",
+    default: '#F0F1F3',
   },
   social: {
     rating: appColors.wineDark,
     rated: appColors.wineFaded,
-    default: "#F0F1F3",
+    default: '#F0F1F3',
   },
   governance: {
     rating: appColors.blueDark,
     rated: appColors.blueFaded,
-    default: "#F0F1F3",
+    default: '#F0F1F3',
   },
 };
 
@@ -140,25 +141,18 @@ const baseStyling = css`
   background: ${(props) => {
     const { userRated, active, rateTagCategoryId, percentage } = props;
 
-    const getTrackColour = (currentActivity) => {
-      return (
-        `linear-gradient(to right, ${
-          options[getEsgType(rateTagCategoryId)][currentActivity]
-        } 0%, ${options[getEsgType(rateTagCategoryId)][currentActivity]} ` +
-        percentage +
-        `%, ${options[getEsgType(rateTagCategoryId)].default} ` +
-        percentage +
-        `%, ${options[getEsgType(rateTagCategoryId)].default} 100%)`
-      );
-    };
+    const getTrackColour = (currentActivity) => 
+      `linear-gradient(to right, ${
+        options[getEsgType(rateTagCategoryId)][currentActivity]
+      } 0%, ${options[getEsgType(rateTagCategoryId)][currentActivity]} ${percentage}%,
+				${options[getEsgType(rateTagCategoryId)].default} ${percentage}%, 
+				${options[getEsgType(rateTagCategoryId)].default} 100%)`;
 
     if (!userRated && !active) {
       return `${appColors.grey200}`;
     } else if (!active && userRated) {
-      return getTrackColour("rated");
-    } else {
-      return getTrackColour("rating");
-    }
+      return getTrackColour('rated');
+    } return getTrackColour('rating');
   }};
 `;
 
@@ -193,77 +187,71 @@ const InputTrack = styled.input`
   &::-webkit-slider-thumb {
     -webkit-appearance: none;
 
-    border: ${({ active }) =>
-      active ? `1px solid ${appColors.grey600}` : "1px solid #BCBCBC"};
-    height: ${({ active }) => (active ? "27px" : "22px")};
-    width: ${({ active }) => (active ? "27px" : "22px")};
+    border: ${({ active }) => (active ? `1px solid ${appColors.grey600}` : '1px solid #BCBCBC')};
+    height: ${({ active }) => (active ? '27px' : '22px')};
+    width: ${({ active }) => (active ? '27px' : '22px')};
 
     visibility: ${({ active, userRated }) => {
       if (!active && userRated) {
-        return "hidden";
+        return 'hidden';
       } else if (active) {
-        return "visible";
+        return 'visible';
       } else if (!active && !userRated) {
-        return "visible";
+        return 'visible';
       }
     }};
 
     box-shadow: 1px 2px 3px rgba(162, 157, 157, 0.6);
     border-radius: 50%;
-    background: ${({ active }) =>
-      active ? `${appColors.white}` : `${appColors.grey100}`};
+    background: ${({ active }) => (active ? `${appColors.white}` : `${appColors.grey100}`)};
     cursor: pointer;
     margin-top: ${({ active }) =>
       active
-        ? "-7px"
-        : "-3px"}; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+        ? '-7px'
+        : '-3px'}; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
   }
 
   /* All the same stuff for Firefox */
   &::-moz-range-thumb {
-    border: ${({ active }) =>
-      active ? `1px solid ${appColors.grey600}` : "1px solid #BCBCBC"};
-    height: ${({ active }) => (active ? "27px" : "22px")};
-    width: ${({ active }) => (active ? "27px" : "22px")};
+    border: ${({ active }) => (active ? `1px solid ${appColors.grey600}` : '1px solid #BCBCBC')};
+    height: ${({ active }) => (active ? '27px' : '22px')};
+    width: ${({ active }) => (active ? '27px' : '22px')};
 
     visibility: ${({ active, userRated }) => {
       if (!active && userRated) {
-        return "hidden";
+        return 'hidden';
       } else if (active) {
-        return "visible";
+        return 'visible';
       } else if (!active && !userRated) {
-        return "visible";
+        return 'visible';
       }
     }};
 
     box-shadow: 1px 2px 3px rgba(162, 157, 157, 0.6);
     border-radius: 50%;
-    background: ${({ active }) =>
-      active ? `${appColors.white}` : `${appColors.grey100}`};
+    background: ${({ active }) => (active ? `${appColors.white}` : `${appColors.grey100}`)};
     cursor: pointer;
   }
 
   /* All the same stuff for IE */
   &::-ms-thumb {
-    border: ${({ active }) =>
-      active ? `1px solid ${appColors.grey600}` : "1px solid #BCBCBC"};
-    height: ${({ active }) => (active ? "27px" : "22px")};
-    width: ${({ active }) => (active ? "27px" : "22px")};
+    border: ${({ active }) => (active ? `1px solid ${appColors.grey600}` : '1px solid #BCBCBC')};
+    height: ${({ active }) => (active ? '27px' : '22px')};
+    width: ${({ active }) => (active ? '27px' : '22px')};
 
     visibility: ${({ active, userRated }) => {
       if (!active && userRated) {
-        return "hidden";
+        return 'hidden';
       } else if (active) {
-        return "visible";
+        return 'visible';
       } else if (!active && !userRated) {
-        return "visible";
+        return 'visible';
       }
     }};
 
     box-shadow: 1px 2px 3px rgba(162, 157, 157, 0.6);
     border-radius: 50%;
-    background: ${({ active }) =>
-      active ? `${appColors.white}` : `${appColors.grey100}`};
+    background: ${({ active }) => (active ? `${appColors.white}` : `${appColors.grey100}`)};
     cursor: pointer;
   }
 

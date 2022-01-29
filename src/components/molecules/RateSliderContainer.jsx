@@ -8,13 +8,13 @@ import {
   Icon,
   Slider,
   SlidingValue,
-  Loader,
+	Loader,
+	RateSlider
 } from "../atoms";
 import { PokeButton } from "../organisms/Venue";
 import PrivateShareButton from "../organisms/Venue/PrivateShareButton";
 import { fontSize, font, palette, theme } from "../../style";
 import { formatRating, pluralFormatRatings } from "../../utils/format";
-import { RateSlider } from "../atoms";
 
 const FONT_RATIO = 3.6;
 
