@@ -1,4 +1,4 @@
-export const truncateFileName = (fileName: string) => {
+export const truncateFileName = (fileName) => {
   const parts = fileName.split(".");
   const name = parts.slice(0, parts.length - 1).join(".");
   const ending = parts[parts.length - 1];
