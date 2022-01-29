@@ -54,6 +54,7 @@
         "react-ga": "^3.3.0",
         "react-helmet": "^6.0.0",
         "react-hotjar": "^3.0.1",
+        "react-player": "^2.9.0",
         "react-popper-tooltip": "^3.1.1",
         "react-redux": "^7.2.5",
         "react-select": "^5.0.0",
