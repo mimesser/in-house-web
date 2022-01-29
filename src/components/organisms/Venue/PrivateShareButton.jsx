@@ -13,7 +13,15 @@ const Circle = styled.span`
   }
 `;
 
-const Share = ({ id, type, openModal, onOpenSharePopup, size, circleColor }) => {
+const Share = ({
+	id,
+	type,
+	openModal,
+	onOpenSharePopup,
+	size,
+	color,
+	circleColor
+}) => {
   const handleClick = useCallback(
     (e) => {
       e.stopPropagation();
@@ -33,7 +41,7 @@ const Share = ({ id, type, openModal, onOpenSharePopup, size, circleColor }) => 
     );
   }
 
-  return <PokeButton onClick={handleClick} size={size} />;
+  return <PokeButton color={color} onClick={handleClick} size={size} />;
 };
 
 const mapDispatch = {
