@@ -13,7 +13,7 @@ import {
 } from "../atoms";
 import { PokeButton } from "../organisms/Venue";
 import PrivateShareButton from "../organisms/Venue/PrivateShareButton";
-import { fontSize, font, palette, theme } from "../../style";
+import { fontSize, font, palette, theme, appColors } from "../../style";
 import { formatRating, pluralFormatRatings } from "../../utils/format";
 
 const FONT_RATIO = 3.6;
@@ -158,7 +158,7 @@ const VotesDetailsContainer = styled(
               <PrivateShareButton
                 id={definitionId}
                 type="rate"
-                color="#88898E"
+                color={appColors.gray400}
               />
             </ShareLayout>
           </VotesContainer>
@@ -204,7 +204,7 @@ const ShareLayout = styled.div`
   right: 30px;
   width: 32px;
   z-index: 2;
-  color: #d0d0d0;
+  color: ${appColors.gray6}
   ${PokeButton} {
     color: ${palette.grey400};
   }
