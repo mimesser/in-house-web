@@ -78,7 +78,7 @@ const TextController = (props) => {
         {ExtendedChild}
         {((props?.clearable && inValue) || props?.type === 'search') && (
           <button className="base-input-container--clearable" onClick={clearInputValue}>
-            <Icon icon={props.type === 'search' ? 'search' : 'x'} />
+            <Icon icon={props.type === 'search' ? 'search' : 'x'} color="inherit" />
           </button>
         )}
       </span>
@@ -194,6 +194,8 @@ const BaseStyling = styled.div`
         background: none;
         padding: 0;
         border: none;
+        color: ${({ variant, value }) =>
+          getColor(variant, !value ? 'DEFAULT' : 'FILLED')} !important;
       }
     }
     &--bottom {
@@ -201,6 +203,7 @@ const BaseStyling = styled.div`
       grid-template-columns: ${({ maxChars, helpText }) =>
         maxChars && helpText ? '1fr auto' : '1fr'};
       text-align: ${({ maxChars, helpText }) => maxChars && !helpText && 'right'};
+      color: ${({ variant, value }) => getColor(variant, !value ? 'DEFAULT' : 'FILLED')} !important;
     }
     &__single-value {
       color: ${({ variant }) => getColor(variant, 'ACTIVE')};
@@ -255,7 +258,8 @@ const BaseStyling = styled.div`
 `;
 
 const InputStyling = styled(BaseStyling)`
-  padding-right: ${({ clearable, type, value }) => (clearable || type === "search") && value && '35px !important'};
+  padding-right: ${({ clearable, type, value }) =>
+    (clearable || type === 'search') && value && '35px !important'};
 `;
 
 const TextAreaStyling = styled(BaseStyling)`
