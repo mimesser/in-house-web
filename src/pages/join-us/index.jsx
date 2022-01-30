@@ -12,8 +12,6 @@ import { appColors } from '../../style';
 const JoinUs = () => {
   const router = useRouter();
 
-  console.log(router);
-
   return (
     <Page whiteHead style={{ backgroundColor: appColors.gray600 }}>
       <Styling>
@@ -29,6 +27,7 @@ const JoinUs = () => {
           <Text
             size={14}
             className="description"
+            style={{maxWidth: 650}}
             color="gray300"
             text={`to avoid our dependence on external capital and control,
         we seek to work with people who share our vision for consensus
