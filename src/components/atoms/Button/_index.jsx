@@ -5,7 +5,6 @@ import { appColors, calcRem } from '../../../style';
 import { Loader } from '../Loader';
 import { Icon } from '../Icon';
 import { truncateFileName } from '../../../utils/helpers/truncateFile';
-import Text from '../text/_index';
 
 // Todo - Improve structure - reference input component
 const btnTheme = {
@@ -269,7 +268,7 @@ export const UploadButton = (props) => {
   };
 
   const handleChange = (event) => {
-    console.log(event.target.files);
+    if (props?.onChange) props.onChange(event);
     setFile(event.target.files[0]);
   };
 
