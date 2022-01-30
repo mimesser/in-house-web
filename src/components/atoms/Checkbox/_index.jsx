@@ -34,8 +34,9 @@ export const Checkbox = ({ variant = 'light', ...props }) => {
 
 const CheckboxStyle = styled.div`
   --svg-size: 24px;
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  width: fit-content;
 
   > label {
     margin-right: 21px;
@@ -62,7 +63,7 @@ const CheckboxStyle = styled.div`
     background-color: ${({ variant }) =>
   variant === 'light' ? appColors.gray100 : appColors.gray600};
     background-size: 18px;
-    background-image: url(static/checked.png);
+    background-image: url("/static/checked.png");
     background-position-y: 2px;
     background-repeat: no-repeat;
     display: inline-flex;
