@@ -36,6 +36,7 @@
         "babel-plugin-styled-components": "^1.13.2",
         "copyfiles": "^2.4.1",
         "cross-env": "7.0.2",
+        "formik": "^2.2.9",
         "husky": "^7.0.4",
         "is-ci": "github:watson/is-ci",
         "koa": "2.12.0",

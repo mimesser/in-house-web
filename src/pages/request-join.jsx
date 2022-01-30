@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { H1, Icon } from '../components/atoms';
 import { Page } from '../components/organisms';
 import { appColors, calcRem } from '../style';
-import Button from "../components/atoms/Button/_index";
+import Button from '../components/atoms/Button/_index';
 
 const PageStyling = styled(Page)`
   padding: 12px;
@@ -51,16 +51,18 @@ const RequestJoin = () => {
       title="In-House - List your House | Speak as a Team | Remain Untraceable"
     >
       <IconStyling>
-        <Icon size={2} icon="x" onClick={() => router.push("/")} />
+        <Icon size={2} icon="x" onClick={() => router.push('/')} />
       </IconStyling>
       <H1 className="heading">the in-house beta trial</H1>
       <div className="btn-actions">
         <Link href="/list-workspace">
           <Button variant="light" text="need this at my job right now" />
         </Link>
-        <Button variant="light" text="join/support the movement" />
+        <Link href="/join-us">
+          <Button variant="light" text="join/support the movement" />
+        </Link>
       </div>
-      <Button outlined className="btn-bottom" variant="light" text="notify me when full live"/>
+      <Button outlined className="btn-bottom" variant="light" text="notify me when full live" />
     </PageStyling>
   );
 };

@@ -35,7 +35,7 @@ const btnTheme = {
 };
 
 const ButtonBase = styled.button`
-  min-width: 89px;
+  min-width: 130px;
   position: relative;
   padding: ${calcRem(12)} ${calcRem(6)};
   font-size: ${calcRem(16)};
@@ -212,7 +212,7 @@ export const CTAButton = (props) => (
 );
 
 export const BackButton = (props) => (
-  <Button {...props} noBorder prefix={<Icon icon="arrow-left" />} noSuffix />
+  <Button text="back" {...props} noBorder prefix={<Icon icon="arrow-left" />} noSuffix />
 );
 
 const IconButtonStyling = styled.button`
