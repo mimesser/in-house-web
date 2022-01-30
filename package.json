@@ -4,7 +4,7 @@
     "main": "server/index.js",
     "version": "1.0.0-alpha+111021.0937",
     "scripts": {
-        "build:ci": "cross-env npm run clean && npm run build && copyfiles -a \"src/.next/**/*\" \"src/static/**/*\" \"src/public/**/*\" server/*.* package.json package-lock.json next.config.js build",
+        "build:ci": "cross-env npm run clean && npm run build && copyfiles -a \".next/**/*\" \"src/static/**/*\" \"src/public/**/*\" server/*.* package.json package-lock.json next.config.js build",
         "build": "cross-env next build",
         "clean": "cross-env rimraf ./build",
         "clean-sentry-config": "node .sentryclirc.resetter.js && git add .sentryclirc",
@@ -54,6 +54,7 @@
         "react-ga": "^3.3.0",
         "react-helmet": "^6.0.0",
         "react-hotjar": "^3.0.1",
+        "react-player": "^2.9.0",
         "react-popper-tooltip": "^3.1.1",
         "react-redux": "^7.2.5",
         "react-select": "^5.0.0",

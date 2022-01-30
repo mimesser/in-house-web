@@ -5,7 +5,20 @@ export const constColors = {
 };
 
 export const appColors = {
-  ...constColors,
+	...constColors,
+	
+	greenFaded: '#D7DED5',
+	greenDark: '#708858',
+	wineFaded: '#DED3D3',
+	wineDark: '#A36464',
+	blueFaded: '#D8DFE2',
+	blueDark: '#597D9E',
+
+	grey100: '#F4F4F2',
+	grey200: '#DFDFDF',
+	grey400: '#88898E',
+	grey500: '#585859',
+	grey600: '#333333',
 
   midnight: '#333333',
   gray2: '#4F4F4F',
