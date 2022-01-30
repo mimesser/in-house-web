@@ -133,7 +133,8 @@ const HousesLayoutStyling = styled.div`
       width: 100%;
       height: auto;
       background-color: ${appColors.gray600};
-      background-image: radial-gradient(#33333373 -28%, #000000c7 55%, black 139%),
+      background-image: linear-gradient(transparent 10%, #111111 104%),
+        radial-gradient(#33333373 30%, #000000c7 70%, #111111 139%),
         ${({ backgroundUrl }) => `url(${backgroundUrl})`};
       background-repeat: no-repeat !important;
       background-size: cover !important;
