@@ -47,13 +47,13 @@ const Push = styled.span`
 `;
 
 // TODO: move this to Venue?
-const Heading = styled(H1).attrs(({ title }) => ({
+const Heading = styled(H1).attrs(({ title, id }) => ({
   children: (
     <>
       <InlineFlex>
         {title}
         <Push />
-        <PrivateShareButton type="mink" color={palette.offWhite} size={1.5} />
+        <PrivateShareButton id={id} type="mink" color={palette.offWhite} size={1.5} />
       </InlineFlex>
       <Patent />
     </>
@@ -296,7 +296,7 @@ const Form = ({
   return (
     <>
       <HelpTip tip="#1 MINK (n): the most popular team password question" placement="top">
-        <Heading title={topMink.question} />
+        <Heading title={topMink.question} id={topMink.id} />
       </HelpTip>
       {inDemo && <TopMinkToolTip />}
       <Answer onSubmit={handleSubmit}>
@@ -316,6 +316,7 @@ const Form = ({
           {showError && !wrongAnswer ? <Loader white /> : !highlightError}
         </SubmitButton>
       </Answer>
+
       <PrivateShare type="mink" renderItem={renderSharePreview} getItemTitle={getTitleForShare} />
     </>
   );

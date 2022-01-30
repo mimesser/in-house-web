@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { appColors, calcRem } from '../../../style';
 import { Loader } from '../Loader';
 import { Icon } from '../Icon';
+import {truncateFileName} from "../../../utils/helpers/truncateFile";
 
+// Todo - Improve structure - reference input component
 const btnTheme = {
   light: {
     text: appColors.midnight,
@@ -53,12 +55,15 @@ const ButtonBase = styled.button`
 
   .btn-children {
     margin: 0 4px;
-    visibility: ${({ loading }) => (loading && 'hidden')};
-    &--prefix, &--suffix {
+    visibility: ${({ loading }) => loading && 'hidden'};
+    &--prefix,
+    &--suffix {
+      display: inline-flex;
       position: relative;
       font-weight: 700;
       font-size: ${calcRem(16)};
-      visibility: ${({ loading }) => (loading && 'hidden')};
+      visibility: ${({ loading }) => loading && 'hidden'};
+      align-items: center;
     }
 
     &--prefix {
@@ -77,7 +82,7 @@ const ButtonBase = styled.button`
     margin: auto;
     left: 0;
     right: 0;
-    visibility: ${({ loading }) => (!loading && 'hidden')};
+    visibility: ${({ loading }) => !loading && 'hidden'};
   }
 
   .loader span {
@@ -150,39 +155,36 @@ const ButtonBase = styled.button`
     `}
 `;
 
-const Button = React.forwardRef(
-  ({ text, children, variant = 'dark', disabled, loading, onClick, ...props }, ref) => {
-    return (
-      <ButtonBase
-        {...props}
-        disable={disabled}
-        aria-disabled={disabled}
-        variant={variant}
-        onClick={disabled || loading ? undefined : onClick}
-        loading={loading}
-        ref={ref}
-      >
-        {loading && (
-          <div className="loader-container">
-            <Loader className="loader" small />
-          </div>
-        )}
-        <>
-          <div className="btn-children">
-            {props.prefix && <span className="btn-children--prefix">{props.prefix}</span>}
-            {text || children}
-          </div>
-          {!props.noSuffix &&
-            (props.suffix ? (
-              <span className="btn-children--suffix">{props.suffix}</span>
-            ) : (
-              <Icon icon="arrow-right" className="btn-children--suffix" />
-            ))}
-        </>
-      </ButtonBase>
-    );
-  },
-);
+const Button = ({ text, children, variant = 'dark', disabled, loading, onClick, ...props }) => {
+  return (
+    <ButtonBase
+      {...props}
+      disable={disabled}
+      aria-disabled={disabled}
+      variant={variant}
+      onClick={disabled || loading ? undefined : onClick}
+      loading={loading}
+    >
+      {loading && (
+        <div className="loader-container">
+          <Loader className="loader" small />
+        </div>
+      )}
+      <>
+        <div className="btn-children">
+          {props.prefix && <span className="btn-children--prefix">{props.prefix}</span>}
+          {text || children}
+        </div>
+        {!props.noSuffix &&
+          (props.suffix ? (
+            <span className="btn-children--suffix">{props.suffix}</span>
+          ) : (
+            <Icon icon="arrow-right" className="btn-children--suffix" />
+          ))}
+      </>
+    </ButtonBase>
+  );
+};
 
 const CTABtnStyling = styled(Button)`
   color: #d9d9d9;
@@ -245,6 +247,42 @@ export const IconButton = ({ icon, variant, containerProps, ...props }) => (
     <Icon icon={icon} {...props} />
   </IconButtonStyling>
 );
+
+const UploadButtonStyling = styled.div`
+  > input {
+    display: none;
+  }
+`;
+
+export const UploadButton = (props) => {
+  const inputRef = useRef(null);
+  const [file, setFile] = useState({});
+
+  const onClick = () => {
+    if (inputRef?.current) {
+      inputRef.current.click();
+    }
+  };
+
+  const handleChange = (event) => {
+    console.log(event.target.files)
+    setFile(event.target.files[0]);
+  };
+
+  return (
+    <UploadButtonStyling>
+      <input type="file" {...props} ref={inputRef} onChange={handleChange} />
+      <Button
+        prefix={<Icon icon="attachment" />}
+        suffix={<Icon icon="plus" />}
+        onClick={onClick}
+        text={file?.name && truncateFileName(file?.name) || props.placeholder || 'Select file...'}
+        outlined
+        dashed
+      />
+    </UploadButtonStyling>
+  );
+};
 
 Button.propTypes = {
   text: PropTypes.string,

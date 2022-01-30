@@ -87,7 +87,7 @@ const Banner = ({
         </LeftSide>
         <Push />
         <RightSide>
-          <PrivateShareButton type="venue" color={palette.offWhite} />
+          <PrivateShareButton id={venue.id} type="venue" color={palette.offWhite} />
         </RightSide>
       </div>
       <div>
