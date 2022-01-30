@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useFormik } from 'formik';
 import Text from '../../components/atoms/text/_index';
@@ -10,25 +10,35 @@ import { Checkbox } from '../../components/atoms/Checkbox/_index';
 import { appColors } from '../../style';
 import { JoinUSBaseStyling } from './styles';
 import { Page } from '../../components/organisms';
-import { Input, Textarea } from '../../components/atoms';
+import Input from '../../components/atoms/Input/_index';
 
 const interest = [
-  { label: 'engineering / devops / qa' },
-  { label: 'content creation / storytelling' },
-  { label: 'ux / ui design' },
-  { label: 'product / project management' },
-  { label: 'app development' },
-  { label: 'branding / art direction' },
-  { label: 'user testing / analytics' },
-  { label: 'community organizing / policy' },
-  { label: 'growth hacking / social media' },
-  { label: 'public relations / outreach' },
-  { label: 'business development / finance' },
-  { label: 'management / operations' },
-  { label: 'legal / compliance' },
-  { label: 'accounting / taxation' },
-  { label: 'others' },
+  { label: 'engineering / devops / qa', value: "eng" },
+  { label: 'content creation / storytelling', value: "content" },
+  { label: 'ux / ui design', value: "design" },
+  { label: 'product / project management', value: "product" },
+  { label: 'app development', value: "dev" },
+  { label: 'branding / art direction', value: "branding" },
+  { label: 'user testing / analytics', value: "testing" },
+  { label: 'community organizing / policy', value: "community" },
+  { label: 'growth hacking / social media', value: "growth" },
+  { label: 'public relations / outreach', value: "relations" },
+  { label: 'business development / finance', value: "bus_dev" },
+  { label: 'management / operations', value: "mgmt" },
+  { label: 'legal / compliance', value: "legal" },
+  { label: 'accounting / taxation', value: "acct" },
+  { label: 'others', value: "others" },
 ];
+
+const hearOptions = [
+  { label: 'social media', value: 'social' },
+  { label: 'coworker / employer', value: 'employer' },
+  { label: 'street advertising', value: 'ads' },
+  { label: 'word of mouth', value: 'mouth' },
+  { label: 'other', value: 'other' },
+];
+
+const initVal = { name: '', email: '', heardAbout: null, comment: '', file: '', interest: {} };
 
 const JoinUsUserPage = () => {
   const router = useRouter();
@@ -38,16 +48,23 @@ const JoinUsUserPage = () => {
   const [showSummary, setShowSummary] = useState(false);
 
   const formik = useFormik({
-    initialValues: { name: '', email: '', heardAbout: '', comment: '', file: '', interest: {} },
-    initialErrors: {},
-    validate: () => {
+    initialValues: initVal,
+    initialErrors: initVal,
+    validate: (values) => {
       const errors = {};
-      // form validation here
-      if (!Object.keys(errors)) setSteps({ step: 2, total: 3 });
+      if (!values.name) errors.name = 'required!';
+      if (!values.email) errors.email = 'required!';
+      if (!values.comment) errors.comment = 'required!';
+      if (!values.heardAbout) errors.heardAbout = 'required!';
+      if (userType !== 'strategic') {
+        if (!Object.keys(values.interest).length)
+          errors.interest = 'at least one option is required!';
+      }
       return errors;
     },
     validateOnChange: true,
     onSubmit: (values, { setSubmitting }) => {
+      console.log(values);
       setTimeout(() => {
         setSubmitting(false);
         setSteps({ step: 3, total: 3 });
@@ -55,6 +72,16 @@ const JoinUsUserPage = () => {
       }, 2000);
     },
   });
+
+  const handleCheckers = (e) => {
+    const copyObj = formik.values.interest;
+    if (!e.target.checked) {
+      delete copyObj[e.target.name];
+    } else {
+      copyObj[e.target.name] = e.target.checked;
+    }
+    formik.handleChange({ target: { name: 'interest', value: copyObj } });
+  };
 
   const goBack = () => {
     if (!showSummary) {
@@ -64,6 +91,10 @@ const JoinUsUserPage = () => {
       setShowSummary(false);
     }
   };
+
+  useEffect(() => {
+    setSteps({ step: formik.isValid ? 2 : 1, total: 3 });
+  }, [formik.isValid]);
 
   return (
     <Page whiteHead style={{ backgroundColor: appColors.gray600 }}>
@@ -81,8 +112,14 @@ const JoinUsUserPage = () => {
                 text="your interest or expertise"
               />
               <>
-                {interest.map(({ label }) => (
-                  <Checkbox>
+                {interest.map(({ label, value }) => (
+                  <Checkbox
+                    key={label}
+                    name={label}
+                    value={value}
+                    onChange={handleCheckers}
+                    checked={formik.values.interest[label]}
+                  >
                     <Text text={label} />
                   </Checkbox>
                 ))}
@@ -91,24 +128,51 @@ const JoinUsUserPage = () => {
           )}
           {!showSummary ? (
             <form className="form">
-              <Input />
-              <Input />
-              <Textarea />
-              <UploadButton placeholder="pdf, word" />
+              <Input
+                variant="light"
+                name="name"
+                placeholder="name"
+                clearable
+                onChange={formik.handleChange}
+                value={formik.values.name}
+              />
+              <Input
+                variant="light"
+                name="email"
+                placeholder="email"
+                clearable
+                onChange={formik.handleChange}
+                value={formik.values.email}
+              />
+              <Input.TextArea
+                style={{ minHeight: 113 }}
+                variant="light"
+                name="comment"
+                placeholder="tell us about yourself"
+                onChange={formik.handleChange}
+                value={formik.values.comment}
+              />
+              <Input.Select
+                variant="light"
+                name="heardAbout"
+                placeholder="how did you hear about us?"
+                options={hearOptions}
+                onChange={formik.handleChange}
+                value={formik.values.heardAbout}
+              />
+              <UploadButton
+                onChange={formik.handleChange}
+                value={formik.values.file}
+                placeholder="pdf, word"
+                variant="light"
+              />
             </form>
           ) : (
             <div>show summary</div>
           )}
           <div className="form-btns">
             {!showSummary ? (
-              <Button
-                text="cancel"
-                variant="light"
-                suffix=" "
-                onClick={goBack}
-                outlined
-                noBorder
-              />
+              <Button text="cancel" variant="light" suffix=" " onClick={goBack} outlined noBorder />
             ) : (
               <BackButton style={{ color: appColors.gray200 }} onClick={goBack} />
             )}

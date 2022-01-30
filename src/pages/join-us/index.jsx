@@ -42,7 +42,9 @@ const JoinUs = () => {
               <Button variant="light" text="strategic partner" />
             </Link>
           </div>
-          <BackButton variant="light" text="back" />
+          <Link href="/">
+            <BackButton variant="light" text="back" />
+          </Link>
         </section>
         <Footer variant="transparent" />
       </Styling>

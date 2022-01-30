@@ -4,7 +4,8 @@ import styled, { css } from 'styled-components';
 import { appColors, calcRem } from '../../../style';
 import { Loader } from '../Loader';
 import { Icon } from '../Icon';
-import {truncateFileName} from "../../../utils/helpers/truncateFile";
+import { truncateFileName } from '../../../utils/helpers/truncateFile';
+import Text from '../text/_index';
 
 // Todo - Improve structure - reference input component
 const btnTheme = {
@@ -268,7 +269,7 @@ export const UploadButton = (props) => {
   };
 
   const handleChange = (event) => {
-    console.log(event.target.files)
+    console.log(event.target.files);
     setFile(event.target.files[0]);
   };
 
@@ -276,11 +277,16 @@ export const UploadButton = (props) => {
     <UploadButtonStyling>
       <input type="file" {...props} ref={inputRef} onChange={handleChange} />
       <Button
+        type="button"
         prefix={<Icon icon="attachment" />}
         suffix={<Icon icon="plus" />}
         onClick={onClick}
-        text={file?.name && truncateFileName(file?.name) || props.placeholder || 'Select file...'}
         outlined
+        text={
+          <span style={{ fontSize: 14 }}>
+            {(file?.name && truncateFileName(file?.name)) || props.placeholder || 'Select file...'}
+          </span>
+        }
         dashed
         variant={props.variant}
       />
@@ -289,7 +295,7 @@ export const UploadButton = (props) => {
 };
 
 Button.propTypes = {
-  text: PropTypes.string,
+  text: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   variant: PropTypes.oneOf(['dark', 'light']),
   outlined: PropTypes.bool,
   noBorder: PropTypes.bool,
