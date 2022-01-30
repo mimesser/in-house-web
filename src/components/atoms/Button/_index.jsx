@@ -252,6 +252,9 @@ const UploadButtonStyling = styled.div`
   > input {
     display: none;
   }
+  > button {
+    padding: ${calcRem(9.5)} ${calcRem(6)};
+  }
 `;
 
 export const UploadButton = (props) => {
@@ -279,6 +282,7 @@ export const UploadButton = (props) => {
         text={file?.name && truncateFileName(file?.name) || props.placeholder || 'Select file...'}
         outlined
         dashed
+        variant={props.variant}
       />
     </UploadButtonStyling>
   );
