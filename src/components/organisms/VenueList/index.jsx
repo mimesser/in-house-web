@@ -3,7 +3,6 @@ import Router, { useRouter } from 'next/router';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Link from 'next/link';
-
 import styled from 'styled-components';
 import { spacing } from '../../../style';
 import { Loader, ClearButton, Icon, Button, Card, H1, Portal } from '../../atoms';

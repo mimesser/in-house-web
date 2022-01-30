@@ -27,7 +27,6 @@ import { spacing, appColors, palette } from '../../../style';
 import PrivateShare from './PrivateShare';
 import PrivateShareButton from './PrivateShareButton';
 import { PokeButton } from '../../molecules';
-import { Votes } from '../../molecules/RateSlider';
 import { FlagItem } from './FlagItem';
 import { RateConfirmation } from './RateConfirmation';
 import { VoteButton, Layout, FlagButton } from './openCardStyle';
@@ -39,6 +38,33 @@ const transition = {
   in: '0.25s',
   out: '0.2s',
 };
+
+export const Votes = styled(({ count, iconSize = 1, userRate, pluralFormat, ...rest }) => (
+	  <NumberSmall {...rest}>
+	    <Icon icon="users" size={iconSize} />
+			<span className="count">{count || 0}</span>{' '}
+			{
+				userRate
+				? <span className="divide">{'   /'}</span>
+	    	: <span className="divide">{pluralFormat(count)}</span>
+	    }
+	  </NumberSmall>
+	))`
+		height: 17px;
+		font-weight: 400; /* normal */
+		font-size: 14px;
+		color: #333333;
+	
+		// font-family: Helvetica Neue
+		// font-style: normal
+		// line-height: 17px;
+	
+		// from figma
+		// flex: none;
+		// order: 1;
+		// flex-grow: 0;
+		// margin: 0px 1px;
+	`;
 
 const VoteColumn = styled.div`
   display: block;
@@ -244,7 +270,7 @@ const Post = ({
   const [selected, setSelected] = useState(selectedPost && selectedPost.id === id);
   const [showFullImage, setShowFullImage] = useState(false);
 
-  const debouncedUpdatePosts = useDebounce(()=>update, 3000, { trailing: true });
+  const debouncedUpdatePosts = useDebounce(() => update, 3000, { trailing: true });
 
   const close = () => setShowFullImage(false);
   const open = () => setShowFullImage(true);
