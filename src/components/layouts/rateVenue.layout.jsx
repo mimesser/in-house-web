@@ -1,25 +1,52 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 import Text from '../atoms/text/_index';
-import { appColors } from '../../style';
+import { appColors, calcRem } from '../../style';
 import { Icon } from '../atoms';
 import { BackButton, IconButton } from '../atoms/Button/_index';
 
-const RateVenueLayout = ({ tabs }) => {
+const RenderRating = ({ rating }) => {
+  const [a, b] = rating ? rating.toFixed(1).split('.') : ['0', '0'];
+  return (
+    <Text
+      variant="light"
+      weight={300}
+      style={{ wordBreak: 'keep-all' }}
+      color="gray100"
+      size={80}
+      family="roboto"
+    >
+      {a}
+      <sup style={{ fontWeight: 300, fontSize: 40, top: calcRem('-27.5px') }}>.{b}</sup>
+    </Text>
+  );
+};
+
+const RateVenueLayout = ({ tabs, ...props }) => {
   const [activeTab, setActiveTab] = useState('rate');
+  const history = useRouter();
+
+  const { selectedVenue } = useSelector((state) => state?.venues);
 
   const handleClick = (e) => {
     setActiveTab(e.target.id);
   };
 
-  const goBack = () => {};
+  const goBack = () => {
+    history.push('/houses');
+  };
+
   const message = () => {};
 
   if (!tabs || typeof tabs !== 'object')
     throw new Error('tab component is missing { rate: Component, ... }');
 
+  const Tabs = tabs[activeTab];
+
   return (
-    <HousesLayoutStyling>
+    <HousesLayoutStyling backgroundUrl={selectedVenue?.venueInfo?.imageUrl}>
       <div className="rate-revenue__hero">
         <div className="rate-revenue--header">
           <BackButton style={{ color: appColors.gray300 }} onClick={goBack}>
@@ -28,7 +55,12 @@ const RateVenueLayout = ({ tabs }) => {
           <IconButton icon="paper-plane" color={appColors.gray400} size={2} onClick={message} />
         </div>
         <section className="rate-revenue--content">
-          <Text.Heading transform="uppercase" color="gray300" size={12} text="industry" />
+          <Text.Heading
+            transform="uppercase"
+            color="gray300"
+            size={12}
+            text={selectedVenue?.industry?.name || 'industry'}
+          />
           <div className="rate-revenue--content__name-rating">
             <Text.Heading
               level={2}
@@ -36,22 +68,20 @@ const RateVenueLayout = ({ tabs }) => {
               weight={700}
               size={32}
               transform="capitalize"
-              text="house name"
+              text={selectedVenue?.name}
             />
             <div>
-              <Text variant="light" weight={300} color="gray100" size={80} family="roboto">
-                8<sup style={{ fontWeight: 300, fontSize: 40 }}>.4</sup>
-              </Text>
+              <RenderRating rating={selectedVenue?.rating} />
             </div>
           </div>
           <div className="rate-revenue--content__address-insiders">
             <address>
               <Text
                 truncate
-                title="150 55th st, brooklyn new york, 11200 USA"
+                title={selectedVenue?.venueInfo?.address}
                 size={12}
                 color="gray300"
-                text="150 55th st, brooklyn new york, 11200 USA"
+                text={selectedVenue?.venueInfo?.address}
               />
             </address>
             <Text
@@ -62,7 +92,8 @@ const RateVenueLayout = ({ tabs }) => {
               style={{ display: 'flex' }}
               family="roboto"
             >
-              <Icon size={1} icon="users2" /><span style={{ marginLeft: 7 }}>340</span>
+              <Icon size={1} icon="users2" />
+              <span style={{ marginLeft: 7 }}>{selectedVenue?.insidersCount}</span>
             </Text>
           </div>
         </section>
@@ -78,7 +109,9 @@ const RateVenueLayout = ({ tabs }) => {
           ))}
         </div>
       </div>
-      <>{tabs[activeTab]}</>
+      <>
+        <Tabs {...props} />
+      </>
     </HousesLayoutStyling>
   );
 };
@@ -95,14 +128,17 @@ const HousesLayoutStyling = styled.div`
 
   .rate-revenue {
     &__hero {
+      position: relative;
       padding: 25px 12px 0;
-      background-image: linear-gradient(transparent, transparent, transparent, #00000063 100%),
-        url(static/org_card_header.png);
       width: 100%;
       height: auto;
+      background-color: ${appColors.gray600};
+      background-image: radial-gradient(#33333373 -28%, #000000c7 55%, black 139%),
+        ${({ backgroundUrl }) => `url(${backgroundUrl})`};
       background-repeat: no-repeat !important;
       background-size: cover !important;
       background-position: center !important;
+      filter: grayscale(100%);
     }
 
     &--header {
@@ -122,6 +158,7 @@ const HousesLayoutStyling = styled.div`
       &__name-rating,
       &__address-insiders {
         ${spacer};
+        gap: 10px;
       }
 
       &__name-rating {

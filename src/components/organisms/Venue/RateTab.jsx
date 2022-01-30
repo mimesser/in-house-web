@@ -331,21 +331,21 @@ const RateTab = ({
     <TabLayout>
       {categories
         ? categories.map((category) => (
-            <RateCategory
-              key={category.id}
-              category={category}
-              value={findCategoryRating(category.id, categoryRatings)}
-              expanded={selectedCategory && selectedCategory.id === category.id}
-              onClick={() => {
-                if (selectedCategory && selectedCategory.id === category.id) {
-                  setSelectedCategory(null);
-                } else {
-                  setSelectedCategory(category);
-                }
-                setSelectedTag(null);
-              }}
-            />
-          ))
+          <RateCategory
+            key={category.id}
+            category={category}
+            value={findCategoryRating(category.id, categoryRatings)}
+            expanded={selectedCategory && selectedCategory.id === category.id}
+            onClick={() => {
+              if (selectedCategory && selectedCategory.id === category.id) {
+                setSelectedCategory(null);
+              } else {
+                setSelectedCategory(category);
+              }
+              setSelectedTag(null);
+            }}
+          />
+        ))
         : null}
       <Link href="/feedback" passHref>
         <NewRateButton icon="arrow-right">new Rate</NewRateButton>
