@@ -11,23 +11,24 @@ import { appColors } from '../../style';
 import { JoinUSBaseStyling } from './styles';
 import { Page } from '../../components/organisms';
 import Input from '../../components/atoms/Input/_index';
+import Summary from './_summary';
 
 const interest = [
-  { label: 'engineering / devops / qa', value: "eng" },
-  { label: 'content creation / storytelling', value: "content" },
-  { label: 'ux / ui design', value: "design" },
-  { label: 'product / project management', value: "product" },
-  { label: 'app development', value: "dev" },
-  { label: 'branding / art direction', value: "branding" },
-  { label: 'user testing / analytics', value: "testing" },
-  { label: 'community organizing / policy', value: "community" },
-  { label: 'growth hacking / social media', value: "growth" },
-  { label: 'public relations / outreach', value: "relations" },
-  { label: 'business development / finance', value: "bus_dev" },
-  { label: 'management / operations', value: "mgmt" },
-  { label: 'legal / compliance', value: "legal" },
-  { label: 'accounting / taxation', value: "acct" },
-  { label: 'others', value: "others" },
+  { label: 'engineering / devops / qa', value: 'eng' },
+  { label: 'content creation / storytelling', value: 'content' },
+  { label: 'ux / ui design', value: 'design' },
+  { label: 'product / project management', value: 'product' },
+  { label: 'app development', value: 'dev' },
+  { label: 'branding / art direction', value: 'branding' },
+  { label: 'user testing / analytics', value: 'testing' },
+  { label: 'community organizing / policy', value: 'community' },
+  { label: 'growth hacking / social media', value: 'growth' },
+  { label: 'public relations / outreach', value: 'relations' },
+  { label: 'business development / finance', value: 'bus_dev' },
+  { label: 'management / operations', value: 'mgmt' },
+  { label: 'legal / compliance', value: 'legal' },
+  { label: 'accounting / taxation', value: 'acct' },
+  { label: 'others', value: 'others' },
 ];
 
 const hearOptions = [
@@ -38,7 +39,7 @@ const hearOptions = [
   { label: 'other', value: 'other' },
 ];
 
-const initVal = { name: '', email: '', heardAbout: null, comment: '', file: '', interest: {} };
+const initVal = { name: '', email: '', heardAbout: null, comment: '', file: {}, interest: {} };
 
 const JoinUsUserPage = () => {
   const router = useRouter();
@@ -56,7 +57,8 @@ const JoinUsUserPage = () => {
       if (!values.email) errors.email = 'required!';
       if (!values.comment) errors.comment = 'required!';
       if (!values.heardAbout) errors.heardAbout = 'required!';
-      if (userType !== 'strategic') {
+      if (!Object.keys(values.file).length) errors.file = 'required!';
+      if (userType === 'motivated') {
         if (!Object.keys(values.interest).length)
           errors.interest = 'at least one option is required!';
       }
@@ -81,6 +83,10 @@ const JoinUsUserPage = () => {
       copyObj[e.target.name] = e.target.checked;
     }
     formik.handleChange({ target: { name: 'interest', value: copyObj } });
+  };
+
+  const handleFileUpload = (e) => {
+    formik.handleChange({ target: { name: e.target.name, value: e.target.files[0] } });
   };
 
   const goBack = () => {
@@ -151,6 +157,7 @@ const JoinUsUserPage = () => {
                 placeholder="tell us about yourself"
                 onChange={formik.handleChange}
                 value={formik.values.comment}
+                maxChars={500}
               />
               <Input.Select
                 variant="light"
@@ -161,14 +168,14 @@ const JoinUsUserPage = () => {
                 value={formik.values.heardAbout}
               />
               <UploadButton
-                onChange={formik.handleChange}
-                value={formik.values.file}
+                onChange={handleFileUpload}
+                name="file"
                 placeholder="pdf, word"
                 variant="light"
               />
             </form>
           ) : (
-            <div>show summary</div>
+            <Summary values={formik.values} />
           )}
           <div className="form-btns">
             {!showSummary ? (
