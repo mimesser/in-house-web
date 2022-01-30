@@ -17,7 +17,10 @@ const Stepper = ({ variant = 'light', state, ...props }) => {
   return (
     <Styling variant={variant} {...props}>
       {[...Array(Math.abs(+state?.total) ?? 0)].map((_, idx) => (
-        <span className={`step ${idx + 1 <= +state?.step ? 'step--has-completed' : ''}`.trim()} />
+        <span
+          key={idx}
+          className={`step ${idx + 1 <= +state?.step ? 'step--has-completed' : ''}`.trim()}
+        />
       ))}
     </Styling>
   );

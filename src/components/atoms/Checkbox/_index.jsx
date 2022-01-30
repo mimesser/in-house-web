@@ -14,15 +14,15 @@ export const Checkbox = ({ variant = 'light', ...props }) => {
   return (
     <CheckboxStyle variant={variant} role="checkbox" tabIndex={0} {...props} onClick={toggle}>
       <input
-        id={props.id || props.name}
+        id={props.name}
         type="checkbox"
-        name={props.name || props.id}
+        name={props.name}
         onChange={props.onChange}
         disabled={props.disabled}
         checked={props.checked}
         ref={inputRef}
       />
-      <label role="presentation" htmlFor={props.id || props.name} />
+      <label role="presentation" htmlFor={props.name} onClick={toggle} />
       <>
         {React.Children.map(props.children, (child) => {
           return props?.children && React.cloneElement(child, { variant, ...child.props });
@@ -61,9 +61,9 @@ const CheckboxStyle = styled.div`
     border: 3px solid
       ${({ variant }) => (variant === 'light' ? appColors.gray100 : appColors.gray600)};
     background-color: ${({ variant }) =>
-  variant === 'light' ? appColors.gray100 : appColors.gray600};
+      variant === 'light' ? appColors.gray100 : appColors.gray600};
     background-size: 18px;
-    background-image: url("/static/checked.png");
+    background-image: url('/static/checked.png');
     background-position-y: 2px;
     background-repeat: no-repeat;
     display: inline-flex;
