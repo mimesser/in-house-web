@@ -25,7 +25,7 @@ module.exports = {
     'react/jsx-one-expression-per-line': 'off',
     'react/jsx-props-no-spreading': 'off',
     'react/jsx-indent-props': ['warn', 2],
-    'max-len': ['warn', { code: 80 }],
+    'max-len': ['warn', { code: 100 }],
     indent: [
       'warn',
       2,
