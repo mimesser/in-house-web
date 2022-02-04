@@ -12,6 +12,7 @@ import { JoinUSBaseStyling } from './styles';
 import { Page } from '../../components/organisms';
 import Input from '../../components/atoms/Input/_index';
 import Summary from './_summary';
+import { isEmailValid } from '../../utils';
 
 const interest = [
   { label: 'engineering / devops / qa', value: 'eng' },
@@ -55,6 +56,7 @@ const JoinUsUserPage = () => {
       const errors = {};
       if (!values.name) errors.name = 'required!';
       if (!values.email) errors.email = 'required!';
+      else if (isEmailValid(values.email)) errors.email = 'email not valid!';
       if (!values.comment) errors.comment = 'required!';
       if (!values.heardAbout) errors.heardAbout = 'required!';
       if (!values.file) errors.file = 'required!';
@@ -68,7 +70,7 @@ const JoinUsUserPage = () => {
     onSubmit: (values, { setSubmitting }) => {
       console.log(values);
       if (showSummary) {
-        alert("flash mink")
+        alert('flash mink');
       } else {
         setTimeout(() => {
           setSubmitting(false);
