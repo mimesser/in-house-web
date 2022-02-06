@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { palette } from '../../../style';
 
-const getColor = ({ color }) => color ? palette[color] : 'inherit';
+const getColor = ({ color }) => color || (color ? palette[color] : 'inherit');
 
 const Wrapper = styled.span`
   display: inline-block;
