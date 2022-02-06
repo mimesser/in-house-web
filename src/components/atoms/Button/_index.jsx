@@ -212,7 +212,7 @@ export const CTAButton = (props) => (
 );
 
 export const BackButton = (props) => (
-  <Button {...props} noBorder prefix={<Icon icon="arrow-left" color="inherit" />} noSuffix />
+  <Button {...props} noBorder prefix={<Icon icon="arrow-left" />} noSuffix />
 );
 
 const IconButtonStyling = styled.button`
