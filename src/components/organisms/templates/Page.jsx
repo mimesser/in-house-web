@@ -139,7 +139,8 @@ export const Page = ({
   imageBack,
   overlayBack,
   whiteHead,
-  noPadd,
+	noPadd,
+	variant
 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const openMenu = useCallback(() => setMenuOpen(true), []);
@@ -161,7 +162,7 @@ export const Page = ({
           {overlayBack && <Overlay />}
         </>
 
-        <Menu isOpen={menuOpen} closeMenu={closeMenu} />
+        <Menu isOpen={menuOpen} closeMenu={closeMenu} variant={variant} />
         {defaultHeader && <Header openMenu={openMenu} white={whiteHead} noPadd={noPadd} />}
         <Container noPadd={noPadd}>{children}</Container>
         {/* <HelpToggle containerRef={ref} /> */}
