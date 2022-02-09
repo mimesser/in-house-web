@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { NumberedSectionBlock, HorizontallyCenteredContainer } from '../Custom/Amazon';
+
+import { NumberedSectionBlock, HorizontallyCenteredContainer } from '../components';
 import Text from '../../../atoms/text/_index';
-import { Icon } from '../../../atoms';
-import { CTAButton } from '../../../atoms/Button/_index';
 import { appColors } from '../../../../style';
+
+import { CTAButton } from '../../../atoms/Button/_index';
 
 const howItWorks = [
   {
@@ -20,7 +21,7 @@ const howItWorks = [
   {
     header: 'alert your team (anonymously)',
     description:
-      'our anonymous share feature⋟allows you to invite people in your team without revealing your identity',
+      'our anonymous share feature allows you to invite people in your team without revealing your identity',
   },
   {
     header: 'address everything (safely)',
@@ -36,7 +37,8 @@ const howItWorks = [
 
 const TopSectionContainer = styled.div`
   padding: 20px 12px 0;
-  background: transparent;
+	background: transparent;
+	background: linear-gradient(356deg, black, transparent);
 `;
 
 const HorizontalBar = styled.div`
@@ -55,10 +57,22 @@ const TextContainer = styled.div`
 
 const TopSection = () => (
   <TopSectionContainer>
-    <Text variant="light" color={appColors.gray200} weight="bold" family="helvetica" size={36}>
+    <Text
+			variant="light"
+			color="gray200"
+			weight="bold"
+			family="helvetica"
+			size={36}
+		>
       voice
     </Text>
-    <Text variant="light" color={appColors.gray200} weight="bold" family="helvetica" size={36}>
+    <Text
+			variant="light"
+			color="gray200"
+			weight="bold"
+			family="helvetica"
+			size={36}
+		>
       everything
     </Text>
 
@@ -66,34 +80,43 @@ const TopSection = () => (
       <HorizontalBar />
     </SpacingContainer>
 
-    <Text variant="dark" color={appColors.gray200} weight="bold" family="helvetica" size={32}>
+    <Text
+			variant="dark"
+			color={appColors.gray200}
+			weight="bold"
+			family="helvetica"
+			size={32}
+		>
       (remain untraceable)
     </Text>
     <SpacingContainer marginTop={34}>
       <CTAButton text="make my workplace transparent" />
     </SpacingContainer>
     <TextContainer>
-      <Text variant="light" color={appColors.gray300} weight="reg" family="helvetica" size={16}>
+      <Text
+				variant="light"
+				color="gray300"
+				weight="reg"
+				family="helvetica"
+				size={16}
+			>
         now there is a tool allowing your entire team to speak truth to power in unified consensus
         —without fear of retaliation
       </Text>
 
-      <Text variant="light" color={appColors.gray300} weight="reg" family="helvetica" size={16}>
+      <Text
+				variant="light"
+				color="gray300"
+				weight="reg"
+				family="helvetica"
+				size={16}
+			>
         grade your company’s ESG/sustainability metrics and show the public how it treats people,
         the planet, and its profits
       </Text>
     </TextContainer>
   </TopSectionContainer>
 );
-
-const NumberedSectionBlockContainer = styled.div`
-  width: 100%;
-  margin-top: 60px;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  text-align: center;
-`;
 
 const SpacingContainerStyling = styled.div`
   margin-top: ${({ marginTop }) => `${marginTop}px`};
@@ -106,45 +129,15 @@ const SpacingContainer = ({ children, ...props }) => (
   <SpacingContainerStyling {...props}>{children}</SpacingContainerStyling>
 );
 
-// const NumberedSectionBlock = ({ index, header, description }) => (
-//   <NumberedSectionBlockContainer>
-//     <HorizontallyCenteredContainer style={{ marginBottom: '8px' }}>
-//       <Icon icon={`number-disc-${index + 1}`} size={6} />
-//     </HorizontallyCenteredContainer>
-
-//     <HorizontallyCenteredContainer style={{ marginBottom: '16px' }}>
-//       <Text
-//         text={header}
-//         color={appColors.gray300}
-//         variant="light"
-//         weight="bold"
-//         family="helvetica"
-//         size={32}
-//       />
-//     </HorizontallyCenteredContainer>
-
-//     <HorizontallyCenteredContainer>
-//       <Text
-//         text={description}
-//         color={appColors.gray400}
-//         variant="dark"
-//         weight="reg"
-//         family="helvetica"
-//         size={16}
-//       />
-//     </HorizontallyCenteredContainer>
-//   </NumberedSectionBlockContainer>
-// );
-
 const SectionOne = () => (
   <>
     <TopSection />
-    <div style={{ background: '#000' }}>
+    <div style={{ background: '#111' }}>
       <SpacingContainer padding="142px 12px 60px 12px">
         <HorizontallyCenteredContainer style={{ marginBottom: '60px' }}>
           <Text
             variant="light"
-            color={appColors.gray300}
+            color="gray300"
             weight="bold"
             family="helvetica"
             size={36}
@@ -161,7 +154,9 @@ const SectionOne = () => (
               header={header}
               description={description}
               index={index}
-              key={index}
+							key={index}
+							headerMaxWidth="306px"
+							descriptionMaxWidth="306px"
             />
           );
         })}
