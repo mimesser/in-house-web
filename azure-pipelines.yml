@@ -68,8 +68,8 @@ stages:
         repository: $(imageRepository)
         tags: |
           $(tag)
-    - task: CmdLine@2
-      displayName: Scan for vulnerabilities
-      inputs:
-        script: |
-          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy --ignore-unfixed $(containerRegistry)/$(imageRepository):$(tag)
+#    - task: CmdLine@2
+#      displayName: Scan for vulnerabilities
+#      inputs:
+#        script: |
+#          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy --ignore-unfixed $(containerRegistry)/$(imageRepository):$(tag)
