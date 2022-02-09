@@ -8,10 +8,9 @@ import { Page, Container } from '../components/organisms';
 import { H1, H3 } from '../components/atoms';
 import { palette, breakpoints, appColors } from '../style';
 
-import SectionOne from '../components/organisms/Pages/Landing/SectionOne'
-import SectionTwo from '../components/organisms/Pages/Landing/SectionTwo'
-import SectionThree from '../components/organisms/Pages/Landing/SectionThree'
-import AmazonLanding from '../components/organisms/Pages/Custom/Amazon';
+import SectionOne from '../components/organisms/Pages/Landing/SectionOne';
+import SectionTwo from '../components/organisms/Pages/Landing/SectionTwo';
+import SectionThree from '../components/organisms/Pages/Landing/SectionThree';
 
 import { Footer } from '../components/organisms/Footer';
 import { initVenuesPage, selectVenues } from '../store/venues';
@@ -32,25 +31,25 @@ const Main = styled.div`
   }
   li {
     margin: 0 0 0px 0;
-	}
-	
-	.player-wrapper {
-		position: relative;
-		padding-top: 56.25% /* Player ratio: 100 / (1280 / 720) */
-	}
-	
-	.react-player {
-		position: absolute;
-		top: 0;
-		left: 0;
-	}
+  }
+
+  .player-wrapper {
+    position: relative;
+    padding-top: 56.25%; /* Player ratio: 100 / (1280 / 720) */
+  }
+
+  .react-player {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 
   @media screen and (min-width: ${breakpoints.xs}) {
     ${H1} {
       line-height: 24px;
       font-size: 40px;
     }
-	}
+  }
 `;
 
 const ScrollPage = styled(Page)`
@@ -115,16 +114,17 @@ const Landing = ({ venues, initVenuesPage }) => {
   }, [selectedValue]);
 
   return (
-    <ScrollPage whiteHead videoBack noPadd>
-      <Main>
-				<SectionOne />
-				<SectionTwo />
-				<SectionThree />
+    <>
+			<ScrollPage whiteHead videoBack noPadd>
+				<Main>
+					<SectionOne />
+					<SectionTwo />
+					<SectionThree />
 
-				{/* <AmazonLanding /> */}
-        <Footer variant="dark" />
-      </Main>
-    </ScrollPage>
+					<Footer showScrollIndicator variant="dark" />
+				</Main>
+			</ScrollPage>
+    </>
   );
 };
 
