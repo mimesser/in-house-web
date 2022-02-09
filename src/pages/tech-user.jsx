@@ -20,7 +20,7 @@ const howItWorks = [
     source: '*US PATENT NO: 8,904,502',
     description:
       'filter out who can speak using common workplace knowledge to verify team members anonymously without emails, logins or personal metadata ever',
-    email: 'no emails or logins ever',
+    note: 'no emails or logins ever',
   },
   {
     header: 'share like a ghost',
@@ -203,11 +203,6 @@ const TechUserLandingPage = () => (
 							note={note}
 							index={index}
 							share={share}
-							startLink={startLink}
-							startLinkText={startLinkText}
-							middleLink={middleLink}
-							middleLinkText={middleLinkText}
-							startText={startText}
 						/>
 					);
 				})}
