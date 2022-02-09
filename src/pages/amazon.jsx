@@ -426,7 +426,7 @@ const AmazonLanding = () => (
 					<Button variant="light" outlined text="notify me when live" noSuffix />
 				</div>
 			</SpacingContainer>
-			<Footer variant="dark" />
+			<Footer showScrollIndicator variant="dark" />
 		</div>
 	</Page>
 );

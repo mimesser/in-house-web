@@ -121,7 +121,7 @@ const Landing = ({ venues, initVenuesPage }) => {
 					<SectionTwo />
 					<SectionThree />
 
-					<Footer variant="dark" />
+					<Footer showScrollIndicator variant="dark" />
 				</Main>
 			</ScrollPage>
     </>

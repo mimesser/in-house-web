@@ -35,8 +35,10 @@ const howItWorks = [
   },
   {
     header: 'become a real leader',
-    description: 
-      'our first 50 legend organizations will be forever celebrated on our platform as the first to usher in a brave new era of transparency and stand firmly with your employees on the right side of history',
+    description: React.createElement("span", {}, <>
+		<a>our first 50 legend organizations</a> will be forever celebrated on our platform as the first to usher in a brave new era of transparency and stand firmly with your employees on the right side of history
+</>)
+,
   },
 ];
 
@@ -258,7 +260,7 @@ const ProgressiveWokers = () => (
 					<CTAButton text="schedule a demo" />
 				</div>
 			</SpacingContainer>
-			<Footer variant="dark" />
+			<Footer showScrollIndicator variant="dark" />
 		</div>
 	</Page>
 );
