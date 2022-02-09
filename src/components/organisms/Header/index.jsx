@@ -82,7 +82,9 @@ const Menu = styled.span`
   position: relative;
   margin-right: 0px;
   margin-left: auto;
-  display: block;
+	display: block;
+	z-index: 2;
+
   ${MenuItems} {
     display: none;
   }
@@ -108,7 +110,7 @@ const Menu = styled.span`
     // margin-right: 0;
     // margin-left: auto;
     // display: none;
-  }
+	}
 `;
 
 export const menuOptions = [
@@ -131,7 +133,7 @@ export const Header = withRouter(({ openMenu, white, noPadd, router }) => (
     <div>
       <Brand />
       <Menu>
-        <MenuItems>
+        <MenuItems variant="dark">
           {menuOptions.map((route) => (
             <li key={route.href}>
               {route.href === router.asPath ? (
