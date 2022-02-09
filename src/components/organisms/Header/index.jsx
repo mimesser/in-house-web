@@ -85,10 +85,7 @@ const Menu = styled.span`
   margin-right: 0px;
   margin-left: auto;
 	display: block;
-	color: ${ ({ variant }) => {
-		console.log('the variant', variant)
-		return variant === "dark" ? "#fff" : "#000"
-	}};
+	color: ${ ({ variant }) => variant === "dark" ? "#fff" : "#000" };
 	z-index: 2;
 
   ${MenuItems} {
