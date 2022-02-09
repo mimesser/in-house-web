@@ -2,7 +2,10 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import ReactPlayer from 'react-player/youtube';
 
-import { NumberedSectionBlock, HorizontallyCenteredContainer } from '../components/organisms/Pages/components';
+import {
+	NumberedSectionBlock,
+	HorizontallyCenteredContainer
+} from '../components/organisms/Pages/components';
 import { Page } from '../components/organisms'
 
 import Button, { CTAButton } from '../components/atoms/Button/_index';

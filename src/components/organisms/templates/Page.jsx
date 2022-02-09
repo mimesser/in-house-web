@@ -163,7 +163,12 @@ export const Page = ({
         </>
 
         <Menu isOpen={menuOpen} closeMenu={closeMenu} variant={variant} />
-        {defaultHeader && <Header openMenu={openMenu} white={whiteHead} noPadd={noPadd} />}
+				{defaultHeader && <Header
+					openMenu={openMenu}
+					white={whiteHead}
+					noPadd={noPadd}
+					variant={variant}
+				/>}
         <Container noPadd={noPadd}>{children}</Container>
         {/* <HelpToggle containerRef={ref} /> */}
       </PageLayout>

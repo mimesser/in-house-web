@@ -24,7 +24,9 @@ const borderColor = ({ white }) => {
 const Layout = styled.div`
   position: relative;
   flex: none; // safari
-  color: ${({ white }) => (white ? palette.white : palette.primary)};
+	color: ${({ white }) => (white ? palette.white : palette.primary)};
+	background: ${ ({ variant }) =>
+		variant === "dark" ? "#000" : "transparent" };
 
   > div {
     display: flex;
@@ -83,6 +85,7 @@ const Menu = styled.span`
   margin-right: 0px;
   margin-left: auto;
 	display: block;
+	color: ${ ({ variant }) => variant === "dark" ? "#fff" : "#000" };
 	z-index: 2;
 
   ${MenuItems} {
@@ -128,12 +131,18 @@ const IconLink = ({ icon, href }) => (
   </Link>
 );
 
-export const Header = withRouter(({ openMenu, white, noPadd, router }) => (
-  <Layout white={white} noPadd={noPadd} id="header">
+export const Header = withRouter(({
+	openMenu,
+	white,
+	noPadd,
+	router,
+	variant
+}) => (
+  <Layout white={white} noPadd={noPadd} id="header" variant={variant}>
     <div>
       <Brand />
-      <Menu>
-        <MenuItems variant="dark">
+      <Menu variant={variant}>
+        <MenuItems>
           {menuOptions.map((route) => (
             <li key={route.href}>
               {route.href === router.asPath ? (
@@ -147,7 +156,11 @@ export const Header = withRouter(({ openMenu, white, noPadd, router }) => (
           ))}
         </MenuItems>
         <MenuToggle onClick={openMenu}>
-          <Icon icon="menu" size={1} />
+          <Icon
+						icon="menu"
+						color={variant === "dark" ? "#fff" : "#000"}
+						size={1}
+					/>
         </MenuToggle>
       </Menu>
     </div>
