@@ -4,13 +4,27 @@ import { Icon } from '../../../atoms';
 import { appColors } from '../../../../style';
 import Text from '../../../atoms/text/_index';
 
-export const NumberedSectionBlock = ({ index, header, source, description, note, share }) => (
+export const NumberedSectionBlock = ({
+	index,
+	header,
+	source,
+	description,
+	note,
+	share,
+	headerMaxWidth,
+	descriptionMaxWidth
+}) => (
   <NumberedSectionBlockContainer>
     <HorizontallyCenteredContainer style={{ marginBottom: '6px' }}>
       <Icon icon={`number-disc-${index + 1}`} size={6} color="none" />
     </HorizontallyCenteredContainer>
 
-    <HorizontallyCenteredContainer style={{ marginBottom: '12px' }}>
+    <HorizontallyCenteredContainer
+			style={{
+				marginBottom: '12px',
+				maxWidth: '306px'
+			}}
+		>
       <div
         style={{
           display: 'flex',
@@ -36,7 +50,7 @@ export const NumberedSectionBlock = ({ index, header, source, description, note,
       </div>
     </HorizontallyCenteredContainer>
 
-    <HorizontallyCenteredContainer style={{ maxWidth: '334px' }}>
+    <HorizontallyCenteredContainer style={{ maxWidth: '306px' }}>
       {source && (
         <Text
           text={source}
