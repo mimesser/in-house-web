@@ -225,7 +225,7 @@ const TechUserLandingPage = () => (
 					<Button variant="light" outlined text="notify me when open to public" noSuffix />
 				</div>
 			</SpacingContainer>
-			<Footer variant="dark" />
+			<Footer showScrollIndicator variant="dark" />
 		</div>
 	</Page>
 );

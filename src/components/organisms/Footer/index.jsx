@@ -1,16 +1,18 @@
-import React from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Link from 'next/link';
 import { Copyright, Patent } from '../../atoms';
-import { appColors, calcRem, fontSize } from '../../../style';
+import { appColors, calcRem, fontSize, constColors } from '../../../style';
+import { HasMoreContentIndicator } from '../../atoms/Indicators/HasMore';
+import { useIntersectionObserverRef } from 'rooks';
 
 const Layout = styled.div`
-  background-color: ${({ variant }) => (variant === 'light' ? appColors.white : appColors.gray600)};
+  background-color: ${({ variant }) => (variant === 'light' ? appColors.white : constColors.black)};
   color: ${({ variant }) => (variant === 'light' ? appColors.gray500 : appColors.gray300)};
   padding: ${calcRem(24)} ${calcRem(12)} ${calcRem(20)} ${calcRem(12)};
   border-top: 0.5px solid
-    ${({ variant }) => (variant === 'light' ? appColors.gray600 : appColors.gray100)};
+    ${({ variant }) => (variant === 'light' ? appColors.gray600 : appColors.grey8)};
 
   > a {
     &:hover {
@@ -62,36 +64,58 @@ const CopyrightLine = styled.div`
   color: ${appColors.gray400};
 `;
 
-export const Footer = ({ variant = 'light' }) => (
-  <Layout variant={variant}>
-    <Link href="/list-house" passHref prefetch={false}>
-      <A>distressed worker?</A>
-    </Link>
-    <Link href="/list-house" passHref prefetch={false}>
-      <A>progressive leadership?</A>
-    </Link>
-    <Link href="#howitworks" passHref prefetch={false}>
-      <A>how it works</A>
-    </Link>
-    <Link href="/faqs" passHref prefetch={false}>
-      <A>faqs</A>
-    </Link>
-    <Link href="/about" passHref prefetch={false}>
-      <A>about</A>
-    </Link>
-    <Break variant={variant} />
-    <Link href="/faqs" passHref prefetch={false}>
-      <A>terms of service</A>
-    </Link>
-    <Link href="/about" passHref prefetch={false}>
-      <A>contact</A>
-    </Link>
-    <Break variant={variant} />
-    <CopyrightLine href="/">
-      <Copyright /> | <Patent />
-    </CopyrightLine>
-  </Layout>
-);
+export const Footer = ({ variant, showScrollIndicator }) => {
+  const [hideIndicator, setHideIndicator] = useState(false);
+
+  const observer = useRef();
+
+  const isFooterShowing = useCallback(
+    (node) => {
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          setHideIndicator(true);
+        } else {
+          if (hideIndicator) setHideIndicator(false);
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [hideIndicator],
+  );
+
+  return (
+    <Layout variant={variant} ref={isFooterShowing}>
+      {!hideIndicator && showScrollIndicator && <HasMoreContentIndicator />}
+      <Link href="/list-house" passHref prefetch={false}>
+        <A>distressed worker?</A>
+      </Link>
+      <Link href="/list-house" passHref prefetch={false}>
+        <A>progressive leadership?</A>
+      </Link>
+      <Link href="#howitworks" passHref prefetch={false}>
+        <A>how it works</A>
+      </Link>
+      <Link href="/faqs" passHref prefetch={false}>
+        <A>faqs</A>
+      </Link>
+      <Link href="/about" passHref prefetch={false}>
+        <A>about</A>
+      </Link>
+      <Break variant={variant} />
+      <Link href="/faqs" passHref prefetch={false}>
+        <A>terms of service</A>
+      </Link>
+      <Link href="/about" passHref prefetch={false}>
+        <A>contact</A>
+      </Link>
+      <Break variant={variant} />
+      <CopyrightLine href="/">
+        <Copyright /> | <Patent />
+      </CopyrightLine>
+    </Layout>
+  );
+};
 
 Footer.propTypes = {
   variant: PropTypes.oneOf(['light', 'dark']),
