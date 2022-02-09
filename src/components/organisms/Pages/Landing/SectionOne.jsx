@@ -38,7 +38,7 @@ const howItWorks = [
 const TopSectionContainer = styled.div`
   padding: 20px 12px 0;
 	background: transparent;
-	background: linear-gradient(356deg, black, transparent);
+	background: linear-gradient(356deg, #111, transparent);
 `;
 
 const HorizontalBar = styled.div`
