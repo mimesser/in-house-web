@@ -33,4 +33,5 @@ export const Brand = styled(({ className }) => (
 	> p > a {
 		text-decoration: none;
 	}
+	z-index: 2;
 `;
