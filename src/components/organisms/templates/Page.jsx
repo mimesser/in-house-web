@@ -139,7 +139,8 @@ export const Page = ({
   imageBack,
   overlayBack,
   whiteHead,
-  noPadd,
+	noPadd,
+	variant,
   style
 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -162,8 +163,13 @@ export const Page = ({
           {overlayBack && <Overlay />}
         </>
 
-        <Menu isOpen={menuOpen} closeMenu={closeMenu} />
-        {defaultHeader && <Header openMenu={openMenu} white={whiteHead} noPadd={noPadd} />}
+        <Menu isOpen={menuOpen} closeMenu={closeMenu} variant={variant} />
+				{defaultHeader && <Header
+					openMenu={openMenu}
+					white={whiteHead}
+					noPadd={noPadd}
+					variant={variant}
+				/>}
         <Container noPadd={noPadd}>{children}</Container>
         {/* <HelpToggle containerRef={ref} /> */}
       </PageLayout>

@@ -68,13 +68,14 @@ const Panel = styled.div`
   white-space: nowrap;
   overflow: hidden;
   ${({ state }) => sidebarTransitionStyles[state]};
-  color: ${palette.offWhite};
+	color: ${palette.offWhite};
 `;
 
 const MenuItems = styled.ul`
   padding: 0;
   margin: 0;
-  list-style: none;
+	list-style: none;
+	z-index: 2;
 `;
 
 const A = styled.a`
@@ -90,7 +91,7 @@ const A = styled.a`
   }
 `;
 
-export const Menu = withRouter(({ isOpen, router, closeMenu }) => {
+export const Menu = withRouter(({ isOpen, router, closeMenu, variant }) => {
   useEffect(() => {
     if (isOpen) {
       closeMenu();
