@@ -49,7 +49,7 @@ FROM base_prod as final
 ARG NODEENV
 ENV NODE_ENV=$NODEENV
 EXPOSE 3000
-COPY --from=builder --chown=nextjs:nodejs /app/.env ./
+COPY --from=builder --chown=nextjs:nodejs /app/ ./
 COPY --from=builder --chown=nextjs:nodejs /app/build/ ./
 COPY --from=deps --chown=nextjs:nodejs /app/node_modules ./node_modules
 USER nextjs
