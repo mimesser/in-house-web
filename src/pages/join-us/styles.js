@@ -10,4 +10,15 @@ export const JoinUSBaseStyling = styled.div`
   > section {
     padding: 50px 12px 80px;
   }
+  .section__content {
+    width: 100%;
+    margin: auto;
+    padding: 50px 12px 80px;
+  }
+  @media screen and (min-width: 500px) {
+    .section__content {
+      padding: 78px 87px;
+      border: 1px solid ${appColors.gray400};
+    }
+  }
 `;
