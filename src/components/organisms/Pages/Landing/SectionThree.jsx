@@ -5,6 +5,7 @@ import { HorizontallyCenteredContainer } from '../components';
 import { CTAButton } from '../../../atoms/Button/_index';
 import Text from '../../../atoms/text/_index';
 import { appColors } from '../../../../style';
+import Link from "next/link";
 
 const GrayCircle = styled.div`
   width: 26px;
@@ -111,9 +112,9 @@ const SectionThree = () => (
 				/>
       ))}
     </div>
-    <div style={{ background: '#111', margin: '0', padding: '12px' }}> 
+    <Link href="/join-us" style={{ background: '#111', margin: '0', padding: '12px' }}>
       <CTAButton text="join us" />
-    </div>
+    </Link>
   </>
 );
 

@@ -110,94 +110,105 @@ const JoinUsUserPage = () => {
 
   return (
     <Page whiteHead style={{ backgroundColor: appColors.gray600 }}>
-      <Styling>
-        <section>
-          <Text.Heading weight="bold" size={32} color="grey100" level={1} text="join us" />
-          <Stepper variant="light" state={steps} className="stepper" />
-          <Text.Heading size={14} color="gray300" level={2} text="100% confidential" />
-          {userType === 'motivated' && !showSummary && (
-            <section className="interest">
-              <Text.Heading
-                level={3}
-                weight={700}
-                color="grey100"
-                text="your interest or expertise"
-              />
-              <>
-                {interest.map(({ label, value }) => (
-                  <Checkbox
-                    key={label}
-                    name={label}
-                    value={value}
-                    onChange={handleCheckers}
-                    checked={formik.values.interest[label]}
-                  >
-                    <Text text={label} />
-                  </Checkbox>
-                ))}
-              </>
-            </section>
-          )}
-          {!showSummary ? (
-            <form className="form">
-              <Input
+      <Styling isTwoForms={userType === 'motivated' && !showSummary}>
+        <div className="section__content">
+          <section className="join-section">
+            <Text.Heading weight="bold" size={32} color="grey100" level={1} text="join us" />
+            <Stepper variant="light" state={steps} className="stepper" />
+            <Text.Heading size={14} color="gray300" level={2} text="100% confidential" />
+            <div className="form-content">
+              {userType === 'motivated' && !showSummary && (
+                <section className="interest">
+                  <Text.Heading
+                    level={3}
+                    weight={700}
+                    color="grey100"
+                    text="your interest or expertise"
+                  />
+                  <>
+                    {interest.map(({ label, value }) => (
+                      <Checkbox
+                        key={label}
+                        name={label}
+                        value={value}
+                        onChange={handleCheckers}
+                        checked={formik.values.interest[label]}
+                      >
+                        <Text text={label} />
+                      </Checkbox>
+                    ))}
+                  </>
+                </section>
+              )}
+              {!showSummary ? (
+                <form className="form">
+                  <Input
+                    variant="light"
+                    name="name"
+                    placeholder="name"
+                    clearable
+                    onChange={formik.handleChange}
+                    value={formik.values.name}
+                  />
+                  <Input
+                    variant="light"
+                    name="email"
+                    placeholder="email"
+                    clearable
+                    onChange={formik.handleChange}
+                    value={formik.values.email}
+                  />
+                  <Input.TextArea
+                    style={{ minHeight: 113 }}
+                    variant="light"
+                    name="comment"
+                    placeholder="tell us about yourself"
+                    onChange={formik.handleChange}
+                    value={formik.values.comment}
+                    maxChars={500}
+                  />
+                  <Input.Select
+                    variant="light"
+                    name="heardAbout"
+                    placeholder="how did you hear about us?"
+                    options={hearOptions}
+                    onChange={formik.handleChange}
+                    value={formik.values.heardAbout}
+                  />
+                  <UploadButton
+                    onChange={handleFileUpload}
+                    name="file"
+                    placeholder="pdf, word"
+                    variant="light"
+                  />
+                </form>
+              ) : (
+                <Summary values={formik.values} />
+              )}
+            </div>
+            <div className="form-btns">
+              {!showSummary ? (
+                <Button
+                  text="cancel"
+                  variant="light"
+                  suffix=" "
+                  onClick={goBack}
+                  outlined
+                  noBorder
+                />
+              ) : (
+                <BackButton style={{ color: appColors.gray200 }} onClick={goBack} />
+              )}
+              <Button
+                onClick={formik.handleSubmit}
+                loading={formik.isSubmitting}
+                disabled={!formik.isValid}
                 variant="light"
-                name="name"
-                placeholder="name"
-                clearable
-                onChange={formik.handleChange}
-                value={formik.values.name}
+                text="submit"
               />
-              <Input
-                variant="light"
-                name="email"
-                placeholder="email"
-                clearable
-                onChange={formik.handleChange}
-                value={formik.values.email}
-              />
-              <Input.TextArea
-                style={{ minHeight: 113 }}
-                variant="light"
-                name="comment"
-                placeholder="tell us about yourself"
-                onChange={formik.handleChange}
-                value={formik.values.comment}
-                maxChars={500}
-              />
-              <Input.Select
-                variant="light"
-                name="heardAbout"
-                placeholder="how did you hear about us?"
-                options={hearOptions}
-                onChange={formik.handleChange}
-                value={formik.values.heardAbout}
-              />
-              <UploadButton
-                onChange={handleFileUpload}
-                name="file"
-                placeholder="pdf, word"
-                variant="light"
-              />
-            </form>
-          ) : (
-            <Summary values={formik.values} />
-          )}
-          <div className="form-btns">
-            {!showSummary ? (
-              <Button text="cancel" variant="light" suffix=" " onClick={goBack} outlined noBorder />
-            ) : (
-              <BackButton style={{ color: appColors.gray200 }} onClick={goBack} />
-            )}
-            <Button
-              onClick={formik.handleSubmit}
-              loading={formik.isSubmitting}
-              disabled={!formik.isValid}
-              variant="light"
-              text="submit"
-            />
-          </div>
-        </section>
+            </div>
+          </section>
+        </div>
         <Footer variant="transparent" />
       </Styling>
     </Page>
@@ -205,14 +216,15 @@ const JoinUsUserPage = () => {
 };
 
 const Styling = styled(JoinUSBaseStyling)`
-  > section {
+  .join-section {
     .stepper,
     .form {
       margin: 30px 0;
     }
     .form {
-      display: grid;
+      display: flex;
       gap: 30px;
+      flex-direction: column;
     }
     .interest {
       margin-top: 30px;
@@ -224,6 +236,24 @@ const Styling = styled(JoinUSBaseStyling)`
       display: flex;
       justify-content: space-between;
       align-items: center;
+    }
+  }
+  .form-content {
+    display: grid;
+    grid-template-columns: 1fr;
+
+    @media screen and (min-width: 800px) {
+      grid-template-columns: ${({ isTwoForms }) => (isTwoForms ? '1fr 1fr' : '1fr')};
+    }
+  }
+
+  .section__content {
+    max-width: ${({ isTwoForms }) => (isTwoForms ? '810px' : '460px')};
+    margin-top: 84px;
+    margin-bottom: 84px;
+
+    @media screen and (min-width: 800px) {
+      padding: 85px 54px 54px 54px;
     }
   }
 `;

@@ -144,6 +144,7 @@ Input.TextArea = TextArea;
 
 const BaseStyling = styled.div`
   margin: 0;
+  height: min-content;
   transition: color 0.3s, border-color 0.3s;
   font-size: ${calcRem(14)};
   font-weight: ${({ weight }) => weight || 400};

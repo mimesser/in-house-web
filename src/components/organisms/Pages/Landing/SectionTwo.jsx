@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components';
 import { HorizontallyCenteredContainer } from '../components';
 import { CTAButton } from '../../../atoms/Button/_index';
 import Text from '../../../atoms/text/_index';
+import Link from "next/link";
 
 const stats = [
   {
@@ -40,7 +41,7 @@ const PortraitImageBgCss = css`
 `;
 
 const PortraitImage = styled.div`
-  ${PortraitImageBgCss}
+  ${PortraitImageBgCss};
   height: 658px;
   position: relative;
 `;
@@ -115,9 +116,9 @@ export const StatSection = ({
 const SectionTwo = () => (
   <>
     <PortraitImage>
-      <div style={{ margin: '0 12px' }}>
+      <Link href="/join-us" style={{ margin: '0 12px' }}>
         <CTAButton text="join us" />
-      </div>
+      </Link>
       <div
         style={{
           position: 'absolute',
@@ -151,9 +152,9 @@ const SectionTwo = () => (
 					descriptionMaxWidth="286px"
         />
       ))}
-      <div style={{ margin: '0 12px' }}>
+      <Link href="/join-us" style={{ margin: '0 12px' }}>
         <CTAButton text="join us" />
-      </div>
+      </Link>
     </div>
   </>
 );
