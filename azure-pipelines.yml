@@ -32,7 +32,7 @@ stages:
       condition: eq(variables['Build.SourceBranchName'], 'develop')
       inputs:
         command: build
-        arguments: '-f Dockerfile-dev --build-arg TCREATEENVFILE="d" --build-arg NODEENV="development" --build-arg SENTRYCLIRCTOKEN=$(SENTRYCLIRC_TOKEN) --build-arg APIURL=$(DEV_API_URL) --build-arg GOPTIMIZEKEY=$(DEV_G_OPTIMIZE_KEY) --build-arg GAKEY=$(DEV_GA_KEY) --build-arg HOTJARSITEID=$(DEV_HOTJAR_SITE_ID) --build-arg SENTRYDSN=$(SENTRYDSN)'
+        arguments: '--build-arg TCREATEENVFILE="d" --build-arg NODEENV="development" --build-arg SENTRYCLIRCTOKEN=$(SENTRYCLIRC_TOKEN) --build-arg APIURL=$(DEV_API_URL) --build-arg GOPTIMIZEKEY=$(DEV_G_OPTIMIZE_KEY) --build-arg GAKEY=$(DEV_GA_KEY) --build-arg HOTJARSITEID=$(DEV_HOTJAR_SITE_ID) --build-arg SENTRYDSN=$(SENTRYDSN)'
         containerRegistry: $(dockerRegistryServiceConnection)
         repository: $(imageRepository)
         Dockerfile: $(dockerfilePath)
