@@ -55,7 +55,7 @@ const RequestJoin = () => {
       </IconStyling>
       <H1 className="heading">the in-house beta trial</H1>
       <div className="btn-actions">
-        <Link href="/list-workspace">
+        <Link href="/list-workplace">
           <Button variant="light" text="need this at my job right now" />
         </Link>
         <Button variant="light" text="join/support the movement" />
