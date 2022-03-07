@@ -102,10 +102,10 @@ const HorizontalBar = styled.div`
   height: 8px;
 `;
 
-const AmazonLanding = () => (
+const FrontlineLanding = () => (
 	<Page
 		noPadd
-		title="in-house | amazon"
+		title="in-house | frontline"
 		variant="dark"
 	>
 		<div
@@ -431,4 +431,4 @@ const AmazonLanding = () => (
 	</Page>
 );
 
-export default AmazonLanding;
+export default FrontlineLanding;
