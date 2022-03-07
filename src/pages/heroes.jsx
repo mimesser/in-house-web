@@ -146,10 +146,10 @@ const PercentSection = ({ percent, subtitle, description, note }) => (
   </PercentSectionContainer>
 );
 
-const ProgressiveWokers = () => (
+const HeroesLanding = () => (
 	<Page
 		noPadd
-		title="in-house | progressive workers"
+		title="in-house | heroes"
 		variant="dark"
 	>
 		<div style={{ background: '#000' }}>
@@ -264,5 +264,5 @@ const ProgressiveWokers = () => (
 		</div>
 	</Page>
 );
-export default ProgressiveWokers;
+export default HeroesLanding;
 
