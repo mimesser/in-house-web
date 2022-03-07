@@ -103,7 +103,7 @@ const HorizontalBar = styled.div`
 const TechUserLandingPage = () => (
 	<Page
 		noPadd
-		title="in-house | high-tech-user"
+		title="in-house | tech"
 		variant="dark"
 	>
 		<div style={{ background: '#000', margin: '0' }}>
