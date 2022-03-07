@@ -99,7 +99,7 @@ const HorizontalBar = styled.div`
   height: 8px;
 `;
 
-const AmazonLanding = () => (
+const FrontlineLanding = () => (
   <div style={{ background: '#000' }}>
     <HeaderImage>
       <PositionContainer left="12" bottom="54">
@@ -220,4 +220,4 @@ const AmazonLanding = () => (
   </div>
 );
 
-export default AmazonLanding;
+export default FrontlineLanding;
