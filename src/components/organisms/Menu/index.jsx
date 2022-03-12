@@ -28,7 +28,7 @@ const CloseIcon = styled(Icon).attrs(() => ({
 
 export const menuOptions = [
   { href: '#howitworks', label: 'how it works' },
-  { href: '/list-house', label: 'list my job' },
+  { href: '/list-house', label: 'list workplace' },
   { href: '/about', label: 'about us' },
   { href: '/faqs', label: 'faq' },
   { href: '/feedback', label: 'contact us' },
