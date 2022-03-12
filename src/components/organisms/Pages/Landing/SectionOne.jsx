@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import { NumberedSectionBlock, HorizontallyCenteredContainer } from '../components';
 import Text from '../../../atoms/text/_index';
@@ -55,68 +57,74 @@ const TextContainer = styled.div`
   margin-top: 26px;
 `;
 
-const TopSection = () => (
-  <TopSectionContainer>
-    <Text
-			variant="light"
-			color="gray200"
-			weight="bold"
-			family="helvetica"
-			size={36}
-		>
-      voice
-    </Text>
-    <Text
-			variant="light"
-			color="gray200"
-			weight="bold"
-			family="helvetica"
-			size={36}
-		>
-      everything
-    </Text>
+const TopSection = () => {
+	const router = useRouter();
 
-    <SpacingContainer marginTop={30} marginBottom={30}>
-      <HorizontalBar />
-    </SpacingContainer>
-
-    <Text
-			variant="dark"
-			color={appColors.gray200}
-			weight="bold"
-			family="helvetica"
-			size={32}
-		>
-      (remain untraceable)
-    </Text>
-    <SpacingContainer marginTop={34}>
-      <CTAButton text="make my workplace transparent" />
-    </SpacingContainer>
-    <TextContainer>
-      <Text
+	return (
+		<TopSectionContainer>
+			<Text
 				variant="light"
-				color="gray300"
-				weight="reg"
+				color="gray200"
+				weight="bold"
 				family="helvetica"
-				size={16}
+				size={36}
 			>
-        now there is a tool allowing your entire team to speak truth to power in unified consensus
-        —without fear of retaliation
-      </Text>
-
-      <Text
+				voice
+			</Text>
+			<Text
 				variant="light"
-				color="gray300"
-				weight="reg"
+				color="gray200"
+				weight="bold"
 				family="helvetica"
-				size={16}
+				size={36}
 			>
-        grade your company’s ESG/sustainability metrics and show the public how it treats people,
-        the planet, and its profits
-      </Text>
-    </TextContainer>
-  </TopSectionContainer>
-);
+				everything
+			</Text>
+
+			<SpacingContainer marginTop={30} marginBottom={30}>
+				<HorizontalBar />
+			</SpacingContainer>
+
+			<Text
+				variant="dark"
+				color={appColors.gray200}
+				weight="bold"
+				family="helvetica"
+				size={32}
+			>
+				(remain untraceable)
+			</Text>
+			<SpacingContainer marginTop={34}>
+				<Link href={`/request-join`}>
+					<CTAButton text="make my workplace transparent" />
+				</Link>
+			</SpacingContainer>
+			<TextContainer>
+				<Text
+					variant="light"
+					color="gray300"
+					weight="reg"
+					family="helvetica"
+					size={16}
+				>
+					now there is a tool allowing your entire team to speak truth to power in unified consensus
+					—without fear of retaliation
+				</Text>
+
+				<Text
+					variant="light"
+					color="gray300"
+					weight="reg"
+					family="helvetica"
+					size={16}
+				>
+					grade your company’s ESG/sustainability metrics and show the public how it treats people,
+					the planet, and its profits
+				</Text>
+			</TextContainer>
+		</TopSectionContainer>
+	)
+	};
 
 const SpacingContainerStyling = styled.div`
   margin-top: ${({ marginTop }) => `${marginTop}px`};
