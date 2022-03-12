@@ -56,7 +56,7 @@ const JoinUsUserPage = () => {
       const errors = {};
       if (!values.name) errors.name = 'required!';
       if (!values.email) errors.email = 'required!';
-      else if (isEmailValid(values.email)) errors.email = 'email not valid!';
+      else if (!isEmailValid(values.email)) errors.email = 'email not valid!';
       if (!values.comment) errors.comment = 'required!';
       if (!values.heardAbout) errors.heardAbout = 'required!';
       if (!values.file) errors.file = 'required!';
