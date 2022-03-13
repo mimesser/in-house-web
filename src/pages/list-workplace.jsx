@@ -106,7 +106,7 @@ const Listworkplace = () => {
       title="In-House - List your House | Speak as a Team | Remain Untraceable"
     >
       <IconStyling>
-        <Icon size={2} icon="x" onClick={() => router.push('/')} />
+        <Icon size={2} icon="x" onClick={() => router.back()} />
       </IconStyling>
       <Text.Heading
         weight="bold"
