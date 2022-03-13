@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Link from 'next/link';
 
 import { HorizontallyCenteredContainer } from '../components';
 import { CTAButton } from '../../../atoms/Button/_index';
@@ -112,7 +113,9 @@ const SectionThree = () => (
       ))}
     </div>
     <div style={{ background: '#111', margin: '0', padding: '12px' }}> 
-      <CTAButton text="join us" />
+			<Link href={`/join-us`}>
+				<CTAButton text="join us" />
+			</Link>
     </div>
   </>
 );

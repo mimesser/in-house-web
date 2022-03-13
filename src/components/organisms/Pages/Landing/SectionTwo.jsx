@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import Link from 'next/link';
 
 import { HorizontallyCenteredContainer } from '../components';
 import { CTAButton } from '../../../atoms/Button/_index';
@@ -116,7 +117,9 @@ const SectionTwo = () => (
   <>
     <PortraitImage>
       <div style={{ margin: '0 12px' }}>
-        <CTAButton text="join us" />
+				<Link href={`/join-us`}>
+					<CTAButton text="join us" />
+				</Link>
       </div>
       <div
         style={{
@@ -152,7 +155,9 @@ const SectionTwo = () => (
         />
       ))}
       <div style={{ margin: '0 12px' }}>
-        <CTAButton text="join us" />
+				<Link href={`/join-us`}>
+					<CTAButton text="join us" />
+				</Link>
       </div>
     </div>
   </>
