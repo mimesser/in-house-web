@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Link from 'next/link';
 
 import { NumberedSectionBlock, HorizontallyCenteredContainer } from '../components';
 import Text from '../../../atoms/text/_index';
@@ -90,7 +91,9 @@ const TopSection = () => (
       (remain untraceable)
     </Text>
     <SpacingContainer marginTop={34}>
-      <CTAButton text="make my workplace transparent" />
+			<Link href={`/request-join`}>
+				<CTAButton text="make my workplace transparent" />
+			</Link>
     </SpacingContainer>
     <TextContainer>
       <Text

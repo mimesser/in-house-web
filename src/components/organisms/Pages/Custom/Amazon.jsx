@@ -152,7 +152,9 @@ const FrontlineLanding = () => (
         </Text>
       </SpacingContainer>
 
-      <CTAButton text="bring democracy to my job" />
+			<Link href={`/request-join`}>
+				<CTAButton text="bring democracy to my job" />
+			</Link>
     </SpacingContainer>
 
     {/* section 2 */}
@@ -212,8 +214,12 @@ const FrontlineLanding = () => (
     </Text>
     <SpacingContainer padding="0 12px 120px">
       <div className="button-group">
-        <CTAButton text="request to list my job" />
-        <CTAButton text="schedule a demo" />
+				<Link href={`/list-workplace`}>
+					<CTAButton text="request to list my job" />
+				</Link>
+				<Link href={`/contact-us`}>
+					<CTAButton text="schedule a demo" />
+				</Link>
         <Button variant="light" outlined text="notify me when live" noSuffix />
       </div>
     </SpacingContainer>
