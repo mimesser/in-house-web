@@ -51,16 +51,20 @@ const RequestJoin = () => {
       title="In-House - List your House | Speak as a Team | Remain Untraceable"
     >
       <IconStyling>
-        <Icon size={2} icon="x" onClick={() => router.push("/")} />
+        <Icon size={2} icon="x" onClick={() => router.back()} />
       </IconStyling>
       <H1 className="heading">the in-house beta trial</H1>
       <div className="btn-actions">
         <Link href="/list-workplace">
           <Button variant="light" text="need this at my job right now" />
         </Link>
-        <Button variant="light" text="join/support the movement" />
+				<Link href="/join-us">
+					<Button variant="light" text="join / support the movement" />
+				</Link>
       </div>
-      <Button outlined className="btn-bottom" variant="light" text="notify me when full live"/>
+			<Link href={`/contact-us`}>
+      	<Button outlined className="btn-bottom" variant="light" text="notify me when full live"/>
+			</Link>
     </PageStyling>
   );
 };
