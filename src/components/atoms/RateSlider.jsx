@@ -11,6 +11,18 @@ const getEsgType = (rateTagCategoryId) => {
       return 'social';
     case '6d48dd8c-abcf-4c69-4ed3-08d9ab04f553':
       return 'governance';
+    case '8abaf9a0-c562-42c8-b5b4-08d98bc24d4c':
+      return 'environment';
+    case '49c7b59e-8756-4ffc-b5b5-08d98bc24d4c':
+      return 'social';
+    case 'f49fb08d-efd7-46b9-b5b6-08d98bc24d4c':
+      return 'governance';
+    case 'a09d6f06-4467-4e2d-0cf9-08d9bbd15ba2':
+      return 'environment';
+    case 'cc1222c0-933f-43d9-0cfa-08d9bbd15ba2':
+      return 'social';
+    case 'd0f3b48c-93d4-4a0d-0cfb-08d9bbd15ba2':
+      return 'governance';
     default:
       return null;
   }
