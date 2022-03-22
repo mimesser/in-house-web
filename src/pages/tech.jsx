@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import Link from 'next/link';
 
 import { NumberedSectionBlock, HorizontallyCenteredContainer } from '../components/organisms/Pages/components';
 import { Page } from '../components/organisms'
@@ -103,7 +104,7 @@ const HorizontalBar = styled.div`
 const TechUserLandingPage = () => (
 	<Page
 		noPadd
-		title="in-house | high-tech-user"
+		title="in-house | tech"
 		variant="dark"
 	>
 		<div style={{ background: '#000', margin: '0' }}>
@@ -157,10 +158,12 @@ const TechUserLandingPage = () => (
 					</PositionContainer>
 				</HeaderImage>
 				<div style={{ padding: '0 12px' }}>
+				<Link href={`/request-join`}>
 					<CTAButton
 						text="bring democracy to my workplace"
 						style={{ marginTop: '36px', marginBottom: '70px' }}
 					/>
+				</Link>
 				</div>
 				{/* <SpacingContainer padding="0 12px">
 					<div style={{ textAlign: 'center' }}>
@@ -220,9 +223,15 @@ const TechUserLandingPage = () => (
 			</Text>
 			<SpacingContainer padding="0 12px 120px">
 				<div className="button-group">
-					<CTAButton text="request to list my job" />
-					<CTAButton text="schedule a demo" />
-					<Button variant="light" outlined text="notify me when open to public" noSuffix />
+					<Link href={`/request-join`}>
+						<CTAButton text="request to list my job" />
+					</Link>
+					<Link href={`/contact-us`}>
+						<CTAButton text="schedule a demo" />
+					</Link>>
+					<Link href={`/contact-us`}>
+						<Button variant="light" outlined text="notify me when open to public" noSuffix />
+					</Link>
 				</div>
 			</SpacingContainer>
 			<Footer showScrollIndicator variant="dark" />

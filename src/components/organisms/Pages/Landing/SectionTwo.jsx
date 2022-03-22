@@ -1,10 +1,10 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import Link from 'next/link';
 
 import { HorizontallyCenteredContainer } from '../components';
 import { CTAButton } from '../../../atoms/Button/_index';
 import Text from '../../../atoms/text/_index';
-import Link from "next/link";
 
 const stats = [
   {
@@ -116,9 +116,11 @@ export const StatSection = ({
 const SectionTwo = () => (
   <>
     <PortraitImage>
-      <Link href="/join-us" style={{ margin: '0 12px' }}>
-        <CTAButton text="join us" />
-      </Link>
+      <div style={{ margin: '0 12px' }}>
+				<Link href={`/join-us`}>
+					<CTAButton text="join us" />
+				</Link>
+      </div>
       <div
         style={{
           position: 'absolute',
@@ -152,9 +154,11 @@ const SectionTwo = () => (
 					descriptionMaxWidth="286px"
         />
       ))}
-      <Link href="/join-us" style={{ margin: '0 12px' }}>
-        <CTAButton text="join us" />
-      </Link>
+      <div style={{ margin: '0 12px' }}>
+				<Link href={`/join-us`}>
+					<CTAButton text="join us" />
+				</Link>
+      </div>
     </div>
   </>
 );
