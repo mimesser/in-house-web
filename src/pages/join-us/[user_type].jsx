@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { useFormik } from 'formik';
 import Text from '../../components/atoms/text/_index';
@@ -13,6 +14,7 @@ import { Page } from '../../components/organisms';
 import Input from '../../components/atoms/Input/_index';
 import Summary from './_summary';
 import { isEmailValid } from '../../utils';
+import { postJoinUs } from '../../store/feedback';
 
 const interest = [
   { label: 'engineering / devops / qa', value: 'eng' },
@@ -42,7 +44,7 @@ const hearOptions = [
 
 const initVal = { name: '', email: '', heardAbout: null, comment: '', file: null, interest: {} };
 
-const JoinUsUserPage = () => {
+const JoinUsUserPage = (props) => {
   const router = useRouter();
   const { user_type: userType } = router.query;
 
@@ -69,6 +71,8 @@ const JoinUsUserPage = () => {
     validateOnChange: true,
     onSubmit: (values, { setSubmitting }) => {
       console.log(values);
+      // props.postJoinUs({ email, subject: subject.value, message, redirectLink });
+      
       if (showSummary) {
         alert('flash mink');
       } else {
@@ -113,7 +117,7 @@ const JoinUsUserPage = () => {
       <Styling isTwoForms={userType === 'motivated' && !showSummary}>
         <div className="section__content">
           <section className="join-section">
-            <Text.Heading weight="bold" size={32} color="grey100" level={1} text="join us" />
+            <Text.Heading weight="bold" size={32} color="gray100" level={1} text="join us" />
             <Stepper variant="light" state={steps} className="stepper" />
             <Text.Heading size={14} color="gray300" level={2} text="100% confidential" />
             <div className="form-content">
@@ -121,8 +125,7 @@ const JoinUsUserPage = () => {
                 <section className="interest">
                   <Text.Heading
                     level={3}
-                    weight={700}
-                    color="grey100"
+                    color="gray100"
                     text="your interest or expertise"
                   />
                   <>
@@ -258,4 +261,11 @@ const Styling = styled(JoinUSBaseStyling)`
   }
 `;
 
-export default JoinUsUserPage;
+const mapState = (state) => ({
+  ...state.feedback,
+});
+
+const mapDispatch = {
+  postJoinUs,
+};
+export default connect(mapState, mapDispatch)(JoinUsUserPage);
