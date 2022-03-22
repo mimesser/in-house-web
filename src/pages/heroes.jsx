@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import ReactPlayer from 'react-player/youtube';
+import Link from 'next/link';
 
 import {
 	NumberedSectionBlock,
@@ -17,8 +17,9 @@ import { Footer } from '../components/organisms/Footer';
 const howItWorks = [
   {
     header: 'be that hero boss',
-    description:
-      'schedule a demo to see how simple it is to let your team tell you everything safely and prove that you celebrate transparency',
+    description: React.createElement("span", {}, <>
+      <Link href={`/contact-us`}>schedule a demo</Link> to see how simple it is to let your team tell you everything safely and prove that you celebrate transparency
+		</>)
   },
   {
     header: 'show them how it works',
@@ -36,7 +37,7 @@ const howItWorks = [
   {
     header: 'become a real leader',
     description: React.createElement("span", {}, <>
-		<a>our first 50 legend organizations</a> will be forever celebrated on our platform as the first to usher in a brave new era of transparency and stand firmly with your employees on the right side of history
+		<Link href={`/contact-us`}>our first 50 legend organizations</Link> will be forever celebrated on our platform as the first to usher in a brave new era of transparency and stand firmly with your employees on the right side of history
 </>)
 ,
   },
@@ -146,10 +147,10 @@ const PercentSection = ({ percent, subtitle, description, note }) => (
   </PercentSectionContainer>
 );
 
-const ProgressiveWokers = () => (
+const HeroesLanding = () => (
 	<Page
 		noPadd
-		title="in-house | progressive workers"
+		title="in-house | heroes"
 		variant="dark"
 	>
 		<div style={{ background: '#000' }}>
@@ -213,7 +214,9 @@ const ProgressiveWokers = () => (
 					);
 				})}
 				<CtaDiv>
-					<CTAButton text="become one of 50 legendary leaders" />
+					<Link href={`/contact-us`}>
+						<CTAButton text="become one of 50 legendary leaders" />
+					</Link>
 				</CtaDiv>
 			</SpacingContainer>
 
@@ -256,13 +259,20 @@ const ProgressiveWokers = () => (
 			</SpacingContainer>
 			<SpacingContainer padding="0 12px 192px" id='getNotification'>
 				<div className="button-group">
-					<CTAButton text="become one of our first 50 pioneers" />
-					<CTAButton text="schedule a demo" />
+					<Link href={`/contact-us`}>
+						<CTAButton text="become one of our first 50 pioneers" />
+					</Link>
+					<Link href={`/contact-us`}>
+						<CTAButton text="schedule a demo" />
+					</Link>
+					<Link href={`/contact-us`}>
+						<Button variant="light" outlined text="notify me when live" noSuffix />
+					</Link>
 				</div>
 			</SpacingContainer>
 			<Footer showScrollIndicator variant="dark" />
 		</div>
 	</Page>
 );
-export default ProgressiveWokers;
+export default HeroesLanding;
 

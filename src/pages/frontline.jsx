@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import ReactPlayer from 'react-player/youtube';
+import Link from 'next/link';
 
 import {
 	NumberedSectionBlock,
@@ -102,10 +103,10 @@ const HorizontalBar = styled.div`
   height: 8px;
 `;
 
-const AmazonLanding = () => (
+const FrontlineLanding = () => (
 	<Page
 		noPadd
-		title="in-house | amazon"
+		title="in-house | frontline"
 		variant="dark"
 	>
 		<div
@@ -168,7 +169,9 @@ const AmazonLanding = () => (
 					</Text>
 				</SpacingContainer>
 
-				<CTAButton text="bring democracy to my job" />
+				<Link href={`/request-join`}>
+					<CTAButton text="bring democracy to my job" />
+				</Link>
 			</SpacingContainer>
 
 			{/* section 2 */}
@@ -200,7 +203,10 @@ const AmazonLanding = () => (
 						/>
 					);
 				})}
-				<CTAButton text="hold my workplace accountable" />
+				
+				<Link href={`/request-join`}>
+					<CTAButton text="hold my workplace accountable" />
+				</Link>
 			</SpacingContainer>
 
 			{/* section 3 */}
@@ -421,9 +427,15 @@ const AmazonLanding = () => (
 			</div>
 			<SpacingContainer padding="0 12px 120px">
 				<div className="button-group">
-					<CTAButton text="request to list my job" />
-					<CTAButton text="schedule a demo" />
-					<Button variant="light" outlined text="notify me when live" noSuffix />
+					<Link href={`/request-join`}>
+						<CTAButton text="request to list my job" />
+					</Link>
+					<Link href={`/contact-us`}>
+						<CTAButton text="schedule a demo" />
+					</Link>
+					<Link href={`/contact-us`}>
+						<Button variant="light" outlined text="notify me when live" noSuffix />
+					</Link>
 				</div>
 			</SpacingContainer>
 			<Footer showScrollIndicator variant="dark" />
@@ -431,4 +443,4 @@ const AmazonLanding = () => (
 	</Page>
 );
 
-export default AmazonLanding;
+export default FrontlineLanding;

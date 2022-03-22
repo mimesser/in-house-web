@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 
 import { NumberedSectionBlock, HorizontallyCenteredContainer } from '../components';
 import Text from '../../../atoms/text/_index';
@@ -57,12 +56,10 @@ const TextContainer = styled.div`
   margin-top: 26px;
 `;
 
-const TopSection = () => {
-	const router = useRouter();
-
-	return (
-		<TopSectionContainer>
-			<Text
+const TopSection = () => (
+  <TopSectionContainer>
+    <TextContainer>
+      <Text
 				variant="light"
 				color="gray200"
 				weight="bold"
@@ -80,51 +77,50 @@ const TopSection = () => {
 			>
 				everything
 			</Text>
+    </TextContainer>
+    <SpacingContainer marginTop={30} marginBottom={30}>
+      <HorizontalBar />
+    </SpacingContainer>
 
-			<SpacingContainer marginTop={30} marginBottom={30}>
-				<HorizontalBar />
-			</SpacingContainer>
+    <Text
+      variant="dark"
+      color={appColors.gray200}
+      weight="bold"
+      family="helvetica"
+      size={32}
+    >
+      (remain untraceable)
+    </Text>
+    <SpacingContainer marginTop={34}>
+      <Link href={`/request-join`}>
+        <CTAButton text="make my workplace transparent" />
+      </Link>
+    </SpacingContainer>
+    <TextContainer>
+      <Text
+        variant="light"
+        color="gray300"
+        weight="reg"
+        family="helvetica"
+        size={16}
+      >
+        now there is a tool allowing your entire team to speak truth to power in unified consensus
+        —without fear of retaliation
+      </Text>
 
-			<Text
-				variant="dark"
-				color={appColors.gray200}
-				weight="bold"
-				family="helvetica"
-				size={32}
-			>
-				(remain untraceable)
-			</Text>
-			<SpacingContainer marginTop={34}>
-				<Link href={`/request-join`}>
-					<CTAButton text="make my workplace transparent" />
-				</Link>
-			</SpacingContainer>
-			<TextContainer>
-				<Text
-					variant="light"
-					color="gray300"
-					weight="reg"
-					family="helvetica"
-					size={16}
-				>
-					now there is a tool allowing your entire team to speak truth to power in unified consensus
-					—without fear of retaliation
-				</Text>
-
-				<Text
-					variant="light"
-					color="gray300"
-					weight="reg"
-					family="helvetica"
-					size={16}
-				>
-					grade your company’s ESG/sustainability metrics and show the public how it treats people,
-					the planet, and its profits
-				</Text>
-			</TextContainer>
-		</TopSectionContainer>
-	)
-	};
+      <Text
+        variant="light"
+        color="gray300"
+        weight="reg"
+        family="helvetica"
+        size={16}
+      >
+        grade your company’s ESG/sustainability metrics and show the public how it treats people,
+        the planet, and its profits
+      </Text>
+    </TextContainer>
+  </TopSectionContainer>
+	);
 
 const SpacingContainerStyling = styled.div`
   margin-top: ${({ marginTop }) => `${marginTop}px`};

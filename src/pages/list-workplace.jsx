@@ -32,7 +32,7 @@ const PageStyling = styled(Page)`
     }
   }
 
-  .list-workspace {
+  .list-workplace {
     &__text-body {
       margin-top: ${calcRem('16px')};
       margin-bottom: ${calcRem('30px')};
@@ -74,7 +74,7 @@ const IconStyling = styled.div`
   }
 `;
 
-const ListWorkspace = () => {
+const Listworkplace = () => {
   const router = useRouter();
   const [formState, setFormState] = useState({ description: '', email: '' });
   const [hasListed, setHasListed] = useState(false);
@@ -92,7 +92,7 @@ const ListWorkspace = () => {
       dispatch(
         postFeedback({
           email: formState.email,
-          subject: 'list your workspace',
+          subject: 'list your workplace',
           message: formState.description,
           callback: () => setHasListed(true),
         }),
@@ -106,7 +106,7 @@ const ListWorkspace = () => {
       title="In-House - List your House | Speak as a Team | Remain Untraceable"
     >
       <IconStyling>
-        <Icon size={2} icon="x" onClick={() => router.push('/')} />
+        <Icon size={2} icon="x" onClick={() => router.back()} />
       </IconStyling>
       <Text.Heading
         weight="bold"
@@ -126,12 +126,12 @@ const ListWorkspace = () => {
           : `we will reach out to you as soon as we can to confirm
             whether we will be able to list your workplace during our beta trial`}
       </Text>
-      <div className="list-workspace__form">
+      <div className="list-workplace__form">
         {!hasListed ? (
           <form>
             <Textarea
               variant="light"
-              className="list-workspace__text-body list-workspace__text-area"
+              className="list-workplace__text-body list-workplace__text-area"
               name="description"
               value={formState.description}
               onChange={handleInputChange}
@@ -142,7 +142,7 @@ const ListWorkspace = () => {
             <Input
               variant="light"
               name="email"
-              className="list-workspace__input"
+              className="list-workplace__input"
               value={formState.email}
               onChange={handleInputChange}
               placeholder="email (100% confidential)"
@@ -166,4 +166,4 @@ const ListWorkspace = () => {
   );
 };
 
-export default ListWorkspace;
+export default Listworkplace;

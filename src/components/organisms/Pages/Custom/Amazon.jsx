@@ -99,7 +99,7 @@ const HorizontalBar = styled.div`
   height: 8px;
 `;
 
-const AmazonLanding = () => (
+const FrontlineLanding = () => (
   <div style={{ background: '#000' }}>
     <HeaderImage>
       <PositionContainer left="12" bottom="54">
@@ -152,7 +152,9 @@ const AmazonLanding = () => (
         </Text>
       </SpacingContainer>
 
-      <CTAButton text="bring democracy to my job" />
+			<Link href={`/request-join`}>
+				<CTAButton text="bring democracy to my job" />
+			</Link>
     </SpacingContainer>
 
     {/* section 2 */}
@@ -212,12 +214,16 @@ const AmazonLanding = () => (
     </Text>
     <SpacingContainer padding="0 12px 120px">
       <div className="button-group">
-        <CTAButton text="request to list my job" />
-        <CTAButton text="schedule a demo" />
+				<Link href={`/list-workplace`}>
+					<CTAButton text="request to list my job" />
+				</Link>
+				<Link href={`/contact-us`}>
+					<CTAButton text="schedule a demo" />
+				</Link>
         <Button variant="light" outlined text="notify me when live" noSuffix />
       </div>
     </SpacingContainer>
   </div>
 );
 
-export default AmazonLanding;
+export default FrontlineLanding;
