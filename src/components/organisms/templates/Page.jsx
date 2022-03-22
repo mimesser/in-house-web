@@ -140,7 +140,8 @@ export const Page = ({
   overlayBack,
   whiteHead,
 	noPadd,
-	variant
+	variant,
+  style
 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const openMenu = useCallback(() => setMenuOpen(true), []);
@@ -155,7 +156,7 @@ export const Page = ({
         <meta property="og:title" content={title} />
         <meta property="twitter:title" content={title} />
       </Head>
-      <PageLayout ref={ref} className={className}>
+      <PageLayout ref={ref} className={className} style={style}>
         <>
           {videoBack && <BackVideo />}
           {imageBack && <BackgroundImage />}
