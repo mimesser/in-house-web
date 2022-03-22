@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { H1, Icon } from '../components/atoms';
 import { Page } from '../components/organisms';
 import { appColors, calcRem } from '../style';
-import Button from "../components/atoms/Button/_index";
+import Button from '../components/atoms/Button/_index';
 
 const PageStyling = styled(Page)`
   padding: 12px;

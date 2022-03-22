@@ -4,6 +4,7 @@ export const actionTypes = {
   SET_FEEDBACK_LOADING: 'SET_FEEDBACK_LOADING',
   SET_FEEDBACK_SUCCESS: 'SET_FEEDBACK_SUCCESS',
   CLEAR_FEEDBACK: 'CLEAR_FEEDBACK',
+  POST_JOIN_US: 'POST_JOIN_US'
 };
 
 export const postFeedback = (payload) => ({
@@ -26,4 +27,9 @@ export const setFeedbackLoading = () => ({
 
 export const clearFeedback = () => ({
   type: actionTypes.CLEAR_FEEDBACK,
+});
+
+export const postJoinUs = (payload) => ({
+  type: actionTypes.POST_JOIN_US,
+  payload,
 });

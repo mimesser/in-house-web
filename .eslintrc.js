@@ -25,16 +25,7 @@ module.exports = {
     'react/jsx-one-expression-per-line': 'off',
     'react/jsx-props-no-spreading': 'off',
     'react/jsx-indent-props': ['warn', 2],
-    'max-len': ['warn', { code: 80 }],
-    indent: [
-      'warn',
-      2,
-      {
-        SwitchCase: 1,
-        ignoredNodes: ['TemplateLiteral'],
-        FunctionDeclaration: { body: 1, parameters: 2 },
-      },
-    ],
+    'max-len': ['warn', { code: 100 }],
     'react/jsx-indent': ['warn', 2],
     'no-unused-vars': 'off',
     'no-console': 'off',

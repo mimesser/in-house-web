@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import { appColors, calcRem } from '../../../style';
 import { Loader } from '../Loader';
 import { Icon } from '../Icon';
-import {truncateFileName} from "../../../utils/helpers/truncateFile";
+import { truncateFileName } from '../../../utils/helpers/truncateFile';
 
 // Todo - Improve structure - reference input component
 const btnTheme = {
@@ -35,7 +35,7 @@ const btnTheme = {
 };
 
 const ButtonBase = styled.button`
-  min-width: 89px;
+  min-width: 130px;
   position: relative;
   padding: ${calcRem(12)} ${calcRem(6)};
   font-size: ${calcRem(16)};
@@ -212,7 +212,7 @@ export const CTAButton = (props) => (
 );
 
 export const BackButton = (props) => (
-  <Button {...props} noBorder prefix={<Icon icon="arrow-left" />} noSuffix />
+  <Button text="back" {...props} noBorder prefix={<Icon icon="arrow-left" />} noSuffix />
 );
 
 const IconButtonStyling = styled.button`
@@ -252,6 +252,9 @@ const UploadButtonStyling = styled.div`
   > input {
     display: none;
   }
+  > button {
+    padding: ${calcRem(9.5)} ${calcRem(6)};
+  }
 `;
 
 export const UploadButton = (props) => {
@@ -265,7 +268,7 @@ export const UploadButton = (props) => {
   };
 
   const handleChange = (event) => {
-    console.log(event.target.files)
+    if (props?.onChange) props.onChange(event);
     setFile(event.target.files[0]);
   };
 
@@ -273,19 +276,25 @@ export const UploadButton = (props) => {
     <UploadButtonStyling>
       <input type="file" {...props} ref={inputRef} onChange={handleChange} />
       <Button
+        type="button"
         prefix={<Icon icon="attachment" />}
         suffix={<Icon icon="plus" />}
         onClick={onClick}
-        text={file?.name && truncateFileName(file?.name) || props.placeholder || 'Select file...'}
         outlined
+        text={
+          <span style={{ fontSize: 14 }}>
+            {(file?.name && truncateFileName(file?.name)) || props.placeholder || 'Select file...'}
+          </span>
+        }
         dashed
+        variant={props.variant}
       />
     </UploadButtonStyling>
   );
 };
 
 Button.propTypes = {
-  text: PropTypes.string,
+  text: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   variant: PropTypes.oneOf(['dark', 'light']),
   outlined: PropTypes.bool,
   noBorder: PropTypes.bool,

@@ -41,7 +41,7 @@ const PortraitImageBgCss = css`
 `;
 
 const PortraitImage = styled.div`
-  ${PortraitImageBgCss}
+  ${PortraitImageBgCss};
   height: 658px;
   position: relative;
 `;

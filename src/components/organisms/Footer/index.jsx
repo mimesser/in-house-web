@@ -8,7 +8,13 @@ import { HasMoreContentIndicator } from '../../atoms/Indicators/HasMore';
 import { useIntersectionObserverRef } from 'rooks';
 
 const Layout = styled.div`
-  background-color: ${({ variant }) => (variant === 'light' ? appColors.white : constColors.black)};
+  background-color: ${({ variant }) =>
+    // eslint-disable-next-line no-nested-ternary
+    variant === 'transparent'
+      ? 'transparent'
+      : variant === 'light'
+      ? appColors.white
+      : appColors.gray600};
   color: ${({ variant }) => (variant === 'light' ? appColors.gray500 : appColors.gray300)};
   padding: ${calcRem(24)} ${calcRem(12)} ${calcRem(20)} ${calcRem(12)};
   border-top: 0.5px solid
@@ -38,7 +44,8 @@ const Layout = styled.div`
 
 const Break = styled.div`
   width: 100%;
-  background: ${({ variant }) => (variant === 'light' ? appColors.gray600 : appColors.gray100)};
+  background: ${({ variant }) =>
+    ['light', 'transparent'].includes(variant) ? appColors.gray600 : appColors.gray100};
   height: 1px;
   margin-bottom: ${calcRem(12)};
   opacity: 0.2;
@@ -118,5 +125,5 @@ export const Footer = ({ variant, showScrollIndicator }) => {
 };
 
 Footer.propTypes = {
-  variant: PropTypes.oneOf(['light', 'dark']),
+  variant: PropTypes.oneOf(['light', 'dark', 'transparent']),
 };

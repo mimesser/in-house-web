@@ -12,12 +12,15 @@ const getColor = (variant, state) => {
   return stepperTheme[state][variant];
 };
 
-const Stepper = ({ variant = 'light', state }) => {
+const Stepper = ({ variant = 'light', state, ...props }) => {
   if (!state || (typeof state.step !== 'number' && typeof state.total !== 'number')) return null;
   return (
-    <Styling variant={variant}>
+    <Styling variant={variant} {...props}>
       {[...Array(Math.abs(+state?.total) ?? 0)].map((_, idx) => (
-        <span className={`step ${idx + 1 <= +state?.step ? 'step--has-completed' : ''}`.trim()} />
+        <span
+          key={idx}
+          className={`step ${idx + 1 <= +state?.step ? 'step--has-completed' : ''}`.trim()}
+        />
       ))}
     </Styling>
   );

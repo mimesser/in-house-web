@@ -47,7 +47,25 @@ export function* postFeedback({ payload: { subject, message, email, redirectLink
     );
   }
 }
+export function* postJoinUs({ payload: { subject, message, email, redirectLink, callback } }) {
+  try {
+    yield put(setFeedbackLoading());
+    yield call(api.post, 'memberships', {
+      subject,
+      message: message 
+    });
+    yield delay(CONFIRMATION_DELAY);
+    if (redirectLink) {
+      Router.push(redirectLink);
+    }
+    if(callback) {
+      callback()
+    }
+  } catch (e) {
+    
+  }
+}
 
 export default function* feedbackSaga() {
-  yield all([takeLatest(actionTypes.POST_FEEDBACK, postFeedback)]);
+  yield all([takeLatest(actionTypes.POST_FEEDBACK, postFeedback), takeLatest(actionTypes.POST_JOIN_US, postJoinUs)]);
 }
