@@ -11,7 +11,7 @@ import { Page } from '../components/organisms'
 import Button, { CTAButton } from '../components/atoms/Button/_index';
 import Text from '../components/atoms/text/_index';
 import Icon from '../components/atoms/Icon';
-import { appColors } from '../style';
+import { appColors, device } from '../style';
 import { Footer } from '../components/organisms/Footer';
 
 const howItWorks = [
@@ -23,11 +23,12 @@ const howItWorks = [
   },
   {
     header: 'show them how it works',
-    description: 'vite us in to show the product to your team so they understand how they can control everything and how you are the one who wants to empower them',
+    description: 'invite us in to show the product to your team so they understand how they can control everything and how you are the one who wants to empower them',
   },
   {
     header: 'become clairvoyant',
     description: 'listen to what your team is saying in real time via consensus voting on everything and act with swift and thoughtful solutions',
+	share: true
   },
   {
     header: 'lead a real team',
@@ -73,33 +74,53 @@ const SpacingContainer = ({ children, ...props }) => (
   <SpacingContainerStyling {...props}>{children}</SpacingContainerStyling>
 );
 const PositionContainer = styled.div`
-  position: absolute;
+  position: relative;
   bottom: ${({ bottom }) => `${bottom}px`};
   left: ${({ left }) => `${left}px`};
 `;
 
 const HeaderImageBgCss = css`
-	background: linear-gradient(transparent, black), url(static/Custom-Landing-Page–Header-Image-4.webp) no-repeat;
-	background-size: cover;
-  background-position-x: left;
-  background-position-y: top;
+  background-image: url(static/Custom-Landing-Page–Header-Image-4.webp);
+
+  @media ${device.iPhoneX} {
+    background-image: url(static/Custom-Landing-Page–Header-Image-4.webp);
+  }
+  @media ${device.iPhone8Plus} {
+    background-image: url(static/Custom-Landing-Page–Header-Image-4.webp);
+  }
+  @media ${device.iPad} {
+    background-image: url(static/Custom-Landing-Page–Header-Image-4.webp);
+  }
+  @media ${device.web} {
+    background-image: url(static/Custom-Landing-Page–Header-Image-4.webp);
+  }
+  @media ${device.laptop} {
+    background-image: url(static/Custom-Landing-Page–Header-Image-4.webp);
+  }
+  @media ${device.desktop} {
+    background-image: url(static/Custom-Landing-Page–Header-Image-4.webp);
+  }
+  @media ${device.macbook} {
+    background-image: url(static/Custom-Landing-Page–Header-Image-4.webp);
+  }
 `;
 
 const CtaDiv = styled.div`
+  margin: auto;
   margin-top : 30px;
+  width: 351px;
 `
 const HeaderImage = styled.div`
-  ${HeaderImageBgCss}
-  height: 350px;
+  background: linear-gradient(356deg,#111,transparent);
   position: relative;
-  margin-bottom: 12px;
+  padding: 248px 12px 12px 12px;
 `;
 
 const BottomImageBgCss = css`
   background-repeat: no-repeat;
   background-size: cover;
   background-position-x: left;
-  background-position-y: top;
+  background-position-y: center;
   background-image: url(static/workplace.webp);
 `;
 
@@ -107,7 +128,6 @@ const BottomImage = styled.div`
   ${BottomImageBgCss}
   height: 450px;
   position: relative;
-  margin-bottom: 12px;
 `;
 
 const HorizontalBar = styled.div`
@@ -117,7 +137,7 @@ const HorizontalBar = styled.div`
 `;
 
 const PercentSectionContainer = styled.div`
-  width: 100%;
+  width: 355px;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -151,9 +171,14 @@ const HeroesLanding = () => (
 	<Page
 		noPadd
 		title="in-house | heroes"
-		variant="dark"
+		// variant="dark"
+		whiteHead
+		imageBack
+		noOverflow={true}
+		
+		headerImageBgCss={HeaderImageBgCss}
 	>
-		<div style={{ background: '#000' }}>
+		<div style={{ zIndex: 1 }}>
 			<HeaderImage>
 				<PositionContainer left="12" bottom="54">
 					<Text
@@ -165,54 +190,57 @@ const HeroesLanding = () => (
 						family="helvetica"
 					/>
 				</PositionContainer>
-				<PositionContainer left="12" bottom="16">
+				<PositionContainer style={{margin: '30px 0'}}>
 					<HorizontalBar />
 				</PositionContainer>
-			</HeaderImage>
-			<SpacingContainer padding="0 12px">
-				<Text
-					text="progressive = transparent"
-					variant="light"
-					color={appColors.gray200}
-					weight="bold"
-					family="helvetica"
-					size={24}
-					margin="15px"
-				/>
-				<Text
-					text="let your team speak and get on the right side of history"
-					variant="dark"
-					color={appColors.gray400}
-					weight="bold"
-					family="helvetica"
-					size={24}
-				/>
-				<SpacingContainer marginTop="30">
-					<Text variant="dark" color={appColors.gray300} size={16} lineHeight={22} weight="reg" opacity={0.7}>
-						allow your entire team to tell you what really matters to them without fear of exposure
-						<br />
-						<br /> 
-						encourage them to share everything in complete anonymity and show the public that you practice what you preach
-					</Text>
+				
+				<SpacingContainer>
+					<Text
+						text="progressive = transparent"
+						variant="light"
+						color={appColors.gray200}
+						weight="bold"
+						family="helvetica"
+						size={24}
+						margin="15px"
+					/>
+					<Text
+						text="let your team speak and get on the right side of history"
+						variant="dark"
+						color={appColors.gray400}
+						weight="bold"
+						family="helvetica"
+						size={24}
+					/>
+					<SpacingContainer marginTop="30">
+						<Text variant="dark" color={appColors.gray300} size={16} lineHeight={22} weight="reg" opacity={0.7}>
+							allow your entire team to tell you what really matters to them without fear of exposure
+							<br />
+							<br /> 
+							encourage them to share everything in complete anonymity and show the public that you practice what you preach
+						</Text>
+					</SpacingContainer>
 				</SpacingContainer>
-			</SpacingContainer>
+			</HeaderImage>
 
 			{/* section 2 */}
-			<SpacingContainer padding="117px 12px 0">
-				{howItWorks.map((section, index) => {
-					const { header, source, description, note, share } = section;
-					return (
-						<NumberedSectionBlock
-							key={index}
-							header={header}
-							description={description}
-							source={source}
-							note={note}
-							index={index}
-							share={share}
-						/>
-					);
-				})}
+			<SpacingContainer padding="117px 12px 0" background="#111">
+				<div style={{display: 'flex', justifyContent: 'space-around', alignItems: 'start', flexWrap: 'wrap'}}>
+					{howItWorks.map((section, index) => {
+						const { header, source, description, note, share } = section;
+						return (
+							<NumberedSectionBlock
+								key={index}
+								header={header}
+								description={description}
+								source={source}
+								note={note}
+								index={index}
+								share={share}
+							/>
+						);
+					})}
+				</div>
 				<CtaDiv>
 					<Link href={`/contact-us`}>
 						<CTAButton text="become one of 50 legendary leaders" />
@@ -221,44 +249,48 @@ const HeroesLanding = () => (
 			</SpacingContainer>
 
 			{/* section 3 */}
-			<SpacingContainer padding="90px 34px 40px">
+			<SpacingContainer padding="90px 34px 40px"  background="#111">
 				<div style={{ textAlign: 'center' }}>
 					<Text variant="light" color={appColors.gray4} weight="bold" family="helvetica" size={32}>
 						sustainable is the new black
 					</Text>
 				</div>
 			</SpacingContainer>
-			<SpacingContainer padding="0px 35px">
-				{percents.map((section, index) => {
-					const { percent, subtitle, description, note } = section;
-					return (
-						<PercentSection
-							key={index}
-							percent={percent}
-							subtitle={subtitle}
-							description={description}
-							note={note}
-						/>
-					);
-				})}
+			<SpacingContainer padding="0px 35px"  background="#111">
+				<div style={{display: 'flex', justifyContent: 'space-around', alignItems: 'start', flexWrap: 'wrap'}}>
+					{percents.map((section, index) => {
+						const { percent, subtitle, description, note } = section;
+						return (
+							<PercentSection
+								key={index}
+								percent={percent}
+								subtitle={subtitle}
+								description={description}
+								note={note}
+							/>
+						);
+					})}
+				</div>
 			</SpacingContainer>
 
-			<BottomImage />
-
-			<SpacingContainer padding="0px 44px">
+			<SpacingContainer padding="0px 44px"  background="#111">
 				<div style={{
-					maxWidth: '286px',
 					textAlign: 'center',
-					margin: 'auto'
+					margin: 'auto',
+					paddingTop: '120px',
+					paddingBottom: '60px'
 				}}>
-					<Text variant="light" color={appColors.gray300} weight="reg" family="helvetica" size={16} align="center">
+					<Text variant="light" color={appColors.gray300} weight="bold" family="Helvetica Neue" size={36} align="center">
 						we will be able to list ~50 workplaces during our beta
 					</Text>
 				</div>
 
 			</SpacingContainer>
-			<SpacingContainer padding="0 12px 192px" id='getNotification'>
-				<div className="button-group">
+
+			<BottomImage />
+
+			<SpacingContainer padding="60px 12px 130px" id='getNotification'  background="#111">
+				<div className="button-group" style={{width: '351px', margin: 'auto'}}>
 					<Link href={`/contact-us`}>
 						<CTAButton text="become one of our first 50 pioneers" />
 					</Link>

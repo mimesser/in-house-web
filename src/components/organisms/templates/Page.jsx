@@ -31,7 +31,7 @@ export const Container = styled.div`
   ${({ noPadd }) => !noPadd && onDesktop(`margin-left: ${paddings}px`)};
   display: flex;
   flex-direction: column;
-  ${onDesktopOverflowAuto};
+  ${({ noOverflow }) => !noOverflow && onDesktop(`overflow: auto`)};
 `;
 
 // noinspection CssInvalidPseudoSelector
@@ -92,6 +92,8 @@ export const BackgroundImage = styled.div`
   @media ${device.macbook} {
     background-image: url(static/web_xl_max_retina_2880x1800.webp);
   }
+
+  ${({headerImageBgCss}) => headerImageBgCss || ''}
 `;
 
 const WINDOW_RESIZE_UPDATE_DELAY = 1000;
@@ -141,6 +143,8 @@ export const Page = ({
   whiteHead,
 	noPadd,
 	variant,
+  headerImageBgCss,
+  noOverflow,
   style
 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -159,7 +163,7 @@ export const Page = ({
       <PageLayout ref={ref} className={className} style={style}>
         <>
           {videoBack && <BackVideo />}
-          {imageBack && <BackgroundImage />}
+          {imageBack && <BackgroundImage headerImageBgCss={headerImageBgCss}/>}
           {overlayBack && <Overlay />}
         </>
 
@@ -170,7 +174,7 @@ export const Page = ({
 					noPadd={noPadd}
 					variant={variant}
 				/>}
-        <Container noPadd={noPadd}>{children}</Container>
+        <Container noPadd={noPadd} noOverflow={noOverflow}>{children}</Container>
         {/* <HelpToggle containerRef={ref} /> */}
       </PageLayout>
     </>
