@@ -1,24 +1,20 @@
 import React from 'react';
+import { withRouter } from 'next/router';
 import styled from 'styled-components';
+import { Footer } from '../components/organisms/Footer';
 
-import { Page } from '../components/organisms';
-import { H1 } from '../components/atoms';
+import { Page, FeedbackForm } from '../components/organisms';
 
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  text-transform: none;
-  align-items: center;
-`;
-
-function ContactUs() {
+function ContactUs(props) {
+  const {
+    query: { subjectIndex = 0, redirect = '/' },
+  } = props.router;
   return (
-    <Page noPadd>
-      <Wrapper>
-        <H1>Coming Soon...</H1>
-      </Wrapper>
+    <Page>
+      <FeedbackForm subjectIndex={subjectIndex} redirectLink={redirect} />
+      <Footer variant="light" />
     </Page>
   );
 }
 
-export default ContactUs;
+export default withRouter(ContactUs);

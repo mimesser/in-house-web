@@ -14,7 +14,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: ${spacing.xxl};
-  max-width: ${breakpoints.sm};
+  max-width: ${breakpoints.lg};
 
   ${H2} {
     margin: ${spacing.xl} 0;

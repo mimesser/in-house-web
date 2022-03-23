@@ -15,10 +15,10 @@ export const Brand = styled(({ className }) => (
 			size={14}
 			weight="bold"
 		>
-			<Link href="/about">
+			<Link href="/">
         in-house
 			</Link>&nbsp;|&nbsp;
-			<Link href="/">
+			<Link href="/about">
         org 2.0
 			</Link>
 		</Text>

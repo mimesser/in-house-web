@@ -70,7 +70,7 @@ const BetaList = () => {
             cancel
           </BackButton>
 
-          <Link href="/feedback?subjectIndex=0&redirect=/houses">
+          <Link href="/list-workplace">
             <ActionButton icon="arrow-right">list your workplace</ActionButton>
           </Link>
         </Commands>
