@@ -31,7 +31,7 @@ export const menuOptions = [
   { href: '/about', label: 'about us' },
   { href: '/join-us', label: 'join us' },
   { href: '/faqs', label: 'faq' },
-  { href: '/feedback', label: 'contact us' },
+  { href: '/contact-us', label: 'contact us' },
 ];
 
 const duration = 300;
