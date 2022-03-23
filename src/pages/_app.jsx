@@ -2,7 +2,7 @@ import App from 'next/app';
 import Head from 'next/head';
 import { END } from 'redux-saga';
 import { ThemeProvider } from 'styled-components';
-import { hotjar } from 'react-hotjar';
+// import { hotjar } from 'react-hotjar';
 
 import { wrapper } from '../store';
 import { theme } from '../style';
@@ -30,7 +30,7 @@ class MyApp extends App {
   }
 
   componentDidMount() {
-    hotjar.initialize(process.env.NEXT_PUBLIC_HOTJAR_SITE_ID, 6);
+    // hotjar.initialize(process.env.NEXT_PUBLIC_HOTJAR_SITE_ID, 6);
     initGA();
     logPageView();
   }
