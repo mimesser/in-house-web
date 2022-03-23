@@ -102,7 +102,7 @@ export const HorizontallyCenteredContainer = styled.div`
 `;
 
 export const NumberedSectionBlockContainer = styled.div`
-  width: 100%;
+  width: 320px;
   display: flex;
   justify-content: center;
   flex-direction: column;

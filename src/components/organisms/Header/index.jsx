@@ -62,6 +62,7 @@ const A = styled.a`
   padding: 0;
   margin: 0;
   display: block;
+  color: ${({ white }) => (white ? palette.white : palette.primary)};
   &:hover {
     color: ${({ white }) => (white ? palette.white : palette.primary)};
   }
@@ -159,7 +160,8 @@ export const Header = withRouter(({
         <MenuToggle onClick={openMenu}>
           <Icon
 						icon="menu"
-						color={variant === "dark" ? "#fff" : "#000"}
+						// color={variant === "dark" ? "#fff" : "#000"}
+						color={"#fff"}
 						size={1}
 					/>
         </MenuToggle>
