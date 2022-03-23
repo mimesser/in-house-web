@@ -9,7 +9,7 @@ import Button, { BackButton, UploadButton } from '../../components/atoms/Button/
 import { Footer } from '../../components/organisms/Footer';
 import { Checkbox } from '../../components/atoms/Checkbox/_index';
 import { appColors } from '../../style';
-import { JoinUSBaseStyling } from './styles';
+import { JoinUSBaseStyling } from '../../style/joinus';
 import { Page } from '../../components/organisms';
 import Input from '../../components/atoms/Input/_index';
 import Summary from './_summary';

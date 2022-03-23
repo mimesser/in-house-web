@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {appColors} from "../../style";
+import {appColors} from ".";
 
 export const JoinUSBaseStyling = styled.div`
   display: grid;
