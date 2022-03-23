@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { useRouter } from 'next/router';
 
 import { H1, H2, Input } from '../../atoms';
+import Text from '../../atoms/text/_index';
 import { WinkConfirmation, CounterInput } from '../../molecules';
 import {
   FormGroup,
@@ -68,8 +69,24 @@ function FeedbackForm(props) {
 
   return (
     <Container>
-      <H1>let us know</H1>
-      <H2>we keep everything confidential</H2>
+      <Text.Heading
+              className="section--heading-title"
+              variant="light"
+              weight="bold"
+              size={32}
+              color="grey600"
+              level={1}
+              text="contact us"
+            />
+      <br />
+      <Text
+              size={14}
+              className="description"
+              style={{ maxWidth: 650 }}
+              color="grey600"
+              text={`all communications are strictly confidential`}
+            />
+      <br />
       <Dropdown
         value={subject}
         placeholder="subject"
@@ -90,15 +107,13 @@ function FeedbackForm(props) {
           value={email}
           disabled={!subject}
           onChange={handleEmailChange}
-          placeholder="email (if you want a reply)"
+          placeholder="email"
           type="email"
         />
       </FormGroup>
       {props.error && <FormGroup>{props.error}</FormGroup>}
       <Commands>
-        <BackButton inverse onClick={() => router.back()}>
-          <LeftArrowIcon icon="arrow-left" />
-          back
+        <BackButton inverse onClick={() => router.back()}>cancel
         </BackButton>
         <SubmitButton disabled={!valid} onClick={submit} icon="arrow-right" loading={props.loading}>
           send

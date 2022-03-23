@@ -118,9 +118,10 @@ const Menu = styled.span`
 
 export const menuOptions = [
   { href: '/houses', label: 'see workplaces' },
-  { href: '/list-house', label: 'list workplace' },
+  { href: '/list-workplace', label: 'list workplace' },
   { href: '/about', label: 'about' },
-  { href: '/feedback', label: 'contact us' },
+  { href: '/faqs', label: 'faq' },
+  { href: '/contact-us', label: 'contact us' },
 ];
 
 const IconLink = ({ icon, href }) => (
