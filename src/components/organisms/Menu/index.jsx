@@ -21,6 +21,7 @@ const CloseIcon = styled(Icon).attrs(() => ({
 }))`
   width: 24px;
   height: 24px;
+  color: ${palette.white};
   :hover {
     color: ${palette.white};
   }
@@ -86,6 +87,7 @@ const A = styled.a`
   font-size: ${fontSize.sm};
   padding: ${spacing.xl} 0 0 ${spacing.xl};
   display: block;
+  color: ${palette.white};
   &:hover {
     color: ${palette.white};
   }
