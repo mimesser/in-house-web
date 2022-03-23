@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { Footer } from '../../components/organisms/Footer';
 import Text from '../../components/atoms/text/_index';
 import Button, { BackButton } from '../../components/atoms/Button/_index';
-import { JoinUSBaseStyling } from './styles';
+import { JoinUSBaseStyling } from '../../style/joinus';
 import { Page } from '../../components/organisms';
 import { appColors } from '../../style';
 
