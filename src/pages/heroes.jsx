@@ -75,8 +75,22 @@ const SpacingContainer = ({ children, ...props }) => (
 );
 const PositionContainer = styled.div`
   position: relative;
+  max-width: ${({ maxWidth }) => `${maxWidth}px`};
   bottom: ${({ bottom }) => `${bottom}px`};
   left: ${({ left }) => `${left}px`};
+  @media ${device.laptop} {
+	margin-left: 80px;
+  }
+  @media ${device.desktop} {
+	margin-left: 277px;
+  }
+`;
+
+const FlexContainer = styled.div`
+	display: flex;
+	justify-content: space-evenly;
+	align-items: start;
+	flex-wrap: wrap;
 `;
 
 const HeaderImageBgCss = css`
@@ -108,7 +122,7 @@ const HeaderImageBgCss = css`
 const CtaDiv = styled.div`
   margin: auto;
   margin-top : 30px;
-  width: 351px;
+  max-width: 351px;
 `
 const HeaderImage = styled.div`
   background: linear-gradient(356deg,#111,transparent);
@@ -134,6 +148,7 @@ const HorizontalBar = styled.div`
   background: #cbccd0;
   width: 128px;
   height: 8px;
+  margin: 30px 0;
 `;
 
 const PercentSectionContainer = styled.div`
@@ -143,6 +158,27 @@ const PercentSectionContainer = styled.div`
   flex-direction: column;
   text-align: center;
 `;
+
+const ResponsiveText = styled(Text)`
+	font-size: 36px;
+
+	@media ${device.mobile} {
+		font-size: 36px;
+	}
+	@media ${device.tab} {
+		font-size: 45px;
+	}
+	@media ${device.web} {
+		font-size: 54px;
+	}
+	@media ${device.laptop} {
+		font-size: 54px;
+	}
+	@media ${device.desktop} {
+		font-size: 54px;
+	}
+
+`
 
 const PercentSection = ({ percent, subtitle, description, note }) => (
   <PercentSectionContainer>
@@ -178,10 +214,10 @@ const HeroesLanding = () => (
 		
 		headerImageBgCss={HeaderImageBgCss}
 	>
-		<div style={{ zIndex: 1 }}>
+		<div style={{ zIndex: 1}}>
 			<HeaderImage>
-				<PositionContainer left="12" bottom="54">
-					<Text
+				<PositionContainer maxWidth='740'>
+					<ResponsiveText
 						text="are you org 2.0?"
 						color={appColors.gray200}
 						variant="light"
@@ -189,13 +225,10 @@ const HeroesLanding = () => (
 						weight="bold"
 						family="helvetica"
 					/>
-				</PositionContainer>
-				<PositionContainer style={{margin: '30px 0'}}>
 					<HorizontalBar />
-				</PositionContainer>
-				
-				<SpacingContainer>
-					<Text
+					
+					
+					<ResponsiveText
 						text="progressive = transparent"
 						variant="light"
 						color={appColors.gray200}
@@ -204,7 +237,7 @@ const HeroesLanding = () => (
 						size={24}
 						margin="15px"
 					/>
-					<Text
+					<ResponsiveText
 						text="let your team speak and get on the right side of history"
 						variant="dark"
 						color={appColors.gray400}
@@ -220,12 +253,13 @@ const HeroesLanding = () => (
 							encourage them to share everything in complete anonymity and show the public that you practice what you preach
 						</Text>
 					</SpacingContainer>
-				</SpacingContainer>
+				</PositionContainer>
+				
 			</HeaderImage>
 
 			{/* section 2 */}
 			<SpacingContainer padding="117px 12px 0" background="#111">
-				<div style={{display: 'flex', justifyContent: 'space-around', alignItems: 'start', flexWrap: 'wrap'}}>
+				<FlexContainer>
 					{howItWorks.map((section, index) => {
 						const { header, source, description, note, share } = section;
 						return (
@@ -240,7 +274,7 @@ const HeroesLanding = () => (
 							/>
 						);
 					})}
-				</div>
+				</FlexContainer>
 				<CtaDiv>
 					<Link href={`/contact-us`}>
 						<CTAButton text="become one of 50 legendary leaders" />
@@ -257,7 +291,7 @@ const HeroesLanding = () => (
 				</div>
 			</SpacingContainer>
 			<SpacingContainer padding="0px 35px"  background="#111">
-				<div style={{display: 'flex', justifyContent: 'space-around', alignItems: 'start', flexWrap: 'wrap'}}>
+				<FlexContainer>
 					{percents.map((section, index) => {
 						const { percent, subtitle, description, note } = section;
 						return (
@@ -270,7 +304,7 @@ const HeroesLanding = () => (
 							/>
 						);
 					})}
-				</div>
+				</FlexContainer>
 			</SpacingContainer>
 
 			<SpacingContainer padding="0px 44px"  background="#111">
@@ -290,7 +324,7 @@ const HeroesLanding = () => (
 			<BottomImage />
 
 			<SpacingContainer padding="60px 12px 130px" id='getNotification'  background="#111">
-				<div className="button-group" style={{width: '351px', margin: 'auto'}}>
+				<div className="button-group" style={{maxWidth: '351px', margin: 'auto'}}>
 					<Link href={`/contact-us`}>
 						<CTAButton text="become one of our first 50 pioneers" />
 					</Link>

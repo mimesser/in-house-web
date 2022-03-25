@@ -1,13 +1,15 @@
 import React from 'react';
 import { createGlobalStyle, css } from 'styled-components';
 import { normalize } from 'polished';
+import { device } from '../style';
 
 import {
   breakpoints,
+  mobileWidth,
   BASE_FONT_SIZE,
   appFontSize,
   font,
-  appLineHeight,
+  lineHeight,
   appBackground,
   palette,
 } from '../style';
@@ -67,10 +69,10 @@ export const GlobalStyle = createGlobalStyle`
     text-transform: lowercase;
     font-size: ${BASE_FONT_SIZE};
     ${font.primary};
-    line-height: ${appLineHeight};
+    line-height: ${lineHeight.sm};
     color: ${palette.text};
     background-color: ${appBackground};
-    min-width: ${breakpoints.xs};
+    min-width: ${mobileWidth.xs};
     min-height: 650px;
     height: 100%;
     word-break: break-word;
@@ -81,6 +83,9 @@ export const GlobalStyle = createGlobalStyle`
 
     > div:first-child {
       height: 100%;
+    }
+    @media ${device.web} {
+      line-height: ${lineHeight.xl};
     }
   }
 

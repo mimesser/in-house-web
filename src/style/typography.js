@@ -29,6 +29,7 @@ export const lineHeight = {
   sm: '1.2',
   md: '1.4',
   lg: '1.5',
+  xl: '1.6',
 };
 
 // // Currently not in use - we have separate font family for each font weight :/
