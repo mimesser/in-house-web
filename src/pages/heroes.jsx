@@ -78,6 +78,12 @@ const PositionContainer = styled.div`
   max-width: ${({ maxWidth }) => `${maxWidth}px`};
   bottom: ${({ bottom }) => `${bottom}px`};
   left: ${({ left }) => `${left}px`};
+  @media ${device.laptop} {
+	margin-left: 80px;
+  }
+  @media ${device.desktop} {
+	margin-left: 277px;
+  }
 `;
 
 const FlexContainer = styled.div`
@@ -156,7 +162,7 @@ const PercentSectionContainer = styled.div`
 const ResponsiveText = styled(Text)`
 	font-size: 36px;
 
-	@media ${device.mobie} {
+	@media ${device.mobile} {
 		font-size: 36px;
 	}
 	@media ${device.tab} {
@@ -208,9 +214,9 @@ const HeroesLanding = () => (
 		
 		headerImageBgCss={HeaderImageBgCss}
 	>
-		<div style={{ zIndex: 1 }}>
+		<div style={{ zIndex: 1}}>
 			<HeaderImage>
-				<PositionContainer maxWidth='720'>
+				<PositionContainer maxWidth='740'>
 					<ResponsiveText
 						text="are you org 2.0?"
 						color={appColors.gray200}
