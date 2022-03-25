@@ -1,8 +1,28 @@
 import styled from "styled-components";
 
 import { Icon } from '../../../atoms';
-import { appColors } from '../../../../style';
+import { appColors, device } from '../../../../style';
 import Text from '../../../atoms/text/_index';
+
+const ResponsiveText = styled(Text)`
+	font-size: 36px;
+
+	@media ${device.mobie} {
+		font-size: 36px;
+	}
+	@media ${device.tab} {
+		font-size: 45px;
+	}
+	@media ${device.web} {
+		font-size: 54px;
+	}
+	@media ${device.laptop} {
+		font-size: 54px;
+	}
+	@media ${device.desktop} {
+		font-size: 54px;
+	}
+`
 
 export const NumberedSectionBlock = ({
 	index,
@@ -63,7 +83,7 @@ export const NumberedSectionBlock = ({
         />
       )}
 
-      <Text
+      <ResponsiveText
         text={description}
         color={appColors.gray400}
         variant="dark"
@@ -107,6 +127,28 @@ export const NumberedSectionBlockContainer = styled.div`
   justify-content: center;
   flex-direction: column;
   text-align: center;
+	margin: 20px;
+  
+	@media ${device.mobie} {
+    width: 306px;
+    margin: 20px;
+	}
+	@media ${device.tab} {
+    width: 300px;
+    margin: 30px;
+	}
+	@media ${device.web} {
+    width: 320px;
+    margin: 40px;
+	}
+	@media ${device.laptop} {
+    width: 320px;
+    margin: 60px;
+	}
+	@media ${device.desktop} {
+    width: 320px;
+    margin: 100px;
+	}
 
   & div > p:last-child {
     margin-bottom: 60px;

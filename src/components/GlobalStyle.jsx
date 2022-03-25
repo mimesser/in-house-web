@@ -4,6 +4,7 @@ import { normalize } from 'polished';
 
 import {
   breakpoints,
+  mobileWidth,
   BASE_FONT_SIZE,
   appFontSize,
   font,
@@ -70,7 +71,7 @@ export const GlobalStyle = createGlobalStyle`
     line-height: ${appLineHeight};
     color: ${palette.text};
     background-color: ${appBackground};
-    min-width: ${breakpoints.xs};
+    min-width: ${mobileWidth.xs};
     min-height: 650px;
     height: 100%;
     word-break: break-word;
