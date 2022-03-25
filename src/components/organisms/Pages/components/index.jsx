@@ -4,23 +4,55 @@ import { Icon } from '../../../atoms';
 import { appColors, device } from '../../../../style';
 import Text from '../../../atoms/text/_index';
 
-const ResponsiveText = styled(Text)`
-	font-size: 36px;
+const ResponsiveTextHeading = styled(Text)`
+  font-size: 32px;
+  line-height: 39px;
 
-	@media ${device.mobie} {
-		font-size: 36px;
+	@media ${device.mobile} {
+		font-size: 32px;
+    line-height: 39px;
 	}
 	@media ${device.tab} {
-		font-size: 45px;
+		font-size: 24px;
+    line-height: 29px;
 	}
 	@media ${device.web} {
-		font-size: 54px;
+		font-size: 36px;
+    line-height: 44px;
 	}
 	@media ${device.laptop} {
-		font-size: 54px;
+		font-size: 36px;
+    line-height: 44px;
 	}
 	@media ${device.desktop} {
-		font-size: 54px;
+		font-size: 36px;
+    line-height: 44px;
+	}
+`
+
+const ResponsiveText = styled(Text)`
+  font-size: 16px;
+  line-height: 19px;
+
+	@media ${device.mobile} {
+		font-size: 16px;
+    line-height: 19px;
+	}
+	@media ${device.tab} {
+		font-size: 16px;
+    line-height: 19px;
+	}
+	@media ${device.web} {
+		font-size: 20px;
+    line-height: 24px;
+	}
+	@media ${device.laptop} {
+		font-size: 20px;
+    line-height: 24px;
+	}
+	@media ${device.desktop} {
+		font-size: 20px;
+    line-height: 24px;
 	}
 `
 
@@ -51,7 +83,7 @@ export const NumberedSectionBlock = ({
           flexDirection: 'column',
         }}
       >
-        <Text
+        <ResponsiveTextHeading
           text={header}
           color={appColors.gray300}
           variant="light"
@@ -129,7 +161,7 @@ export const NumberedSectionBlockContainer = styled.div`
   text-align: center;
 	margin: 20px;
   
-	@media ${device.mobie} {
+	@media ${device.mobile} {
     width: 306px;
     margin: 20px;
 	}
