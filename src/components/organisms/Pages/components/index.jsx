@@ -1,8 +1,60 @@
 import styled from "styled-components";
 
 import { Icon } from '../../../atoms';
-import { appColors } from '../../../../style';
+import { appColors, device } from '../../../../style';
 import Text from '../../../atoms/text/_index';
+
+const ResponsiveTextHeading = styled(Text)`
+  font-size: 32px;
+  line-height: 39px;
+
+	@media ${device.mobile} {
+		font-size: 32px;
+    line-height: 39px;
+	}
+	@media ${device.tab} {
+		font-size: 24px;
+    line-height: 29px;
+	}
+	@media ${device.web} {
+		font-size: 36px;
+    line-height: 44px;
+	}
+	@media ${device.laptop} {
+		font-size: 36px;
+    line-height: 44px;
+	}
+	@media ${device.desktop} {
+		font-size: 36px;
+    line-height: 44px;
+	}
+`
+
+const ResponsiveText = styled(Text)`
+  font-size: 16px;
+  line-height: 19px;
+
+	@media ${device.mobile} {
+		font-size: 16px;
+    line-height: 19px;
+	}
+	@media ${device.tab} {
+		font-size: 16px;
+    line-height: 19px;
+	}
+	@media ${device.web} {
+		font-size: 20px;
+    line-height: 24px;
+	}
+	@media ${device.laptop} {
+		font-size: 20px;
+    line-height: 24px;
+	}
+	@media ${device.desktop} {
+		font-size: 20px;
+    line-height: 24px;
+	}
+`
 
 export const NumberedSectionBlock = ({
 	index,
@@ -31,7 +83,7 @@ export const NumberedSectionBlock = ({
           flexDirection: 'column',
         }}
       >
-        <Text
+        <ResponsiveTextHeading
           text={header}
           color={appColors.gray300}
           variant="light"
@@ -63,7 +115,7 @@ export const NumberedSectionBlock = ({
         />
       )}
 
-      <Text
+      <ResponsiveText
         text={description}
         color={appColors.gray400}
         variant="dark"
@@ -107,6 +159,28 @@ export const NumberedSectionBlockContainer = styled.div`
   justify-content: center;
   flex-direction: column;
   text-align: center;
+	margin: 20px;
+  
+	@media ${device.mobile} {
+    width: 306px;
+    margin: 20px;
+	}
+	@media ${device.tab} {
+    width: 300px;
+    margin: 30px;
+	}
+	@media ${device.web} {
+    width: 320px;
+    margin: 40px;
+	}
+	@media ${device.laptop} {
+    width: 320px;
+    margin: 60px;
+	}
+	@media ${device.desktop} {
+    width: 320px;
+    margin: 100px;
+	}
 
   & div > p:last-child {
     margin-bottom: 60px;
