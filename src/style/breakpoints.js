@@ -54,7 +54,8 @@ export const device = {
   and (-webkit-device-pixel-ratio : 2)
   and (orientation : portrait)
   `,
-
+  mobile: `(min-width: ${mobileWidth.sm})`,
+  tab: `(min-width: ${mobileWidth.lg})`,
   web: `(min-width: ${desktopWidth.sm})`,
   laptop: `(min-width: ${desktopWidth.md})`,
   desktop: `(min-width: ${desktopWidth.lg})`,
