@@ -38,6 +38,14 @@ const features = [
   },
 ];
 
+const FeatureText = styled.div`
+  padding: 40px;
+  flex: 1;
+  min-width: 240px;
+  @media ${device.tab} {    
+    order: ${({ order }) => `${order}`};
+  }
+`;
 const FeatureBlock = ({ header, description, image, order }) => (
   <div 
     style={{
@@ -47,13 +55,8 @@ const FeatureBlock = ({ header, description, image, order }) => (
       padding: '60px 0',
     }}>
     
-    <div
-      style={{
-        padding: '40px',
-        flex: 1,
-        minWidth: '240px',
-        order: order,
-      }}
+    <FeatureText
+      order={order}
     >
       <Text
 				color="gray300"
@@ -79,7 +82,7 @@ const FeatureBlock = ({ header, description, image, order }) => (
           {description}
         </Text>
       </div>
-    </div>
+    </FeatureText>
 
     <div
       style={{
@@ -141,7 +144,7 @@ const SectionThree = () => (
 					header={header}
 					description={description}
 					key={index}
-          order={device.mobile? 0 : index % 2}
+          order={index % 2}
 					image={image}
 				/>
       ))}      
