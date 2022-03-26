@@ -152,6 +152,12 @@ export const HorizontallyCenteredContainer = styled.div`
     margin: 0 auto;
   }
 `;
+export const FlexContainer = styled.div`
+	display: flex;
+	justify-content: space-evenly;
+	align-items: start;
+	flex-wrap: wrap;
+`;
 
 export const NumberedSectionBlockContainer = styled.div`
   width: 320px;
