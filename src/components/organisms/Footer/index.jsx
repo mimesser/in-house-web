@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Link from 'next/link';
 import { Copyright, Patent } from '../../atoms';
-import { appColors, calcRem, fontSize, constColors } from '../../../style';
+import { appColors, calcRem, fontSize, constColors, device } from '../../../style';
 import { HasMoreContentIndicator } from '../../atoms/Indicators/HasMore';
 import { useIntersectionObserverRef } from 'rooks';
 
@@ -42,6 +42,11 @@ const Layout = styled.div`
       'a b'
       'a b'
       'copyright copyright';
+  }
+  
+  @media ${device.desktop} {
+    margin-left: 277px;
+    margin-right: 277px;
   }
 `;
 

@@ -106,6 +106,8 @@ const PlayerWrapper = styled.div`
 	}
 	@media ${device.desktop} {
 		min-height: 787px;
+		margin-left: 277px;
+		margin-right: 277px;
 	}
 ` 
 
@@ -125,8 +127,7 @@ const HeaderImage = styled.div`
 const BottomImageBgCss = css`
   background-repeat: no-repeat;
   background-size: cover;
-  background-position-x: left;
-  background-position-y: top;
+  background-position-y: center;
 
   background-image: url(static/Custom-Landing-Page–Header-Image-2.webp);
   
@@ -147,6 +148,8 @@ const BottomImageBgCss = css`
   }
   @media ${device.desktop} {
     background-image: url(static/Custom-Landing-Page–Header-Image-2.webp);
+	margin-left: 277px;
+	margin-right: 277px;
   }
   @media ${device.macbook} {
     background-image: url(static/Custom-Landing-Page–Header-Image-2.webp);
