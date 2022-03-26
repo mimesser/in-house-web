@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { HorizontallyCenteredContainer } from '../components';
 import { CTAButton } from '../../../atoms/Button/_index';
 import Text from '../../../atoms/text/_index';
-import { appColors } from '../../../../style';
+import { appColors, device } from '../../../../style';
 
 const GrayCircle = styled.div`
   width: 26px;
@@ -38,20 +38,21 @@ const features = [
   },
 ];
 
-const FeatureBlock = ({ header, description, image }) => (
-  <div
+const FeatureBlock = ({ header, description, image, order }) => (
+  <div 
     style={{
-      padding: '0 12px',
-      height: '638px',
-      backgroundImage: image,
-      backgroundRepeat: 'no-repeat',
-      backgroundSize: 'cover',
-    }}
-  >
+      display: 'flex',
+      alignItems: 'center',
+      flexWrap:'wrap',
+      padding: '60px 0',
+    }}>
+    
     <div
       style={{
-        paddingTop: '18px',
-        borderTop: `1px solid ${appColors.gray400}`,
+        padding: '40px',
+        flex: 1,
+        minWidth: '240px',
+        order: order,
       }}
     >
       <Text
@@ -79,26 +80,58 @@ const FeatureBlock = ({ header, description, image }) => (
         </Text>
       </div>
     </div>
+
+    <div
+      style={{
+        padding: '0 12px',
+        height: '638px',
+        backgroundImage: image,
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+        backgroundPositionY: 'center',
+        flex: 2,
+        minWidth: '375px',
+      }}
+    >
+    </div>
   </div>
 );
 
+const ResponsiveText = styled(Text)`
+	font-size: 36px;
+
+	@media ${device.mobile} {
+		font-size: 36px;
+    max-width: 295px;
+	}
+	@media ${device.tab} {
+		font-size: 45px;
+    max-width: 640px;
+	}
+	@media ${device.web} {
+		font-size: 54px;
+	}
+	@media ${device.laptop} {
+		font-size: 54px;
+	}
+	@media ${device.desktop} {
+		font-size: 54px;
+	}
+`
 const SectionThree = () => (
   <>
     <div style={{ background: '#111' }}>
-      <HorizontallyCenteredContainer>
-        <GrayCircle />
-      </HorizontallyCenteredContainer>
-
       <HorizontallyCenteredContainer
 				align="center"
-				style={{ marginBottom: '62px' }}
+				style={{ paddingTop: '60px', maxWidth:'1200px', alignItems: 'center'}}
 			>
-        <Text
+        <ResponsiveText
           text="your team runs the show"
           color="gray400"
           variant="dark"
           weight="bold"
           family="helvetica"
+          maxWidth="1000px"
           size={36}
         />
       </HorizontallyCenteredContainer>
@@ -108,14 +141,15 @@ const SectionThree = () => (
 					header={header}
 					description={description}
 					key={index}
+          order={device.mobile? 0 : index % 2}
 					image={image}
 				/>
-      ))}
-    </div>
-    <div style={{ background: '#111', margin: '0', padding: '12px' }}> 
-			<Link href={`/join-us`}>
-				<CTAButton text="join us" />
-			</Link>
+      ))}      
+      <div style={{ textAlign: 'center', paddingBottom: '60px'}}> 
+        <Link href={`/join-us`}>
+          <CTAButton text="join us" />
+        </Link>
+      </div>
     </div>
   </>
 );

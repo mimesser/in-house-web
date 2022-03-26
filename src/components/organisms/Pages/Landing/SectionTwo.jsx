@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { HorizontallyCenteredContainer } from '../components';
 import { CTAButton } from '../../../atoms/Button/_index';
 import Text from '../../../atoms/text/_index';
+import { device } from '../../../../style';
 
 const stats = [
   {
@@ -33,21 +34,28 @@ const stats = [
     source: '*(internal surveys, 2019)',
   },
 ];
-
+ 
+// Take media query here
 const PortraitImageBgCss = css`
   background-repeat: no-repeat;
   background-size: cover;
+  background-position-y: center;
+  background-position-x: center;
   background-image: url(static/dude_glasses.webp);
 `;
 
 const PortraitImage = styled.div`
   ${PortraitImageBgCss};
-  height: 658px;
   position: relative;
+  min-height: 1280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-top: 120px;
 `;
 
 const StatSectionContainer = styled.div`
-  width: 100%;
+  width: 320px;
   margin-bottom: 60px;
   display: flex;
   justify-content: center;
@@ -55,6 +63,32 @@ const StatSectionContainer = styled.div`
   text-align: center;
 `;
 
+const FlexContainer = styled.div`
+	display: flex;
+	justify-content: space-evenly;
+	align-items: start;
+	flex-wrap: wrap;
+`;
+
+const ResponsiveText = styled(Text)`
+	font-size: 36px;
+
+	@media ${device.mobile} {
+		font-size: 36px;
+	}
+	@media ${device.tab} {
+		font-size: 45px;
+	}
+	@media ${device.web} {
+		font-size: 54px;
+	}
+	@media ${device.laptop} {
+		font-size: 54px;
+	}
+	@media ${device.desktop} {
+		font-size: 54px;
+	}
+`
 export const StatSection = ({
 	header,
 	subHeader,
@@ -116,14 +150,18 @@ export const StatSection = ({
 const SectionTwo = () => (
   <>
     <PortraitImage>
-      <div style={{ margin: '0 12px' }}>
-				<Link href={`/join-us`}>
-					<CTAButton text="join us" />
-				</Link>
-      </div>
+    <div
+        style={{
+          bottom: '26px',
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          textAlign: 'center',
+          minHeight: '1000px',
+        }}
+      ></div>
       <div
         style={{
-          position: 'absolute',
           bottom: '26px',
           width: '100%',
           display: 'flex',
@@ -131,7 +169,7 @@ const SectionTwo = () => (
           textAlign: 'center',
         }}
       >
-        <Text
+        <ResponsiveText
 					family="helvetica"
 					color="gray300"
 					weight="bold"
@@ -139,27 +177,29 @@ const SectionTwo = () => (
 					variant="light"
 				>
           the world literally wants to know
-        </Text>
+        </ResponsiveText>
+      </div>
+      
+      <div style={{ paddingTop: '34px' }}>
+        <FlexContainer>
+          {stats.map((section, index) => (
+            <StatSection
+              header={section.header}
+              subHeader={section.subHeader}
+              description={section.description}
+              source={section.source}
+              key={index}
+              descriptionMaxWidth="286px"
+            />
+          ))}
+        </FlexContainer>
+        <div style={{ textAlign: 'center' , marginBottom: '60px'}}>
+          <Link href={`/join-us`}>
+            <CTAButton text="join us" />
+          </Link>
+        </div>
       </div>
     </PortraitImage>
-
-    <div style={{ background: '#111', paddingTop: '34px' }}>
-      {stats.map((section, index) => (
-        <StatSection
-          header={section.header}
-          subHeader={section.subHeader}
-          description={section.description}
-          source={section.source}
-					key={index}
-					descriptionMaxWidth="286px"
-        />
-      ))}
-      <div style={{ margin: '0 12px' }}>
-				<Link href={`/join-us`}>
-					<CTAButton text="join us" />
-				</Link>
-      </div>
-    </div>
   </>
 );
 
