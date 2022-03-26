@@ -14,7 +14,10 @@ const Layout = styled.div`
       ? 'transparent'
       : variant === 'light'
       ? appColors.white
-      : appColors.gray600};
+      : variant === 'darkest'
+      ? appColors.secondaryBlack
+      : appColors.gray600
+      };
   color: ${({ variant }) => (variant === 'light' ? appColors.gray500 : appColors.gray300)};
   padding: ${calcRem(24)} ${calcRem(12)} ${calcRem(20)} ${calcRem(12)};
   border-top: 0.5px solid
@@ -94,10 +97,10 @@ export const Footer = ({ variant, showScrollIndicator }) => {
   return (
     <Layout variant={variant} ref={isFooterShowing}>
       {!hideIndicator && showScrollIndicator && <HasMoreContentIndicator />}
-      <Link href="/list-house" passHref prefetch={false}>
+      <Link href="/list-workplace" passHref prefetch={false}>
         <A>distressed worker?</A>
       </Link>
-      <Link href="/list-house" passHref prefetch={false}>
+      <Link href="/list-workplace" passHref prefetch={false}>
         <A>progressive leadership?</A>
       </Link>
       <Link href="#howitworks" passHref prefetch={false}>
@@ -125,5 +128,5 @@ export const Footer = ({ variant, showScrollIndicator }) => {
 };
 
 Footer.propTypes = {
-  variant: PropTypes.oneOf(['light', 'dark', 'transparent']),
+  variant: PropTypes.oneOf(['light', 'dark', 'darkest', 'transparent']),
 };

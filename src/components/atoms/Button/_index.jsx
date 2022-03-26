@@ -198,6 +198,8 @@ const CTABtnStyling = styled(Button)`
     color: #ffffff;
     background-color: rgba(203, 203, 203, 0.7);
   }
+  max-width: 351px;
+  text-align: center;
 `;
 
 export const CTAButton = (props) => (
