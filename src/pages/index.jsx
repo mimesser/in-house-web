@@ -39,7 +39,7 @@ const Main = styled.div`
   }
 
   .react-player {
-    position: absolute;
+    position: relative;
     top: 0;
     left: 0;
   }
