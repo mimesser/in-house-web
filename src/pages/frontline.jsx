@@ -5,13 +5,14 @@ import Link from 'next/link';
 
 import {
 	NumberedSectionBlock,
-	HorizontallyCenteredContainer
+	HorizontallyCenteredContainer,
+	FlexContainer
 } from '../components/organisms/Pages/components';
 import { Page } from '../components/organisms'
 
 import Button, { CTAButton } from '../components/atoms/Button/_index';
 import Text from '../components/atoms/text/_index';
-import { appColors } from '../style';
+import { appColors, device } from '../style';
 import { Footer } from '../components/organisms/Footer';
 
 const howItWorks = [
@@ -43,18 +44,31 @@ const howItWorks = [
       "your teams' opinions create scores that tell the public how your company treats its people, the planet, and its profits",
   },
 ];
-
+const percents = [
+	{
+	  percent: '85%',
+	  subtitle: 'of consumers',
+	  description: 'want to support sustainable companies but don’t know which is which',
+	  note: '*(Business Wire, 2021)'
+	},
+	{
+	  percent: '93%',
+	  subtitle: 'of leadership',
+	  description: 'want to hear the honest truth but can’t get their teams to talk',
+	  note: '*(internal surveys, 2019)',
+	},
+	{
+	  percent: '98%',
+	  subtitle: 'of workers',
+	  description: 'want to address problems and know what their co-workers think',
+	  note: '*(internal surveys, 2019)',
+	},
+  ]
 const SpacingContainerStyling = styled.div`
   margin-top: ${({ marginTop }) => (marginTop ? `${marginTop}px` : null)};
   margin-bottom: ${({ marginBottom }) => (marginBottom ? `${marginBottom}px` : null)};
   background: ${({ background }) => background};
   padding: ${({ padding }) => padding};
-
-  .button-group {
-    & > button {
-      margin-top: 30px;
-    }
-  }
 `;
 
 const SpacingContainer = ({ children, ...props }) => (
@@ -62,23 +76,50 @@ const SpacingContainer = ({ children, ...props }) => (
 );
 
 const PositionContainer = styled.div`
-  position: absolute;
-  bottom: ${({ bottom }) => `${bottom}px`};
-  left: ${({ left }) => `${left}px`};
+	position: relative;
+	max-width: ${({ maxWidth }) => `${maxWidth}px`};
+	bottom: ${({ bottom }) => `${bottom}px`};
+	left: ${({ left }) => `${left}px`};
+	@media ${device.laptop} {
+		margin-left: 80px;
+	}
+	@media ${device.desktop} {
+		margin-left: 277px;
+	}
 `;
 
+const PlayerWrapper = styled.div`
+	min-height: 239px;
+	
+    position: relative;
+	@media ${device.mobile} {
+		min-height: 239px;
+	}
+	@media ${device.tab} {
+		min-height: 460px;
+	}
+	@media ${device.web} {
+		min-height: 787px;
+	}
+	@media ${device.laptop} {
+		min-height: 787px;
+	}
+	@media ${device.desktop} {
+		min-height: 787px;
+	}
+` 
+
 const HeaderImageBgCss = css`
-	background: linear-gradient(transparent, black), url(static/Custom-Landing-Page–Header-Image-1.webp) no-repeat;
-	background-size: cover;
+  background: linear-gradient(356deg,#111,transparent), url(static/Custom-Landing-Page–Header-Image-1.webp) no-repeat;
+  background-size: cover;
   background-position-x: left;
   background-position-y: top;
 `;
 
 const HeaderImage = styled.div`
   ${HeaderImageBgCss}
-  height: 350px;
   position: relative;
-  margin-bottom: 12px;
+  padding: 248px 12px 12px 12px;
 `;
 
 const BottomImageBgCss = css`
@@ -88,30 +129,111 @@ const BottomImageBgCss = css`
   background-position-y: top;
 
   background-image: url(static/Custom-Landing-Page–Header-Image-2.webp);
+  
+  @media ${device.iPhoneX} {
+    background-image: url(static/Custom-Landing-Page–Header-Image-2.webp);
+  }
+  @media ${device.iPhone8Plus} {
+    background-image: url(static/Custom-Landing-Page–Header-Image-2.webp);
+  }
+  @media ${device.iPad} {
+    background-image: url(static/Custom-Landing-Page–Header-Image-2.webp);
+  }
+  @media ${device.web} {
+    background-image: url(static/Custom-Landing-Page–Header-Image-2.webp);
+  }
+  @media ${device.laptop} {
+    background-image: url(static/Custom-Landing-Page–Header-Image-2.webp);
+  }
+  @media ${device.desktop} {
+    background-image: url(static/Custom-Landing-Page–Header-Image-2.webp);
+  }
+  @media ${device.macbook} {
+    background-image: url(static/Custom-Landing-Page–Header-Image-2.webp);
+  }
 `;
 
 const BottomImage = styled.div`
   ${BottomImageBgCss}
   height: 450px;
   position: relative;
-  margin-bottom: 12px;
 `;
 
 const HorizontalBar = styled.div`
   background: #cbccd0;
   width: 128px;
   height: 8px;
+  margin: 30px 0;
 `;
+
+const ResponsiveText = styled(Text)`
+	font-size: ${({ size }) => `${size}px` || '36px'};
+	line-height: ${({ size }) => `${size + 9}px` || '44px'};
+
+	@media ${device.mobile} {
+		font-size: ${({ size }) => `${size}px` || '36px'};
+		line-height: ${({ size }) => `${size + 7}px` || '44px'};
+	}
+	@media ${device.tab} {
+		font-size: ${({ size }) => `${size + 9}px` || '45px'};
+		line-height: ${({ size }) => `${size + 18}px` || '54px'};
+	}
+	@media ${device.web} {
+		font-size: ${({ size }) => `${size + 18}px` || '54px'};
+		line-height: ${({ size }) => `${size + 30}px` || '66px'};
+	}
+	@media ${device.laptop} {
+		font-size: ${({ size }) => `${size + 18}px` || '54px'};
+		line-height: ${({ size }) => `${size + 30}px` || '66px'};
+	}
+	@media ${device.desktop} {
+		font-size: ${({ size }) => `${size + 18}px` || '54px'};
+		line-height: ${({ size }) => `${size + 30}px` || '66px'};
+	}
+`
+const PercentSectionContainer = styled.div`
+  width: 355px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+`;
+
+const PercentSection = ({ percent, subtitle, description, note }) => (
+	<PercentSectionContainer>
+	  <HorizontallyCenteredContainer style={{ marginBottom: '30px' }}>
+		{/* <div
+		  style={{
+			display: 'flex',
+			flexDirection: 'column',
+		  }}
+		> */}
+			  {/* <HorizontallyCenteredContainer
+			  style={{
+				  marginBottom: '12px',
+				  maxWidth: descriptionMaxWidth
+			  }}></HorizontallyCenteredContainer> */}
+		  <Text text={percent} color={appColors.gray300} variant="light" weight="reg" family="helvetica" size={55} />
+		  <Text text={subtitle} color={appColors.gray200} variant="light" weight="bold" family="helvetica" size={20} margin="5px" />
+		  <Text text={description} color={appColors.gray400} variant="light" weight="reg" family="helvetica" size={16} />
+		  <Text text={note} color={appColors.gray400} variant="light" weight="reg" family="helvetica" size={16} opacity={0.7} />
+		{/* </div> */}
+	  </HorizontallyCenteredContainer>
+	</PercentSectionContainer>
+  );
 
 const FrontlineLanding = () => (
 	<Page
 		noPadd
 		title="in-house | frontline"
-		variant="dark"
+		whiteHead
+		imageBack
+		noOverflow={true}		
+		headerImageBgCss={HeaderImageBgCss}
 	>
 		<div
 			style={{
-				background: '#000',
+				background: appColors.secondaryBlack,
 				position: 'absolute',
 				top: '0',
 				left: '0',
@@ -119,8 +241,8 @@ const FrontlineLanding = () => (
 			}}
 		>
 			<HeaderImage>
-				<PositionContainer left="12" bottom="54">
-					<Text
+				<PositionContainer maxWidth='740'>
+					<ResponsiveText
 						text="you have power"
 						color={appColors.gray200}
 						variant="light"
@@ -128,54 +250,49 @@ const FrontlineLanding = () => (
 						weight="bold"
 						family="helvetica"
 					/>
-					<Text
+					<ResponsiveText
 						text="in your numbers"
-						color={appColors.gray300}
+						color={appColors.gray200}
 						variant="light"
 						weight="bold"
 						family="helvetica"
-						size={32}
+						size={36}
 					/>
-				</PositionContainer>
 
-				<PositionContainer left="12" bottom="16">
 					<HorizontalBar />
+
+					<ResponsiveText
+						text="voice everything"
+						variant="light"
+						color={appColors.gray200}
+						weight="bold"
+						family="helvetica"
+						size={27}
+					/>
+					<ResponsiveText
+						text="(remain untraceable)"
+						variant="dark"
+						color={appColors.gray400}
+						weight="bold"
+						family="helvetica"
+						size={27}
+					/>
+					<SpacingContainer marginTop="30" marginBottom="60">
+						<Text variant="dark" color={appColors.gray300} size={16} lineHeight={22} weight="reg">
+							for the first time ever there is a tool that allows you and your team to speak truth to
+							power in unified anonymous consensus without fear of retaliation
+						</Text>
+					</SpacingContainer>
+					<div style={{ paddingBottom: '60px'}}>
+						<Link href={`/request-join`}>
+							<CTAButton text="bring democracy to my job" />
+						</Link>
+					</div>
 				</PositionContainer>
 			</HeaderImage>
 
-			<SpacingContainer padding="0 12px">
-				<Text
-					text="voice everything"
-					variant="light"
-					color={appColors.gray200}
-					weight="bold"
-					family="helvetica"
-					size={24}
-				/>
-
-				<Text
-					text="(remain untraceable)"
-					variant="dark"
-					color={appColors.gray400}
-					weight="bold"
-					family="helvetica"
-					size={24}
-				/>
-
-				<SpacingContainer marginTop="30" marginBottom="60">
-					<Text variant="dark" color={appColors.gray300} size={16} lineHeight={22} weight="reg">
-						for the first time ever there is a tool that allows you and your team to speak truth to
-						power in unified anonymous consensus without fear of retaliation
-					</Text>
-				</SpacingContainer>
-
-				<Link href={`/request-join`}>
-					<CTAButton text="bring democracy to my job" />
-				</Link>
-			</SpacingContainer>
-
 			{/* section 2 */}
-			<SpacingContainer padding="210px 12px 0">
+			<SpacingContainer padding="127px 12px 0">
 				<HorizontallyCenteredContainer style={{ marginBottom: '60px' }}>
 					<Text
 						variant="light"
@@ -188,60 +305,51 @@ const FrontlineLanding = () => (
 						make them listen
 					</Text>
 				</HorizontallyCenteredContainer>
-
-				{howItWorks.map((section, index) => {
-					const { header, source, description, note, share } = section;
-					return (
-						<NumberedSectionBlock
-							key={index}
-							header={header}
-							description={description}
-							source={source}
-							note={note}
-							index={index}
-							share={share}
-						/>
-					);
-				})}
-				
-				<Link href={`/request-join`}>
-					<CTAButton text="hold my workplace accountable" />
-				</Link>
+				<FlexContainer>					
+					{howItWorks.map((section, index) => {
+						const { header, source, description, note, share } = section;
+						return (
+							<NumberedSectionBlock
+								key={index}
+								header={header}
+								description={description}
+								source={source}
+								note={note}
+								index={index}
+								share={share}
+							/>
+						);
+					})}
+				</FlexContainer>
+				<div style={{ textAlign: 'center', paddingBottom: '60px'}}> 
+					<Link href={`/request-join`}>
+						<CTAButton text="hold my workplace accountable" />
+					</Link>
+				</div>
 			</SpacingContainer>
 
 			{/* section 3 */}
-			<SpacingContainer padding="100px 12px 60px">
-				<Text variant="light" color={appColors.gray4} weight="bold" family="helvetica" size={32}>
-					<div style={{ textAlign: 'center' }}>
-						the world literally wants to know
-					</div>
-				</Text>
-			</SpacingContainer>
-
-			<div className="player-wrapper">
+			
+			<PlayerWrapper>
 				<ReactPlayer
 					url="https://youtu.be/6rMaaxouNTA"
 					light
 					controls
-					width="100%"
-					height="217px"
-					className="react-player"
+					height="100%"
+					width="100%" 
 				/>
-			</div>
-
-			<div
-				style={{
-					padding: '50px 28px 0',
-				}}
-			>
-				<div
-					style={{
-						maxWidth: "303px",
-						margin: 'auto',
-						textAlign: 'center',
-						marginBottom: '28px'
-					}}
-				>
+			</PlayerWrapper>
+			<div style={{ textAlign: 'center', paddingBottom: '60px'}}>
+				<ResponsiveText
+					text="the world literally wants to know"
+					variant="dark"
+					color={appColors.gray300}
+					weight="bold"
+					family="helvetica"
+					size={36}
+					textAlign="center"
+				/>
+				<SpacingContainer padding='2% 15% 2% 15%'>
 					<Text
 						variant="light"
 						color={appColors.gray400}
@@ -251,15 +359,7 @@ const FrontlineLanding = () => (
 					>
 						the pandemic has reminded everyone who & how important esssential workers really are   
 					</Text>
-				</div>
-
-				<div
-					style={{
-						maxWidth: "303px",
-						margin: 'auto',
-						textAlign: 'center',
-					}}
-				>
+					<br />
 					<Text
 						variant="light"
 						color={appColors.gray400}
@@ -269,176 +369,59 @@ const FrontlineLanding = () => (
 					>
 						don't believe for a second that your employer and the public is not interested in what you have to say   
 					</Text>
-				</div>
-
-				<div
-					style={{
-						display: 'flex',
-						flexDirection: "column",
-					}}
-				>
-					<HorizontallyCenteredContainer
-						style={{
-							marginBottom: '6px',
-						}}
-					>
-						<Text
-							variant="light"
-							color={appColors.gray300}
-							weight="reg"
-							family="helvetica"
-							size={55}
-							text="85%"
-						/>
-					</HorizontallyCenteredContainer>
-
-					<HorizontallyCenteredContainer style={{ marginBottom: '6px' }}>
-						<Text
-							variant="light"
-							color={appColors.gray200}
-							weight="bold"
-							family="helvetica"
-							size={20}
-							text="of consumers"
-						/>
-					</HorizontallyCenteredContainer>
-
-					<HorizontallyCenteredContainer
-						maxWidth="194px"
-						align="center"
-						border="1px dotted red"
-						
-					>
-						<Text
-							variant="light"
-							color={appColors.gray400}
-							weight="reg"
-							family="helvetica"
-							size={16}
-							text="only want to support sustainable companies but don’t know which is which"
-						/>
-					</HorizontallyCenteredContainer>
-
-					<div
-						style={{
-							display: 'flex',
-							justifyContent: 'space-between',
-							marginBottom: '16px',
-							marginTop: '20px'
-						}}
-					>
-
-						<HorizontallyCenteredContainer 
-							style={{
-								marginBottom: '6px',
-								maxWidth: '128px',
-							}}
-						>
-							<Text
-								variant="light"
-								color={appColors.gray300}
-								weight="reg"
-								family="helvetica"
-								size={55}
-								text="93%"
-							/>
-
-							<Text
-								variant="light"
-								color={appColors.gray200}
-								weight="bold"
-								family="helvetica"
-								size={20}
-								text="of leadership"
-							/>
-
-							<Text
-								variant="light"
-								color={appColors.gray400}
-								weight="reg"
-								family="helvetica"
-								size={16}
-								text="want to know the truth but can’t get their teams to talk"
-							/>
-						</HorizontallyCenteredContainer>
-
-						<HorizontallyCenteredContainer 
-							style={{
-								marginBottom: '6px',
-								maxWidth: '128px',
-								marginTop: '0',
-								marginBottom: '0',
-								justifyContent: 'flex-start'
-							}}
-						>
-							<Text
-								variant="light"
-								color={appColors.gray300}
-								weight="reg"
-								family="helvetica"
-								size={55}
-								text="98%"
-							/>
-
-							<Text
-								variant="light"
-								color={appColors.gray200}
-								weight="bold"
-								family="helvetica"
-								size={20}
-								text="of workers"
-							/>
-
-							<Text
-								variant="light"
-								color={appColors.gray400}
-								weight="reg"
-								family="helvetica"
-								size={16}
-								text="want to talk about problems but are too afraid"
-							/>
-						</HorizontallyCenteredContainer>
-					</div>
-
-					<HorizontallyCenteredContainer>
-						<Text
-							variant="light"
-							color={appColors.gray500}
-							weight="reg"
-							family="helvetica"
-							size={14}
-							text="*(internal surveys, 2021)"
-						/>
-					</HorizontallyCenteredContainer>
-				</div>
-
+				</SpacingContainer>
 			</div>
 
+			<SpacingContainer padding="0px 35px">
+				<FlexContainer>
+					{percents.map((section, index) => {
+						const { percent, subtitle, description, note } = section;
+						return (
+							<PercentSection
+								key={index}
+								percent={percent}
+								subtitle={subtitle}
+								description={description}
+								note={note}
+							/>
+						);
+					})}
+				</FlexContainer>
+			</SpacingContainer>
+			
+			<div style={{ textAlign: 'center', paddingTop: '60px', paddingBottom: '60px'}}>
+				<ResponsiveText
+					text="we will be able to list ~50 workplaces during our beta trial"
+					variant="dark"
+					color={appColors.gray300}
+					weight="bold"
+					family="helvetica"
+					size={36}
+				/>
+			</div>
 			<BottomImage />
 
-			<div style={{
-				maxWidth: '286px',
-				textAlign: 'center',
-				margin: 'auto'
-			}}>
-				<Text variant="light" color="gray300" weight="reg" family="helvetica" size={16}>
-					be one of the first ~50 workplaces listed in our beta trial
-				</Text>
-			</div>
-			<SpacingContainer padding="0 12px 120px">
-				<div className="button-group">
-					<Link href={`/request-join`}>
-						<CTAButton text="request to list my job" />
-					</Link>
-					<Link href={`/contact-us`}>
-						<CTAButton text="schedule a demo" />
-					</Link>
-					<Link href={`/contact-us`}>
-						<Button variant="light" outlined text="notify me when live" noSuffix />
-					</Link>
+			<SpacingContainer padding="30px 12px 30px">
+				<div style={{ textAlign:"center"}}>
+					
+					<div style={{marginTop: "30px", marginBottom: "30px"}}>
+						<Link href={`/request-join`}>
+							<CTAButton text="request to list my job" />
+						</Link>
+					</div>
+					<div style={{marginTop: "30px", marginBottom: "30px"}}>
+						<Link href={`/contact-us`} style={{paddingTop: "30px", paddingBottom: "30px"}}>
+							<CTAButton text="schedule a demo" />
+						</Link>
+					</div>
+					<div style={{marginTop: "30px", marginBottom: "30px"}}>
+						<Link href={`/contact-us`}>
+							<Button variant="light" outlined text="notify me when live" noSuffix style={{maxWidth: "351px"}}/>
+						</Link>
+					</div>
 				</div>
 			</SpacingContainer>
-			<Footer showScrollIndicator variant="dark" />
+			<Footer showScrollIndicator variant="darkest" />
 		</div>
 	</Page>
 );
