@@ -71,10 +71,12 @@ const JoinUsUserPage = (props) => {
     validateOnChange: true,
     onSubmit: (values, { setSubmitting }) => {
       console.log(values);
-      // props.postJoinUs({ email, subject: subject.value, message, redirectLink });
       
       if (showSummary) {
-        alert('flash mink');
+        values.redirectLink = "/"
+        //values.membershipType = 0
+        props.postJoinUs(values);
+        setSubmitting(false);
       } else {
         setTimeout(() => {
           setSubmitting(false);
@@ -94,9 +96,19 @@ const JoinUsUserPage = (props) => {
     }
     formik.handleChange({ target: { name: 'interest', value: copyObj } });
   };
-
+  const getBase64 = (file) => {
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+      console.log(reader.result);
+    };
+    reader.onerror = function (error) {
+      console.log('Error: ', error);
+    };
+ }
   const handleFileUpload = (e) => {
     formik.handleChange({ target: { name: e.target.name, value: e.target.files[0] } });
+    getBase64(e.target.files[0]);
   };
 
   const goBack = () => {

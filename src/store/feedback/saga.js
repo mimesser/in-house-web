@@ -47,12 +47,21 @@ export function* postFeedback({ payload: { subject, message, email, redirectLink
     );
   }
 }
-export function* postJoinUs({ payload: { subject, message, email, redirectLink, callback } }) {
-  try {
-    yield put(setFeedbackLoading());
+export function* postJoinUs({ payload: { name, email, comment, file, heardAbout, interest, redirectLink } }) {
+  try {    
+    const { interests } = yield call(api.get, 'memberships/interests');
+    const { sources } = yield call(api.get, 'memberships/sources');
+
     yield call(api.post, 'memberships', {
-      subject,
-      message: message 
+      name: name,
+      email: email,
+      summary: comment,
+      document: file,
+      hearAboutUsId: "b7f6802c-54da-4401-5efb-08da0678883f",
+      membershipType: 0,
+      interestIds:[
+
+      ]
     });
     yield delay(CONFIRMATION_DELAY);
     if (redirectLink) {
