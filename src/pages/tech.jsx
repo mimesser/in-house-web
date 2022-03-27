@@ -108,8 +108,6 @@ const BottomImageBgCss = css`
 	}
 	@media ${device.desktop} {
 		background-image: url(static/Custom-Landing-Page–Header-Image-2.webp);
-		margin-left: 277px;
-		margin-right: 277px;
 	}
 	@media ${device.macbook} {
 		background-image: url(static/Custom-Landing-Page–Header-Image-2.webp);
