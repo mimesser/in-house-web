@@ -6,7 +6,8 @@ import Link from 'next/link';
 import {
 	NumberedSectionBlock,
 	HorizontallyCenteredContainer,
-	FlexContainer
+	FlexContainer,
+	BottomSectionWrapper
 } from '../components/organisms/Pages/components';
 import { Page } from '../components/organisms'
 
@@ -90,7 +91,9 @@ const PositionContainer = styled.div`
 
 const PlayerWrapper = styled.div`
 	min-height: 239px;
-	
+	display: flex;
+	justify-content: center;
+	align-items: stretch;	
     position: relative;
 	@media ${device.mobile} {
 		min-height: 239px;
@@ -106,8 +109,11 @@ const PlayerWrapper = styled.div`
 	}
 	@media ${device.desktop} {
 		min-height: 787px;
-		margin-left: 277px;
-		margin-right: 277px;
+		padding-left: 277px;
+		padding-right: 277px;
+	}
+	> div {
+		height: initial !important;
 	}
 ` 
 
@@ -148,8 +154,6 @@ const BottomImageBgCss = css`
   }
   @media ${device.desktop} {
     background-image: url(static/Custom-Landing-Page–Header-Image-2.webp);
-	margin-left: 277px;
-	margin-right: 277px;
   }
   @media ${device.macbook} {
     background-image: url(static/Custom-Landing-Page–Header-Image-2.webp);
@@ -338,11 +342,10 @@ const FrontlineLanding = () => (
 					url="https://youtu.be/6rMaaxouNTA"
 					light
 					controls
-					height="100%"
 					width="100%" 
 				/>
 			</PlayerWrapper>
-			<div style={{ textAlign: 'center', paddingBottom: '60px'}}>
+			<div style={{ textAlign: 'center', paddingTop: '60px', paddingBottom: '60px'}}>
 				<ResponsiveText
 					text="the world literally wants to know"
 					variant="dark"
@@ -402,7 +405,9 @@ const FrontlineLanding = () => (
 					size={36}
 				/>
 			</div>
-			<BottomImage />
+			<BottomSectionWrapper>					
+				<BottomImage />
+			</BottomSectionWrapper>
 
 			<SpacingContainer padding="30px 12px 30px">
 				<div style={{ textAlign:"center"}}>
