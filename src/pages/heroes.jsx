@@ -4,7 +4,9 @@ import Link from 'next/link';
 
 import {
 	NumberedSectionBlock,
-	HorizontallyCenteredContainer
+	HorizontallyCenteredContainer,
+	FlexContainer,
+	BottomSectionWrapper
 } from '../components/organisms/Pages/components';
 import { Page } from '../components/organisms'
 
@@ -86,13 +88,6 @@ const PositionContainer = styled.div`
   }
 `;
 
-const FlexContainer = styled.div`
-	display: flex;
-	justify-content: space-evenly;
-	align-items: start;
-	flex-wrap: wrap;
-`;
-
 const HeaderImageBgCss = css`
   background-image: url(static/Custom-Landing-Page–Header-Image-4.webp);
 
@@ -121,7 +116,7 @@ const HeaderImageBgCss = css`
 
 const CtaDiv = styled.div`
   margin: auto;
-  margin-top : 30px;
+  padding-top : 30px;
   max-width: 351px;
 `
 const HeaderImage = styled.div`
@@ -136,6 +131,29 @@ const BottomImageBgCss = css`
   background-position-x: left;
   background-position-y: center;
   background-image: url(static/workplace.webp);
+  @media ${device.iPhoneX} {
+    background-image: url(static/workplace.webp);
+  }
+  @media ${device.iPhone8Plus} {
+    background-image: url(static/workplace.webp);
+  }
+  @media ${device.iPad} {
+    background-image: url(static/workplace.webp);
+  }
+  @media ${device.web} {
+    background-image: url(static/workplace.webp);
+  }
+  @media ${device.laptop} {
+    background-image: url(static/workplace.webp);
+  }
+  @media ${device.desktop} {
+    background-image: url(static/workplace.webp);
+	padding-left: 277px;
+	padding-right: 277px;
+  }
+  @media ${device.macbook} {
+    background-image: url(static/workplace.webp);
+  }
 `;
 
 const BottomImage = styled.div`
@@ -161,7 +179,7 @@ const PercentSectionContainer = styled.div`
 
 const ResponsiveText = styled(Text)`
 	font-size: 36px;
-
+  	line-height: initial;
 	@media ${device.mobile} {
 		font-size: 36px;
 	}
@@ -320,8 +338,9 @@ const HeroesLanding = () => (
 				</div>
 
 			</SpacingContainer>
-
-			<BottomImage />
+			<BottomSectionWrapper>
+				<BottomImage />
+			</BottomSectionWrapper>
 
 			<SpacingContainer padding="60px 12px 130px" id='getNotification'  background="#111">
 				<div className="button-group" style={{maxWidth: '351px', margin: 'auto'}}>
@@ -336,7 +355,7 @@ const HeroesLanding = () => (
 					</Link>
 				</div>
 			</SpacingContainer>
-			<Footer showScrollIndicator variant="dark" />
+			<Footer showScrollIndicator variant="darkest" />
 		</div>
 	</Page>
 );
