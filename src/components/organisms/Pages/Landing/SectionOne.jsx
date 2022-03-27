@@ -86,7 +86,7 @@ const TextContainer = styled.div`
 `;
 const ResponsiveText = styled(Text)`
 	font-size: 36px;
-
+  line-height: initial;
 	@media ${device.mobile} {
 		font-size: 36px;
 	}

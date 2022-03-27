@@ -4,7 +4,7 @@ import { Icon } from '../../../atoms';
 import { appColors, device } from '../../../../style';
 import Text from '../../../atoms/text/_index';
 
-const ResponsiveTextHeading = styled(Text)`
+export const ResponsiveTextHeading = styled(Text)`
   font-size: 32px;
   line-height: 39px;
 
@@ -30,7 +30,7 @@ const ResponsiveTextHeading = styled(Text)`
 	}
 `
 
-const ResponsiveText = styled(Text)`
+export const ResponsiveText = styled(Text)`
   font-size: 16px;
   line-height: 19px;
 
@@ -159,6 +159,13 @@ export const FlexContainer = styled.div`
 	flex-wrap: wrap;
 `;
 
+export const BottomSectionWrapper = styled.div`
+  @media ${device.desktop} {
+    background: #111;
+    padding: 0 277px;
+
+  }
+`
 export const NumberedSectionBlockContainer = styled.div`
   width: 320px;
   display: flex;
