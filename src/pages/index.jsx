@@ -119,9 +119,7 @@ const Landing = ({ venues, initVenuesPage }) => {
 			<ScrollPage whiteHead videoBack noPadd>
 				<Main>
 					<SectionOne />
-          <BottomSectionWrapper>
-  					<SectionTwo />
-          </BottomSectionWrapper>
+          <SectionTwo />
 					<SectionThree />
 
 					<Footer showScrollIndicator variant="darkest" />
