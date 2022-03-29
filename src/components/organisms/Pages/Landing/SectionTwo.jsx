@@ -40,8 +40,23 @@ const PortraitImageBgCss = css`
   background-repeat: no-repeat;
   background-size: cover;
   background-position-y: center;
-  background-position-x: center;
+  background-position-x: center; 
   background-image: url(static/dude_glasses.webp);
+	@media ${device.mobile} {
+    background-image: url(https://in-house.azureedge.net/webstatic/landing_main/dude_glasses-375.jpg);
+	}
+	@media ${device.tab} {
+    background-image: url(static/dude_glasses.webp);
+	}
+	@media ${device.web} {
+    background-image: url(static/dude_glasses.webp);
+	}
+	@media ${device.laptop} {
+    background-image: url(static/dude_glasses.webp);
+	}
+	@media ${device.desktop} {
+    background-image: url(https://in-house.azureedge.net/webstatic/landing_main/dude_glasses-1920.jpg);
+	}
 `;
 
 const PortraitImage = styled.div`

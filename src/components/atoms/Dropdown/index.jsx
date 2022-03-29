@@ -85,10 +85,6 @@ export const CustomSelect = styled(withNoSSR(Select)).attrs(() => ({
   opacity: ${({ options }) => (options ? 1 : 0)};
   transition: opacity 1s;
 
-  .react-select__input-container {
-    grid-template-columns: min-content;
-  }
-
   .react-select__input-container:after {
     content: '';
   }
@@ -134,7 +130,7 @@ const noOptionsMessage = () => (
   <NoOptionsDiv>
     <div>no results</div>
     <div>
-      <Link href="/list-house">
+      <Link href="/list-workplace">
         <div>
           <span>list your org</span>
           <Icon icon="arrow-right" />
