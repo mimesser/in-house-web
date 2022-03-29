@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import Link from 'next/link';
 
-import { NumberedSectionBlock, HorizontallyCenteredContainer, FlexContainer } from '../components/organisms/Pages/components';
+import { NumberedSectionBlock, HorizontallyCenteredContainer, FlexContainer, BottomSectionWrapper } from '../components/organisms/Pages/components';
 import { Page } from '../components/organisms'
 
 import Button, { CTAButton } from '../components/atoms/Button/_index';
@@ -269,8 +269,9 @@ const TechUserLandingPage = () => (
 					size={36}
 				/>
 			</div>
-
-			<BottomImage />
+			<BottomSectionWrapper>
+				<BottomImage />
+			</BottomSectionWrapper>
 			
 			<SpacingContainer padding="30px 12px 30px">
 				<div style={{ textAlign:"center"}}>

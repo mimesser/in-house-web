@@ -56,7 +56,8 @@ const PortraitImageBgCss = css`
 	}
 	@media ${device.desktop} {
     background-image: url(https://in-house.azureedge.net/webstatic/landing_main/dude_glasses-1920.jpg);
-	}
+    padding: 0 277px;
+  }
 `;
 
 const PortraitImage = styled.div`
