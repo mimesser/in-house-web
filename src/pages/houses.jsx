@@ -117,7 +117,7 @@ class Houses extends Component {
     }
 
     return (
-      <Page title={title} defaultHeader={defaultHeader} noPadd>
+      <Page title={title} noPadd variant="dark">
         <View loading={this.props.selectedVenue?.loading} />
       </Page>
     );

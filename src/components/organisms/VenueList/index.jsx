@@ -136,7 +136,7 @@ const SearchPage = ({ setSelectedVenue, venues, inDemo, categories }) => {
         {!inDemo && (
           <section>
             {/* <Link href="/list" passHref> */}
-            <BetaCard icon="arrow-right" href="/list-house">
+            <BetaCard icon="arrow-right" href="/list-workplace">
               list my workplace
             </BetaCard>
             {/* </Link> */}
@@ -153,7 +153,7 @@ const SearchPage = ({ setSelectedVenue, venues, inDemo, categories }) => {
       </Results>
       <SelectedItemArea>
         <BetaLink>
-          <Link href="/list-house" passHref>
+          <Link href="/list-workplace" passHref>
             <Button icon="arrow-right">list my workplace</Button>
           </Link>
         </BetaLink>

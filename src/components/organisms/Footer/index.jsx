@@ -179,7 +179,7 @@ export const Footer = ({ variant, showScrollIndicator }) => {
       <CopyrightLine href="/">
         <Copyright /> | <Patent />
       </CopyrightLine>
-      <SocialMedia2 style={{ alignSelf: 'flex-end', textAlign: 'center'}}>
+      <SocialMedia2 style={{ alignSelf: 'flex-end', textAlign: 'center', paddingTop:'30px'}}>
           {socialLinks.map((link) => (
             // eslint-disable-next-line react/jsx-props-no-spreading
             <SocialLink {...link} key={link.icon} />

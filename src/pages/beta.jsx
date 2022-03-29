@@ -367,7 +367,7 @@ const Landing = ({ venues, loading, categories, initVenuesPage, loadAggregateDat
                   filter && (
                     <>
                       <NoResults />
-                      <Link href="/list-house" prefetch={false}>
+                      <Link href="/list-workplace" prefetch={false}>
                         <ListOrg icon="arrow-right" wide>
                           list your org
                         </ListOrg>

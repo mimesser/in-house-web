@@ -8,13 +8,26 @@ import Button, { BackButton } from '../../components/atoms/Button/_index';
 import { JoinUSBaseStyling } from '../../style/joinus';
 import { Page } from '../../components/organisms';
 import { appColors } from '../../style';
+import { H1 } from '../../components/atoms';
+
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  text-transform: none;
+  align-items: center;
+  margin: auto;
+`;
 
 const JoinUs = () => {
   const router = useRouter();
 
   return (
     <Page whiteHead style={{ backgroundColor: appColors.gray600 }}>
-      <Styling>
+       <Wrapper>
+        <H1 style={{color: '#fff'}}>Coming Soon...</H1>
+      </Wrapper>
+      <Footer variant="transparent" />
+      {/* <Styling>
         <div className="section__content">
           <section className="section">
             <Text.Heading
@@ -49,7 +62,7 @@ const JoinUs = () => {
           </section>
         </div>
         <Footer variant="transparent" />
-      </Styling>
+      </Styling> */}
     </Page>
   );
 };
