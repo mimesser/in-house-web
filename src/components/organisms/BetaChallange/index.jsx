@@ -151,7 +151,7 @@ export const BetaChallange = ({
               </>
             )}
 
-            <BetaList icon="arrow-right" href="/list-house">
+            <BetaList icon="arrow-right" href="/list-workplace">
               request to list your workplace
             </BetaList>
           </QuestionForm>
