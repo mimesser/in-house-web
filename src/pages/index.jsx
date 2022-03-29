@@ -14,6 +14,7 @@ import SectionThree from '../components/organisms/Pages/Landing/SectionThree';
 
 import { Footer } from '../components/organisms/Footer';
 import { initVenuesPage, selectVenues } from '../store/venues';
+import { BottomSectionWrapper } from '../components/organisms/Pages/components';
 
 const Main = styled.div`
   position: relative;
@@ -118,7 +119,9 @@ const Landing = ({ venues, initVenuesPage }) => {
 			<ScrollPage whiteHead videoBack noPadd>
 				<Main>
 					<SectionOne />
-					<SectionTwo />
+          <BottomSectionWrapper>
+  					<SectionTwo />
+          </BottomSectionWrapper>
 					<SectionThree />
 
 					<Footer showScrollIndicator variant="darkest" />

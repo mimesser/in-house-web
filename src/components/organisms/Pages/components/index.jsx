@@ -157,6 +157,11 @@ export const FlexContainer = styled.div`
 	justify-content: space-evenly;
 	align-items: start;
 	flex-wrap: wrap;
+  
+	@media ${device.desktop} {
+		padding-left: 177px;
+		padding-right: 177px;
+	}
 `;
 
 export const BottomSectionWrapper = styled.div`

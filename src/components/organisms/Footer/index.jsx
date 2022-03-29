@@ -68,8 +68,8 @@ const Layout = styled.div`
   }
   
   @media ${device.desktop} {
-    padding-left: 357px;
-    padding-right: 357px;
+    padding-left: 277px;
+    padding-right: 277px;
     
   }
 `;
