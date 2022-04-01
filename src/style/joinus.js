@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {appColors} from ".";
+import {appColors, device} from ".";
 
 export const JoinUSBaseStyling = styled.div`
   display: grid;
@@ -12,13 +12,23 @@ export const JoinUSBaseStyling = styled.div`
   }
   .section__content {
     width: 100%;
-    margin: auto;
-    padding: 50px 12px 80px;
+    padding: 55px 12px 88px;
   }
-  @media screen and (min-width: 500px) {
+  @media ${device.tab} {
     .section__content {
-      padding: 78px 87px;
-      border: 1px solid ${appColors.gray400};
+      padding: 65px 40px 88px;
+    }
+  }
+
+  @media ${device.web} {
+    .section__content {
+      padding: 65px 80px 88px;
+    }
+  }
+
+  @media ${device.desktop} {
+    .section__content {
+      padding: 65px 277px 88px;
     }
   }
 `;
