@@ -27,7 +27,7 @@ const interest = [
   { label: 'user testing / analytics', value: 'testing' },
   { label: 'community organizing / policy', value: 'community' },
   { label: 'growth hacking / social media', value: 'growth' },
-  { label: 'public relations / outreach', value: 'relations' },
+  { label: 'public relatio+nns / outreach', value: 'relations' },
   { label: 'business development / finance', value: 'bus_dev' },
   { label: 'management / operations', value: 'mgmt' },
   { label: 'legal / compliance', value: 'legal' },
@@ -224,6 +224,7 @@ const JoinUsUserPage = (props) => {
                       name="file"
                       placeholder="pdf, word"
                       variant="light"
+                      style={{ width: '350px' }}
                     />
                   </FormRow>
                 </form>
@@ -250,7 +251,13 @@ const JoinUsUserPage = (props) => {
                 disabled={!formik.isValid}
                 variant="light"
                 text="submit"
-                style={{ width: '134px' }}
+                style={{
+                  width: '134px',
+                  backgroundColor: formik.isValid ? undefined : appColors.gray600,
+                  borderColor: appColors.gray300,
+                  borderStyle: 'solid',
+                  borderWidth: '1px',
+                }}
               />
             </div>
           </section>
@@ -276,6 +283,9 @@ const Styling = styled(JoinUSBaseStyling)`
         width: 350px;
       }
       textarea {
+        width: 350px;
+      }
+      .base-input-container {
         width: 350px;
       }
     }
@@ -317,6 +327,9 @@ const Styling = styled(JoinUSBaseStyling)`
       }
       .form {
         textarea {
+          width: 732px;
+        }
+        .base-input-container {
           width: 732px;
         }
       }
