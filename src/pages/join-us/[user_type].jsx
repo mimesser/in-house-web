@@ -14,7 +14,7 @@ import { Page } from '../../components/organisms';
 import Input from '../../components/atoms/Input/_index';
 import Summary from './_summary';
 import { isEmailValid } from '../../utils';
-import { postJoinUs } from '../../store/feedback';
+import { postJoinUs, loadInterests, loadSources } from '../../store/feedback';
 import { FormRow } from '../../components/atoms/FormRow/index';
 
 const interest = [
@@ -127,6 +127,11 @@ const JoinUsUserPage = (props) => {
     setSteps({ step: formik.isValid ? 2 : 1, total: 3 });
   }, [formik.isValid]);
 
+  useEffect(() => {
+    props.loadInterests();
+    props.loadSources();
+  }, []);
+
   return (
     <Page whiteHead noPadd style={{ backgroundColor: appColors.gray600 }}>
       <Styling>
@@ -163,17 +168,18 @@ const JoinUsUserPage = (props) => {
                     smSize={36}
                   />
                   <>
-                    {interest.map(({ label, value }) => (
-                      <Checkbox
-                        key={label}
-                        name={label}
-                        value={value}
-                        onChange={handleCheckers}
-                        checked={formik.values.interest[label]}
-                      >
-                        <Text text={label} color="gray300" size={14} smSize={16} mdSize={20} />
-                      </Checkbox>
-                    ))}
+                    {!props.interestsLoading &&
+                      props.interests.map(({ label, value }) => (
+                        <Checkbox
+                          key={value}
+                          name={value}
+                          value={value}
+                          onChange={handleCheckers}
+                          checked={formik.values.interest[label]}
+                        >
+                          <Text text={label} color="gray300" size={14} smSize={16} mdSize={20} />
+                        </Checkbox>
+                      ))}
                   </>
                 </section>
               )}
@@ -213,9 +219,10 @@ const JoinUsUserPage = (props) => {
                       variant="light"
                       name="heardAbout"
                       placeholder="how did you hear about us?"
-                      options={hearOptions}
+                      options={props.sources}
                       onChange={formik.handleChange}
                       value={formik.values.heardAbout}
+                      loading={props.sourcesLoading}
                     />
                   </FormRow>
                   <FormRow>
@@ -229,7 +236,7 @@ const JoinUsUserPage = (props) => {
                   </FormRow>
                 </form>
               ) : (
-                <Summary values={formik.values} />
+                <Summary values={formik.values} interests={props.interests} />
               )}
             </div>
             <div className="form-btns">
@@ -360,5 +367,7 @@ const mapState = (state) => ({
 
 const mapDispatch = {
   postJoinUs,
+  loadInterests,
+  loadSources,
 };
 export default connect(mapState, mapDispatch)(JoinUsUserPage);
