@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { appColors, calcRem } from '../../../style';
+import { appColors, calcRem, device } from '../../../style';
 
 const getFontWeight = (weight) => {
   switch (weight) {
@@ -55,6 +55,19 @@ const TextStyling = styled.p`
   font-weight: ${({ weight }) => getFontWeight(weight)};
   font-family: ${({ family }) => getFontFamily(family)};
   margin: 0;
+
+  @media ${device.tab} {
+    ${({smSize}) => smSize && `font-size: ${calcRem(smSize)}`}
+  }
+  @media ${device.web} {
+    ${({mdSize}) => mdSize && `font-size: ${calcRem(mdSize)}`}
+  }
+  @media ${device.laptop} {
+    ${({lgSize}) => lgSize && `font-size: ${calcRem(lgSize)}`}
+  }
+  @media ${device.desktop} {
+    ${({xlSize}) => xlSize && `font-size: ${calcRem(xlSize)}`}
+  }
 `;
 
 const Text = ({ children, text, ...props }) => {
@@ -67,7 +80,13 @@ const TextHeading = ({ level = 1, children, text, ...props }) => {
 
 Text.Heading = TextHeading;
 
-const size = PropTypes.oneOf([10, 12, 14, 16, 18, 20, 22, 24, 26, 32, 36, 38, 40, 72, 80, 96]);
+const fontSizes = [10, 12, 14, 16, 18, 20, 22, 24, 26, 32, 36, 38, 40, 72, 80, 96];
+
+const size = PropTypes.oneOf(fontSizes);
+const smSize = PropTypes.oneOf(fontSizes);
+const mdSize = PropTypes.oneOf(fontSizes);
+const lgSize = PropTypes.oneOf(fontSizes);
+const xlSize = PropTypes.oneOf(fontSizes);
 const weight = PropTypes.oneOf(['light', 'reg', 'med', 'bold']);
 const family = PropTypes.oneOf(['helvetica', 'roboto']);
 const variant = PropTypes.oneOf(['light', 'dark']);
@@ -82,6 +101,10 @@ Text.propTypes = {
   variant,
   weight,
   family,
+  smSize,
+  mdSize,
+  lgSize,
+  xlSize,
 };
 
 TextHeading.propTypes = {
