@@ -8,13 +8,14 @@ import Stepper from '../../components/atoms/stepper';
 import Button, { BackButton, UploadButton } from '../../components/atoms/Button/_index';
 import { Footer } from '../../components/organisms/Footer';
 import { Checkbox } from '../../components/atoms/Checkbox/_index';
-import { appColors } from '../../style';
+import { appColors, device } from '../../style';
 import { JoinUSBaseStyling } from '../../style/joinus';
 import { Page } from '../../components/organisms';
 import Input from '../../components/atoms/Input/_index';
 import Summary from './_summary';
 import { isEmailValid } from '../../utils';
-import { postJoinUs } from '../../store/feedback';
+import { postJoinUs, loadInterests, loadSources } from '../../store/feedback';
+import { FormRow } from '../../components/atoms/FormRow/index';
 
 const interest = [
   { label: 'engineering / devops / qa', value: 'eng' },
@@ -26,7 +27,7 @@ const interest = [
   { label: 'user testing / analytics', value: 'testing' },
   { label: 'community organizing / policy', value: 'community' },
   { label: 'growth hacking / social media', value: 'growth' },
-  { label: 'public relations / outreach', value: 'relations' },
+  { label: 'public relatio+nns / outreach', value: 'relations' },
   { label: 'business development / finance', value: 'bus_dev' },
   { label: 'management / operations', value: 'mgmt' },
   { label: 'legal / compliance', value: 'legal' },
@@ -71,10 +72,16 @@ const JoinUsUserPage = (props) => {
     validateOnChange: true,
     onSubmit: (values, { setSubmitting }) => {
       console.log(values);
-      // props.postJoinUs({ email, subject: subject.value, message, redirectLink });
-      
+
       if (showSummary) {
-        alert('flash mink');
+        values.redirectLink = '/thanks';
+        if (userType === 'motivated'){          
+          values.membershipType = 1
+        } else{   
+          values.membershipType = 2
+        }
+        props.postJoinUs(values);
+        setSubmitting(false);
       } else {
         setTimeout(() => {
           setSubmitting(false);
@@ -97,6 +104,7 @@ const JoinUsUserPage = (props) => {
 
   const handleFileUpload = (e) => {
     formik.handleChange({ target: { name: e.target.name, value: e.target.files[0] } });
+    // getBase64(e.target.files[0]);
   };
 
   const goBack = () => {
@@ -112,81 +120,116 @@ const JoinUsUserPage = (props) => {
     setSteps({ step: formik.isValid ? 2 : 1, total: 3 });
   }, [formik.isValid]);
 
+  useEffect(() => {
+    props.loadInterests();
+    props.loadSources();
+  }, []);
+
   return (
-    <Page whiteHead style={{ backgroundColor: appColors.gray600 }}>
-      <Styling isTwoForms={userType === 'motivated' && !showSummary}>
+    <Page whiteHead noPadd style={{ backgroundColor: appColors.gray600 }}>
+      <Styling>
         <div className="section__content">
           <section className="join-section">
-            <Text.Heading weight="bold" size={32} color="gray100" level={1} text="join us" />
-            <Stepper variant="light" state={steps} className="stepper" />
-            <Text.Heading size={14} color="gray300" level={2} text="100% confidential" />
+            <Text.Heading
+              className="section--heading-title"
+              variant="light"
+              weight="bold"
+              size={32}
+              smSize={45}
+              lgSize={54}
+              color="gray100"
+              level={1}
+              text={`join us${showSummary ? ' - confirm' : ''}`}
+            />
+            <Stepper variant="light" state={steps} className="stepper" style={{ width: '350px' }} />
+            <Text.Heading
+              size={14}
+              smSize={20}
+              color="gray300"
+              level={2}
+              text="100% confidential"
+            />
             <div className="form-content">
               {userType === 'motivated' && !showSummary && (
                 <section className="interest">
                   <Text.Heading
                     level={3}
                     color="gray100"
+                    variant="light"
                     text="your interest or expertise"
+                    size={24}
+                    smSize={36}
                   />
                   <>
-                    {interest.map(({ label, value }) => (
-                      <Checkbox
-                        key={label}
-                        name={label}
-                        value={value}
-                        onChange={handleCheckers}
-                        checked={formik.values.interest[label]}
-                      >
-                        <Text text={label} />
-                      </Checkbox>
-                    ))}
+                    {!props.interestsLoading &&
+                      props.interests.map(({ label, value }) => (
+                        <Checkbox
+                          key={value}
+                          name={value}
+                          value={value}
+                          onChange={handleCheckers}
+                          checked={formik.values.interest[label]}
+                        >
+                          <Text text={label} color="gray300" size={14} smSize={16} mdSize={20} />
+                        </Checkbox>
+                      ))}
                   </>
                 </section>
               )}
               {!showSummary ? (
                 <form className="form">
-                  <Input
-                    variant="light"
-                    name="name"
-                    placeholder="name"
-                    clearable
-                    onChange={formik.handleChange}
-                    value={formik.values.name}
-                  />
-                  <Input
-                    variant="light"
-                    name="email"
-                    placeholder="email"
-                    clearable
-                    onChange={formik.handleChange}
-                    value={formik.values.email}
-                  />
-                  <Input.TextArea
-                    style={{ minHeight: 113 }}
-                    variant="light"
-                    name="comment"
-                    placeholder="tell us about yourself"
-                    onChange={formik.handleChange}
-                    value={formik.values.comment}
-                    maxChars={500}
-                  />
-                  <Input.Select
-                    variant="light"
-                    name="heardAbout"
-                    placeholder="how did you hear about us?"
-                    options={hearOptions}
-                    onChange={formik.handleChange}
-                    value={formik.values.heardAbout}
-                  />
-                  <UploadButton
-                    onChange={handleFileUpload}
-                    name="file"
-                    placeholder="pdf, word"
-                    variant="light"
-                  />
+                  <FormRow>
+                    <Input
+                      variant="light"
+                      name="name"
+                      placeholder="name"
+                      clearable
+                      onChange={formik.handleChange}
+                      value={formik.values.name}
+                    />
+                    <Input
+                      variant="light"
+                      name="email"
+                      placeholder="email"
+                      clearable
+                      onChange={formik.handleChange}
+                      value={formik.values.email}
+                    />
+                  </FormRow>
+                  <FormRow>
+                    <Input.TextArea
+                      style={{ minHeight: 113 }}
+                      variant="light"
+                      name="comment"
+                      placeholder="tell us about yourself"
+                      onChange={formik.handleChange}
+                      value={formik.values.comment}
+                      maxChars={500}
+                    />
+                  </FormRow>
+                  <FormRow>
+                    <Input.Select
+                      variant="light"
+                      name="heardAbout"
+                      placeholder="how did you hear about us?"
+                      options={props.sources}
+                      onChange={formik.handleChange}
+                      value={formik.values.heardAbout}
+                      loading={props.sourcesLoading}
+                    />
+                  </FormRow>
+                  <FormRow>
+                    <UploadButton
+                      onChange={handleFileUpload}
+                      name="file"
+                      placeholder="pdf, word"
+                      variant="light"
+                      style={{ width: '350px' }}
+                    />
+                  </FormRow>
                 </form>
               ) : (
-                <Summary values={formik.values} />
+                <Summary values={formik.values} interests={props.interests} />
               )}
             </div>
             <div className="form-btns">
@@ -208,6 +251,13 @@ const JoinUsUserPage = (props) => {
                 disabled={!formik.isValid}
                 variant="light"
                 text="submit"
+                style={{
+                  width: '134px',
+                  backgroundColor: formik.isValid ? undefined : appColors.gray600,
+                  borderColor: appColors.gray300,
+                  borderStyle: 'solid',
+                  borderWidth: '1px',
+                }}
               />
             </div>
           </section>
@@ -228,6 +278,16 @@ const Styling = styled(JoinUSBaseStyling)`
       display: flex;
       gap: 30px;
       flex-direction: column;
+      max-width: 732px;
+      input {
+        width: 350px;
+      }
+      textarea {
+        width: 350px;
+      }
+      .base-input-container {
+        width: 350px;
+      }
     }
     .interest {
       margin-top: 30px;
@@ -242,21 +302,54 @@ const Styling = styled(JoinUSBaseStyling)`
     }
   }
   .form-content {
-    display: grid;
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
 
-    @media screen and (min-width: 800px) {
-      grid-template-columns: ${({ isTwoForms }) => (isTwoForms ? '1fr 1fr' : '1fr')};
+    .interest {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      div {
+        flex-basis: 100%;
+        flex-grow: 1;
+      }
+      h3 {
+        flex-basis: 100%;
+        flex-grow: 1;
+      }
+    }
+
+    @media ${device.tab} {
+      .interest {
+        div {
+          flex-basis: 48%;
+        }
+      }
+      .form {
+        textarea {
+          width: 732px;
+        }
+        .base-input-container {
+          width: 732px;
+        }
+      }
+      .form-btns {
+        max-width: 350px;
+      }
+    }
+
+    @media ${device.web} {
+      .interest {
+        div {
+          flex-basis: 32%;
+        }
+      }
     }
   }
 
-  .section__content {
-    max-width: ${({ isTwoForms }) => (isTwoForms ? '810px' : '460px')};
-    margin-top: 84px;
-    margin-bottom: 84px;
-
-    @media screen and (min-width: 800px) {
-      padding: 85px 54px 54px 54px;
+  @media ${device.tab} {
+    .form-btns {
+      max-width: 350px;
     }
   }
 `;
@@ -267,5 +360,7 @@ const mapState = (state) => ({
 
 const mapDispatch = {
   postJoinUs,
+  loadInterests,
+  loadSources,
 };
 export default connect(mapState, mapDispatch)(JoinUsUserPage);

@@ -290,6 +290,7 @@ export const UploadButton = (props) => {
         }
         dashed
         variant={props.variant}
+        style={props.style}
       />
     </UploadButtonStyling>
   );

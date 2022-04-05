@@ -7,27 +7,14 @@ import Text from '../../components/atoms/text/_index';
 import Button, { BackButton } from '../../components/atoms/Button/_index';
 import { JoinUSBaseStyling } from '../../style/joinus';
 import { Page } from '../../components/organisms';
-import { appColors } from '../../style';
-import { H1 } from '../../components/atoms';
-
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  text-transform: none;
-  align-items: center;
-  margin: auto;
-`;
+import { appColors, device } from '../../style';
 
 const JoinUs = () => {
   const router = useRouter();
 
   return (
-    <Page whiteHead style={{ backgroundColor: appColors.gray600 }}>
-       <Wrapper>
-        <H1 style={{color: '#fff'}}>Coming Soon...</H1>
-      </Wrapper>
-      <Footer variant="transparent" />
-      {/* <Styling>
+    <Page whiteHead noPadd style={{ backgroundColor: appColors.gray600 }}>
+      <Styling>
         <div className="section__content">
           <section className="section">
             <Text.Heading
@@ -35,12 +22,16 @@ const JoinUs = () => {
               variant="light"
               weight="bold"
               size={32}
+              smSize={45}
+              lgSize={54}
               color="gray100"
               level={1}
               text="join us"
             />
             <Text
               size={14}
+              smSize={16}
+              lgSize={20}
               className="description"
               style={{ maxWidth: 650 }}
               color="gray300"
@@ -62,7 +53,7 @@ const JoinUs = () => {
           </section>
         </div>
         <Footer variant="transparent" />
-      </Styling> */}
+      </Styling>
     </Page>
   );
 };
@@ -75,23 +66,26 @@ const Styling = styled(JoinUSBaseStyling)`
     .join-us--btns {
       display: grid;
       gap: 30px;
-      margin: 20px auto 20px;
+      margin: 60px 0 58px;
+      max-width: 358px;
     }
   }
 
-  @media screen and (min-width: 500px) {
+  @media ${device.tab} {
     .section__content {
-      max-width: 525px;
-      background-color: white;
-      max-height: 446px;
+      max-width: 448px;
     }
-    .section.join-us--btns {
-      margin-top: 90px;
-      margin-bottom: 90px;
+  }
+
+  @media ${device.web} {
+    .section__content {
+      max-width: 892px;
     }
-    .section--heading-title,
-    .section--back {
-      color: ${appColors.secondaryBlack} !important;
+  }
+
+  @media ${device.desktop} {
+    .section__content {
+      max-width: 1286px;
     }
   }
 `;
