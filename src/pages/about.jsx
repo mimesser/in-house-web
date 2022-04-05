@@ -43,7 +43,7 @@ export default function About() {
 
   return (
     <Page noPadd
-		title="in-house | heroes"
+		title="in-house | Speak as a Team | Remain Untraceable"
 		// variant="dark"
 		whiteHead
 		noOverflow={true}

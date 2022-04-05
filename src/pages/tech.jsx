@@ -156,7 +156,7 @@ const ResponsiveText = styled(Text)`
 const TechUserLandingPage = () => (
 	<Page
 		noPadd
-		title="in-house | tech"
+		title="in-house | Speak as a Team | Remain Untraceable"
 		whiteHead
 		imageBack
 		noOverflow={true}		
