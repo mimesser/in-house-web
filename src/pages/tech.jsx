@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import Link from 'next/link';
 
-import { NumberedSectionBlock, HorizontallyCenteredContainer, FlexContainer } from '../components/organisms/Pages/components';
+import { NumberedSectionBlock, HorizontallyCenteredContainer, FlexContainer, BottomSectionWrapper } from '../components/organisms/Pages/components';
 import { Page } from '../components/organisms'
 
 import Button, { CTAButton } from '../components/atoms/Button/_index';
@@ -108,8 +108,6 @@ const BottomImageBgCss = css`
 	}
 	@media ${device.desktop} {
 		background-image: url(static/Custom-Landing-Page–Header-Image-2.webp);
-		margin-left: 277px;
-		margin-right: 277px;
 	}
 	@media ${device.macbook} {
 		background-image: url(static/Custom-Landing-Page–Header-Image-2.webp);
@@ -158,7 +156,7 @@ const ResponsiveText = styled(Text)`
 const TechUserLandingPage = () => (
 	<Page
 		noPadd
-		title="in-house | tech"
+		title="in-house | Speak as a Team | Remain Untraceable"
 		whiteHead
 		imageBack
 		noOverflow={true}		
@@ -201,7 +199,7 @@ const TechUserLandingPage = () => (
 					/>
 					
 					<SpacingContainer marginTop="30" marginBottom="60">
-						<Text variant="dark" color={appColors.gray300} size={16} lineHeight={22} weight="reg">
+						<Text variant="light" color={appColors.gray300} size={16} lineHeight={22} weight="reg">
 							for the first time ever there is a tool that allows you and your team to speak truth to
 							power in unified anonymous consensus without fear of retaliation
 						</Text>
@@ -264,15 +262,16 @@ const TechUserLandingPage = () => (
 			<div style={{ textAlign: 'center', paddingTop: '60px', paddingBottom: '60px'}}>
 				<ResponsiveText
 					text="we will be able to list ~50 workplaces during our beta trial"
-					variant="dark"
+					variant="light"
 					color={appColors.gray300}
 					weight="bold"
 					family="helvetica"
 					size={36}
 				/>
 			</div>
-
-			<BottomImage />
+			<BottomSectionWrapper>
+				<BottomImage />
+			</BottomSectionWrapper>
 			
 			<SpacingContainer padding="30px 12px 30px">
 				<div style={{ textAlign:"center"}}>

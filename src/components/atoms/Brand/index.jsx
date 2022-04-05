@@ -6,11 +6,10 @@ import Link from 'next/link';
 import { spacing, appColors } from '../../../style';
 import Text from '../text/_index'
 
-export const Brand = styled(({ className }) => (
+export const Brand = styled(({ className, variant }) => (
   <span className={className}>
 		<Text
-			variant="light"
-			color={appColors.gray100} 
+			variant={variant? variant : "light"}
 			family="helvetica"
 			size={14}
 			weight="bold"
