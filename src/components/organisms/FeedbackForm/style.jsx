@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { spacing, breakpoints, fontSize } from '../../../style';
+import { spacing, breakpoints, fontSize, device, calcRem } from '../../../style';
 import { Button, H2 } from '../../atoms';
 import { Icon } from '../../atoms/Icon';
 import { CustomSelect } from '../../atoms/Dropdown';
@@ -18,7 +18,12 @@ export const Container = styled.div`
 
   ${H2} {
     margin: ${spacing.xl} 0;
-  }
+  }  
+  padding: ${calcRem(24)} ${calcRem(12)} ${calcRem(20)} ${calcRem(12)};
+
+	@media ${device.desktop} {
+		margin: 0 277px;
+	}
 `;
 
 export const Commands = styled.div`

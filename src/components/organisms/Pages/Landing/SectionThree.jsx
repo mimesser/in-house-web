@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
 
-import { HorizontallyCenteredContainer } from '../components';
+import { BottomSectionWrapper, HorizontallyCenteredContainer } from '../components';
 import { CTAButton } from '../../../atoms/Button/_index';
 import Text from '../../../atoms/text/_index';
 import { appColors, device } from '../../../../style';
@@ -62,7 +62,7 @@ const FeatureBlock = ({ header, description, image, order }) => (
 				color="gray300"
 				family="helvetica"
 				weight="bold"
-				size={24}
+				size={36}
 				variant="light"
 			>
         {header}
@@ -76,7 +76,7 @@ const FeatureBlock = ({ header, description, image, order }) => (
 					color="gray400"
 					family="helvetica"
 					weight="reg"
-					size={18}
+					size={20}
 					variant="dark"
 				>
           {description}
@@ -130,24 +130,25 @@ const SectionThree = () => (
 			>
         <ResponsiveText
           text="your team runs the show"
-          color="gray400"
-          variant="dark"
+          color="gray100"
+          variant="light"
           weight="bold"
           family="helvetica"
           maxWidth="1000px"
           size={36}
         />
       </HorizontallyCenteredContainer>
-
-      {features.map(({ header, description, image }, index) => (
-				<FeatureBlock
-					header={header}
-					description={description}
-					key={index}
-          order={index % 2}
-					image={image}
-				/>
-      ))}      
+      <BottomSectionWrapper>
+        {features.map(({ header, description, image }, index) => (
+          <FeatureBlock
+            header={header}
+            description={description}
+            key={index}
+            order={index % 2}
+            image={image}
+          />
+        ))}      
+      </BottomSectionWrapper>
       <div style={{ textAlign: 'center', paddingBottom: '60px'}}> 
         <Link href={`/join-us`}>
           <CTAButton text="join us" />

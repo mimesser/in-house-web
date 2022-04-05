@@ -10,7 +10,12 @@ function ContactUs(props) {
     query: { subjectIndex = 0, redirect = '/' },
   } = props.router;
   return (
-    <Page>
+    <Page noPadd
+		title="in-house |  Speak as a Team | Remain Untraceable"
+		variant="dark"
+    whiteHead={false}
+		noOverflow={true}
+		>
       <FeedbackForm subjectIndex={subjectIndex} redirectLink={redirect} />
       <Footer variant="light" />
     </Page>
