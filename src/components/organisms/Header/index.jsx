@@ -92,7 +92,7 @@ const Menu = styled.span`
   ${MenuItems} {
     display: none;
   }
-  @media (min-width: ${breakpoints.md}) {
+  @media (min-width: ${breakpoints.xl}) {
     ${MenuItems} {
       display: flex;
       width: 100%;

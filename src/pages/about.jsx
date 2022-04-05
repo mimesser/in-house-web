@@ -4,7 +4,9 @@ import { useRouter } from 'next/router';
 
 import { Page } from '../components/organisms';
 import { H1, H2, Break, ClearButton, Icon } from '../components/atoms';
-import { fontSize, palette, spacing, breakpoints } from '../style';
+import Button from '../components/atoms/Button/_index';
+import { fontSize, palette, spacing, breakpoints, appColors } from '../style';
+import { Footer } from '../components/organisms/Footer';
 
 const Main = styled.div`
   position: relative;
@@ -40,7 +42,13 @@ export default function About() {
   const router = useRouter();
 
   return (
-    <Page whiteHead imageBack noPadd>
+    <Page noPadd
+		title="in-house | Speak as a Team | Remain Untraceable"
+		// variant="dark"
+		whiteHead
+		noOverflow={true}
+    style={{background: appColors.secondaryBlack}}
+    >
       <Main>
         <H1>org 2.0</H1>
         <Break />
@@ -53,11 +61,16 @@ export default function About() {
           tool. we use it ourselves, we have learned to listen, and it works. we believe it is time
           for a new day … for everyone.
         </H2>
-        <BackButton onClick={() => router.back()}>
-          <Icon icon="arrow-left" />
-          back
-        </BackButton>
+        <br />
+        <br />
+        <Button
+            onClick={() => router.push('/houses')}
+            text={'find your org'}
+            style={{ backgroundColor: appColors.gray500, justifyContent: 'center', margin: 'auto' }}
+            noSuffix
+          />
       </Main>
+      <Footer showScrollIndicator variant="darkest" />
     </Page>
   );
 }

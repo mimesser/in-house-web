@@ -6,7 +6,7 @@ import { Transition } from 'react-transition-group';
 
 import { Icon, ClearButton } from '../../atoms';
 
-import { spacing, fontSize, font, palette, breakpoints, themeColors } from '../../../style';
+import { spacing, fontSize, font, palette, breakpoints, themeColors, appColors } from '../../../style';
 
 const CloseButtonWrapper = styled.div`
   display: flex;
@@ -69,7 +69,7 @@ const Panel = styled.div`
   white-space: nowrap;
   overflow: hidden;
   ${({ state }) => sidebarTransitionStyles[state]};
-	color: ${palette.offWhite};
+	color: ${appColors.gray300};
 `;
 
 const MenuItems = styled.ul`
@@ -87,7 +87,6 @@ const A = styled.a`
   font-size: ${fontSize.sm};
   padding: ${spacing.xl} 0 0 ${spacing.xl};
   display: block;
-  color: ${palette.white};
   &:hover {
     color: ${palette.white};
   }
