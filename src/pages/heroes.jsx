@@ -264,7 +264,7 @@ const HeroesLanding = () => (
 						size={24}
 					/>
 					<SpacingContainer marginTop="30">
-						<Text variant="dark" color={appColors.gray300} size={16} lineHeight={22} weight="reg" opacity={0.7}>
+						<Text variant="light" color={appColors.gray300} size={16} lineHeight={22} weight="reg" opacity={0.7}>
 							allow your entire team to tell you what really matters to them without fear of exposure
 							<br />
 							<br /> 
