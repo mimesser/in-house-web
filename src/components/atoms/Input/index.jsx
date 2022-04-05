@@ -27,7 +27,7 @@ export const baseFormControlStyle = css`
   box-sizing: border-box;
   font-size: ${calcRem(14)};
   font-family: 'Helvetica', sans-serif;
-  background: ${({ variant }) => (variant === 'light' ? 'none' : 'white')};
+  background: ${({ variant }) => (variant === 'light' ? 'none !important' : 'white')};
   border: ${borderWidth}px solid ${borderColor};
   color: ${({ variant }) => (variant === 'light' ? appColors.gray300 : appColors.gray500)};
   transition: color 0.3s, border-color 0.3s;

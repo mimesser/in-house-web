@@ -129,7 +129,7 @@ export const NumberedSectionBlock = ({
           <Text
             text={note}
             color={appColors.gray300}
-            variant="dark"
+            variant="light"
             weight="reg"
             family="helvetica"
             size={16}

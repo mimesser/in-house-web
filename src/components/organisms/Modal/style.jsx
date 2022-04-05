@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
+import { device } from '../../../style';
 
 import {
   spacing,
@@ -78,6 +79,42 @@ export const Container = styled.div.attrs(() => ({
   display: flex;
   align-items: center;
   justify-content: center;
+  
+  top: 19%;
+  bottom: 19%;
+  left: 38%;
+  right: 38%;    
+
+  @media ${device.mobile} {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;    
+	}
+	@media ${device.tab} {		
+    top: 18%;
+    bottom: 18%;
+    left: 22%;
+    right: 22%;    
+	}
+	@media ${device.web} {
+    top: 18%;
+    bottom: 18%;
+    left: 33%;
+    right: 33%;    
+	}
+	@media ${device.laptop} {
+    top: 6%;
+    bottom: 6%;
+    left: 33%;
+    right: 33%;    
+	}
+	@media ${device.desktop} {
+    top: 19%;
+    bottom: 19%;
+    left: 38%;
+    right: 38%;    
+	}
 `;
 
 export const Dialog = styled.div`
@@ -92,7 +129,7 @@ export const Dialog = styled.div`
   width: 100%;
   // max-width: ${calcRem('500px')};
   height: 100%;
-  // max-height: ${calcRem('700px')};
+  // max-height: ${calcRem('700px')};  
 
   ${colors};
   padding: ${({ noPadd }) => (noPadd ? 0 : spacing.xxl)};

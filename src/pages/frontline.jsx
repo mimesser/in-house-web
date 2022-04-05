@@ -285,7 +285,7 @@ const FrontlineLanding = () => (
 						size={27}
 					/>
 					<SpacingContainer marginTop="30" marginBottom="60">
-						<Text variant="dark" color={appColors.gray300} size={16} lineHeight={22} weight="reg">
+						<Text variant="light" color={appColors.gray300} size={16} lineHeight={22} weight="reg">
 							for the first time ever there is a tool that allows you and your team to speak truth to
 							power in unified anonymous consensus without fear of retaliation
 						</Text>
@@ -348,7 +348,7 @@ const FrontlineLanding = () => (
 			<div style={{ textAlign: 'center', paddingTop: '60px', paddingBottom: '60px'}}>
 				<ResponsiveText
 					text="the world literally wants to know"
-					variant="dark"
+					variant="light"
 					color={appColors.gray300}
 					weight="bold"
 					family="helvetica"
@@ -398,7 +398,7 @@ const FrontlineLanding = () => (
 			<div style={{ textAlign: 'center', paddingTop: '60px', paddingBottom: '60px'}}>
 				<ResponsiveText
 					text="we will be able to list ~50 workplaces during our beta trial"
-					variant="dark"
+					variant="light"
 					color={appColors.gray300}
 					weight="bold"
 					family="helvetica"
