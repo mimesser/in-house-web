@@ -3,42 +3,32 @@ import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import Text from '../../components/atoms/text/_index';
 
-const Summary = ({ values }) => {
+const SummaryRow = ({ text, value, style }) => (
+  <div style={style}>
+    <Text color="gray400" size={14} smSize={20} text={text} transform="uppercase" />
+    <Text color="gray100" variant="light" size={14} smSize={20} text={value} />
+  </div>
+);
+
+const Summary = ({ values, interests = [] }) => {
   const router = useRouter();
   const { user_type: userType } = router.query;
   return (
     <Styling>
-      <div>
-        <Text color="gray400" size={14} text="name" transform="uppercase" />
-        <Text color="gray100" variant="light" size={14} text={values.name} />
-      </div>
-      <div>
-        <Text color="gray400" size={14} text="email" transform="uppercase" />
-        <Text color="gray100" variant="light" size={14} text={values.email} />
-      </div>
-      <div>
-        <Text color="gray400" size={14} text="comment" transform="uppercase" />
-        <Text color="gray100" variant="light" size={14} text={values.comment} />
-      </div>
-      <div>
-        <Text color="gray400" size={14} text="heard about" transform="uppercase" />
-        <Text color="gray100" variant="light" size={14} text={values.heardAbout.value} />
-      </div>
+      <SummaryRow text="name" value={values.name} />
+      <SummaryRow text="email" value={values.email} />
+      <SummaryRow text="comment" value={values.comment} />
+      <SummaryRow text="heard about" value={values.heardAbout.label} />
       {userType === 'motivated' && (
-        <div style={{ marginTop: 30, maxWidth: 400 }}>
-          <Text color="gray400" size={14} text="interest" transform="uppercase" />
-          <Text
-            color="gray100"
-            variant="light"
-            size={14}
-            text={Object.keys(values.interest).join(',\n')}
-          />
-        </div>
+        <SummaryRow
+          text="interest"
+          value={Object.keys(values.interest)
+            .map((value) => interests.find((interest) => interest.value === value).label)
+            .join(',\n')}
+          style={{ marginTop: 30, maxWidth: 400 }}
+        />
       )}
-      <div>
-        <Text color="gray400" size={14} text="attachment" transform="uppercase" />
-        <Text color="gray100" variant="light" size={14} text={values.file?.name} />
-      </div>
+      <SummaryRow text="attachment" value={values.file?.name} />
     </Styling>
   );
 };
