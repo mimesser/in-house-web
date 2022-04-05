@@ -51,11 +51,22 @@ export function* postFeedback({ payload: { subject, message, email, redirectLink
 }
 
 export function* postJoinUs({
-  payload: { name, email, comment, file, heardAbout, interest, redirectLink },
+  payload: { name, email, comment, file, heardAbout, interest, membershipType, redirectLink },
 }) {
   try {
     const interestIds = interest ? Object.keys(interest) : undefined;
     console.log(interestIds);
+
+    // const data = new FormData()
+    // data.append("Name", name)
+    // data.append("Email", email)
+    // data.append("Document", file)
+    // data.append("HearAboutUsId", heardAbout.value)
+    // data.append("Summary", comment)
+    // data.append("MembershipType", 1)
+    // interestIds.forEach(interest => {      
+    //   data.append("InterestIds", interest)
+    // });
 
     const data = {
       Name: name,
@@ -63,7 +74,7 @@ export function* postJoinUs({
       Summary: comment,
       Document: file,
       HearAboutUsId: heardAbout.value, // "b7f6802c-54da-4401-5efb-08da0678883f",
-      MembershipType: 0,
+      MembershipType: membershipType,
       InterestIds: interestIds,
     };
 

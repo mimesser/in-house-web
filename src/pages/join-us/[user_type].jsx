@@ -45,17 +45,6 @@ const hearOptions = [
 
 const initVal = { name: '', email: '', heardAbout: null, comment: '', file: null, interest: {} };
 
-const getBase64 = (file) => {
-  let reader = new FileReader();
-  reader.readAsDataURL(file);
-  reader.onload = function () {
-    console.log(reader.result);
-  };
-  reader.onerror = function (error) {
-    console.log('Error: ', error);
-  };
-};
-
 const JoinUsUserPage = (props) => {
   const router = useRouter();
   const { user_type: userType } = router.query;
@@ -86,7 +75,11 @@ const JoinUsUserPage = (props) => {
 
       if (showSummary) {
         values.redirectLink = '/thanks';
-        //values.membershipType = 0
+        if (userType === 'motivated'){          
+          values.membershipType = 1
+        } else{   
+          values.membershipType = 2
+        }
         props.postJoinUs(values);
         setSubmitting(false);
       } else {
@@ -111,7 +104,7 @@ const JoinUsUserPage = (props) => {
 
   const handleFileUpload = (e) => {
     formik.handleChange({ target: { name: e.target.name, value: e.target.files[0] } });
-    getBase64(e.target.files[0]);
+    // getBase64(e.target.files[0]);
   };
 
   const goBack = () => {
