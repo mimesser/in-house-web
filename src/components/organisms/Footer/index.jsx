@@ -12,12 +12,16 @@ const socialLinks = [
     href: 'https://www.facebook.com/iH.movement/',
   },
   {
-    icon: 'twitter',
-    href: 'https://twitter.com/iH_movement',
-  },
-  {
     icon: 'linkedin',
     href: 'https://www.linkedin.com/company/in-house6',
+  },
+  {
+    icon: 'youtube',
+    href: 'https://www.youtube.com/channel/UC4mqXm_iuXUIcf0cBcwHuIA',
+  },
+  {
+    icon: 'instagram',
+    href: 'https://www.instagram.com/ih.movement',
   },
 ];
 
@@ -53,7 +57,7 @@ const Layout = styled.div`
     }
   }
   padding: ${calcRem(24)} ${calcRem(12)} ${calcRem(20)} ${calcRem(12)};
-  @media all and (min-width: ${calcRem(900)}) {
+  @media all and (min-width: ${calcRem(767)}) {
     display: grid;
     column-gap: 20px;
     grid-template-areas:
@@ -82,7 +86,7 @@ const Break1 = styled.div`
   margin-bottom: ${calcRem(12)};
   opacity: 0.2;
 
-  @media all and (min-width: ${calcRem(900)}) {
+  @media all and (min-width: ${calcRem(767)}) {
     display: none;
   }
 `;
@@ -100,18 +104,18 @@ const A = styled.a`
   text-decoration: none;
   cursor: pointer;
   font-size: ${calcRem(12)};
-  margin-bottom: ${calcRem(12)};
+  margin-bottom: ${calcRem(30)};
   display: block;
   color: inherit;
   transition: color 0.5s;
 `;
 const SocialMedia1 = styled.div`
-  @media all and (max-width: ${calcRem(900)}) {
+  @media all and (max-width: ${calcRem(767)}) {
     display: none;
   }
 `;
 const SocialMedia2 = styled.div`
-  @media all and (min-width: ${calcRem(900)}) {
+  @media all and (min-width: ${calcRem(767)}) {
     display: none;
   }
 `;
@@ -168,7 +172,7 @@ export const Footer = ({ variant, showScrollIndicator }) => {
         <Link href="/about" passHref prefetch={false}>
           <A>contact</A>
         </Link>
-        <SocialMedia1 style={{ alignSelf: 'flex-end', paddingTop: '60px'}}>
+        <SocialMedia1 style={{ alignSelf: 'flex-end', paddingTop: '90px'}}>
           {socialLinks.map((link) => (
             // eslint-disable-next-line react/jsx-props-no-spreading
             <SocialLink {...link} key={link.icon} />

@@ -131,7 +131,7 @@ const SectionThree = () => (
         <ResponsiveText
           text="your team runs the show"
           color="gray100"
-          variant="dark"
+          variant="light"
           weight="bold"
           family="helvetica"
           maxWidth="1000px"

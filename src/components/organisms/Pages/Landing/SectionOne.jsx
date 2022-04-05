@@ -119,7 +119,7 @@ const TopSection = () => (
     </SpacingContainer>
 
     <ResponsiveText
-      variant="dark"
+      variant="light"
       color={appColors.gray200}
       weight="bold"
       family="helvetica"
@@ -143,7 +143,6 @@ const TopSection = () => (
         now there is a tool allowing your entire team to speak truth to power in unified consensus
         —without fear of retaliation
       </Text>
-
       <Text
         variant="light"
         color="gray300"
