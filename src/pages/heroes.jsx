@@ -224,7 +224,7 @@ const PercentSection = ({ percent, subtitle, description, note }) => (
 const HeroesLanding = () => (
 	<Page
 		noPadd
-		title="in-house | heroes"
+		title="in-house | Speak as a Team | Remain Untraceable"
 		// variant="dark"
 		whiteHead
 		imageBack

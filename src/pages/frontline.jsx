@@ -232,7 +232,7 @@ const PercentSection = ({ percent, subtitle, description, note }) => (
 const FrontlineLanding = () => (
 	<Page
 		noPadd
-		title="in-house | frontline"
+		title="in-house | Speak as a Team | Remain Untraceable"
 		whiteHead
 		imageBack
 		noOverflow={true}		
