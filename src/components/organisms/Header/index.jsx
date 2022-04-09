@@ -31,15 +31,7 @@ const Layout = styled.div`
   > div {
     display: flex;
     align-items: center;
-    padding: ${spacing.xl};
-
-    @media screen and (min-width: ${breakpoints.sm}) {
-      padding: ${spacing.xl} ${spacing.xxl};
-    }
-
-    @media screen and (min-width: ${breakpoints.xl}) {
-      padding: ${spacing.xl} ${spacing.xxxl};
-    }
+    padding: ${spacing.xl} 0;
 
     ${({ noPadd }) => !noPadd && onDesktop(`padding: ${spacing.xl} ${deskPadRem}`)};
 
