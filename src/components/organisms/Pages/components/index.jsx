@@ -1,82 +1,77 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 import { Icon } from '../../../atoms';
-import { appColors, device } from '../../../../style';
+import { appColors, desktopWidth, device, mobileWidth } from '../../../../style';
 import Text from '../../../atoms/text/_index';
 
 export const ResponsiveTextHeading = styled(Text)`
   font-size: 32px;
   line-height: 39px;
 
-	@media ${device.mobile} {
-		font-size: 32px;
+  @media ${device.mobile} {
+    font-size: 32px;
     line-height: 39px;
-	}
-	@media ${device.tab} {
-		font-size: 24px;
+  }
+  @media ${device.tab} {
+    font-size: 24px;
     line-height: 29px;
-	}
-	@media ${device.web} {
-		font-size: 36px;
+  }
+  @media ${device.web} {
+    font-size: 36px;
     line-height: 44px;
-	}
-	@media ${device.laptop} {
-		font-size: 36px;
+  }
+  @media ${device.laptop} {
+    font-size: 36px;
     line-height: 44px;
-	}
-	@media ${device.desktop} {
-		font-size: 36px;
+  }
+  @media ${device.desktop} {
+    font-size: 36px;
     line-height: 44px;
-	}
-`
+  }
+`;
 
 export const ResponsiveText = styled(Text)`
   font-size: 16px;
   line-height: 19px;
 
-	@media ${device.mobile} {
-		font-size: 16px;
+  @media ${device.mobile} {
+    font-size: 16px;
     line-height: 19px;
-	}
-	@media ${device.tab} {
-		font-size: 16px;
+  }
+  @media ${device.tab} {
+    font-size: 16px;
     line-height: 19px;
-	}
-	@media ${device.web} {
-		font-size: 20px;
+  }
+  @media ${device.web} {
+    font-size: 20px;
     line-height: 24px;
-	}
-	@media ${device.laptop} {
-		font-size: 20px;
+  }
+  @media ${device.laptop} {
+    font-size: 20px;
     line-height: 24px;
-	}
-	@media ${device.desktop} {
-		font-size: 20px;
+  }
+  @media ${device.desktop} {
+    font-size: 20px;
     line-height: 24px;
-	}
-`
+  }
+`;
 
 export const NumberedSectionBlock = ({
-	index,
-	header,
-	source,
-	description,
-	note,
-	share,
-	headerMaxWidth,
-	descriptionMaxWidth
+  index,
+  header,
+  source,
+  description,
+  note,
+  share,
+  headerMaxWidth,
+  descriptionMaxWidth,
 }) => (
   <NumberedSectionBlockContainer>
-    <HorizontallyCenteredContainer style={{ marginBottom: '6px' }}>
+    <HorizontallyCenteredContainer>
       <Icon icon={`number-disc-${index + 1}`} size={6} color="none" />
     </HorizontallyCenteredContainer>
 
-    <HorizontallyCenteredContainer
-			style={{
-				marginBottom: '12px',
-				maxWidth: '306px'
-			}}
-		>
+    <HorizontallyCenteredContainer minHeight="5rem">
       <div
         style={{
           display: 'flex',
@@ -92,17 +87,15 @@ export const NumberedSectionBlock = ({
           size={32}
         />
 
-        <div>
-          {share && (
-            <HorizontallyCenteredContainer>
-              <Icon icon="paper-plane" size={3} color={appColors.gray400} />
-            </HorizontallyCenteredContainer>
-          )}
-        </div>
+        {share && (
+          <HorizontallyCenteredContainer>
+            <Icon icon="paper-plane" size={3} color={appColors.gray400} />
+          </HorizontallyCenteredContainer>
+        )}
       </div>
     </HorizontallyCenteredContainer>
 
-    <HorizontallyCenteredContainer style={{ maxWidth: '306px' }}>
+    <HorizontallyCenteredContainer>
       {source && (
         <Text
           text={source}
@@ -111,7 +104,7 @@ export const NumberedSectionBlock = ({
           weight="reg"
           family="helvetica"
           size={16}
-          style={{ marginBottom: '12px', textTransform: 'uppercase' }}
+          style={{ textTransform: 'uppercase' }}
         />
       )}
 
@@ -142,65 +135,42 @@ export const NumberedSectionBlock = ({
 
 export const HorizontallyCenteredContainer = styled.div`
   display: flex;
-  justify-content: center;
-  max-width: ${({ maxWidth }) => maxWidth || '333px'};
+  justify-content: flex-start;
+  max-width: ${({ maxWidth }) => maxWidth};
   margin: auto;
   text-align: ${({ align }) => (align ? 'center' : null)};
   flex-direction: column;
-
+  min-height: ${({ minHeight }) => minHeight}; 
   span {
     margin: 0 auto;
   }
 `;
 export const FlexContainer = styled.div`
-	display: flex;
-	justify-content: space-evenly;
-	align-items: start;
-	flex-wrap: wrap;
-  
-	@media ${device.desktop} {
-		padding-left: 177px;
-		padding-right: 177px;
-	}
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  flex-wrap: wrap;
+  column-gap: 20px;
+  row-gap: 60px;
 `;
 
 export const BottomSectionWrapper = styled.div`
   @media ${device.desktop} {
     background: #111;
-    padding: 0 277px;
-
   }
-`
+`;
 export const NumberedSectionBlockContainer = styled.div`
-  width: 320px;
   display: flex;
   justify-content: center;
   flex-direction: column;
   text-align: center;
-	margin: 20px;
+  row-gap: 15px;
+  flex-grow: 0;
+  flex-basis: 99%;
   
-	@media ${device.mobile} {
-    width: 306px;
-    margin: 20px;
+  @media(min-width: ${mobileWidth.lg}) {
+		flex-basis: 48%;
 	}
-	@media ${device.tab} {
-    width: 300px;
-    margin: 30px;
-	}
-	@media ${device.web} {
-    width: 320px;
-    margin: 40px;
-	}
-	@media ${device.laptop} {
-    width: 320px;
-    margin: 60px;
-	}
-	@media ${device.desktop} {
-    width: 320px;
-    margin: 100px;
-	}
-
-  & div > p:last-child {
-    margin-bottom: 60px;
-  }
+	@media (min-width: ${desktopWidth.sm}) {
+		flex-basis: 32%;
 `;
