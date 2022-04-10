@@ -70,18 +70,11 @@ export const Container = styled.div`
 
 // noinspection CssInvalidPseudoSelector
 const Video = styled.video`
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  min-width: 100%;
-  min-height: 100%;
-  /* For some reason we have a 1px white line on mobile. */
-  width: calc(100% + 1px);
-  height: auto;
-  transform: translate(-50%, -50%);
-  object-fit: cover;
-
-  ${onDesktop(`width: auto`)};
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
 `;
 
 const Overlay = styled.div`
