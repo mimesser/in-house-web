@@ -19,7 +19,7 @@ import {
 } from '../../../style';
 
 const PageLayout = styled.div`
-  height: 100%;
+  height: auto;
   position: relative;
   background-color: ${appBackground};
   display: flex;
