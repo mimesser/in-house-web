@@ -1,5 +1,6 @@
-import styled from "styled-components";
-import {appColors, device} from ".";
+import styled from 'styled-components';
+import { appColors } from '.';
+import { mobileWidth } from './breakpoints';
 
 export const JoinUSBaseStyling = styled.div`
   display: grid;
@@ -8,27 +9,17 @@ export const JoinUSBaseStyling = styled.div`
   background-color: ${appColors.gray600};
 
   > section {
-    padding: 50px 12px 80px;
+    padding-top: 50px;
+    padding-bottom: 80px;
   }
   .section__content {
     width: 100%;
-    padding: 55px 12px 88px;
+    padding-top: 55px;
+    padding-bottom: 88px;
   }
-  @media ${device.tab} {
+  @media ${mobileWidth.lg} {
     .section__content {
-      padding: 65px 40px 88px;
-    }
-  }
-
-  @media ${device.web} {
-    .section__content {
-      padding: 65px 80px 88px;
-    }
-  }
-
-  @media ${device.desktop} {
-    .section__content {
-      padding: 65px 277px 88px;
+      padding-top: 65px;
     }
   }
 `;
