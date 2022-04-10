@@ -70,7 +70,7 @@ const SpacingContainer = ({ children, ...props }) => (
 );
 
 const HeaderImageBgCss = css`
-  background: linear-gradient(356deg, #111, transparent),
+  background: linear-gradient(0deg, #111, transparent),
     url(static/Custom-Landing-Page–Header-Image-3.webp) no-repeat;
   background-size: cover;
   background-position-x: left;
@@ -88,7 +88,8 @@ const HeaderImage = styled.div`
 	height: 100vh;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
+	align-items: flex-start;
+	justify-content: center;
 
   @media (min-width: ${mobileWidth.sm}) {
     margin-left: -12px;
