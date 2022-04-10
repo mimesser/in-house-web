@@ -70,7 +70,7 @@ const SpacingContainer = ({ children, ...props }) => (
 );
 
 const HeaderImageBgCss = css`
-  background: linear-gradient(0deg, #111, transparent),
+  background: linear-gradient(180.68deg, rgba(17, 17, 17, 0.15) 31.47%, #111111 99.41%),
     url(static/Custom-Landing-Page–Header-Image-3.webp) no-repeat;
   background-size: cover;
   background-position-x: left;
