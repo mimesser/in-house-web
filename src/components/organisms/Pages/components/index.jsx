@@ -173,4 +173,5 @@ export const NumberedSectionBlockContainer = styled.div`
 	}
 	@media (min-width: ${desktopWidth.sm}) {
 		flex-basis: 32%;
+  }
 `;

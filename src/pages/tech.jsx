@@ -78,19 +78,7 @@ const HeaderImageBgCss = css`
   margin-top: -64px;
 `;
 
-const HeaderImage = styled.div`
-  ${HeaderImageBgCss}
-  position: relative;
-  margin-left: -12px;
-  margin-right: -12px;
-  padding-left: 12px;
-  padding-right: 12px;
-	height: 100vh;
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	justify-content: center;
-
+export const imageMargins = css`
   @media (min-width: ${mobileWidth.sm}) {
     margin-left: -12px;
     margin-right: -12px;
@@ -141,6 +129,21 @@ const HeaderImage = styled.div`
   }
 `;
 
+const HeaderImage = styled.div`
+  ${HeaderImageBgCss}
+  position: relative;
+  margin-left: -12px;
+  margin-right: -12px;
+  padding-left: 12px;
+  padding-right: 12px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+	${imageMargins}
+`;
+
 const PositionContainer = styled.div`
   position: relative;
   max-width: ${({ maxWidth }) => `${maxWidth}px`};
@@ -185,6 +188,7 @@ const BottomImage = styled.div`
   ${BottomImageBgCss}
   height: 450px;
   position: relative;
+	${imageMargins}
 `;
 
 const HorizontalBar = styled.div`
@@ -203,7 +207,7 @@ const ResponsiveText = styled(Text)`
   }
   @media (min-width: ${mobileWidth.lg}) {
     font-size: ${({ size }) => `${size + 9}px` || '45px'};
-    line-height:${({ size }) => `${size + 18}px` || '54px'};
+    line-height: ${({ size }) => `${size + 18}px` || '54px'};
   }
   @media (min-width: ${desktopWidth.sm}) {
     font-size: ${({ size }) => `${size + 18}px` || '54px'};
