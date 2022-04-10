@@ -118,12 +118,12 @@ const PlayerWrapper = styled.div`
 `;
 
 const HeaderImageBgCss = css`
-  background: linear-gradient(356deg, #111, transparent),
+  background: linear-gradient(180.68deg, rgba(17, 17, 17, 0.15) 31.47%, #111111 99.41%),
     url(static/Custom-Landing-Page–Header-Image-1.webp) no-repeat;
   background-size: cover;
   background-position-x: left;
   background-position-y: top;
-  margin-top: -64px;
+  margin-top: -70px;
 `;
 
 const HeaderImage = styled.div`
@@ -211,7 +211,7 @@ const PercentSectionContainer = styled.div`
   }
 `;
 
-const PercentSection = ({ percent, subtitle, description, note }) => (
+export const PercentSection = ({ percent, subtitle, description, note }) => (
   <PercentSectionContainer>
     <HorizontallyCenteredContainer>
       <Text
@@ -263,7 +263,7 @@ const FrontlineLanding = () => (
     title="in-house | Speak as a Team | Remain Untraceable"
     whiteHead
     noOverflow={true}
-    style={{ backgroundColor: '#111', height: 'auto' }}
+    style={{ backgroundColor: '#111' }}
   >
     <HeaderImage>
       <PositionContainer maxWidth="740">
