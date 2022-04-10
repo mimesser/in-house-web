@@ -55,19 +55,21 @@ const TextStyling = styled.p`
   font-weight: ${({ weight }) => getFontWeight(weight)};
   font-family: ${({ family }) => getFontFamily(family)};
   margin: 0;
+  text-align: ${({ alignment }) => alignment};
 
   @media ${device.tab} {
-    ${({smSize}) => smSize && `font-size: ${calcRem(smSize)}`}
+    ${({ smSize }) => smSize && `font-size: ${calcRem(smSize)}`}
   }
   @media ${device.web} {
-    ${({mdSize}) => mdSize && `font-size: ${calcRem(mdSize)}`}
+    ${({ mdSize }) => mdSize && `font-size: ${calcRem(mdSize)}`}
   }
   @media ${device.laptop} {
-    ${({lgSize}) => lgSize && `font-size: ${calcRem(lgSize)}`}
+    ${({ lgSize }) => lgSize && `font-size: ${calcRem(lgSize)}`}
   }
   @media ${device.desktop} {
-    ${({xlSize}) => xlSize && `font-size: ${calcRem(xlSize)}`}
+    ${({ xlSize }) => xlSize && `font-size: ${calcRem(xlSize)}`}
   }
+  
 `;
 
 const Text = ({ children, text, ...props }) => {
@@ -90,6 +92,7 @@ const xlSize = PropTypes.oneOf(fontSizes);
 const weight = PropTypes.oneOf(['light', 'reg', 'med', 'bold']);
 const family = PropTypes.oneOf(['helvetica', 'roboto']);
 const variant = PropTypes.oneOf(['light', 'dark']);
+const alignment = PropTypes.oneOf(['center', 'left', 'right', 'justify']);
 // // flexible typechecking with any color
 // const color = PropTypes.oneOfType([PropTypes.string, PropTypes.oneOf(Object.keys(appColors))]);
 const color = PropTypes.oneOf(Object.keys(appColors)); // colors are tied to our palette
@@ -105,6 +108,7 @@ Text.propTypes = {
   mdSize,
   lgSize,
   xlSize,
+  alignment,
 };
 
 TextHeading.propTypes = {
