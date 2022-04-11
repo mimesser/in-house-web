@@ -141,8 +141,15 @@ export const FlexContainer = styled.div`
   justify-content: center;
   align-items: start;
   flex-wrap: wrap;
-  column-gap: 20px;
-  row-gap: 60px;
+  column-gap: ${({ smColumnGap = 20 }) => smColumnGap}px;
+  row-gap: ${({ rowGap = 60 }) => rowGap}px;
+
+  @media (min-width: ${mobileWidth.lg}) {
+    column-gap: ${({ mdColumnGap = 20 }) => mdColumnGap}px;
+  }
+  @media (min-width: ${desktopWidth.sm}) {
+    column-gap: ${({ lgColumnGap = 20 }) => lgColumnGap}px;
+  }
 `;
 
 export const BottomSectionWrapper = styled.div`
@@ -154,6 +161,27 @@ export const BottomSectionWrapper = styled.div`
     row-gap: 240px;
   }
 `;
+
+const flexBasisCalculation = css`
+  flex-basis: calc(
+    ${({ smCols = 1 }) => 100 / smCols}% -
+      ${({ smCols = 1, smColumnGap = 20 }) => (smColumnGap * (smCols - 1)) / smCols}px
+  );
+
+  @media (min-width: ${mobileWidth.lg}) {
+    flex-basis: calc(
+      ${({ mdCols = 2 }) => 100 / mdCols}% -
+        ${({ mdCols = 2, mdColumnGap = 20 }) => (mdColumnGap * (mdCols - 1)) / mdCols}px
+    );
+  }
+  @media (min-width: ${desktopWidth.sm}) {
+    flex-basis: calc(
+      ${({ lgCols = 3 }) => 100 / lgCols}% -
+        ${({ lgCols = 3, lgColumnGap = 20 }) => (lgColumnGap * (lgCols - 1)) / lgCols}px
+    );
+  }
+`;
+
 export const NumberedSectionBlockContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -161,14 +189,7 @@ export const NumberedSectionBlockContainer = styled.div`
   text-align: center;
   row-gap: 15px;
   flex-grow: 0;
-  flex-basis: 99%;
-
-  @media (min-width: ${mobileWidth.lg}) {
-    flex-basis: 48%;
-  }
-  @media (min-width: ${desktopWidth.sm}) {
-    flex-basis: 32%;
-  }
+  ${flexBasisCalculation}
 `;
 
 const SpacingContainerStyling = styled.div`
@@ -194,18 +215,22 @@ const PercentSectionContainer = styled.div`
   text-align: center;
   row-gap: 15px;
   flex-grow: 0;
-  flex-basis: 99%;
-
-  @media (min-width: ${mobileWidth.lg}) {
-    flex-basis: 48%;
-  }
-  @media (min-width: ${desktopWidth.sm}) {
-    flex-basis: 32%;
-  }
+  ${flexBasisCalculation}
 `;
 
-export const PercentSection = ({ percent, subtitle, description, note }) => (
-  <PercentSectionContainer>
+export const PercentSection = ({
+  percent,
+  subtitle,
+  description,
+  note,
+  smCols,
+  mdCols,
+  lgCols,
+  smColumnGap,
+  mdColumnGap,
+  lgColumnGap,
+}) => (
+  <PercentSectionContainer {...{ smCols, mdCols, lgCols, smColumnGap, mdColumnGap, lgColumnGap }}>
     <HorizontallyCenteredContainer>
       <Text
         text={percent}

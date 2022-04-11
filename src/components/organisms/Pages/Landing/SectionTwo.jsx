@@ -2,10 +2,16 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import Link from 'next/link';
 
-import { FlexContainer, HorizontallyCenteredContainer, imageMargins, imageOffset, PercentSection } from '../components';
+import {
+  FlexContainer,
+  HorizontallyCenteredContainer,
+  imageMargins,
+  imageOffset,
+  PercentSection,
+} from '../components';
 import { CTAButton } from '../../../atoms/Button/_index';
 import Text from '../../../atoms/text/_index';
-import { appColors, device } from '../../../../style';
+import { appColors, desktopWidth, device, mobileWidth } from '../../../../style';
 
 const stats = [
   {
@@ -45,9 +51,9 @@ const PortraitImageBgCss = css`
     #111111 99.6%
   );
   background-repeat: no-repeat;
-  background-size: cover;
-  background-position-y: center;
+  background-position-y: top;
   background-position-x: center;
+  background-size: contain;
   background-image: url(static/dude_glasses.webp);
   @media ${device.mobile} {
     background-image: url(https://in-house.azureedge.net/webstatic/landing_main/dude_glasses-375.jpg);
@@ -69,15 +75,30 @@ const PortraitImageBgCss = css`
 const PortraitImage = styled.div`
   ${PortraitImageBgCss};
   position: relative;
-  min-height: 100vh;
+  min-height: 1833px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   row-gap: 60px;
   padding-bottom: 60px;
   ${imageOffset}
-`;
 
+  @media (min-width: ${mobileWidth.md}) {
+    min-height: 1814px;
+  }
+
+  @media (min-width: ${mobileWidth.lg}) {
+    min-height: 1316px;
+  }
+
+  @media (min-width: ${mobileWidth.xl}) {
+    min-height: 1280px;
+  }
+
+  @media (min-width: ${desktopWidth.sm}) {
+    min-height: 1260px;
+  }
+`;
 
 const ResponsiveText = styled(Text)`
   font-size: 36px;
@@ -102,7 +123,7 @@ const ResponsiveText = styled(Text)`
 const SectionTwo = () => (
   <>
     <PortraitImage>
-      <HorizontallyCenteredContainer>
+      <HorizontallyCenteredContainer style={{ margin: 0 }}>
         <ResponsiveText
           family="helvetica"
           color={appColors.gray100}
@@ -115,7 +136,7 @@ const SectionTwo = () => (
         </ResponsiveText>
       </HorizontallyCenteredContainer>
 
-      <FlexContainer>
+      <FlexContainer mdColumnGap={110} lgColumnGap={80}>
         {stats.map((section, index) => (
           <PercentSection
             key={index}
@@ -123,10 +144,13 @@ const SectionTwo = () => (
             subtitle={section.subHeader}
             description={section.description}
             note={section.source}
+            lgCols={4}
+            mdColumnGap={110}
+            lgColumnGap={80}
           />
         ))}
       </FlexContainer>
-      <HorizontallyCenteredContainer>
+      <HorizontallyCenteredContainer style={{ margin: 0, alignItems: 'center' }}>
         <Link href={`/join-us`}>
           <CTAButton text="join us" />
         </Link>
