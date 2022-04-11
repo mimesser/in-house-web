@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { Icon } from '../../../atoms';
 import { appColors, desktopWidth, device, mobileWidth } from '../../../../style';
@@ -56,16 +56,7 @@ export const ResponsiveText = styled(Text)`
   }
 `;
 
-export const NumberedSectionBlock = ({
-  index,
-  header,
-  source,
-  description,
-  note,
-  share,
-  headerMaxWidth,
-  descriptionMaxWidth,
-}) => (
+export const NumberedSectionBlock = ({ index, header, source, description, note, share }) => (
   <NumberedSectionBlockContainer>
     <HorizontallyCenteredContainer>
       <Icon icon={`number-disc-${index + 1}`} size={6} color="none" />
@@ -140,7 +131,7 @@ export const HorizontallyCenteredContainer = styled.div`
   margin: auto;
   text-align: ${({ align }) => (align ? 'center' : null)};
   flex-direction: column;
-  min-height: ${({ minHeight }) => minHeight}; 
+  min-height: ${({ minHeight }) => minHeight};
   span {
     margin: 0 auto;
   }
@@ -155,8 +146,12 @@ export const FlexContainer = styled.div`
 `;
 
 export const BottomSectionWrapper = styled.div`
-  @media ${device.desktop} {
-    background: #111;
+  display: flex;
+  flex-direction: column;
+  row-gap: 180px;
+
+  @media (min-width: ${mobileWidth.lg}) {
+    row-gap: 240px;
   }
 `;
 export const NumberedSectionBlockContainer = styled.div`
@@ -167,11 +162,169 @@ export const NumberedSectionBlockContainer = styled.div`
   row-gap: 15px;
   flex-grow: 0;
   flex-basis: 99%;
-  
-  @media(min-width: ${mobileWidth.lg}) {
-		flex-basis: 48%;
-	}
-	@media (min-width: ${desktopWidth.sm}) {
-		flex-basis: 32%;
+
+  @media (min-width: ${mobileWidth.lg}) {
+    flex-basis: 48%;
   }
+  @media (min-width: ${desktopWidth.sm}) {
+    flex-basis: 32%;
+  }
+`;
+
+const SpacingContainerStyling = styled.div`
+  margin-top: ${({ marginTop }) => (marginTop ? `${marginTop}px` : null)};
+  margin-bottom: ${({ marginBottom }) => (marginBottom ? `${marginBottom}px` : null)};
+  background: ${({ background }) => background};
+  padding: ${({ padding }) => padding};
+  display: flex;
+  flex-direction: column;
+  row-gap: ${({ rowGap }) => (rowGap ? rowGap : '60px')};
+  align-items: ${({ alignment }) => alignment};
+  z-index: 1;
+`;
+
+export const SpacingContainer = ({ children, ...props }) => (
+  <SpacingContainerStyling {...props}>{children}</SpacingContainerStyling>
+);
+
+const PercentSectionContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  row-gap: 15px;
+  flex-grow: 0;
+  flex-basis: 99%;
+
+  @media (min-width: ${mobileWidth.lg}) {
+    flex-basis: 48%;
+  }
+  @media (min-width: ${desktopWidth.sm}) {
+    flex-basis: 32%;
+  }
+`;
+
+export const PercentSection = ({ percent, subtitle, description, note }) => (
+  <PercentSectionContainer>
+    <HorizontallyCenteredContainer>
+      <Text
+        text={percent}
+        color={appColors.gray300}
+        variant="light"
+        weight="reg"
+        family="helvetica"
+        size={72}
+      />
+      <Text
+        text={subtitle}
+        color={appColors.gray200}
+        variant="light"
+        weight="bold"
+        family="helvetica"
+        size={32}
+      />
+    </HorizontallyCenteredContainer>
+    <HorizontallyCenteredContainer>
+      <Text
+        text={description}
+        color={appColors.gray400}
+        variant="light"
+        weight="reg"
+        family="helvetica"
+        size={16}
+        mdSize={20}
+      />
+    </HorizontallyCenteredContainer>
+    <HorizontallyCenteredContainer>
+      <Text
+        text={note}
+        color={appColors.gray400}
+        variant="light"
+        weight="reg"
+        family="helvetica"
+        size={12}
+        mdSize={14}
+      />
+      {/* </div> */}
+    </HorizontallyCenteredContainer>
+  </PercentSectionContainer>
+);
+
+export const imageMargins = css`
+  @media (min-width: ${mobileWidth.sm}) {
+    margin-left: -12px;
+    margin-right: -12px;
+  }
+
+  @media (min-width: ${mobileWidth.md}) {
+    margin-left: -32px;
+    margin-right: -32px;
+  }
+
+  @media (min-width: ${mobileWidth.lg}) {
+    margin-left: -40px;
+    margin-right: -40px;
+  }
+
+  @media (min-width: ${mobileWidth.xl}) {
+    margin-left: -56px;
+    margin-right: -56px;
+  }
+
+  @media (min-width: ${desktopWidth.sm}) {
+    margin-left: -80px;
+    margin-right: -80px;
+  }
+
+  @media (min-width: ${desktopWidth.md}) {
+    margin-left: -123px;
+    margin-right: -123px;
+  }
+
+  @media (min-width: ${desktopWidth.lg}) {
+    margin-left: -277px;
+    margin-right: -277px;
+  }
+`;
+
+export const imagePaddings = css`
+  @media (min-width: ${mobileWidth.sm}) {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  @media (min-width: ${mobileWidth.md}) {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  @media (min-width: ${mobileWidth.lg}) {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  @media (min-width: ${mobileWidth.xl}) {
+    padding-left: 56px;
+    padding-right: 56px;
+  }
+
+  @media (min-width: ${desktopWidth.sm}) {
+    padding-left: 80px;
+    padding-right: 80px;
+  }
+
+  @media (min-width: ${desktopWidth.md}) {
+    padding-left: 123px;
+    padding-right: 123px;
+  }
+
+  @media (min-width: ${desktopWidth.lg}) {
+    padding-left: 277px;
+    padding-right: 277px;
+  }
+`;
+
+export const imageOffset = css`
+  ${imageMargins}
+  ${imagePaddings}
 `;

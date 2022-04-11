@@ -2,20 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
 
-import { BottomSectionWrapper, HorizontallyCenteredContainer } from '../components';
+import {
+  BottomSectionWrapper,
+  HorizontallyCenteredContainer,
+  imageMargins,
+  SpacingContainer,
+} from '../components';
 import { CTAButton } from '../../../atoms/Button/_index';
 import Text from '../../../atoms/text/_index';
-import { appColors, device } from '../../../../style';
-
-const GrayCircle = styled.div`
-  width: 26px;
-  height: 26px;
-  background: ${appColors.gray400};
-  margin-top: 90px;
-  margin-bottom: 50px;
-  border-radius: 50%;
-  align-self: center;
-`;
+import { appColors, desktopWidth, device, mobileWidth } from '../../../../style';
 
 const features = [
   {
@@ -38,124 +33,136 @@ const features = [
   },
 ];
 
-const FeatureText = styled.div`
-  padding: 40px;
-  flex: 1;
-  min-width: 240px;
-  @media ${device.tab} {
-    order: ${({ order }) => `${order}`};
+const FeatureBlockContainer = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  row-gap: 60px;
+  justify-content: flex-end;
+
+  @media (min-width: ${mobileWidth.lg}) {
+    column-gap: 40px;
+    flex-direction: ${({order}) => order ? 'row-reverse' : 'row'};
+  }
+  @media (min-width: ${desktopWidth.sm}) {
+    column-gap: 80px;
   }
 `;
+
+const FeatureText = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+  jusify-content: center;
+  flex-basis: 99%;
+  flex-grow: 0;
+  padding: 0 40px;
+
+  @media (min-width: ${mobileWidth.lg}) {
+    padding: 0;
+    flex-basis: 33%;
+  }
+`;
+
+const ImageContainer = styled.div`
+  height: 536px;
+  background-image: ${({ image }) => image || 'none'};
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position-y: center;
+  flex-grow: 0;
+  flex-basis: 99%;
+  @media (min-width: ${mobileWidth.md}) {
+    height: 637px;
+  }
+  @media (min-width: ${mobileWidth.lg}) {
+    flex-basis: calc(67% - 80px);
+    height: 547px;
+  }
+  @media (min-width: ${desktopWidth.sm}) {
+    flex-basis: calc(67% - 160px);
+    height: 640px;
+  }
+  @media (min-width: ${desktopWidth.lg}) {
+    flex-basis: calc(67% - 357px);
+    height: 640px;
+  }
+`;
+
 const FeatureBlock = ({ header, description, image, order }) => (
-  <div
-    style={{
-      display: 'flex',
-      alignItems: 'center',
-      flexWrap: 'wrap',
-      padding: '60px 0',
-    }}
-  >
-    <FeatureText order={order}>
+  <FeatureBlockContainer order={order}>
+    <FeatureText>
       <Text
         color={appColors.gray300}
         family="helvetica"
         weight="bold"
         size={24}
-        smSize={36}
+        smSize={32}
         mdSize={45}
         variant="light"
+        style={{ textAlign: 'center' }}
       >
         {header}
       </Text>
-      <div
-        style={{
-          marginTop: '12px',
-        }}
+      <Text
+        color={appColors.gray400}
+        family="helvetica"
+        weight="reg"
+        size={16}
+        mdSize={20}
+        variant="dark"
       >
-        <Text
-          color={appColors.gray400}
-          family="helvetica"
-          weight="reg"
-          size={16}
-          mdSize={20}
-          variant="dark"
-        >
-          {description}
-        </Text>
-      </div>
+        {description}
+      </Text>
     </FeatureText>
 
-    <div
-      style={{
-        padding: '0 12px',
-        height: '638px',
-        backgroundImage: image,
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover',
-        backgroundPositionY: 'center',
-        flex: 2,
-        minWidth: '375px',
-      }}
-    ></div>
-  </div>
+    <ImageContainer image={image} />
+  </FeatureBlockContainer>
 );
 
 const ResponsiveText = styled(Text)`
   font-size: 36px;
 
-  @media ${device.mobile} {
-    font-size: 36px;
-    max-width: 295px;
-  }
-  @media ${device.tab} {
-    font-size: 45px;
-    max-width: 640px;
-  }
-  @media ${device.web} {
-    font-size: 54px;
-  }
-  @media ${device.laptop} {
-    font-size: 54px;
-  }
-  @media ${device.desktop} {
+  @media ${desktopWidth.sm} {
     font-size: 54px;
   }
 `;
+
+const SectionThreeContainer = styled(SpacingContainer)`
+  ${imageMargins}
+`;
+
 const SectionThree = () => (
-  <>
-    <div style={{ background: '#111' }}>
-      <HorizontallyCenteredContainer
-        align="center"
-        style={{ paddingTop: '60px', maxWidth: '1200px', alignItems: 'center' }}
-      >
-        <ResponsiveText
-          text="your team runs the show"
-          color={appColors.gray100}
-          variant="light"
-          weight="bold"
-          family="helvetica"
-          maxWidth="1000px"
-          size={36}
+  <SectionThreeContainer padding="60px 0 120px">
+    <HorizontallyCenteredContainer align="center">
+      <ResponsiveText
+        text="your team runs the show"
+        color={appColors.gray100}
+        variant="light"
+        weight="bold"
+        family="helvetica"
+        maxWidth="1000px"
+        size={36}
+      />
+    </HorizontallyCenteredContainer>
+    <BottomSectionWrapper>
+      {features.map(({ header, description, image }, index) => (
+        <FeatureBlock
+          header={header}
+          description={description}
+          key={index}
+          order={index % 2}
+          image={image}
         />
-      </HorizontallyCenteredContainer>
-      <BottomSectionWrapper>
-        {features.map(({ header, description, image }, index) => (
-          <FeatureBlock
-            header={header}
-            description={description}
-            key={index}
-            order={index % 2}
-            image={image}
-          />
-        ))}
-      </BottomSectionWrapper>
-      <div style={{ textAlign: 'center', paddingBottom: '60px' }}>
-        <Link href={`/join-us`}>
-          <CTAButton text="join us" />
-        </Link>
-      </div>
+      ))}
+    </BottomSectionWrapper>
+    <div style={{ textAlign: 'center' }}>
+      <Link href={`/join-us`}>
+        <CTAButton text="join us" />
+      </Link>
     </div>
-  </>
+  </SectionThreeContainer>
 );
 
 export default SectionThree;

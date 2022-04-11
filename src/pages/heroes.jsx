@@ -7,6 +7,10 @@ import {
   HorizontallyCenteredContainer,
   FlexContainer,
   BottomSectionWrapper,
+  SpacingContainer,
+  PercentSection,
+  imageOffset,
+  imageMargins,
 } from '../components/organisms/Pages/components';
 import { Page } from '../components/organisms';
 
@@ -15,8 +19,6 @@ import Text from '../components/atoms/text/_index';
 import Icon from '../components/atoms/Icon';
 import { appColors, desktopWidth, device, mobileWidth } from '../style';
 import { Footer } from '../components/organisms/Footer';
-import { imageMargins } from './tech';
-import { PercentSection } from './frontline';
 
 const howItWorks = [
   {
@@ -76,20 +78,6 @@ const percents = [
   },
 ];
 
-const SpacingContainerStyling = styled.div`
-  margin-top: ${({ marginTop }) => (marginTop ? `${marginTop}px` : null)};
-  margin-bottom: ${({ marginBottom }) => (marginBottom ? `${marginBottom}px` : null)};
-  background: ${({ background }) => background};
-  padding: ${({ padding }) => padding};
-  display: flex;
-  flex-direction: column;
-  row-gap: ${({ rowGap }) => (rowGap ? rowGap : '60px')};
-  align-items: ${({ alignment }) => alignment};
-  z-index: 1;
-`;
-const SpacingContainer = ({ children, ...props }) => (
-  <SpacingContainerStyling {...props}>{children}</SpacingContainerStyling>
-);
 const PositionContainer = styled.div`
   position: relative;
   max-width: ${({ maxWidth }) => `${maxWidth}px`};
@@ -147,7 +135,7 @@ const HeaderImage = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  ${imageMargins}
+  ${imageOffset}
 `;
 
 const BottomImageBgCss = css`
