@@ -7,6 +7,9 @@ import {
   HorizontallyCenteredContainer,
   FlexContainer,
   BottomSectionWrapper,
+	SpacingContainer,
+	imageOffset,
+	imageMargins,
 } from '../components/organisms/Pages/components';
 import { Page } from '../components/organisms';
 
@@ -53,22 +56,6 @@ const howItWorks = [
   },
 ];
 
-const SpacingContainerStyling = styled.div`
-  margin-top: ${({ marginTop }) => (marginTop ? `${marginTop}px` : null)};
-  margin-bottom: ${({ marginBottom }) => (marginBottom ? `${marginBottom}px` : null)};
-  background: ${({ background }) => background};
-  padding: ${({ padding }) => padding};
-  display: flex;
-  flex-direction: column;
-  row-gap: ${({ rowGap }) => (rowGap ? rowGap : '60px')};
-  align-items: ${({ alignment }) => alignment};
-  z-index: 1;
-`;
-
-const SpacingContainer = ({ children, ...props }) => (
-  <SpacingContainerStyling {...props}>{children}</SpacingContainerStyling>
-);
-
 const HeaderImageBgCss = css`
   background: linear-gradient(180.68deg, rgba(17, 17, 17, 0.15) 31.47%, #111111 99.41%),
     url(static/Custom-Landing-Page–Header-Image-3.webp) no-repeat;
@@ -76,57 +63,6 @@ const HeaderImageBgCss = css`
   background-position-x: left;
   background-position-y: top;
   margin-top: -64px;
-`;
-
-export const imageMargins = css`
-  @media (min-width: ${mobileWidth.sm}) {
-    margin-left: -12px;
-    margin-right: -12px;
-    padding-left: 12px;
-    padding-right: 12px;
-  }
-
-  @media (min-width: ${mobileWidth.md}) {
-    margin-left: -32px;
-    margin-right: -32px;
-    padding-left: 32px;
-    padding-right: 32px;
-  }
-
-  @media (min-width: ${mobileWidth.lg}) {
-    margin-left: -40px;
-    margin-right: -40px;
-    padding-left: 40px;
-    padding-right: 40px;
-  }
-
-  @media (min-width: ${mobileWidth.xl}) {
-    margin-left: -56px;
-    margin-right: -56px;
-    padding-left: 56px;
-    padding-right: 56px;
-  }
-
-  @media (min-width: ${desktopWidth.sm}) {
-    margin-left: -80px;
-    margin-right: -80px;
-    padding-left: 80px;
-    padding-right: 80px;
-  }
-
-  @media (min-width: ${desktopWidth.md}) {
-    margin-left: -123px;
-    margin-right: -123px;
-    padding-left: 123px;
-    padding-right: 123px;
-  }
-
-  @media (min-width: ${desktopWidth.lg}) {
-    margin-left: -277px;
-    margin-right: -277px;
-    padding-left: 277px;
-    padding-right: 277px;
-  }
 `;
 
 const HeaderImage = styled.div`
@@ -141,7 +77,7 @@ const HeaderImage = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-	${imageMargins}
+	${imageOffset}
 `;
 
 const PositionContainer = styled.div`

@@ -8,6 +8,10 @@ import {
   HorizontallyCenteredContainer,
   FlexContainer,
   BottomSectionWrapper,
+	SpacingContainer,
+	PercentSection,
+	imageOffset,
+	imageMargins
 } from '../components/organisms/Pages/components';
 import { Page } from '../components/organisms';
 
@@ -15,7 +19,6 @@ import Button, { CTAButton } from '../components/atoms/Button/_index';
 import Text from '../components/atoms/text/_index';
 import { appColors, desktopWidth, device, mobileWidth } from '../style';
 import { Footer } from '../components/organisms/Footer';
-import { imageMargins } from './tech';
 
 const howItWorks = [
   {
@@ -66,21 +69,6 @@ const percents = [
     note: '*(internal surveys, 2019)',
   },
 ];
-const SpacingContainerStyling = styled.div`
-  margin-top: ${({ marginTop }) => (marginTop ? `${marginTop}px` : null)};
-  margin-bottom: ${({ marginBottom }) => (marginBottom ? `${marginBottom}px` : null)};
-  background: ${({ background }) => background};
-  padding: ${({ padding }) => padding};
-  display: flex;
-  flex-direction: column;
-  row-gap: ${({ rowGap }) => (rowGap ? rowGap : '60px')};
-  align-items: ${({ alignment }) => alignment};
-  z-index: 1;
-`;
-
-const SpacingContainer = ({ children, ...props }) => (
-  <SpacingContainerStyling {...props}>{children}</SpacingContainerStyling>
-);
 
 const PositionContainer = styled.div`
   position: relative;
@@ -138,7 +126,7 @@ const HeaderImage = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  ${imageMargins}
+  ${imageOffset}
 `;
 
 const BottomImageBgCss = css`
@@ -194,68 +182,6 @@ const ResponsiveText = styled(Text)`
     line-height: ${({ size }) => `${size + 30}px` || '66px'};
   }
 `;
-const PercentSectionContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  text-align: center;
-  row-gap: 15px;
-  flex-grow: 0;
-  flex-basis: 99%;
-
-  @media (min-width: ${mobileWidth.lg}) {
-    flex-basis: 48%;
-  }
-  @media (min-width: ${desktopWidth.sm}) {
-    flex-basis: 32%;
-  }
-`;
-
-export const PercentSection = ({ percent, subtitle, description, note }) => (
-  <PercentSectionContainer>
-    <HorizontallyCenteredContainer>
-      <Text
-        text={percent}
-        color={appColors.gray300}
-        variant="light"
-        weight="reg"
-        family="helvetica"
-        size={72}
-      />
-      <Text
-        text={subtitle}
-        color={appColors.gray200}
-        variant="light"
-        weight="bold"
-        family="helvetica"
-        size={32}
-      />
-    </HorizontallyCenteredContainer>
-    <HorizontallyCenteredContainer>
-      <Text
-        text={description}
-        color={appColors.gray400}
-        variant="light"
-        weight="reg"
-        family="helvetica"
-        size={16}
-        mdSize={20}
-      />
-    </HorizontallyCenteredContainer>
-    <HorizontallyCenteredContainer>
-      <Text
-        text={note}
-        color={appColors.gray400}
-        variant="light"
-        weight="reg"
-        family="helvetica"
-        size={12}
-        mdSize={14}
-      />
-      {/* </div> */}
-    </HorizontallyCenteredContainer>
-  </PercentSectionContainer>
-);
 
 const FrontlineLanding = () => (
   <Page

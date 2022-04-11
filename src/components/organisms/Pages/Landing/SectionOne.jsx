@@ -2,13 +2,18 @@ import React from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
 
-import { NumberedSectionBlock, HorizontallyCenteredContainer, FlexContainer } from '../components';
+import {
+  NumberedSectionBlock,
+  HorizontallyCenteredContainer,
+  FlexContainer,
+  SpacingContainer,
+  imageOffset,
+} from '../components';
 import Text from '../../../atoms/text/_index';
 import { appColors, device } from '../../../../style';
 
 import { CTAButton } from '../../../atoms/Button/_index';
 import { padding } from 'polished';
-import { imageMargins } from '../../../../pages/tech';
 
 const howItWorks = [
   {
@@ -48,7 +53,7 @@ const TopSectionContainer = styled.div`
   justify-content: center;
   margin-top: -65px;
   height: 100vh;
-  ${imageMargins}
+  ${imageOffset}
 `;
 
 const HorizontalBar = styled.div`
@@ -142,23 +147,6 @@ const TopSection = () => (
       </Text>
     </TextContainer>
   </TopSectionContainer>
-);
-
-const SpacingContainerStyling = styled.div`
-  margin-top: ${({ marginTop }) => `${marginTop}px`};
-  margin-bottom: ${({ marginBottom }) => `${marginBottom}px`};
-  background: ${({ background }) => background};
-  padding: ${({ padding }) => padding};
-  display: flex;
-  flex-direction: column;
-  row-gap: ${({ rowGap }) => (rowGap ? rowGap : '60px')};
-  align-items: ${({ alignment }) => alignment};
-  z-index: 1;
-  ${imageMargins}
-`;
-
-const SpacingContainer = ({ children, ...props }) => (
-  <SpacingContainerStyling {...props}>{children}</SpacingContainerStyling>
 );
 
 const SectionOne = () => (
