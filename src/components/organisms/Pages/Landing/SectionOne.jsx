@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 import { NumberedSectionBlock, HorizontallyCenteredContainer, FlexContainer } from '../components';
 import Text from '../../../atoms/text/_index';
-import { appColors, desktopHeight, device, mobileHeight } from '../../../../style';
+import { appColors, device } from '../../../../style';
 
 import { CTAButton } from '../../../atoms/Button/_index';
 import { padding } from 'polished';

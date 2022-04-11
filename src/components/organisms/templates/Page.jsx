@@ -75,6 +75,7 @@ const Video = styled.video`
   left: 0;
   width: 100vw;
   height: 100vh;
+  object-fit: cover;
 `;
 
 const Overlay = styled.div`
