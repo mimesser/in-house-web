@@ -54,21 +54,21 @@ const PortraitImageBgCss = css`
   background-position-y: top;
   background-position-x: center;
   background-size: contain;
-  background-image: url(static/dude_glasses.webp);
+  background-image: url('https://in-house.azureedge.net/webstatic/landing_main/main-dude_glasses-375.jpg');
   @media ${device.mobile} {
-    background-image: url(https://in-house.azureedge.net/webstatic/landing_main/dude_glasses-375.jpg);
+    background-image: url('https://in-house.azureedge.net/webstatic/landing_main/main-dude_glasses-375.jpg');
   }
   @media ${device.tab} {
-    background-image: url(static/dude_glasses.webp);
+    background-image: url('https://in-house.azureedge.net/webstatic/landing_main/main-dude_glasses-768.jpg');
   }
   @media ${device.web} {
-    background-image: url(static/dude_glasses.webp);
+    background-image: url('https://in-house.azureedge.net/webstatic/landing_main/main-dude_glasses-1280.jpg');
   }
   @media ${device.laptop} {
-    background-image: url(static/dude_glasses.webp);
+    background-image: url('https://in-house.azureedge.net/webstatic/landing_main/main-dude_glasses-1366.jpg');
   }
   @media ${device.desktop} {
-    background-image: url(https://in-house.azureedge.net/webstatic/landing_main/dude_glasses-1920.jpg);
+    background-image: url('https://in-house.azureedge.net/webstatic/landing_main/main-dude_glasses-1920.jpg');
   }
 `;
 
@@ -151,7 +151,7 @@ const SectionTwo = () => (
         ))}
       </FlexContainer>
       <HorizontallyCenteredContainer style={{ margin: 0, alignItems: 'center' }}>
-        <Link href={`/join-us`}>
+        <Link href={`/request-join`}>
           <CTAButton text="join us" />
         </Link>
       </HorizontallyCenteredContainer>

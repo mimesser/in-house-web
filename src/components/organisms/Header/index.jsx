@@ -114,6 +114,7 @@ export const menuOptions = [
   { href: '/list-workplace', label: 'list workplace' },
   { href: '/about', label: 'about' },
   { href: '/faqs', label: 'faq' },
+  { href: '/join-us', label: 'join us' },
   { href: '/contact-us', label: 'contact us' },
 ];
 

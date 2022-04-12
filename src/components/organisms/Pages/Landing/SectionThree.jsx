@@ -17,19 +17,19 @@ const features = [
     header: 'control the top ‘mink’',
     description:
       'a motivated team can out-vote everyone else to select the question that everyone else must be able to answer to be verified as an insider. just create and vote-up questions that only your teammates will know',
-    image: "url('static/image1.webp')",
+    image: "main-section_1",
   },
   {
     header: 'address everything safely',
     description:
       'speak and vote in consensus on every issue so everyone in your team can see what matters and by how much. the result is a comprehensive digital nervous system connecting everyone in real time around the real issues that matter.',
-    image: "url('static/image2.webp')",
+    image: "main-section_2",
   },
   {
     header: 'promote accountability',
     description:
       'rate individual subjects with one tap to generate universal E.S.G. scores and show the world how your company treats people, the planet, and its profits.',
-    image: "url('static/image3.webp')",
+    image: "main-section_3",
   },
 ];
 
@@ -76,25 +76,35 @@ const FeatureText = styled.div`
 
 const ImageContainer = styled.div`
   height: 536px;
-  background-image: ${({ image }) => image || 'none'};
   background-repeat: no-repeat;
   background-size: cover;
   background-position-y: center;
   flex-grow: 0;
   flex-basis: 99%;
-  @media (min-width: ${mobileWidth.md}) {
+
+  background-image: ${({ image }) => 'url(https://in-house.azureedge.net/webstatic/landing_main/' + image + '-375.jpg)' || 'none'};
+  @media ${device.mobile} {
+    background-image: ${({ image }) => 'url(https://in-house.azureedge.net/webstatic/landing_main/' + image + '-375.jpg)' || 'none'};
     height: 637px;
   }
-  @media (min-width: ${mobileWidth.lg}) {
+  @media ${device.tab} {
+    background-image: ${({ image }) => 'url(https://in-house.azureedge.net/webstatic/landing_main/' + image + '-768.jpg)' || 'none'};
     flex-basis: 60%;
     height: 547px;
   }
-  @media (min-width: ${desktopWidth.sm}) {
+  @media ${device.web} {
+    background-image: ${({ image }) => 'url(https://in-house.azureedge.net/webstatic/landing_main/' + image + '-1280.jpg)' || 'none'};
     height: 640px;
   }
-  @media (min-width: ${desktopWidth.lg}) {
+  @media ${device.laptop} {
+    background-image: ${({ image }) => 'url(https://in-house.azureedge.net/webstatic/landing_main/' + image + '-1366.jpg)' || 'none'};
     height: 640px;
   }
+  @media ${device.desktop} {
+    background-image: ${({ image }) => 'url(https://in-house.azureedge.net/webstatic/landing_main/' + image + '-1920.jpg)' || 'none'};
+    height: 640px;
+  }
+
 `;
 
 const FeatureBlock = ({ header, description, image, order }) => (
@@ -164,7 +174,7 @@ const SectionThree = () => (
       ))}
     </BottomSectionWrapper>
     <div style={{ textAlign: 'center' }}>
-      <Link href={`/join-us`}>
+      <Link href={`/request-join`}>
         <CTAButton text="join us" />
       </Link>
     </div>
