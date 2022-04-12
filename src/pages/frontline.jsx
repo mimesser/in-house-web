@@ -8,10 +8,11 @@ import {
   HorizontallyCenteredContainer,
   FlexContainer,
   BottomSectionWrapper,
-	SpacingContainer,
-	PercentSection,
-	imageOffset,
-	imageMargins
+  SpacingContainer,
+  PercentSection,
+  imageOffset,
+  imageMargins,
+	ResponsiveText,
 } from '../components/organisms/Pages/components';
 import { Page } from '../components/organisms';
 
@@ -78,6 +79,12 @@ const PositionContainer = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 30px;
+	@media (min-width: ${desktopWidth.sm}) {
+    max-width: ${({ smMaxWidth }) => `${smMaxWidth}px`};
+  }
+	@media (min-width: ${desktopWidth.sm}) {
+    max-width: ${({ mdMaxWidth }) => `${mdMaxWidth}px`};
+  }
 `;
 
 const PlayerWrapper = styled.div`
@@ -125,8 +132,13 @@ const HeaderImage = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: center;
+	justify-content: flex-end;
+	padding-bottom: calc(60px + 5%);
   ${imageOffset}
+	@media (min-width: ${desktopWidth.sm}) {
+		justify-content: center;
+		padding-bottom: 0;
+	}
 `;
 
 const BottomImageBgCss = css`
@@ -172,17 +184,6 @@ const HorizontalBar = styled.div`
   height: 8px;
 `;
 
-const ResponsiveText = styled(Text)`
-  font-size: ${({ size }) => `${size}px` || '36px'};
-  line-height: ${({ size }) => `${size + 9}px` || '44px'};
-  text-align: ${({ textAlign }) => textAlign};
-
-  @media (min-width: ${desktopWidth.sm}) {
-    font-size: ${({ size }) => `${size + 18}px` || '54px'};
-    line-height: ${({ size }) => `${size + 30}px` || '66px'};
-  }
-`;
-
 const FrontlineLanding = () => (
   <Page
     noPadd
@@ -192,22 +193,19 @@ const FrontlineLanding = () => (
     style={{ backgroundColor: '#111' }}
   >
     <HeaderImage>
-      <PositionContainer maxWidth="740">
+      <PositionContainer smMaxWidth={680} mdMaxWidth={550}>
         <ResponsiveText
-          text="you have power"
-          color={appColors.gray200}
+          text="you have power in your numbers"
+          color={appColors.gray100}
           variant="light"
           size={36}
+          smSize={45}
+          mdSize={54}
+          lineHeight={44}
+          smLineHeight={55}
+          mdLineHeight={66}
           weight="bold"
           family="helvetica"
-        />
-        <ResponsiveText
-          text="in your numbers"
-          color={appColors.gray200}
-          variant="light"
-          weight="bold"
-          family="helvetica"
-          size={36}
         />
 
         <HorizontalBar />
@@ -218,7 +216,12 @@ const FrontlineLanding = () => (
           color={appColors.gray200}
           weight="bold"
           family="helvetica"
-          size={27}
+          size={24}
+          smSize={36}
+          mdSize={54}
+          lineHeight={29}
+          smLineHeight={44}
+          mdLineHeight={66}
         />
         <ResponsiveText
           text="(remain untraceable)"
@@ -226,10 +229,15 @@ const FrontlineLanding = () => (
           color={appColors.gray400}
           weight="bold"
           family="helvetica"
-          size={27}
+          size={24}
+          smSize={36}
+          mdSize={54}
+          lineHeight={29}
+          smLineHeight={44}
+          mdLineHeight={66}
         />
         <SpacingContainer>
-          <Text variant="light" color={appColors.gray300} size={16} lineHeight={22} weight="reg">
+          <Text variant="light" color={appColors.gray300} size={16} lineHeight={19} weight="reg">
             for the first time ever there is a tool that allows you and your team to speak truth to
             power in unified anonymous consensus without fear of retaliation
           </Text>
@@ -246,10 +254,13 @@ const FrontlineLanding = () => (
         <ResponsiveText
           text="make them listen"
           variant="light"
-          color={appColors.gray300}
+          color={appColors.gray200}
           weight="bold"
           family="helvetica"
           size={36}
+					lineHeight={44}
+					mdSize={54}
+					mdLineHeight={66}
         />
       </HorizontallyCenteredContainer>
       <FlexContainer>
@@ -281,10 +292,13 @@ const FrontlineLanding = () => (
       <ResponsiveText
         text="the world literally wants to know"
         variant="light"
-        color={appColors.gray300}
+        color={appColors.gray200}
         weight="bold"
         family="helvetica"
-        size={36}
+				size={36}
+				lineHeight={44}
+				mdSize={54}
+				mdLineHeight={66}
         textAlign="center"
       />
       <PlayerWrapper>
@@ -333,10 +347,13 @@ const FrontlineLanding = () => (
       <ResponsiveText
         text="we will be able to list ~50 workplaces during our beta trial"
         variant="light"
-        color={appColors.gray300}
+        color={appColors.gray200}
         weight="bold"
         family="helvetica"
-        size={36}
+				size={36}
+				lineHeight={44}
+				mdSize={54}
+				mdLineHeight={66}
       />
     </div>
     <BottomSectionWrapper>

@@ -8,9 +8,10 @@ import {
   FlexContainer,
   SpacingContainer,
   imageOffset,
+  ResponsiveText,
 } from '../components';
 import Text from '../../../atoms/text/_index';
-import { appColors, device } from '../../../../style';
+import { appColors, desktopWidth, device, mobileWidth } from '../../../../style';
 
 import { CTAButton } from '../../../atoms/Button/_index';
 import { padding } from 'polished';
@@ -63,42 +64,18 @@ const HorizontalBar = styled.div`
 `;
 
 const TextContainer = styled.div`
-  @media ${device.tab} {
-    max-width: 482px;
+  @media (min-width: ${mobileWidth.lg}) {
+    max-width: 437px;
   }
-  @media ${device.web} {
-    max-width: 615px;
-  }
-  @media ${device.laptop} {
-    max-width: 615px;
-  }
-  @media ${device.desktop} {
-    max-width: 810px;
+  @media (min-width: ${desktopWidth.sm}) {
+    max-width: 535px;
   }
   position: relative;
   display: flex;
   flex-direction: column;
   row-gap: 30px;
 `;
-const ResponsiveText = styled(Text)`
-  font-size: 36px;
-  line-height: initial;
-  @media ${device.mobile} {
-    font-size: 36px;
-  }
-  @media ${device.tab} {
-    font-size: 45px;
-  }
-  @media ${device.web} {
-    font-size: 54px;
-  }
-  @media ${device.laptop} {
-    font-size: 54px;
-  }
-  @media ${device.desktop} {
-    font-size: 54px;
-  }
-`;
+
 const TopSection = () => (
   <TopSectionContainer>
     <TextContainer>
@@ -108,6 +85,11 @@ const TopSection = () => (
         weight="bold"
         family="helvetica"
         size={36}
+        smSize={45}
+        mdSize={54}
+        lineHeight={44}
+        smLineHeight={55}
+        mdLineHeight={66}
       >
         voice everything
       </ResponsiveText>
@@ -121,6 +103,12 @@ const TopSection = () => (
         weight="bold"
         family="helvetica"
         size={32}
+        smSize={45}
+        mdSize={54}
+        lineHeight={39}
+        smLineHeight={55}
+        mdLineHeight={66}
+        
       >
         (remain untraceable)
       </ResponsiveText>
@@ -136,7 +124,8 @@ const TopSection = () => (
         family="helvetica"
         size={16}
         mdSize={20}
-        lineHeight={24}
+        lineHeight={19}
+        mdLineHeight={24}
       >
         now there is a tool allowing your entire team to speak truth to power in unified consensus
         —without fear of retaliation

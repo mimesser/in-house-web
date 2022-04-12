@@ -4,19 +4,17 @@ import Link from 'next/link';
 
 import {
   NumberedSectionBlock,
-  HorizontallyCenteredContainer,
   FlexContainer,
   BottomSectionWrapper,
   SpacingContainer,
   PercentSection,
   imageOffset,
   imageMargins,
+  ResponsiveText,
 } from '../components/organisms/Pages/components';
 import { Page } from '../components/organisms';
 
 import Button, { CTAButton } from '../components/atoms/Button/_index';
-import Text from '../components/atoms/text/_index';
-import Icon from '../components/atoms/Icon';
 import { appColors, desktopWidth, device, mobileWidth } from '../style';
 import { Footer } from '../components/organisms/Footer';
 
@@ -89,7 +87,7 @@ const PositionContainer = styled.div`
 `;
 
 const HeaderImageBgCss = css`
-  background: linear-gradient(180.68deg, rgba(17, 17, 17, 0.15) 31.47%, #111111 99.41%),
+  background: linear-gradient(180.68deg, rgba(17, 17, 17, 0.28) 47.53%, #111111 99.41%),
     url(static/Custom-Landing-Page–Header-Image-4.webp) no-repeat;
 
   @media ${device.iPhoneX} {
@@ -134,8 +132,13 @@ const HeaderImage = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: flex-end;
+	padding-bottom: calc(60px + 5%);
   ${imageOffset}
+  @media (min-width: ${desktopWidth.sm}) {
+		justify-content: center;
+		padding-bottom: 0;
+	}
 `;
 
 const BottomImageBgCss = css`
@@ -180,16 +183,6 @@ const HorizontalBar = styled.div`
   height: 8px;
 `;
 
-const ResponsiveText = styled(Text)`
-  font-size: ${({ size }) => `${size}px` || '36px'};
-  line-height: ${({ size }) => `${size + 9}px` || '44px'};
-  text-align: ${({ textAlign }) => textAlign};
-  @media (min-width: ${desktopWidth.sm}) {
-    font-size: ${({ size }) => `${size + 18}px` || '54px'};
-    line-height: ${({ size }) => `${size + 30}px` || '66px'};
-  }
-`;
-
 const HeroesLanding = () => (
   <Page
     noPadd
@@ -201,19 +194,22 @@ const HeroesLanding = () => (
   >
     <HeaderImage>
       <PositionContainer maxWidth="740">
-        <Text
+        <ResponsiveText
           text="are you org 2.0?"
           color={appColors.gray100}
           variant="light"
           size={36}
           smSize={45}
-          md-size={54}
+          mdSize={54}
+          lineHeight={44}
+          smLineHeight={55}
+          mdLineHeight={66}
           weight="bold"
           family="helvetica"
         />
         <HorizontalBar />
 
-        <Text
+        <ResponsiveText
           text="progressive = transparent"
           variant="light"
           color={appColors.gray100}
@@ -222,8 +218,11 @@ const HeroesLanding = () => (
           size={24}
           smSize={45}
           mdSize={54}
+          lineHeight={29}
+          smLineHeight={55}
+          mdLineHeight={66}
         />
-        <Text
+        <ResponsiveText
           text="let your team speak and get on the right side of history"
           variant="dark"
           color={appColors.gray300}
@@ -232,15 +231,24 @@ const HeroesLanding = () => (
           size={24}
           smSize={45}
           mdSize={54}
+          lineHeight={29}
+          smLineHeight={55}
+          mdLineHeight={66}
         />
         <SpacingContainer>
-          <Text variant="light" color={appColors.gray300} size={16} lineHeight={19} weight="reg">
+          <ResponsiveText
+            variant="light"
+            color={appColors.gray300}
+            size={16}
+            lineHeight={19}
+            weight="reg"
+          >
             allow your entire team to tell you what really matters to them without fear of exposure
             <br />
             <br />
             encourage them to share everything in complete anonymity and show the public that you
             practice what you preach
-          </Text>
+          </ResponsiveText>
         </SpacingContainer>
       </PositionContainer>
     </HeaderImage>
@@ -275,11 +283,14 @@ const HeroesLanding = () => (
       <ResponsiveText
         text="sustainable is the new black"
         variant="light"
-        color={appColors.gray300}
+        color={appColors.gray200}
         weight="bold"
         family="helvetica"
         size={36}
-        textAlign="center"
+        mdSize={54}
+        lineHeight={44}
+        mdLineHeight={66}
+        style={{textAlign: "center"}}
       />
       <FlexContainer>
         {percents.map((section, index) => {
@@ -301,7 +312,7 @@ const HeroesLanding = () => (
       <ResponsiveText
         text="we will be able to list ~50 workplaces during our beta trial"
         variant="light"
-        color={appColors.gray300}
+        color={appColors.gray200}
         weight="bold"
         family="helvetica"
         size={36}
