@@ -51,7 +51,7 @@ export const Patent = styled.span.attrs(() => ({
 `;
 
 export const Copyright = styled.span.attrs(() => ({
-  children: '© Minklist Digital LLC, 2020 - all rights reserved',
+  children: '© Minklist Digital LLC, 2022 - all rights reserved',
 }))`
   font-size: ${fontSize.xs};
   ${font.primary};

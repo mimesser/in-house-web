@@ -56,7 +56,35 @@ const howItWorks = [
 
 const HeaderImageBgCss = css`
   background: linear-gradient(180.68deg, rgba(17, 17, 17, 0.15) 31.47%, #111111 99.41%),
-    url(static/Custom-Landing-Page–Header-Image-3.webp) no-repeat;
+    url('https://in-house.azureedge.net/webstatic/landing_main/tech-hero-375.jpg') no-repeat;
+  @media ${device.iPhoneX} {
+    background: linear-gradient(180.68deg, rgba(17, 17, 17, 0.15) 31.47%, #111111 99.41%),
+      url('https://in-house.azureedge.net/webstatic/landing_main/tech-hero-375.jpg') no-repeat;  
+  }
+  @media ${device.iPhone8Plus} {
+    background: linear-gradient(180.68deg, rgba(17, 17, 17, 0.15) 31.47%, #111111 99.41%),
+      url('https://in-house.azureedge.net/webstatic/landing_main/tech-hero-414.jpg') no-repeat;
+  }
+  @media ${device.iPad} {
+    background: linear-gradient(180.68deg, rgba(17, 17, 17, 0.15) 31.47%, #111111 99.41%),
+      url(https://in-house.azureedge.net/webstatic/landing_main/tech-hero-768.jpg) no-repeat;
+  }
+  @media ${device.web} {
+    background: linear-gradient(180.68deg, rgba(17, 17, 17, 0.15) 31.47%, #111111 99.41%),
+      url(https://in-house.azureedge.net/webstatic/landing_main/tech-hero-1280.jpg) no-repeat;
+  }
+  @media ${device.laptop} {
+    background: linear-gradient(180.68deg, rgba(17, 17, 17, 0.15) 31.47%, #111111 99.41%),
+      url(https://in-house.azureedge.net/webstatic/landing_main/tech-hero-1366.jpg) no-repeat;
+  }
+  @media ${device.desktop} {
+    background: linear-gradient(180.68deg, rgba(17, 17, 17, 0.15) 31.47%, #111111 99.41%),
+      url(https://in-house.azureedge.net/webstatic/landing_main/tech-hero-1920.jpg) no-repeat;
+  }
+  @media ${device.macbook} {
+    background: linear-gradient(180.68deg, rgba(17, 17, 17, 0.15) 31.47%, #111111 99.41%),
+      url(https://in-house.azureedge.net/webstatic/landing_main/tech-hero-1920.jpg) no-repeat;
+  }
   background-size: cover;
   background-position-x: left;
   background-position-y: top;
@@ -106,28 +134,28 @@ const BottomImageBgCss = css`
   background-size: cover;
   background-position-y: center;
 
-  background-image: url(static/Custom-Landing-Page–Header-Image-2.webp);
+  background-image: url('https://in-house.azureedge.net/webstatic/landing_main/tech-product-375.jpg');
 
   @media ${device.iPhoneX} {
-    background-image: url(static/Custom-Landing-Page–Header-Image-2.webp);
+    background-image: url('https://in-house.azureedge.net/webstatic/landing_main/tech-product-375.jpg');
   }
   @media ${device.iPhone8Plus} {
-    background-image: url(static/Custom-Landing-Page–Header-Image-2.webp);
+    background-image: url('https://in-house.azureedge.net/webstatic/landing_main/tech-product-414.jpg');
   }
   @media ${device.iPad} {
-    background-image: url(static/Custom-Landing-Page–Header-Image-2.webp);
+    background-image: url('https://in-house.azureedge.net/webstatic/landing_main/tech-product-768.jpg');
   }
   @media ${device.web} {
-    background-image: url(static/Custom-Landing-Page–Header-Image-2.webp);
+    background-image: url('https://in-house.azureedge.net/webstatic/landing_main/tech-product-1280.jpg');
   }
   @media ${device.laptop} {
-    background-image: url(static/Custom-Landing-Page–Header-Image-2.webp);
+    background-image: url('https://in-house.azureedge.net/webstatic/landing_main/tech-product-1366.jpg');
   }
   @media ${device.desktop} {
-    background-image: url(static/Custom-Landing-Page–Header-Image-2.webp);
+    background-image: url('https://in-house.azureedge.net/webstatic/landing_main/tech-product-1920.jpg');
   }
   @media ${device.macbook} {
-    background-image: url(static/Custom-Landing-Page–Header-Image-2.webp);
+    background-image: url('https://in-house.azureedge.net/webstatic/landing_main/tech-product-1920.jpg');
   }
 `;
 
@@ -268,7 +296,7 @@ const TechUserLandingPage = () => (
         })}
       </FlexContainer>
       <div style={{ textAlign: 'center' }}>
-        <Link href={`/join-us`}>
+        <Link href={`/request-join`}>
           <CTAButton text="join us" />
         </Link>
       </div>
