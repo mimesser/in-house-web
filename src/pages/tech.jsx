@@ -7,21 +7,19 @@ import {
   HorizontallyCenteredContainer,
   FlexContainer,
   BottomSectionWrapper,
-	SpacingContainer,
-	imageOffset,
-	imageMargins,
+  SpacingContainer,
+  imageOffset,
+  imageMargins,
+  ResponsiveText,
 } from '../components/organisms/Pages/components';
 import { Page } from '../components/organisms';
 
 import Button, { CTAButton } from '../components/atoms/Button/_index';
-import Text from '../components/atoms/text/_index';
 import {
   appColors,
   device,
-  mobileHeight,
   mobileWidth,
   desktopWidth,
-  desktopHeight,
 } from '../style';
 import { Footer } from '../components/organisms/Footer';
 
@@ -76,8 +74,14 @@ const HeaderImage = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: center;
-	${imageOffset}
+  justify-content: flex-end;
+	padding-bottom: calc(60px + 5%);
+  ${imageOffset}
+  @media (min-width: ${mobileWidth.lg}) {
+		justify-content: center;
+		padding-bottom: 0;
+	}
+
 `;
 
 const PositionContainer = styled.div`
@@ -88,6 +92,13 @@ const PositionContainer = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 30px;
+
+  @media (min-width: ${mobileWidth.lg}) {
+    max-width: ${({ smMaxWidth }) => `${smMaxWidth}px`};
+  }
+  @media (min-width: ${desktopWidth.sm}) {
+    max-width: ${({ mdMaxWidth }) => `${mdMaxWidth}px`};
+  }
 `;
 
 const BottomImageBgCss = css`
@@ -124,7 +135,7 @@ const BottomImage = styled.div`
   ${BottomImageBgCss}
   height: 450px;
   position: relative;
-	${imageMargins}
+  ${imageMargins}
 `;
 
 const HorizontalBar = styled.div`
@@ -133,23 +144,12 @@ const HorizontalBar = styled.div`
   height: 8px;
 `;
 
-const ResponsiveText = styled(Text)`
-  font-size: ${({ size }) => `${size}px` || '36px'};
-  line-height: ${({ size }) => `${size + 9}px` || '44px'};
-
-  @media (min-width: ${mobileWidth.sm}) {
-    font-size: ${({ size }) => `${size}px` || '36px'};
-    line-height: ${({ size }) => `${size + 7}px` || '44px'};
-  }
-  @media (min-width: ${mobileWidth.lg}) {
-    font-size: ${({ size }) => `${size + 9}px` || '45px'};
-    line-height: ${({ size }) => `${size + 18}px` || '54px'};
-  }
-  @media (min-width: ${desktopWidth.sm}) {
-    font-size: ${({ size }) => `${size + 18}px` || '54px'};
-    line-height: ${({ size }) => `${size + 30}px` || '66px'};
-  }
-`;
+const HowItWorksContainer = styled(SpacingContainer)`
+	margin-top: -1px;
+	padding: 61px 0 60px;
+	background-color: #111;
+	${imageOffset}
+`
 
 const TechUserLandingPage = () => (
   <Page
@@ -160,38 +160,63 @@ const TechUserLandingPage = () => (
     style={{ backgroundColor: '#111', height: 'auto' }}
   >
     <HeaderImage>
-      <PositionContainer maxWidth="740">
+      <PositionContainer smMaxWidth={421} mdMaxWidth={545}>
         <ResponsiveText
           text="time to speak?"
           color={appColors.gray200}
           variant="light"
           size={36}
+          smSize={45}
+          mdSize={54}
+          lineHeight={44}
+          smLineHeight={55}
+          mdLineHeight={66}
           weight="bold"
           family="helvetica"
         />
         <HorizontalBar />
-        <ResponsiveText
-          text="voice everything"
-          variant="light"
-          color={appColors.gray200}
-          weight="bold"
-          family="helvetica"
-          size={27}
-        />
-        <ResponsiveText
-          text="(remain untraceable)"
-          variant="dark"
-          color={appColors.gray400}
-          weight="bold"
-          family="helvetica"
-          size={27}
-        />
+        <SpacingContainer rowGap="15px">
+          <ResponsiveText
+            text="voice everything"
+            variant="light"
+            color={appColors.gray200}
+            weight="bold"
+            family="helvetica"
+            size={24}
+            smSize={36}
+            mdSize={54}
+            lineHeight={29}
+            smLineHeight={44}
+            mdLineHeight={66}
+          />
+          <ResponsiveText
+            text="(remain untraceable)"
+            variant="dark"
+            color={appColors.gray400}
+            weight="bold"
+            family="helvetica"
+            size={24}
+            smSize={36}
+            mdSize={54}
+            lineHeight={29}
+            smLineHeight={44}
+            mdLineHeight={66}
+          />
+        </SpacingContainer>
 
         <SpacingContainer>
-          <Text variant="light" color={appColors.gray300} size={16} lineHeight={22} weight="reg">
+          <ResponsiveText
+            variant="light"
+            color={appColors.gray300}
+            size={16}
+            lineHeight={19}
+            weight="reg"
+            xlSize={20}
+            xlLineHeight={24}
+          >
             for the first time ever there is a tool that allows you and your team to speak truth to
             power in unified anonymous consensus without fear of retaliation
-          </Text>
+          </ResponsiveText>
         </SpacingContainer>
         <Link href={`/request-join`}>
           <CTAButton text="bring democracy to my workplace" />
@@ -200,15 +225,18 @@ const TechUserLandingPage = () => (
     </HeaderImage>
     {/* section 2 */}
 
-    <SpacingContainer padding="60px 0">
+    <HowItWorksContainer>
       <HorizontallyCenteredContainer style={{ maxWidth: '740px' }}>
         <ResponsiveText
           text="finally address everything"
           color={appColors.gray300}
           variant="light"
           size={36}
+          lineHeight={44}
           weight="bold"
           family="helvetica"
+          mdSize={54}
+          mdLineHeight={66}
           style={{ textAlign: 'center' }}
         />
       </HorizontallyCenteredContainer>
@@ -244,7 +272,7 @@ const TechUserLandingPage = () => (
           <CTAButton text="join us" />
         </Link>
       </div>
-    </SpacingContainer>
+    </HowItWorksContainer>
 
     <div style={{ textAlign: 'center', padding: '60px 0' }}>
       <ResponsiveText
@@ -253,7 +281,12 @@ const TechUserLandingPage = () => (
         color={appColors.gray300}
         weight="bold"
         family="helvetica"
-        size={36}
+        size={32}
+        lineHeight={39}
+        smSize={36}
+        smLineHeight={44}
+        mdSize={54}
+        mdLineHeight={66}
       />
     </div>
     <BottomSectionWrapper>

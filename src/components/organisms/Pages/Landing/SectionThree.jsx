@@ -40,10 +40,11 @@ const FeatureBlockContainer = styled.div`
   flex-wrap: wrap;
   row-gap: 60px;
   justify-content: flex-end;
+  align-content: center;
 
   @media (min-width: ${mobileWidth.lg}) {
     column-gap: 40px;
-    flex-direction: ${({order}) => order ? 'row-reverse' : 'row'};
+    flex-direction: ${({ order }) => (order ? 'row-reverse' : 'row')};
   }
   @media (min-width: ${desktopWidth.sm}) {
     column-gap: 80px;
@@ -54,14 +55,22 @@ const FeatureText = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 15px;
-  jusify-content: center;
+  justify-content: center;
   flex-basis: 99%;
   flex-grow: 0;
   padding: 0 40px;
 
   @media (min-width: ${mobileWidth.lg}) {
     padding: 0;
-    flex-basis: 33%;
+    flex-basis: calc(40% - 80px);
+  }
+  @media (min-width: ${desktopWidth.sm}) {
+    flex-basis: calc(40% - 160px);
+    height: 640px;
+  }
+  @media (min-width: ${desktopWidth.lg}) {
+    flex-basis: calc(40% - 357px);
+    height: 640px;
   }
 `;
 
@@ -77,15 +86,13 @@ const ImageContainer = styled.div`
     height: 637px;
   }
   @media (min-width: ${mobileWidth.lg}) {
-    flex-basis: calc(67% - 80px);
+    flex-basis: 60%;
     height: 547px;
   }
   @media (min-width: ${desktopWidth.sm}) {
-    flex-basis: calc(67% - 160px);
     height: 640px;
   }
   @media (min-width: ${desktopWidth.lg}) {
-    flex-basis: calc(67% - 357px);
     height: 640px;
   }
 `;
@@ -101,7 +108,6 @@ const FeatureBlock = ({ header, description, image, order }) => (
         smSize={32}
         mdSize={45}
         variant="light"
-        style={{ textAlign: 'center' }}
       >
         {header}
       </Text>

@@ -29,30 +29,20 @@ export const ResponsiveTextHeading = styled(Text)`
     line-height: 44px;
   }
 `;
-
 export const ResponsiveText = styled(Text)`
-  font-size: 16px;
-  line-height: 19px;
+  line-height: ${({ lineHeight }) => `${lineHeight}px`};
 
-  @media ${device.mobile} {
-    font-size: 16px;
-    line-height: 19px;
+  @media (min-width: ${mobileWidth.lg}) {
+    line-height: ${({ smLineHeight }) => `${smLineHeight}px`};
   }
-  @media ${device.tab} {
-    font-size: 16px;
-    line-height: 19px;
+  @media (min-width: ${desktopWidth.sm}) {
+    line-height: ${({ mdLineHeight }) => `${mdLineHeight}px`};
   }
-  @media ${device.web} {
-    font-size: 20px;
-    line-height: 24px;
+  @media (min-width: ${desktopWidth.md}) {
+    line-height: ${({ lgLineHeight }) => `${lgLineHeight}px`};
   }
-  @media ${device.laptop} {
-    font-size: 20px;
-    line-height: 24px;
-  }
-  @media ${device.desktop} {
-    font-size: 20px;
-    line-height: 24px;
+  @media (min-width: ${desktopWidth.lg}) {
+    line-height: ${({ xlLineHeight }) => `${xlLineHeight}px`};
   }
 `;
 
@@ -69,13 +59,18 @@ export const NumberedSectionBlock = ({ index, header, source, description, note,
           flexDirection: 'column',
         }}
       >
-        <ResponsiveTextHeading
+        <ResponsiveText
           text={header}
           color={appColors.gray300}
           variant="light"
           weight="bold"
           family="helvetica"
           size={32}
+          lineHeight={39}
+          smSize={24}
+          smLineHeight={29}
+          mdSize={36}
+          mdLineHeight={44}
         />
 
         {share && (
@@ -88,13 +83,16 @@ export const NumberedSectionBlock = ({ index, header, source, description, note,
 
     <HorizontallyCenteredContainer>
       {source && (
-        <Text
+        <ResponsiveText
           text={source}
           color={appColors.gray400}
           variant="light"
           weight="reg"
           family="helvetica"
           size={16}
+          lineHeight={19}
+          mdSize={20}
+          mdLineHeight={24}
           style={{ textTransform: 'uppercase' }}
         />
       )}
@@ -106,6 +104,9 @@ export const NumberedSectionBlock = ({ index, header, source, description, note,
         weight="reg"
         family="helvetica"
         size={16}
+        lineHeight={19}
+        mdSize={20}
+        mdLineHeight={24}
       />
 
       {note && (
@@ -117,6 +118,9 @@ export const NumberedSectionBlock = ({ index, header, source, description, note,
             weight="reg"
             family="helvetica"
             size={16}
+            lineHeight={19}
+            mdSize={20}
+            mdLineHeight={24}
           />
         </div>
       )}
@@ -232,21 +236,23 @@ export const PercentSection = ({
 }) => (
   <PercentSectionContainer {...{ smCols, mdCols, lgCols, smColumnGap, mdColumnGap, lgColumnGap }}>
     <HorizontallyCenteredContainer>
-      <Text
+      <ResponsiveText
         text={percent}
         color={appColors.gray300}
         variant="light"
         weight="reg"
         family="helvetica"
         size={72}
+        lineHeight={86}
       />
-      <Text
+      <ResponsiveText
         text={subtitle}
-        color={appColors.gray200}
+        color={appColors.gray300}
         variant="light"
         weight="bold"
         family="helvetica"
         size={32}
+        lineHeight={39}
       />
     </HorizontallyCenteredContainer>
     <HorizontallyCenteredContainer>
