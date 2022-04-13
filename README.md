@@ -23,7 +23,7 @@ SENTRY_TOKEN=PLEASE_ASK_FOR_THE_TOKEN
 
 ## Running locally
 Start local web server in dev mode (with hot reloading) pointing to the staging back-end in dev environment   
-`npm run start:dev`   
+`npm run next:dev`   
 
 ## Work In Progress
 
