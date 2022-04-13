@@ -2,9 +2,16 @@ import React from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
 
-import { NumberedSectionBlock, HorizontallyCenteredContainer } from '../components';
+import {
+  NumberedSectionBlock,
+  HorizontallyCenteredContainer,
+  FlexContainer,
+  SpacingContainer,
+  imageOffset,
+  ResponsiveText,
+} from '../components';
 import Text from '../../../atoms/text/_index';
-import { appColors, device } from '../../../../style';
+import { appColors, desktopWidth, device, mobileWidth } from '../../../../style';
 
 import { CTAButton } from '../../../atoms/Button/_index';
 import { padding } from 'polished';
@@ -38,37 +45,16 @@ const howItWorks = [
   },
 ];
 
-const TopSectionContainer = styled.div`  
-	background: transparent;
-  @media ${device.mobile} {
-		padding-left: 20px;
-    padding-top: 215px;
-    padding-bottom: 212px;
-	}
-	@media ${device.tab} {
-		padding-left: 40px;
-    padding-top: 420px;
-    padding-bottom: 420px;
-    max-width: 482px;
-	}
-	@media ${device.web} {
-		padding-left: 80px;
-    padding-top: 290px;
-    max-width: 615px;
-    padding-bottom: 290px;
-	}
-	@media ${device.laptop} {
-		padding-left: 80px;
-    padding-top: 290px;
-    max-width: 615px;
-    padding-bottom: 290px;
-	}
-	@media ${device.desktop} {
-		padding-left: 277px;
-    padding-top: 290px;
-    max-width: 810px;
-    padding-bottom: 290px;
-	}
+const TopSectionContainer = styled.div`
+  background: linear-gradient(180.68deg, rgba(17, 17, 17, 0.15) 31.47%, #111111 99.41%);
+  posiition: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  margin-top: -65px;
+  height: 100vh;
+  ${imageOffset}
 `;
 
 const HorizontalBar = styled.div`
@@ -78,61 +64,59 @@ const HorizontalBar = styled.div`
 `;
 
 const TextContainer = styled.div`
+  @media (min-width: ${mobileWidth.lg}) {
+    max-width: 437px;
+  }
+  @media (min-width: ${desktopWidth.sm}) {
+    max-width: 535px;
+  }
+  position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  margin-top: 26px;
-  row-gap: 2ch;
+  row-gap: 30px;
 `;
-const ResponsiveText = styled(Text)`
-	font-size: 36px;
-  line-height: initial;
-	@media ${device.mobile} {
-		font-size: 36px;
-	}
-	@media ${device.tab} {
-		font-size: 45px;
-	}
-	@media ${device.web} {
-		font-size: 54px;
-	}
-	@media ${device.laptop} {
-		font-size: 54px;
-	}
-	@media ${device.desktop} {
-		font-size: 54px;
-	}
-`
+
 const TopSection = () => (
   <TopSectionContainer>
-      <ResponsiveText
-				variant="light"
-				color={appColors.gray100}
-				weight="bold"
-				family="helvetica"
-				size={36}
-			>
-				voice everything
-			</ResponsiveText>
-    <SpacingContainer marginTop={30} marginBottom={30}>
-      <HorizontalBar />
-    </SpacingContainer>
-
-    <ResponsiveText
-      variant="light"
-      color={appColors.gray100}
-      weight="bold"
-      family="helvetica"
-      size={32}
-    >
-      (remain untraceable)
-    </ResponsiveText>
-    <SpacingContainer marginTop={34}>
-      <Link href={`/request-join`}>
-        <CTAButton text="make my workplace transparent" />
-      </Link>
-    </SpacingContainer>
     <TextContainer>
+      <ResponsiveText
+        variant="light"
+        color={appColors.gray100}
+        weight="bold"
+        family="helvetica"
+        size={36}
+        smSize={45}
+        mdSize={54}
+        lineHeight={44}
+        smLineHeight={55}
+        mdLineHeight={66}
+      >
+        voice everything
+      </ResponsiveText>
+      <SpacingContainer>
+        <HorizontalBar />
+      </SpacingContainer>
+
+      <ResponsiveText
+        variant="light"
+        color={appColors.gray200}
+        weight="bold"
+        family="helvetica"
+        size={32}
+        smSize={45}
+        mdSize={54}
+        lineHeight={39}
+        smLineHeight={55}
+        mdLineHeight={66}
+        
+      >
+        (remain untraceable)
+      </ResponsiveText>
+      <SpacingContainer>
+        <Link href={`/request-join`}>
+          <CTAButton text="make my workplace transparent" />
+        </Link>
+      </SpacingContainer>
       <Text
         variant="light"
         color={appColors.gray300}
@@ -140,84 +124,60 @@ const TopSection = () => (
         family="helvetica"
         size={16}
         mdSize={20}
+        lineHeight={19}
+        mdLineHeight={24}
       >
         now there is a tool allowing your entire team to speak truth to power in unified consensus
         —without fear of retaliation
-      </Text>
-      <Text
-        variant="light"
-        color={appColors.gray300}
-        weight="reg"
-        family="helvetica"
-        size={16}
-        mdSize={20}
-      >
+        <br />
+        <br />
         grade your company’s ESG/sustainability metrics and show the public how it treats people,
         the planet, and its profits
       </Text>
     </TextContainer>
   </TopSectionContainer>
-	);
-
-const SpacingContainerStyling = styled.div`
-  margin-top: ${({ marginTop }) => `${marginTop}px`};
-  margin-bottom: ${({ marginBottom }) => `${marginBottom}px`};
-  background: ${({ background }) => background};
-  padding: ${({ padding }) => padding};
-`;
-
-const SpacingContainer = ({ children, ...props }) => (
-  <SpacingContainerStyling {...props}>{children}</SpacingContainerStyling>
 );
-
-const FlexContainer = styled.div`
-	display: flex;
-	justify-content: space-evenly;
-	align-items: start;
-	flex-wrap: wrap;
-`;
 
 const SectionOne = () => (
   <>
-    <TopSection style = {{background: 'linear-gradient(356deg, #111, transparent)'}}/>
-    <div style={{ background: '#111' }}>
-      <SpacingContainer padding="60px 12px 60px 12px">
-        <HorizontallyCenteredContainer>
-          <Text
-            variant="light"
-            color="gray300"
-            weight="bold"
-            family="helvetica"
-            size={36}
-            style={{ textAlign: 'center' }}
-          >
-            how it works
-          </Text>
-        </HorizontallyCenteredContainer>
-        <FlexContainer>
-          {howItWorks.map((section, index) => {
-            const { header, description, share } = section;
+    <TopSection />
+    <SpacingContainer padding="60px 0 120px" marginTop="-1">
+      <HorizontallyCenteredContainer>
+        <Text
+          variant="light"
+          color="gray100"
+          weight="bold"
+          family="helvetica"
+          size={36}
+          mdSize={54}
+          style={{ textAlign: 'center' }}
+        >
+          how it works
+        </Text>
+      </HorizontallyCenteredContainer>
+      <FlexContainer>
+        {howItWorks.map((section, index) => {
+          const { header, description, share } = section;
 
-            return (
-              <NumberedSectionBlock
-                header={header}
-                description={description}
-                index={index}
-                key={index}
-                headerMaxWidth="306px"
-                descriptionMaxWidth="306px"
-								share={share}
-              />
-            );
-          })}
-        </FlexContainer>  
-        <div style={{ textAlign: 'center'}}>
-          <Link href={`/join-us`}>
-            <CTAButton text="join us" />
-          </Link>
-        </div>
-      </SpacingContainer>    
-    </div>
+          return (
+            <NumberedSectionBlock
+              header={header}
+              description={description}
+              index={index}
+              key={index}
+              headerMaxWidth="306px"
+              descriptionMaxWidth="306px"
+              share={share}
+            />
+          );
+        })}
+      </FlexContainer>
+      <div style={{ textAlign: 'center' }}>
+        <Link href={`/request-join`}>
+          <CTAButton text="join us" />
+        </Link>
+      </div>
+    </SpacingContainer>
   </>
 );
 

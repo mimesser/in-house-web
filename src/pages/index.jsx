@@ -116,15 +116,15 @@ const Landing = ({ venues, initVenuesPage }) => {
 
   return (
     <>
-			<ScrollPage whiteHead videoBack noPadd>
-				<Main>
-					<SectionOne />
+      <ScrollPage whiteHead videoBack noPadd style={{ backgroundColor: '#111' }}>
+        <Main>
+          <SectionOne />
           <SectionTwo />
-					<SectionThree />
+          <SectionThree />
 
-					<Footer showScrollIndicator variant="darkest" />
-				</Main>
-			</ScrollPage>
+          <Footer showScrollIndicator variant="darkest" />
+        </Main>
+      </ScrollPage>
     </>
   );
 };
