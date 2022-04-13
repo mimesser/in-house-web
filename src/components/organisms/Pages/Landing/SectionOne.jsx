@@ -173,7 +173,7 @@ const SectionOne = () => (
         })}
       </FlexContainer>
       <div style={{ textAlign: 'center' }}>
-        <Link href={`/join-us`}>
+        <Link href={`/request-join`}>
           <CTAButton text="join us" />
         </Link>
       </div>
