@@ -42,29 +42,29 @@ const FeatureText = styled.div`
   padding: 40px;
   flex: 1;
   min-width: 240px;
-  @media ${device.tab} {    
+  @media ${device.tab} {
     order: ${({ order }) => `${order}`};
   }
 `;
 const FeatureBlock = ({ header, description, image, order }) => (
-  <div 
+  <div
     style={{
       display: 'flex',
       alignItems: 'center',
-      flexWrap:'wrap',
+      flexWrap: 'wrap',
       padding: '60px 0',
-    }}>
-    
-    <FeatureText
-      order={order}
-    >
+    }}
+  >
+    <FeatureText order={order}>
       <Text
-				color="gray300"
-				family="helvetica"
-				weight="bold"
-				size={36}
-				variant="light"
-			>
+        color={appColors.gray300}
+        family="helvetica"
+        weight="bold"
+        size={24}
+        smSize={36}
+        mdSize={45}
+        variant="light"
+      >
         {header}
       </Text>
       <div
@@ -73,12 +73,13 @@ const FeatureBlock = ({ header, description, image, order }) => (
         }}
       >
         <Text
-					color="gray400"
-					family="helvetica"
-					weight="reg"
-					size={20}
-					variant="dark"
-				>
+          color={appColors.gray400}
+          family="helvetica"
+          weight="reg"
+          size={16}
+          mdSize={20}
+          variant="dark"
+        >
           {description}
         </Text>
       </div>
@@ -95,42 +96,41 @@ const FeatureBlock = ({ header, description, image, order }) => (
         flex: 2,
         minWidth: '375px',
       }}
-    >
-    </div>
+    ></div>
   </div>
 );
 
 const ResponsiveText = styled(Text)`
-	font-size: 36px;
+  font-size: 36px;
 
-	@media ${device.mobile} {
-		font-size: 36px;
+  @media ${device.mobile} {
+    font-size: 36px;
     max-width: 295px;
-	}
-	@media ${device.tab} {
-		font-size: 45px;
+  }
+  @media ${device.tab} {
+    font-size: 45px;
     max-width: 640px;
-	}
-	@media ${device.web} {
-		font-size: 54px;
-	}
-	@media ${device.laptop} {
-		font-size: 54px;
-	}
-	@media ${device.desktop} {
-		font-size: 54px;
-	}
-`
+  }
+  @media ${device.web} {
+    font-size: 54px;
+  }
+  @media ${device.laptop} {
+    font-size: 54px;
+  }
+  @media ${device.desktop} {
+    font-size: 54px;
+  }
+`;
 const SectionThree = () => (
   <>
     <div style={{ background: '#111' }}>
       <HorizontallyCenteredContainer
-				align="center"
-				style={{ paddingTop: '60px', maxWidth:'1200px', alignItems: 'center'}}
-			>
+        align="center"
+        style={{ paddingTop: '60px', maxWidth: '1200px', alignItems: 'center' }}
+      >
         <ResponsiveText
           text="your team runs the show"
-          color="gray100"
+          color={appColors.gray100}
           variant="light"
           weight="bold"
           family="helvetica"
@@ -147,9 +147,9 @@ const SectionThree = () => (
             order={index % 2}
             image={image}
           />
-        ))}      
+        ))}
       </BottomSectionWrapper>
-      <div style={{ textAlign: 'center', paddingBottom: '60px'}}> 
+      <div style={{ textAlign: 'center', paddingBottom: '60px' }}>
         <Link href={`/join-us`}>
           <CTAButton text="join us" />
         </Link>
