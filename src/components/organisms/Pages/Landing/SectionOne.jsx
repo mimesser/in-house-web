@@ -58,7 +58,7 @@ const TopSectionContainer = styled.div`
 `;
 
 const HorizontalBar = styled.div`
-  background: #cbccd0;
+  background: ${appColors.gray100};
   width: 128px;
   height: 8px;
 `;
@@ -119,7 +119,7 @@ const TopSection = () => (
       </SpacingContainer>
       <Text
         variant="light"
-        color="gray300"
+        color={appColors.gray300}
         weight="reg"
         family="helvetica"
         size={16}
