@@ -14,21 +14,55 @@ import {
   palette,
   onDesktopOverflowAuto,
   device,
+  mobileWidth,
+  desktopWidth
 } from '../../../style';
 
 const PageLayout = styled.div`
-  height: 100%;
+  height: auto;
   position: relative;
   background-color: ${appBackground};
   display: flex;
   flex-direction: column;
-`;
 
-const paddings = deskPad - 32;
+  @media (min-width: ${mobileWidth.sm}) {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  @media (min-width: ${mobileWidth.md}) {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  @media (min-width: ${mobileWidth.lg}) {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  @media (min-width: ${mobileWidth.xl}) {
+    padding-left: 56px;
+    padding-right: 56px;
+  }
+
+  @media (min-width: ${desktopWidth.sm}) {
+    padding-left: 80px;
+    padding-right: 80px;
+  }
+
+  @media (min-width: ${desktopWidth.md}) {
+    padding-left: 123px;
+    padding-right: 123px;
+  }
+
+  @media (min-width: ${desktopWidth.lg}) {
+    padding-left: 277px;
+    padding-right: 277px;
+  }
+`;
 
 export const Container = styled.div`
   flex: 1;
-  ${({ noPadd }) => !noPadd && onDesktop(`margin-left: ${paddings}px`)};
   display: flex;
   flex-direction: column;
   ${({ noOverflow }) => !noOverflow && onDesktop(`overflow: auto`)};
@@ -36,18 +70,12 @@ export const Container = styled.div`
 
 // noinspection CssInvalidPseudoSelector
 const Video = styled.video`
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  min-width: 100%;
-  min-height: 100%;
-  /* For some reason we have a 1px white line on mobile. */
-  width: calc(100% + 1px);
-  height: auto;
-  transform: translate(-50%, -50%);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   object-fit: cover;
-
-  ${onDesktop(`width: auto`)};
 `;
 
 const Overlay = styled.div`

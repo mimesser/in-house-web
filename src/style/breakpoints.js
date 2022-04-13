@@ -10,10 +10,10 @@ export const breakpoints = {
 
 export const mobileHeight = {
   xs: '667px',
-  sm: '736px',
-  md: '812px',
+  sm: '812px',
+  md: '896px',
   lg: '1024px',
-  xl: '1366px',
+  xl: '1280px',
 };
 
 export const mobileWidth = {
@@ -21,12 +21,19 @@ export const mobileWidth = {
   sm: '375px',
   md: '414px',
   lg: '768px',
-  xl: '1024px',
+  xl: '800px',
 };
-const desktopWidth = {
-  sm: '1024px',
-  md: '1440px',
+
+export const desktopWidth = {
+  sm: '1280px',
+  md: '1366px',
   lg: '1920px',
+};
+
+export const desktopHeight = {
+  sm: '768px',
+  md: '1024px',
+  lg: '1080px',
 };
 
 export const device = {
@@ -55,7 +62,9 @@ export const device = {
   and (orientation : portrait)
   `,
   mobile: `(min-width: ${mobileWidth.sm})`,
+  mobile2: `(min-width: ${mobileWidth.md})`,
   tab: `(min-width: ${mobileWidth.lg})`,
+  tab2: `(min-width: ${mobileWidth.xl})`,
   web: `(min-width: ${desktopWidth.sm})`,
   laptop: `(min-width: ${desktopWidth.md})`,
   desktop: `(min-width: ${desktopWidth.lg})`,
