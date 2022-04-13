@@ -72,17 +72,17 @@ const TopSectionContainer = styled.div`
 `;
 
 const HorizontalBar = styled.div`
-  background: #cbccd0;
+  background: ${appColors.gray100};
   width: 128px;
   height: 8px;
 `;
 
 const TextContainer = styled.div`
-  height: 154px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   margin-top: 26px;
+  row-gap: 2ch;
 `;
 const ResponsiveText = styled(Text)`
 	font-size: 36px;
@@ -107,7 +107,7 @@ const TopSection = () => (
   <TopSectionContainer>
       <ResponsiveText
 				variant="light"
-				color="gray200"
+				color={appColors.gray100}
 				weight="bold"
 				family="helvetica"
 				size={36}
@@ -120,7 +120,7 @@ const TopSection = () => (
 
     <ResponsiveText
       variant="light"
-      color={appColors.gray200}
+      color={appColors.gray100}
       weight="bold"
       family="helvetica"
       size={32}
@@ -135,20 +135,22 @@ const TopSection = () => (
     <TextContainer>
       <Text
         variant="light"
-        color="gray300"
+        color={appColors.gray300}
         weight="reg"
         family="helvetica"
         size={16}
+        mdSize={20}
       >
         now there is a tool allowing your entire team to speak truth to power in unified consensus
         —without fear of retaliation
       </Text>
       <Text
         variant="light"
-        color="gray300"
+        color={appColors.gray300}
         weight="reg"
         family="helvetica"
         size={16}
+        mdSize={20}
       >
         grade your company’s ESG/sustainability metrics and show the public how it treats people,
         the planet, and its profits

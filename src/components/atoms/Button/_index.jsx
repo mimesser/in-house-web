@@ -187,9 +187,8 @@ const Button = ({ text, children, variant = 'dark', disabled, loading, onClick, 
 };
 
 const CTABtnStyling = styled(Button)`
-  color: #d9d9d9;
-  background-color: rgba(203, 203, 203, 0.3);
-
+  color: ${appColors.gray100};
+  background-color: ${appColors.gray500};
   &:hover {
     background-color: rgba(203, 203, 203, 0.5);
   }
