@@ -75,10 +75,10 @@ const JoinUsUserPage = (props) => {
 
       if (showSummary) {
         values.redirectLink = '/thanks';
-        if (userType === 'motivated'){          
-          values.membershipType = 1
-        } else{   
-          values.membershipType = 2
+        if (userType === 'motivated') {
+          values.membershipType = 1;
+        } else {
+          values.membershipType = 2;
         }
         props.postJoinUs(values);
         setSubmitting(false);
@@ -161,7 +161,9 @@ const JoinUsUserPage = (props) => {
                     smSize={36}
                   />
                   <>
-                    {!props.interestsLoading &&
+                    {!props.interests || props.interests.length === 0 ? (
+                      <Text text="Loading ..." color="gray300" size={20} smSize={24} />
+                    ) : (
                       props.interests.map(({ label, value }) => (
                         <Checkbox
                           key={value}
@@ -172,7 +174,8 @@ const JoinUsUserPage = (props) => {
                         >
                           <Text text={label} color="gray300" size={14} smSize={16} mdSize={20} />
                         </Checkbox>
-                      ))}
+                      ))
+                    )}
                   </>
                 </section>
               )}
