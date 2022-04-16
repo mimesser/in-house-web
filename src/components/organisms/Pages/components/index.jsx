@@ -1,32 +1,23 @@
 import styled, { css } from 'styled-components';
 
 import { Icon } from '../../../atoms';
-import { appColors, desktopWidth, device, mobileWidth } from '../../../../style';
+import { appColors, desktopWidth, mobileWidth } from '../../../../style';
 import Text from '../../../atoms/text/_index';
 
 export const ResponsiveTextHeading = styled(Text)`
-  font-size: 32px;
-  line-height: 39px;
+  line-height: ${({ lineHeight }) => `${lineHeight}px`};
 
-  @media ${device.mobile} {
-    font-size: 32px;
-    line-height: 39px;
+  @media (min-width: ${mobileWidth.lg}) {
+    line-height: ${({ smLineHeight }) => `${smLineHeight}px`};
   }
-  @media ${device.tab} {
-    font-size: 24px;
-    line-height: 29px;
+  @media (min-width: ${desktopWidth.sm}) {
+    line-height: ${({ mdLineHeight }) => `${mdLineHeight}px`};
   }
-  @media ${device.web} {
-    font-size: 36px;
-    line-height: 44px;
+  @media (min-width: ${desktopWidth.md}) {
+    line-height: ${({ lgLineHeight }) => `${lgLineHeight}px`};
   }
-  @media ${device.laptop} {
-    font-size: 36px;
-    line-height: 44px;
-  }
-  @media ${device.desktop} {
-    font-size: 36px;
-    line-height: 44px;
+  @media (min-width: ${desktopWidth.lg}) {
+    line-height: ${({ xlLineHeight }) => `${xlLineHeight}px`};
   }
 `;
 export const ResponsiveText = styled(Text)`
@@ -44,6 +35,12 @@ export const ResponsiveText = styled(Text)`
   @media (min-width: ${desktopWidth.lg}) {
     line-height: ${({ xlLineHeight }) => `${xlLineHeight}px`};
   }
+`;
+
+export const HorizontalBar = styled.div`
+  background: ${appColors.gray100};
+  width: 128px;
+  height: 8px;
 `;
 
 export const NumberedSectionBlock = ({ index, header, source, description, note, share }) => (
