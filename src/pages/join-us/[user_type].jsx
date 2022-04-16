@@ -162,7 +162,7 @@ const JoinUsUserPage = (props) => {
                   />
                   <>
                     {!props.interests || props.interests.length === 0 ? (
-                      <Text text="Loading ..." color="gray300" size={20} smSize={24} />
+                      <Text text="Loading ..." color={appColors.gray300} size={20} smSize={24} />
                     ) : (
                       props.interests.map(({ label, value }) => (
                         <Checkbox
@@ -226,8 +226,7 @@ const JoinUsUserPage = (props) => {
                       onChange={handleFileUpload}
                       name="file"
                       placeholder="pdf, word"
-                      variant="light"
-                      style={{ width: '350px' }}
+                      style={{ width: '350px', borderColor: appColors.gray400 }}
                     />
                   </FormRow>
                 </form>

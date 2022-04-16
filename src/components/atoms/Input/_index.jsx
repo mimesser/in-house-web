@@ -3,8 +3,8 @@ import { useCallback, useRef, useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { omit } from 'lodash';
-import Select from 'react-select';
-import { appColors, calcRem } from '../../../style';
+import Select, { components } from 'react-select';
+import { appColors, calcRem, themeColors } from '../../../style';
 import { Icon } from '../Icon';
 
 const inputStyleStates = {
@@ -98,6 +98,12 @@ const Input = ({ ...props }) => {
   );
 };
 
+const DropdownIndicator = (props) => (
+  <components.DropdownIndicator {...props}>
+    <Icon icon="angle-down" size={1.25} color={appColors.gray400} />
+  </components.DropdownIndicator>
+);
+
 const ISelect = ({ options, disabled, ...props }) => {
   return (
     <TextController {...props} maxChars={false}>
@@ -106,7 +112,7 @@ const ISelect = ({ options, disabled, ...props }) => {
         classNamePrefix="base-input"
         blurInputOnSelect
         options={options}
-        dropDownIndicator={<Icon icon="angle-down" />}
+        components={{ DropdownIndicator }}
         menuPlacement="auto"
         isDisabled={disabled}
       />
