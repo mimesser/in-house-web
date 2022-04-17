@@ -1,6 +1,14 @@
 import styled from 'styled-components';
 
-import { spacing, breakpoints, fontSize, device, calcRem } from '../../../style';
+import {
+  spacing,
+  breakpoints,
+  fontSize,
+  device,
+  calcRem,
+  mobileWidth,
+  desktopWidth,
+} from '../../../style';
 import { Button, H2 } from '../../atoms';
 import { Icon } from '../../atoms/Icon';
 import { CustomSelect } from '../../atoms/Dropdown';
@@ -13,31 +21,29 @@ export const Container = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: ${spacing.xxl};
-  max-width: ${breakpoints.lg};
+  padding: 80px 0 129px;
+  row-gap: 30px;
 
-  ${H2} {
-    margin: ${spacing.xl} 0;
-  }  
-  padding: ${calcRem(24)} ${calcRem(12)} ${calcRem(20)} ${calcRem(12)};
+  @media (min-width: ${mobileWidth.lg}) {
+    row-gap: 60px;
+    max-width: 500px;
+  }
 
-	@media ${device.desktop} {
-		margin: 0 277px;
-	}
+  @media (min-width: ${desktopWidth.sm}) {
+    max-width: 732px;
+  }
+`;
+
+export const FieldsGroup = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  row-gap: 30px;
 `;
 
 export const Commands = styled.div`
   display: flex;
-  margin-top: auto;
-`;
-
-export const Dropdown = styled(CustomSelect).attrs({})`
-  width: auto !important;
-  font-size: ${fontSize.md};
-
-  div {
-    border-radius: 0;
-  }
+  justify-content: space-between;
 `;
 
 export const SubmitButton = styled(Button).attrs({

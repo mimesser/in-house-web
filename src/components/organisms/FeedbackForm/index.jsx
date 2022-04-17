@@ -1,24 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useRouter } from 'next/router';
-
-import { H1, H2, Input } from '../../atoms';
 import Text from '../../atoms/text/_index';
 import { WinkConfirmation, CounterInput } from '../../molecules';
-import {
-  FormGroup,
-  Container,
-  Commands,
-  Dropdown,
-  SubmitButton,
-  BackButton,
-  LeftArrowIcon,
-} from './style';
+import Button from '../../atoms/Button/_index';
+import { FormGroup, Container, Commands, SubmitButton, LeftArrowIcon, FieldsGroup } from './style';
+import Input from '../../atoms/Input/_index';
 import { postFeedback, clearFeedback } from '../../../store/feedback';
 import { isEmailValid } from '../../../utils/index';
 import { feedbackPageOptions } from '../../../constants';
+import { appColors } from '../../../style';
 
-const subjectOptions = ['-- select subject --', ...feedbackPageOptions].map((value) => ({
+const subjectOptions = feedbackPageOptions.map((value) => ({
   label: value,
   value,
 }));
@@ -26,7 +19,7 @@ const subjectOptions = ['-- select subject --', ...feedbackPageOptions].map((val
 function FeedbackForm(props) {
   const subjectId = props.subjectIndex || 0;
   const { redirectLink } = props;
-  const [subject, setSubject] = useState(subjectOptions[subjectId]);
+  const [subject, setSubject] = useState(null);
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [valid, setValidity] = useState(false);
@@ -40,18 +33,16 @@ function FeedbackForm(props) {
   };
 
   const clear = () => {
-    setSubject('');
+    setSubject(null);
     setEmail('');
     setMessage('');
   };
 
-  useEffect(
-    () =>
-      setValidity(
-        subject.value !== subjectOptions[0].value && !!message && (!email || isEmailValid(email)),
-      ),
-    [subject, email, message],
-  );
+  useEffect(() => setValidity(!subject && !!message && (!email || isEmailValid(email))), [
+    subject,
+    email,
+    message,
+  ]);
 
   /**
    * TODO: after submission, the form should clear.
@@ -70,54 +61,87 @@ function FeedbackForm(props) {
   return (
     <Container>
       <Text.Heading
-              className="section--heading-title"
-              variant="light"
-              weight="bold"
-              size={32}
-              color="grey600"
-              level={1}
-              text="contact us"
-            />
-      <br />
+        className="section--heading-title"
+        variant="light"
+        weight="bold"
+        size={32}
+        lineHeight={39}
+        smSize={45}
+        smLineHeight={55}
+        mdSize={54}
+        mdLineHeight={66}
+        color={appColors.gray100}
+        level={1}
+        text="contact us"
+      />
       <Text
-              size={14}
-              className="description"
-              style={{ maxWidth: 650 }}
-              color="grey600"
-              text={`all communications are strictly confidential`}
-            />
-      <br />
-      <Dropdown
-        value={subject}
-        placeholder="subject"
-        options={subjectOptions}
-        onChange={handleSubjectChange}
+        size={16}
+        lineHeight={20}
+        smSize={20}
+        smLineHeight={24}
+        className="description"
+        style={{ maxWidth: 650 }}
+        color={appColors.gray100}
+        text={`all communications are strictly confidential`}
       />
-      <CounterInput
-        multiline
-        disabled={!subject}
-        value={message}
-        onChange={setMessage}
-        max={500}
-        placeholder="type something"
-        rows={4}
-      />
-      <FormGroup>
-        <Input
-          value={email}
-          disabled={!subject}
-          onChange={handleEmailChange}
-          placeholder="email"
-          type="email"
+
+      <FieldsGroup>
+        <Input.Select
+          variant="light"
+          placeholder="subject"
+          options={subjectOptions}
+          onChange={handleSubjectChange}
+          value={subject}
         />
-      </FormGroup>
-      {props.error && <FormGroup>{props.error}</FormGroup>}
+        <CounterInput
+          variant="light"
+          multiline
+          marginless
+          disabled={!subject}
+          value={message}
+          onChange={setMessage}
+          max={500}
+          placeholder="type something"
+          rows={4}
+        />
+        <FormGroup marginless>
+          <Input
+            variant="light"
+            value={email}
+            disabled={!subject}
+            onChange={handleEmailChange}
+            placeholder="email"
+            type="email"
+            style={{ width: '351px' }}
+          />
+        </FormGroup>
+        {props.error && <FormGroup>{props.error}</FormGroup>}
+      </FieldsGroup>
       <Commands>
-        <BackButton inverse onClick={() => router.back()}>cancel
-        </BackButton>
-        <SubmitButton disabled={!valid} onClick={submit} icon="arrow-right" loading={props.loading}>
-          send
-        </SubmitButton>
+        <Button
+          noBorder
+          variant="light"
+          suffix=" "
+          onClick={() => router.back()}
+          style={{ flexGrow: 0, paddingLeft: 0 }}
+        >
+          cancel
+        </Button>
+        <Button
+          disabled={!valid}
+          onClick={submit}
+          variant="light"
+          icon="arrow-right"
+          loading={props.loading}
+          text="send"
+          style={{
+            width: '134px',
+            backgroundColor: valid ? undefined : appColors.gray600,
+            borderColor: appColors.gray300,
+            borderStyle: 'solid',
+            borderWidth: '1px',
+          }}
+        />
       </Commands>
     </Container>
   );
