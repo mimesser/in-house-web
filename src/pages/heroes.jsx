@@ -87,7 +87,7 @@ const PositionContainer = styled.div`
 `;
 
 const HeaderImageBgCss = css`
-  background: linear-gradient(180.68deg, rgba(17, 17, 17, 0.28) 47.53%, #111111 99.41%),
+  background: linear-gradient(180.68deg, rgba(17, 17, 17, 0.15) 31.47%, #111111 99.41%),
     url(static/Custom-Landing-Page–Header-Image-4.webp) no-repeat;
 
   @media ${device.iPhoneX} {
