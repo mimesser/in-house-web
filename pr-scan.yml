@@ -1,6 +1,6 @@
 pr:
   branches:
-    include:
+    exclude:
       - develop
       - staging
       - prod
