@@ -1,6 +1,4 @@
 trigger:
-  include:
-    - '*'
   exclude:
     - develop
     - staging
