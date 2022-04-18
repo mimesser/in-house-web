@@ -1,11 +1,8 @@
-pr:
-  branches:
-    include:
-      - '*'
-    exclude:
-      - develop
-      - staging
-      - prod
+trigger:
+  exclude:
+    - develop
+    - staging
+    - prod
 
 resources:
 - repo: self
