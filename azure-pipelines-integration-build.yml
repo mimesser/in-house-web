@@ -1,8 +1,9 @@
 trigger:
-  exclude:
-    - develop
-    - staging
-    - prod
+  branches:
+    exclude:
+      - develop
+      - staging
+      - prod
 
 resources:
 - repo: self
