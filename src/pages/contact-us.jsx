@@ -1,6 +1,5 @@
 import React from 'react';
 import { withRouter } from 'next/router';
-import styled from 'styled-components';
 import { Footer } from '../components/organisms/Footer';
 
 import { Page, FeedbackForm } from '../components/organisms';
@@ -9,15 +8,17 @@ function ContactUs(props) {
   const {
     query: { subjectIndex = 0, redirect = '/' },
   } = props.router;
+
   return (
-    <Page noPadd
-		title="in-house |  Speak as a Team | Remain Untraceable"
-		variant="dark"
-    whiteHead={false}
-		noOverflow={true}
-		>
+    <Page
+      noPadd
+      title="in-house |  Speak as a Team | Remain Untraceable"
+      whiteHead
+      noOverflow={true}
+      style={{ backgroundColor: '#111' }}
+    >
       <FeedbackForm subjectIndex={subjectIndex} redirectLink={redirect} />
-      <Footer variant="light" />
+      <Footer showScrollIndicator variant="darkest" />
     </Page>
   );
 }
