@@ -34,6 +34,16 @@ const btnTheme = {
   },
 };
 
+const dashedStyle = css`
+  background-image: linear-gradient(to right, ${appColors.gray400} 60%, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(${appColors.gray400} 60%, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(to right, ${appColors.gray400} 60%, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(${appColors.gray400} 60%, rgba(0, 0, 0, 0) 0%);
+  background-position: top, right, bottom, left;
+  background-size: 20px 1px, 1px 20px;
+  background-repeat: repeat-x, repeat-y;
+`;
+
 const ButtonBase = styled.button`
   min-width: 130px;
   position: relative;
@@ -103,10 +113,13 @@ const ButtonBase = styled.button`
     outlined &&
     css`
       background: none;
-      border: 1px
-        ${`${dashed ? 'dashed' : 'solid'} ${
-          btnTheme[variant][`textOutline${disable ? 'Disabled' : ''}`]
-        }`};
+      ${
+        dashed
+          ? dashedStyle
+          : `border: 1px solid ${btnTheme[variant][`textOutline${disable ? 'Disabled' : ''}`]};`
+      }
+      
+
       color: ${btnTheme[variant][`textOutline${disable ? 'Disabled' : ''}`]};
 
       .loader span {
@@ -115,17 +128,24 @@ const ButtonBase = styled.button`
 
       &:hover {
         background: none;
-        border: ${!disable &&
-        `1px ${dashed ? 'dashed' : 'solid'} ${btnTheme[variant].outlineHover}`};
+        ${
+          dashed
+            ? dashedStyle
+            : `border: ${!disable && `1px solid ${btnTheme[variant].outlineHover}`};`
+        }
         color: ${!disable && btnTheme[variant].outlineHover};
       }
 
       &:active {
         background: none;
-        border: ${!disable &&
-        `1px ${dashed ? 'dashed' : 'solid'} ${
-          btnTheme[variant === 'dark' ? 'light' : 'dark'].textActive
-        }`};
+        ${
+          dashed
+            ? dashedStyle
+            : `border: ${
+                !disable &&
+                `1px solid ${btnTheme[variant === 'dark' ? 'light' : 'dark'].textActive}`
+              };`
+        }
         color: ${!disable && btnTheme[variant === 'dark' ? 'light' : 'dark'].textActive};
       }
     `}
@@ -283,7 +303,7 @@ export const UploadButton = (props) => {
         onClick={onClick}
         outlined
         text={
-          <span style={{ fontSize: 14 }}>
+          <span style={{ fontSize: 14, color: appColors.gray400 }}>
             {(file?.name && truncateFileName(file?.name)) || props.placeholder || 'Select file...'}
           </span>
         }
